@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.StoragePool
         internal DiskPoolCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskPoolsRestClient = new DiskPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DiskPool.ResourceType, out string apiVersion);
+            _diskPoolsRestClient = new DiskPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,16 +57,17 @@ namespace Azure.ResourceManager.StoragePool
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: DiskPools_CreateOrUpdate
         /// <summary> Create or Update Disk pool. This create or update operation can take 15 minutes to complete. This is expected service behavior. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolCreatePayload"/> is null. </exception>
         public virtual DiskPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
             if (diskPoolCreatePayload == null)
             {
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken);
-                var operation = new DiskPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _diskPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
+                var operation = new DiskPoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _diskPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,16 +95,17 @@ namespace Azure.ResourceManager.StoragePool
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: DiskPools_CreateOrUpdate
         /// <summary> Create or Update Disk pool. This create or update operation can take 15 minutes to complete. This is expected service behavior. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolCreatePayload"/> is null. </exception>
         public async virtual Task<DiskPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
             if (diskPoolCreatePayload == null)
             {
@@ -114,7 +117,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _diskPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
+                var operation = new DiskPoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _diskPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -132,12 +135,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Get a Disk pool. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
         public virtual Response<DiskPool> Get(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Get");
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.StoragePool
                 var response = _diskPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiskPool(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,12 +165,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Get a Disk pool. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
         public async virtual Task<Response<DiskPool>> GetAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Get");
@@ -177,7 +180,7 @@ namespace Azure.ResourceManager.StoragePool
                 var response = await _diskPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DiskPool(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,12 +192,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
         public virtual Response<DiskPool> GetIfExists(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
@@ -216,12 +219,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
         public async virtual Task<Response<DiskPool>> GetIfExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
@@ -243,12 +246,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Exists");
@@ -268,12 +271,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
+            if (string.IsNullOrEmpty(diskPoolName))
             {
-                throw new ArgumentNullException(nameof(diskPoolName));
+                throw new ArgumentException($"Parameter {nameof(diskPoolName)} cannot be null or empty", nameof(diskPoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Exists");
@@ -305,7 +308,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = _diskPoolsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,7 +323,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = _diskPoolsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +349,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = await _diskPoolsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,7 +364,7 @@ namespace Azure.ResourceManager.StoragePool
                 try
                 {
                     var response = await _diskPoolsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

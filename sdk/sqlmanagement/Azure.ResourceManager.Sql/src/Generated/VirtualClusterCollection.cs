@@ -18,6 +18,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Sql
         internal VirtualClusterCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualClustersRestClient = new VirtualClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(VirtualCluster.ResourceType, out string apiVersion);
+            _virtualClustersRestClient = new VirtualClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,12 +59,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a virtual cluster. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is null or empty. </exception>
         public virtual Response<VirtualCluster> Get(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
+            if (string.IsNullOrEmpty(virtualClusterName))
             {
-                throw new ArgumentNullException(nameof(virtualClusterName));
+                throw new ArgumentException($"Parameter {nameof(virtualClusterName)} cannot be null or empty", nameof(virtualClusterName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Get");
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _virtualClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualCluster(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,12 +89,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a virtual cluster. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is null or empty. </exception>
         public async virtual Task<Response<VirtualCluster>> GetAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
+            if (string.IsNullOrEmpty(virtualClusterName))
             {
-                throw new ArgumentNullException(nameof(virtualClusterName));
+                throw new ArgumentException($"Parameter {nameof(virtualClusterName)} cannot be null or empty", nameof(virtualClusterName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Get");
@@ -102,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _virtualClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualCluster(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,12 +116,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is null or empty. </exception>
         public virtual Response<VirtualCluster> GetIfExists(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
+            if (string.IsNullOrEmpty(virtualClusterName))
             {
-                throw new ArgumentNullException(nameof(virtualClusterName));
+                throw new ArgumentException($"Parameter {nameof(virtualClusterName)} cannot be null or empty", nameof(virtualClusterName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
@@ -141,12 +143,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is null or empty. </exception>
         public async virtual Task<Response<VirtualCluster>> GetIfExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
+            if (string.IsNullOrEmpty(virtualClusterName))
             {
-                throw new ArgumentNullException(nameof(virtualClusterName));
+                throw new ArgumentException($"Parameter {nameof(virtualClusterName)} cannot be null or empty", nameof(virtualClusterName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
@@ -168,12 +170,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
+            if (string.IsNullOrEmpty(virtualClusterName))
             {
-                throw new ArgumentNullException(nameof(virtualClusterName));
+                throw new ArgumentException($"Parameter {nameof(virtualClusterName)} cannot be null or empty", nameof(virtualClusterName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
@@ -193,12 +195,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
+            if (string.IsNullOrEmpty(virtualClusterName))
             {
-                throw new ArgumentNullException(nameof(virtualClusterName));
+                throw new ArgumentException($"Parameter {nameof(virtualClusterName)} cannot be null or empty", nameof(virtualClusterName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
@@ -230,7 +232,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _virtualClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,7 +247,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _virtualClustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _virtualClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -286,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _virtualClustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

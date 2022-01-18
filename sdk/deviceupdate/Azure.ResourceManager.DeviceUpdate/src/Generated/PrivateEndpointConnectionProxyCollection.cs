@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         internal PrivateEndpointConnectionProxyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(PrivateEndpointConnectionProxy.ResourceType, out string apiVersion);
+            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         // Collection level operations.
 
         /// <summary> (INTERNAL - DO NOT USE) Creates or updates the specified private endpoint connection proxy resource associated with the device update account. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="privateEndpointConnectionProxy"> The parameters for creating a private endpoint connection proxy. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="privateEndpointConnectionProxy"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxy"/> is null. </exception>
         public virtual PrivateEndpointConnectionProxyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData privateEndpointConnectionProxy, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
             if (privateEndpointConnectionProxy == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _privateEndpointConnectionProxiesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, privateEndpointConnectionProxy, cancellationToken);
-                var operation = new PrivateEndpointConnectionProxyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _privateEndpointConnectionProxiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, privateEndpointConnectionProxy).Request, response);
+                var operation = new PrivateEndpointConnectionProxyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _privateEndpointConnectionProxiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, privateEndpointConnectionProxy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         /// <summary> (INTERNAL - DO NOT USE) Creates or updates the specified private endpoint connection proxy resource associated with the device update account. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="privateEndpointConnectionProxy"> The parameters for creating a private endpoint connection proxy. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="privateEndpointConnectionProxy"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxy"/> is null. </exception>
         public async virtual Task<PrivateEndpointConnectionProxyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData privateEndpointConnectionProxy, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
             if (privateEndpointConnectionProxy == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = await _privateEndpointConnectionProxiesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, privateEndpointConnectionProxy, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointConnectionProxyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _privateEndpointConnectionProxiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, privateEndpointConnectionProxy).Request, response);
+                var operation = new PrivateEndpointConnectionProxyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _privateEndpointConnectionProxiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, privateEndpointConnectionProxy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> (INTERNAL - DO NOT USE) Get the specified private endpoint connection proxy associated with the device update account. </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
         public virtual Response<PrivateEndpointConnectionProxy> Get(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var response = _privateEndpointConnectionProxiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnectionProxy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionProxy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> (INTERNAL - DO NOT USE) Get the specified private endpoint connection proxy associated with the device update account. </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
         public async virtual Task<Response<PrivateEndpointConnectionProxy>> GetAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var response = await _privateEndpointConnectionProxiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateEndpointConnectionProxy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionProxy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
         public virtual Response<PrivateEndpointConnectionProxy> GetIfExists(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
         public async virtual Task<Response<PrivateEndpointConnectionProxy>> GetIfExistsAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionProxyId))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionProxyId)} cannot be null or empty", nameof(privateEndpointConnectionProxyId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.Exists");
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 try
                 {
                     var response = _privateEndpointConnectionProxiesRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionProxy(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionProxy(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,7 +314,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 try
                 {
                     var response = await _privateEndpointConnectionProxiesRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionProxy(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionProxy(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

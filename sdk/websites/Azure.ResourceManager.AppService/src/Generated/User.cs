@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.AppService
             _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.AppService
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +76,8 @@ namespace Azure.ResourceManager.AppService
         internal User(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -193,11 +196,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
         /// OperationId: UpdatePublishingUser
         /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public async virtual Task<WebSiteManagementUpdatePublishingUserOperation> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
+        public async virtual Task<UserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
             if (userDetails == null)
             {
@@ -209,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _restClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteManagementUpdatePublishingUserOperation(this, response);
+                var operation = new UserCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,11 +228,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
         /// OperationId: UpdatePublishingUser
         /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public virtual WebSiteManagementUpdatePublishingUserOperation CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
+        public virtual UserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
             if (userDetails == null)
             {
@@ -241,7 +244,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _restClient.UpdatePublishingUser(userDetails, cancellationToken);
-                var operation = new WebSiteManagementUpdatePublishingUserOperation(this, response);
+                var operation = new UserCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

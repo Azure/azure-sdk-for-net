@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceDatabaseSchemaCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseSchemasRestClient = new ManagedDatabaseSchemasRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagedInstanceDatabaseSchema.ResourceType, out string apiVersion);
+            _managedDatabaseSchemasRestClient = new ManagedDatabaseSchemasRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get managed database schema. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is null or empty. </exception>
         public virtual Response<ManagedInstanceDatabaseSchema> Get(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
+            if (string.IsNullOrEmpty(schemaName))
             {
-                throw new ArgumentNullException(nameof(schemaName));
+                throw new ArgumentException($"Parameter {nameof(schemaName)} cannot be null or empty", nameof(schemaName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchema(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchema(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get managed database schema. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is null or empty. </exception>
         public async virtual Task<Response<ManagedInstanceDatabaseSchema>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
+            if (string.IsNullOrEmpty(schemaName))
             {
-                throw new ArgumentNullException(nameof(schemaName));
+                throw new ArgumentException($"Parameter {nameof(schemaName)} cannot be null or empty", nameof(schemaName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceDatabaseSchema(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchema(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is null or empty. </exception>
         public virtual Response<ManagedInstanceDatabaseSchema> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
+            if (string.IsNullOrEmpty(schemaName))
             {
-                throw new ArgumentNullException(nameof(schemaName));
+                throw new ArgumentException($"Parameter {nameof(schemaName)} cannot be null or empty", nameof(schemaName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is null or empty. </exception>
         public async virtual Task<Response<ManagedInstanceDatabaseSchema>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
+            if (string.IsNullOrEmpty(schemaName))
             {
-                throw new ArgumentNullException(nameof(schemaName));
+                throw new ArgumentException($"Parameter {nameof(schemaName)} cannot be null or empty", nameof(schemaName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
+            if (string.IsNullOrEmpty(schemaName))
             {
-                throw new ArgumentNullException(nameof(schemaName));
+                throw new ArgumentException($"Parameter {nameof(schemaName)} cannot be null or empty", nameof(schemaName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
+            if (string.IsNullOrEmpty(schemaName))
             {
-                throw new ArgumentNullException(nameof(schemaName));
+                throw new ArgumentException($"Parameter {nameof(schemaName)} cannot be null or empty", nameof(schemaName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Exists");
@@ -229,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedDatabaseSchemasRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,7 +246,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedDatabaseSchemasRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedDatabaseSchemasRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -286,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedDatabaseSchemasRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

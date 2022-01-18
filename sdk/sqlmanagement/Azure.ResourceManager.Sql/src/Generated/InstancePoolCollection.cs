@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Sql
         internal InstancePoolCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instancePoolsRestClient = new InstancePoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(InstancePool.ResourceType, out string apiVersion);
+            _instancePoolsRestClient = new InstancePoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,16 +57,17 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: InstancePools_CreateOrUpdate
         /// <summary> Creates or updates an instance pool. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be created or updated. </param>
         /// <param name="parameters"> The requested instance pool resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual InstancePoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string instancePoolName, InstancePoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
             if (parameters == null)
             {
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _instancePoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, parameters, cancellationToken);
-                var operation = new InstancePoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _instancePoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, parameters).Request, response);
+                var operation = new InstancePoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _instancePoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,16 +95,17 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: InstancePools_CreateOrUpdate
         /// <summary> Creates or updates an instance pool. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be created or updated. </param>
         /// <param name="parameters"> The requested instance pool resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<InstancePoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string instancePoolName, InstancePoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
             if (parameters == null)
             {
@@ -114,7 +117,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _instancePoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InstancePoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _instancePoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, parameters).Request, response);
+                var operation = new InstancePoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _instancePoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -132,12 +135,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an instance pool. </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
         public virtual Response<InstancePool> Get(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.Get");
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _instancePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstancePool(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InstancePool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,12 +165,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an instance pool. </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
         public async virtual Task<Response<InstancePool>> GetAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.Get");
@@ -177,7 +180,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _instancePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new InstancePool(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InstancePool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,12 +192,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
         public virtual Response<InstancePool> GetIfExists(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.GetIfExists");
@@ -216,12 +219,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
         public async virtual Task<Response<InstancePool>> GetIfExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.GetIfExists");
@@ -243,12 +246,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.Exists");
@@ -268,12 +271,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
+            if (string.IsNullOrEmpty(instancePoolName))
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentException($"Parameter {nameof(instancePoolName)} cannot be null or empty", nameof(instancePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("InstancePoolCollection.Exists");
@@ -305,7 +308,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _instancePoolsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,7 +323,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _instancePoolsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +349,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _instancePoolsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,7 +364,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _instancePoolsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
@@ -19,21 +18,21 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        private static DatabaseAccountsRestOperations GetDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DatabaseAccountsRestOperations GetDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is null or empty. </exception>
         public static async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
+            if (string.IsNullOrEmpty(accountName))
             {
-                throw new ArgumentNullException(nameof(accountName));
+                throw new ArgumentException($"Parameter {nameof(accountName)} cannot be null or empty", nameof(accountName));
             }
 
             return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameExistsAsync(accountName, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -60,12 +59,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is null or empty. </exception>
         public static Response<bool> CheckNameExistsDatabaseAccount(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
+            if (string.IsNullOrEmpty(accountName))
             {
-                throw new ArgumentNullException(nameof(accountName));
+                throw new ArgumentException($"Parameter {nameof(accountName)} cannot be null or empty", nameof(accountName));
             }
 
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameExists(accountName, cancellationToken);
                     return response;
                 }

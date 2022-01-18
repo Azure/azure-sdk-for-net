@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Compute
         internal DedicatedHostCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dedicatedHostsRestClient = new DedicatedHostsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DedicatedHost.ResourceType, out string apiVersion);
+            _dedicatedHostsRestClient = new DedicatedHostsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.Compute
         // Collection level operations.
 
         /// <summary> Create or update a dedicated host . </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="hostName"> The name of the dedicated host . </param>
         /// <param name="parameters"> Parameters supplied to the Create Dedicated Host. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual DedicatedHostCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string hostName, DedicatedHostData parameters, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
             if (parameters == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _dedicatedHostsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, parameters, cancellationToken);
-                var operation = new DedicatedHostCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, parameters).Request, response);
+                var operation = new DedicatedHostCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a dedicated host . </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="hostName"> The name of the dedicated host . </param>
         /// <param name="parameters"> Parameters supplied to the Create Dedicated Host. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<DedicatedHostCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hostName, DedicatedHostData parameters, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
             if (parameters == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _dedicatedHostsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DedicatedHostCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, parameters).Request, response);
+                var operation = new DedicatedHostCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,12 +125,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
         public virtual Response<DedicatedHost> Get(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.Get");
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _dedicatedHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DedicatedHost(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DedicatedHost(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,12 +153,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
         public async virtual Task<Response<DedicatedHost>> GetAsync(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.Get");
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _dedicatedHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DedicatedHost(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DedicatedHost(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,12 +181,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
         public virtual Response<DedicatedHost> GetIfExists(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.GetIfExists");
@@ -206,12 +209,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
         public async virtual Task<Response<DedicatedHost>> GetIfExistsAsync(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.GetIfExists");
@@ -234,12 +237,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.Exists");
@@ -260,12 +263,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            if (string.IsNullOrEmpty(hostName))
             {
-                throw new ArgumentNullException(nameof(hostName));
+                throw new ArgumentException($"Parameter {nameof(hostName)} cannot be null or empty", nameof(hostName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostCollection.Exists");
@@ -294,7 +297,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _dedicatedHostsRestClient.ListByHostGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,7 +312,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _dedicatedHostsRestClient.ListByHostGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -332,7 +335,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _dedicatedHostsRestClient.ListByHostGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +350,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _dedicatedHostsRestClient.ListByHostGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedHost(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

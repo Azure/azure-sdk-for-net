@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmVirtualNetworkConnection(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmVirtualNetworkConnection(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -243,12 +246,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public async virtual Task<Response<VnetRoute>> CreateOrUpdateVnetRouteAsync(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
+            if (string.IsNullOrEmpty(routeName))
             {
-                throw new ArgumentNullException(nameof(routeName));
+                throw new ArgumentException($"Parameter {nameof(routeName)} cannot be null or empty", nameof(routeName));
             }
             if (route == null)
             {
@@ -276,12 +280,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public virtual Response<VnetRoute> CreateOrUpdateVnetRoute(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
+            if (string.IsNullOrEmpty(routeName))
             {
-                throw new ArgumentNullException(nameof(routeName));
+                throw new ArgumentException($"Parameter {nameof(routeName)} cannot be null or empty", nameof(routeName));
             }
             if (route == null)
             {
@@ -308,12 +313,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is null or empty. </exception>
         public async virtual Task<Response> DeleteVnetRouteAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
+            if (string.IsNullOrEmpty(routeName))
             {
-                throw new ArgumentNullException(nameof(routeName));
+                throw new ArgumentException($"Parameter {nameof(routeName)} cannot be null or empty", nameof(routeName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnection.DeleteVnetRoute");
@@ -336,12 +341,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is null or empty. </exception>
         public virtual Response DeleteVnetRoute(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
+            if (string.IsNullOrEmpty(routeName))
             {
-                throw new ArgumentNullException(nameof(routeName));
+                throw new ArgumentException($"Parameter {nameof(routeName)} cannot be null or empty", nameof(routeName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnection.DeleteVnetRoute");
@@ -365,12 +370,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public async virtual Task<Response<VnetRoute>> UpdateVnetRouteAsync(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
+            if (string.IsNullOrEmpty(routeName))
             {
-                throw new ArgumentNullException(nameof(routeName));
+                throw new ArgumentException($"Parameter {nameof(routeName)} cannot be null or empty", nameof(routeName));
             }
             if (route == null)
             {
@@ -398,12 +404,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public virtual Response<VnetRoute> UpdateVnetRoute(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
+            if (string.IsNullOrEmpty(routeName))
             {
-                throw new ArgumentNullException(nameof(routeName));
+                throw new ArgumentException($"Parameter {nameof(routeName)} cannot be null or empty", nameof(routeName));
             }
             if (route == null)
             {

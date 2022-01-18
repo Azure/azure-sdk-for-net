@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotDiagnosticAnalysisCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteSlotDiagnosticAnalysis.ResourceType, out string apiVersion);
+            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Site Analysis. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is null or empty. </exception>
         public virtual Response<SiteSlotDiagnosticAnalysis> Get(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
+            if (string.IsNullOrEmpty(analysisName))
             {
-                throw new ArgumentNullException(nameof(analysisName));
+                throw new ArgumentException($"Parameter {nameof(analysisName)} cannot be null or empty", nameof(analysisName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _diagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticAnalysis(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Site Analysis. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is null or empty. </exception>
         public async virtual Task<Response<SiteSlotDiagnosticAnalysis>> GetAsync(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
+            if (string.IsNullOrEmpty(analysisName))
             {
-                throw new ArgumentNullException(nameof(analysisName));
+                throw new ArgumentException($"Parameter {nameof(analysisName)} cannot be null or empty", nameof(analysisName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _diagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotDiagnosticAnalysis(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is null or empty. </exception>
         public virtual Response<SiteSlotDiagnosticAnalysis> GetIfExists(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
+            if (string.IsNullOrEmpty(analysisName))
             {
-                throw new ArgumentNullException(nameof(analysisName));
+                throw new ArgumentException($"Parameter {nameof(analysisName)} cannot be null or empty", nameof(analysisName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is null or empty. </exception>
         public async virtual Task<Response<SiteSlotDiagnosticAnalysis>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
+            if (string.IsNullOrEmpty(analysisName))
             {
-                throw new ArgumentNullException(nameof(analysisName));
+                throw new ArgumentException($"Parameter {nameof(analysisName)} cannot be null or empty", nameof(analysisName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
+            if (string.IsNullOrEmpty(analysisName))
             {
-                throw new ArgumentNullException(nameof(analysisName));
+                throw new ArgumentException($"Parameter {nameof(analysisName)} cannot be null or empty", nameof(analysisName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
+            if (string.IsNullOrEmpty(analysisName))
             {
-                throw new ArgumentNullException(nameof(analysisName));
+                throw new ArgumentException($"Parameter {nameof(analysisName)} cannot be null or empty", nameof(analysisName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteAnalysesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteAnalysesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteAnalysesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteAnalysesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceTapConfigurationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkInterfaceTapConfigurationsRestClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(NetworkInterfaceTapConfiguration.ResourceType, out string apiVersion);
+            _networkInterfaceTapConfigurationsRestClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates a Tap configuration in the specified NetworkInterface. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="tapConfigurationParameters"> Parameters supplied to the create or update tap configuration operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> or <paramref name="tapConfigurationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationParameters"/> is null. </exception>
         public virtual NetworkInterfaceTapConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string tapConfigurationName, NetworkInterfaceTapConfigurationData tapConfigurationParameters, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
             if (tapConfigurationParameters == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfaceTapConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters, cancellationToken);
-                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
+                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a Tap configuration in the specified NetworkInterface. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="tapConfigurationParameters"> Parameters supplied to the create or update tap configuration operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> or <paramref name="tapConfigurationParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationParameters"/> is null. </exception>
         public async virtual Task<NetworkInterfaceTapConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string tapConfigurationName, NetworkInterfaceTapConfigurationData tapConfigurationParameters, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
             if (tapConfigurationParameters == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkInterfaceTapConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
+                var operation = new NetworkInterfaceTapConfigurationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _networkInterfaceTapConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, tapConfigurationParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get the specified tap configuration on a network interface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
         public virtual Response<NetworkInterfaceTapConfiguration> Get(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkInterfaceTapConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get the specified tap configuration on a network interface. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
         public async virtual Task<Response<NetworkInterfaceTapConfiguration>> GetAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkInterfaceTapConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tapConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterfaceTapConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceTapConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
         public virtual Response<NetworkInterfaceTapConfiguration> GetIfExists(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
         public async virtual Task<Response<NetworkInterfaceTapConfiguration>> GetIfExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
+            if (string.IsNullOrEmpty(tapConfigurationName))
             {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
+                throw new ArgumentException($"Parameter {nameof(tapConfigurationName)} cannot be null or empty", nameof(tapConfigurationName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Exists");
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkInterfaceTapConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkInterfaceTapConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +329,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkInterfaceTapConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +344,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkInterfaceTapConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterfaceTapConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

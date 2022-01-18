@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Compute
         internal PrivateEndpointConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(PrivateEndpointConnection.ResourceType, out string apiVersion);
+            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.Compute
         // Collection level operations.
 
         /// <summary> Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="privateEndpointConnection"> private endpoint connection object supplied in the body of the Put private endpoint connection operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointConnection"/> is null. </exception>
-        public virtual DiskAccessUpdateAPrivateEndpointConnectionOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointConnectionName, PrivateEndpointConnectionData privateEndpointConnection, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnection"/> is null. </exception>
+        public virtual PrivateEndpointConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointConnectionName, PrivateEndpointConnectionData privateEndpointConnection, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
             if (privateEndpointConnection == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskAccessesRestClient.UpdateAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection, cancellationToken);
-                var operation = new DiskAccessUpdateAPrivateEndpointConnectionOperation(Parent, _clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response);
+                var operation = new PrivateEndpointConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="privateEndpointConnection"> private endpoint connection object supplied in the body of the Put private endpoint connection operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointConnection"/> is null. </exception>
-        public async virtual Task<DiskAccessUpdateAPrivateEndpointConnectionOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointConnectionName, PrivateEndpointConnectionData privateEndpointConnection, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnection"/> is null. </exception>
+        public async virtual Task<PrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointConnectionName, PrivateEndpointConnectionData privateEndpointConnection, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
             if (privateEndpointConnection == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskAccessesRestClient.UpdateAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskAccessUpdateAPrivateEndpointConnectionOperation(Parent, _clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response);
+                var operation = new PrivateEndpointConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets information about a private endpoint connection under a disk access resource. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public virtual Response<PrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _diskAccessesRestClient.GetAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets information about a private endpoint connection under a disk access resource. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public async virtual Task<Response<PrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _diskAccessesRestClient.GetAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public virtual Response<PrivateEndpointConnection> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public async virtual Task<Response<PrivateEndpointConnection>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _diskAccessesRestClient.ListPrivateEndpointConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _diskAccessesRestClient.ListPrivateEndpointConnectionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +329,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _diskAccessesRestClient.ListPrivateEndpointConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +344,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _diskAccessesRestClient.ListPrivateEndpointConnectionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

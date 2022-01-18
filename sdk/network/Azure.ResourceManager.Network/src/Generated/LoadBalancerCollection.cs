@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Network
         internal LoadBalancerCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(LoadBalancer.ResourceType, out string apiVersion);
+            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,16 +54,17 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates a load balancer. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual LoadBalancerCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string loadBalancerName, LoadBalancerData parameters, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
             if (parameters == null)
             {
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, parameters, cancellationToken);
-                var operation = new LoadBalancerCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
+                var operation = new LoadBalancerCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,16 +89,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a load balancer. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<LoadBalancerCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string loadBalancerName, LoadBalancerData parameters, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
             if (parameters == null)
             {
@@ -108,7 +111,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _loadBalancersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadBalancerCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
+                var operation = new LoadBalancerCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,12 +127,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
         public virtual Response<LoadBalancer> Get(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.Get");
@@ -139,7 +142,7 @@ namespace Azure.ResourceManager.Network
                 var response = _loadBalancersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadBalancer(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,12 +155,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
         public async virtual Task<Response<LoadBalancer>> GetAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.Get");
@@ -167,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _loadBalancersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancer(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,12 +183,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
         public virtual Response<LoadBalancer> GetIfExists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.GetIfExists");
@@ -208,12 +211,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
         public async virtual Task<Response<LoadBalancer>> GetIfExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.GetIfExists");
@@ -236,12 +239,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.Exists");
@@ -262,12 +265,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (loadBalancerName == null)
+            if (string.IsNullOrEmpty(loadBalancerName))
             {
-                throw new ArgumentNullException(nameof(loadBalancerName));
+                throw new ArgumentException($"Parameter {nameof(loadBalancerName)} cannot be null or empty", nameof(loadBalancerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerCollection.Exists");
@@ -296,7 +299,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _loadBalancersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,7 +314,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _loadBalancersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,7 +337,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _loadBalancersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +352,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _loadBalancersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

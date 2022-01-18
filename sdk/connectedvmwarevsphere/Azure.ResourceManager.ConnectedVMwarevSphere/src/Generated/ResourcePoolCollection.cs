@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal ResourcePoolCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _resourcePoolsRestClient = new ResourcePoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourcePool.ResourceType, out string apiVersion);
+            _resourcePoolsRestClient = new ResourcePoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,16 +57,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ResourcePools_Create
         /// <summary> Create Or Update resourcePool. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public virtual ResourcePoolCreateOperation CreateOrUpdate(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
+        public virtual ResourcePoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.CreateOrUpdate");
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _resourcePoolsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body, cancellationToken);
-                var operation = new ResourcePoolCreateOperation(Parent, _clientDiagnostics, Pipeline, _resourcePoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response);
+                var operation = new ResourcePoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _resourcePoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -89,16 +90,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ResourcePools_Create
         /// <summary> Create Or Update resourcePool. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public async virtual Task<ResourcePoolCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
+        public async virtual Task<ResourcePoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.CreateOrUpdate");
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _resourcePoolsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcePoolCreateOperation(Parent, _clientDiagnostics, Pipeline, _resourcePoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response);
+                var operation = new ResourcePoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _resourcePoolsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,12 +125,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements resourcePool GET method. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
         public virtual Response<ResourcePool> Get(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Get");
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _resourcePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourcePool(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourcePool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,12 +155,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements resourcePool GET method. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
         public async virtual Task<Response<ResourcePool>> GetAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Get");
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _resourcePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ResourcePool(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourcePool(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,12 +182,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
         public virtual Response<ResourcePool> GetIfExists(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExists");
@@ -208,12 +209,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
         public async virtual Task<Response<ResourcePool>> GetIfExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExists");
@@ -235,12 +236,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Exists");
@@ -260,12 +261,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
+            if (string.IsNullOrEmpty(resourcePoolName))
             {
-                throw new ArgumentNullException(nameof(resourcePoolName));
+                throw new ArgumentException($"Parameter {nameof(resourcePoolName)} cannot be null or empty", nameof(resourcePoolName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Exists");
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = _resourcePoolsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = _resourcePoolsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = await _resourcePoolsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,7 +354,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = await _resourcePoolsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePool(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

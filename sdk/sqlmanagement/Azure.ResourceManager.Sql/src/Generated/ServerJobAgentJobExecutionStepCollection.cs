@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ServerJobAgentJobExecutionStepCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobStepExecutionsRestClient = new JobStepExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerJobAgentJobExecutionStep.ResourceType, out string apiVersion);
+            _jobStepExecutionsRestClient = new JobStepExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a step execution of a job execution. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is null or empty. </exception>
         public virtual Response<ServerJobAgentJobExecutionStep> Get(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
+            if (string.IsNullOrEmpty(stepName))
             {
-                throw new ArgumentNullException(nameof(stepName));
+                throw new ArgumentException($"Parameter {nameof(stepName)} cannot be null or empty", nameof(stepName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _jobStepExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), stepName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobExecutionStep(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a step execution of a job execution. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is null or empty. </exception>
         public async virtual Task<Response<ServerJobAgentJobExecutionStep>> GetAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
+            if (string.IsNullOrEmpty(stepName))
             {
-                throw new ArgumentNullException(nameof(stepName));
+                throw new ArgumentException($"Parameter {nameof(stepName)} cannot be null or empty", nameof(stepName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _jobStepExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), stepName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerJobAgentJobExecutionStep(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is null or empty. </exception>
         public virtual Response<ServerJobAgentJobExecutionStep> GetIfExists(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
+            if (string.IsNullOrEmpty(stepName))
             {
-                throw new ArgumentNullException(nameof(stepName));
+                throw new ArgumentException($"Parameter {nameof(stepName)} cannot be null or empty", nameof(stepName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is null or empty. </exception>
         public async virtual Task<Response<ServerJobAgentJobExecutionStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
+            if (string.IsNullOrEmpty(stepName))
             {
-                throw new ArgumentNullException(nameof(stepName));
+                throw new ArgumentException($"Parameter {nameof(stepName)} cannot be null or empty", nameof(stepName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
+            if (string.IsNullOrEmpty(stepName))
             {
-                throw new ArgumentNullException(nameof(stepName));
+                throw new ArgumentException($"Parameter {nameof(stepName)} cannot be null or empty", nameof(stepName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
+            if (string.IsNullOrEmpty(stepName))
             {
-                throw new ArgumentNullException(nameof(stepName));
+                throw new ArgumentException($"Parameter {nameof(stepName)} cannot be null or empty", nameof(stepName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.Exists");
@@ -235,7 +237,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _jobStepExecutionsRestClient.ListByJobExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -250,7 +252,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _jobStepExecutionsRestClient.ListByJobExecutionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,7 +285,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _jobStepExecutionsRestClient.ListByJobExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -298,7 +300,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _jobStepExecutionsRestClient.ListByJobExecutionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStep(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

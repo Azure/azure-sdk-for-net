@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdSecurityPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AfdSecurityPolicy.ResourceType, out string apiVersion);
+            _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.Cdn
         // Collection level operations.
 
         /// <summary> Creates a new security policy within the specified profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="securityPolicy"> The security policy properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="securityPolicy"/> is null. </exception>
-        public virtual AfdSecurityPolicyCreateOperation CreateOrUpdate(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicy"/> is null. </exception>
+        public virtual AfdSecurityPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
             if (securityPolicy == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdSecurityPoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken);
-                var operation = new AfdSecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
+                var operation = new AfdSecurityPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new security policy within the specified profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="securityPolicy"> The security policy properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="securityPolicy"/> is null. </exception>
-        public async virtual Task<AfdSecurityPolicyCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicy"/> is null. </exception>
+        public async virtual Task<AfdSecurityPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityPolicyName, AfdSecurityPolicyData securityPolicy, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
             if (securityPolicy == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdSecurityPoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecurityPolicyCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
+                var operation = new AfdSecurityPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing security policy within a profile. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
         public virtual Response<AfdSecurityPolicy> Get(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _afdSecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdSecurityPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing security policy within a profile. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
         public async virtual Task<Response<AfdSecurityPolicy>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdSecurityPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
         public virtual Response<AfdSecurityPolicy> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
         public async virtual Task<Response<AfdSecurityPolicy>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
+            if (string.IsNullOrEmpty(securityPolicyName))
             {
-                throw new ArgumentNullException(nameof(securityPolicyName));
+                throw new ArgumentException($"Parameter {nameof(securityPolicyName)} cannot be null or empty", nameof(securityPolicyName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicyCollection.Exists");
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _afdSecurityPoliciesRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _afdSecurityPoliciesRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +329,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _afdSecurityPoliciesRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _afdSecurityPoliciesRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecurityPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

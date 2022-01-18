@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteInstanceProcessModuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteInstanceProcessModule.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is null or empty. </exception>
         public virtual Response<SiteInstanceProcessModule> Get(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
+            if (string.IsNullOrEmpty(baseAddress))
             {
-                throw new ArgumentNullException(nameof(baseAddress));
+                throw new ArgumentException($"Parameter {nameof(baseAddress)} cannot be null or empty", nameof(baseAddress));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceProcessModule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is null or empty. </exception>
         public async virtual Task<Response<SiteInstanceProcessModule>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
+            if (string.IsNullOrEmpty(baseAddress))
             {
-                throw new ArgumentNullException(nameof(baseAddress));
+                throw new ArgumentException($"Parameter {nameof(baseAddress)} cannot be null or empty", nameof(baseAddress));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteInstanceProcessModule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is null or empty. </exception>
         public virtual Response<SiteInstanceProcessModule> GetIfExists(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
+            if (string.IsNullOrEmpty(baseAddress))
             {
-                throw new ArgumentNullException(nameof(baseAddress));
+                throw new ArgumentException($"Parameter {nameof(baseAddress)} cannot be null or empty", nameof(baseAddress));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is null or empty. </exception>
         public async virtual Task<Response<SiteInstanceProcessModule>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
+            if (string.IsNullOrEmpty(baseAddress))
             {
-                throw new ArgumentNullException(nameof(baseAddress));
+                throw new ArgumentException($"Parameter {nameof(baseAddress)} cannot be null or empty", nameof(baseAddress));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
+            if (string.IsNullOrEmpty(baseAddress))
             {
-                throw new ArgumentNullException(nameof(baseAddress));
+                throw new ArgumentException($"Parameter {nameof(baseAddress)} cannot be null or empty", nameof(baseAddress));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
+            if (string.IsNullOrEmpty(baseAddress))
             {
-                throw new ArgumentNullException(nameof(baseAddress));
+                throw new ArgumentException($"Parameter {nameof(baseAddress)} cannot be null or empty", nameof(baseAddress));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.Exists");
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListInstanceProcessModules(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListInstanceProcessModulesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListInstanceProcessModulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListInstanceProcessModulesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

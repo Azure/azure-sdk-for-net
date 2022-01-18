@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -32,14 +33,14 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        private static DatabaseAccountsRestOperations GetDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DatabaseAccountsRestOperations GetDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static RestorableDatabaseAccountsRestOperations GetRestorableDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static RestorableDatabaseAccountsRestOperations GetRestorableDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new RestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new RestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the DatabaseAccounts for this <see cref="Subscription" />. </summary>
@@ -51,7 +52,8 @@ namespace Azure.ResourceManager.CosmosDB
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DatabaseAccount.ResourceType, out string apiVersion);
+                DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DatabaseAccount>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatabaseAccounts");
@@ -81,7 +83,8 @@ namespace Azure.ResourceManager.CosmosDB
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DatabaseAccount.ResourceType, out string apiVersion);
+                DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DatabaseAccount> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatabaseAccounts");
@@ -139,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                RestorableDatabaseAccountsRestOperations restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<RestorableDatabaseAccount>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorableDatabaseAccounts");
@@ -169,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                RestorableDatabaseAccountsRestOperations restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<RestorableDatabaseAccount> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorableDatabaseAccounts");

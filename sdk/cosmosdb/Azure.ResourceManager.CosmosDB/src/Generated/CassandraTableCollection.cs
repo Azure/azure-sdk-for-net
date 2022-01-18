@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.CosmosDB
         internal CassandraTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(CassandraTable.ResourceType, out string apiVersion);
+            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.CosmosDB
         // Collection level operations.
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra Table. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="createUpdateCassandraTableParameters"> The parameters to provide for the current Cassandra Table. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
-        public virtual CassandraResourceCreateUpdateCassandraTableOperation CreateOrUpdate(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
+        public virtual CassandraTableCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
             if (createUpdateCassandraTableParameters == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraResourcesRestClient.CreateUpdateCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters, cancellationToken);
-                var operation = new CassandraResourceCreateUpdateCassandraTableOperation(Parent, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
+                var operation = new CassandraTableCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra Table. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="createUpdateCassandraTableParameters"> The parameters to provide for the current Cassandra Table. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
-        public async virtual Task<CassandraResourceCreateUpdateCassandraTableOperation> CreateOrUpdateAsync(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
+        public async virtual Task<CassandraTableCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string tableName, CassandraTableCreateUpdateOptions createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
             if (createUpdateCassandraTableParameters == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraResourcesRestClient.CreateUpdateCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceCreateUpdateCassandraTableOperation(Parent, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
+                var operation = new CassandraTableCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateCreateUpdateCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, createUpdateCassandraTableParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Cassandra table under an existing Azure Cosmos DB database account. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
         public virtual Response<CassandraTable> Get(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cassandraResourcesRestClient.GetCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CassandraTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Cassandra table under an existing Azure Cosmos DB database account. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
         public async virtual Task<Response<CassandraTable>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cassandraResourcesRestClient.GetCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CassandraTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
         public virtual Response<CassandraTable> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
         public async virtual Task<Response<CassandraTable>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
+            if (string.IsNullOrEmpty(tableName))
             {
-                throw new ArgumentNullException(nameof(tableName));
+                throw new ArgumentException($"Parameter {nameof(tableName)} cannot be null or empty", nameof(tableName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTableCollection.Exists");
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = _cassandraResourcesRestClient.ListCassandraTables(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CassandraTable(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CassandraTable(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,7 +314,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = await _cassandraResourcesRestClient.ListCassandraTablesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CassandraTable(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CassandraTable(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

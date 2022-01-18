@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteLinkCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteLinksRestClient = new ExpressRouteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ExpressRouteLink.ResourceType, out string apiVersion);
+            _expressRouteLinksRestClient = new ExpressRouteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,12 +54,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is null or empty. </exception>
         public virtual Response<ExpressRouteLink> Get(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
+            if (string.IsNullOrEmpty(linkName))
             {
-                throw new ArgumentNullException(nameof(linkName));
+                throw new ArgumentException($"Parameter {nameof(linkName)} cannot be null or empty", nameof(linkName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteLink(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -79,12 +81,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is null or empty. </exception>
         public async virtual Task<Response<ExpressRouteLink>> GetAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
+            if (string.IsNullOrEmpty(linkName))
             {
-                throw new ArgumentNullException(nameof(linkName));
+                throw new ArgumentException($"Parameter {nameof(linkName)} cannot be null or empty", nameof(linkName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteLink(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,12 +108,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is null or empty. </exception>
         public virtual Response<ExpressRouteLink> GetIfExists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
+            if (string.IsNullOrEmpty(linkName))
             {
-                throw new ArgumentNullException(nameof(linkName));
+                throw new ArgumentException($"Parameter {nameof(linkName)} cannot be null or empty", nameof(linkName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
@@ -133,12 +135,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is null or empty. </exception>
         public async virtual Task<Response<ExpressRouteLink>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
+            if (string.IsNullOrEmpty(linkName))
             {
-                throw new ArgumentNullException(nameof(linkName));
+                throw new ArgumentException($"Parameter {nameof(linkName)} cannot be null or empty", nameof(linkName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
@@ -160,12 +162,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
+            if (string.IsNullOrEmpty(linkName))
             {
-                throw new ArgumentNullException(nameof(linkName));
+                throw new ArgumentException($"Parameter {nameof(linkName)} cannot be null or empty", nameof(linkName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
@@ -185,12 +187,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
+            if (string.IsNullOrEmpty(linkName))
             {
-                throw new ArgumentNullException(nameof(linkName));
+                throw new ArgumentException($"Parameter {nameof(linkName)} cannot be null or empty", nameof(linkName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteLinksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,7 +259,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,7 +274,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteLinksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

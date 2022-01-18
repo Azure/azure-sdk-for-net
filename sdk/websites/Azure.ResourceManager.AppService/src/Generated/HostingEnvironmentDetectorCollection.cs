@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentDetectorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(HostingEnvironmentDetector.ResourceType, out string apiVersion);
+            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,12 +60,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is null or empty. </exception>
         public virtual Response<HostingEnvironmentDetector> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
+            if (string.IsNullOrEmpty(detectorName))
             {
-                throw new ArgumentNullException(nameof(detectorName));
+                throw new ArgumentException($"Parameter {nameof(detectorName)} cannot be null or empty", nameof(detectorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _diagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentDetector(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,12 +93,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is null or empty. </exception>
         public async virtual Task<Response<HostingEnvironmentDetector>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
+            if (string.IsNullOrEmpty(detectorName))
             {
-                throw new ArgumentNullException(nameof(detectorName));
+                throw new ArgumentException($"Parameter {nameof(detectorName)} cannot be null or empty", nameof(detectorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _diagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentDetector(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,12 +123,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is null or empty. </exception>
         public virtual Response<HostingEnvironmentDetector> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
+            if (string.IsNullOrEmpty(detectorName))
             {
-                throw new ArgumentNullException(nameof(detectorName));
+                throw new ArgumentException($"Parameter {nameof(detectorName)} cannot be null or empty", nameof(detectorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
@@ -151,12 +153,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is null or empty. </exception>
         public async virtual Task<Response<HostingEnvironmentDetector>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
+            if (string.IsNullOrEmpty(detectorName))
             {
-                throw new ArgumentNullException(nameof(detectorName));
+                throw new ArgumentException($"Parameter {nameof(detectorName)} cannot be null or empty", nameof(detectorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
@@ -181,12 +183,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
+            if (string.IsNullOrEmpty(detectorName))
             {
-                throw new ArgumentNullException(nameof(detectorName));
+                throw new ArgumentException($"Parameter {nameof(detectorName)} cannot be null or empty", nameof(detectorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
@@ -209,12 +211,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
+            if (string.IsNullOrEmpty(detectorName))
             {
-                throw new ArgumentNullException(nameof(detectorName));
+                throw new ArgumentException($"Parameter {nameof(detectorName)} cannot be null or empty", nameof(detectorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
@@ -246,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListHostingEnvironmentDetectorResponses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -261,7 +263,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,7 +289,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListHostingEnvironmentDetectorResponsesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -302,7 +304,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmHybridConnectionNamespaceRelayCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerfarmHybridConnectionNamespaceRelay.ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,16 +55,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null or empty. </exception>
         public virtual Response<ServerfarmHybridConnectionNamespaceRelay> Get(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
-            if (relayName == null)
+            if (string.IsNullOrEmpty(relayName))
             {
-                throw new ArgumentNullException(nameof(relayName));
+                throw new ArgumentException($"Parameter {nameof(relayName)} cannot be null or empty", nameof(relayName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.Get");
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _appServicePlansRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,16 +90,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null or empty. </exception>
         public async virtual Task<Response<ServerfarmHybridConnectionNamespaceRelay>> GetAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
-            if (relayName == null)
+            if (string.IsNullOrEmpty(relayName))
             {
-                throw new ArgumentNullException(nameof(relayName));
+                throw new ArgumentException($"Parameter {nameof(relayName)} cannot be null or empty", nameof(relayName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.Get");
@@ -107,7 +109,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _appServicePlansRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,16 +122,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null or empty. </exception>
         public virtual Response<ServerfarmHybridConnectionNamespaceRelay> GetIfExists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
-            if (relayName == null)
+            if (string.IsNullOrEmpty(relayName))
             {
-                throw new ArgumentNullException(nameof(relayName));
+                throw new ArgumentException($"Parameter {nameof(relayName)} cannot be null or empty", nameof(relayName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.GetIfExists");
@@ -152,16 +154,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null or empty. </exception>
         public async virtual Task<Response<ServerfarmHybridConnectionNamespaceRelay>> GetIfExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
-            if (relayName == null)
+            if (string.IsNullOrEmpty(relayName))
             {
-                throw new ArgumentNullException(nameof(relayName));
+                throw new ArgumentException($"Parameter {nameof(relayName)} cannot be null or empty", nameof(relayName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.GetIfExists");
@@ -184,16 +186,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
-            if (relayName == null)
+            if (string.IsNullOrEmpty(relayName))
             {
-                throw new ArgumentNullException(nameof(relayName));
+                throw new ArgumentException($"Parameter {nameof(relayName)} cannot be null or empty", nameof(relayName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.Exists");
@@ -214,16 +216,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
         /// <param name="relayName"> Name of the Service Bus relay. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
-            if (relayName == null)
+            if (string.IsNullOrEmpty(relayName))
             {
-                throw new ArgumentNullException(nameof(relayName));
+                throw new ArgumentException($"Parameter {nameof(relayName)} cannot be null or empty", nameof(relayName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.Exists");
