@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
+    [NonParallelizable]
     public class ManagedHsmTests : VaultOperationsTestsBase
     {
         public ManagedHsmTests(bool isAsync)

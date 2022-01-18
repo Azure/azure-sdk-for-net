@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.KeyVault
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Keys_CreateIfNotExist
         /// <summary> Creates the first version of a new key if it does not exist. If it already exists, then the existing key is returned without any write operations being performed. This API does not create subsequent versions, and does not update existing keys. </summary>
         /// <param name="keyName"> The name of the key to be created. </param>
         /// <param name="parameters"> The parameters used to create the specified key. </param>
@@ -84,6 +87,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Keys_CreateIfNotExist
         /// <summary> Creates the first version of a new key if it does not exist. If it already exists, then the existing key is returned without any write operations being performed. This API does not create subsequent versions, and does not update existing keys. </summary>
         /// <param name="keyName"> The name of the key to be created. </param>
         /// <param name="parameters"> The parameters used to create the specified key. </param>
@@ -118,6 +124,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Keys_Get
         /// <summary> Gets the current version of the specified key from the specified key vault. </summary>
         /// <param name="keyName"> The name of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -145,6 +154,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Keys_Get
         /// <summary> Gets the current version of the specified key from the specified key vault. </summary>
         /// <param name="keyName"> The name of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -276,6 +288,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Keys_List
         /// <summary> Lists the keys in the specified key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VaultKey" /> that may take multiple service requests to iterate over. </returns>
@@ -314,6 +329,9 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Keys_List
         /// <summary> Lists the keys in the specified key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VaultKey" /> that may take multiple service requests to iterate over. </returns>

@@ -393,7 +393,8 @@ namespace Azure.Core.TestFramework
             }
             else
             {
-                return prefix + Random.Next(9999);
+                var random = new Random((int)DateTime.Now.Ticks);
+                return prefix + random.Next(99999);
             }
         }
 

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
-            var permissions = new Permissions
+            var permissions = new AccessPermissions
             {
                 Keys = { new KeyPermissions("all") },
                 Secrets = { new SecretPermissions("all") },

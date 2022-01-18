@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             string vaultName = "myVault";
             Guid tenantIdGuid = new Guid("Your tenantId");
             string objectId = "Your Object Id";
-            Permissions permissions = new Permissions
+            AccessPermissions permissions = new AccessPermissions
             {
                 Keys = { new KeyPermissions("all") },
                 Secrets = { new SecretPermissions("all") },

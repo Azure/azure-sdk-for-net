@@ -101,6 +101,9 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// OperationId: Keys_GetVersion
         /// <summary> Gets the specified version of the specified key in the specified key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VaultKeyVersion>> GetAsync(CancellationToken cancellationToken = default)
@@ -121,6 +124,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// OperationId: Keys_GetVersion
         /// <summary> Gets the specified version of the specified key in the specified key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VaultKeyVersion> Get(CancellationToken cancellationToken = default)

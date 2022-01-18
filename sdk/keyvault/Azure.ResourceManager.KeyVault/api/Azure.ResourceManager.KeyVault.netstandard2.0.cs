@@ -380,12 +380,20 @@ namespace Azure.ResourceManager.KeyVault
 }
 namespace Azure.ResourceManager.KeyVault.Models
 {
+    public partial class AccessPermissions
+    {
+        public AccessPermissions() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermissions> Certificates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermissions> Keys { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } }
+    }
     public partial class AccessPolicyEntry
     {
-        public AccessPolicyEntry(System.Guid tenantId, string objectId, Azure.ResourceManager.KeyVault.Models.Permissions permissions) { }
+        public AccessPolicyEntry(System.Guid tenantId, string objectId, Azure.ResourceManager.KeyVault.Models.AccessPermissions permissions) { }
         public System.Guid? ApplicationId { get { throw null; } set { } }
         public string ObjectId { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.Permissions Permissions { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.AccessPermissions Permissions { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
     }
     public enum AccessPolicyUpdateKind
@@ -411,9 +419,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ActionsRequired left, Azure.ResourceManager.KeyVault.Models.ActionsRequired right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Attributes
+    public partial class BaseAttributes
     {
-        public Attributes() { }
+        public BaseAttributes() { }
         public System.DateTimeOffset? Created { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? Expires { get { throw null; } set { } }
@@ -458,7 +466,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal CheckNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.Reason? Reason { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.NameAvailabilityReason? Reason { get { throw null; } }
     }
     public enum CreateMode
     {
@@ -831,6 +839,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
+    public enum NameAvailabilityReason
+    {
+        AccountNameInvalid = 0,
+        AlreadyExists = 1,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkRuleAction : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkRuleAction>
     {
@@ -874,14 +887,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IpRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
-    }
-    public partial class Permissions
-    {
-        public Permissions() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermissions> Certificates { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermissions> Keys { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } }
     }
     public partial class PrivateEndpointConnectionDeleteOperation : Azure.Operation<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionData>
     {
@@ -1021,18 +1026,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess left, Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum Reason
-    {
-        AccountNameInvalid = 0,
-        AlreadyExists = 1,
-    }
     public partial class Resource : Azure.ResourceManager.Models.Resource
     {
         public Resource() { }
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class SecretAttributes : Azure.ResourceManager.KeyVault.Models.Attributes
+    public partial class SecretAttributes : Azure.ResourceManager.KeyVault.Models.BaseAttributes
     {
         public SecretAttributes() { }
     }

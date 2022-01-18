@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.KeyVault
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// OperationId: Keys_GetVersion
         /// <summary> Gets the specified version of the specified key in the specified key vault. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -76,6 +79,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// OperationId: Keys_GetVersion
         /// <summary> Gets the specified version of the specified key in the specified key vault. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,6 +213,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// OperationId: Keys_ListVersions
         /// <summary> Lists the versions of the specified key in the specified key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VaultKeyVersion" /> that may take multiple service requests to iterate over. </returns>
@@ -245,6 +254,9 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}
+        /// OperationId: Keys_ListVersions
         /// <summary> Lists the versions of the specified key in the specified key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VaultKeyVersion" /> that may take multiple service requests to iterate over. </returns>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class Attributes : IUtf8JsonSerializable
+    public partial class BaseAttributes : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static Attributes DeserializeAttributes(JsonElement element)
+        internal static BaseAttributes DeserializeBaseAttributes(JsonElement element)
         {
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> nbf = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new Attributes(Optional.ToNullable(enabled), Optional.ToNullable(nbf), Optional.ToNullable(exp), Optional.ToNullable(created), Optional.ToNullable(updated));
+            return new BaseAttributes(Optional.ToNullable(enabled), Optional.ToNullable(nbf), Optional.ToNullable(exp), Optional.ToNullable(created), Optional.ToNullable(updated));
         }
     }
 }
