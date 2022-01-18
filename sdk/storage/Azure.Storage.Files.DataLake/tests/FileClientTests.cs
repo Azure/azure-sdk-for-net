@@ -386,9 +386,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
 
             // Act
-            Response<PathInfo> response = await file.CreateAsync();
+            await file.CreateAsync();
 
             // Assert
+            Response<PathProperties> response = await file.GetPropertiesAsync();
             Assert.IsTrue(response.Value.IsServerEncrypted);
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
@@ -450,9 +451,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
 
             // Act
-            Response<PathInfo> response = await file.CreateIfNotExistsAsync();
+            await file.CreateIfNotExistsAsync();
 
             // Assert
+            Response<PathProperties> response = await file.GetPropertiesAsync();
             Assert.IsTrue(response.Value.IsServerEncrypted);
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
@@ -2096,13 +2098,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             byte[] data = GetRandomBuffer(Size);
             using Stream stream = new MemoryStream(data);
             await file.AppendAsync(stream, 0);
-            Response<PathInfo> flushResponse = await file.FlushAsync(Size);
-
-            // Assert
-            Assert.IsTrue(flushResponse.Value.IsServerEncrypted);
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, flushResponse.Value.EncryptionKeySha256);
-
-            // Act
+            await file.FlushAsync(Size);
             Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
 
             // Assert

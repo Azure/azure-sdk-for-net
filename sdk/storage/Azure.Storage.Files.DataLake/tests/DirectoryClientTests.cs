@@ -379,9 +379,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .WithCustomerProvidedKey(customerProvidedKey));
 
             // Act
-            Response<PathInfo> response = await directory.CreateAsync();
+            await directory.CreateAsync();
 
             // Assert
+            Response<PathProperties> response = await directory.GetPropertiesAsync();
             Assert.IsTrue(response.Value.IsServerEncrypted);
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
