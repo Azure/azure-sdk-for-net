@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("userData");
                 writer.WriteStringValue(UserData);
             }
+            if (Optional.IsDefined(CapacityReservation))
+            {
+                writer.WritePropertyName("capacityReservation");
+                writer.WriteObjectValue(CapacityReservation);
+            }
+            if (Optional.IsDefined(ApplicationProfile))
+            {
+                writer.WritePropertyName("applicationProfile");
+                writer.WriteObjectValue(ApplicationProfile);
+            }
             writer.WriteEndObject();
         }
 
@@ -92,6 +102,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<BillingProfile> billingProfile = default;
             Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
             Optional<string> userData = default;
+            Optional<CapacityReservationProfile> capacityReservation = default;
+            Optional<ApplicationProfile> applicationProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"))
@@ -204,8 +216,28 @@ namespace Azure.ResourceManager.Compute.Models
                     userData = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("capacityReservation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("applicationProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property.Value);
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetVMProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value);
+            return new VirtualMachineScaleSetVMProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value);
         }
     }
 }

@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
+            if (Optional.IsDefined(SharedGalleryImageId))
+            {
+                writer.WritePropertyName("sharedGalleryImageId");
+                writer.WriteStringValue(SharedGalleryImageId);
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> sku = default;
             Optional<string> version = default;
             Optional<string> exactVersion = default;
+            Optional<string> sharedGalleryImageId = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -78,13 +84,18 @@ namespace Azure.ResourceManager.Compute.Models
                     exactVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sharedGalleryImageId"))
+                {
+                    sharedGalleryImageId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value);
+            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value);
         }
     }
 }
