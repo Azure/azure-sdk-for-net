@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="copyMethod">Copy Method</param>
         /// <param name="copyOptions"></param>
         /// <returns>A guid of the job id</returns>
-        public string ScheduleCopy(
+        public string ScheduleCopyDirectory(
             Uri sourceUri,
             BlobVirtualDirectoryClient destinationClient,
             BlobServiceCopyMethod copyMethod,

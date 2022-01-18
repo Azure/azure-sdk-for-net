@@ -95,28 +95,39 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Set up blob to upload
             var blobName = GetNewBlobName();
-            BlobClient blob = InstrumentClient(testContainer.transferManager.GetBlobClient(blobName));
-            string localSourceFile = CreateRandomFile(Path.GetTempFileName());
-
-            // Set up destination client
-            BlobClient destClient = testContainer.transferManager.GetBlobClient(blobName);
-
-            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            BlobClient blob = InstrumentClient(testContainer.Container.GetBlobClient(blobName));
+            string tempfolder = Path.GetTempPath();
+            string directoryName = GetNewBlobDirectoryName();
+            try
             {
-                ContinueOnLocalFilesystemFailure = false,
-                ContinueOnStorageFailure = false,
-                ConcurrencyForLocalFilesystemListing = 1
-            };
-            BlobTransferManager blobTransferManager = InstrumentClient(new BlobTransferManager(managerOptions));
+                string directory = CreateRandomDirectory(tempfolder, directoryName);
+                string localSourceFile = CreateRandomFile(directory);
 
-            // Act
-            blobTransferManager.ScheduleUpload(localSourceFile, destClient);
+                // Set up destination client
+                BlobClient destClient = testContainer.Container.GetBlobClient(blobName);
 
-            // Assert
-            await destClient.ExistsAsync();
+                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+                {
+                    ContinueOnLocalFilesystemFailure = false,
+                    ContinueOnStorageFailure = false,
+                    ConcurrencyForLocalFilesystemListing = 1
+                };
+                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
 
-            // Cleanup
-            File.Delete(localSourceFile);
+                // Act
+                blobTransferManager.ScheduleUpload(localSourceFile, destClient);
+
+                // Assert
+                await destClient.ExistsAsync();
+            }
+            finally
+            {
+                // Cleanup
+                if (Directory.Exists(directoryName))
+                {
+                    Directory.Delete(directoryName, true);
+                }
+            }
         }
 
         [RecordedTest]
@@ -130,7 +141,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string folder = CreateRandomDirectory(Path.GetTempPath());
 
             // Set up destination client
-            BlobVirtualDirectoryClient destClient = testContainer.transferManager.GetBlobVirtualDirectoryClient(dirName);
+            BlobVirtualDirectoryClient destClient = testContainer.Container.GetBlobVirtualDirectoryClient(dirName);
 
             StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
             {
@@ -144,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             blobTransferManager.ScheduleUploadDirectory(folder, destClient);
 
             // Assert
-            List<string> blobs = ((List<BlobItem>)await testContainer.transferManager.GetBlobsAsync().ToListAsync())
+            List<string> blobs = ((List<BlobItem>)await testContainer.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
             // Assert
             Assert.IsEmpty(blobs);

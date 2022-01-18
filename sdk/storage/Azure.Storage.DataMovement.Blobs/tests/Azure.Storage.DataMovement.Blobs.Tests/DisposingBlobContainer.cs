@@ -11,21 +11,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
     // TODO: see if we can replace this with the DisposingContainer in Azure.Storage.Blobs.Test
     public class DisposingBlobContainer : IDisposingContainer<BlobContainerClient>
     {
-        public BlobContainerClient transferManager { get; private set; }
+        public BlobContainerClient Container { get; private set; }
 
         public DisposingBlobContainer(BlobContainerClient client)
         {
-            transferManager = client;
+            Container = client;
         }
 
         public async ValueTask DisposeAsync()
         {
-            if (transferManager != null)
+            if (Container != null)
             {
                 try
                 {
-                    await transferManager.DeleteIfExistsAsync();
-                    transferManager = null;
+                    await Container.DeleteIfExistsAsync();
+                    Container = null;
                 }
                 catch
                 {

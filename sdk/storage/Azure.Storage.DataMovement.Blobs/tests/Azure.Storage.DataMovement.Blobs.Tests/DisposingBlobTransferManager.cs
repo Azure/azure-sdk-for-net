@@ -10,25 +10,27 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 {
     public class DisposingBlobTransferManager : IDisposingContainer<BlobTransferManager>
     {
-        public BlobTransferManager transferManager { get; private set; }
+        public BlobTransferManager TransferManager => Container;
+
+        public BlobTransferManager Container { get; private set; }
 
         public DisposingBlobTransferManager(BlobTransferManager client)
         {
-            transferManager = client;
+            Container = client;
         }
 
         public async ValueTask DisposeAsync()
         {
-            if (transferManager != null)
+            if (TransferManager != null)
             {
                 try
                 {
                     await Task.Run(() =>
                     {
-                        transferManager.CancelTransfers();
-                        transferManager.Clean();
+                        TransferManager.CancelTransfers();
+                        TransferManager.Clean();
                     });
-                    transferManager = null;
+                    Container = null;
                 }
                 catch
                 {

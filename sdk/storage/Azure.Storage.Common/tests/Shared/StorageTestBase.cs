@@ -363,14 +363,14 @@ namespace Azure.Storage.Test.Shared
             return authenticationResult.AccessToken;
         }
 
-        public string CreateRandomDirectory(string parentPath)
+        public string CreateRandomDirectory(string parentPath, string directoryName = default)
         {
-            return Directory.CreateDirectory(Path.Combine(parentPath, Recording.Random.NewGuid().ToString())).FullName;
+            return Directory.CreateDirectory(Path.Combine(parentPath, string.IsNullOrEmpty(directoryName) ? Recording.Random.NewGuid().ToString() : directoryName)).FullName;
         }
 
-        public string CreateRandomFile(string parentPath)
+        public string CreateRandomFile(string parentPath, string fileName = default)
         {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, Recording.Random.NewGuid().ToString())))
+            using (FileStream fs = File.Create(Path.Combine(parentPath, string.IsNullOrEmpty(fileName) ? Recording.Random.NewGuid().ToString() : fileName)))
             {
                 return fs.Name;
             }
