@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> CheckNameAvailabilityWebPubSubAsync(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WebPubSub
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWebPubSub");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckWebPubSubNameAvailability");
                 scope.Start();
                 try
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static Response<NameAvailability> CheckNameAvailabilityWebPubSub(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
+        public static Response<NameAvailability> CheckWebPubSubNameAvailability(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WebPubSub
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityWebPubSub");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckWebPubSubNameAvailability");
                 scope.Start();
                 try
                 {

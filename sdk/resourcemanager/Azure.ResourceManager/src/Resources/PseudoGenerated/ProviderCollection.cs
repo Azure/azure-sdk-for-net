@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class ProviderCollection : ArmCollection, IEnumerable<Provider>, IAsyncEnumerable<Provider>
+    public partial class ProviderCollection : ArmCollection, IEnumerable<Provider>, IAsyncEnumerable<Provider>
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private ProviderRestOperations _restClient;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ProviderRestOperations _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderCollection"/> class for mocking.
@@ -37,6 +37,20 @@ namespace Azure.ResourceManager.Resources
         internal ProviderCollection(Subscription parent)
             : base(parent)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
+        }
+
+        internal ProviderCollection(ArmResource operations, ResourceIdentifier id)
+            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var version);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -48,10 +62,6 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        private ProviderRestOperations RestClient => _restClient ??= new ProviderRestOperations(Diagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
-
         /// <summary>
         /// Gets the provider for a namespace.
         /// </summary>
@@ -61,14 +71,14 @@ namespace Azure.ResourceManager.Resources
         /// <returns></returns>
         public virtual Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ProviderCollection.Get");
             scope.Start();
 
             try
             {
-                var result = RestClient.Get(resourceProviderNamespace, expand, cancellationToken);
+                var result = _restClient.Get(resourceProviderNamespace, expand, cancellationToken);
                 if (result.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(result.GetRawResponse());
 
                 return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
@@ -88,14 +98,14 @@ namespace Azure.ResourceManager.Resources
         /// <returns></returns>
         public virtual async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ProviderCollection.Get");
             scope.Start();
 
             try
             {
-                Response<ProviderData> response = await RestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                Response<ProviderData> response = await _restClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new Provider(this, response), response.GetRawResponse());
             }
@@ -114,12 +124,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Provider> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderListResult> response = RestClient.List(top, expand, cancellationToken);
+                    Response<ProviderListResult> response = _restClient.List(top, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -130,12 +140,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Provider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderListResult> response = RestClient.ListNextPage(nextLink, top, expand, cancellationToken);
+                    Response<ProviderListResult> response = _restClient.ListNextPage(nextLink, top, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -155,12 +165,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderListResult> response = await RestClient.ListAsync(top, expand, cancellationToken).ConfigureAwait(false);
+                    Response<ProviderListResult> response = await _restClient.ListAsync(top, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -171,12 +181,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProviderCollection.GetAll");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderListResult> response = await RestClient.ListNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
+                    Response<ProviderListResult> response = await _restClient.ListNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(data => new Provider(this, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -198,12 +208,12 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<Provider> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProviderCollection.GetIfExists");
             scope.Start();
 
             try
             {
-                var response = RestClient.Get(resourceProviderNamespace, expand, cancellationToken);
+                var response = _restClient.Get(resourceProviderNamespace, expand, cancellationToken);
                 return response.Value == null
                    ? Response.FromValue<Provider>(null, response.GetRawResponse())
                    : Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
@@ -225,12 +235,12 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<Provider>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProviderCollection.GetIfExists");
             scope.Start();
 
             try
             {
-                var response = await RestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                    ? Response.FromValue<Provider>(null, response.GetRawResponse())
                    : Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
@@ -251,7 +261,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProviderCollection.CheckIfExists");
             scope.Start();
 
             try
@@ -275,7 +285,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProviderCollection.CheckIfExists");
             scope.Start();
 
             try

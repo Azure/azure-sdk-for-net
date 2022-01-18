@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -15,12 +16,10 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
-        private readonly ConcurrentDictionary<Type, object> _overrides = new ConcurrentDictionary<Type, object>();
+        private IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
-        /// <summary>
-        /// Gets the ApiVersions object
-        /// </summary>
-        public ApiVersions ApiVersions { get; private set; }
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal ConcurrentDictionary<string, string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();
 
         /// <summary>
         /// Gets the ApiVersions object
@@ -28,35 +27,55 @@ namespace Azure.ResourceManager
         public string Scope { get; set; } = "https://management.core.windows.net/.default";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
+        /// Sets the api version to use for a given resource type.
         /// </summary>
-        public ArmClientOptions()
+        /// <param name="resourceType"> The resource type to set the version for. </param>
+        /// <param name="apiVersion"> The api version to use. </param>
+        public void SetApiVersion(ResourceType resourceType, string apiVersion)
         {
-            ApiVersions = new ApiVersions(this);
+            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+
+            ResourceApiVersionOverrides[resourceType] = apiVersion;
         }
 
         /// <summary>
-        /// Gets override object.
+        /// Gets the api version override if it has been set for the current client options.
         /// </summary>
-        /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
-        /// <param name="objectConstructor"> A function used to construct a new object if none was found. </param>
-        /// <returns> The override object. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public object GetOverrideObject<T>(Func<object> objectConstructor)
+        /// <param name="resourceType"> The resource type to get the version for. </param>
+        /// <param name="apiVersion"> The api version to variable to set. </param>
+        public bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
         {
-            if (objectConstructor is null)
-                throw new ArgumentNullException(nameof(objectConstructor));
-
-            return _overrides.GetOrAdd(typeof(T), objectConstructor());
+            return ResourceApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
         }
 
         internal ArmClientOptions Clone()
         {
             ArmClientOptions copy = new ArmClientOptions();
 
-            copy.ApiVersions = ApiVersions.Clone();
             copy.Transport = Transport;
+
+            //copy overrrides
+            CopyApiVersions(copy, ResourceApiVersionOverrides);
+
+            foreach (var keyValuePair in ResourceApiVersionOverrides)
+            {
+                copy.ResourceApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
+            }
+
             return copy;
+        }
+
+        private static void CopyApiVersions(ArmClientOptions copy, IDictionary<ResourceType, string> source)
+        {
+            foreach (var resourceType in source)
+            {
+                if (!copy.ResourceApiVersions.TryGetValue(resourceType.Key.Namespace, out var versionOverrides))
+                {
+                    versionOverrides = new Dictionary<string, string>();
+                    copy.ResourceApiVersions.TryAdd(resourceType.Key.Namespace, versionOverrides);
+                }
+                versionOverrides[resourceType.Key.Type] = resourceType.Value;
+            }
         }
     }
 }
