@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,7 +16,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -39,13 +39,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "AppServicePlan"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal AppServicePlan(ArmResource options, AppServicePlanData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal AppServicePlan(ArmResource options, AppServicePlanData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServicePlan"/> class. </summary>
@@ -55,6 +58,9 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServicePlan"/> class. </summary>
@@ -67,13 +73,13 @@ namespace Azure.ResourceManager.AppService
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,6 +94,12 @@ namespace Azure.ResourceManager.AppService
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
@@ -139,17 +151,37 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
@@ -158,7 +190,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete an App Service plan. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AppServicePlanDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AppServicePlanDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Delete");
             scope.Start();
@@ -183,7 +215,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete an App Service plan. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AppServicePlanDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AppServicePlanDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Delete");
             scope.Start();
@@ -263,20 +295,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServicePlans_ListCapabilities
         /// <summary> Description for List all capabilities of an App Service plan. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<Capability>>> GetCapabilitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Capability" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Capability> GetCapabilitiesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
-            scope.Start();
-            try
+            async Task<Page<Capability>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _appServicePlansRestClient.ListCapabilitiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
+                scope.Start();
+                try
+                {
+                    var response = await _appServicePlansRestClient.ListCapabilitiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities
@@ -284,20 +321,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServicePlans_ListCapabilities
         /// <summary> Description for List all capabilities of an App Service plan. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Capability>> GetCapabilities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Capability" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Capability> GetCapabilities(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
-            scope.Start();
-            try
+            Page<Capability> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _appServicePlansRestClient.ListCapabilities(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
+                scope.Start();
+                try
+                {
+                    var response = _appServicePlansRestClient.ListCapabilities(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays
@@ -700,7 +742,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of ServerfarmHybridConnectionNamespaceRelays in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmHybridConnectionNamespaceRelays and their operations over a AppServicePlan. </returns>
-        public ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
+        public virtual ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
         {
             return new ServerfarmHybridConnectionNamespaceRelayCollection(this);
         }
@@ -710,7 +752,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets an object representing a HybridConnectionLimits along with the instance operations that can be performed on it in the AppServicePlan. </summary>
         /// <returns> Returns a <see cref="HybridConnectionLimits" /> object. </returns>
-        public HybridConnectionLimits GetHybridConnectionLimits()
+        public virtual HybridConnectionLimits GetHybridConnectionLimits()
         {
             return new HybridConnectionLimits(this, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
@@ -720,7 +762,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of ServerfarmVirtualNetworkConnections in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnections and their operations over a AppServicePlan. </returns>
-        public ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
+        public virtual ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
         {
             return new ServerfarmVirtualNetworkConnectionCollection(this);
         }

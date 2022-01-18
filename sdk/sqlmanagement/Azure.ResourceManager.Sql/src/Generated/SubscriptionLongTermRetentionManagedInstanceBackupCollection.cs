@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedInstanceLongTermRetentionBackup and their operations over its parent. </summary>
     public partial class SubscriptionLongTermRetentionManagedInstanceBackupCollection : ArmCollection, IEnumerable<SubscriptionLongTermRetentionManagedInstanceBackup>, IAsyncEnumerable<SubscriptionLongTermRetentionManagedInstanceBackup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LongTermRetentionManagedInstanceBackupsRestOperations _longTermRetentionManagedInstanceBackupsRestClient;
@@ -36,11 +36,12 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionLongTermRetentionManagedInstanceBackupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionLongTermRetentionManagedInstanceBackupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, or <paramref name="databaseName"/> is null. </exception>
         internal SubscriptionLongTermRetentionManagedInstanceBackupCollection(ArmResource parent, string locationName, string managedInstanceName, string databaseName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -48,10 +49,16 @@ namespace Azure.ResourceManager.Sql
             _locationName = locationName;
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -131,9 +138,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _longTermRetentionManagedInstanceBackupsRestClient.Get(Id.SubscriptionId, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,14 +160,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _longTermRetentionManagedInstanceBackupsRestClient.GetAsync(Id.SubscriptionId, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Exists");
             scope.Start();
             try
             {
@@ -367,6 +374,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SubscriptionLongTermRetentionManagedInstanceBackup, ManagedInstanceLongTermRetentionBackupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SubscriptionLongTermRetentionManagedInstanceBackup, ManagedInstanceLongTermRetentionBackupData> Construct() { }
     }
 }

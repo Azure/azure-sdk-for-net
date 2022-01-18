@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         OrderItemResource IOperationSource<OrderItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new OrderItemResource(_operationBase, OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement));
+            var data = OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement);
+            return new OrderItemResource(_operationBase, data);
         }
 
         async ValueTask<OrderItemResource> IOperationSource<OrderItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new OrderItemResource(_operationBase, OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement));
+            var data = OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement);
+            return new OrderItemResource(_operationBase, data);
         }
     }
 }

@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of JobCredential and their operations over its parent. </summary>
     public partial class JobCredentialCollection : ArmCollection, IEnumerable<JobCredential>, IAsyncEnumerable<JobCredential>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JobCredentialsRestOperations _jobCredentialsRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of JobCredentialCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobCredentialCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JobCredentialCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _jobCredentialsRestClient = new JobCredentialsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => JobAgent.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != JobAgent.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobAgent.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JobCredentialCreateOrUpdateOperation CreateOrUpdate(string credentialName, JobCredentialData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual JobCredentialCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
         {
             if (credentialName == null)
             {
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JobCredentialCreateOrUpdateOperation> CreateOrUpdateAsync(string credentialName, JobCredentialData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<JobCredentialCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
         {
             if (credentialName == null)
             {
@@ -195,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobCredentialsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<JobCredential>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobCredential(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobCredential>(null, response.GetRawResponse());
+                return Response.FromValue(new JobCredential(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(credentialName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobCredentialsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<JobCredential>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobCredential(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobCredential>(null, response.GetRawResponse());
+                return Response.FromValue(new JobCredential(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,7 +274,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(credentialName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.Exists");
             scope.Start();
             try
             {
@@ -381,6 +386,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, JobCredential, JobCredentialData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, JobCredential, JobCredentialData> Construct() { }
     }
 }

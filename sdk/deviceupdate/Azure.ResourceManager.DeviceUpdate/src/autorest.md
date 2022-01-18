@@ -10,8 +10,8 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/34018925632ef75ef541
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
-no-property-type-replacement:
-  - CheckNameAvailabilityRequest
+override-operation-name:
+  CheckNameAvailability: CheckDeviceUpdateNameAvailability
 directive:
   - from: swagger-document
     where: $.definitions.GroupInformation

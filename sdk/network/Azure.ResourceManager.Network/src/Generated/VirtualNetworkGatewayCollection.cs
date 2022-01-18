@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualNetworkGateway and their operations over its parent. </summary>
     public partial class VirtualNetworkGatewayCollection : ArmCollection, IEnumerable<VirtualNetworkGateway>, IAsyncEnumerable<VirtualNetworkGateway>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualNetworkGatewaysRestOperations _virtualNetworkGatewaysRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualNetworkGatewayCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _virtualNetworkGatewaysRestClient = new VirtualNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayCreateOrUpdateOperation CreateOrUpdate(string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkGatewayName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkGatewayName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworkGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualNetworkGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkGateway>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualNetworkGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualNetworkGateway, VirtualNetworkGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualNetworkGateway, VirtualNetworkGatewayData> Construct() { }
     }
 }

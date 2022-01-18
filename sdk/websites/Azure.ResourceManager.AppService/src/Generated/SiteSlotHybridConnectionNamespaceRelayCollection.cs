@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -27,16 +28,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotHybridConnectionNamespaceRelayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotHybridConnectionNamespaceRelayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotHybridConnectionNamespaceRelayCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SiteSlot.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SiteSlot.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,7 +57,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateHybridConnectionSlotOperation CreateOrUpdate(string namespaceName, string relayName, HybridConnectionData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebAppCreateOrUpdateHybridConnectionSlotOperation CreateOrUpdate(bool waitForCompletion, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -92,7 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/>, or <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateHybridConnectionSlotOperation> CreateOrUpdateAsync(string namespaceName, string relayName, HybridConnectionData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebAppCreateOrUpdateHybridConnectionSlotOperation> CreateOrUpdateAsync(bool waitForCompletion, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -215,9 +222,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetHybridConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotHybridConnectionNamespaceRelay>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,14 +249,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridConnectionNamespaceRelayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridConnectionNamespaceRelayCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetHybridConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotHybridConnectionNamespaceRelay>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +311,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridConnectionNamespaceRelayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridConnectionNamespaceRelayCollection.Exists");
             scope.Start();
             try
             {
@@ -319,6 +326,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotHybridConnectionNamespaceRelay, HybridConnectionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotHybridConnectionNamespaceRelay, HybridConnectionData> Construct() { }
     }
 }

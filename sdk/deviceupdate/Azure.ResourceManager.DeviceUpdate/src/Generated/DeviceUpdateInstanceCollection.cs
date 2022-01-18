@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing collection of DeviceUpdateInstance and their operations over its parent. </summary>
     public partial class DeviceUpdateInstanceCollection : ArmCollection, IEnumerable<DeviceUpdateInstance>, IAsyncEnumerable<DeviceUpdateInstance>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DeviceUpdateInstancesRestOperations _deviceUpdateInstancesRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdateInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeviceUpdateInstanceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _deviceUpdateInstancesRestClient = new DeviceUpdateInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => DeviceUpdateAccount.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != DeviceUpdateAccount.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceUpdateAccount.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="instance"/> is null. </exception>
-        public virtual DeviceUpdateInstanceCreateOperation CreateOrUpdate(string instanceName, DeviceUpdateInstanceData instance, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeviceUpdateInstanceCreateOperation CreateOrUpdate(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
             if (instanceName == null)
             {
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="instance"/> is null. </exception>
-        public async virtual Task<DeviceUpdateInstanceCreateOperation> CreateOrUpdateAsync(string instanceName, DeviceUpdateInstanceData instance, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeviceUpdateInstanceCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
             if (instanceName == null)
             {
@@ -183,9 +188,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _deviceUpdateInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,14 +210,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(instanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _deviceUpdateInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,7 +262,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(instanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -363,6 +368,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, DeviceUpdateInstance, DeviceUpdateInstanceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeviceUpdateInstance, DeviceUpdateInstanceData> Construct() { }
     }
 }

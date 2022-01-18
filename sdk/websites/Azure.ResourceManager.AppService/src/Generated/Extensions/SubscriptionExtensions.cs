@@ -563,8 +563,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NameIdentifier> GetRecommendationsDomainsAsync(this Subscription subscription, DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -618,8 +618,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<NameIdentifier> GetRecommendationsDomains(this Subscription subscription, DomainRecommendationSearchParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -1051,13 +1051,13 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DeletedWebApps_ListByLocation
-        /// <summary> Lists the DeletedSiteData for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedSites for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<DeletedSiteData> GetDeletedWebAppsByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeletedSite> GetDeletedWebAppsByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1068,14 +1068,14 @@ namespace Azure.ResourceManager.AppService
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<DeletedSiteData>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<DeletedSite>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListByLocationAsync(subscription.Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1083,14 +1083,14 @@ namespace Azure.ResourceManager.AppService
                         throw;
                     }
                 }
-                async Task<Page<DeletedSiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<DeletedSite>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListByLocationNextPageAsync(nextLink, subscription.Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1106,13 +1106,13 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: DeletedWebApps_ListByLocation
-        /// <summary> Lists the DeletedSiteData for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the DeletedSites for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<DeletedSiteData> GetDeletedWebAppsByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeletedSite> GetDeletedWebAppsByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1123,14 +1123,14 @@ namespace Azure.ResourceManager.AppService
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<DeletedSiteData> FirstPageFunc(int? pageSizeHint)
+                Page<DeletedSite> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListByLocation(subscription.Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1138,14 +1138,14 @@ namespace Azure.ResourceManager.AppService
                         throw;
                     }
                 }
-                Page<DeletedSiteData> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<DeletedSite> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
                     scope.Start();
                     try
                     {
                         var response = restOperations.ListByLocationNextPage(nextLink, subscription.Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is null. </exception>
-        public static async Task<Response<DeletedSiteData>> GetDeletedWebAppByLocationDeletedWebAppAsync(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = await restOperations.GetDeletedWebAppByLocationAsync(subscription.Id.SubscriptionId, location, deletedSiteId, cancellationToken).ConfigureAwait(false);
-                    return response;
+                    return Response.FromValue(new DeletedSite(subscription, response.Value), response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is null. </exception>
-        public static Response<DeletedSiteData> GetDeletedWebAppByLocationDeletedWebApp(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public static Response<DeletedSite> GetDeletedWebAppByLocationDeletedWebApp(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                     var response = restOperations.GetDeletedWebAppByLocation(subscription.Id.SubscriptionId, location, deletedSiteId, cancellationToken);
-                    return response;
+                    return Response.FromValue(new DeletedSite(subscription, response.Value), response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2231,8 +2231,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(this Subscription subscription, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             if (nameIdentifier == null)
@@ -2286,8 +2286,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<IdentifierData> GetSiteIdentifiersAssignedToHostName(this Subscription subscription, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             if (nameIdentifier == null)

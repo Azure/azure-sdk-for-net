@@ -4,6 +4,7 @@
 #region Snippet:Manage_CommunicationService_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
                 Location = "global",
                 DataLocation = "UnitedStates",
             };
-            CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+            CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
             CommunicationService communicationService = communicationServiceLro.Value;
             #endregion Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
         }
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
             CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
             CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-            await communicationService.DeleteAsync();
+            await communicationService.DeleteAsync(true);
             #endregion Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
         }
     }

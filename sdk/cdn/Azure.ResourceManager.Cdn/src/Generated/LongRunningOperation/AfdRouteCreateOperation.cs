@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdRoute IOperationSource<AfdRoute>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdRoute(_operationBase, AfdRouteData.DeserializeAfdRouteData(document.RootElement));
+            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
+            return new AfdRoute(_operationBase, data);
         }
 
         async ValueTask<AfdRoute> IOperationSource<AfdRoute>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdRoute(_operationBase, AfdRouteData.DeserializeAfdRouteData(document.RootElement));
+            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
+            return new AfdRoute(_operationBase, data);
         }
     }
 }

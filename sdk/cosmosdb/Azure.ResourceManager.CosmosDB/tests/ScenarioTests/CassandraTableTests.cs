@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -36,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _cassandraKeyspace.Delete();
-            _databaseAccount.Delete();
+            _cassandraKeyspace.Delete(true);
+            _databaseAccount.Delete(true);
         }
 
         [SetUp]
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CassandraTable table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
             if (table != null)
             {
-                await table.DeleteAsync();
+                await table.DeleteAsync(true);
             }
         }
 
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             parameters.Options = new CreateUpdateOptions { Throughput = TestThroughput2 };
 
-            table = await (await CassandraTableCollection.CreateOrUpdateAsync(_tableName, parameters)).WaitForCompletionAsync();
+            table = (await CassandraTableCollection.CreateOrUpdateAsync(true, _tableName, parameters)).Value;
             Assert.AreEqual(_tableName, table.Data.Resource.Id);
             VerifyCassandraTableCreation(table, parameters);
             // Seems bug in swagger definition
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS,
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(false, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToAutoscale().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToAutoscale(false).WaitForCompletionAsync();
             AssertAutoscale(throughputData);
         }
 
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToManualThroughput().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToManualThroughput(false).WaitForCompletionAsync();
             AssertManualThroughput(throughputData);
         }
 
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraTableDelete()
         {
             var table = await CreateCassandraTable(null);
-            await table.DeleteAsync();
+            await table.DeleteAsync(true);
 
             table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
             Assert.Null(table);
@@ -167,14 +168,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 parameters = BuildCreateUpdateOptions(null);
             }
 
-            var tableLro = await CassandraTableCollection.CreateOrUpdateAsync(_tableName, parameters);
+            var tableLro = await CassandraTableCollection.CreateOrUpdateAsync(true, _tableName, parameters);
             return tableLro.Value;
         }
 
         private CassandraTableCreateUpdateOptions BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
-            return new CassandraTableCreateUpdateOptions(Resources.Models.Location.WestUS,
+            return new CassandraTableCreateUpdateOptions(AzureLocation.WestUS,
                 new CassandraTableResource(_tableName, default, new CassandraSchema {
                     Columns = { new CassandraColumn { Name = "columnA", Type = "int" }, new CassandraColumn { Name = "columnB", Type = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },

@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing collection of PrivateLink and their operations over its parent. </summary>
     public partial class PrivateLinkCollection : ArmCollection, IEnumerable<PrivateLink>, IAsyncEnumerable<PrivateLink>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateLinkCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => DeviceUpdateAccount.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != DeviceUpdateAccount.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceUpdateAccount.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -114,9 +119,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,14 +141,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +193,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentNullException(nameof(groupId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -264,6 +269,6 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, PrivateLink, PrivateLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLink, PrivateLinkData> Construct() { }
     }
 }

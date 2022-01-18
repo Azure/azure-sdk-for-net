@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         BackendAddressPool IOperationSource<BackendAddressPool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new BackendAddressPool(_operationBase, BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement));
+            var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);
+            return new BackendAddressPool(_operationBase, data);
         }
 
         async ValueTask<BackendAddressPool> IOperationSource<BackendAddressPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new BackendAddressPool(_operationBase, BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement));
+            var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);
+            return new BackendAddressPool(_operationBase, data);
         }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VpnSite and their operations over its parent. </summary>
     public partial class VpnSiteCollection : ArmCollection, IEnumerable<VpnSite>, IAsyncEnumerable<VpnSite>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VpnSitesRestOperations _vpnSitesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VpnSiteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnSiteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VpnSiteCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _vpnSitesRestClient = new VpnSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public virtual VpnSiteCreateOrUpdateOperation CreateOrUpdate(string vpnSiteName, VpnSiteData vpnSiteParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VpnSiteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (vpnSiteName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public async virtual Task<VpnSiteCreateOrUpdateOperation> CreateOrUpdateAsync(string vpnSiteName, VpnSiteData vpnSiteParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnSiteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (vpnSiteName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _vpnSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VpnSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VpnSite>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _vpnSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vpnSiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VpnSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VpnSite>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VpnSite, VpnSiteData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VpnSite, VpnSiteData> Construct() { }
     }
 }

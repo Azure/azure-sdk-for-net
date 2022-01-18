@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of StaticSiteUserProvidedFunctionAppARMResource and their operations over its parent. </summary>
     public partial class StaticSiteUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteUserProvidedFunctionApp>, IAsyncEnumerable<StaticSiteUserProvidedFunctionApp>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly StaticSitesRestOperations _staticSitesRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteUserProvidedFunctionAppCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteUserProvidedFunctionAppCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => StaticSiteARMResource.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != StaticSiteARMResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteARMResource.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="staticSiteUserProvidedFunctionEnvelope"/> is null. </exception>
-        public virtual StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation CreateOrUpdate(string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation CreateOrUpdate(bool waitForCompletion, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="staticSiteUserProvidedFunctionEnvelope"/> is null. </exception>
-        public async virtual Task<StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation> CreateOrUpdateAsync(string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation> CreateOrUpdateAsync(bool waitForCompletion, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
@@ -197,9 +202,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,14 +224,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -271,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
@@ -383,6 +388,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, StaticSiteUserProvidedFunctionApp, StaticSiteUserProvidedFunctionAppARMResourceData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, StaticSiteUserProvidedFunctionApp, StaticSiteUserProvidedFunctionAppARMResourceData> Construct() { }
     }
 }

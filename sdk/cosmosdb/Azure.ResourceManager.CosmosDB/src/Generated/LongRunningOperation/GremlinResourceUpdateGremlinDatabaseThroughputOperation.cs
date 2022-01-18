@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         DatabaseAccountGremlinDatabaseThroughputSetting IOperationSource<DatabaseAccountGremlinDatabaseThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DatabaseAccountGremlinDatabaseThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
+            return new DatabaseAccountGremlinDatabaseThroughputSetting(_operationBase, data);
         }
 
         async ValueTask<DatabaseAccountGremlinDatabaseThroughputSetting> IOperationSource<DatabaseAccountGremlinDatabaseThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DatabaseAccountGremlinDatabaseThroughputSetting(_operationBase, ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
+            var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
+            return new DatabaseAccountGremlinDatabaseThroughputSetting(_operationBase, data);
         }
     }
 }

@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of VirtualMachineRunCommandData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineRunCommandData(Location location) : base(location)
+        public VirtualMachineRunCommandData(AzureLocation location) : base(location)
         {
             Parameters = new ChangeTrackingList<RunCommandInputParameter>();
             ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
@@ -42,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine run command instance view. </param>
-        internal VirtualMachineRunCommandData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, string provisioningState, VirtualMachineRunCommandInstanceView instanceView) : base(id, name, type, tags, location)
+        internal VirtualMachineRunCommandData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, string provisioningState, VirtualMachineRunCommandInstanceView instanceView) : base(id, name, type, tags, location)
         {
             Source = source;
             Parameters = parameters;

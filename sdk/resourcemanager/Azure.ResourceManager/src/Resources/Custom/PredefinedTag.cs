@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
         }
 
         /// <summary>
@@ -52,13 +55,9 @@ namespace Azure.ResourceManager.Resources
             _data = data;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
         }
-
-        /// <summary>
-        /// Gets the valid resource type for this operation class.
-        /// </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -199,13 +198,6 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-            if (identifier is null)
-                throw new ArgumentException("Invalid resource type for TagsOperation", nameof(identifier));
         }
     }
 }

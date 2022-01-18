@@ -6,8 +6,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Netwo
 EndProject
 Project("{B4FB44D3-B154-4769-8B0D-1F9BD7BB7001}") = "Azure.ResourceManager.Network.Tests", "tests\Azure.ResourceManager.Network.Tests.csproj", "{D0F09556-CA4C-43A1-8996-1BC2D99AD264}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{612DC74D-90C6-41CD-9C0A-D7E543D6D857}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{F76CA6E1-2957-4E0D-9164-1ADE84C762A3}"
 EndProject
 Global

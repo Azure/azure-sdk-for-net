@@ -9,6 +9,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 {
@@ -25,14 +26,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #endregion
             #region Snippet:Managing_ServiceBusTopics_CreateResourceGroup
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
             #region Snippet:Managing_ServiceBusTopics_CreateNamespace
             string namespaceName = "myNamespace";
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
             ServiceBusTopicCollection serviceBusTopicCollection = serviceBusNamespace.GetServiceBusTopics();
             #endregion
             this.serviceBusTopicCollection = serviceBusTopicCollection;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusTopics_CreateTopic
             string topicName = "myTopic";
-            ServiceBusTopic serviceBusTopic = (await serviceBusTopicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
+            ServiceBusTopic serviceBusTopic = (await serviceBusTopicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData())).Value;
             #endregion
         }
 
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
         {
             #region Snippet:Managing_ServiceBusTopics_DeleteTopic
             ServiceBusTopic serviceBusTopic = await serviceBusTopicCollection.GetAsync("myTopic");
-            await serviceBusTopic.DeleteAsync();
+            await serviceBusTopic.DeleteAsync(true);
             #endregion
         }
     }

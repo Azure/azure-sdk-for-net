@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of SshPublicKey and their operations over its parent. </summary>
     public partial class SshPublicKeyCollection : ArmCollection, IEnumerable<SshPublicKey>, IAsyncEnumerable<SshPublicKey>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SshPublicKeysRestOperations _sshPublicKeysRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of SshPublicKeyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SshPublicKeyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SshPublicKeyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _sshPublicKeysRestClient = new SshPublicKeysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SshPublicKeyCreateOperation CreateOrUpdate(string sshPublicKeyName, SshPublicKeyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SshPublicKeyCreateOperation CreateOrUpdate(bool waitForCompletion, string sshPublicKeyName, SshPublicKeyData parameters, CancellationToken cancellationToken = default)
         {
             if (sshPublicKeyName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SshPublicKeyCreateOperation> CreateOrUpdateAsync(string sshPublicKeyName, SshPublicKeyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SshPublicKeyCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sshPublicKeyName, SshPublicKeyData parameters, CancellationToken cancellationToken = default)
         {
             if (sshPublicKeyName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _sshPublicKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SshPublicKey>(null, response.GetRawResponse())
-                    : Response.FromValue(new SshPublicKey(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SshPublicKey>(null, response.GetRawResponse());
+                return Response.FromValue(new SshPublicKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(sshPublicKeyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _sshPublicKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SshPublicKey>(null, response.GetRawResponse())
-                    : Response.FromValue(new SshPublicKey(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SshPublicKey>(null, response.GetRawResponse());
+                return Response.FromValue(new SshPublicKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(sshPublicKeyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SshPublicKeyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SshPublicKeyCollection.Exists");
             scope.Start();
             try
             {
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SshPublicKey, SshPublicKeyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SshPublicKey, SshPublicKeyData> Construct() { }
     }
 }

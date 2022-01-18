@@ -3,10 +3,10 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         private readonly SubscriptionData _data;
 
         /// <summary>
-        /// The resource type for subscription
+        /// The resource type for subscription.
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
 
@@ -42,11 +42,16 @@ namespace Azure.ResourceManager.Resources
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Subscription(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext,  id)
+            : base(clientContext, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            ClientOptions.TryGetApiVersion(Feature.ResourceType, out version);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -60,8 +65,13 @@ namespace Azure.ResourceManager.Resources
             _data = subscriptionData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out var version);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, version);
+            ClientOptions.TryGetApiVersion(Feature.ResourceType, out version);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri, version);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// <summary>
@@ -77,10 +87,11 @@ namespace Azure.ResourceManager.Resources
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
-        /// <summary>
-        /// Gets the valid resource type for this operation class
-        /// </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -295,6 +306,16 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the RestApi definition for a given Azure namespace.
+        /// </summary>
+        /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
+        /// <returns> A collection representing the rest apis for the namespace. </returns>
+        public virtual RestApiCollection GetRestApis(string azureNamespace)
+        {
+            return new RestApiCollection(this, azureNamespace);
         }
     }
 }

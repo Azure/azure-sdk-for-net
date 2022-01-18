@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of ContinuousWebJob and their operations over its parent. </summary>
     public partial class SiteContinuousWebJobCollection : ArmCollection, IEnumerable<SiteContinuousWebJob>, IAsyncEnumerable<SiteContinuousWebJob>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebAppsRestOperations _webAppsRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteContinuousWebJobCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteContinuousWebJobCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteContinuousWebJobCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WebSite.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != WebSite.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -120,9 +125,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,14 +147,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJobCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJobCollection.Exists");
             scope.Start();
             try
             {
@@ -306,6 +311,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteContinuousWebJob, ContinuousWebJobData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteContinuousWebJob, ContinuousWebJobData> Construct() { }
     }
 }

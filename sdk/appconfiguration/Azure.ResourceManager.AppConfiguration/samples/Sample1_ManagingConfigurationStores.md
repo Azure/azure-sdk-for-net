@@ -7,6 +7,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_ConfigurationStores_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
@@ -28,7 +29,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the Collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
@@ -42,7 +43,7 @@ ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("west
 {
     PublicNetworkAccess = PublicNetworkAccess.Disabled
 };
-ConfigurationStore configurationStore = await (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+ConfigurationStore configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
 ```
 
 ***List all configurationStores***
@@ -86,5 +87,5 @@ if (await configurationStoreCollection.ExistsAsync("myApp"))
 ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
 ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
-await (await configStore.DeleteAsync()).WaitForCompletionResponseAsync();
+await configStore.DeleteAsync(true);
 ```

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Communication.Tests
         [OneTimeSetUp]
         public async Task OneTimeSetup()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new Location("westus")));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus")));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _location = ResourceLocation;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var list = await _resourceGroup.GetCommunicationServices().GetAllAsync().ToEnumerableAsync();
             foreach (var communicationService in list)
             {
-                await communicationService.DeleteAsync();
+                await communicationService.DeleteAsync(true);
             }
         }
 
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var collection = _resourceGroup.GetCommunicationServices();
             var communicationService = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            await communicationService.DeleteAsync();
+            await communicationService.DeleteAsync(true);
             Assert.IsFalse(collection.Exists(communicationServiceName));
         }
 

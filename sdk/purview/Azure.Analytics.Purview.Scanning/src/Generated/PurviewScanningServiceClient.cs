@@ -41,14 +41,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewScanningServiceClient(Uri endpoint, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -96,6 +90,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
             try
@@ -148,6 +144,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetKeyVaultReference(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
             try
@@ -211,6 +209,9 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CreateOrUpdateKeyVaultReferenceAsync(string keyVaultName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
             scope.Start();
             try
@@ -274,6 +275,9 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CreateOrUpdateKeyVaultReference(string keyVaultName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
             scope.Start();
             try
@@ -326,6 +330,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> DeleteKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
             try
@@ -378,6 +384,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response DeleteKeyVaultReference(string keyVaultName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(keyVaultName, nameof(keyVaultName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
             try
@@ -430,6 +438,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetScanRulesetAsync(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
             try
@@ -482,6 +492,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetScanRuleset(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
             try
@@ -545,6 +557,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
             scope.Start();
             try
@@ -608,6 +622,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response CreateOrUpdateScanRuleset(string scanRulesetName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
             scope.Start();
             try
@@ -660,6 +676,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> DeleteScanRulesetAsync(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
             try
@@ -712,6 +730,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response DeleteScanRuleset(string scanRulesetName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(scanRulesetName, nameof(scanRulesetName));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
             try
@@ -764,6 +784,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(dataSourceType, nameof(dataSourceType));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();
             try
@@ -816,6 +838,8 @@ namespace Azure.Analytics.Purview.Scanning
         public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(dataSourceType, nameof(dataSourceType));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();
             try

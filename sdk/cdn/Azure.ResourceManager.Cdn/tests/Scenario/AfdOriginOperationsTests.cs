@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
             AfdOrigin afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
-            await afdOriginInstance.DeleteAsync();
+            await afdOriginInstance.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdOriginInstance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 Priority = 1,
                 Weight = 150
             };
-            var lro = await afdOriginInstance.UpdateAsync(updateOptions);
+            var lro = await afdOriginInstance.UpdateAsync(true, updateOptions);
             AfdOrigin updatedAfdOriginInstance = lro.Value;
             ResourceDataHelper.AssertAfdOriginUpdate(updatedAfdOriginInstance, updateOptions);
         }

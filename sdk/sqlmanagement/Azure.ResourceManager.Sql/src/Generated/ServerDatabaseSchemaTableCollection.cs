@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of DatabaseTable and their operations over its parent. </summary>
     public partial class ServerDatabaseSchemaTableCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaTable>, IAsyncEnumerable<ServerDatabaseSchemaTable>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseTablesRestOperations _databaseTablesRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDatabaseSchemaTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDatabaseSchemaTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseSchemaTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _databaseTablesRestClient = new DatabaseTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServerDatabaseSchema.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServerDatabaseSchema.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseSchema.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -120,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _databaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.Exists");
             scope.Start();
             try
             {
@@ -308,6 +313,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerDatabaseSchemaTable, DatabaseTableData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerDatabaseSchemaTable, DatabaseTableData> Construct() { }
     }
 }

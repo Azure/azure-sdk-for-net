@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of SqlTimeZone and their operations over its parent. </summary>
     public partial class SqlTimeZoneCollection : ArmCollection, IEnumerable<SqlTimeZone>, IAsyncEnumerable<SqlTimeZone>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TimeZonesRestOperations _timeZonesRestClient;
@@ -33,18 +33,25 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SqlTimeZoneCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlTimeZoneCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal SqlTimeZoneCollection(ArmResource parent, string locationName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _timeZonesRestClient = new TimeZonesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _locationName = locationName;
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -124,9 +131,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _timeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SqlTimeZone>(null, response.GetRawResponse())
-                    : Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SqlTimeZone>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,14 +153,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _timeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SqlTimeZone>(null, response.GetRawResponse())
-                    : Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SqlTimeZone>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(timeZoneId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
             try
             {
@@ -356,6 +363,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SqlTimeZone, SqlTimeZoneData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlTimeZone, SqlTimeZoneData> Construct() { }
     }
 }

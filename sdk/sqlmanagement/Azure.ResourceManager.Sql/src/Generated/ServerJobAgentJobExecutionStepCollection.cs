@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of JobExecution and their operations over its parent. </summary>
     public partial class ServerJobAgentJobExecutionStepCollection : ArmCollection, IEnumerable<ServerJobAgentJobExecutionStep>, IAsyncEnumerable<ServerJobAgentJobExecutionStep>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JobStepExecutionsRestOperations _jobStepExecutionsRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionStepCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionStepCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerJobAgentJobExecutionStepCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _jobStepExecutionsRestClient = new JobStepExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServerJobAgentJobExecution.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServerJobAgentJobExecution.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerJobAgentJobExecution.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -120,9 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobStepExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), stepName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecutionStep>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecutionStep(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecutionStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobStepExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecutionStep>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecutionStep(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerJobAgentJobExecutionStep>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(stepName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionStepCollection.Exists");
             scope.Start();
             try
             {
@@ -320,6 +325,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServerJobAgentJobExecutionStep, JobExecutionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerJobAgentJobExecutionStep, JobExecutionData> Construct() { }
     }
 }

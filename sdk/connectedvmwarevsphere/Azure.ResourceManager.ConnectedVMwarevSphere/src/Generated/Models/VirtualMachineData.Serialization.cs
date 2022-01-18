@@ -8,10 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                writer.WriteObjectValue(ExtendedLocation);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -67,10 +65,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("placementProfile");
                 writer.WriteObjectValue(PlacementProfile);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile");
-                writer.WriteObjectValue(OsProfile);
+                writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
@@ -118,12 +116,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
-            Optional<CheckNameAvailabilityRequest> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<SystemData> systemData = default;
             Optional<string> kind = default;
             Optional<VMwareIdentity> identity = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -131,7 +129,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> templateId = default;
             Optional<string> vCenterId = default;
             Optional<PlacementProfile> placementProfile = default;
-            Optional<OsProfile> osProfile = default;
+            Optional<OSProfile> osProfile = default;
             Optional<HardwareProfile> hardwareProfile = default;
             Optional<NetworkProfile> networkProfile = default;
             Optional<StorageProfile> storageProfile = default;
@@ -158,7 +156,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<CheckNameAvailabilityRequest>(property.Value.ToString());
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -257,7 +255,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osProfile = OsProfile.DeserializeOsProfile(property0.Value);
+                            osProfile = OSProfile.DeserializeOSProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"))
@@ -384,7 +382,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VirtualMachineData(id, name, type, tags, location, extendedLocation, systemData, kind.Value, identity.Value, resourcePoolId.Value, templateId.Value, vCenterId.Value, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, guestAgentProfile.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), powerState.Value, customResourceName.Value, uuid.Value, Optional.ToList(statuses), provisioningState.Value, vmId.Value);
+            return new VirtualMachineData(id, name, type, tags, location, extendedLocation.Value, systemData, kind.Value, identity.Value, resourcePoolId.Value, templateId.Value, vCenterId.Value, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, guestAgentProfile.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), powerState.Value, customResourceName.Value, uuid.Value, Optional.ToList(statuses), provisioningState.Value, vmId.Value);
         }
     }
 }

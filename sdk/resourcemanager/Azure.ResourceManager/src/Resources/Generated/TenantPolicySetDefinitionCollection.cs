@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicySetDefinition and their operations over its parent. </summary>
     public partial class TenantPolicySetDefinitionCollection : ArmCollection, IEnumerable<TenantPolicySetDefinition>, IAsyncEnumerable<TenantPolicySetDefinition>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicySetDefinitionsRestOperations _policySetDefinitionsRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of TenantPolicySetDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TenantPolicySetDefinitionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Tenant.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -120,9 +125,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,14 +147,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _policySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TenantPolicySetDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -310,6 +315,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TenantPolicySetDefinition, PolicySetDefinitionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, TenantPolicySetDefinition, PolicySetDefinitionData> Construct() { }
     }
 }

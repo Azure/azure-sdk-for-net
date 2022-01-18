@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of TemplateSpec and their operations over its parent. </summary>
     public partial class TemplateSpecCollection : ArmCollection, IEnumerable<TemplateSpec>, IAsyncEnumerable<TemplateSpec>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TemplateSpecsRestOperations _templateSpecsRestClient;
@@ -32,16 +32,22 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TemplateSpecCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TemplateSpecCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _templateSpecsRestClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -51,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
-        public virtual TemplateSpecCreateOrUpdateOperation CreateOrUpdate(string templateSpecName, TemplateSpecData templateSpec, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual TemplateSpecCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             if (templateSpecName == null)
             {
@@ -85,7 +91,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
-        public async virtual Task<TemplateSpecCreateOrUpdateOperation> CreateOrUpdateAsync(string templateSpecName, TemplateSpecData templateSpec, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<TemplateSpecCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             if (templateSpecName == null)
             {
@@ -186,9 +192,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _templateSpecsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<TemplateSpec>(null, response.GetRawResponse())
-                    : Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TemplateSpec>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,14 +215,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _templateSpecsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<TemplateSpec>(null, response.GetRawResponse())
-                    : Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<TemplateSpec>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(templateSpecName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
             try
             {
@@ -417,6 +423,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, TemplateSpec, TemplateSpecData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, TemplateSpec, TemplateSpecData> Construct() { }
     }
 }

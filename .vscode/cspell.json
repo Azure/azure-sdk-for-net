@@ -65,6 +65,7 @@
     "finalizers",
     "illumos",
     "ints",
+    "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
@@ -78,6 +79,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "skus",
     "structs",
     "uints",
     "unformattable",
@@ -95,10 +97,16 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
+    },
+    {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
-        "skus",
         "vmss",
         "unattend",
         "ssdlrs",
@@ -122,6 +130,7 @@
     {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
+        "Cpus",
         "Ctlr",
         "Lsilogic",
         "Lsilogicsas",
@@ -153,13 +162,13 @@
         "Eaptls",
         "Fqdns",
         "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "Ipconfiguration",
         "Mbps",
         "Nics",
         "Owasp",
         "Pfsmm",
         "Snat",
-        "Skus",
         "Sstp",
         "TLSDHEDSS",
         "TLSDHERSA",
@@ -182,12 +191,6 @@
         "setsas",
         "mhsm",
         "mhsmip"
-      ]
-    },
-    {
-      "filename": "**/sdk/webpubsub/**/*.cs",
-      "words": [
-        "skus"
       ]
     },
     {
@@ -243,8 +246,13 @@
         "Ragrs",
         "Ragzrs",
         "Rehydrated",
-        "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagepool/**/*.cs",
+      "words": [
+        "Iscsi"
       ]
     },
     {
@@ -271,6 +279,7 @@
         "sybase",
         "sybase",
         "teradata",
+        "updation",
         "usql",
         "vertica",
         "xero"
@@ -297,7 +306,6 @@
       "filename": "**/sdk/websites/**/*.cs",
       "words": [
         "Ipssl",
-        "Skus",
         "Kube",
         "Metadatas",
         "Unparked",

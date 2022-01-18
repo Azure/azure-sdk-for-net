@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the Colletion, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
+            AzureLocation location = AzureLocation.WestUS2;
             ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             {
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
-            WebPubSubData data = new WebPubSubData(Location.WestUS2)
+            WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
                 Sku = new WebPubSubSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
             };
 
-            WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(false, webPubSubName, data)).WaitForCompletionAsync();
 
             #endregion
         }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
             WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
-            await webPubSub.DeleteAsync();
+            await webPubSub.DeleteAsync(true);
             #endregion
         }
     }

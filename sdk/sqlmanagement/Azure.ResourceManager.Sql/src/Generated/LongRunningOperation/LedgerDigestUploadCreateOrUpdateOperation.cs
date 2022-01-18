@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         LedgerDigestUploads IOperationSource<LedgerDigestUploads>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new LedgerDigestUploads(_operationBase, LedgerDigestUploadsData.DeserializeLedgerDigestUploadsData(document.RootElement));
+            var data = LedgerDigestUploadsData.DeserializeLedgerDigestUploadsData(document.RootElement);
+            return new LedgerDigestUploads(_operationBase, data);
         }
 
         async ValueTask<LedgerDigestUploads> IOperationSource<LedgerDigestUploads>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new LedgerDigestUploads(_operationBase, LedgerDigestUploadsData.DeserializeLedgerDigestUploadsData(document.RootElement));
+            var data = LedgerDigestUploadsData.DeserializeLedgerDigestUploadsData(document.RootElement);
+            return new LedgerDigestUploads(_operationBase, data);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
-            var data = new GenericResourceData(Location.WestUS2);
+            var data = new GenericResourceData(AzureLocation.WestUS2);
             data.Sku = new Resources.Models.Sku()
             {
                 Name = "Aligned"
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgName)
         {
-            ResourceGroupData input = new ResourceGroupData(Location.WestUS);
+            ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
             ResourceGroupCreateOrUpdateOperation lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
             return lro.Value;
         }
@@ -118,13 +119,13 @@ namespace Azure.ResourceManager.Tests
         protected async Task<ManagementLockObject> CreateManagementLockObject(ArmResource armResource, string lockName)
         {
             ManagementLockObjectData input = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
-            ManagementLockCreateOrUpdateByScopeOperation lro = await armResource.GetManagementLockObjects().CreateOrUpdateAsync(lockName, input);
+            ManagementLockCreateOrUpdateByScopeOperation lro = await armResource.GetManagementLockObjects().CreateOrUpdateAsync(true, lockName, input);
             return lro.Value;
         }
 
         private GenericResourceData ConstructGenericVirtualNetworkData()
         {
-            var virtualNetwork = new GenericResourceData(Location.WestUS2)
+            var virtualNetwork = new GenericResourceData(AzureLocation.WestUS2)
             {
                 Properties = new JsonObject()
                 {
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignmentCreateOperation lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, input);
+            PolicyAssignmentCreateOperation lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, input);
             return lro.Value;
         }
 
@@ -186,21 +187,21 @@ namespace Azure.ResourceManager.Tests
         protected async Task<SubscriptionPolicyDefinition> CreatePolicyDefinitionAtSubscription(Subscription subscription, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            PolicyDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, input);
+            PolicyDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
             return lro.Value;
         }
 
         protected async Task<ManagementGroupPolicyDefinition> CreatePolicyDefinitionAtMgmtGroup(ManagementGroup mgmtGroup, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            PolicyDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, input);
+            PolicyDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
             return lro.Value;
         }
 
         protected async Task<PolicyExemption> CreatePolicyExemption(ArmResource armResource, PolicyAssignment policyAssignment, string policyExemptionName)
         {
             PolicyExemptionData input = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            PolicyExemptionCreateOrUpdateOperation lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, input);
+            PolicyExemptionCreateOrUpdateOperation lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, input);
             return lro.Value;
         }
 
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            PolicySetDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(policySetDefinitionName, input);
+            PolicySetDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
             return lro.Value;
         }
 
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(policySetDefinitionName, input);
+            PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
             return lro.Value;
         }
 
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
             ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
-            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties);
+            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks().CreateOrUpdateAsync(true, resourceLinkId, properties);
             return lro.Value;
         }
     }
