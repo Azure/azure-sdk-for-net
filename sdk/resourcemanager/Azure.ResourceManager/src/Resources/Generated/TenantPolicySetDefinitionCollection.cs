@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Resources
         internal TenantPolicySetDefinitionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(TenantPolicySetDefinition.ResourceType, out string apiVersion);
+            _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is null or empty. </exception>
         public virtual Response<TenantPolicySetDefinition> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
+            if (string.IsNullOrEmpty(policySetDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policySetDefinitionName)} cannot be null or empty", nameof(policySetDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policySetDefinitionsRestClient.GetBuiltIn(policySetDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicySetDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is null or empty. </exception>
         public async virtual Task<Response<TenantPolicySetDefinition>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
+            if (string.IsNullOrEmpty(policySetDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policySetDefinitionName)} cannot be null or empty", nameof(policySetDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policySetDefinitionsRestClient.GetBuiltInAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TenantPolicySetDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is null or empty. </exception>
         public virtual Response<TenantPolicySetDefinition> GetIfExists(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
+            if (string.IsNullOrEmpty(policySetDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policySetDefinitionName)} cannot be null or empty", nameof(policySetDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is null or empty. </exception>
         public async virtual Task<Response<TenantPolicySetDefinition>> GetIfExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
+            if (string.IsNullOrEmpty(policySetDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policySetDefinitionName)} cannot be null or empty", nameof(policySetDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
+            if (string.IsNullOrEmpty(policySetDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policySetDefinitionName)} cannot be null or empty", nameof(policySetDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
+            if (string.IsNullOrEmpty(policySetDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policySetDefinitionName)} cannot be null or empty", nameof(policySetDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Exists");
@@ -230,7 +232,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _policySetDefinitionsRestClient.ListBuiltIn(filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,7 +247,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _policySetDefinitionsRestClient.ListBuiltInNextPage(nextLink, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -273,7 +275,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _policySetDefinitionsRestClient.ListBuiltInAsync(filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -288,7 +290,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _policySetDefinitionsRestClient.ListBuiltInNextPageAsync(nextLink, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

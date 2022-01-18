@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Sql
     internal partial class TimeZonesRestOperations
     {
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
@@ -29,9 +31,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
-        public TimeZonesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public TimeZonesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2020-11-01-preview";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
             uri.AppendPath(locationName, true);
             uri.AppendPath("/timeZones", false);
-            uri.AppendQuery("api-version", "2020-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -133,7 +138,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(locationName, true);
             uri.AppendPath("/timeZones/", false);
             uri.AppendPath(timeZoneId, true);
-            uri.AppendQuery("api-version", "2020-11-01-preview", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);

@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedBackupShortTermRetentionPoliciesRestClient = new ManagedBackupShortTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagedInstanceDatabaseBackupShortTermRetentionPolicy.ResourceType, out string apiVersion);
+            _managedBackupShortTermRetentionPoliciesRestClient = new ManagedBackupShortTermRetentionPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
         /// OperationId: ManagedBackupShortTermRetentionPolicies_CreateOrUpdate
         /// <summary> Updates a managed database&apos;s short term retention policy. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="parameters"> The short term retention policy info. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedBackupShortTermRetentionPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceDatabaseBackupShortTermRetentionPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedBackupShortTermRetentionPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken);
-                var operation = new ManagedBackupShortTermRetentionPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedBackupShortTermRetentionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
+                var operation = new ManagedInstanceDatabaseBackupShortTermRetentionPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedBackupShortTermRetentionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,12 +88,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
         /// OperationId: ManagedBackupShortTermRetentionPolicies_CreateOrUpdate
         /// <summary> Updates a managed database&apos;s short term retention policy. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="parameters"> The short term retention policy info. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedBackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceDatabaseBackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedBackupShortTermRetentionPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedBackupShortTermRetentionPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedBackupShortTermRetentionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
+                var operation = new ManagedInstanceDatabaseBackupShortTermRetentionPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedBackupShortTermRetentionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedBackupShortTermRetentionPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedBackupShortTermRetentionPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedBackupShortTermRetentionPoliciesRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedBackupShortTermRetentionPoliciesRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedBackupShortTermRetentionPoliciesRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedBackupShortTermRetentionPoliciesRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

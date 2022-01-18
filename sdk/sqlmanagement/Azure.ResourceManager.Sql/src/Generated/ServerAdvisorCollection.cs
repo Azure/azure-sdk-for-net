@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ServerAdvisorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAdvisorsRestClient = new ServerAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerAdvisor.ResourceType, out string apiVersion);
+            _serverAdvisorsRestClient = new ServerAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server advisor. </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is null or empty. </exception>
         public virtual Response<ServerAdvisor> Get(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
+            if (string.IsNullOrEmpty(advisorName))
             {
-                throw new ArgumentNullException(nameof(advisorName));
+                throw new ArgumentException($"Parameter {nameof(advisorName)} cannot be null or empty", nameof(advisorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerAdvisor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server advisor. </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is null or empty. </exception>
         public async virtual Task<Response<ServerAdvisor>> GetAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
+            if (string.IsNullOrEmpty(advisorName))
             {
-                throw new ArgumentNullException(nameof(advisorName));
+                throw new ArgumentException($"Parameter {nameof(advisorName)} cannot be null or empty", nameof(advisorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerAdvisor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is null or empty. </exception>
         public virtual Response<ServerAdvisor> GetIfExists(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
+            if (string.IsNullOrEmpty(advisorName))
             {
-                throw new ArgumentNullException(nameof(advisorName));
+                throw new ArgumentException($"Parameter {nameof(advisorName)} cannot be null or empty", nameof(advisorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is null or empty. </exception>
         public async virtual Task<Response<ServerAdvisor>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
+            if (string.IsNullOrEmpty(advisorName))
             {
-                throw new ArgumentNullException(nameof(advisorName));
+                throw new ArgumentException($"Parameter {nameof(advisorName)} cannot be null or empty", nameof(advisorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
+            if (string.IsNullOrEmpty(advisorName))
             {
-                throw new ArgumentNullException(nameof(advisorName));
+                throw new ArgumentException($"Parameter {nameof(advisorName)} cannot be null or empty", nameof(advisorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
+            if (string.IsNullOrEmpty(advisorName))
             {
-                throw new ArgumentNullException(nameof(advisorName));
+                throw new ArgumentException($"Parameter {nameof(advisorName)} cannot be null or empty", nameof(advisorName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.Exists");
@@ -229,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _serverAdvisorsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _serverAdvisorsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -44,7 +45,8 @@ namespace Azure.ResourceManager.Sql
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,7 +58,8 @@ namespace Azure.ResourceManager.Sql
         internal RestorableDroppedManagedDatabase(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +74,8 @@ namespace Azure.ResourceManager.Sql
         internal RestorableDroppedManagedDatabase(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorableDroppedManagedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorableDroppedManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorableDroppedManagedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new RestorableDroppedManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -256,10 +260,10 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorableDroppedManagedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorableDroppedManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -285,10 +289,10 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorableDroppedManagedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new RestorableDroppedManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -316,7 +320,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorableDroppedManagedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorableDroppedManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -344,7 +348,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorableDroppedManagedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new RestorableDroppedManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
             }

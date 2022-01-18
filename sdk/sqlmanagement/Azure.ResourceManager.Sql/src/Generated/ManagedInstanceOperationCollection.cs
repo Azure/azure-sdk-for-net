@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ManagedInstanceOperationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstanceOperationsRestClient = new ManagedInstanceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagedInstanceOperation.ResourceType, out string apiVersion);
+            _managedInstanceOperationsRestClient = new ManagedInstanceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedInstanceOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceOperation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedInstanceOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceOperation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,7 +194,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedInstanceOperationsRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -207,7 +209,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedInstanceOperationsRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -233,7 +235,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedInstanceOperationsRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,7 +250,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedInstanceOperationsRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

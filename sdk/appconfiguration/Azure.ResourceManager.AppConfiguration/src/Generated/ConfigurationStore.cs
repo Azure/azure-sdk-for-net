@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.AppConfiguration
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppConfiguration
         internal ConfigurationStore(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppConfiguration
         internal ConfigurationStore(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 var response = _configurationStoresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ConfigurationStoreDeleteOperation(_clientDiagnostics, Pipeline, _configurationStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -240,7 +243,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _configurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -269,7 +272,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _configurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -295,10 +298,10 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _configurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -324,10 +327,10 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _configurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -355,7 +358,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _configurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -383,7 +386,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _configurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ConfigurationStore(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -395,8 +398,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Updates a configuration store with the specified parameters. </summary>
-        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
         public async virtual Task<ConfigurationStoreUpdateOperation> UpdateAsync(bool waitForCompletion, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)
@@ -424,8 +427,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Updates a configuration store with the specified parameters. </summary>
-        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="configurationStoreUpdateOptions"> The options for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationStoreUpdateOptions"/> is null. </exception>
         public virtual ConfigurationStoreUpdateOperation Update(bool waitForCompletion, ConfigurationStoreUpdateOptions configurationStoreUpdateOptions, CancellationToken cancellationToken = default)

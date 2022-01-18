@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnConnectionsRestClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _vpnConnectionsRestClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Network
         internal VpnConnection(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnConnectionsRestClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _vpnConnectionsRestClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Network
         internal VpnConnection(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnConnectionsRestClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _vpnConnectionsRestClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new VpnConnectionDeleteOperation(_clientDiagnostics, Pipeline, _vpnConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -223,8 +226,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Starts packet capture on Vpn connection in the specified resource group. </summary>
-        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VpnConnectionStartPacketCaptureOperation> StartPacketCaptureAsync(bool waitForCompletion, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
@@ -246,8 +249,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Starts packet capture on Vpn connection in the specified resource group. </summary>
-        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VpnConnectionStartPacketCaptureOperation StartPacketCapture(bool waitForCompletion, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
@@ -269,8 +272,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Stops packet capture on Vpn connection in the specified resource group. </summary>
-        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VpnConnectionStopPacketCaptureOperation> StopPacketCaptureAsync(bool waitForCompletion, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {
@@ -292,8 +295,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Stops packet capture on Vpn connection in the specified resource group. </summary>
-        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VpnConnectionStopPacketCaptureOperation StopPacketCapture(bool waitForCompletion, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {

@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ServerAzureADOnlyAuthenticationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerAzureADOnlyAuthentication.ResourceType, out string apiVersion);
+            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,9 +55,9 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerAzureADOnlyAuthentications_CreateOrUpdate
         /// <summary> Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="parameters"> The required parameters for creating or updating an Active Directory only authentication property. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ServerAzureADOnlyAuthenticationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, AuthenticationName authenticationName, ServerAzureADOnlyAuthenticationData parameters, CancellationToken cancellationToken = default)
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverAzureADOnlyAuthenticationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters, cancellationToken);
-                var operation = new ServerAzureADOnlyAuthenticationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters).Request, response);
+                var operation = new ServerAzureADOnlyAuthenticationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerAzureADOnlyAuthentications_CreateOrUpdate
         /// <summary> Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="parameters"> The required parameters for creating or updating an Active Directory only authentication property. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServerAzureADOnlyAuthenticationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, AuthenticationName authenticationName, ServerAzureADOnlyAuthenticationData parameters, CancellationToken cancellationToken = default)
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverAzureADOnlyAuthenticationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerAzureADOnlyAuthenticationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters).Request, response);
+                var operation = new ServerAzureADOnlyAuthenticationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADOnlyAuthentication(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADOnlyAuthentication(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverAzureADOnlyAuthenticationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerAzureADOnlyAuthentication(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADOnlyAuthentication(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _serverAzureADOnlyAuthenticationsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _serverAzureADOnlyAuthenticationsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _serverAzureADOnlyAuthenticationsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _serverAzureADOnlyAuthenticationsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADOnlyAuthentication(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

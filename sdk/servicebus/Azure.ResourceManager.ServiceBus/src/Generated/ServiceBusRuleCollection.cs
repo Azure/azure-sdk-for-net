@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.ServiceBus
         internal ServiceBusRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _rulesRestClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServiceBusRule.ResourceType, out string apiVersion);
+            _rulesRestClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.ServiceBus
         // Collection level operations.
 
         /// <summary> Creates a new rule and updates an existing rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="parameters"> Parameters supplied to create a rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual RuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual ServiceBusRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
             if (parameters == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _rulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, parameters, cancellationToken);
-                var operation = new RuleCreateOrUpdateOperation(Parent, response);
+                var operation = new ServiceBusRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Creates a new rule and updates an existing rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="parameters"> Parameters supplied to create a rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<ServiceBusRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
             if (parameters == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _rulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RuleCreateOrUpdateOperation(Parent, response);
+                var operation = new ServiceBusRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Retrieves the description for the specified rule. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
         public virtual Response<ServiceBusRule> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _rulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Retrieves the description for the specified rule. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
         public async virtual Task<Response<ServiceBusRule>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _rulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
         public virtual Response<ServiceBusRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
         public async virtual Task<Response<ServiceBusRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            if (string.IsNullOrEmpty(ruleName))
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentException($"Parameter {nameof(ruleName)} cannot be null or empty", nameof(ruleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.Exists");
@@ -290,7 +293,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = _rulesRestClient.ListBySubscriptions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +308,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = _rulesRestClient.ListBySubscriptionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -330,7 +333,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await _rulesRestClient.ListBySubscriptionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,7 +348,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await _rulesRestClient.ListBySubscriptionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Network
         internal PeerExpressRouteCircuitConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _peerExpressRouteCircuitConnectionsRestClient = new PeerExpressRouteCircuitConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(PeerExpressRouteCircuitConnection.ResourceType, out string apiVersion);
+            _peerExpressRouteCircuitConnectionsRestClient = new PeerExpressRouteCircuitConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,12 +54,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Peer Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is null or empty. </exception>
         public virtual Response<PeerExpressRouteCircuitConnection> Get(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
+            if (string.IsNullOrEmpty(connectionName))
             {
-                throw new ArgumentNullException(nameof(connectionName));
+                throw new ArgumentException($"Parameter {nameof(connectionName)} cannot be null or empty", nameof(connectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 var response = _peerExpressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -79,12 +81,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Peer Express Route Circuit Connection from the specified express route circuit. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is null or empty. </exception>
         public async virtual Task<Response<PeerExpressRouteCircuitConnection>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
+            if (string.IsNullOrEmpty(connectionName))
             {
-                throw new ArgumentNullException(nameof(connectionName));
+                throw new ArgumentException($"Parameter {nameof(connectionName)} cannot be null or empty", nameof(connectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,12 +108,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is null or empty. </exception>
         public virtual Response<PeerExpressRouteCircuitConnection> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
+            if (string.IsNullOrEmpty(connectionName))
             {
-                throw new ArgumentNullException(nameof(connectionName));
+                throw new ArgumentException($"Parameter {nameof(connectionName)} cannot be null or empty", nameof(connectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
@@ -133,12 +135,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is null or empty. </exception>
         public async virtual Task<Response<PeerExpressRouteCircuitConnection>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
+            if (string.IsNullOrEmpty(connectionName))
             {
-                throw new ArgumentNullException(nameof(connectionName));
+                throw new ArgumentException($"Parameter {nameof(connectionName)} cannot be null or empty", nameof(connectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
@@ -160,12 +162,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
+            if (string.IsNullOrEmpty(connectionName))
             {
-                throw new ArgumentNullException(nameof(connectionName));
+                throw new ArgumentException($"Parameter {nameof(connectionName)} cannot be null or empty", nameof(connectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
@@ -185,12 +187,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
+            if (string.IsNullOrEmpty(connectionName))
             {
-                throw new ArgumentNullException(nameof(connectionName));
+                throw new ArgumentException($"Parameter {nameof(connectionName)} cannot be null or empty", nameof(connectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _peerExpressRouteCircuitConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _peerExpressRouteCircuitConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,7 +259,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _peerExpressRouteCircuitConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,7 +274,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _peerExpressRouteCircuitConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

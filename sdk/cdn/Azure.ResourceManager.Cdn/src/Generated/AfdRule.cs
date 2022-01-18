@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Cdn
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdRulesRestClient = new AfdRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdRulesRestClient = new AfdRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdRule(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdRulesRestClient = new AfdRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdRulesRestClient = new AfdRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdRulesRestClient = new AfdRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdRulesRestClient = new AfdRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _afdRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AfdRuleDeleteOperation(_clientDiagnostics, Pipeline, _afdRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -223,8 +226,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing delivery rule within a rule set. </summary>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
         public async virtual Task<AfdRuleUpdateOperation> UpdateAsync(bool waitForCompletion, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
@@ -252,8 +255,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing delivery rule within a rule set. </summary>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
         public virtual AfdRuleUpdateOperation Update(bool waitForCompletion, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)

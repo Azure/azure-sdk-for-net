@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Cdn
         internal CdnEndpointCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(CdnEndpoint.ResourceType, out string apiVersion);
+            _cdnEndpointsRestClient = new CdnEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.Cdn
         // Collection level operations.
 
         /// <summary> Creates a new CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="endpointInput"> Endpoint properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointInput"/> is null. </exception>
-        public virtual CdnEndpointCreateOperation CreateOrUpdate(bool waitForCompletion, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointInput"/> is null. </exception>
+        public virtual CdnEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
             if (endpointInput == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _cdnEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken);
-                var operation = new CdnEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
+                var operation = new CdnEndpointCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="endpointInput"> Endpoint properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointInput"/> is null. </exception>
-        public async virtual Task<CdnEndpointCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointInput"/> is null. </exception>
+        public async virtual Task<CdnEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string endpointName, CdnEndpointData endpointInput, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
             if (endpointInput == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _cdnEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnEndpointCreateOperation(Parent, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
+                var operation = new CdnEndpointCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, endpointInput).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
         public virtual Response<CdnEndpoint> Get(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _cdnEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CdnEndpoint(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
         public async virtual Task<Response<CdnEndpoint>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = await _cdnEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CdnEndpoint(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
         public virtual Response<CdnEndpoint> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
         public async virtual Task<Response<CdnEndpoint>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
+            if (string.IsNullOrEmpty(endpointName))
             {
-                throw new ArgumentNullException(nameof(endpointName));
+                throw new ArgumentException($"Parameter {nameof(endpointName)} cannot be null or empty", nameof(endpointName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _cdnEndpointsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _cdnEndpointsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +329,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _cdnEndpointsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _cdnEndpointsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

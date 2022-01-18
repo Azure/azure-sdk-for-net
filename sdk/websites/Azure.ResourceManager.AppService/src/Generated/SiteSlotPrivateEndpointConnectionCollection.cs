@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotPrivateEndpointConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteSlotPrivateEndpointConnection.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,16 +55,17 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// OperationId: WebApps_ApproveOrRejectPrivateEndpointConnectionSlot
         /// <summary> Description for Approves or rejects a private endpoint connection. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
-        public virtual WebAppApproveOrRejectPrivateEndpointConnectionSlotOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointWrapper"/> is null. </exception>
+        public virtual SiteSlotPrivateEndpointConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
             if (privateEndpointWrapper == null)
             {
@@ -75,7 +77,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.ApproveOrRejectPrivateEndpointConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, privateEndpointWrapper, cancellationToken);
-                var operation = new WebAppApproveOrRejectPrivateEndpointConnectionSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, privateEndpointWrapper).Request, response);
+                var operation = new SiteSlotPrivateEndpointConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, privateEndpointWrapper).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,16 +93,17 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// OperationId: WebApps_ApproveOrRejectPrivateEndpointConnectionSlot
         /// <summary> Description for Approves or rejects a private endpoint connection. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
-        public async virtual Task<WebAppApproveOrRejectPrivateEndpointConnectionSlotOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointWrapper"/> is null. </exception>
+        public async virtual Task<SiteSlotPrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
             if (privateEndpointWrapper == null)
             {
@@ -112,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.ApproveOrRejectPrivateEndpointConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, privateEndpointWrapper, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppApproveOrRejectPrivateEndpointConnectionSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, privateEndpointWrapper).Request, response);
+                var operation = new SiteSlotPrivateEndpointConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, privateEndpointWrapper).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,12 +133,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a private endpoint connection. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public virtual Response<SiteSlotPrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotPrivateEndpointConnectionCollection.Get");
@@ -145,7 +148,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetPrivateEndpointConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,12 +163,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a private endpoint connection. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public async virtual Task<Response<SiteSlotPrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotPrivateEndpointConnectionCollection.Get");
@@ -175,7 +178,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetPrivateEndpointConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotPrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,12 +190,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public virtual Response<SiteSlotPrivateEndpointConnection> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotPrivateEndpointConnectionCollection.GetIfExists");
@@ -214,12 +217,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public async virtual Task<Response<SiteSlotPrivateEndpointConnection>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotPrivateEndpointConnectionCollection.GetIfExists");
@@ -241,12 +244,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotPrivateEndpointConnectionCollection.Exists");
@@ -266,12 +269,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            if (string.IsNullOrEmpty(privateEndpointConnectionName))
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentException($"Parameter {nameof(privateEndpointConnectionName)} cannot be null or empty", nameof(privateEndpointConnectionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotPrivateEndpointConnectionCollection.Exists");
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.GetPrivateEndpointConnectionListSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +321,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.GetPrivateEndpointConnectionListSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +347,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.GetPrivateEndpointConnectionListSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +362,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.GetPrivateEndpointConnectionListSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotPrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

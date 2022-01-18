@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Network
         internal OutboundRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(OutboundRule.ResourceType, out string apiVersion);
+            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,12 +54,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified load balancer outbound rule. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is null or empty. </exception>
         public virtual Response<OutboundRule> Get(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
+            if (string.IsNullOrEmpty(outboundRuleName))
             {
-                throw new ArgumentNullException(nameof(outboundRuleName));
+                throw new ArgumentException($"Parameter {nameof(outboundRuleName)} cannot be null or empty", nameof(outboundRuleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.Get");
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 var response = _loadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OutboundRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -79,12 +81,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified load balancer outbound rule. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is null or empty. </exception>
         public async virtual Task<Response<OutboundRule>> GetAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
+            if (string.IsNullOrEmpty(outboundRuleName))
             {
-                throw new ArgumentNullException(nameof(outboundRuleName));
+                throw new ArgumentException($"Parameter {nameof(outboundRuleName)} cannot be null or empty", nameof(outboundRuleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.Get");
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _loadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OutboundRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,12 +108,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is null or empty. </exception>
         public virtual Response<OutboundRule> GetIfExists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
+            if (string.IsNullOrEmpty(outboundRuleName))
             {
-                throw new ArgumentNullException(nameof(outboundRuleName));
+                throw new ArgumentException($"Parameter {nameof(outboundRuleName)} cannot be null or empty", nameof(outboundRuleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
@@ -133,12 +135,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is null or empty. </exception>
         public async virtual Task<Response<OutboundRule>> GetIfExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
+            if (string.IsNullOrEmpty(outboundRuleName))
             {
-                throw new ArgumentNullException(nameof(outboundRuleName));
+                throw new ArgumentException($"Parameter {nameof(outboundRuleName)} cannot be null or empty", nameof(outboundRuleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
@@ -160,12 +162,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
+            if (string.IsNullOrEmpty(outboundRuleName))
             {
-                throw new ArgumentNullException(nameof(outboundRuleName));
+                throw new ArgumentException($"Parameter {nameof(outboundRuleName)} cannot be null or empty", nameof(outboundRuleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
@@ -185,12 +187,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
+            if (string.IsNullOrEmpty(outboundRuleName))
             {
-                throw new ArgumentNullException(nameof(outboundRuleName));
+                throw new ArgumentException($"Parameter {nameof(outboundRuleName)} cannot be null or empty", nameof(outboundRuleName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _loadBalancerOutboundRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _loadBalancerOutboundRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,7 +259,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _loadBalancerOutboundRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,7 +274,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _loadBalancerOutboundRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

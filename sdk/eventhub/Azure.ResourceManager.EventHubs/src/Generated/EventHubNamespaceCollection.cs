@@ -39,8 +39,9 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubNamespaceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _eventHubNamespacesRestClient = new EventHubNamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(EventHubNamespace.ResourceType, out string apiVersion);
+            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _eventHubNamespacesRestClient = new EventHubNamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,16 +56,17 @@ namespace Azure.ResourceManager.EventHubs
         // Collection level operations.
 
         /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="parameters"> Parameters for creating a namespace resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual EventHubNamespaceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string namespaceName, EventHubNamespaceData parameters, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
             if (parameters == null)
             {
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
-                var operation = new EventHubNamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var operation = new EventHubNamespaceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -89,16 +91,17 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="parameters"> Parameters for creating a namespace resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<EventHubNamespaceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string namespaceName, EventHubNamespaceData parameters, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
             if (parameters == null)
             {
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubNamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var operation = new EventHubNamespaceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _eventHubNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,12 +128,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets the description of the specified namespace. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
         public virtual Response<EventHubNamespace> Get(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Get");
@@ -140,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _namespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubNamespace(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,12 +155,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets the description of the specified namespace. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
         public async virtual Task<Response<EventHubNamespace>> GetAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Get");
@@ -167,7 +170,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _namespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new EventHubNamespace(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,12 +182,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
         public virtual Response<EventHubNamespace> GetIfExists(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExists");
@@ -206,12 +209,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
         public async virtual Task<Response<EventHubNamespace>> GetIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExists");
@@ -233,12 +236,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Exists");
@@ -258,12 +261,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
+            if (string.IsNullOrEmpty(namespaceName))
             {
-                throw new ArgumentNullException(nameof(namespaceName));
+                throw new ArgumentException($"Parameter {nameof(namespaceName)} cannot be null or empty", nameof(namespaceName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Exists");
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = _namespacesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -307,7 +310,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = _namespacesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -330,7 +333,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await _namespacesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,7 +348,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await _namespacesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

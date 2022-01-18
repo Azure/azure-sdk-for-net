@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Compute
         internal ProximityPlacementGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _proximityPlacementGroupsRestClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ProximityPlacementGroup.ResourceType, out string apiVersion);
+            _proximityPlacementGroupsRestClient = new ProximityPlacementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,16 +54,17 @@ namespace Azure.ResourceManager.Compute
         // Collection level operations.
 
         /// <summary> Create or update a proximity placement group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="parameters"> Parameters supplied to the Create Proximity Placement Group operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ProximityPlacementGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string proximityPlacementGroupName, ProximityPlacementGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
             if (parameters == null)
             {
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _proximityPlacementGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, parameters, cancellationToken);
-                var operation = new ProximityPlacementGroupCreateOrUpdateOperation(Parent, response);
+                var operation = new ProximityPlacementGroupCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,16 +89,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a proximity placement group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="parameters"> Parameters supplied to the Create Proximity Placement Group operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ProximityPlacementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string proximityPlacementGroupName, ProximityPlacementGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
             if (parameters == null)
             {
@@ -108,7 +111,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _proximityPlacementGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ProximityPlacementGroupCreateOrUpdateOperation(Parent, response);
+                var operation = new ProximityPlacementGroupCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,12 +127,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
         public virtual Response<ProximityPlacementGroup> Get(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Get");
@@ -139,7 +142,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _proximityPlacementGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProximityPlacementGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProximityPlacementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,12 +155,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
         public async virtual Task<Response<ProximityPlacementGroup>> GetAsync(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Get");
@@ -167,7 +170,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _proximityPlacementGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ProximityPlacementGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProximityPlacementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,12 +183,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
         public virtual Response<ProximityPlacementGroup> GetIfExists(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.GetIfExists");
@@ -208,12 +211,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
         public async virtual Task<Response<ProximityPlacementGroup>> GetIfExistsAsync(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.GetIfExists");
@@ -236,12 +239,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Exists");
@@ -262,12 +265,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
+            if (string.IsNullOrEmpty(proximityPlacementGroupName))
             {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
+                throw new ArgumentException($"Parameter {nameof(proximityPlacementGroupName)} cannot be null or empty", nameof(proximityPlacementGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Exists");
@@ -296,7 +299,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _proximityPlacementGroupsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,7 +314,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = _proximityPlacementGroupsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,7 +337,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _proximityPlacementGroupsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +352,7 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = await _proximityPlacementGroupsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

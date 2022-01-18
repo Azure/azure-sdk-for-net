@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _virtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineScaleSetVirtualMachineRunCommand(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _virtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Compute
         internal VirtualMachineScaleSetVirtualMachineRunCommand(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _virtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -183,14 +186,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to delete the VMSS VM run command. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetVMRunCommandDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetVirtualMachineRunCommandDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommand.Delete");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetVMRunCommandsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetVMRunCommandDeleteOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VirtualMachineScaleSetVirtualMachineRunCommandDeleteOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,16 +208,16 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to delete the VMSS VM run command. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetVMRunCommandDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVirtualMachineRunCommandDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommand.Delete");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetVMRunCommandsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VirtualMachineScaleSetVMRunCommandDeleteOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new VirtualMachineScaleSetVirtualMachineRunCommandDeleteOperation(_clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -242,7 +245,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineScaleSetVMRunCommandsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineScaleSetVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -271,7 +274,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineScaleSetVMRunCommandsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineScaleSetVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -297,10 +300,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineScaleSetVMRunCommandsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineScaleSetVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -326,10 +329,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineScaleSetVMRunCommandsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineScaleSetVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -357,7 +360,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachineScaleSetVMRunCommandsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineScaleSetVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -385,7 +388,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachineScaleSetVMRunCommandsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineScaleSetVirtualMachineRunCommand(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -397,11 +400,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to update the VMSS VM run command. </summary>
-        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetVMRunCommandUpdateOperation> UpdateAsync(bool waitForCompletion, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation> UpdateAsync(bool waitForCompletion, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
             if (runCommand == null)
             {
@@ -413,7 +416,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetVMRunCommandsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetVMRunCommandUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, response);
+                var operation = new VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -426,11 +429,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to update the VMSS VM run command. </summary>
-        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
-        public virtual VirtualMachineScaleSetVMRunCommandUpdateOperation Update(bool waitForCompletion, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation Update(bool waitForCompletion, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
             if (runCommand == null)
             {
@@ -442,7 +445,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetVMRunCommandsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand, cancellationToken);
-                var operation = new VirtualMachineScaleSetVMRunCommandUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, response);
+                var operation = new VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineScaleSetVMRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

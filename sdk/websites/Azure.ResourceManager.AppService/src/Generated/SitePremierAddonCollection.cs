@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.AppService
         internal SitePremierAddonCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SitePremierAddon.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_AddPremierAddOn
         /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public virtual WebAppAddPremierAddOnOperation CreateOrUpdate(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
+        public virtual SitePremierAddonCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
             if (premierAddOn == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.AddPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, premierAddOn, cancellationToken);
-                var operation = new WebAppAddPremierAddOnOperation(Parent, response);
+                var operation = new SitePremierAddonCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -88,16 +90,17 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_AddPremierAddOn
         /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public async virtual Task<WebAppAddPremierAddOnOperation> CreateOrUpdateAsync(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
+        public async virtual Task<SitePremierAddonCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
             if (premierAddOn == null)
             {
@@ -109,7 +112,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.AddPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, premierAddOn, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppAddPremierAddOnOperation(Parent, response);
+                var operation = new SitePremierAddonCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,12 +130,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named add-on of an app. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
         public virtual Response<SitePremierAddon> Get(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Get");
@@ -142,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SitePremierAddon(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,12 +160,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named add-on of an app. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
         public async virtual Task<Response<SitePremierAddon>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Get");
@@ -172,7 +175,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SitePremierAddon(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePremierAddon(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,12 +187,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
         public virtual Response<SitePremierAddon> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
@@ -211,12 +214,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
         public async virtual Task<Response<SitePremierAddon>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
@@ -238,12 +241,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Exists");
@@ -263,12 +266,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
+            if (string.IsNullOrEmpty(premierAddOnName))
             {
-                throw new ArgumentNullException(nameof(premierAddOnName));
+                throw new ArgumentException($"Parameter {nameof(premierAddOnName)} cannot be null or empty", nameof(premierAddOnName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Exists");

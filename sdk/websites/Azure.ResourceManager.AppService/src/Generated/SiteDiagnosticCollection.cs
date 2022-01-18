@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteDiagnosticCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteDiagnostic.ResourceType, out string apiVersion);
+            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Diagnostics Category. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is null or empty. </exception>
         public virtual Response<SiteDiagnostic> Get(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
+            if (string.IsNullOrEmpty(diagnosticCategory))
             {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
+                throw new ArgumentException($"Parameter {nameof(diagnosticCategory)} cannot be null or empty", nameof(diagnosticCategory));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _diagnosticsRestClient.GetSiteDiagnosticCategory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticCategory, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnostic(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Diagnostics Category. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is null or empty. </exception>
         public async virtual Task<Response<SiteDiagnostic>> GetAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
+            if (string.IsNullOrEmpty(diagnosticCategory))
             {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
+                throw new ArgumentException($"Parameter {nameof(diagnosticCategory)} cannot be null or empty", nameof(diagnosticCategory));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _diagnosticsRestClient.GetSiteDiagnosticCategoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticCategory, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteDiagnostic(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is null or empty. </exception>
         public virtual Response<SiteDiagnostic> GetIfExists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
+            if (string.IsNullOrEmpty(diagnosticCategory))
             {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
+                throw new ArgumentException($"Parameter {nameof(diagnosticCategory)} cannot be null or empty", nameof(diagnosticCategory));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is null or empty. </exception>
         public async virtual Task<Response<SiteDiagnostic>> GetIfExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
+            if (string.IsNullOrEmpty(diagnosticCategory))
             {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
+                throw new ArgumentException($"Parameter {nameof(diagnosticCategory)} cannot be null or empty", nameof(diagnosticCategory));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
+            if (string.IsNullOrEmpty(diagnosticCategory))
             {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
+                throw new ArgumentException($"Parameter {nameof(diagnosticCategory)} cannot be null or empty", nameof(diagnosticCategory));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
+            if (string.IsNullOrEmpty(diagnosticCategory))
             {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
+                throw new ArgumentException($"Parameter {nameof(diagnosticCategory)} cannot be null or empty", nameof(diagnosticCategory));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Exists");
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteDiagnosticCategories(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteDiagnosticCategoriesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteDiagnosticCategoriesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteDiagnosticCategoriesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDiagnostic(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -17,6 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Network
         internal AzureWebCategoryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webCategoriesRestClient = new WebCategoriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AzureWebCategory.ResourceType, out string apiVersion);
+            _webCategoriesRestClient = new WebCategoriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is null or empty. </exception>
         public virtual Response<AzureWebCategory> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentException($"Parameter {nameof(name)} cannot be null or empty", nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -83,12 +85,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is null or empty. </exception>
         public async virtual Task<Response<AzureWebCategory>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentException($"Parameter {nameof(name)} cannot be null or empty", nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Get");
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AzureWebCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -111,12 +113,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is null or empty. </exception>
         public virtual Response<AzureWebCategory> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentException($"Parameter {nameof(name)} cannot be null or empty", nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is null or empty. </exception>
         public async virtual Task<Response<AzureWebCategory>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentException($"Parameter {nameof(name)} cannot be null or empty", nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
@@ -167,12 +169,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentException($"Parameter {nameof(name)} cannot be null or empty", nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
@@ -193,12 +195,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentException($"Parameter {nameof(name)} cannot be null or empty", nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
@@ -227,7 +229,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _webCategoriesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _webCategoriesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -265,7 +267,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _webCategoriesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -280,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _webCategoriesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

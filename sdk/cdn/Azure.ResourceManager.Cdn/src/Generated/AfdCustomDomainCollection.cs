@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdCustomDomainCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AfdCustomDomain.ResourceType, out string apiVersion);
+            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,16 +52,17 @@ namespace Azure.ResourceManager.Cdn
         // Collection level operations.
 
         /// <summary> Creates a new domain within the specified profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="customDomain"> Domain properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public virtual AfdCustomDomainCreateOperation CreateOrUpdate(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomain"/> is null. </exception>
+        public virtual AfdCustomDomainCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
             if (customDomain == null)
             {
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdCustomDomainsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken);
-                var operation = new AfdCustomDomainCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var operation = new AfdCustomDomainCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,16 +87,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new domain within the specified profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="customDomain"> Domain properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public async virtual Task<AfdCustomDomainCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomain"/> is null. </exception>
+        public async virtual Task<AfdCustomDomainCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
             if (customDomain == null)
             {
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdCustomDomainsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var operation = new AfdCustomDomainCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,12 +124,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
         public virtual Response<AfdCustomDomain> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Get");
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _afdCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdCustomDomain(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +151,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
         public async virtual Task<Response<AfdCustomDomain>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Get");
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = await _afdCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdCustomDomain(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,12 +178,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
         public virtual Response<AfdCustomDomain> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetIfExists");
@@ -202,12 +205,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
         public async virtual Task<Response<AfdCustomDomain>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetIfExists");
@@ -229,12 +232,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Exists");
@@ -254,12 +257,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
+            if (string.IsNullOrEmpty(customDomainName))
             {
-                throw new ArgumentNullException(nameof(customDomainName));
+                throw new ArgumentException($"Parameter {nameof(customDomainName)} cannot be null or empty", nameof(customDomainName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Exists");
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _afdCustomDomainsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _afdCustomDomainsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +329,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _afdCustomDomainsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _afdCustomDomainsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

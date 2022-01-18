@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Storage
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Storage
         internal FileShare(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Storage
         internal FileShare(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -183,9 +186,9 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes specified share under its account. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
         /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<FileShareDeleteOperation> DeleteAsync(bool waitForCompletion, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
         {
@@ -207,9 +210,9 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes specified share under its account. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
         /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual FileShareDeleteOperation Delete(bool waitForCompletion, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
         {
@@ -220,7 +223,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _fileSharesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, include, cancellationToken);
                 var operation = new FileShareDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

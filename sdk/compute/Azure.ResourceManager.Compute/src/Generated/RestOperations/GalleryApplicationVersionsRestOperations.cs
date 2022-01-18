@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Compute
     internal partial class GalleryApplicationVersionsRestOperations
     {
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
@@ -29,9 +31,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
-        public GalleryApplicationVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public GalleryApplicationVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2020-09-30";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -306,7 +311,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -430,7 +435,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -541,7 +546,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/applications/", false);
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", "2020-09-30", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);

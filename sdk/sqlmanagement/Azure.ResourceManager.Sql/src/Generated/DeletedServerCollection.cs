@@ -18,6 +18,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -40,7 +41,8 @@ namespace Azure.ResourceManager.Sql
         internal DeletedServerCollection(ArmResource parent, string locationName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deletedServersRestClient = new DeletedServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DeletedServer.ResourceType, out string apiVersion);
+            _deletedServersRestClient = new DeletedServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
             _locationName = locationName;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -61,12 +63,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a deleted server. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is null or empty. </exception>
         public virtual Response<DeletedServer> Get(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
+            if (string.IsNullOrEmpty(deletedServerName))
             {
-                throw new ArgumentNullException(nameof(deletedServerName));
+                throw new ArgumentException($"Parameter {nameof(deletedServerName)} cannot be null or empty", nameof(deletedServerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Get");
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _deletedServersRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedServer(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,12 +93,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a deleted server. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is null or empty. </exception>
         public async virtual Task<Response<DeletedServer>> GetAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
+            if (string.IsNullOrEmpty(deletedServerName))
             {
-                throw new ArgumentNullException(nameof(deletedServerName));
+                throw new ArgumentException($"Parameter {nameof(deletedServerName)} cannot be null or empty", nameof(deletedServerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Get");
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _deletedServersRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedServer(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,12 +120,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is null or empty. </exception>
         public virtual Response<DeletedServer> GetIfExists(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
+            if (string.IsNullOrEmpty(deletedServerName))
             {
-                throw new ArgumentNullException(nameof(deletedServerName));
+                throw new ArgumentException($"Parameter {nameof(deletedServerName)} cannot be null or empty", nameof(deletedServerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
@@ -145,12 +147,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is null or empty. </exception>
         public async virtual Task<Response<DeletedServer>> GetIfExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
+            if (string.IsNullOrEmpty(deletedServerName))
             {
-                throw new ArgumentNullException(nameof(deletedServerName));
+                throw new ArgumentException($"Parameter {nameof(deletedServerName)} cannot be null or empty", nameof(deletedServerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
@@ -172,12 +174,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
+            if (string.IsNullOrEmpty(deletedServerName))
             {
-                throw new ArgumentNullException(nameof(deletedServerName));
+                throw new ArgumentException($"Parameter {nameof(deletedServerName)} cannot be null or empty", nameof(deletedServerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
@@ -197,12 +199,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
+            if (string.IsNullOrEmpty(deletedServerName))
             {
-                throw new ArgumentNullException(nameof(deletedServerName));
+                throw new ArgumentException($"Parameter {nameof(deletedServerName)} cannot be null or empty", nameof(deletedServerName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _deletedServersRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -249,7 +251,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _deletedServersRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,7 +277,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _deletedServersRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -290,7 +292,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _deletedServersRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

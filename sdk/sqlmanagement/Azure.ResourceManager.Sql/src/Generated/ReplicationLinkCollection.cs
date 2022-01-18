@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ReplicationLinkCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ReplicationLink.ResourceType, out string apiVersion);
+            _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +57,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a replication link. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is null or empty. </exception>
         public virtual Response<ReplicationLink> Get(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
+            if (string.IsNullOrEmpty(linkId))
             {
-                throw new ArgumentNullException(nameof(linkId));
+                throw new ArgumentException($"Parameter {nameof(linkId)} cannot be null or empty", nameof(linkId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _replicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,12 +87,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a replication link. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is null or empty. </exception>
         public async virtual Task<Response<ReplicationLink>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
+            if (string.IsNullOrEmpty(linkId))
             {
-                throw new ArgumentNullException(nameof(linkId));
+                throw new ArgumentException($"Parameter {nameof(linkId)} cannot be null or empty", nameof(linkId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _replicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ReplicationLink(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is null or empty. </exception>
         public virtual Response<ReplicationLink> GetIfExists(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
+            if (string.IsNullOrEmpty(linkId))
             {
-                throw new ArgumentNullException(nameof(linkId));
+                throw new ArgumentException($"Parameter {nameof(linkId)} cannot be null or empty", nameof(linkId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
@@ -139,12 +141,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is null or empty. </exception>
         public async virtual Task<Response<ReplicationLink>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
+            if (string.IsNullOrEmpty(linkId))
             {
-                throw new ArgumentNullException(nameof(linkId));
+                throw new ArgumentException($"Parameter {nameof(linkId)} cannot be null or empty", nameof(linkId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
@@ -166,12 +168,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
+            if (string.IsNullOrEmpty(linkId))
             {
-                throw new ArgumentNullException(nameof(linkId));
+                throw new ArgumentException($"Parameter {nameof(linkId)} cannot be null or empty", nameof(linkId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
@@ -191,12 +193,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
+            if (string.IsNullOrEmpty(linkId))
             {
-                throw new ArgumentNullException(nameof(linkId));
+                throw new ArgumentException($"Parameter {nameof(linkId)} cannot be null or empty", nameof(linkId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _replicationLinksRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _replicationLinksRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _replicationLinksRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,7 +286,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _replicationLinksRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentWorkerPool(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal HostingEnvironmentWorkerPool(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -246,13 +249,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment. </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is null or empty. </exception>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
         {
-            if (instance == null)
+            if (string.IsNullOrEmpty(instance))
             {
-                throw new ArgumentNullException(nameof(instance));
+                throw new ArgumentException($"Parameter {nameof(instance)} cannot be null or empty", nameof(instance));
             }
 
             async Task<Page<ResourceMetricDefinition>> FirstPageFunc(int? pageSizeHint)
@@ -294,13 +297,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment. </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is null or empty. </exception>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)
         {
-            if (instance == null)
+            if (string.IsNullOrEmpty(instance))
             {
-                throw new ArgumentNullException(nameof(instance));
+                throw new ArgumentException($"Parameter {nameof(instance)} cannot be null or empty", nameof(instance));
             }
 
             Page<ResourceMetricDefinition> FirstPageFunc(int? pageSizeHint)

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Compute
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskRestorePointRestClient = new DiskRestorePointRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _diskRestorePointRestClient = new DiskRestorePointRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Compute
         internal DiskRestorePoint(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskRestorePointRestClient = new DiskRestorePointRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _diskRestorePointRestClient = new DiskRestorePointRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Compute
         internal DiskRestorePoint(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskRestorePointRestClient = new DiskRestorePointRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _diskRestorePointRestClient = new DiskRestorePointRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -179,8 +182,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public async virtual Task<DiskRestorePointGrantAccessOperation> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
@@ -208,8 +211,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
         public virtual DiskRestorePointGrantAccessOperation GrantAccess(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
@@ -270,7 +273,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _diskRestorePointRestClient.RevokeAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DiskRestorePointRevokeAccessOperation(_clientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
