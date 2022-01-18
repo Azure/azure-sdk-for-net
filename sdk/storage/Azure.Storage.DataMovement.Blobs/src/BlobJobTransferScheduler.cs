@@ -8,9 +8,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Azure;
 using Microsoft.VisualStudio.Threading;
+using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -20,7 +22,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// Performs scanning or queues up scanning of the jobs in the queue
     /// Adds the job items to the queue
     /// </summary>
-    public class BlobJobTransferScheduler : IDisposable
+    internal class BlobJobTransferScheduler : IDisposable
     {
         /// <summary>
         /// The maximum number of simultaneous workers for making service side list calls. Handles the amount of scanning
@@ -86,7 +88,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // Set _maxWorkerCount
             if (maxListServiceRequestWorkerCount.HasValue && maxListServiceRequestWorkerCount > 0)
             {
-                _maxListServiceRequestWorkerCount = (int)maxListServiceRequestWorkerCount;
+                _maxListServiceRequestWorkerCount = maxListServiceRequestWorkerCount.Value;
             }
             else
             {
@@ -100,7 +102,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // Set _maxWorkerCount
             if (maxLocalListWorkerCount.HasValue && maxLocalListWorkerCount > 0)
             {
-                _maxLocalListWorkerCount = (int)maxLocalListWorkerCount;
+                _maxLocalListWorkerCount = maxLocalListWorkerCount.Value;
             }
             else
             {
@@ -251,6 +253,72 @@ namespace Azure.Storage.DataMovement.Blobs
                 else
                 {
                     tasksToProcess.Enqueue(job.GetSingleDownloadTaskAsync(blob.Name));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds job to the queue that has already been scanned.
+        /// </summary>
+        /// <param name="job"></param>
+        internal void AddJob(BlobServiceCopyTransferJob job)
+        {
+            // Just because this job would only be a single job, we need to queue
+            // it in the case that other jobs are currently being scanned
+            // that way we're not adding scans out of order
+
+            // TODO: look into possiblity of sending requests based on different priority
+            // because if the job is for a different storage account
+            // it might be worth sending that requests anyways cause it wouldn't slow down traffic for that storage account per say
+            if (tasksToProcess.IsEmpty)
+            {
+                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+                jobRunner.Start();
+            }
+            else
+            {
+                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+            }
+        }
+
+        /// <summary>
+        /// Adds job to the queue that has already been scanned.
+        /// </summary>
+        /// <param name="job"></param>
+        internal void AddJob(BlobServiceCopyDirectoryTransferJob job)
+        {
+            // TODO: Need to replace this with the async method so that we can enumerate based on the continuation token
+            // in the case that the customer decides to pause the job, and wants to resume later we have the continuation token
+            // or we're getting throttled and we should take a break and continue later.
+
+            //TODO: add cancellation token here for enumeration
+            BlobVirtualDirectoryClient sourceVirtualDirectoryClient = new BlobVirtualDirectoryClient(job.SourceDirectoryUri);
+            Pageable<BlobItem> blobs = sourceVirtualDirectoryClient.GetBlobs();
+
+            foreach (BlobItem blob in blobs)
+            {
+                if (tasksToProcess.IsEmpty)
+                {
+                    if (job.CopyMethod == BlobServiceCopyMethod.ServiceSideAsyncCopy)
+                    {
+                        tasksToProcess.Enqueue(job.GetSingleAsyncCopyTaskAsync(blob.Name));
+                    }
+                    else
+                    {
+                        tasksToProcess.Enqueue(job.GetSingleSyncCopyTaskAsync(blob.Name));
+                    }
+                    jobRunner.Start();
+                }
+                else
+                {
+                    if (job.CopyMethod == BlobServiceCopyMethod.ServiceSideAsyncCopy)
+                    {
+                        tasksToProcess.Enqueue(job.GetSingleAsyncCopyTaskAsync(blob.Name));
+                    }
+                    else
+                    {
+                        tasksToProcess.Enqueue(job.GetSingleSyncCopyTaskAsync(blob.Name));
+                    }
                 }
             }
         }

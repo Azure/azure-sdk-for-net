@@ -12,9 +12,9 @@ using Azure.Storage.DataMovement.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class StorageTranferManagerTests : DataMovementTestBase
+    public class StorageTransferManagerTests : DataMovementTestBase
     {
-        public StorageTranferManagerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public StorageTransferManagerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ConcurrencyForLocalFilesystemListing = 1
             };
 
-            StorageTransferManager blobTransferManager = InstrumentClient(new StorageTransferManager(managerOptions));
+            StorageTransferManager blobTransferManager = new StorageTransferManager(managerOptions);
         }
     }
 }

@@ -160,7 +160,7 @@ namespace Azure.Storage.DataMovement
                 // TODO: catch any errors that fly up the stack and attempt
                 // to delete the other log or plan files, but throw the proper exception
                 // or list of files that could not be deleted.
-                job.Logger.removeAllLogFiles();
+                job.Logger.removeLogFile();
                 job.PlanJobWriter.RemovePlanFile();
             }
         }

@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 response = await blockBlobClient.UploadAsync(
                     uploadStream,
-                    blobUploadOptions).ConfigureAwait(false);
+                    blobUploadOptions ).ConfigureAwait(false);
             }
             return response;
         }

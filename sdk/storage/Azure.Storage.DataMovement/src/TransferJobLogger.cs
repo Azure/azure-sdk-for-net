@@ -29,24 +29,31 @@ namespace Azure.Storage.DataMovement
         /// <param name="logLevel"></param>
         public TransferJobLogger(string loggerFolderPath, string jobId, DataMovementLogLevel logLevel = DataMovementLogLevel.None)
         {
-            // Create Logger file path name
-            LoggerFilePath = loggerFolderPath + jobId + Constants.DataMovement.Log.FileExtension;
-            // If the file already exists, keep incrementing until we find a unique file name
-            int fileIncrement = 1;
-            while (File.Exists(LoggerFilePath))
+            if (logLevel > DataMovementLogLevel.None)
             {
-                if (fileIncrement < Constants.DataMovement.DuplicateFileNameLimit)
+                // Create Logger file path name
+                LoggerFilePath = loggerFolderPath + jobId + Constants.DataMovement.Log.FileExtension;
+                // If the file already exists, keep incrementing until we find a unique file name
+                int fileIncrement = 1;
+                while (File.Exists(LoggerFilePath))
                 {
-                    LoggerFilePath = $"{loggerFolderPath}{jobId}({fileIncrement}){Constants.DataMovement.Log.FileExtension}";
+                    if (fileIncrement < Constants.DataMovement.DuplicateFileNameLimit)
+                    {
+                        LoggerFilePath = $"{loggerFolderPath}{jobId}({fileIncrement}){Constants.DataMovement.Log.FileExtension}";
+                    }
+                    else
+                    {
+                        throw Errors.TooManyLogFiles(loggerFolderPath, jobId);
+                    }
                 }
-                else
-                {
-                    throw Errors.TooManyLogFiles(loggerFolderPath, jobId);
-                }
+                // Create Job Log file
+                File.Create(LoggerFilePath);
             }
-            // Create Job Log file
-            File.Create(LoggerFilePath);
-
+            else
+            {
+                // If they opted not to log, do not create the file
+                LoggerFilePath = string.Empty;
+            }
             LogLevelLimit = logLevel;
         }
 
@@ -71,25 +78,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Purpose is to delete individual plan files
-        /// </summary>
-        /// <param name="jobId"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        public void RemoveLogFile(string jobId)
-        {
-            // Look for the job plan file that we are looking to delete in the folder
-
-            // If not throw an exception
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Purpose is to clean all the job files. AKA this would be a clean
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public void removeAllLogFiles()
+        public void removeLogFile()
         {
-            throw new NotImplementedException();
+            File.Delete(LoggerFilePath);
+            //TODO: properly catch the error and log it somewhere else? propergate this error up.
         }
     }
 }

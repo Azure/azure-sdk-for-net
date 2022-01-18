@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -30,6 +31,12 @@ namespace Azure.Storage.DataMovement.Blobs.Models
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </summary>
+        public AccessTier? AccessTier { get; set; }
+
+        /// <summary>
         /// Optional <see cref="BlobDirectoryRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </summary>
@@ -42,6 +49,14 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public BlobDirectoryRequestConditions DestinationConditions { get; set; }
 
         /// <summary>
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
+        ///
+        /// This parameter is not valid for synchronous copies.
+        /// </summary>
+        public RehydratePriority? RehydratePriority { get; set; }
+
+        /// <summary>
         /// If the destination blob should be sealed.
         /// Only applicable for Append Blobs.
         ///
@@ -50,10 +65,24 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public bool? ShouldSealDestination { get; set; }
 
         /// <summary>
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </summary>
+        public BlobImmutabilityPolicy DestinationImmutabilityPolicy { get; set; }
+
+        /// <summary>
         /// Optional.  Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </summary>
         public bool? LegalHold { get; set; }
+
+        /// <summary>
+        /// Optional.  Source authentication used to access the source blob.
+        /// Note that is parameter does not apply to
+        /// <see cref="BlobBaseClient.StartCopyFromUriAsync(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/>.
+        /// </summary>
+        public HttpAuthorization SourceAuthentication { get; set; }
     }
 }

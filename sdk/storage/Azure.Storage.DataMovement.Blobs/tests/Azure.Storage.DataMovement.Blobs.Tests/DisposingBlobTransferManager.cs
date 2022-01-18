@@ -8,12 +8,11 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
-    // TODO: see if we can replace this with the DisposingContainer in Azure.Storage.Blobs.Test
-    public class DisposingBlobContainer : IDisposingContainer<BlobContainerClient>
+    public class DisposingBlobTransferManager : IDisposingContainer<BlobTransferManager>
     {
-        public BlobContainerClient transferManager { get; private set; }
+        public BlobTransferManager transferManager { get; private set; }
 
-        public DisposingBlobContainer(BlobContainerClient client)
+        public DisposingBlobTransferManager(BlobTransferManager client)
         {
             transferManager = client;
         }
@@ -24,7 +23,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 try
                 {
-                    await transferManager.DeleteIfExistsAsync();
+                    await Task.Run(() =>
+                    {
+                        transferManager.CancelTransfers();
+                        transferManager.Clean();
+                    });
                     transferManager = null;
                 }
                 catch

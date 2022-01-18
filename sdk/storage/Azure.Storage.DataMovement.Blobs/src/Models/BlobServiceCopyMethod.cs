@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Storage.Blobs.Specialized;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
     /// Copy Method.
     /// Users can specify what type copy to occur.
     /// </summary>
-    public enum ServiceCopyMethod
+    public enum BlobServiceCopyMethod
     {
         /// <summary>
         /// For Blobs sends <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">Copy Blob</see>

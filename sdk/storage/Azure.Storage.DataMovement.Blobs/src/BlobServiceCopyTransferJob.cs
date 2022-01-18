@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -20,11 +20,11 @@ namespace Azure.Storage.DataMovement
 
         public BlobBaseClient destinationBlobClient => _destinationBlobClient;
 
-        private BlobBaseClient _sourceBlobClient;
+        private Uri _sourceUri;
 
-        public BlobBaseClient sourceBlobClient => _sourceBlobClient;
+        public Uri sourceUri => _sourceUri;
 
-        public readonly ServiceCopyMethod _copyMethod;
+        public readonly BlobServiceCopyMethod _copyMethod;
 
         internal BlobCopyFromUriOptions _copyFromUriOptions;
         /// <summary>
@@ -38,19 +38,19 @@ namespace Azure.Storage.DataMovement
         /// TODO: better description and param descriptions.
         /// </summary>
         /// <param name="jobId"></param>
-        /// <param name="sourceClient"></param>
+        /// <param name="sourceUri"></param>
         /// <param name="destinationClient"></param>
         /// <param name="copyMethod"></param>
         /// <param name="copyFromUriOptions"></param>
         public BlobServiceCopyTransferJob(
             string jobId,
-            BlobBaseClient sourceClient,
+            Uri sourceUri,
             BlobBaseClient destinationClient,
-            ServiceCopyMethod copyMethod,
+            BlobServiceCopyMethod copyMethod,
             BlobCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
-            _sourceBlobClient = sourceClient;
+            _sourceUri = sourceUri;
             _destinationBlobClient = destinationClient;
             _copyMethod = copyMethod;
             _copyFromUriOptions = copyFromUriOptions;
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement
         {
             // TODO: add other Copymethod Options
             // for now only do CopyMethod.ServiceSideAsyncCopy as a stub
-            return destinationBlobClient.StartCopyFromUriAsync(sourceBlobClient.Uri);
+            return destinationBlobClient.StartCopyFromUriAsync(sourceUri);
         }
     }
 }

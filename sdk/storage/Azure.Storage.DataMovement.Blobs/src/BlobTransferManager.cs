@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobTransferManager(StorageTransferManagerOptions options = default)
             : base(options)
         {
-            jobTransferScheduler = new BlobJobTransferScheduler(options.ConcurrencyForLocalFilesystemListing, options.ConcurrencyForServiceListing);
+            jobTransferScheduler = new BlobJobTransferScheduler(options?.ConcurrencyForLocalFilesystemListing, options?.ConcurrencyForServiceListing);
         }
 
         /// <summary>
@@ -142,6 +142,69 @@ namespace Azure.Storage.DataMovement.Blobs
             TotalJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
 
+            return jobId;
+        }
+
+        /// <summary>
+        /// Add Blob Copy Job to perform
+        ///
+        /// TODO: Better description and param comments.
+        /// </summary>
+        /// <param name="sourceUri"></param>
+        /// <param name="destinationClient"></param>
+        /// <param name="copyMethod">Copy Method</param>
+        /// <param name="copyOptions"></param>
+        /// <returns>A guid of the job id</returns>
+        public string ScheduleCopy(
+            Uri sourceUri,
+            BlobClient destinationClient,
+            BlobServiceCopyMethod copyMethod,
+            BlobCopyFromUriOptions copyOptions = default)
+        {
+            //TODO: if check the local path exists and not a directory
+            // or we can go and check at the start of the job, to prevent
+            // having to check the existence of the path twice.
+            string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
+
+            BlobServiceCopyTransferJob transferJob = new BlobServiceCopyTransferJob(
+                jobId,
+                sourceUri,
+                destinationClient,
+                copyMethod,
+                copyOptions);
+            TotalJobs.Add(transferJob);
+            jobTransferScheduler.AddJob(transferJob);
+
+            // TODO: remove stub
+            return jobId;
+        }
+
+        /// <summary>
+        /// Add Blob Copy Job to perform
+        ///
+        /// TODO: Better description and param comments.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// The Source directory Uri to copy blobs from.
+        /// The source must allow permissions to list in the container.
+        /// TODO: add minimum SAS permissions requirements (e.g. permissions for both contaner and blob level, rl permissions)</param>
+        /// <param name="destinationClient"></param>
+        /// <param name="copyMethod">Copy Method</param>
+        /// <param name="copyOptions"></param>
+        /// <returns>A guid of the job id</returns>
+        public string ScheduleCopy(
+            Uri sourceUri,
+            BlobVirtualDirectoryClient destinationClient,
+            BlobServiceCopyMethod copyMethod,
+            BlobDirectoryCopyFromUriOptions copyOptions = default)
+        {
+            //TODO: if check the local path exists and not a directory
+            // or we can go and check at the start of the job, to prevent
+            // having to check the existence of the path twice.
+            string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
+            BlobServiceCopyDirectoryTransferJob transferJob = new BlobServiceCopyDirectoryTransferJob(jobId, sourceUri, destinationClient, copyMethod, copyOptions);
+            TotalJobs.Add(transferJob);
+            jobTransferScheduler.AddJob(transferJob);
             return jobId;
         }
 
