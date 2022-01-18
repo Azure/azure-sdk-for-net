@@ -24,6 +24,7 @@ namespace Azure.Rest.WebPubSub.Tests
         {
         }
 
+        [Ignore("Ignore until live test is supported")]
         [Test]
         public async Task SimpleWebSocketClientCanConnectAndReceiveMessage()
         {
@@ -58,6 +59,7 @@ namespace Azure.Rest.WebPubSub.Tests
             CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
         }
 
+        [Ignore("Ignore until live test is supported")]
         [Test]
         public async Task SubprotocolWebSocketClientCanConnectAndReceiveMessage()
         {
