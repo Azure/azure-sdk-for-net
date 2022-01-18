@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #region Snippet:Managing_Namespaces_AddTag
             EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
             EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-            await eventHubNamespace.AddTagAsync(true, "key","value");
+            await eventHubNamespace.AddTagAsync("key","value");
             #endregion
         }
     }
