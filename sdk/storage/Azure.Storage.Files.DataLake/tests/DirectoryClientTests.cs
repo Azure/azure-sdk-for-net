@@ -884,6 +884,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task RenameAsync_CPK()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeDirectoryClient sourceDirectory = InstrumentClient(test.FileSystem
+                .GetDirectoryClient(GetNewDirectoryName())
+                .WithCustomerProvidedKey(customerProvidedKey));
+            await sourceDirectory.CreateAsync();
+            string destDirectoryName = GetNewDirectoryName();
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.IsServerEncrypted);
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [RecordedTest]
         public async Task GetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
