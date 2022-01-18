@@ -110,7 +110,7 @@ namespace Microsoft.Rest.Serialization
                 throw new ArgumentNullException("property");
             }
 
-            string propertyName = name;
+            string propertyName = property.PropertyName;
             parentPath = new string[0];
 
             if (!string.IsNullOrEmpty(propertyName))
