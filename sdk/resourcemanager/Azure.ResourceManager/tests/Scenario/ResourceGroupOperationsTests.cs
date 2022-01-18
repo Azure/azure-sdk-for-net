@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Tests
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg1 = rg1Op.Value;
             Assert.AreEqual(0, rg1.Data.Tags.Count);
-            ResourceGroup rg2 = await rg1.AddTagAsync(true, "key", "value");
+            ResourceGroup rg2 = await rg1.AddTagAsync("key", "value");
             Assert.AreEqual(1, rg2.Data.Tags.Count);
             Assert.IsTrue(rg2.Data.Tags.Contains(new KeyValuePair<string, string>("key", "value")));
             Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(true, null, "value"));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(true, " ", "value"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(null, "value"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
         }
 
         [TestCase]
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Tests
             {
                 { "key", "value"}
             };
-            ResourceGroup rg2 = await rg1.SetTagsAsync(true, tags);
+            ResourceGroup rg2 = await rg1.SetTagsAsync(tags);
             Assert.AreEqual(tags, rg2.Data.Tags);
             Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.SetTagsAsync(true, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.SetTagsAsync(null));
         }
 
         [TestCase]
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.Tests
                 { "k1", "v1"},
                 { "k2", "v2"}
             };
-            rg1 = await rg1.SetTagsAsync(true, tags);
-            ResourceGroup rg2 = await rg1.RemoveTagAsync(true, "k1");
+            rg1 = await rg1.SetTagsAsync(tags);
+            ResourceGroup rg2 = await rg1.RemoveTagAsync("k1");
             var tags2 = new Dictionary<string, string>()
             {
                 { "k2", "v2"}
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(true, null));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(true, " "));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(" "));
         }
 
         [TestCase]

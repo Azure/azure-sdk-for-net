@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Tests.Samples
             }
 #endif
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            resourceGroup = await resourceGroup.AddTagAsync(true, "key", "value");
+            resourceGroup = await resourceGroup.AddTagAsync("key", "value");
             #endregion Snippet:Managing_Resource_Groups_UpdateAResourceGroup
         }
 

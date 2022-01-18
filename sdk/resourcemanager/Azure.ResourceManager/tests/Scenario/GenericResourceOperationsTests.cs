@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Tests
 
             Assert.AreEqual(0, aset.Data.Tags.Count);
 
-            aset = await aset.AddTagAsync(true, "key", "value");
+            aset = await aset.AddTagAsync("key", "value");
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Tests
 
             Dictionary<string, string> tags = new Dictionary<string, string>();
             tags.Add("key", "value");
-            aset = await aset.SetTagsAsync(true, tags);
+            aset = await aset.SetTagsAsync(tags);
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.Tests
 
             Dictionary<string, string> tags = new Dictionary<string, string>();
             tags.Add("key", "value");
-            aset = await aset.SetTagsAsync(true, tags);
+            aset = await aset.SetTagsAsync(tags);
 
-            aset = await aset.RemoveTagAsync(true, "key");
+            aset = await aset.RemoveTagAsync("key");
 
             Assert.IsFalse(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual(0, aset.Data.Tags.Count);
