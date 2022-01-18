@@ -6,14 +6,15 @@ if [ -z $1 ]; then
 fi
 echo $1
 
-pwsh eng/automation/init.ps1
+pwsh eng/scripts/automation/init.ps1
 
 DIRECTORY=$(cd `dirname $0` && pwd)
-WORKFOLDER="$(realpath $DIRECTORY/../../)"
+WORKFOLDER="$(realpath $DIRECTORY/../../../)"
 echo $WORKFOLDER
 export DOTNET_ROOT=$WORKFOLDER/.dotnet
+export PATH=$DOTNET_ROOT:$PATH
 which dotnet
-dotnet --list-sdk
+dotnet --list-sdks
 echo $1
 cat > $1 << EOF
 {
