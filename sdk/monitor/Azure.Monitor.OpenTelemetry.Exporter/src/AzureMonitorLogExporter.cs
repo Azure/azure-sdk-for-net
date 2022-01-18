@@ -11,7 +11,7 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    internal class AzureMonitorLogExporter : AzureMonitorBaseExporter<LogRecord>
     {
         private readonly ITransmitter Transmitter;
         private readonly AzureMonitorExporterOptions options;
@@ -37,8 +37,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var resource = this.ParentProvider.GetResource();
-                var telemetryItems = AzureMonitorConverter.Convert(batch, resource, this.instrumentationKey);
+                InitRoleNameAndInstance();
+                var telemetryItems = AzureMonitorConverter.Convert(batch, RoleName, RoleInstance, instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
