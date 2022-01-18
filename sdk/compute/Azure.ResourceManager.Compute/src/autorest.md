@@ -79,4 +79,7 @@ directive:
   - from: swagger-document
     where: $.definitions.GalleryImageProperties.properties.osState
     transform: $["x-ms-client-name"] = "OSState"
+  - from: swagger-document
+    where: "$.definitions.DiskSecurityType.x-ms-enum.values[1]"
+    transform: $["x-ms-client-name"] = "ConfidentialVM_VmGuestStateOnlyEncryptedWithPlatformKey"
 ```
