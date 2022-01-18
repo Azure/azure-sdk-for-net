@@ -143,10 +143,9 @@ namespace Azure.AI.Translation.Document.Tests
 
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var timestamp = Recording.UtcNow;
 
-            // Wait to account for any time discrepancies
-            Thread.Sleep(1000);
+            // timestamp pushed 1 second back to account for any time discrepancies
+            var timestamp = Recording.UtcNow.AddSeconds(-1);
 
             var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
