@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class OsProfile : IUtf8JsonSerializable
+    public partial class OSProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("adminPassword");
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
-        internal static OsProfile DeserializeOsProfile(JsonElement element)
+        internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
             Optional<string> computerName = default;
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;
-            Optional<OsType> osType = default;
+            Optional<OSType> osType = default;
             Optional<string> osName = default;
             Optional<string> toolsRunningStatus = default;
             Optional<string> toolsVersionStatus = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new OsType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osName"))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new OsProfile(computerName.Value, adminUsername.Value, adminPassword.Value, Optional.ToNullable(osType), osName.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value);
+            return new OSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, Optional.ToNullable(osType), osName.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value);
         }
     }
 }
