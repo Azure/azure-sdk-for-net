@@ -82,54 +82,54 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        private static DeletedServersRestOperations GetDeletedServersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DeletedServersRestOperations GetDeletedServersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DeletedServersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DeletedServersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static InstancePoolsRestOperations GetInstancePoolsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static InstancePoolsRestOperations GetInstancePoolsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new InstancePoolsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new InstancePoolsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static CapabilitiesRestOperations GetCapabilitiesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static CapabilitiesRestOperations GetCapabilitiesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new CapabilitiesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new CapabilitiesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static LongTermRetentionBackupsRestOperations GetLongTermRetentionBackupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static LongTermRetentionBackupsRestOperations GetLongTermRetentionBackupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new LongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new LongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static LongTermRetentionManagedInstanceBackupsRestOperations GetLongTermRetentionManagedInstanceBackupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static LongTermRetentionManagedInstanceBackupsRestOperations GetLongTermRetentionManagedInstanceBackupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new LongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new LongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ManagedInstancesRestOperations GetManagedInstancesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ManagedInstancesRestOperations GetManagedInstancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ManagedInstancesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ManagedInstancesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static OperationsHealthRestOperations GetOperationsHealthRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static OperationsHealthRestOperations GetOperationsHealthRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new OperationsHealthRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new OperationsHealthRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static SyncGroupsRestOperations GetSyncGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static SyncGroupsRestOperations GetSyncGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new SyncGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new SyncGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualClustersRestOperations GetVirtualClustersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualClustersRestOperations GetVirtualClustersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualClustersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualClustersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ServersRestOperations GetServersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ServersRestOperations GetServersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ServersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ServersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeletedServersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                DeletedServersRestOperations restOperations = GetDeletedServersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<DeletedServer>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedServers");
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeletedServersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                DeletedServersRestOperations restOperations = GetDeletedServersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<DeletedServer> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedServers");
@@ -268,7 +268,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetInstancePoolsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(InstancePool.ResourceType, out string apiVersion);
+                InstancePoolsRestOperations restOperations = GetInstancePoolsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<InstancePool>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetInstancePools");
@@ -316,7 +317,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetInstancePoolsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(InstancePool.ResourceType, out string apiVersion);
+                InstancePoolsRestOperations restOperations = GetInstancePoolsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<InstancePool> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetInstancePools");
@@ -403,7 +405,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCapabilitiesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CapabilitiesRestOperations restOperations = GetCapabilitiesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.ListByLocationAsync(subscription.Id.SubscriptionId, locationName, include, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -439,7 +441,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCapabilitiesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CapabilitiesRestOperations restOperations = GetCapabilitiesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.ListByLocation(subscription.Id.SubscriptionId, locationName, include, cancellationToken);
                     return response;
                 }
@@ -473,7 +475,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionBackupsRestOperations restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionBackupsByLocation");
@@ -530,7 +532,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionBackupsRestOperations restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionBackupsByLocation");
@@ -592,7 +594,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionBackupsRestOperations restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionBackupsByServer");
@@ -654,7 +656,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionBackupsRestOperations restOperations = GetLongTermRetentionBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionBackupsByServer");
@@ -716,7 +718,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionManagedInstanceBackupsRestOperations restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionManagedInstanceBackupsByInstance");
@@ -778,7 +780,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionManagedInstanceBackupsRestOperations restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionManagedInstanceBackupsByInstance");
@@ -835,7 +837,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionManagedInstanceBackupsRestOperations restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionManagedInstanceBackupsByLocation");
@@ -892,7 +894,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                LongTermRetentionManagedInstanceBackupsRestOperations restOperations = GetLongTermRetentionManagedInstanceBackupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLongTermRetentionManagedInstanceBackupsByLocation");
@@ -941,7 +943,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedInstancesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ManagedInstance.ResourceType, out string apiVersion);
+                ManagedInstancesRestOperations restOperations = GetManagedInstancesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ManagedInstance>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedInstances");
@@ -990,7 +993,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetManagedInstancesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ManagedInstance.ResourceType, out string apiVersion);
+                ManagedInstancesRestOperations restOperations = GetManagedInstancesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ManagedInstance> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedInstances");
@@ -1073,7 +1077,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetOperationsHealthRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                OperationsHealthRestOperations restOperations = GetOperationsHealthRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<OperationsHealth>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOperationsHealthsByLocation");
@@ -1128,7 +1132,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetOperationsHealthRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                OperationsHealthRestOperations restOperations = GetOperationsHealthRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<OperationsHealth> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOperationsHealthsByLocation");
@@ -1183,7 +1187,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetSyncGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                SyncGroupsRestOperations restOperations = GetSyncGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<SubResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSyncDatabaseIdsSyncGroups");
@@ -1238,7 +1242,7 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetSyncGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                SyncGroupsRestOperations restOperations = GetSyncGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<SubResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSyncDatabaseIdsSyncGroups");
@@ -1286,7 +1290,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualCluster.ResourceType, out string apiVersion);
+                VirtualClustersRestOperations restOperations = GetVirtualClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualCluster>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualClusters");
@@ -1334,7 +1339,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualCluster.ResourceType, out string apiVersion);
+                VirtualClustersRestOperations restOperations = GetVirtualClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualCluster> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualClusters");
@@ -1411,7 +1417,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetServersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(SqlServer.ResourceType, out string apiVersion);
+                ServersRestOperations restOperations = GetServersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<SqlServer>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
@@ -1460,7 +1467,8 @@ namespace Azure.ResourceManager.Sql
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetServersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(SqlServer.ResourceType, out string apiVersion);
+                ServersRestOperations restOperations = GetServersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<SqlServer> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServers");
@@ -1546,7 +1554,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var restOperations = GetServersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ServersRestOperations restOperations = GetServersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -1581,7 +1589,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var restOperations = GetServersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ServersRestOperations restOperations = GetServersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, parameters, cancellationToken);
                     return response;
                 }

@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.EdgeOrder
         }
         #endregion
 
-        private static EdgeOrderManagementRestOperations GetEdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static EdgeOrderManagementRestOperations GetEdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<OrderResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderAtResourceGroupLevel");
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<OrderResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderAtResourceGroupLevel");

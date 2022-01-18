@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal ServerDatabaseAdvisorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAdvisorsRestClient = new DatabaseAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerDatabaseAdvisor.ResourceType, out string apiVersion);
+            _databaseAdvisorsRestClient = new DatabaseAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _databaseAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseAdvisor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _databaseAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseAdvisor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _databaseAdvisorsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new ServerDatabaseAdvisor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerDatabaseAdvisor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _databaseAdvisorsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new ServerDatabaseAdvisor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerDatabaseAdvisor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

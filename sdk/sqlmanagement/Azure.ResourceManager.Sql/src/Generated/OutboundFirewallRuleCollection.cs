@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal OutboundFirewallRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _outboundFirewallRulesRestClient = new OutboundFirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(OutboundFirewallRule.ResourceType, out string apiVersion);
+            _outboundFirewallRulesRestClient = new OutboundFirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,9 +55,9 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: OutboundFirewallRules_CreateOrUpdate
         /// <summary> Create a outbound firewall rule with a given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="parameters"> The OutboundFirewallRule to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> or <paramref name="parameters"/> is null. </exception>
         public virtual OutboundFirewallRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string outboundRuleFqdn, OutboundFirewallRuleData parameters, CancellationToken cancellationToken = default)
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _outboundFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, parameters, cancellationToken);
-                var operation = new OutboundFirewallRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, parameters).Request, response);
+                var operation = new OutboundFirewallRuleCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: OutboundFirewallRules_CreateOrUpdate
         /// <summary> Create a outbound firewall rule with a given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="parameters"> The OutboundFirewallRule to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<OutboundFirewallRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string outboundRuleFqdn, OutboundFirewallRuleData parameters, CancellationToken cancellationToken = default)
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _outboundFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new OutboundFirewallRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, parameters).Request, response);
+                var operation = new OutboundFirewallRuleCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _outboundFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OutboundFirewallRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundFirewallRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _outboundFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleFqdn, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OutboundFirewallRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundFirewallRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _outboundFirewallRulesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _outboundFirewallRulesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +345,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _outboundFirewallRulesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _outboundFirewallRulesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundFirewallRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

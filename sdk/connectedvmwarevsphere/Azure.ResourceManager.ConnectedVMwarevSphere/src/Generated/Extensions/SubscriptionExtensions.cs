@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -21,44 +22,44 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static ResourcePoolsRestOperations GetResourcePoolsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ResourcePoolsRestOperations GetResourcePoolsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ResourcePoolsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ResourcePoolsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ClustersRestOperations GetClustersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ClustersRestOperations GetClustersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ClustersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ClustersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static HostsRestOperations GetHostsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static HostsRestOperations GetHostsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new HostsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new HostsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DatastoresRestOperations GetDatastoresRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DatastoresRestOperations GetDatastoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DatastoresRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DatastoresRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VCentersRestOperations GetVCentersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VCentersRestOperations GetVCentersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VCentersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VCentersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualMachinesRestOperations GetVirtualMachinesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualMachinesRestOperations GetVirtualMachinesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualMachinesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualMachinesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualMachineTemplatesRestOperations GetVirtualMachineTemplatesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualMachineTemplatesRestOperations GetVirtualMachineTemplatesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualMachineTemplatesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualMachineTemplatesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualNetworksRestOperations GetVirtualNetworksRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualNetworksRestOperations GetVirtualNetworksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualNetworksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualNetworksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
@@ -73,7 +74,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourcePoolsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ResourcePool.ResourceType, out string apiVersion);
+                ResourcePoolsRestOperations restOperations = GetResourcePoolsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ResourcePool>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourcePools");
@@ -121,7 +123,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourcePoolsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ResourcePool.ResourceType, out string apiVersion);
+                ResourcePoolsRestOperations restOperations = GetResourcePoolsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ResourcePool> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetResourcePools");
@@ -197,7 +200,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VMwareCluster.ResourceType, out string apiVersion);
+                ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VMwareCluster>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
@@ -245,7 +249,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VMwareCluster.ResourceType, out string apiVersion);
+                ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VMwareCluster> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
@@ -321,7 +326,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetHostsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VMwareHost.ResourceType, out string apiVersion);
+                HostsRestOperations restOperations = GetHostsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VMwareHost>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetHosts");
@@ -369,7 +375,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetHostsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VMwareHost.ResourceType, out string apiVersion);
+                HostsRestOperations restOperations = GetHostsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VMwareHost> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetHosts");
@@ -445,7 +452,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDatastoresRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VMwareDatastore.ResourceType, out string apiVersion);
+                DatastoresRestOperations restOperations = GetDatastoresRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VMwareDatastore>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatastores");
@@ -493,7 +501,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDatastoresRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VMwareDatastore.ResourceType, out string apiVersion);
+                DatastoresRestOperations restOperations = GetDatastoresRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VMwareDatastore> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatastores");
@@ -569,7 +578,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVCentersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VCenter.ResourceType, out string apiVersion);
+                VCentersRestOperations restOperations = GetVCentersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VCenter>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVCenters");
@@ -617,7 +627,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVCentersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VCenter.ResourceType, out string apiVersion);
+                VCentersRestOperations restOperations = GetVCentersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VCenter> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVCenters");
@@ -693,7 +704,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualMachine.ResourceType, out string apiVersion);
+                VirtualMachinesRestOperations restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualMachine>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachines");
@@ -741,7 +753,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualMachine.ResourceType, out string apiVersion);
+                VirtualMachinesRestOperations restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualMachine> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachines");
@@ -817,7 +830,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualMachineTemplatesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualMachineTemplate.ResourceType, out string apiVersion);
+                VirtualMachineTemplatesRestOperations restOperations = GetVirtualMachineTemplatesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualMachineTemplate>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineTemplates");
@@ -865,7 +879,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualMachineTemplatesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualMachineTemplate.ResourceType, out string apiVersion);
+                VirtualMachineTemplatesRestOperations restOperations = GetVirtualMachineTemplatesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualMachineTemplate> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineTemplates");
@@ -941,7 +956,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualNetwork.ResourceType, out string apiVersion);
+                VirtualNetworksRestOperations restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualNetwork>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualNetworks");
@@ -989,7 +1005,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualNetwork.ResourceType, out string apiVersion);
+                VirtualNetworksRestOperations restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualNetwork> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualNetworks");

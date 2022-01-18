@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static ConfigurationStoresRestOperations GetConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ConfigurationStoresRestOperations GetConfigurationStoresRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the ConfigurationStores for this <see cref="Subscription" />. </summary>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.AppConfiguration
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ConfigurationStore.ResourceType, out string apiVersion);
+                ConfigurationStoresRestOperations restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ConfigurationStore>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurationStores");
@@ -82,7 +84,8 @@ namespace Azure.ResourceManager.AppConfiguration
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ConfigurationStore.ResourceType, out string apiVersion);
+                ConfigurationStoresRestOperations restOperations = GetConfigurationStoresRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ConfigurationStore> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurationStores");

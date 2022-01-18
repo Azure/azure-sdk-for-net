@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static NamespacesRestOperations GetNamespacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NamespacesRestOperations GetNamespacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the ServiceBusNamespaces for this <see cref="Subscription" />. </summary>
@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.ServiceBus
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ServiceBusNamespace.ResourceType, out string apiVersion);
+                NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ServiceBusNamespace>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
@@ -81,7 +82,8 @@ namespace Azure.ResourceManager.ServiceBus
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ServiceBusNamespace.ResourceType, out string apiVersion);
+                NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ServiceBusNamespace> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
@@ -164,7 +166,7 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -196,7 +198,7 @@ namespace Azure.ResourceManager.ServiceBus
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, parameters, cancellationToken);
                     return response;
                 }

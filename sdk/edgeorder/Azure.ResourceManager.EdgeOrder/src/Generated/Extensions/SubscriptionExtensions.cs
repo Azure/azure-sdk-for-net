@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static EdgeOrderManagementRestOperations GetEdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static EdgeOrderManagementRestOperations GetEdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
@@ -41,7 +41,8 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AddressResource.ResourceType, out string apiVersion);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AddressResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAddressesAtSubscriptionLevel");
@@ -91,7 +92,8 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AddressResource.ResourceType, out string apiVersion);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AddressResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAddressesAtSubscriptionLevel");
@@ -176,7 +178,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ProductFamily>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamilies");
@@ -233,7 +235,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ProductFamily> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamilies");
@@ -289,7 +291,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ProductConfiguration>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurations");
@@ -345,7 +347,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ProductConfiguration> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurations");
@@ -394,7 +396,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ProductFamiliesMetadataDetails>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamiliesMetadata");
@@ -443,7 +445,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ProductFamiliesMetadataDetails> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamiliesMetadata");
@@ -492,7 +494,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<OrderResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderAtSubscriptionLevel");
@@ -541,7 +543,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<OrderResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderAtSubscriptionLevel");
@@ -620,7 +622,8 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(OrderItemResource.ResourceType, out string apiVersion);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<OrderItemResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderItemsAtSubscriptionLevel");
@@ -671,7 +674,8 @@ namespace Azure.ResourceManager.EdgeOrder
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(OrderItemResource.ResourceType, out string apiVersion);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<OrderItemResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderItemsAtSubscriptionLevel");
