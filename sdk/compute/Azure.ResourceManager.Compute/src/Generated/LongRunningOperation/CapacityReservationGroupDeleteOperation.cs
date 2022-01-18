@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Updates the role instances in the specified update domain. </summary>
-    public partial class CloudServiceWalkUpdateDomainCloudServicesUpdateDomainOperation : Operation
+    /// <summary> The operation to delete a capacity reservation group. This operation is allowed only if all the associated resources are disassociated from the reservation group and all capacity reservations under the reservation group have also been deleted. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
+    public partial class CapacityReservationGroupDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of CloudServiceWalkUpdateDomainCloudServicesUpdateDomainOperation for mocking. </summary>
-        protected CloudServiceWalkUpdateDomainCloudServicesUpdateDomainOperation()
+        /// <summary> Initializes a new instance of CapacityReservationGroupDeleteOperation for mocking. </summary>
+        protected CapacityReservationGroupDeleteOperation()
         {
         }
 
-        internal CloudServiceWalkUpdateDomainCloudServicesUpdateDomainOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CapacityReservationGroupDeleteOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CloudServiceWalkUpdateDomainCloudServicesUpdateDomainOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

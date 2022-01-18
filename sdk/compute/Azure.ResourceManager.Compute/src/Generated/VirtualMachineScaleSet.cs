@@ -1437,13 +1437,13 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineScaleSetVM
+        #region VirtualMachineScaleSetVm
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetVMs in the VirtualMachineScaleSet. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetVMs and their operations over a VirtualMachineScaleSet. </returns>
-        public virtual VirtualMachineScaleSetVMCollection GetVirtualMachineScaleSetVMs()
+        /// <summary> Gets a collection of VirtualMachineScaleSetVms in the VirtualMachineScaleSet. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetVms and their operations over a VirtualMachineScaleSet. </returns>
+        public virtual VirtualMachineScaleSetVmCollection GetVirtualMachineScaleSetVms()
         {
-            return new VirtualMachineScaleSetVMCollection(this);
+            return new VirtualMachineScaleSetVmCollection(this);
         }
         #endregion
     }

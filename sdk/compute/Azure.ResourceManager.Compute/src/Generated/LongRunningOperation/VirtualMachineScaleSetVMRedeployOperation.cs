@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on. </summary>
-    public partial class VirtualMachineScaleSetVMRedeployOperation : Operation
+    public partial class VirtualMachineScaleSetVmRedeployOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMRedeployOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMRedeployOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmRedeployOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmRedeployOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMRedeployOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmRedeployOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMRedeployOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmRedeployOperation");
         }
 
         /// <inheritdoc />

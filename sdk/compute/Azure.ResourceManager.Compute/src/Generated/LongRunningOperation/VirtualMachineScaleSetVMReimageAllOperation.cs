@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for managed disks. </summary>
-    public partial class VirtualMachineScaleSetVMReimageAllOperation : Operation
+    public partial class VirtualMachineScaleSetVmReimageAllOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMReimageAllOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMReimageAllOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmReimageAllOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmReimageAllOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMReimageAllOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmReimageAllOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMReimageAllOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmReimageAllOperation");
         }
 
         /// <inheritdoc />

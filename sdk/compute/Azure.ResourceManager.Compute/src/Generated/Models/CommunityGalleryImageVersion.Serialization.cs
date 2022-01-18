@@ -11,12 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryImageVersion
+    public partial class CommunityGalleryImageVersion
     {
-        internal static SharedGalleryImageVersion DeserializeSharedGalleryImageVersion(JsonElement element)
+        internal static CommunityGalleryImageVersion DeserializeCommunityGalleryImageVersion(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> location = default;
+            Optional<string> type = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<string> uniqueId = default;
@@ -30,6 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharedGalleryImageVersion(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate));
+            return new CommunityGalleryImageVersion(name.Value, location.Value, type.Value, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate));
         }
     }
 }

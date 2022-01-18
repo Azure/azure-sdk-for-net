@@ -12,12 +12,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryImage
+    public partial class CommunityGalleryImage
     {
-        internal static SharedGalleryImage DeserializeSharedGalleryImage(JsonElement element)
+        internal static CommunityGalleryImage DeserializeCommunityGalleryImage(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> location = default;
+            Optional<string> type = default;
             Optional<OperatingSystemTypes> osType = default;
             Optional<OperatingSystemStateTypes> osState = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
@@ -38,6 +39,11 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharedGalleryImage(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value);
+            return new CommunityGalleryImage(name.Value, location.Value, type.Value, uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value);
         }
     }
 }

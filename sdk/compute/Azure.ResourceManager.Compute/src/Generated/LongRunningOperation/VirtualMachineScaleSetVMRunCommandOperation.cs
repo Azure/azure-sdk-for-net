@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Run command on a virtual machine in a VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMRunCommandOperation : Operation<RunCommandResult>, IOperationSource<RunCommandResult>
+    public partial class VirtualMachineScaleSetVmRunCommandOperation : Operation<RunCommandResult>, IOperationSource<RunCommandResult>
     {
         private readonly OperationInternals<RunCommandResult> _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMRunCommandOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMRunCommandOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmRunCommandOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmRunCommandOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMRunCommandOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmRunCommandOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<RunCommandResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMRunCommandOperation");
+            _operation = new OperationInternals<RunCommandResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmRunCommandOperation");
         }
 
         /// <inheritdoc />

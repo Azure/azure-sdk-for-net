@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The operation to start a virtual machine. </summary>
-    public partial class VirtualMachineStartOperation : Operation
+    /// <summary> Updates the role instances in the specified update domain. </summary>
+    public partial class CloudServiceWalkUpdateDomainOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineStartOperation for mocking. </summary>
-        protected VirtualMachineStartOperation()
+        /// <summary> Initializes a new instance of CloudServiceWalkUpdateDomainOperation for mocking. </summary>
+        protected CloudServiceWalkUpdateDomainOperation()
         {
         }
 
-        internal VirtualMachineStartOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CloudServiceWalkUpdateDomainOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineStartOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CloudServiceWalkUpdateDomainOperation");
         }
 
         /// <inheritdoc />

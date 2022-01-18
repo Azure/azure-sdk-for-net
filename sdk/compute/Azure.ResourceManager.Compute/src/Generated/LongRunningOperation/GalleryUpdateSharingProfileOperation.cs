@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Update sharing profile of a gallery. </summary>
-    public partial class GalleryUpdateGallerySharingProfileOperation : Operation<SharingUpdate>, IOperationSource<SharingUpdate>
+    public partial class GalleryUpdateSharingProfileOperation : Operation<SharingUpdate>, IOperationSource<SharingUpdate>
     {
         private readonly OperationInternals<SharingUpdate> _operation;
 
-        /// <summary> Initializes a new instance of GalleryUpdateGallerySharingProfileOperation for mocking. </summary>
-        protected GalleryUpdateGallerySharingProfileOperation()
+        /// <summary> Initializes a new instance of GalleryUpdateSharingProfileOperation for mocking. </summary>
+        protected GalleryUpdateSharingProfileOperation()
         {
         }
 
-        internal GalleryUpdateGallerySharingProfileOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal GalleryUpdateSharingProfileOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SharingUpdate>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryUpdateGallerySharingProfileOperation");
+            _operation = new OperationInternals<SharingUpdate>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryUpdateSharingProfileOperation");
         }
 
         /// <inheritdoc />

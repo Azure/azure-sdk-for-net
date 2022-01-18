@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         public SharedGalleriesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2020-09-30";
+            this.apiVersion = apiVersion ?? "2021-07-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
-        public async Task<Response<SharedGallery>> GetAsync(string subscriptionId, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public async Task<Response<SharedGalleryData>> GetAsync(string subscriptionId, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -178,11 +178,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        SharedGallery value = default;
+                        SharedGalleryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedGallery.DeserializeSharedGallery(document.RootElement);
+                        value = SharedGalleryData.DeserializeSharedGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((SharedGalleryData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -194,7 +196,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, or <paramref name="galleryUniqueName"/> is null. </exception>
-        public Response<SharedGallery> Get(string subscriptionId, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public Response<SharedGalleryData> Get(string subscriptionId, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -215,11 +217,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        SharedGallery value = default;
+                        SharedGalleryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedGallery.DeserializeSharedGallery(document.RootElement);
+                        value = SharedGalleryData.DeserializeSharedGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((SharedGalleryData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

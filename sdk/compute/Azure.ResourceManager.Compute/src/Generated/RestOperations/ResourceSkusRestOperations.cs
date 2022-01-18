@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Compute
         public ResourceSkusRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2019-04-01";
+            this.apiVersion = apiVersion ?? "2021-07-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string filter)
+        internal HttpMessage CreateListRequest(string subscriptionId, string filter, string includeExtendedLocations)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$filter", filter, true);
             }
+            if (includeExtendedLocations != null)
+            {
+                uri.AppendQuery("includeExtendedLocations", includeExtendedLocations, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -66,16 +70,17 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<ResourceSkusResult>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceSkusResult>> ListAsync(string subscriptionId, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            using var message = CreateListRequest(subscriptionId, filter);
+            using var message = CreateListRequest(subscriptionId, filter, includeExtendedLocations);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -94,16 +99,17 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<ResourceSkusResult> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ResourceSkusResult> List(string subscriptionId, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            using var message = CreateListRequest(subscriptionId, filter);
+            using var message = CreateListRequest(subscriptionId, filter, includeExtendedLocations);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, string includeExtendedLocations)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -137,9 +143,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<ResourceSkusResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceSkusResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, includeExtendedLocations);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -170,9 +177,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        public Response<ResourceSkusResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ResourceSkusResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -183,7 +191,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, includeExtendedLocations);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

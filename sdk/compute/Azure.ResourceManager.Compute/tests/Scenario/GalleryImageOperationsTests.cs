@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             };
-            GalleryImage updatedGalleryImage = await image.SetTagsAsync(tags);
+            GalleryImage updatedGalleryImage = await image.SetTagsAsync(true, tags);
 
             Assert.AreEqual(tags, updatedGalleryImage.Data.Tags);
         }

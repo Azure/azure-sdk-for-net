@@ -12,18 +12,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
-    public partial class SharedGalleryImage : PirSharedGalleryResource
+    public partial class CommunityGalleryImage : PirCommunityGalleryResource
     {
-        /// <summary> Initializes a new instance of SharedGalleryImage. </summary>
-        internal SharedGalleryImage()
+        /// <summary> Initializes a new instance of CommunityGalleryImage. </summary>
+        internal CommunityGalleryImage()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryImage. </summary>
+        /// <summary> Initializes a new instance of CommunityGalleryImage. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </param>
         /// <param name="endOfLifeDate"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="features"> A list of gallery image features. </param>
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
-        internal SharedGalleryImage(string name, string location, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, uniqueId)
+        internal CommunityGalleryImage(string name, string location, string type, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, type, uniqueId)
         {
             OsType = osType;
             OsState = osState;

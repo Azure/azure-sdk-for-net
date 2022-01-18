@@ -466,19 +466,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public async virtual Task<GalleryUpdateGallerySharingProfileOperation> UpdateGallerySharingProfileAsync(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryUpdateSharingProfileOperation> UpdateSharingProfileAsync(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
             if (sharingUpdate == null)
             {
                 throw new ArgumentNullException(nameof(sharingUpdate));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateGallerySharingProfile");
+            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateSharingProfile");
             scope.Start();
             try
             {
                 var response = await _gallerySharingProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryUpdateGallerySharingProfileOperation(_clientDiagnostics, Pipeline, _gallerySharingProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate).Request, response);
+                var operation = new GalleryUpdateSharingProfileOperation(_clientDiagnostics, Pipeline, _gallerySharingProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -495,19 +495,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharingUpdate"/> is null. </exception>
-        public virtual GalleryUpdateGallerySharingProfileOperation UpdateGallerySharingProfile(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
+        public virtual GalleryUpdateSharingProfileOperation UpdateSharingProfile(bool waitForCompletion, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
             if (sharingUpdate == null)
             {
                 throw new ArgumentNullException(nameof(sharingUpdate));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateGallerySharingProfile");
+            using var scope = _clientDiagnostics.CreateScope("Gallery.UpdateSharingProfile");
             scope.Start();
             try
             {
                 var response = _gallerySharingProfileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate, cancellationToken);
-                var operation = new GalleryUpdateGallerySharingProfileOperation(_clientDiagnostics, Pipeline, _gallerySharingProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate).Request, response);
+                var operation = new GalleryUpdateSharingProfileOperation(_clientDiagnostics, Pipeline, _gallerySharingProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharingUpdate).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

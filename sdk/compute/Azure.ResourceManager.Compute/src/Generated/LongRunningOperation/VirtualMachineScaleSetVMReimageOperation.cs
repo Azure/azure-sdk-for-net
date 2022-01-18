@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Reimages (upgrade the operating system) a specific virtual machine in a VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMReimageOperation : Operation
+    public partial class VirtualMachineScaleSetVmReimageOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMReimageOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMReimageOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmReimageOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmReimageOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMReimageOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmReimageOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMReimageOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmReimageOperation");
         }
 
         /// <inheritdoc />

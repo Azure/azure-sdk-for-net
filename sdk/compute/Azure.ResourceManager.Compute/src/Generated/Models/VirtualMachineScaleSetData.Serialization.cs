@@ -125,6 +125,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("orchestrationMode");
                 writer.WriteStringValue(OrchestrationMode.Value.ToString());
             }
+            if (Optional.IsDefined(SpotRestorePolicy))
+            {
+                writer.WritePropertyName("spotRestorePolicy");
+                writer.WriteObjectValue(SpotRestorePolicy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.Compute
             Optional<AdditionalCapabilities> additionalCapabilities = default;
             Optional<ScaleInPolicy> scaleInPolicy = default;
             Optional<OrchestrationMode> orchestrationMode = default;
+            Optional<SpotRestorePolicy> spotRestorePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -392,11 +398,21 @@ namespace Azure.ResourceManager.Compute
                             orchestrationMode = new OrchestrationMode(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("spotRestorePolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            spotRestorePolicy = SpotRestorePolicy.DeserializeSpotRestorePolicy(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, tags, location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVMs), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode));
+            return new VirtualMachineScaleSetData(id, name, type, tags, location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVMs), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value);
         }
     }
 }

@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges. </summary>
-    public partial class VirtualMachineScaleSetVMPowerOffOperation : Operation
+    public partial class VirtualMachineScaleSetVmPowerOffOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMPowerOffOperation for mocking. </summary>
-        protected VirtualMachineScaleSetVMPowerOffOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmPowerOffOperation for mocking. </summary>
+        protected VirtualMachineScaleSetVmPowerOffOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMPowerOffOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVmPowerOffOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMPowerOffOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVmPowerOffOperation");
         }
 
         /// <inheritdoc />
