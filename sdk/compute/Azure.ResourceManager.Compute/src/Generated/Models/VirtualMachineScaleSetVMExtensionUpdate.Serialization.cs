@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("protectedSettings");
                 writer.WriteObjectValue(ProtectedSettings);
             }
+            if (Optional.IsDefined(SuppressFailures))
+            {
+                writer.WritePropertyName("suppressFailures");
+                writer.WriteBooleanValue(SuppressFailures.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableAutomaticUpgrade = default;
             Optional<object> settings = default;
             Optional<object> protectedSettings = default;
+            Optional<bool> suppressFailures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -160,11 +166,21 @@ namespace Azure.ResourceManager.Compute.Models
                             protectedSettings = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("suppressFailures"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            suppressFailures = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMExtensionUpdate(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value);
+            return new VirtualMachineScaleSetVMExtensionUpdate(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToNullable(suppressFailures));
         }
     }
 }

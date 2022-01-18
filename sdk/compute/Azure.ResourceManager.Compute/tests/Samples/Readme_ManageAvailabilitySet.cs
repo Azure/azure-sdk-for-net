@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation rgLro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation rgLro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgLro.Value;
             #region Snippet:Managing_Availability_Set_CreateAnAvailabilitySet
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // add a tag on this availabilitySet
-            AvailabilitySet updatedAvailabilitySet = await availabilitySet.AddTagAsync("key", "value");
+            AvailabilitySet updatedAvailabilitySet = await availabilitySet.AddTagAsync(true, "key", "value");
             #endregion Snippet:Managing_Availability_Set_AddTagAvailabilitySet
         }
     }
