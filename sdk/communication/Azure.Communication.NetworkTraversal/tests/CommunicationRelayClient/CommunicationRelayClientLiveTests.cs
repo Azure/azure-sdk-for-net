@@ -27,87 +27,87 @@ namespace Azure.Communication.NetworkTraversal.Tests
         {
         }
 
-        //[Test]
-        //[TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionString")]
-        //[TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredential")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredential")]
-        //public async Task GettingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod, params string[] scopes)
-        //{
-        //    CommunicationRelayClient client = authMethod switch
-        //    {
-        //        AuthMethod.ConnectionString => CreateClientWithConnectionString(),
-        //        AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
-        //        AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
-        //        _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
-        //    };
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredential")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentials(AuthMethod authMethod, params string[] scopes)
+        {
+            CommunicationRelayClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
 
-        //    CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
-        //    Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-        //    Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value);
+            Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value);
 
-        //    Assert.IsNotNull(turnCredentialsResponse.Value);
-        //    Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
-        //    Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
-        //    foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
-        //    {
-        //        foreach (string url in serverCredential.Urls)
-        //        {
-        //            Assert.IsFalse(string.IsNullOrWhiteSpace(url));
-        //        }
-        //        Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
-        //        Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
-        //        Assert.IsNotNull((serverCredential.RouteType));
-        //    }
-        //}
-
-        //[Test]
-        //[TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringRouteTypeNearest")]
-        //[TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialRouteTypeNearest")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialRouteTypeNearest")]
-        //public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithNearestRouteType(AuthMethod authMethod, params string[] scopes)
-        //    => await GettingTurnCredentialsWithRequestedRouteType(authMethod, RouteType.Nearest);
-
-        //[Test]
-        //[TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringRouteTypeAny")]
-        //[TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialRouteTypeAny")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialRouteTypeAny")]
-        //public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithAnyRouteType(AuthMethod authMethod, params string[] scopes)
-        //=> await GettingTurnCredentialsWithRequestedRouteType(authMethod, RouteType.Any);
-
-        //public async Task GettingTurnCredentialsWithRequestedRouteType(AuthMethod authMethod, RouteType routeType)
-        //{
-        //    CommunicationRelayClient client = authMethod switch
-        //    {
-        //        AuthMethod.ConnectionString => CreateClientWithConnectionString(),
-        //        AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
-        //        AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
-        //        _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
-        //    };
-
-        //    CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-
-        //    Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
-        //    Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value, routeType) ;
-
-        //    Assert.IsNotNull(turnCredentialsResponse.Value);
-        //    Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
-        //    Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
-        //    foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
-        //    {
-        //        foreach (string url in serverCredential.Urls)
-        //        {
-        //            Assert.IsFalse(string.IsNullOrWhiteSpace(url));
-        //        }
-        //        Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
-        //        Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
-        //        Assert.AreEqual(routeType, serverCredential.RouteType);
-        //    }
-        //}
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
+            {
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
+                Assert.IsNotNull((serverCredential.RouteType));
+            }
+        }
 
         [Test]
-        //[TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringWithoutIdentity")]
-        //[TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialWithoutIdentity")]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringRouteTypeNearest")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialRouteTypeNearest")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialRouteTypeNearest")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithNearestRouteType(AuthMethod authMethod, params string[] scopes)
+            => await GettingTurnCredentialsWithRequestedRouteType(authMethod, RouteType.Nearest);
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringRouteTypeAny")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialRouteTypeAny")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialRouteTypeAny")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithAnyRouteType(AuthMethod authMethod, params string[] scopes)
+        => await GettingTurnCredentialsWithRequestedRouteType(authMethod, RouteType.Any);
+
+        public async Task GettingTurnCredentialsWithRequestedRouteType(AuthMethod authMethod, RouteType routeType)
+        {
+            CommunicationRelayClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+
+            Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value, routeType);
+
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
+            {
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
+                Assert.AreEqual(routeType, serverCredential.RouteType);
+            }
+        }
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringWithoutIdentity")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialWithoutIdentity")]
         [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialWithoutIdentity")]
         public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithoutIdentity(AuthMethod authMethod, params string[] scopes)
         {

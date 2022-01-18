@@ -41,7 +41,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithConnectionString();
 
             Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user);
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
             foreach (CommunicationIceServer iceServer in iceServers)
@@ -72,7 +72,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithConnectionString();
             #region Snippet:GetRelayConfigurationAsyncWithNearestRouteType
             Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user,RouteType.Nearest);
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
             foreach (CommunicationIceServer iceServer in iceServers)
@@ -101,7 +101,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
 
             #region Snippet:GetRelayConfigurationAsync
             Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
             foreach (CommunicationIceServer iceServer in iceServers)
@@ -135,7 +135,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithConnectionString();
 
             Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user);
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
             foreach (CommunicationIceServer iceServer in iceServers)
@@ -165,7 +165,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
             client = CreateClientWithConnectionString();
 
             Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(user, RouteType.Nearest);
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
             foreach (CommunicationIceServer iceServer in iceServers)
@@ -193,7 +193,7 @@ namespace Azure.Communication.NetworkTraversal.Samples
 
             #region Snippet:GetRelayConfiguration
             Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration();
-            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
             IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
             Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
             foreach (CommunicationIceServer iceServer in iceServers)
