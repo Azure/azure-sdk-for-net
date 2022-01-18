@@ -51,7 +51,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -110,7 +110,7 @@ await eventHubNamespace.DeleteAsync(true);
 ```C# Snippet:Managing_Namespaces_AddTag
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
 EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-await eventHubNamespace.AddTagAsync("key","value");
+await eventHubNamespace.AddTagAsync(true, "key","value");
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/yukun-dong/azure-sdk-for-net/tree/eventhub-2018-01-preview/sdk/eventhub/Azure.ResourceManager.EventHubs/samples) we have available.
