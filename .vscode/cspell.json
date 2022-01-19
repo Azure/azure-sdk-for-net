@@ -116,8 +116,7 @@
         "vhds",
         "swappable",
         "ssdzrs",
-        "dscp",
-        "vmguest"
+        "dscp"
       ]
     },
     {
