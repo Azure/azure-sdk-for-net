@@ -1,4 +1,4 @@
-﻿//#region Snippet:Using_Statements
+﻿#region Snippet:Using_Statements
 //using System;
 //using System.Linq;
 //using Azure.Identity;
@@ -10,7 +10,7 @@
 //using Azure.ResourceManager.Network.Models;
 //using Azure.ResourceManager.Resources;
 //using Azure.ResourceManager.Resources.Models;
-//#endregion
+#endregion
 //using System.Threading.Tasks;
 //using NUnit.Framework;
 
@@ -22,11 +22,11 @@
 //        [Ignore("Only verifying that the sample builds")]
 //        public async Task MigrationExample()
 //        {
-//            #region Snippet:Construct_Client
+            #region Snippet:Construct_Client
 //            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-//            #endregion
+            #endregion
 
-//            #region Snippet:Create_ResourceGroup
+            #region Snippet:Create_ResourceGroup
 //            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 //            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
@@ -36,17 +36,17 @@
 //            ResourceGroupData rgData = new ResourceGroupData(location);
 //            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 //            ResourceGroup resourceGroup = rgCreateLro.Value;
-//            #endregion
+            #endregion
 
-//            #region Snippet:Create_AvailabilitySet
+            #region Snippet:Create_AvailabilitySet
 //            string vmName = "quickstartvm";
 //            AvailabilitySetData aSetData = new AvailabilitySetData(location);
 //            AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
 //            AvailabilitySet aset = asetCreateLro.Value;
 //            string asetId = aset.Id;
-//            #endregion
+            #endregion
 
-//            #region Snippet:Create_Vnet_and_Subnet
+            #region Snippet:Create_Vnet_and_Subnet
 //            string vnetName = "MYVM" + "_vnet";
 //            string subnetName = "mySubnet";
 //            AddressSpace addressSpace = new AddressSpace();
@@ -66,16 +66,16 @@
 //            };
 //            VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
 //            VirtualNetwork vnet = vnetCreateLro.Value;
-//            #endregion
+            #endregion
 
-//            #region Snippet:Create_NetworkSecurityGroup
+            #region Snippet:Create_NetworkSecurityGroup
 //            string nsgName = vmName + "_nsg";
 //            NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
 //            NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, nsgName, nsgData);
 //            NetworkSecurityGroup nsg = nsgCreateLro.Value;
-//            #endregion
+            #endregion
 
-//            #region Snippet:Create_NetworkInterface
+            #region Snippet:Create_NetworkInterface
 //            string nicName = vmName + "_nic";
 //            NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
 //            {
@@ -90,9 +90,9 @@
 //            nicData.IpConfigurations.Add(nicIPConfig);
 //            NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicData);
 //            NetworkInterface nic = nicCreateLro.Value;
-//            #endregion
+            #endregion
 
-//            #region Snippet:Create_VirtualMachine
+            #region Snippet:Create_VirtualMachine
 //            VirtualMachineData vmData = new VirtualMachineData(location);
 //            vmData.OsProfile.AdminUsername = "admin-username";
 //            vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
@@ -105,7 +105,7 @@
 
 //            VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, vmName, vmData)).Value;
 //            Console.WriteLine("VM ID: " + vm.Id);
-//            #endregion
+            #endregion
 //        }
 //    }
 //}
