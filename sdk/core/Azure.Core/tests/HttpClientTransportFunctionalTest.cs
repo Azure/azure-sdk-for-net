@@ -90,18 +90,33 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public async Task CookiesCanBeEnabledUsingSwitch()
         {
             using var appContextSwitch = new TestAppContextSwitch("Azure.Core.Pipeline.HttpClientTransport.EnableCookies", "true");
+
+            await TestCookiesEnabled();
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task CookiesCanBeEnabledUsingEnvVar()
+        {
+            using var envVar = new TestEnvVar("AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES", "true");
+
+            await TestCookiesEnabled();
+        }
+
+        private async Task TestCookiesEnabled()
+        {
             int requestCount = 0;
             using (TestServer testServer = new TestServer(
-                context =>
+                async context =>
                 {
                     if (requestCount++ == 1)
                     {
                         Assert.IsTrue(context.Request.Headers.ContainsKey("cookie"));
-                        Assert.AreEqual(
-                            "stsservicecookie=estsfd",
+                        Assert.AreEqual("stsservicecookie=estsfd",
                             context.Request.Headers["cookie"].First());
                     }
 
@@ -109,7 +124,7 @@ namespace Azure.Core.Tests
                     context.Response.Headers.Add(
                         "set-cookie",
                         "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly");
-                    return Task.CompletedTask;
+                    await context.Response.WriteAsync("");
                 },
                 https: true))
             {
@@ -118,7 +133,7 @@ namespace Azure.Core.Tests
                 request.Method = RequestMethod.Post;
                 request.Uri.Reset(testServer.Address);
                 request.Content = RequestContent.Create("Hello");
-                var response = await ExecuteRequest(request, transport);
+                await ExecuteRequest(request, transport);
 
                 // create a second request to verify cookies not set
                 request = transport.CreateRequest();
@@ -126,54 +141,6 @@ namespace Azure.Core.Tests
                 request.Uri.Reset(testServer.Address);
                 request.Content = RequestContent.Create("Hello");
                 await ExecuteRequest(request, transport);
-            }
-        }
-
-        [Test]
-        public async Task CookiesCanBeEnabledUsingEnvVar()
-        {
-            string oldValue = Environment.GetEnvironmentVariable("AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
-
-            Environment.SetEnvironmentVariable("AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES", "true");
-
-            try
-            {
-                int requestCount = 0;
-                using (TestServer testServer = new TestServer(
-                    async context =>
-                    {
-                        if (requestCount++ == 1)
-                        {
-                            Assert.IsTrue(context.Request.Headers.ContainsKey("cookie"));
-                            Assert.AreEqual("stsservicecookie=estsfd; path=/; secure; samesite=none; httponly",
-                                context.Request.Headers["cookie"]);
-                        }
-
-                        context.Response.StatusCode = 200;
-                        context.Response.Headers.Add(
-                            "set-cookie",
-                            "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly");
-                        await context.Response.WriteAsync("");
-                    }))
-                {
-                    var transport = GetTransport(https: true);
-                    Request request = transport.CreateRequest();
-                    request.Method = RequestMethod.Post;
-                    request.Uri.Reset(testServer.Address);
-                    request.Content = RequestContent.Create("Hello");
-                    await ExecuteRequest(request, transport);
-
-                    // create a second request to verify cookies not set
-                    request = transport.CreateRequest();
-                    request.Method = RequestMethod.Post;
-                    request.Uri.Reset(testServer.Address);
-                    request.Content = RequestContent.Create("Hello");
-                    await ExecuteRequest(request, transport);
-                }
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES", oldValue);
             }
         }
 

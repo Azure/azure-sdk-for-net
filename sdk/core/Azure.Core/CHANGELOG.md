@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Cookies are no longer set on requests by default. They can be re-enabled for `HttpClientTransport` using the `Azure.Core.Pipeline.HttpClientTransport.EnableCookies` switch, or the `AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES` environment variable.
+
 ### Bugs Fixed
 
 ### Other Changes
