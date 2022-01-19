@@ -636,5 +636,17 @@ namespace Azure.ResourceManager.Resources
         {
             return func(ArmClient.BaseUri, ArmClient.Credential, new ArmClientOptions(), ArmClient.Pipeline);
         }
+
+        /// <summary>
+        /// Provides a way to reuse the protected client context.
+        /// </summary>
+        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
+        /// <param name="func"> The method to pass the internal properties to. </param>
+        /// <returns> Whatever the delegate returns. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T UseClientContext<T>(Func<ArmClient, Uri, DiagnosticsOptions, HttpPipeline, T> func)
+        {
+            return func(ArmClient, BaseUri, DiagnosticOptions, Pipeline);
+        }
     }
 }
