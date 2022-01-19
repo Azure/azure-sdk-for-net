@@ -11,6 +11,8 @@ input-file:  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/54a980
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
+override-operation-name:
+    CommunicationService_CheckNameAvailability: CheckCommunicationNameAvailability
 directive:
   - rename-model:
       from: CommunicationServiceResource

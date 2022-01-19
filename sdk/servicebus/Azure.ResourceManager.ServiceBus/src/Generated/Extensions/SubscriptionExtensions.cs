@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityNamespace");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckServiceBusNameAvailability");
                 scope.Start();
                 try
                 {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ServiceBus
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailabilityNamespace");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckServiceBusNameAvailability");
                 scope.Start();
                 try
                 {
