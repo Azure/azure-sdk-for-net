@@ -31,7 +31,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="beginExecutionTime"> The time when the job began execution. </param>
         /// <param name="endExecutionTime"> The time when the job finished execution. </param>
         /// <param name="cancellationTime"> The time when a job was successfully cancelled. </param>
-        /// <param name="costEstimate"> The job cost estimate. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </param>
+        /// <param name="costEstimate"> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </param>
         /// <param name="errorData"> The error data for the job. This is expected only when Status &apos;Failed&apos;. </param>
         /// <param name="tags"> List of user-supplied tags associated with the job. </param>
         /// <returns> A new <see cref="Models.JobDetails"/> instance for mocking. </returns>

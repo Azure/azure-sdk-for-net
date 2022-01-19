@@ -20,11 +20,11 @@ namespace Azure.Quantum.Jobs.Samples
         {
             #region Snippet:Azure_Quantum_Jobs_CreateClient
             // Create a QuantumJobClient
-            var subscriptionId = "your_subscription_id";
-            var resourceGroupName = "your_resource_group_name";
-            var workspaceName = "your_quantum_workspace_name";
-            var location = "your_location";
-            var storageContainerName = "your_container_name";
+            var subscriptionId = "916dfd6d-030c-4bd9-b579-7bb6d1926e97";
+            var resourceGroupName = "e2e-scenarios";
+            var workspaceName = "e2e-qsharp-tests";
+            var location = "westus2";
+            var storageContainerName = "testcontainer";
 
             var credential = new DefaultAzureCredential(true);
 
