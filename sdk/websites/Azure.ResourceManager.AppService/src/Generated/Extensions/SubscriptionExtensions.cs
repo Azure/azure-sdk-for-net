@@ -2012,7 +2012,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -2022,7 +2022,7 @@ namespace Azure.ResourceManager.AppService
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppServiceNameAvailability");
                 scope.Start();
                 try
                 {
@@ -2049,7 +2049,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<ResourceNameAvailability> CheckNameAvailability(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -2059,7 +2059,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppServiceNameAvailability");
                 scope.Start();
                 try
                 {
