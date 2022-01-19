@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Messaging;
+using Azure.Messaging.EventGrid;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -49,11 +51,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             private readonly Dictionary<string, Type> _bindingContract;
             private readonly EventGridExtensionConfigProvider _eventGridExtensionConfigProvider;
             private readonly bool _singleDispatch;
+            private readonly bool _hasEventGridEvent;
+            private readonly bool _hasCloudEvent;
 
             public EventGridTriggerBinding(ParameterInfo parameter, EventGridExtensionConfigProvider eventGridExtensionConfigProvider, bool singleDispatch)
             {
                 _eventGridExtensionConfigProvider = eventGridExtensionConfigProvider;
                 _parameter = parameter;
+                _hasEventGridEvent = _parameter.ParameterType == typeof(EventGridEvent);
+                _hasCloudEvent = _parameter.ParameterType == typeof(CloudEvent);
                 _singleDispatch = singleDispatch;
                 _bindingContract = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
                 {
@@ -127,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 // for csharp function, shortName == functionNameAttribute.Name
                 // for csharpscript function, shortName == Functions.FolderName (need to strip the first half)
                 string functionName = context.Descriptor.ShortName.Split('.').Last();
-                return Task.FromResult<IListener>(new EventGridListener(context.Executor, _eventGridExtensionConfigProvider, functionName, _singleDispatch));
+                return Task.FromResult<IListener>(new EventGridListener(context.Executor, _eventGridExtensionConfigProvider, functionName, _singleDispatch, _hasEventGridEvent, _hasCloudEvent));
             }
 
             public ParameterDescriptor ToParameterDescriptor()

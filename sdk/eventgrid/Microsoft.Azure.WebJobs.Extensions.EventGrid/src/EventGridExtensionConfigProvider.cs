@@ -139,7 +139,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 return new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent($"cannot find function: '{functionName}'") };
             }
 
-            return await _httpRequestProcessor.ProcessAsync(req, functionName, ProcessEventsAsync, CancellationToken.None).ConfigureAwait(false);
+            var listener = _listeners[functionName];
+            return await _httpRequestProcessor.ProcessAsync(req, functionName, ProcessEventsAsync, listener.HasEventGridEvent, listener.HasCloudEvent, CancellationToken.None).ConfigureAwait(false);
         }
 
         private async Task<HttpResponseMessage> ProcessEventsAsync(JArray events, string functionName, CancellationToken cancellationToken)

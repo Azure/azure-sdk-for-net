@@ -11,16 +11,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
     {
         public ITriggeredFunctionExecutor Executor { get; private set; }
         public readonly bool SingleDispatch;
+        public bool HasEventGridEvent { get; }
+        public bool HasCloudEvent { get; }
 
         private EventGridExtensionConfigProvider _listenersStore;
         private readonly string _functionName;
 
-        public EventGridListener(ITriggeredFunctionExecutor executor, EventGridExtensionConfigProvider listenersStore, string functionName, bool singleDispatch)
+        public EventGridListener(ITriggeredFunctionExecutor executor, EventGridExtensionConfigProvider listenersStore, string functionName, bool singleDispatch, bool hasEventGridEvent, bool hasCloudEvent)
         {
             _listenersStore = listenersStore;
             _functionName = functionName;
             SingleDispatch = singleDispatch;
             Executor = executor;
+            HasEventGridEvent = hasEventGridEvent;
+            HasCloudEvent = hasCloudEvent;
 
             // Register the listener as part of create time initialization
             _listenersStore.AddListener(_functionName, this);
