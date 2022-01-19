@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Generate aadToken for Azure Directory app.
+Generate aadToken for Azure Directory app using client secrets.
 .PARAMETER TenantId
 The aad tenant id/Directory ID. 
 .PARAMETER ClientId
@@ -51,10 +51,7 @@ param(
   [hashtable]$AdditionalHeaders,
 
   [Parameter(Mandatory = $false)]
-  [hashtable]$AdditionalBody,
-
-  [Parameter(Mandatory = $false)]
-  [switch]$TestMode
+  [hashtable]$AdditionalBody
 )
 . "${PSScriptRoot}\logging.ps1"
 
@@ -103,6 +100,3 @@ catch {
 $resp | Write-Verbose
 
 return $resp.access_token
-
-
-  
