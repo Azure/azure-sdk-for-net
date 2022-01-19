@@ -1,12 +1,12 @@
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
-    [System.ObsoleteAttribute("Please use SignalRTriggerCategories instead.")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public static partial class Category
     {
         public const string Connections = "connections";
         public const string Messages = "messages";
     }
-    [System.ObsoleteAttribute("Please use SignalRTriggerEvents instead.")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public static partial class Event
     {
         public const string Connected = "connected";

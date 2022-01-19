@@ -71,7 +71,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public static bool TryGetJsonObjectSerializer(this IConfiguration configuration, out ObjectSerializer serializer)
         {
-            var hubProtocolConfig = configuration[Constants.AzureSignalRHubProtocol];
             //indicates Newtonsoft, camcelCase
             if (configuration.GetValue(Constants.AzureSignalRNewtonsoftCamelCase, false))
             {
@@ -88,6 +87,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 return true;
             }
 
+            var hubProtocolConfig = configuration[Constants.AzureSignalRHubProtocol];
             if (hubProtocolConfig is not null)
             {
                 serializer = Enum.Parse(typeof(HubProtocol), hubProtocolConfig, true) switch

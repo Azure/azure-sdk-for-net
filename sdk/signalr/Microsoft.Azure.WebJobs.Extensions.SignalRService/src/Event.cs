@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.ComponentModel;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     /// A class contains constant strings that represents different trigger event type.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Breaking change")]
-    [Obsolete("Please use SignalRTriggerEvents instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public static class Event
     {
         /// <summary>
