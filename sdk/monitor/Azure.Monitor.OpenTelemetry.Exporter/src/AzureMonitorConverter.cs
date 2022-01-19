@@ -35,7 +35,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 MonitorBase telemetryData = new MonitorBase();
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = TelemetryItem.GetTelemetry(activity, ref monitorTags, instrumentationKey);
+                telemetryItem = new TelemetryItem(activity, ref monitorTags);
+                telemetryItem.InstrumentationKey = instrumentationKey;
                 telemetryItem.SetResource(roleName, roleInstance);
 
                 switch (activity.GetTelemetryType())
@@ -64,7 +65,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = TelemetryItem.GetTelemetry(logRecord, instrumentationKey);
+                telemetryItem = new TelemetryItem(logRecord);
+                telemetryItem.InstrumentationKey = instrumentationKey;
                 telemetryItem.SetResource(roleName, roleInstance);
                 telemetryItem.Data = new MonitorBase
                 {

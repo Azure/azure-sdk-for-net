@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Azure.Core;
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -20,58 +21,49 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             [TelemetryType.Event] = "Event",
         };
 
-        internal static TelemetryItem GetTelemetry(Activity activity, ref TagEnumerationState monitorTags, string instrumentationKey)
+        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags)
         {
-            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
-            {
-                InstrumentationKey = instrumentationKey
-            };
+            this.Name = PartA_Name_Mapping[activity.GetTelemetryType()];
+            this.Time = FormatUtcTimestamp(activity.StartTimeUtc);
+            this.Tags = new ChangeTrackingDictionary<string, string>();
 
             if (activity.ParentSpanId != default)
             {
-                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
+                this.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
             }
 
-            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
+            this.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
             // todo: update swagger to include this key.
-            telemetryItem.Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            this.Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
             // we only have mapping for server spans
             // todo: non-server spans
             if (activity.Kind == ActivityKind.Server)
             {
-                telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
-                telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
+                this.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
+                this.Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
             }
 
-            telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
-
-            return telemetryItem;
+            this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
         }
 
-        internal static TelemetryItem GetTelemetry(LogRecord logRecord, string instrumentationKey)
+        public TelemetryItem (LogRecord logRecord)
         {
-            var name = PartA_Name_Mapping[TelemetryType.Message];
-            var time = FormatUtcTimestamp(logRecord.Timestamp);
-
-            TelemetryItem telemetryItem = new TelemetryItem(name, time)
-            {
-                InstrumentationKey = instrumentationKey
-            };
+            this.Name = PartA_Name_Mapping[TelemetryType.Message];
+            this.Time = FormatUtcTimestamp(logRecord.Timestamp);
+            this.Tags = new ChangeTrackingDictionary<string, string>();
 
             if (logRecord.TraceId != default)
             {
-                telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
+                this.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
             }
 
             if (logRecord.SpanId != default)
             {
-                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+                this.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
-
-            return telemetryItem;
+            this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
         }
 
         internal void SetResource(string roleName, string roleInstance)

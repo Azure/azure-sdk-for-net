@@ -12,11 +12,12 @@ using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class AzureMonitorTraceExporter : AzureMonitorBaseExporter<Activity>
+    public class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter Transmitter;
         private readonly AzureMonitorExporterOptions options;
         private readonly string instrumentationKey;
+        private readonly ResourceParser resourceParser;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
         {
@@ -27,6 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             this.options = options ?? throw new ArgumentNullException(nameof(options));
             ConnectionString.ConnectionStringParser.GetValues(this.options.ConnectionString, out this.instrumentationKey, out _);
             this.Transmitter = transmitter;
+            resourceParser = new ResourceParser();
         }
 
         /// <inheritdoc/>
@@ -37,8 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                InitRoleNameAndInstance();
-                var telemetryItems = AzureMonitorConverter.Convert(batch, RoleName, RoleInstance, instrumentationKey);
+                var resource = this.ParentProvider.GetResource();
+                resourceParser.UpdateRoleNameAndInstance(resource);
+                var telemetryItems = AzureMonitorConverter.Convert(batch, resourceParser.RoleName, resourceParser.RoleInstance, instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.

@@ -1,9 +1,5 @@
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public abstract partial class AzureMonitorBaseExporter<T> : OpenTelemetry.BaseExporter<T> where T : class
-    {
-        protected AzureMonitorBaseExporter() { }
-    }
     public static partial class AzureMonitorExporterHelperExtensions
     {
         public static OpenTelemetry.Trace.TracerProviderBuilder AddAzureMonitorTraceExporter(this OpenTelemetry.Trace.TracerProviderBuilder builder, System.Action<Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions> configure = null) { throw null; }
@@ -18,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             V2020_09_15_Preview = 1,
         }
     }
-    public partial class AzureMonitorTraceExporter : Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorBaseExporter<System.Diagnostics.Activity>
+    public partial class AzureMonitorTraceExporter : OpenTelemetry.BaseExporter<System.Diagnostics.Activity>
     {
         public AzureMonitorTraceExporter(Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions options) { }
         public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }

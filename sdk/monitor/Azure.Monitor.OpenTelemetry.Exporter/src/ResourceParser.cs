@@ -3,26 +3,23 @@
 
 using System;
 using System.Net;
-using OpenTelemetry;
 using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public abstract class AzureMonitorBaseExporter<T> : BaseExporter<T>
-        where T : class
+    internal class ResourceParser
     {
-        internal string RoleName { get; set; }
+        internal string RoleName { get; private set; }
 
-        internal string RoleInstance { get; set; }
+        internal string RoleInstance { get; private set; }
 
-        internal void InitRoleNameAndInstance(Resource resource = null)
+        internal void UpdateRoleNameAndInstance(Resource resource)
         {
             if (RoleName != null || RoleInstance != null)
             {
                 return;
             }
 
-            resource = resource ?? ParentProvider.GetResource();
             if (resource == null)
             {
                 return;
