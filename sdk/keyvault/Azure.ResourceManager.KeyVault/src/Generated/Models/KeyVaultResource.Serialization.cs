@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class Resource : IUtf8JsonSerializable
+    public partial class KeyVaultResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static Resource DeserializeResource(JsonElement element)
+        internal static KeyVaultResource DeserializeKeyVaultResource(JsonElement element)
         {
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new Resource(id, name, type, location.Value, Optional.ToDictionary(tags));
+            return new KeyVaultResource(id, name, type, location.Value, Optional.ToDictionary(tags));
         }
     }
 }

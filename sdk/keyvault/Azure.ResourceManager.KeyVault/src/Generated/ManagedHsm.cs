@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets the private link resources supported for the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MhsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResourceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MhsmPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetMhsmPrivateLinkResource");
+                using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetMhsmPrivateLinkResources");
                 scope.Start();
                 try
                 {
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets the private link resources supported for the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MhsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResource(CancellationToken cancellationToken = default)
+        public virtual Pageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             Page<MhsmPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetMhsmPrivateLinkResource");
+                using var scope = _clientDiagnostics.CreateScope("ManagedHsm.GetMhsmPrivateLinkResources");
                 scope.Start();
                 try
                 {

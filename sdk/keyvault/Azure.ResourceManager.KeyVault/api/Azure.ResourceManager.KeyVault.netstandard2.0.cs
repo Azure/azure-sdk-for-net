@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault
         internal DeletedVaultData() { }
         public Azure.ResourceManager.KeyVault.Models.DeletedVaultProperties Properties { get { throw null; } }
     }
-    public partial class KeyData : Azure.ResourceManager.KeyVault.Models.Resource
+    public partial class KeyData : Azure.ResourceManager.KeyVault.Models.KeyVaultResource
     {
         public KeyData() { }
         public Azure.ResourceManager.KeyVault.Models.KeyAttributes Attributes { get { throw null; } set { } }
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.KeyVault
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionCollection GetMhsmPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkResource> GetMhsmPrivateLinkResource(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkResource> GetMhsmPrivateLinkResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkResource> GetMhsmPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkResource> GetMhsmPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.Models.ManagedHsmUpdateOperation Update(bool waitForCompletion, Azure.ResourceManager.KeyVault.ManagedHsmData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.KeyVault.Models.ManagedHsmUpdateOperation> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.KeyVault.ManagedHsmData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.KeyVaultResource
     {
         public PrivateEndpointConnectionData() { }
         public string Etag { get { throw null; } set { } }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.Secret> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Secret>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SecretData : Azure.ResourceManager.KeyVault.Models.Resource
+    public partial class SecretData : Azure.ResourceManager.KeyVault.Models.KeyVaultResource
     {
         public SecretData(Azure.ResourceManager.KeyVault.Models.SecretProperties properties) { }
         public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } set { } }
@@ -684,6 +684,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string KeyUriWithVersion { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? Kty { get { throw null; } set { } }
     }
+    public partial class KeyVaultResource : Azure.ResourceManager.Models.Resource
+    {
+        public KeyVaultResource() { }
+        public string Location { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class ManagedHsmCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.KeyVault.ManagedHsm>
     {
         protected ManagedHsmCreateOrUpdateOperation() { }
@@ -963,7 +969,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.PrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.KeyVault.Models.PrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateLinkResource : Azure.ResourceManager.KeyVault.Models.Resource
+    public partial class PrivateLinkResource : Azure.ResourceManager.KeyVault.Models.KeyVaultResource
     {
         public PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
@@ -1023,12 +1029,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static implicit operator Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess left, Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Resource : Azure.ResourceManager.Models.Resource
-    {
-        public Resource() { }
-        public string Location { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SecretAttributes : Azure.ResourceManager.KeyVault.Models.BaseAttributes
     {

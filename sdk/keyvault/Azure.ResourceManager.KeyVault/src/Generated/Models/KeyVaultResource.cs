@@ -12,21 +12,21 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Key Vault resource. </summary>
-    public partial class Resource : ResourceManager.Models.Resource
+    public partial class KeyVaultResource : Resource
     {
-        /// <summary> Initializes a new instance of Resource. </summary>
-        public Resource()
+        /// <summary> Initializes a new instance of KeyVaultResource. </summary>
+        public KeyVaultResource()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of Resource. </summary>
+        /// <summary> Initializes a new instance of KeyVaultResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal Resource(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags) : base(id, name, type)
+        internal KeyVaultResource(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags) : base(id, name, type)
         {
             Location = location;
             Tags = tags;

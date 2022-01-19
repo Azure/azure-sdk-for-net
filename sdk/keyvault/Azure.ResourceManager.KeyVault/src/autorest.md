@@ -15,7 +15,7 @@ modelerfour:
 model-namespace: false
 override-operation-name:
   Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
-  MHSMPrivateLinkResources_ListByMhsmResource: GetMhsmPrivateLinkResource
+  MHSMPrivateLinkResources_ListByMhsmResource: GetMhsmPrivateLinkResources
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
@@ -44,4 +44,8 @@ directive:
         "modelAsString": false,
         "name": "NameAvailabilityReason"
       }
+  - from: swagger-document
+    where: "$.definitions.Resource"
+    transform: >
+      $["x-ms-client-name"] = "KeyVaultResource";
 ```
