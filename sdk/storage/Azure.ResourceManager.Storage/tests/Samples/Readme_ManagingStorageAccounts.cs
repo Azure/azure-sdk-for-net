@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
             // add a tag on this storage account
-            await storageAccount.AddTagAsync(true, "key", "value");
+            await storageAccount.AddTagAsync("key", "value");
             #endregion
         }
     }

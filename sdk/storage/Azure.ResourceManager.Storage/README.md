@@ -122,7 +122,7 @@ await storageAccount.DeleteAsync(true);
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
 // add a tag on this storage account
-await storageAccount.AddTagAsync(true, "key", "value");
+await storageAccount.AddTagAsync("key", "value");
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.ResourceManager.Storage/samples) we have available.

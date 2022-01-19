@@ -1154,13 +1154,13 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, parameters)).Value;
 
             //add tag to this storage account
-            account = await account.AddTagAsync(true, "key", "value");
+            account = await account.AddTagAsync("key", "value");
 
             //verify the tag is added successfully
             Assert.AreEqual(account.Data.Tags.Count, DefaultTags.Count + 1);
 
             //remove tag
-            account = await account.RemoveTagAsync(true, "key");
+            account = await account.RemoveTagAsync("key");
 
             //verify the tag is removed successfully
             Assert.AreEqual(account.Data.Tags.Count, DefaultTags.Count);
