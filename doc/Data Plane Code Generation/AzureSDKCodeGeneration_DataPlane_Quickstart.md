@@ -59,7 +59,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 
 **Note**: 
 - Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
-- namespace is the shipped package name, it should be Azure.<group>.<service>
+- namespace is the shipped package name, it should be `Azure.<group>.<service>`
 - inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink, e.g. https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json.
 
 - Both AADToken and AzureKey authentication are supported. If your service support AADToken, just set the parameter **securityScope**(the security scope), and if your service support AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service support two authentications.
@@ -121,13 +121,18 @@ eng\scripts\Export-API.ps1 deviceupdate
 ```
 
 ## Add package ship requirements
-You can continuously work on the first-version shippable package created above to refine, such as add Tests, Samples and refine the Readme.md and Changelog.
 
-### Tests ###
+Before the library package can be released, you will need to add several requirements manually, including tests, samples, README, and CHANGELOG.
+You can refer to following guideline to add those requirements:
+- Tests: https://azure.github.io/azure-sdk/general_implementation.html#testing
+- README/Samples/Changelog: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository
+- Other release concerns: https://azure.github.io/azure-sdk/policies_releases.html
 
-In this section, we will talk about adding unit tests and live tests and how to run them. You will notice that there is a test project under Azure.<group>.<service>\tests.
+### Tests
 
-Here is the step by step process to add tests:
+In this section, we will talk about adding unit tests and live tests and how to run them. You will notice that there is a test project under `Azure.<group>.<service>\tests`.
+
+Here is the step by step process to add tests:requirements
 - Add other client parameters in `<client-name>ClientTestEnvironment.cs`
 - Update `<client-name>ClientTest.cs`. 
   - Comment-out the 'CreateClient' method, and update the new <service>Client statement.
@@ -145,7 +150,7 @@ In this section, we will talk about how to add samples. As you can see, we alrea
 
 **Learn more:** For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples).
 
-You will update all the <operation>.md and README.md files under Azure.<group>.<service>\samples directory to the your service according to the examples in those files. Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/samples/) is an example.
+You will update all the `Sample<sample_number>_<scenario>.md` and README.md files under `Azure.<group>.<service>\samples` directory to the your service according to the examples in those files. Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/samples/) is an example.
 
 ### Snippets
 
@@ -163,6 +168,6 @@ Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.
 
 ### Customize
 
-In Azure.<group>.<service> project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger. After you run the GenerateCode command, you should find a Generated folder in your project. Inside the Generated folder you'll find the <Service>Client and <Service>ClientOptions which you can use to interact with the service.
+In `Azure.<group>.<service>` project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger. After you run the GenerateCode command, you should find a Generated folder in your project. Inside the Generated folder you'll find the <Service>Client and <Service>ClientOptions which you can use to interact with the service.
 
 **Learn more**: the [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
