@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Get the account collection from the specific resource group and create an account
             string accountName = "myAccount";
             DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-            DeviceUpdateAccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
+            DeviceUpdateAccountCreateOrUpdateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
             DeviceUpdateAccount account = lro.Value;
             #endregion Snippet:Managing_Accounts_CreateAnAccount
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 

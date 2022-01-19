@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Network
         internal IpAllocationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _ipAllocationsRestClient = new IpAllocationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(IpAllocation.ResourceType, out string apiVersion);
+            _ipAllocationsRestClient = new IpAllocationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,9 +54,9 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates an IpAllocation in the specified resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual IpAllocationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ipAllocationName, IpAllocationData parameters, CancellationToken cancellationToken = default)
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ipAllocationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken);
-                var operation = new IpAllocationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ipAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
+                var operation = new IpAllocationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _ipAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates an IpAllocation in the specified resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<IpAllocationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ipAllocationName, IpAllocationData parameters, CancellationToken cancellationToken = default)
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _ipAllocationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new IpAllocationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ipAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
+                var operation = new IpAllocationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _ipAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ipAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IpAllocation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ipAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new IpAllocation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IpAllocation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _ipAllocationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _ipAllocationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _ipAllocationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _ipAllocationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpAllocation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

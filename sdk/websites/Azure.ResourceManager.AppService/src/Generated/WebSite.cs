@@ -47,8 +47,9 @@ namespace Azure.ResourceManager.AppService
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,8 +61,9 @@ namespace Azure.ResourceManager.AppService
         internal WebSite(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -76,8 +78,9 @@ namespace Azure.ResourceManager.AppService
         internal WebSite(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -193,18 +196,18 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_Delete
         /// <summary> Description for Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppDeleteOperation> DeleteAsync(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteDeleteOperation> DeleteAsync(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.Delete");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppDeleteOperation(response);
+                var operation = new WebSiteDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,20 +223,20 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_Delete
         /// <summary> Description for Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppDeleteOperation Delete(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
+        public virtual WebSiteDeleteOperation Delete(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.Delete");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
-                var operation = new WebAppDeleteOperation(response);
+                var operation = new WebSiteDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -1527,14 +1530,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppListPublishingCredentialsOperation> GetPublishingCredentialsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteGetPublishingCredentialsOperation> GetPublishingCredentialsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.ListPublishingCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppListPublishingCredentialsOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new WebSiteGetPublishingCredentialsOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1552,14 +1555,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppListPublishingCredentialsOperation GetPublishingCredentials(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual WebSiteGetPublishingCredentialsOperation GetPublishingCredentials(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.ListPublishingCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WebAppListPublishingCredentialsOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new WebSiteGetPublishingCredentialsOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2373,12 +2376,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_MigrateStorage
         /// <summary> Description for Restores a web app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="subscriptionName"> Azure subscription. </param>
         /// <param name="migrationOptions"> Migration migrationOptions. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
-        public async virtual Task<WebAppMigrateStorageOperation> MigrateStorageAsync(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteMigrateStorageOperation> MigrateStorageAsync(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionName == null)
             {
@@ -2394,7 +2397,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.MigrateStorageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppMigrateStorageOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
+                var operation = new WebSiteMigrateStorageOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2410,12 +2413,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_MigrateStorage
         /// <summary> Description for Restores a web app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="subscriptionName"> Azure subscription. </param>
         /// <param name="migrationOptions"> Migration migrationOptions. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
-        public virtual WebAppMigrateStorageOperation MigrateStorage(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
+        public virtual WebSiteMigrateStorageOperation MigrateStorage(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
         {
             if (subscriptionName == null)
             {
@@ -2431,7 +2434,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.MigrateStorage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken);
-                var operation = new WebAppMigrateStorageOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
+                var operation = new WebSiteMigrateStorageOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2447,11 +2450,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_MigrateMySql
         /// <summary> Description for Migrates a local (in-app) MySql database to a remote MySql database. </summary>
-        /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRequestEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppMigrateMySqlOperation> MigrateMySqlAsync(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteMigrateMySqlOperation> MigrateMySqlAsync(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
         {
             if (migrationRequestEnvelope == null)
             {
@@ -2463,7 +2466,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.MigrateMySqlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppMigrateMySqlOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
+                var operation = new WebSiteMigrateMySqlOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2479,11 +2482,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_MigrateMySql
         /// <summary> Description for Migrates a local (in-app) MySql database to a remote MySql database. </summary>
-        /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRequestEnvelope"/> is null. </exception>
-        public virtual WebAppMigrateMySqlOperation MigrateMySql(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
+        public virtual WebSiteMigrateMySqlOperation MigrateMySql(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
         {
             if (migrationRequestEnvelope == null)
             {
@@ -2495,7 +2498,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.MigrateMySql(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken);
-                var operation = new WebAppMigrateMySqlOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
+                var operation = new WebSiteMigrateMySqlOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2713,19 +2716,19 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_StartWebSiteNetworkTraceOperation
         /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppStartWebSiteNetworkTraceOperationOperation> StartWebSiteNetworkTraceOperationAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteStartWebSiteNetworkTraceOperationOperation> StartWebSiteNetworkTraceOperationAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.StartWebSiteNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppStartWebSiteNetworkTraceOperationOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var operation = new WebSiteStartWebSiteNetworkTraceOperationOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2741,19 +2744,19 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_StartWebSiteNetworkTraceOperation
         /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppStartWebSiteNetworkTraceOperationOperation StartWebSiteNetworkTraceOperation(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual WebSiteStartWebSiteNetworkTraceOperationOperation StartWebSiteNetworkTraceOperation(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.StartWebSiteNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new WebAppStartWebSiteNetworkTraceOperationOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var operation = new WebSiteStartWebSiteNetworkTraceOperationOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3405,11 +3408,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_RestoreFromBackupBlob
         /// <summary> Description for Restores an app from a backup blob in Azure Storage. </summary>
-        /// <param name="request"> Information on restore request . </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<WebAppRestoreFromBackupBlobOperation> RestoreFromBackupBlobAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteRestoreFromBackupBlobOperation> RestoreFromBackupBlobAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -3421,7 +3424,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.RestoreFromBackupBlobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppRestoreFromBackupBlobOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var operation = new WebSiteRestoreFromBackupBlobOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3437,11 +3440,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_RestoreFromBackupBlob
         /// <summary> Description for Restores an app from a backup blob in Azure Storage. </summary>
-        /// <param name="request"> Information on restore request . </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual WebAppRestoreFromBackupBlobOperation RestoreFromBackupBlob(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual WebSiteRestoreFromBackupBlobOperation RestoreFromBackupBlob(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -3453,9 +3456,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.RestoreFromBackupBlob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new WebAppRestoreFromBackupBlobOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var operation = new WebSiteRestoreFromBackupBlobOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -3469,11 +3472,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_RestoreFromDeletedApp
         /// <summary> Description for Restores a deleted web app to this web app. </summary>
-        /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<WebAppRestoreFromDeletedAppOperation> RestoreFromDeletedAppAsync(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteRestoreFromDeletedAppOperation> RestoreFromDeletedAppAsync(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -3485,7 +3488,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.RestoreFromDeletedAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppRestoreFromDeletedAppOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var operation = new WebSiteRestoreFromDeletedAppOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3501,11 +3504,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_RestoreFromDeletedApp
         /// <summary> Description for Restores a deleted web app to this web app. </summary>
-        /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public virtual WebAppRestoreFromDeletedAppOperation RestoreFromDeletedApp(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual WebSiteRestoreFromDeletedAppOperation RestoreFromDeletedApp(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -3517,9 +3520,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.RestoreFromDeletedApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
-                var operation = new WebAppRestoreFromDeletedAppOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var operation = new WebSiteRestoreFromDeletedAppOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -3533,11 +3536,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_RestoreSnapshot
         /// <summary> Description for Restores a web app from a snapshot. </summary>
-        /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<WebAppRestoreSnapshotOperation> RestoreSnapshotAsync(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteRestoreSnapshotOperation> RestoreSnapshotAsync(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -3549,7 +3552,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.RestoreSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppRestoreSnapshotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var operation = new WebSiteRestoreSnapshotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3565,11 +3568,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_RestoreSnapshot
         /// <summary> Description for Restores a web app from a snapshot. </summary>
-        /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public virtual WebAppRestoreSnapshotOperation RestoreSnapshot(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual WebSiteRestoreSnapshotOperation RestoreSnapshot(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             if (restoreRequest == null)
             {
@@ -3581,9 +3584,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.RestoreSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
-                var operation = new WebAppRestoreSnapshotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var operation = new WebSiteRestoreSnapshotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -3693,11 +3696,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_SwapSlotWithProduction
         /// <summary> Description for Swaps two deployment slots of an app. </summary>
-        /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public async virtual Task<WebAppSwapSlotWithProductionOperation> SwapSlotWithProductionAsync(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteSwapSlotWithProductionOperation> SwapSlotWithProductionAsync(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (slotSwapEntity == null)
             {
@@ -3709,7 +3712,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.SwapSlotWithProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppSwapSlotWithProductionOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
+                var operation = new WebSiteSwapSlotWithProductionOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3725,11 +3728,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_SwapSlotWithProduction
         /// <summary> Description for Swaps two deployment slots of an app. </summary>
-        /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public virtual WebAppSwapSlotWithProductionOperation SwapSlotWithProduction(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual WebSiteSwapSlotWithProductionOperation SwapSlotWithProduction(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             if (slotSwapEntity == null)
             {
@@ -3741,9 +3744,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.SwapSlotWithProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken);
-                var operation = new WebAppSwapSlotWithProductionOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
+                var operation = new WebSiteSwapSlotWithProductionOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -3963,19 +3966,19 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_StartNetworkTrace
         /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppStartNetworkTraceOperation> StartNetworkTraceAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<WebSiteStartNetworkTraceOperation> StartNetworkTraceAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.StartNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppStartNetworkTraceOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var operation = new WebSiteStartNetworkTraceOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3991,19 +3994,19 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_StartNetworkTrace
         /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppStartNetworkTraceOperation StartNetworkTrace(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual WebSiteStartNetworkTraceOperation StartNetworkTrace(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.StartNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new WebAppStartNetworkTraceOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var operation = new WebSiteStartNetworkTraceOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.ServiceBus
         internal NamespaceDisasterRecoveryConfigAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _disasterRecoveryConfigAuthorizationRulesRestClient = new DisasterRecoveryConfigAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(NamespaceDisasterRecoveryConfigAuthorizationRule.ResourceType, out string apiVersion);
+            _disasterRecoveryConfigAuthorizationRulesRestClient = new DisasterRecoveryConfigAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _disasterRecoveryConfigAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = _disasterRecoveryConfigAuthorizationRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = _disasterRecoveryConfigAuthorizationRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,7 +259,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,7 +274,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

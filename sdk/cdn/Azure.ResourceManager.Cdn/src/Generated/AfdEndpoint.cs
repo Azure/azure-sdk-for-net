@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Cdn
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdEndpoint(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdEndpoint(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdEndpointsRestClient = new AfdEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _afdEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AfdEndpointDeleteOperation(_clientDiagnostics, Pipeline, _afdEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -240,7 +243,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _afdEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AfdEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -269,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _afdEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new AfdEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -295,10 +298,10 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _afdEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AfdEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -324,10 +327,10 @@ namespace Azure.ResourceManager.Cdn
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _afdEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new AfdEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -355,7 +358,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _afdEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AfdEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -383,7 +386,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _afdEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new AfdEndpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -395,8 +398,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile. Only tags can be updated after creating an endpoint. To update origins, use the Update Origin operation. To update origin groups, use the Update Origin group operation. To update domains, use the Update Custom Domain operation. </summary>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
         public async virtual Task<AfdEndpointUpdateOperation> UpdateAsync(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
@@ -424,8 +427,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile. Only tags can be updated after creating an endpoint. To update origins, use the Update Origin operation. To update origin groups, use the Update Origin group operation. To update domains, use the Update Custom Domain operation. </summary>
-        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
         public virtual AfdEndpointUpdateOperation Update(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
@@ -453,8 +456,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Removes a content from AzureFrontDoor. </summary>
-        /// <param name="contents"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="contents"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         public async virtual Task<AfdEndpointPurgeContentOperation> PurgeContentAsync(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
@@ -482,8 +485,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Removes a content from AzureFrontDoor. </summary>
-        /// <param name="contents"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="contents"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         public virtual AfdEndpointPurgeContentOperation PurgeContent(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
@@ -500,7 +503,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _afdEndpointsRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents, cancellationToken);
                 var operation = new AfdEndpointPurgeContentOperation(_clientDiagnostics, Pipeline, _afdEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

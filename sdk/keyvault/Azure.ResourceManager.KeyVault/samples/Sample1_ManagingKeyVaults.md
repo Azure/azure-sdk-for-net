@@ -29,7 +29,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the Key vault inside this resource group.
@@ -42,7 +42,7 @@ VaultCollection vaultCollection = resourceGroup.GetVaults();
 string vaultName = "myVault";
 Guid tenantIdGuid = new Guid("Your tenantId");
 string objectId = "Your Object Id";
-Permissions permissions = new Permissions
+AccessPermissions permissions = new AccessPermissions
 {
     Keys = { new KeyPermissions("all") },
     Secrets = { new SecretPermissions("all") },

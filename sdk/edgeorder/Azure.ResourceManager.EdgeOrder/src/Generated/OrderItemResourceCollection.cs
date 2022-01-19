@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.EdgeOrder
         internal OrderItemResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new EdgeOrderManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(OrderItemResource.ResourceType, out string apiVersion);
+            _restClient = new EdgeOrderManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: CreateOrderItem
         /// <summary> Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public virtual EdgeOrderManagementCreateOrderItemOperation CreateOrUpdate(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        public virtual OrderItemResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
             if (orderItemName == null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _restClient.CreateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, orderItemResource, cancellationToken);
-                var operation = new EdgeOrderManagementCreateOrderItemOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, orderItemResource).Request, response);
+                var operation = new OrderItemResourceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, orderItemResource).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: CreateOrderItem
         /// <summary> Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public async virtual Task<EdgeOrderManagementCreateOrderItemOperation> CreateOrUpdateAsync(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        public async virtual Task<OrderItemResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
             if (orderItemName == null)
             {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _restClient.CreateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, orderItemResource, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderManagementCreateOrderItemOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, orderItemResource).Request, response);
+                var operation = new OrderItemResourceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, orderItemResource).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 var response = _restClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OrderItemResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrderItemResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 var response = await _restClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OrderItemResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrderItemResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = _restClient.ListOrderItemsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = _restClient.ListOrderItemsAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await _restClient.ListOrderItemsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -373,7 +374,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await _restClient.ListOrderItemsAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespace namespace2 = null;
 
             //validate
-            await foreach (ServiceBusNamespace serviceBusNamespace in DefaultSubscription.GetNamespacesAsync())
+            await foreach (ServiceBusNamespace serviceBusNamespace in DefaultSubscription.GetServiceBusNamespacesAsync())
             {
                 count++;
                 if (serviceBusNamespace.Id.Name == namespaceName1)

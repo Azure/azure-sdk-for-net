@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class ConfigurationStoreCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppConfiguration.ConfigurationStore>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.ConfigurationStore>, System.Collections.IEnumerable
     {
         protected ConfigurationStoreCollection() { }
-        public virtual Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreCreateOperation CreateOrUpdate(bool waitForCompletion, string configStoreName, Azure.ResourceManager.AppConfiguration.ConfigurationStoreData configStoreCreationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, Azure.ResourceManager.AppConfiguration.ConfigurationStoreData configStoreCreationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string configStoreName, Azure.ResourceManager.AppConfiguration.ConfigurationStoreData configStoreCreationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppConfiguration.Models.ConfigurationStoreCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, Azure.ResourceManager.AppConfiguration.ConfigurationStoreData configStoreCreationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.ConfigurationStore> Get(string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public bool? ReadOnly { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class ConfigurationStoreCreateOperation : Azure.Operation<Azure.ResourceManager.AppConfiguration.ConfigurationStore>
+    public partial class ConfigurationStoreCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.AppConfiguration.ConfigurationStore>
     {
-        protected ConfigurationStoreCreateOperation() { }
+        protected ConfigurationStoreCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

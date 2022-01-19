@@ -28,7 +28,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="billingProfile"> Specifies the billing related details of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
         /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
         /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
-        internal VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData)
+        /// <param name="capacityReservation"> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
+        /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        internal VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile)
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.Compute.Models
             BillingProfile = billingProfile;
             ScheduledEventsProfile = scheduledEventsProfile;
             UserData = userData;
+            CapacityReservation = capacityReservation;
+            ApplicationProfile = applicationProfile;
         }
 
         /// <summary> Specifies the operating system settings for the virtual machines in the scale set. </summary>
@@ -68,5 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
         public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
         /// <summary> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
+        /// <summary> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </summary>
+        public CapacityReservationProfile CapacityReservation { get; set; }
+        /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
+        public ApplicationProfile ApplicationProfile { get; set; }
     }
 }

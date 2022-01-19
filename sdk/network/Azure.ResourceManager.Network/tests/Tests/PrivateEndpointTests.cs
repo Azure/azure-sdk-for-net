@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Network.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -189,8 +190,8 @@ namespace Azure.ResourceManager.Network.Tests
             var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
 
             var privateDnsZoneName = Recording.GenerateAssetName("private_dns_zone");
-            var privateDnsZoneResourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}";
-            privateDnsZone = _subscription.GetGenericResources().CreateOrUpdate(privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
+            var privateDnsZoneResourceId = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}");
+            privateDnsZone = ArmClient.GetGenericResources().CreateOrUpdate(true, privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupCollection = privateEndpoint.GetPrivateDnsZoneGroups();

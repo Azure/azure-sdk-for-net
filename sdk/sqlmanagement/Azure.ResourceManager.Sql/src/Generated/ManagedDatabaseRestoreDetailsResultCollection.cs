@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Sql
         internal ManagedDatabaseRestoreDetailsResultCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetailsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagedDatabaseRestoreDetailsResult.ResourceType, out string apiVersion);
+            _managedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetailsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseRestoreDetailsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseRestoreDetailsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

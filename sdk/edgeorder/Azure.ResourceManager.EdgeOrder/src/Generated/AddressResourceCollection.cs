@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.EdgeOrder
         internal AddressResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new EdgeOrderManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AddressResource.ResourceType, out string apiVersion);
+            _restClient = new EdgeOrderManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: CreateAddress
         /// <summary> Creates a new address with the specified parameters. Existing address can be updated with this API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public virtual EdgeOrderManagementCreateAddressOperation CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public virtual AddressResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             if (addressName == null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _restClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken);
-                var operation = new EdgeOrderManagementCreateAddressOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
+                var operation = new AddressResourceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: CreateAddress
         /// <summary> Creates a new address with the specified parameters. Existing address can be updated with this API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public async virtual Task<EdgeOrderManagementCreateAddressOperation> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public async virtual Task<AddressResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             if (addressName == null)
             {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _restClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderManagementCreateAddressOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
+                var operation = new AddressResourceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 var response = _restClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AddressResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 var response = await _restClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AddressResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = _restClient.ListAddressesAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = _restClient.ListAddressesAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -350,7 +351,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await _restClient.ListAddressesAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -365,7 +366,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await _restClient.ListAddressesAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

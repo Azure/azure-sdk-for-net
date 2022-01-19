@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.AppService
             _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.AppService
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +76,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteSlotBasicPublishingCredentialsPolicyScm(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -193,11 +196,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// OperationId: WebApps_UpdateScmAllowedSlot
         /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<WebAppUpdateScmAllowedSlotOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (csmPublishingAccessPoliciesEntity == null)
             {
@@ -209,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.UpdateScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppUpdateScmAllowedSlotOperation(this, response);
+                var operation = new SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,11 +228,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// OperationId: WebApps_UpdateScmAllowedSlot
         /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public virtual WebAppUpdateScmAllowedSlotOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public virtual SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (csmPublishingAccessPoliciesEntity == null)
             {
@@ -241,7 +244,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.UpdateScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
-                var operation = new WebAppUpdateScmAllowedSlotOperation(this, response);
+                var operation = new SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

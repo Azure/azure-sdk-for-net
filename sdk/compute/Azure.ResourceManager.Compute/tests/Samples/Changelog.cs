@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var location = AzureLocation.WestUS;
             // Create ResourceGroup
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgOperation.Value;
 
             // Create AvailabilitySet

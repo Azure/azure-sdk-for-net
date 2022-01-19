@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Network
         internal P2SVpnGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Network
         internal P2SVpnGateway(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _p2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.Network
                 var response = _p2sVpnGatewaysRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new P2SVpnGatewayDeleteOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -223,11 +226,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
-        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public async virtual Task<P2SVpnGatewayUpdateTagsOperation> UpdateAsync(bool waitForCompletion, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<P2SVpnGatewayUpdateOperation> UpdateAsync(bool waitForCompletion, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (p2SVpnGatewayParameters == null)
             {
@@ -239,7 +242,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _p2sVpnGatewaysRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+                var operation = new P2SVpnGatewayUpdateOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -252,11 +255,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
-        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public virtual P2SVpnGatewayUpdateTagsOperation Update(bool waitForCompletion, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual P2SVpnGatewayUpdateOperation Update(bool waitForCompletion, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (p2SVpnGatewayParameters == null)
             {
@@ -268,7 +271,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _p2sVpnGatewaysRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken);
-                var operation = new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+                var operation = new P2SVpnGatewayUpdateOperation(this, _clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -325,8 +328,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
-        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<P2SVpnGatewayGenerateVpnProfileOperation> GenerateVpnProfileAsync(bool waitForCompletion, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
@@ -354,8 +357,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
-        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual P2SVpnGatewayGenerateVpnProfileOperation GenerateVpnProfile(bool waitForCompletion, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
@@ -427,8 +430,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
-        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation> GetP2SVpnConnectionHealthDetailedAsync(bool waitForCompletion, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
@@ -456,8 +459,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
-        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation GetP2SVpnConnectionHealthDetailed(bool waitForCompletion, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
@@ -485,8 +488,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
-        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async virtual Task<P2SVpnGatewayDisconnectP2SVpnConnectionsOperation> DisconnectP2SVpnConnectionsAsync(bool waitForCompletion, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
@@ -514,8 +517,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
-        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual P2SVpnGatewayDisconnectP2SVpnConnectionsOperation DisconnectP2SVpnConnections(bool waitForCompletion, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
@@ -532,7 +535,7 @@ namespace Azure.ResourceManager.Network
                 var response = _p2sVpnGatewaysRestClient.DisconnectP2SVpnConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
                 var operation = new P2SVpnGatewayDisconnectP2SVpnConnectionsOperation(_clientDiagnostics, Pipeline, _p2sVpnGatewaysRestClient.CreateDisconnectP2SVpnConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

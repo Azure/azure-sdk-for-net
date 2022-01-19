@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static DeviceUpdateRestOperations GetDeviceUpdateRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DeviceUpdateRestOperations GetDeviceUpdateRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DeviceUpdateRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DeviceUpdateRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DeviceUpdateAccountsRestOperations GetDeviceUpdateAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DeviceUpdateAccountsRestOperations GetDeviceUpdateAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Checks ADU resource name availability. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDeviceUpdateNameAvailability");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeviceUpdateRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DeviceUpdateRestOperations restOperations = GetDeviceUpdateRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, request, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailability(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDeviceUpdateNameAvailability");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeviceUpdateRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DeviceUpdateRestOperations restOperations = GetDeviceUpdateRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, request, cancellationToken);
                     return response;
                 }
@@ -105,7 +105,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DeviceUpdateAccount.ResourceType, out string apiVersion);
+                DeviceUpdateAccountsRestOperations restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DeviceUpdateAccount>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");
@@ -150,7 +151,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DeviceUpdateAccount.ResourceType, out string apiVersion);
+                DeviceUpdateAccountsRestOperations restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DeviceUpdateAccount> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");

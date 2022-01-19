@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal WorkloadClassifierCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _workloadClassifiersRestClient = new WorkloadClassifiersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(WorkloadClassifier.ResourceType, out string apiVersion);
+            _workloadClassifiersRestClient = new WorkloadClassifiersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,9 +55,9 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}
         /// OperationId: WorkloadClassifiers_CreateOrUpdate
         /// <summary> Creates or updates a workload classifier. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="workloadClassifierName"> The name of the workload classifier to create/update. </param>
         /// <param name="parameters"> The properties of the workload classifier. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual WorkloadClassifierCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _workloadClassifiersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters, cancellationToken);
-                var operation = new WorkloadClassifierCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _workloadClassifiersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response);
+                var operation = new WorkloadClassifierCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _workloadClassifiersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}
         /// OperationId: WorkloadClassifiers_CreateOrUpdate
         /// <summary> Creates or updates a workload classifier. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="workloadClassifierName"> The name of the workload classifier to create/update. </param>
         /// <param name="parameters"> The properties of the workload classifier. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<WorkloadClassifierCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _workloadClassifiersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadClassifierCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _workloadClassifiersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response);
+                var operation = new WorkloadClassifierCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _workloadClassifiersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _workloadClassifiersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkloadClassifier(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifier(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _workloadClassifiersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WorkloadClassifier(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifier(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _workloadClassifiersRestClient.ListByWorkloadGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _workloadClassifiersRestClient.ListByWorkloadGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +345,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _workloadClassifiersRestClient.ListByWorkloadGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _workloadClassifiersRestClient.ListByWorkloadGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadClassifier(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

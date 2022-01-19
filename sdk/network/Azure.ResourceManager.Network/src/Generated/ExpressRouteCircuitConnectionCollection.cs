@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteCircuitConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteCircuitConnectionsRestClient = new ExpressRouteCircuitConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ExpressRouteCircuitConnection.ResourceType, out string apiVersion);
+            _expressRouteCircuitConnectionsRestClient = new ExpressRouteCircuitConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,9 +52,9 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates a Express Route Circuit Connection in the specified express route circuits. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="expressRouteCircuitConnectionParameters"> Parameters supplied to the create or update express route circuit connection operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="expressRouteCircuitConnectionParameters"/> is null. </exception>
         public virtual ExpressRouteCircuitConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, CancellationToken cancellationToken = default)
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteCircuitConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters, cancellationToken);
-                var operation = new ExpressRouteCircuitConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteCircuitConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
+                var operation = new ExpressRouteCircuitConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRouteCircuitConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a Express Route Circuit Connection in the specified express route circuits. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="expressRouteCircuitConnectionParameters"> Parameters supplied to the create or update express route circuit connection operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="expressRouteCircuitConnectionParameters"/> is null. </exception>
         public async virtual Task<ExpressRouteCircuitConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, CancellationToken cancellationToken = default)
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteCircuitConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteCircuitConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
+                var operation = new ExpressRouteCircuitConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRouteCircuitConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRouteCircuitConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRouteCircuitConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

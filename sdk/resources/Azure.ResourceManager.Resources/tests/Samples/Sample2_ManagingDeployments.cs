@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                     }
                 }
             });
-            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+            DeploymentCreateOrUpdateOperation lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;

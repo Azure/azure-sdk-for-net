@@ -349,10 +349,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 uri.AppendQuery("n", n.Value, true);
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -413,10 +410,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendRaw(url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -485,10 +479,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendRaw(url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -549,10 +540,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendRaw(url, false);
             uri.AppendPath("/acr/v1/", false);
             uri.AppendPath(name, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (value != null)
@@ -647,10 +635,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 uri.AppendQuery("digest", digest, true);
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -731,10 +716,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(name, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -815,10 +797,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(name, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (value != null)
@@ -908,10 +887,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(name, true);
             uri.AppendPath("/_tags/", false);
             uri.AppendPath(reference, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -995,10 +971,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1077,10 +1050,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(name, true);
             uri.AppendPath("/_manifests/", false);
             uri.AppendPath(digest, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1161,10 +1131,7 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(name, true);
             uri.AppendPath("/_manifests/", false);
             uri.AppendPath(digest, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (value != null)
