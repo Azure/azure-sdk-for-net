@@ -1,19 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Shared\**\*.cs" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\SkuUtility.cs" LinkBase="Shared" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Shared\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
