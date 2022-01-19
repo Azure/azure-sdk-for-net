@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
+        private static AppConfigurationManagementRestOperations GetAppConfigurationManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
+        {
+            return new AppConfigurationManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+        }
+
         /// <summary> Lists the ConfigurationStores for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -147,6 +152,70 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceFilterCollection filters = new(ConfigurationStore.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+        }
+
+        /// <summary> Checks whether the configuration store name is available for use. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
+        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        {
+            if (checkNameAvailabilityParameters == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityParameters));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppConfigurationNameAvailability");
+                scope.Start();
+                try
+                {
+                    AppConfigurationManagementRestOperations restOperations = GetAppConfigurationManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
+                    var response = await restOperations.CheckAppConfigurationNameAvailabilityAsync(subscription.Id.SubscriptionId, checkNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Checks whether the configuration store name is available for use. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
+        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        {
+            if (checkNameAvailabilityParameters == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityParameters));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppConfigurationNameAvailability");
+                scope.Start();
+                try
+                {
+                    AppConfigurationManagementRestOperations restOperations = GetAppConfigurationManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
+                    var response = restOperations.CheckAppConfigurationNameAvailability(subscription.Id.SubscriptionId, checkNameAvailabilityParameters, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
         }
     }
 }
