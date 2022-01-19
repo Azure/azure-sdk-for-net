@@ -65,13 +65,13 @@ param(
 $LoginAPIBaseURI = "https://login.microsoftonline.com/$TenantId/oauth2/token"
 
 $Headers = @{
-    content_type = $ContentType
+    "content-type" = $ContentType
 }
 
 $Body = @{
-    grant_type = $GrantType
-    client_id = $ClientId
-    client_secret = $ClientSecret
+    "grant_type" = $GrantType
+    "client_id" = $ClientId
+    "client_secret" = $ClientSecret
 }
 
 function Load-RequestHeaders() {
@@ -100,7 +100,7 @@ try {
     $resp = Invoke-RestMethod $LoginAPIBaseURI -Method 'POST' -Headers $headers -Body $body
 }
 catch { 
-    LogError $PSItem.ToString()
+    LogError $_
     exit 1
 }
 
