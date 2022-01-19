@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourcesRestClient.DeleteById(Id, apiVersion, cancellationToken);
                 var operation = new GenericResourceDeleteOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
