@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string MoName { get { throw null; } }
         public string MoRefId { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsProfile OsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfile OSProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile PlacementProfile { get { throw null; } set { } }
         public string PowerState { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string MoRefId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NetworkInterface> NetworkInterfaces { get { throw null; } }
         public int? NumCoresPerSocket { get { throw null; } }
-        public int? NumCPUs { get { throw null; } }
-        public string OsName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType? OsType { get { throw null; } }
+        public int? NumCpus { get { throw null; } }
+        public string OSName { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType? OSType { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.ResourceStatus> Statuses { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public bool? MemoryHotAddEnabled { get { throw null; } }
         public int? MemorySizeMB { get { throw null; } set { } }
         public int? NumCoresPerSocket { get { throw null; } set { } }
-        public int? NumCPUs { get { throw null; } set { } }
+        public int? NumCpus { get { throw null; } set { } }
     }
     public partial class HttpProxyConfiguration
     {
@@ -1139,35 +1139,35 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.NICType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.NICType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OsProfile
+    public partial class OSProfile
     {
-        public OsProfile() { }
+        public OSProfile() { }
         public string AdminPassword { get { throw null; } set { } }
         public string AdminUsername { get { throw null; } set { } }
         public string ComputerName { get { throw null; } set { } }
-        public string OsName { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType? OsType { get { throw null; } set { } }
+        public string OSName { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType? OSType { get { throw null; } set { } }
         public string ToolsRunningStatus { get { throw null; } }
         public string ToolsVersion { get { throw null; } }
         public string ToolsVersionStatus { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OsType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType>
+    public readonly partial struct OSType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OsType(string value) { throw null; }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType Linux { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType Other { get { throw null; } }
-        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType other) { throw null; }
+        public OSType(string value) { throw null; }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType Linux { get { throw null; } }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType Other { get { throw null; } }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.OsType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PlacementProfile

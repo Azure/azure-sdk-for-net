@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDeviceUpdateNameAvailability");
                 scope.Start();
                 try
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailability(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDeviceUpdateNameAvailability");
                 scope.Start();
                 try
                 {
