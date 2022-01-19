@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// allowed grace period is 90 minutes (PT90M).</param>
         /// <param name="repairAction">Type of repair action (replace, restart,
         /// reimage) that will be used for repairing unhealthy virtual machines
-        /// in the scale set. Default value is replace.</param>
+        /// in the scale set. Default value is replace. Possible values
+        /// include: 'Replace', 'Restart', 'Reimage'</param>
         public AutomaticRepairsPolicy(bool? enabled = default(bool?), string gracePeriod = default(string), string repairAction = default(string))
         {
             Enabled = enabled;
@@ -78,7 +79,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets type of repair action (replace, restart, reimage) that
         /// will be used for repairing unhealthy virtual machines in the scale
-        /// set. Default value is replace.
+        /// set. Default value is replace. Possible values include: 'Replace',
+        /// 'Restart', 'Reimage'
         /// </summary>
         [JsonProperty(PropertyName = "repairAction")]
         public string RepairAction { get; set; }

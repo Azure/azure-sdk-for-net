@@ -528,18 +528,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='statusOnly'>
+            /// statusOnly=true enables fetching run time status of all Virtual Machines in
+            /// the subscription.
+            /// </param>
             /// <param name='filter'>
             /// The system query option to filter VMs returned in the response. Allowed
             /// value is 'virtualMachineScaleSet/id' eq
             /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
             /// </param>
-            /// <param name='statusOnly'>
-            /// statusOnly=true enables fetching run time status of all Virtual Machines in
-            /// the subscription.
-            /// </param>
-            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string filter = default(string), string statusOnly = default(string))
+            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string))
             {
-                return operations.ListAllAsync(filter, statusOnly).GetAwaiter().GetResult();
+                return operations.ListAllAsync(statusOnly, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -549,21 +549,21 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='statusOnly'>
+            /// statusOnly=true enables fetching run time status of all Virtual Machines in
+            /// the subscription.
+            /// </param>
             /// <param name='filter'>
             /// The system query option to filter VMs returned in the response. Allowed
             /// value is 'virtualMachineScaleSet/id' eq
             /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
             /// </param>
-            /// <param name='statusOnly'>
-            /// statusOnly=true enables fetching run time status of all Virtual Machines in
-            /// the subscription.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string filter = default(string), string statusOnly = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(filter, statusOnly, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
