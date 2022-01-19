@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            resourceGroup = await rgCollection.CreateOrUpdate(false, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
         }
     }
 }
