@@ -1415,7 +1415,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             if (includeLeaseId)
             {
-                options.DestinationRequestConditions = new ShareFileRequestConditions
+                options.DestinationConditions = new ShareFileRequestConditions
                 {
                     LeaseId = leaseId
                 };

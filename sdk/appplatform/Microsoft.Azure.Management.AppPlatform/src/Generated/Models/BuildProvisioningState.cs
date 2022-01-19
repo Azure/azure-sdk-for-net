@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 {
 
     /// <summary>
-    /// Defines values for UserSourceType.
+    /// Defines values for BuildProvisioningState.
     /// </summary>
-    public static class UserSourceType
+    public static class BuildProvisioningState
     {
-        public const string Jar = "Jar";
-        public const string NetCoreZip = "NetCoreZip";
-        public const string Source = "Source";
+        public const string Creating = "Creating";
+        public const string Updating = "Updating";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
+        public const string Deleting = "Deleting";
     }
 }
