@@ -32,9 +32,14 @@ This module does not contain a client and instead libraries that help other Azur
 
 ### CommunicationTokenCredential
 
-`CommunicationTokenCredential` authenticates a user with Communication Services, such as Chat or Calling. It optionally provides an auto-refresh mechanism to ensure a continuously stable authentication state during communications.
+The `CommunicationTokenCredential` object is used to authenticate a user with Communication Services, such as Chat or Calling. It optionally provides an auto-refresh mechanism to ensure a continuously stable authentication state during communications.
 
-It is up to you the developer to first create valid user tokens with the Communication Administration SDK. Then you use these tokens with the `CommunicationTokenCredential`.
+Depending on your scenario, you may want to initialize the `CommunicationTokenCredential` with:
+
+- a static token (suitable for short-lived clients used to e.g. send one-off Chat messages) or
+- a callback function that ensures a continuous authentication state (ideal e.g. for long Calling sessions).
+
+The tokens supplied to the `CommunicationTokenCredential` either through the constructor or via the token refresher callback can be obtained using the Azure Communication Identity library.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -54,23 +59,23 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Create a credential with a static token
 
-For a short-lived clients, refreshing the token upon expiry is not necessary and `CommunicationTokenCredential` may be instantiated with a static token.
+For short-lived clients, refreshing the token upon expiry is not necessary and `CommunicationTokenCredential` may be instantiated with a static token.
 
 ```C# Snippet:CommunicationTokenCredential_CreateWithStaticToken
 string token = Environment.GetEnvironmentVariable("COMMUNICATION_SERVICES_USER_TOKEN");
 using var tokenCredential = new CommunicationTokenCredential(token);
 ```
 
-Alternatively, you can create a `CommunicationTokenCredential` with callback to renew tokens if expired.
+### Create a credential with a callback
+
+Alternatively, for short-lived clients, you can create a `CommunicationTokenCredential` with a callback to renew tokens if expired.
 Here we pass two imagined functions that make network requests to retrieve token strings for user Bob.
 If callbacks are passed, upon requests (sending a chat message), `CommunicationTokenCredential` ensures
 that a valid token is acquired prior to executing the request.
+It's necessary that the `FetchTokenForUserFromMyServer` method returns a valid token (with an expiration date set in the future) at all times.
 
 Optionally, you can enable proactive token refreshing where a fresh token will be acquired as soon as the
 previous token approaches expiry. Using this method, your requests are less likely to be blocked to acquire a fresh token:
-
-Optionally, you can adjust the time span before token expiry that will trigger the proactive refreshing of the token. For example, if the proactive refreshing is enabled ('refreshProactively' is true), setting the time span to 5 minutes means that 5 minutes before the cached token expires, the proactive refresh will request a new token by calling the 'tokenRefresher' callback.
-The default value is 4.5 minutes to avoid MSAL compatibility issues.
 
 ```C# Snippet:CommunicationTokenCredential_CreateRefreshableWithoutInitialToken
 using var tokenCredential = new CommunicationTokenCredential(
@@ -78,7 +83,6 @@ using var tokenCredential = new CommunicationTokenCredential(
         refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
         tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
     {
-        RefreshIntervalBeforeTokenExpiry = new TimeSpan(0, 0, 5, 0), // Proactive refreshing will be triggered 5 minutes before the token expires
         AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
     });
 ```
