@@ -117,7 +117,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        //property.ThrowNonNullablePropertyIsNull();
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customKeyIdentifier = property.Value.GetString();
