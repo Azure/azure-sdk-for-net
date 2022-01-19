@@ -1,28 +1,35 @@
 <#
 .DESCRIPTION
 Generate aadToken for Azure Directory app using client secrets.
+
 .PARAMETER TenantId
 The aad tenant id/Directory ID. 
+
 .PARAMETER ClientId
 The aad client id/application id. 
+
 .PARAMETER ClientSecret
 The client secret generates from add.
+
 .PARAMETER Resource
 The App ID URI of the web service.
 E.g. https://graph.windows.net/
+
 .PARAMETER Scope
 The full scope string defining the requested permissions.
+
 .PARAMETER GrantType
 OAuth defines four grant types: authorization code, implicit,
 resource owner password credentials, and client credentials.
+
 .PARAMETER ContentType
 Content type of http requests.
+
 .PARAMETER AdditionalHeaders
 Additional parameters for http request headers in key-value pair format, e.g. @{ key1 = val1; key2 = val2; key3 = val3}
+
 .PARAMETER AdditionalBody
 Additional parameters for http request body in key-value pair format, e.g. @{ key1 = val1; key2 = val2; key3 = val3}
-.PARAMETER TestMode
-
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
