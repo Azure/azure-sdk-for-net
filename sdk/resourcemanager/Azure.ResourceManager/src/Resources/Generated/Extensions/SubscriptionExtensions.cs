@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources
 
         private static ResourceLinksRestOperations GetResourceLinksRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
         {
-            return new ResourceLinksRestOperations(clientDiagnostics, pipeline, clientOptions.Diagnostics.ApplicationId, endpoint);
+            return new ResourceLinksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links

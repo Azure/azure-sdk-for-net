@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Resources
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,20 +56,23 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyAssignment(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="PolicyAssignment"/> class. </summary>
-        /// <param name="client"> The client options to build client context. </param>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PolicyAssignment(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyAssignment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

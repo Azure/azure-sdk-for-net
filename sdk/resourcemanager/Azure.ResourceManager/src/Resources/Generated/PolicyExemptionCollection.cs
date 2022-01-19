@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PolicyExemptionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyExemption.ResourceType.Namespace, DiagnosticOptions);
-            _policyExemptionsRestClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _policyExemptionsRestClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         // Collection level operations.
