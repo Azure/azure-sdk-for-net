@@ -11,12 +11,6 @@ This tutorial has following sections:
   - [Prerequisites](#prerequisites)
   - [Setup your repo](#setup-your-repo)
   - [Create starting package](#create-starting-package)
-    - [Create the project folder](#create-the-project-folder)
-      - [1. install dotnet template](#1-install-dotnet-template)
-      - [2. dotnet new project](#2-dotnet-new-project)
-      - [3. update the solution file if needed](#3-update-the-solution-file-if-needed)
-    - [Generate client library](#generate-client-library)
-    - [Export public API](#export-public-api)
   - [Add package ship requirements](#add-package-ship-requirements)
     - [Tests](#tests)
     - [Samples](#samples)
@@ -64,20 +58,23 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 
 - Both AADToken and AzureKey authentication are supported. If your service support AADToken, just set the parameter **securityScope**(the security scope), and if your service support AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service support two authentications.
 
-The script `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` will do **step-by-step** as following.
+The script `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` will do **step-by-step** as following:
 
-### Create the project folder
+1. Create the project folder
+
 Create a SDK library project, configuration file, or solution based on the specified template.
-#### 1. install dotnet template
+
+- install dotnet template
+  
 navigate to the sdk repo root director, and run the following commands:
 
 ```
 dotnet new -i sdk/template-dpg/Azure.ServiceTemplate.Template
 ```
 
-#### 2. dotnet new project
-- create project folder `Azure.<group>.<service>`. e.g. Azure.IoT.DeviceUpdate under `sdk/<service>` folder
-- new project: navigate to the project folder, and run 'dotnet new' as following:
+- dotnet new project
+  
+  create project folder `Azure.<group>.<service>`. e.g. Azure.IoT.DeviceUpdate under `sdk/<service>` folder, navigate to the project folder, and run 'dotnet new' as following:
   
 ```
 sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryName [Client-Library-Title] --swagger [input-swagger-file-path] --securityScopes [security-scopes] --force
@@ -87,7 +84,8 @@ e.g.
 dotnet new dataplane --libraryName DeviceUpdate --swagger https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2021-06-01-preview/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
 ```
 
-#### 3. update the solution file if needed
+- update the solution file if needed
+
 Run 'dotnet sln' as following to update the projects in the solution file:
 
 ```
@@ -99,7 +97,7 @@ dotnet sln add tests\Azure.<group>.<service>.Tests.csproj
 
 **Learn more:** to understand more about the Azure SDK repo structure, see [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md) in the `azure-sdk` repo.
 
-### Generate client library
+2. Generate client library
 
 In this section, we'll create a generated API layer built on Azure Core.
 
@@ -111,7 +109,7 @@ sdk\<your-service-name>\Azure.<group>.<service>\src> dotnet build /t:GenerateCod
 
 After you run the GenerateCode command, you should find a **Generated** folder in your project. Inside the Generated folder you'll find the ServiceClient and ServiceClientOptions which you can use to interact with the service.
 
-### Export public API
+3. Export public API
 
 If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [sdk\template-dpg\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
 
