@@ -11,29 +11,31 @@
 namespace Azure.Quantum.Jobs.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Get SAS URL operation response.
+    /// List of quotas.
     /// </summary>
-    public partial class SasUriResponse
+    public partial class QuotaList
     {
         /// <summary>
-        /// Initializes a new instance of the SasUriResponse class.
+        /// Initializes a new instance of the QuotaList class.
         /// </summary>
-        public SasUriResponse()
+        public QuotaList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SasUriResponse class.
+        /// Initializes a new instance of the QuotaList class.
         /// </summary>
-        /// <param name="sasUri">A URL with a SAS token to upload a blob for
-        /// execution in the given workspace.</param>
-        public SasUriResponse(string sasUri = default(string))
+        /// <param name="nextLink">Link to the next page of results.</param>
+        public QuotaList(IList<Quota> value = default(IList<Quota>), string nextLink = default(string))
         {
-            SasUri = sasUri;
+            Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -43,11 +45,15 @@ namespace Azure.Quantum.Jobs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a URL with a SAS token to upload a blob for execution
-        /// in the given workspace.
         /// </summary>
-        [JsonProperty(PropertyName = "sasUri")]
-        public string SasUri { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Quota> Value { get; private set; }
+
+        /// <summary>
+        /// Gets link to the next page of results.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
     }
 }
