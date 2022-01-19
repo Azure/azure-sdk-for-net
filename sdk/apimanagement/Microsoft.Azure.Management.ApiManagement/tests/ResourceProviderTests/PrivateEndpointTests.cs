@@ -43,7 +43,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
         public async void SetupPrivateEndpointAutoApprovalTests()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 //prepare test base
