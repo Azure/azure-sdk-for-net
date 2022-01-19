@@ -12,7 +12,7 @@ using Azure.ResourceManager.KeyVault.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the Key data model. </summary>
-    public partial class KeyData : Resource
+    public partial class KeyData : KeyVaultResource
     {
         /// <summary> Initializes a new instance of KeyData. </summary>
         public KeyData()

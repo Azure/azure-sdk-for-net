@@ -13,7 +13,7 @@ using Azure.ResourceManager.KeyVault.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the Secret data model. </summary>
-    public partial class SecretData : Resource
+    public partial class SecretData : KeyVaultResource
     {
         /// <summary> Initializes a new instance of SecretData. </summary>
         /// <param name="properties"> Properties of the secret. </param>
