@@ -8,5 +8,7 @@ namespace Azure.Template.Tests
     public class MiniSecretClientTestEnvironment : TestEnvironment
     {
         public string KeyVaultUri => GetRecordedVariable("KEYVAULT_URL");
+
+        public string KeyVaultSecret => GetRecordedVariable("KEYVAULT_SECRET", options => options.IsSecret());
     }
 }

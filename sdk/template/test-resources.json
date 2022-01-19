@@ -29,10 +29,14 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "secretValue": {
+            "type": "securestring",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "The secret value to add to the Key Vault. By default, this is a random GUID."
+            }
         }
-    },
-    "variables": {
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]"
     },
     "resources": [
         {
@@ -68,14 +72,18 @@
               "[resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))]"
             ],
             "properties": {
-              "value": "Very secret value"
+              "value": "[parameters('secretValue')]"
             }
           }
     ],
     "outputs": {
         "KEYVAULT_URL": {
             "type": "string",
-            "value": "[variables('azureKeyVaultUrl')]"
+            "value": "[reference(parameters('baseName')).vaultUri]"
+        },
+        "KEYVAULT_SECRET": {
+            "type": "string",
+            "value": "[parameters('secretValue')]"
         }
     }
 }
