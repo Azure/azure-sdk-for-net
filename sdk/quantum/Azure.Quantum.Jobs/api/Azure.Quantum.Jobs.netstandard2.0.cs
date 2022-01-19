@@ -85,13 +85,13 @@ namespace Azure.Quantum.Jobs.Models
         public string InputDataFormat { get { throw null; } set { } }
         public string InputDataUri { get { throw null; } set { } }
         public object InputParams { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string OutputDataFormat { get { throw null; } set { } }
         public string OutputDataUri { get { throw null; } set { } }
         public string ProviderId { get { throw null; } set { } }
         public Azure.Quantum.Jobs.Models.JobStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
