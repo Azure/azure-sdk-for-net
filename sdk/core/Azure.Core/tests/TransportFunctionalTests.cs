@@ -1114,6 +1114,35 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public async Task CookiesDisabledByDefault()
+        {
+            using (TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.IsFalse(context.Request.Headers.ContainsKey("cookie"));
+                    context.Response.StatusCode = 200;
+                    context.Response.Headers.Add(
+                        "set-cookie",
+                        "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly");
+                }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
+
+                // create a second request to verify cookies not set
+                request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
+            }
+        }
+
         private static Request CreateRequest(HttpPipelineTransport transport, TestServer server, byte[] bytes = null)
         {
             Request request = transport.CreateRequest();
