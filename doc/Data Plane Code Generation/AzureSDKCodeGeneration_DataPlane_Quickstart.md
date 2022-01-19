@@ -69,7 +69,7 @@ Create a SDK library project, configuration file, or solution based on the speci
 navigate to the sdk repo root director, and run the following commands:
 
 ```
-dotnet new -i sdk/template-dpg/Azure.ServiceTemplate.Template
+dotnet new --install sdk/template-dpg/Azure.ServiceTemplate.Template
 ```
 
 - dotnet new project
@@ -134,10 +134,10 @@ Here is the step by step process to add tests:requirements
 - Add other client parameters in `<client-name>ClientTestEnvironment.cs`
 - Update `<client-name>ClientTest.cs`. 
   - Comment-out the 'CreateClient' method, and update the new <service>Client statement.
-  - remove all the template project tests, and write the tests according to the commented Test method template. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing) to add live tests.
+  - remove all the template project tests, and write the tests according to the commented Test method template. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
 
 **Note**: 
-- Before running live tests you will need to create live test resources, please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manager resources and update test environment.
+- Before running live tests you will need to create live test resources, please refer to [this](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manage resources and update test environment.
 - `Azure.<group>.<service>` is the Azure SDK package name and `<client-name>` is a client name, C# generator will generate a client which you can find in `Azure.<group>.<service>/Generated` directory.
 
 **Learn more:** see the [docs](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#to-test-1) to learn more about tests.
@@ -169,7 +169,7 @@ Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.
 In `Azure.<group>.<service>` project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger. 
 
 You can customize your client libray in two ways:
-- Many customizations can be done as a transform in `autorest.md`. e.g.
+- Customizations can be done as a transform in `autorest.md`. e.g.
 
 ```yaml
 directive:
