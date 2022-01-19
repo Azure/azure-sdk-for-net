@@ -68,7 +68,7 @@ using var tokenCredential = new CommunicationTokenCredential(token);
 
 ### Create a credential with a callback
 
-Alternatively, for short-lived clients, you can create a `CommunicationTokenCredential` with a callback to renew tokens if expired.
+Alternatively, for long-lived clients, you can create a `CommunicationTokenCredential` with a callback to renew tokens if expired.
 Here we pass two imagined functions that make network requests to retrieve token strings for user Bob.
 If callbacks are passed, upon requests (sending a chat message), `CommunicationTokenCredential` ensures
 that a valid token is acquired prior to executing the request.
