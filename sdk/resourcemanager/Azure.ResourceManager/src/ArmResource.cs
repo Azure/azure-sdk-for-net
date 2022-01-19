@@ -156,12 +156,7 @@ namespace Azure.ResourceManager.Core
         public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
             where T : class
         {
-            if (!_clientCache.TryGetValue(typeof(T), out object client))
-            {
-                client = func(ArmClient);
-                _clientCache.TryAdd(typeof(T), client);
-            }
-            return client as T;
+            return _clientCache.GetOrAdd(typeof(T), func) as T;
         }
     }
 }
