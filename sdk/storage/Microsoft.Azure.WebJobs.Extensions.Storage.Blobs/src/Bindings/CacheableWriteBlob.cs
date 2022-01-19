@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         private bool TryPutToFunctionDataCacheCore(BlobProperties properties, bool isDeleteOnFailure)
         {
             string eTag = properties.ETag.ToString();
-            string id = _blob.BlobClient.Uri.ToString();
+            string id = _blob.BlobClient.Uri.AbsoluteUri;
             FunctionDataCacheKey cacheKey = new FunctionDataCacheKey(id, eTag);
             return _functionDataCache.TryPut(cacheKey, _cacheObject, isIncrementActiveReference: false, isDeleteOnFailure);
         }

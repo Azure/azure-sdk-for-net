@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 return null;
             }
             string eTag = properties.ETag.ToString();
-            string id = blob.BlobClient.Uri.ToString();
+            string id = blob.BlobClient.Uri.AbsoluteUri;
             FunctionDataCacheKey cacheKey = new FunctionDataCacheKey(id, eTag);
             return cacheKey;
         }
