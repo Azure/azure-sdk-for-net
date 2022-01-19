@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Network
         internal PublicIPPrefixCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _publicIPPrefixesRestClient = new PublicIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(PublicIPPrefix.ResourceType, out string apiVersion);
+            _publicIPPrefixesRestClient = new PublicIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,9 +54,9 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual PublicIPPrefixCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _publicIPPrefixesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, parameters, cancellationToken);
-                var operation = new PublicIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
+                var operation = new PublicIPPrefixCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<PublicIPPrefixCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _publicIPPrefixesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PublicIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
+                var operation = new PublicIPPrefixCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _publicIPPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _publicIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublicIPPrefix(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicIPPrefix(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _publicIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, publicIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PublicIPPrefix(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublicIPPrefix(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _publicIPPrefixesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _publicIPPrefixesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _publicIPPrefixesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _publicIPPrefixesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PublicIPPrefix(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

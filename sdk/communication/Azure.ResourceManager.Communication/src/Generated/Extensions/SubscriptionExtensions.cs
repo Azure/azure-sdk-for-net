@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static CommunicationServiceRestOperations GetCommunicationServiceRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static CommunicationServiceRestOperations GetCommunicationServiceRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new CommunicationServiceRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new CommunicationServiceRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CommunicationServiceRestOperations restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, nameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Communication
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CommunicationServiceRestOperations restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, nameAvailabilityParameters, cancellationToken);
                     return response;
                 }
@@ -88,7 +88,8 @@ namespace Azure.ResourceManager.Communication
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(CommunicationService.ResourceType, out string apiVersion);
+                CommunicationServiceRestOperations restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<CommunicationService>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCommunicationServices");
@@ -133,7 +134,8 @@ namespace Azure.ResourceManager.Communication
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(CommunicationService.ResourceType, out string apiVersion);
+                CommunicationServiceRestOperations restOperations = GetCommunicationServiceRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<CommunicationService> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCommunicationServices");

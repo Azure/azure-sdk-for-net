@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Deletes a VirtualWAN. </summary>
-    public partial class VirtualWanDeleteOperation : Operation
+    public partial class VirtualWANDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualWanDeleteOperation for mocking. </summary>
-        protected VirtualWanDeleteOperation()
+        /// <summary> Initializes a new instance of VirtualWANDeleteOperation for mocking. </summary>
+        protected VirtualWANDeleteOperation()
         {
         }
 
-        internal VirtualWanDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualWANDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualWanDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualWANDeleteOperation");
         }
 
         /// <inheritdoc />

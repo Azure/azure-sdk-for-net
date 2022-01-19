@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Resources
         internal ApplicationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _applicationsRestClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(Application.ResourceType, out string apiVersion);
+            _applicationsRestClient = new ApplicationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,9 +53,9 @@ namespace Azure.ResourceManager.Resources
         // Collection level operations.
 
         /// <summary> Creates a new managed application. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ApplicationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _applicationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken);
-                var operation = new ApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response);
+                var operation = new ApplicationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a new managed application. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ApplicationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string applicationName, ApplicationData parameters, CancellationToken cancellationToken = default)
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _applicationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response);
+                var operation = new ApplicationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _applicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Application(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _applicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Application(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Application(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -289,7 +290,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _applicationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _applicationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -327,7 +328,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _applicationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -342,7 +343,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _applicationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Application(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Application(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

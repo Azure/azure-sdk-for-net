@@ -140,19 +140,6 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         public string Type { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class CustomLocationUpdateOperation : Azure.Operation<Azure.ResourceManager.ExtendedLocation.CustomLocation>
-    {
-        protected CustomLocationUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.ExtendedLocation.CustomLocation Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class EnabledResourceType : Azure.ResourceManager.Models.Resource
     {
         public EnabledResourceType() { }

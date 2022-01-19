@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Network
         internal HubRouteTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _hubRouteTablesRestClient = new HubRouteTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(HubRouteTable.ResourceType, out string apiVersion);
+            _hubRouteTablesRestClient = new HubRouteTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,9 +52,9 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates a RouteTable resource if it doesn&apos;t exist else updates the existing RouteTable. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="routeTableParameters"> Parameters supplied to create or update RouteTable. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="routeTableParameters"/> is null. </exception>
         public virtual HubRouteTableCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _hubRouteTablesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters, cancellationToken);
-                var operation = new HubRouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _hubRouteTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response);
+                var operation = new HubRouteTableCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _hubRouteTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a RouteTable resource if it doesn&apos;t exist else updates the existing RouteTable. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="routeTableParameters"> Parameters supplied to create or update RouteTable. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="routeTableParameters"/> is null. </exception>
         public async virtual Task<HubRouteTableCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _hubRouteTablesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new HubRouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _hubRouteTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response);
+                var operation = new HubRouteTableCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _hubRouteTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 var response = _hubRouteTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HubRouteTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HubRouteTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _hubRouteTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HubRouteTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HubRouteTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _hubRouteTablesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _hubRouteTablesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _hubRouteTablesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _hubRouteTablesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubRouteTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

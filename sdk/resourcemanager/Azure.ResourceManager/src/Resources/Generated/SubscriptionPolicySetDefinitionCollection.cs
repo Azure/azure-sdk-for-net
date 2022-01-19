@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Resources
         internal SubscriptionPolicySetDefinitionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SubscriptionPolicySetDefinition.ResourceType, out string apiVersion);
+            _policySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: PolicySetDefinitions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicySetDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        public virtual SubscriptionPolicySetDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policySetDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, policySetDefinitionName, parameters, cancellationToken);
-                var operation = new PolicySetDefinitionCreateOrUpdateOperation(Parent, response);
+                var operation = new SubscriptionPolicySetDefinitionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: PolicySetDefinitions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicySetDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<SubscriptionPolicySetDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policySetDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, policySetDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicySetDefinitionCreateOrUpdateOperation(Parent, response);
+                var operation = new SubscriptionPolicySetDefinitionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionPolicySetDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,7 +307,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _policySetDefinitionsRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _policySetDefinitionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _policySetDefinitionsRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _policySetDefinitionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

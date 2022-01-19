@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         {
             string resourceGroupName = Recording.GenerateAssetName("testservicebusRG-");
             ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

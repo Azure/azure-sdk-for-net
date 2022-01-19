@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Tests
             _rgName = SessionRecording.GenerateAssetName("testRg-");
             Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            var op = InstrumentOperation(rgCollection.CreateOrUpdate(_rgName, new ResourceGroupData(_location), waitForCompletion: false));
+            var op = InstrumentOperation(rgCollection.CreateOrUpdate(false, _rgName, new ResourceGroupData(_location)));
             op.WaitForCompletion();
             await StopSessionRecordingAsync();
         }
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Tests
             var client = GetArmClient(options);
             var subscription = await client.GetDefaultSubscriptionAsync();
             var rgCollection = subscription.GetResourceGroups();
-            _ = await rgCollection.CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
+            _ = await rgCollection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
             Assert.AreEqual(GetDefaultResourceGroupVersion(rgCollection), tracker.VersionUsed);
         }
 
         private static string GetDefaultResourceGroupVersion(ResourceGroupCollection rgCollection)
         {
-            var restClient = rgCollection.GetType().GetField("_restClient", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rgCollection) as ResourceGroupsRestOperations;
+            var restClient = rgCollection.GetType().GetField("_resourceGroupsRestClient", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rgCollection) as ResourceGroupsRestOperations;
             return restClient.GetType().GetField("apiVersion", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(restClient) as string;
         }
 
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.Tests
             var subscription2 = await client2.GetDefaultSubscriptionAsync();
             var rgCollection1 = subscription1.GetResourceGroups();
             var rgCollection2 = subscription2.GetResourceGroups();
-            _ = await rgCollection1.CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
-            _ = await rgCollection2.CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
+            _ = await rgCollection1.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
+            _ = await rgCollection2.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
             Assert.AreEqual(versionOverride, tracker1.VersionUsed);
             Assert.AreEqual(GetDefaultResourceGroupVersion(rgCollection2), tracker2.VersionUsed);

@@ -47,8 +47,9 @@ namespace Azure.ResourceManager.Sql
             _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataMaskingPoliciesRestClient = new DataMaskingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _dataMaskingPoliciesRestClient = new DataMaskingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,8 +62,9 @@ namespace Azure.ResourceManager.Sql
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataMaskingPoliciesRestClient = new DataMaskingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _dataMaskingPoliciesRestClient = new DataMaskingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -77,8 +79,9 @@ namespace Azure.ResourceManager.Sql
         internal DataMaskingPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataMaskingPoliciesRestClient = new DataMaskingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _dataMaskingPoliciesRestClient = new DataMaskingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -197,8 +200,8 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
         /// OperationId: DataMaskingPolicies_CreateOrUpdate
         /// <summary> Creates or updates a database data masking policy. </summary>
-        /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<DataMaskingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
@@ -229,8 +232,8 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
         /// OperationId: DataMaskingPolicies_CreateOrUpdate
         /// <summary> Creates or updates a database data masking policy. </summary>
-        /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual DataMaskingPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
