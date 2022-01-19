@@ -8,10 +8,9 @@ namespace Azure.ResourceManager
         public ArmClient(string defaultSubscriptionId, Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
         public ArmClient(string defaultSubscriptionId, System.Uri baseUri, Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
         public ArmClient(System.Uri baseUri, Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
-        protected virtual System.Uri BaseUri { get { throw null; } }
-        protected virtual Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } }
-        protected virtual Azure.Core.TokenCredential Credential { get { throw null; } }
-        protected virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        protected internal virtual System.Uri BaseUri { get { throw null; } }
+        protected internal virtual Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
+        protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Subscription GetDefaultSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Subscription> GetDefaultSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.Feature GetFeature(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -32,6 +31,7 @@ namespace Azure.ResourceManager
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.ProviderInfo> GetTenantProviders(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.ProviderInfo> GetTenantProvidersAsync(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.TenantCollection GetTenants() { throw null; }
+        public bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T UseClientContext<T>(System.Func<System.Uri, Azure.Core.TokenCredential, Azure.ResourceManager.ArmClientOptions, Azure.Core.Pipeline.HttpPipeline, T> func) { throw null; }
     }
@@ -108,20 +108,17 @@ namespace Azure.ResourceManager.Core
     public abstract partial class ArmCollection : Azure.ResourceManager.Core.ArmResource
     {
         protected ArmCollection() { }
-        protected ArmCollection(Azure.ResourceManager.ArmClientOptions options, Azure.Core.TokenCredential credential, System.Uri baseUri, Azure.Core.Pipeline.HttpPipeline pipeline) { }
+        protected internal ArmCollection(Azure.ResourceManager.ArmClient client) { }
         protected ArmCollection(Azure.ResourceManager.Core.ArmResource parent) { }
         protected Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
     }
     public abstract partial class ArmResource
     {
         protected ArmResource() { }
-        protected ArmResource(Azure.ResourceManager.ArmClientOptions clientOptions, Azure.Core.TokenCredential credential, System.Uri uri, Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.ResourceIdentifier id) { }
+        protected internal ArmResource(Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { }
         protected ArmResource(Azure.ResourceManager.Core.ArmResource parentOperations, Azure.Core.ResourceIdentifier id) { }
-        protected internal virtual System.Uri BaseUri { get { throw null; } }
-        protected internal virtual Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } }
-        protected internal virtual Azure.Core.TokenCredential Credential { get { throw null; } }
+        protected internal virtual Azure.ResourceManager.ArmClient ArmClient { get { throw null; } }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         protected internal Azure.ResourceManager.Resources.TagResource TagResource { get { throw null; } }
         protected System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> ListAvailableLocations(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> ListAvailableLocationsAsync(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
