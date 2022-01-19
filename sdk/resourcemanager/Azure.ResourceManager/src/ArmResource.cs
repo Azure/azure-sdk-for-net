@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"> The type of client to get. </typeparam>
         /// <param name="func"> The constructor factory for the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public T GetCachedClient<T>(Func<ArmClient, T> func)
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
             where T : class
         {
             if (!_clientCache.TryGetValue(typeof(T), out object client))
