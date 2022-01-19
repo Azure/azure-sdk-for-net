@@ -120,8 +120,11 @@ namespace Azure.ResourceManager.Core
         protected ArmResource(Azure.ResourceManager.ArmClientOptions clientOptions, Azure.Core.TokenCredential credential, System.Uri uri, Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.ResourceIdentifier id) { }
         protected ArmResource(Azure.ResourceManager.Core.ArmResource parentOperations, Azure.Core.ResourceIdentifier id) { }
         protected internal virtual Azure.ResourceManager.ArmClient ArmClient { get { throw null; } }
+        protected internal System.Uri BaseUri { get { throw null; } }
         protected internal Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } }
+        protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         protected internal Azure.ResourceManager.Resources.TagResource TagResource { get { throw null; } }
         protected System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> ListAvailableLocations(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> ListAvailableLocationsAsync(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -79,11 +79,20 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected internal virtual ArmClient ArmClient { get; }
 
-        internal DiagnosticsOptions DiagnosticOptions => ArmClient.DiagnosticOptions;
+        /// <summary>
+        /// Gets the diagnostic options for this resource client.
+        /// </summary>
+        protected internal DiagnosticsOptions DiagnosticOptions => ArmClient.DiagnosticOptions;
 
-        internal HttpPipeline Pipeline { get; }
+        /// <summary>
+        /// Gets the pipeline for this resource client.
+        /// </summary>
+        protected internal HttpPipeline Pipeline { get; }
 
-        internal Uri BaseUri { get; }
+        /// <summary>
+        /// Gets the base uri for this resource client.
+        /// </summary>
+        protected internal Uri BaseUri { get; }
 
         /// <summary>
         /// Gets client options
