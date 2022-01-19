@@ -149,6 +149,7 @@ function DeployStressPackage(
         Run az bicep build -f "$($pkg.Directory)/stress-test-resources.bicep"
         if ($LASTEXITCODE) { return }
     }
+
     $imageTag = "${registryName}.azurecr.io"
     if ($repositoryBase) {
         $imageTag += "/$repositoryBase"
@@ -157,6 +158,7 @@ function DeployStressPackage(
         $imageTag += "/$($pkg.Namespace)"
     }
     $imageTag += "/$($pkg.ReleaseName):${deployId}"
+
     $dockerFilePath = "$($pkg.Directory)/Dockerfile"
     if ($pushImages -and (Test-Path $dockerFilePath)) {
         Write-Host "Building and pushing stress test docker image '$imageTag'"
