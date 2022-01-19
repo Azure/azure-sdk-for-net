@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Tests
         public async Task GetGlobalManagementGroup()
         {
             _mgmtGroupName = SessionRecording.GenerateAssetName("mgmt-group-");
-            var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupOptions());
+            var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(true, _mgmtGroupName, new CreateManagementGroupOptions());
             _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
-            Assert.IsTrue(await Client.GetManagementGroups().CheckIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetManagementGroups().CheckIfExistsAsync(_mgmtGroup.Data.Name + "x", cacheControl: "no-cache"));
+            Assert.IsTrue(await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name + "x", cacheControl: "no-cache"));
             Assert.AreEqual(403, ex.Status); //you get forbidden vs not found here for some reason by the service
         }
 
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdate()
         {
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
-            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions());
-            ManagementGroup mgmtGroup = mgmtGroupOp.Value;
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(false, mgmtGroupName, new CreateManagementGroupOptions());
+            ManagementGroup mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Tests
         public async Task StartCreateOrUpdate()
         {
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
-            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions(), waitForCompletion: false);
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(false, mgmtGroupName, new CreateManagementGroupOptions());
             ManagementGroup mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);

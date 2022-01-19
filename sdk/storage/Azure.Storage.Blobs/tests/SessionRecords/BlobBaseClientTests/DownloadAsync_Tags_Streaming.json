@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "07bf2385-204f-9373-7315-87fe24759eba",
         "x-ms-date": "Fri, 05 Mar 2021 16:28:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "07bf2385-204f-9373-7315-87fe24759eba",
         "x-ms-request-id": "173876c0-801e-0074-4ddc-11d2b5000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -42,7 +42,7 @@
         "x-ms-client-request-id": "e59f1673-6221-a01d-e35b-9a573acf5fa3",
         "x-ms-date": "Fri, 05 Mar 2021 16:28:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "NkcAMb2XQ/YTtwQHEld4MzDoRNfKbjtwPMI+xdt4MwVmY3s5+k+D7t/J85gbbIAbnVPNPDDH78cMkPX6WH4am4P/oK/bPjnhZFb4AXqiVNBCIiiIqvbVnnOzLWpZiJVhrlgUHMvQP14a7Nfaz+1MaTsluDVVkvCNKQI8KBHPh9zBllIijjgEcePJbb4e+8+FZ8QuNNBfCxxoh/LJlBdNSmT7GDibKtsCIEdSjCQybi4ytsBMoFMMYYs1ugZGOt3LfCNaI+KX6j3pKxOIDH/4NRnDl91WAKoQ77esZW/UvOZqhxAB2EpMmsyDY3RAg1ULPYTsg6P/dHt4STQq6oTNFG8tHoVv913PdvwR05010GtioSjr6DlCahOUiI4WIbBHtk8FE2TQnEUnHQym7aHeQ3nIyElc4Ss26rRx2m/OuFRLyRxNL70HkgTixMosm31ytkQVTVln69UjzymwXsHWWGS3WyOEkBO8wTZEeR1hCU43/yQquWv75N5HKWCTVzNCC2xmdUBZ7SUwWYwiInG3wsbbeV6drJ/5u3ZFPWazKGoCAW2x+pMN3RL++V/f2cJsj2eZuN3VpV/MbbnKFK++fTEiHyADBscyzZtLn7I/GeKz2K3/GW+MLVwO5I3aQsliP3wuvbmhaImgZ+tCiQWsjVPXFjsBv2PClfLD9SI5WIvR6V82EVwoEm8kX7KESqNWYlY6AyyOYIAYbCfH3nNnZg5fcKCmdXz2rgTL3WCxPUtObJLL/1VfQ4jfHaQ1YDP8vfijJNkDsO3aRFQnwoMfZy7ceXHgm2e5ACwYxlfXwU3Qzx9nDRlxS7yl8bsAN4EEv7Z2WefCGyGR6SOt6umVAoIHVvJkuFoVai61O6qsucirEwehYWhlDrT91ST1xGDSEO44+OGOoAZcYe65DOB35S9bAtfh86EaoUc+ZuM2H6bN4iq8dMDnHHMARf95rAHThvD0msGJ8RxNHVeZUDojJkFH6yq1u3Fvc+Zj4a6hoPRFat/yQYXlRPEOb1ZpTss53R+9MsDXHst/hSbbJQ9tq3xiU+ZaMOS8YqY5pkwaBSUaKgSP4240bksUc7xeCR/hoMPaBvrl36w7AdAannd/ZH8BwPsL3scOLuWaRb0nXViHVwWIQP8qNUpYVOKdGdDUlQ49XUgk1cL8y9gVS5nuE6R3k0Zx9iSA1ouws4rlcBQUxbCu6v8PYoJDjHQmFeqxaUA+JYaKYp7qvYe9dCI4FlrDAIXpQCmkaDDELmqvWcGh/klJp0uNimMSwy14Uu5fCnUaYxRkyCkXmb1WxjQzO2PFG3XY7m8PNnYi13z7KxVBZCP1lfasPDYgMQ2NNsQu3ojJszZ5hxwFCiyeQvGtGw==",
       "StatusCode": 201,
@@ -57,7 +57,7 @@
         "x-ms-content-crc64": "dV2gwbAL5fA=",
         "x-ms-request-id": "17387745-801e-0074-3cdc-11d2b5000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -74,7 +74,7 @@
         "x-ms-client-request-id": "a644f9e3-9cc3-4fde-d558-10d7de878d0c",
         "x-ms-date": "Fri, 05 Mar 2021 16:28:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<Tags><TagSet><Tag><Key>tagKey0</Key><Value>tagValue0</Value></Tag><Tag><Key>tagKey1</Key><Value>tagValue1</Value></Tag></TagSet></Tags>",
       "StatusCode": 204,
@@ -83,7 +83,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "a644f9e3-9cc3-4fde-d558-10d7de878d0c",
         "x-ms-request-id": "17387758-801e-0074-4edc-11d2b5000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -98,7 +98,7 @@
         "x-ms-client-request-id": "40738fb6-b88a-ebdf-4e9d-789faa111741",
         "x-ms-date": "Fri, 05 Mar 2021 16:28:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -120,7 +120,7 @@
         "x-ms-request-id": "17387789-801e-0074-79dc-11d2b5000000",
         "x-ms-server-encrypted": "true",
         "x-ms-tag-count": "2",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "NkcAMb2XQ/YTtwQHEld4MzDoRNfKbjtwPMI+xdt4MwVmY3s5+k+D7t/J85gbbIAbnVPNPDDH78cMkPX6WH4am4P/oK/bPjnhZFb4AXqiVNBCIiiIqvbVnnOzLWpZiJVhrlgUHMvQP14a7Nfaz+1MaTsluDVVkvCNKQI8KBHPh9zBllIijjgEcePJbb4e+8+FZ8QuNNBfCxxoh/LJlBdNSmT7GDibKtsCIEdSjCQybi4ytsBMoFMMYYs1ugZGOt3LfCNaI+KX6j3pKxOIDH/4NRnDl91WAKoQ77esZW/UvOZqhxAB2EpMmsyDY3RAg1ULPYTsg6P/dHt4STQq6oTNFG8tHoVv913PdvwR05010GtioSjr6DlCahOUiI4WIbBHtk8FE2TQnEUnHQym7aHeQ3nIyElc4Ss26rRx2m/OuFRLyRxNL70HkgTixMosm31ytkQVTVln69UjzymwXsHWWGS3WyOEkBO8wTZEeR1hCU43/yQquWv75N5HKWCTVzNCC2xmdUBZ7SUwWYwiInG3wsbbeV6drJ/5u3ZFPWazKGoCAW2x+pMN3RL++V/f2cJsj2eZuN3VpV/MbbnKFK++fTEiHyADBscyzZtLn7I/GeKz2K3/GW+MLVwO5I3aQsliP3wuvbmhaImgZ+tCiQWsjVPXFjsBv2PClfLD9SI5WIvR6V82EVwoEm8kX7KESqNWYlY6AyyOYIAYbCfH3nNnZg5fcKCmdXz2rgTL3WCxPUtObJLL/1VfQ4jfHaQ1YDP8vfijJNkDsO3aRFQnwoMfZy7ceXHgm2e5ACwYxlfXwU3Qzx9nDRlxS7yl8bsAN4EEv7Z2WefCGyGR6SOt6umVAoIHVvJkuFoVai61O6qsucirEwehYWhlDrT91ST1xGDSEO44+OGOoAZcYe65DOB35S9bAtfh86EaoUc+ZuM2H6bN4iq8dMDnHHMARf95rAHThvD0msGJ8RxNHVeZUDojJkFH6yq1u3Fvc+Zj4a6hoPRFat/yQYXlRPEOb1ZpTss53R+9MsDXHst/hSbbJQ9tq3xiU+ZaMOS8YqY5pkwaBSUaKgSP4240bksUc7xeCR/hoMPaBvrl36w7AdAannd/ZH8BwPsL3scOLuWaRb0nXViHVwWIQP8qNUpYVOKdGdDUlQ49XUgk1cL8y9gVS5nuE6R3k0Zx9iSA1ouws4rlcBQUxbCu6v8PYoJDjHQmFeqxaUA+JYaKYp7qvYe9dCI4FlrDAIXpQCmkaDDELmqvWcGh/klJp0uNimMSwy14Uu5fCnUaYxRkyCkXmb1WxjQzO2PFG3XY7m8PNnYi13z7KxVBZCP1lfasPDYgMQ2NNsQu3ojJszZ5hxwFCiyeQvGtGw=="
     },
@@ -135,7 +135,7 @@
         "x-ms-client-request-id": "4e204706-4c13-ef81-6d17-4d8333ac0e1b",
         "x-ms-date": "Fri, 05 Mar 2021 16:28:27 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -145,7 +145,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "4e204706-4c13-ef81-6d17-4d8333ac0e1b",
         "x-ms-request-id": "1738779a-801e-0074-07dc-11d2b5000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

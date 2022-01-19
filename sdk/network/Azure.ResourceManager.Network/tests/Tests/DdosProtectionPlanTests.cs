@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
-            DdosProtectionPlan ddosProtectionPlan = await container.CreateOrUpdate(name, new DdosProtectionPlanData(TestEnvironment.Location)).WaitForCompletionAsync();
+            DdosProtectionPlan ddosProtectionPlan = await container.CreateOrUpdate(true, name, new DdosProtectionPlanData(TestEnvironment.Location)).WaitForCompletionAsync();
 
-            Assert.True(await container.CheckIfExistsAsync(name));
+            Assert.True(await container.ExistsAsync(name));
 
             var ddosProtectionPlanData = ddosProtectionPlan.Data;
             ValidateCommon(ddosProtectionPlanData, name);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
             var data = new DdosProtectionPlanData(TestEnvironment.Location);
             data.Tags.Add("tag1", "value1");
             data.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await container.CreateOrUpdate(name, data).WaitForCompletionAsync();
+            ddosProtectionPlan = await container.CreateOrUpdate(true, name, data).WaitForCompletionAsync();
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests
             // patch
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await ddosProtectionPlan.UpdateTagsAsync(tags);
+            ddosProtectionPlan = await ddosProtectionPlan.UpdateAsync(tags);
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(ddosProtectionPlanData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await ddosProtectionPlan.DeleteAsync();
+            await ddosProtectionPlan.DeleteAsync(true);
 
-            Assert.False(await container.CheckIfExistsAsync(name));
+            Assert.False(await container.ExistsAsync(name));
 
             ddosProtectionPlans = await container.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);

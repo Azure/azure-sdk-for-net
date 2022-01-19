@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "ad3cb03b-c672-c186-b8cb-521fb46fa811",
         "x-ms-date": "Wed, 17 Feb 2021 02:31:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "ad3cb03b-c672-c186-b8cb-521fb46fa811",
         "x-ms-request-id": "28d7f100-e01e-0061-40d4-04f981000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 02:31:29 GMT",
         "x-ms-lease-id": "e2cf81fc-7f8f-8feb-0d13-75ea20f5f9e8",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "3640d363-b8c0-22e7-e702-050759724293",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "28d7f121-e01e-0061-59d4-04f981000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the container.\n",
@@ -86,7 +86,7 @@
         "x-ms-client-request-id": "e0bc19b7-722e-f550-32df-cb2e360db352",
         "x-ms-date": "Wed, 17 Feb 2021 02:31:29 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -99,7 +99,7 @@
         ],
         "x-ms-client-request-id": "e0bc19b7-722e-f550-32df-cb2e360db352",
         "x-ms-request-id": "28d7f12a-e01e-0061-60d4-04f981000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

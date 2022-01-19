@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public class ErrorMessages
         {
-            public const string NotSupportedDataType = "Message only supports text, binary, json. Current value is: ";
+            public const string NotSupportedDataType = "Message data only supports text, binary, json. Current value is: ";
             public const string NotValidWebPubSubRequest = "Invalid request that missing required fields.";
             public const string SignatureValidationFailed = "Invalid request signature.";
         }

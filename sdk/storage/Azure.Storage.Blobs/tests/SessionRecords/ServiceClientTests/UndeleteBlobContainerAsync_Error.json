@@ -16,7 +16,7 @@
         "x-ms-deleted-container-name": "test-blob-bfc53990-0857-cb54-df87-f380aaf6f949",
         "x-ms-deleted-container-version": "01D60F8BB59A4652",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "5e65c3f0-5999-fa6c-3236-05d15574c380",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "14d8b987-501e-0056-01d3-0407ce000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",

@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Network
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<FrontendIPConfiguration>> frontendIPConfigurations = default;
+            Optional<IList<FrontendIPConfigurationData>> frontendIPConfigurations = default;
             Optional<IList<BackendAddressPoolData>> backendAddressPools = default;
-            Optional<IList<LoadBalancingRule>> loadBalancingRules = default;
-            Optional<IList<Probe>> probes = default;
+            Optional<IList<LoadBalancingRuleData>> loadBalancingRules = default;
+            Optional<IList<ProbeData>> probes = default;
             Optional<IList<InboundNatRuleData>> inboundNatRules = default;
             Optional<IList<InboundNatPool>> inboundNatPools = default;
-            Optional<IList<OutboundRule>> outboundRules = default;
+            Optional<IList<OutboundRuleData>> outboundRules = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FrontendIPConfiguration> array = new List<FrontendIPConfiguration>();
+                            List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendIPConfiguration.DeserializeFrontendIPConfiguration(item));
+                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -251,10 +251,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LoadBalancingRule> array = new List<LoadBalancingRule>();
+                            List<LoadBalancingRuleData> array = new List<LoadBalancingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancingRule.DeserializeLoadBalancingRule(item));
+                                array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Probe> array = new List<Probe>();
+                            List<ProbeData> array = new List<ProbeData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Probe.DeserializeProbe(item));
+                                array.Add(ProbeData.DeserializeProbeData(item));
                             }
                             probes = array;
                             continue;
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<OutboundRule> array = new List<OutboundRule>();
+                            List<OutboundRuleData> array = new List<OutboundRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OutboundRule.DeserializeOutboundRule(item));
+                                array.Add(OutboundRuleData.DeserializeOutboundRuleData(item));
                             }
                             outboundRules = array;
                             continue;

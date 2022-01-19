@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "b9a21943-53d5-f08f-f455-39dc945f42e8",
         "x-ms-date": "Tue, 26 Jan 2021 19:27:29 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,12 +29,12 @@
         ],
         "x-ms-client-request-id": "b9a21943-53d5-f08f-f455-39dc945f42e8",
         "x-ms-request-id": "d9e293ee-201a-0033-1319-f48569000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-b06e24b2-8bd7-67de-eb56-6a99d0526319/test-directory-6333ebde-fa5a-35b7-b6cd-1dfa377dc621?sv=2020-12-06&ss=f&srt=s&se=2021-01-26T20%3A27%3A30Z&sp=r&sig=Sanitized&restype=directory",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-b06e24b2-8bd7-67de-eb56-6a99d0526319/test-directory-6333ebde-fa5a-35b7-b6cd-1dfa377dc621?sv=2021-04-10&ss=f&srt=s&se=2021-01-26T20%3A27%3A30Z&sp=r&sig=Sanitized&restype=directory",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -45,7 +45,7 @@
         ],
         "x-ms-client-request-id": "b5826b9a-3d96-49af-616d-02083595b977",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "b5826b9a-3d96-49af-616d-02083595b977",
         "x-ms-error-code": "AuthorizationResourceTypeMismatch",
         "x-ms-request-id": "536734d7-b01a-006c-0919-f43155000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>AuthorizationResourceTypeMismatch</Code><Message>This request is not authorized to perform this operation using this resource type.\n",
@@ -84,7 +84,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:27:30 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "cc60eabf-10fa-788a-b00c-5443a73a9b76",
         "x-ms-request-id": "536734e3-b01a-006c-1219-f43155000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

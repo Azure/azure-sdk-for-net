@@ -2,7 +2,7 @@
   "Name": "PoolUsageMetrics",
   "ProtocolName": "Models.PoolUsageMetrics",
   "SummaryComment": "The usage metrics for a single pool in a certain time range.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

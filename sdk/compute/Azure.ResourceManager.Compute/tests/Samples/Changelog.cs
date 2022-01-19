@@ -10,6 +10,7 @@
             using Azure.ResourceManager.Resources;
             using Azure.ResourceManager.Resources.Models;
             using System.Linq;
+            using Azure.Core;
 
 #if !SNIPPET
 using System.Threading.Tasks;
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
 #endif
             var armClient = new ArmClient(new DefaultAzureCredential());
 
-            var location = Location.WestUS;
+            var location = AzureLocation.WestUS;
             // Create ResourceGroup
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgOperation.Value;
 
             // Create AvailabilitySet
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 PlatformFaultDomainCount = 2,
                 Sku = new Compute.Models.Sku() { Name = "Aligned" }
             };
-            AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync("myAvailabilitySet", availabilitySetData);
+            AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
             AvailabilitySet availabilitySet = asetOperation.Value;
 
             // Create VNet
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 },
             };
-            VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync("myVirtualNetwork", vnetData);
+            VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
             VirtualNetwork vnet = vnetOperation.Value;
 
             // Create Network interface
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 Location = location,
                 IpConfigurations =
                 {
-                    new NetworkInterfaceIPConfiguration()
+                    new NetworkInterfaceIPConfigurationData()
                     {
                         Name = "Primary",
                         Primary = true,
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync("myNetworkInterface", nicData);
+            NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
             NetworkInterface nic = nicOperation.Value;
 
             var vmData = new VirtualMachineData(location)
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 },
                 HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
             };
-            VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync("myVirtualMachine", vmData);
+            VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
             VirtualMachine vm = vmOperation.Value;
             #endregion
         }
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         public void CreateVmExtension()
         {
             #region Snippet:Changelog_CreateVMExtension
-            var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+            var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
             {
                 Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
                 Publisher = "Microsoft.Compute",

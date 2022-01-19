@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Network.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -57,14 +58,14 @@ namespace Azure.ResourceManager.Network.Tests
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
-            return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(name, vnet).WaitForCompletionAsync();
+            return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(true, name, vnet).WaitForCompletionAsync();
         }
 
         private async Task<StorageAccount> createStorageAccount()
         {
             var name = Recording.GenerateAssetName("testsa");
             var parameters = new StorageAccountCreateParameters(new Storage.Models.Sku(SkuName.StandardLRS),Kind.Storage,TestEnvironment.Location);
-            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(name,parameters)).Value;
+            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, name,parameters)).Value;
             //var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
 
         //var storageParameters = new Storage.Models.StorageAccountCreateParameters(new Storage.Models.Sku(Storage.Models.SkuName.StandardLRS), Storage.Models.Kind.Storage, TestEnvironment.Location);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests
         //Response<Storage.Models.StorageAccount> account = await accountOperation.WaitForCompletionAsync();
         //return account.Value;
 
-            //return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(storageAccountId, new GenericResourceData(TestEnvironment.Location)
+            //return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(true, storageAccountId, new GenericResourceData(TestEnvironment.Location)
             //{
             //    //Sku = new Resources.Models.Sku(),
             //    Kind = "storage",
@@ -83,16 +84,16 @@ namespace Azure.ResourceManager.Network.Tests
         {
             if (virtualNetwork != null)
             {
-                await virtualNetwork.DeleteAsync();
+                await virtualNetwork.DeleteAsync(true);
             }
             if (privateDnsZone != null)
             {
-                await privateDnsZone.DeleteAsync();
+                await privateDnsZone.DeleteAsync(true);
             }
             if (storageAccount != null)
             {
                 //await StorageManagementClient.StorageAccounts.DeleteAsync(resourceGroup.Data.Name, storageAccount.Name);
-                await storageAccount.DeleteAsync();
+                await storageAccount.DeleteAsync(true);
             }
         }
 
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
             };
 
-            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(name, privateEndpointData)).Value;
+            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
             Assert.AreEqual(name, privateEndpoint.Data.Name);
             Assert.AreEqual(TestEnvironment.Location, privateEndpoint.Data.Location);
             Assert.IsEmpty(privateEndpoint.Data.Tags);
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // update
             privateEndpointData.Tags.Add("test", "test");
-            privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(name, privateEndpointData)).Value;
+            privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
             Assert.AreEqual(name, privateEndpoint.Data.Name);
             Assert.AreEqual(TestEnvironment.Location, privateEndpoint.Data.Location);
             Assert.That(privateEndpoint.Data.Tags, Has.Count.EqualTo(1));
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(name, privateEndpoint.Data.Name);
 
             // delete
-            await privateEndpoint.DeleteAsync();
+            await privateEndpoint.DeleteAsync(true);
 
             // list all
             privateEndpoints = (await _subscription.GetPrivateEndpointsAsync().ToEnumerableAsync());
@@ -186,15 +187,15 @@ namespace Azure.ResourceManager.Network.Tests
                 },
             };
 
-            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(name, privateEndpointData)).Value;
+            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
 
             var privateDnsZoneName = Recording.GenerateAssetName("private_dns_zone");
-            var privateDnsZoneResourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}";
-            privateDnsZone = _subscription.GetGenericResources().CreateOrUpdate(privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
+            var privateDnsZoneResourceId = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}");
+            privateDnsZone = ArmClient.GetGenericResources().CreateOrUpdate(true, privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupCollection = privateEndpoint.GetPrivateDnsZoneGroups();
-            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(privateDnsZoneGroupName, new PrivateDnsZoneGroupData {
+            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(true, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {
                 PrivateDnsZoneConfigs = {
                     new PrivateDnsZoneConfig
                     {
@@ -225,17 +226,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(privateDnsZone.Id, privateDnsZoneGroup.Data.PrivateDnsZoneConfigs[0].PrivateDnsZoneId);
 
             // update
-            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(privateDnsZoneGroupName, new PrivateDnsZoneGroupData {})).Value;
+            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(true, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {})).Value;
             Assert.IsEmpty(privateDnsZoneGroup.Data.PrivateDnsZoneConfigs);
 
             // delete
-            await privateDnsZoneGroup.DeleteAsync();
+            await privateDnsZoneGroup.DeleteAsync(true);
 
             // list again
             groups = (await privateDnsZoneGroupCollection.GetAllAsync().ToEnumerableAsync());
             Assert.IsEmpty(groups);
 
-            await privateEndpoint.DeleteAsync();
+            await privateEndpoint.DeleteAsync(true);
         }
 
         [Test]
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task AvailablePrivateEndpointInResourceGroupTypeTest()
         {
-            var types = await _subscription.GetAvailablePrivateEndpointTypesByResourceGroupAsync( resourceGroup.Data.Name, TestEnvironment.Location).ToEnumerableAsync();
+            var types = await resourceGroup.GetAvailablePrivateEndpointTypesAsync(TestEnvironment.Location).ToEnumerableAsync();
             Assert.IsNotEmpty(types);
         }
     }

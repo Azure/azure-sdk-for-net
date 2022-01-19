@@ -265,7 +265,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tenant/gitAccess\",\r\n  \"type\": \"Microsoft.ApiManagement/service/tenant\",\r\n  \"name\": \"gitAccess\",\r\n  \"properties\": {\r\n    \"principalId\": \"git\",\r\n    \"primaryKey\": null,\r\n    \"secondaryKey\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tenant/gitAccess\",\r\n  \"type\": \"Microsoft.ApiManagement/service/tenant\",\r\n  \"name\": \"gitAccess\",\r\n  \"properties\": {\r\n    \"principalId\": \"git\",\r\n    \"primaryKey\": \"default\",\r\n    \"secondaryKey\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -331,7 +331,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/tenant/gitAccess\",\r\n  \"principalId\": \"git\",\r\n  \"primaryKey\": \"WuJkRChZ9b2Z79irR/4ZQmz26hblXg3bqZaI4eLfwNYhS0HWBa1h0RakaRXVluS9/Sz6di2aA2X51UJwvIGuMw==\",\r\n  \"secondaryKey\": \"BnpPiyrP7/ikUo04LC+nHtxgDnP0TMFXp/gy5Yi+rQg5ZxDc0UFC+sOm6utHj5puQH9PH3FubkuP3HQOTZooRQ==\",\r\n  \"enabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/tenant/gitAccess\",\r\n  \"principalId\": \"git\",\r\n  \"primaryKey\": \"default\",\r\n  \"secondaryKey\": \"BnpPiyrP7/ikUo04LC+nHtxgDnP0TMFXp/gy5Yi+rQg5ZxDc0UFC+sOm6utHj5puQH9PH3FubkuP3HQOTZooRQ==\",\r\n  \"enabled\": true\r\n}",
       "StatusCode": 200
     },
     {
@@ -397,7 +397,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/tenant/gitAccess\",\r\n  \"principalId\": \"git\",\r\n  \"primaryKey\": \"dPCoiOmbCw8SPVXf68+h3emH/SXafiqhcg77IAT9g5HLsjGgRWKzzyyOO1oyPpW3XKhmPNAhGrI2w4q7ySsskw==\",\r\n  \"secondaryKey\": \"BnpPiyrP7/ikUo04LC+nHtxgDnP0TMFXp/gy5Yi+rQg5ZxDc0UFC+sOm6utHj5puQH9PH3FubkuP3HQOTZooRQ==\",\r\n  \"enabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/tenant/gitAccess\",\r\n  \"principalId\": \"git\",\r\n  \"primaryKey\": \"default\",\r\n  \"secondaryKey\": \"BnpPiyrP7/ikUo04LC+nHtxgDnP0TMFXp/gy5Yi+rQg5ZxDc0UFC+sOm6utHj5puQH9PH3FubkuP3HQOTZooRQ==\",\r\n  \"enabled\": true\r\n}",
       "StatusCode": 200
     },
     {
@@ -463,7 +463,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/tenant/gitAccess\",\r\n  \"principalId\": \"git\",\r\n  \"primaryKey\": \"dPCoiOmbCw8SPVXf68+h3emH/SXafiqhcg77IAT9g5HLsjGgRWKzzyyOO1oyPpW3XKhmPNAhGrI2w4q7ySsskw==\",\r\n  \"secondaryKey\": \"yhfg5fOr+fSF6fqy2EoNFo6XSZwcJmVwhbIfdzZccCCLfLHwt4ouTxbPaVuhsahwfpZxAuLkSnhoIEn69WCx1A==\",\r\n  \"enabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/tenant/gitAccess\",\r\n  \"principalId\": \"git\",\r\n  \"primaryKey\": \"default\",\r\n  \"secondaryKey\": \"yhfg5fOr+fSF6fqy2EoNFo6XSZwcJmVwhbIfdzZccCCLfLHwt4ouTxbPaVuhsahwfpZxAuLkSnhoIEn69WCx1A==\",\r\n  \"enabled\": true\r\n}",
       "StatusCode": 200
     },
     {

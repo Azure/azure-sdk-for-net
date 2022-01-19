@@ -1154,7 +1154,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobItem
             {
-                Name = blobItemInternal.Name,
+                Name = blobItemInternal.Name.ToBlobNameString(),
                 Deleted = blobItemInternal.Deleted,
                 Snapshot = blobItemInternal.Snapshot,
                 VersionId = blobItemInternal.VersionId,
@@ -1169,6 +1169,20 @@ namespace Azure.Storage.Blobs
                     : null,
                 HasVersionsOnly = blobItemInternal.HasVersionsOnly
             };
+        }
+
+        internal static string ToBlobNameString(this BlobName blobName)
+        {
+            string blobNameString;
+            if (blobName.Encoded.GetValueOrDefault())
+            {
+                blobNameString = Uri.UnescapeDataString(blobName.Content);
+            }
+            else
+            {
+                blobNameString = blobName.Content;
+            }
+            return blobNameString;
         }
 
         internal static BlobItemProperties ToBlobItemProperties(this BlobPropertiesInternal blobPropertiesInternal)

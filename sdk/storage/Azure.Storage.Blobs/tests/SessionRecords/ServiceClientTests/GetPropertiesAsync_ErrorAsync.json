@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "7e28e1f8-3781-0d7a-0a15-6df3a3dbb3a3",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 401,
@@ -28,7 +28,7 @@
         "x-ms-client-request-id": "7e28e1f8-3781-0d7a-0a15-6df3a3dbb3a3",
         "x-ms-error-code": "NoAuthenticationInformation",
         "x-ms-request-id": "8cafc5ef-a01e-0002-53d3-04647a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>NoAuthenticationInformation</Code><Message>Server failed to authenticate the request. Please refer to the information in the www-authenticate header.\n",

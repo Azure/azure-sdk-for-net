@@ -7,7 +7,7 @@
   "ParentPathVariables": [ "parentJobId" ],
   "CustomIncludes": [ "FileStaging" ],
   "IsTopLevelObject": true,
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "HideCustomConstructor": true,
   "Properties": [
     {

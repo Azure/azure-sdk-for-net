@@ -36,12 +36,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.</param>
         /// <param name="triggerUri">Logic App Callback URL for this specific
         /// workflow.</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
-        public ActionRequest(string logicAppResourceId, string triggerUri, string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
-            : base(id, name, type, etag)
+        public ActionRequest(string logicAppResourceId, string triggerUri, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string))
+            : base(id, name, type, systemData, etag)
         {
             LogicAppResourceId = logicAppResourceId;
             TriggerUri = triggerUri;

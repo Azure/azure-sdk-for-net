@@ -56,14 +56,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItems;
         }
 
-        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, string instrumentationKey)
+        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, Resource resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = TelemetryPartA.GetTelemetryItem(logRecord, instrumentationKey);
+                telemetryItem = TelemetryPartA.GetTelemetryItem(logRecord, resource, instrumentationKey);
                 telemetryItem.Data = new MonitorBase
                 {
                     BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Message],

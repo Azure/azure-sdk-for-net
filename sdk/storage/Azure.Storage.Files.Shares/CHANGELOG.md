@@ -1,6 +1,15 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.9.0-beta.3 (Unreleased)
+- Added support for service version 2021-04-10.
+- Added support for ShareDirectoryClient.Rename() and ShareFileClient.Rename().
+- Fixed a memory leak in ShareFileClient.UploadAsync().
+
+## 12.9.0-beta.2 (2021-11-30)
+- Added support for service version 2021-02-12.
+- Added support for premium file share ProvisionedBandwidthMiBps property.
+
+## 12.9.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.
 - Added support for SDK-calculated transactional hash checksums on data transfer.
 - Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed starting in version 12.7.0.

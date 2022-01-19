@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "db649194-1842-20ee-9db7-3fe98e634b08",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "db649194-1842-20ee-9db7-3fe98e634b08",
         "x-ms-request-id": "2e697d4e-201e-00a4-56f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "47015a5a-5af7-f309-79eb-e4742bf29052",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -63,7 +63,7 @@
         ],
         "x-ms-client-request-id": "47015a5a-5af7-f309-79eb-e4742bf29052",
         "x-ms-request-id": "6f4b799d-e01f-004f-3af3-060e0b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -85,7 +85,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "c6547f46-fd09-69af-90c9-6462770cd881",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -100,7 +100,7 @@
         "x-ms-client-request-id": "20c5d69e-5c21-5d65-aa97-b62df6a77c6c",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "2e697f19-201e-00a4-07f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -122,7 +122,7 @@
         "x-ms-client-request-id": "a0c3c98a-b847-4e60-1844-8ab1739b4416",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -135,7 +135,7 @@
         ],
         "x-ms-client-request-id": "a0c3c98a-b847-4e60-1844-8ab1739b4416",
         "x-ms-request-id": "2e697feb-201e-00a4-4ff3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -154,7 +154,7 @@
         "x-ms-client-request-id": "bfb6f1d5-aae5-f91b-7e80-d49e4e59f954",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -169,7 +169,7 @@
         ],
         "x-ms-client-request-id": "bfb6f1d5-aae5-f91b-7e80-d49e4e59f954",
         "x-ms-request-id": "2e69807c-201e-00a4-5cf3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -187,7 +187,7 @@
         "x-ms-client-request-id": "affc4281-fb66-bd21-bfa6-7ce47ec1fe40",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -202,7 +202,7 @@
         ],
         "x-ms-client-request-id": "affc4281-fb66-bd21-bfa6-7ce47ec1fe40",
         "x-ms-request-id": "6f4b79ce-e01f-004f-6bf3-060e0b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -224,7 +224,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "fe9e600f-9726-9a47-9dde-045068cf08bd",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -239,7 +239,7 @@
         "x-ms-client-request-id": "a6546daa-0de8-ea81-fa62-1187f7d155f0",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "2e6981e7-201e-00a4-34f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -261,7 +261,7 @@
         "x-ms-client-request-id": "faa51c48-627b-e8d5-02ed-bddeb0850d5b",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -274,7 +274,7 @@
         ],
         "x-ms-client-request-id": "faa51c48-627b-e8d5-02ed-bddeb0850d5b",
         "x-ms-request-id": "2e6982c0-201e-00a4-06f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -293,7 +293,7 @@
         "x-ms-client-request-id": "4092758b-6618-ad4d-1d42-8c730d86ac32",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -308,7 +308,7 @@
         ],
         "x-ms-client-request-id": "4092758b-6618-ad4d-1d42-8c730d86ac32",
         "x-ms-request-id": "2e69837a-201e-00a4-38f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -326,7 +326,7 @@
         "x-ms-client-request-id": "e404c558-fe04-5885-45ce-038b16a20919",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -341,7 +341,7 @@
         ],
         "x-ms-client-request-id": "e404c558-fe04-5885-45ce-038b16a20919",
         "x-ms-request-id": "6f4b7a2c-e01f-004f-49f3-060e0b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -363,7 +363,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "85083e66-e6c3-40f5-a2c1-d8b47546f63c",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -378,7 +378,7 @@
         "x-ms-client-request-id": "9083a388-a7f9-729f-cfc3-414225d1e3fe",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "2e698537-201e-00a4-68f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -400,7 +400,7 @@
         "x-ms-client-request-id": "d12bb67d-66c3-b643-4de0-0f3bb5074730",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -413,7 +413,7 @@
         ],
         "x-ms-client-request-id": "d12bb67d-66c3-b643-4de0-0f3bb5074730",
         "x-ms-request-id": "2e6985e7-201e-00a4-0df3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -432,7 +432,7 @@
         "x-ms-client-request-id": "e2d25353-a2f0-62e5-e3cc-48afcae59207",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -447,7 +447,7 @@
         ],
         "x-ms-client-request-id": "e2d25353-a2f0-62e5-e3cc-48afcae59207",
         "x-ms-request-id": "2e6986aa-201e-00a4-4cf3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -465,7 +465,7 @@
         "x-ms-client-request-id": "539dd4e3-18da-7ba9-c85e-9bcb39122381",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -480,7 +480,7 @@
         ],
         "x-ms-client-request-id": "539dd4e3-18da-7ba9-c85e-9bcb39122381",
         "x-ms-request-id": "6f4b7a72-e01f-004f-0ef3-060e0b000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -497,7 +497,7 @@
         "x-ms-client-request-id": "2b4f093e-8c35-21c4-40f3-e267a5c82f17",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -524,7 +524,7 @@
         "x-ms-permissions": "rw-r-----",
         "x-ms-request-id": "2e698827-201e-00a4-3ff3-0676f9000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -546,7 +546,7 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "1b559f89-c1da-a993-7072-72e14cb1a9bc",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -561,7 +561,7 @@
         "x-ms-client-request-id": "42a35618-7e61-f187-05cd-29d00d669c3c",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "2e6988ce-201e-00a4-64f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
@@ -583,7 +583,7 @@
         "x-ms-client-request-id": "4e4ffdd9-ec25-36b5-575d-6a568fec8b69",
         "x-ms-date": "Fri, 19 Feb 2021 19:11:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -596,7 +596,7 @@
         ],
         "x-ms-client-request-id": "4e4ffdd9-ec25-36b5-575d-6a568fec8b69",
         "x-ms-request-id": "2e69898c-201e-00a4-17f3-0676f9000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

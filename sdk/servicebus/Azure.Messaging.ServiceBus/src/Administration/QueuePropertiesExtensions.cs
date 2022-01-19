@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 new XElement(XName.Get("EnablePartitioning", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnablePartitioning)),
                 description.ForwardDeadLetteredMessagesTo != null ? new XElement(XName.Get("ForwardDeadLetteredMessagesTo", AdministrationClientConstants.ServiceBusNamespace), description.ForwardDeadLetteredMessagesTo) : null,
                 new XElement(XName.Get("EnableExpress", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableExpress)),
-                description.MaxMessageSizeInKilobytes != 0 ? new XElement(XName.Get("MaxMessageSizeInKilobytes", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxMessageSizeInKilobytes)) : null,
+                description.MaxMessageSizeInKilobytes.HasValue ? new XElement(XName.Get("MaxMessageSizeInKilobytes", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxMessageSizeInKilobytes.Value)) : null,
             };
 
             // Insert unknown properties in the exact order they were in the received xml.

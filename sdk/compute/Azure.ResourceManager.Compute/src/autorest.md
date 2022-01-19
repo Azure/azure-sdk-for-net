@@ -10,82 +10,33 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/654c237832960c2753b7a4a4459a434af6d57a4a/specification/compute/resource-manager/readme.md
-tag: package-2021-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a4783665bb6c0b13f345aec/specification/compute/resource-manager/readme.md
+tag: package-2021-08-01
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
-  lenient-model-deduplication: true
+  
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
-  RestorePoints
-operation-group-to-resource-type:
-  CloudServiceRoles: Microsoft.Compute/cloudServices/roles
-  CloudServiceOperatingSystems: Microsoft.Compute/locations/cloudServiceOsFamilies
-  VirtualMachineExtensionImages: Microsoft.Compute/locations/publishers/vmextension
-  VirtualMachineImages: Microsoft.Compute/locations/publishers/vmimage
-  Usage: Microsoft.Compute/locations/usages
-  VirtualMachineSizes: Microsoft.Compute/locations/vmSizes
-  VirtualMachineImagesEdgeZone: Microsoft.Compute/locations/edgeZones/publishers/artifacttypes/offers/skus/versions
-  VirtualMachineScaleSetRollingUpgrades: Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades
-  LogAnalytics: Microsoft.Compute/locations/logAnalytics
-  Locations: Microsoft.Compute/locations/runCommands
-  ResourceSkus: Microsoft.Compute/skus
-  DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints/diskRestorePoints
-  GallerySharingProfile: Microsoft.Compute/galleries/share
-  SharedGalleries: Microsoft.Compute/locations/sharedGalleries
-  SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries/images
-  SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images/versions
-operation-group-to-resource:
-  CloudServiceRoleInstances: NonResource
-  CloudServiceRoles: NonResource
-  CloudServiceOperatingSystems: NonResource
-  VirtualMachineImages: NonResource
-  VirtualMachineExtensionImages: NonResource
-  VirtualMachineImagesEdgeZone: NonResource
-  VirtualMachineScaleSetRollingUpgrades: VirtualMachineScaleSetRollingUpgrade
-  LogAnalytics: NonResource
-  Locations: NonResource
-  DiskRestorePoint: DiskRestorePoint
-  GallerySharingProfile: NonResource
-  SharedGalleries: NonResource
-  SharedGalleryImages: NonResource
-  SharedGalleryImageVersions: NonResource
-  RestorePointCollections: RestorePointGroup
-operation-group-to-parent:
-  Usage: subscriptions
-  LogAnalytics: subscriptions
-  CloudServiceRoleInstances: Microsoft.Compute/cloudServices
-  CloudServiceRoles: Microsoft.Compute/cloudServices
-  CloudServiceOperatingSystems: subscriptions
-  VirtualMachineSizes: subscriptions
-  VirtualMachineImages: subscriptions
-  VirtualMachineExtensionImages: subscriptions
-  VirtualMachineImagesEdgeZone: subscriptions
-  VirtualMachineExtensions: Microsoft.Compute/virtualMachines
-  VirtualMachineScaleSetVMExtensions: Microsoft.Compute/virtualMachineScaleSets
-  VirtualMachineScaleSetRollingUpgrades: Microsoft.Compute/virtualMachineScaleSets
-  VirtualMachineRunCommands: Microsoft.Compute/virtualMachines
-  VirtualMachineScaleSetVMRunCommands: Microsoft.Compute/virtualMachineScaleSets/virtualMachines ## there is a casing inconsistency !!!
-  GallerySharingProfile: Microsoft.Compute/galleries
-  ResourceSkus: subscriptions
-  DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints
-  SharedGalleries: subscriptions
-  SharedGalleryImages: subscriptions
-  SharedGalleryImageVersions: subscriptions
-operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+
+override-operation-name:
+  VirtualMachines_Start: PowerOn
+  VirtualMachineScaleSets_Start: PowerOn
+  VirtualMachineScaleSetVMs_Start: PowerOn
+  CloudServices_Start: PowerOn
+  CloudServicesUpdateDomain_GetUpdateDomain: GetUpdateDomain
+  CloudServicesUpdateDomain_ListUpdateDomains: GetUpdateDomains
+  CloudServicesUpdateDomain_WalkUpdateDomain: WalkUpdateDomain
+  GallerySharingProfile_Update: UpdateSharingProfile
+  VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
+  VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
+
+request-path-to-resource-data:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
+
 directive:
-  ## first we need to unify all the paths by changing `virtualmachines` to `virtualMachines` so that every path could have consistent casing
-  - from: swagger-document
-    where: $.paths
-    transform: >
-      for (var key in $) {
-          const newKey = key.replace('virtualmachines', 'virtualMachines');
-          if (newKey !== key) {
-              $[newKey] = $[key]
-              delete $[key]
-          }
-      }
   - from: compute.json
     where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages
     transform: $.description="The list of data disk images information."
@@ -104,55 +55,28 @@ directive:
   - rename-model:
       from: RollingUpgradeStatusInfo
       to: VirtualMachineScaleSetRollingUpgrade
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.operationId
-    transform: return "PrivateEndpointConnections_CreateOrUpdate"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].get.operationId
-    transform: return "PrivateEndpointConnections_Get"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].delete.operationId
-    transform: return "PrivateEndpointConnections_Delete"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections'].get.operationId
-    transform: return "PrivateEndpointConnections_List"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries'].get.operationId
-    transform: return "Galleries_ListBySubscription"
-  ## temporary approach
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}'].put.parameters
-    transform: >
-        $[2] = {
-            "in": "path",
-            "name": "updateDomain",
-            "description": "Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on.",
-            "required": true,
-            "type": "string"
-        }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}'].get.parameters
-    transform: >
-        $[2] = {
-            "in": "path",
-            "name": "updateDomain",
-            "description": "Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on.",
-            "required": true,
-            "type": "string"
-        }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start'].post.operationId
-    transform: return 'VirtualMachines_PowerOn';
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/start'].post.operationId
-    transform: return 'VirtualMachineScaleSets_PowerOn';
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/start'].post.operationId
-    transform: return 'VirtualMachineScaleSetVMs_PowerOn';
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/start'].post.operationId
-    transform: return 'CloudServices_PowerOn';
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
+  - rename-model:
+      from: VirtualMachineScaleSetVM
+      to: VirtualMachineScaleSetVm
+  - rename-model:
+      from: VirtualMachineScaleSetVMExtension
+      to: VirtualMachineScaleSetVmExtension
+  - from: disk.json
+    where: $.definitions.PurchasePlan
+    transform: $["x-ms-client-name"] = "DiskPurchasePlan"
+  - from: swagger-document
+    where: $.definitions.DiskProperties.properties.osType
+    transform: $["x-ms-client-name"] = "OSType"
+  - from: swagger-document
+    where: $.definitions.DiskRestorePointProperties.properties.osType
+    transform: $["x-ms-client-name"] = "OSType"
+  - from: swagger-document
+    where: $.definitions.GalleryImageProperties.properties.osType
+    transform: $["x-ms-client-name"] = "OSType"
+  - from: swagger-document
+    where: $.definitions.GalleryImageProperties.properties.osState
+    transform: $["x-ms-client-name"] = "OSState"
 ```

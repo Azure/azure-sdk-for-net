@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "08283862-b226-2249-342a-24ccdafaea3d",
         "x-ms-date": "Fri, 26 Jun 2020 01:35:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "08283862-b226-2249-342a-24ccdafaea3d",
         "x-ms-request-id": "5aff92dc-c01a-007b-0f5a-4b0f3c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "88971b7e-e0f1-94bc-5c08-1560eb3f22d1",
         "x-ms-date": "Fri, 26 Jun 2020 01:35:46 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "88971b7e-e0f1-94bc-5c08-1560eb3f22d1",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "5aff92e2-c01a-007b-125a-4b0f3c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
@@ -84,7 +84,7 @@
         "x-ms-date": "Fri, 26 Jun 2020 01:35:46 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "be4ed0c0-6162-734c-0e4a-9f246076a491",
         "x-ms-request-id": "5aff92e4-c01a-007b-135a-4b0f3c000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

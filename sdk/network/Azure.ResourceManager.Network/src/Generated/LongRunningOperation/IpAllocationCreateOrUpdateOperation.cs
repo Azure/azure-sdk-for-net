@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         IpAllocation IOperationSource<IpAllocation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new IpAllocation(_operationBase, IpAllocationData.DeserializeIpAllocationData(document.RootElement));
+            var data = IpAllocationData.DeserializeIpAllocationData(document.RootElement);
+            return new IpAllocation(_operationBase, data);
         }
 
         async ValueTask<IpAllocation> IOperationSource<IpAllocation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new IpAllocation(_operationBase, IpAllocationData.DeserializeIpAllocationData(document.RootElement));
+            var data = IpAllocationData.DeserializeIpAllocationData(document.RootElement);
+            return new IpAllocation(_operationBase, data);
         }
     }
 }

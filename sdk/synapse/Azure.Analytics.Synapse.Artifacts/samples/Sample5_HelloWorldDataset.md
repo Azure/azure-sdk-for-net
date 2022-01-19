@@ -1,9 +1,7 @@
 ```C# Snippet:CreateDatasetClientPrep
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-
 string storageName = "<my-storage-name>";
-
 string dataSetName = "Test-Dataset";
 ```
 

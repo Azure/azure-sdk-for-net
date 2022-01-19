@@ -9,7 +9,7 @@ namespace SignalRServiceExtension.Tests.Utils
 {
     public class FakeTypeLocator : ITypeLocator
     {
-        private Type _type;
+        private readonly Type _type;
 
         public FakeTypeLocator(Type type)
         {

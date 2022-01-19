@@ -1,135 +1,75 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16/scriptCmdlets?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTYvc2NyaXB0Q21kbGV0cz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16/scriptCmdlets?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTYvc2NyaXB0Q21kbGV0cz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2e168778-8660-4a7f-94c0-f1102cf39b0e"
+          "80042ff4-6028-418a-9109-807a9e0a2abd"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
-        ],
-        "x-ms-request-id": [
-          "1e08a77c-bb99-4cbf-a0d9-8bbbbb9fab11"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "8e587cdd-9fd7-41e6-be68-6ca7205dc11b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210519T181511Z:8e587cdd-9fd7-41e6-be68-6ca7205dc11b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 635E705634CF4675B2DDEB0A6144BEF8 Ref B: MIAEDGE1908 Ref C: 2021-05-19T18:15:11Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 19 May 2021 18:15:11 GMT"
-        ],
-        "Content-Length": [
-          "3144"
+          "Fri, 12 Nov 2021 17:42:29 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "1470"
         ]
       },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRInstall\",\n      \"name\": \"Invoke-PreflightJetDRInstall\",\n      \"properties\": {\n        \"description\": \"Preflight commands to execute\",\n        \"parameters\": [\n          {\n            \"description\": \"Cluster where the MSA will be deployed\",\n            \"name\": \"Cluster\",\n            \"optional\": \"Required\",\n            \"type\": \"String\",\n            \"visibility\": \"Visible\"\n          },\n          {\n            \"description\": \"Protected Cluster\",\n            \"name\": \"ProtectedCluster\",\n            \"optional\": \"Required\",\n            \"type\": \"String\",\n            \"visibility\": \"Visible\"\n          },\n          {\n            \"description\": \"Install\",\n            \"name\": \"Mode\",\n            \"optional\": \"Required\",\n            \"type\": \"String\",\n            \"visibility\": \"Visible\"\n          },\n          {\n            \"description\": \"Credential\",\n            \"name\": \"Credential\",\n            \"optional\": \"Required\",\n            \"type\": \"Credential\",\n            \"visibility\": \"Hidden\"\n          }\n        ],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    },\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRSystemCheck\",\n      \"name\": \"Invoke-PreflightJetDRSystemCheck\",\n      \"properties\": {\n        \"description\": \"Preflight commands to execute\",\n        \"parameters\": [],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    },\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRUninstall\",\n      \"name\": \"Invoke-PreflightJetDRUninstall\",\n      \"properties\": {\n        \"description\": \"This Cmdlet checks and displays current state of the system before uninstall of JetDR\",\n        \"parameters\": [\n          {\n            \"description\": \"IP of MSA VM\",\n            \"name\": \"MSIp\",\n            \"optional\": \"Required\",\n            \"type\": \"String\",\n            \"visibility\": \"Visible\"\n          },\n          {\n            \"description\": \"Credential\",\n            \"name\": \"Credential\",\n            \"optional\": \"Required\",\n            \"type\": \"Credential\",\n            \"visibility\": \"Hidden\"\n          },\n          {\n            \"description\": \"Protected Cluster\",\n            \"name\": \"ProtectedCluster\",\n            \"optional\": \"Required\",\n            \"type\": \"String\",\n            \"visibility\": \"Visible\"\n          }\n        ],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    },\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Uninstall-JetDR\",\n      \"name\": \"Uninstall-JetDR\",\n      \"properties\": {\n        \"description\": \"The top level Cmdlet creates a new user,assigns elevated privilleges to the user, unconfigures cluster,unregisters vCenter from the JetDr MSA,removes the user.\",\n        \"parameters\": [\n          {\n            \"description\": \"IP of the MSA to be deployed\",\n            \"name\": \"MSIp\",\n            \"optional\": \"Required\",\n            \"type\": \"String\",\n            \"visibility\": \"Visible\"\n          },\n          {\n            \"description\": \"Protected Cluster\",\n            \"name\": \"ProtectedCluster\",\n            \"optional\": \"Required\",\n            \"type\": \"String\",\n            \"visibility\": \"Visible\"\n          },\n          {\n            \"description\": \"Credential of root user of MSA\",\n            \"name\": \"Credential\",\n            \"optional\": \"Required\",\n            \"type\": \"Credential\",\n            \"visibility\": \"Hidden\"\n          }\n        ],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    }\n  ]\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/{scriptPackageName}/scriptCmdlets/Set-AvsStoragePolicy\",\r\n      \"name\": \"Set-AvsStoragePolicy\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\",\r\n      \"properties\": {\r\n        \"description\": \"Allow user to set the storage policy of the specified VM\",\r\n        \"timeout\": \"P0Y0M0DT0H60M0S\",\r\n        \"parameters\": [\r\n          {\r\n            \"type\": \"String\",\r\n            \"name\": \"VM\",\r\n            \"description\": \"VM to set the storage policy on\",\r\n            \"visibility\": \"Visible\",\r\n            \"optional\": \"Required\"\r\n          },\r\n          {\r\n            \"type\": \"String\",\r\n            \"name\": \"StoragePolicyName\",\r\n            \"description\": \"Name of the storage policy to set\",\r\n            \"visibility\": \"Visible\",\r\n            \"optional\": \"Required\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/{scriptPackageName}/scriptCmdlets/New-ExternalSsoDomain\",\r\n      \"name\": \"New-ExternalSsoDomain\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\",\r\n      \"properties\": {\r\n        \"description\": \"Add an external Sso domain to their vCenter\",\r\n        \"timeout\": \"P0Y0M0DT0H60M0S\",\r\n        \"parameters\": [\r\n          {\r\n            \"type\": \"String\",\r\n            \"name\": \"DomainName\",\r\n            \"description\": \"Domain name of the Server\",\r\n            \"visibility\": \"Visible\",\r\n            \"optional\": \"Required\"\r\n          },\r\n          {\r\n            \"type\": \"String\",\r\n            \"name\": \"BaseUserDN\",\r\n            \"description\": \"Base User DN of the Server\",\r\n            \"visibility\": \"Visible\",\r\n            \"optional\": \"Required\"\r\n          },\r\n          {\r\n            \"type\": \"SecureString\",\r\n            \"name\": \"Password\",\r\n            \"description\": \"Password for authenticating to the server\",\r\n            \"visibility\": \"Hidden\",\r\n            \"optional\": \"Required\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16/scriptCmdlets/invoke-preflightjetdrsystemcheck?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTYvc2NyaXB0Q21kbGV0cy9pbnZva2UtcHJlZmxpZ2h0amV0ZHJzeXN0ZW1jaGVjaz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16/scriptCmdlets/invoke-preflightjetdrsystemcheck?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTYvc2NyaXB0Q21kbGV0cy9pbnZva2UtcHJlZmxpZ2h0amV0ZHJzeXN0ZW1jaGVjaz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b459666e-044f-47ac-8e1f-1ee7544b8b3c"
+          "e0ed2a2a-2562-489d-a78b-3d6178d4115a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
-        ],
-        "x-ms-request-id": [
-          "e65763c2-d276-4c7c-b134-ed694120bf90"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-correlation-request-id": [
-          "82ed21aa-fe87-40b9-b75c-b078658e056a"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210519T181512Z:82ed21aa-fe87-40b9-b75c-b078658e056a"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Cache": [
-          "CONFIG_NOCACHE"
-        ],
-        "X-MSEdge-Ref": [
-          "Ref A: 60C7C5F4C020492C9ED02649C4CD9685 Ref B: MIAEDGE1908 Ref C: 2021-05-19T18:15:12Z"
+        "Server": [
+          "Rocket"
         ],
         "Date": [
-          "Wed, 19 May 2021 18:15:11 GMT"
-        ],
-        "Content-Length": [
-          "450"
+          "Fri, 12 Nov 2021 17:42:29 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "801"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRSystemCheck\",\n  \"name\": \"Invoke-PreflightJetDRSystemCheck\",\n  \"properties\": {\n    \"description\": \"Preflight commands to execute\",\n    \"parameters\": [],\n    \"timeout\": \"PT2H\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/New-ExternalSsoDomain\",\r\n  \"name\": \"New-ExternalSsoDomain\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\",\r\n  \"properties\": {\r\n    \"description\": \"Add an external Sso domain to their vCenter\",\r\n    \"timeout\": \"P0Y0M0DT0H60M0S\",\r\n    \"parameters\": [\r\n      {\r\n        \"type\": \"String\",\r\n        \"name\": \"DomainName\",\r\n        \"description\": \"Domain name of the Server\",\r\n        \"visibility\": \"Visible\",\r\n        \"optional\": \"Required\"\r\n      },\r\n      {\r\n        \"type\": \"String\",\r\n        \"name\": \"BaseUserDN\",\r\n        \"description\": \"Base User DN of the Server\",\r\n        \"visibility\": \"Visible\",\r\n        \"optional\": \"Required\"\r\n      },\r\n      {\r\n        \"type\": \"SecureString\",\r\n        \"name\": \"Password\",\r\n        \"description\": \"Password for authenticating to the server\",\r\n        \"visibility\": \"Hidden\",\r\n        \"optional\": \"Required\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

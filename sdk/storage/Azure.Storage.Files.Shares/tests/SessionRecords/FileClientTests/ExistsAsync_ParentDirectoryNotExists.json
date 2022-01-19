@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "70c1b0a4-9e51-a86c-b745-019abcfddc5e",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "70c1b0a4-9e51-a86c-b745-019abcfddc5e",
         "x-ms-request-id": "f571df0f-601a-0050-2f19-f41892000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "a34fa0a3-d855-d675-2f27-ee8ea0aefbe3",
         "x-ms-date": "Tue, 26 Jan 2021 19:29:50 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -62,7 +62,7 @@
         "x-ms-client-request-id": "a34fa0a3-d855-d675-2f27-ee8ea0aefbe3",
         "x-ms-error-code": "ParentNotFound",
         "x-ms-request-id": "f571df12-601a-0050-3019-f41892000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:29:50 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -94,7 +94,7 @@
         ],
         "x-ms-client-request-id": "bb137b99-6512-e6aa-b4c5-0fa45b694c9b",
         "x-ms-request-id": "f571df13-601a-0050-3119-f41892000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

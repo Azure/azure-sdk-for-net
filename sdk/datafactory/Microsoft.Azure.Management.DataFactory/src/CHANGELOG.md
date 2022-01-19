@@ -1,5 +1,24 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 5.1.0
+###  Feature Additions
+- Added support UAMI M2
+- Added connectionProperties in GoogleAdWordsLinkedService
+- Added servicePrincipalCredentialType and servicePrincipalCredential into AzureBlobFSLinkedService
+
+## Version 5.0.0
+###  Feature Additions
+### Breaking Changes
+- Removed unnecessary additional properties for data flow flowlet for bug fix
+- Added optional property disableChunking in FTP and SFTP read settings
+- Added parameters for dataflow activity
+- Added possible values to pipeline run status description
+
+## Version 4.28.0
+###  Feature Additions
+- Supported Dataset and LinkedService for Rest call transform
+- Change compressionType to type of object
+
 ## Version 4.27.0
 ###  Feature Additions
 - Supported Dataflow flowlets in ADF

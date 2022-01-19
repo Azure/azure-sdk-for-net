@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "fb43340a-ed66-d234-2551-bc53e5696164",
         "x-ms-date": "Wed, 17 Feb 2021 18:58:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "fb43340a-ed66-d234-2551-bc53e5696164",
         "x-ms-request-id": "d620e3db-b01e-001e-675e-05361a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "2f49ee80-ef69-275a-10ff-9d96c3c0b851",
         "x-ms-date": "Wed, 17 Feb 2021 18:58:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": [],
       "StatusCode": 201,
@@ -69,7 +69,7 @@
         "x-ms-content-crc64": "AAAAAAAAAAA=",
         "x-ms-request-id": "d620e3ee-b01e-001e-785e-05361a000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T18:58:37.9065857Z"
       },
       "ResponseBody": []
@@ -91,7 +91,7 @@
         "x-ms-client-request-id": "bfcfb3e9-b40d-a444-1ec3-f868b5ac7386",
         "x-ms-date": "Wed, 17 Feb 2021 18:58:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "bAVKsFs61lP3u3nF6HNtm+Pp+ljZhM8tqoqG+BkpgDiLNtqogWu9Rhj1N652lT6dkQGy2sZgd+c1HAbQs906zjpBObKYxRp4LLQ/5EwhtxRM6WcYdqZxK7/ycmVk7JI6u2lzNFyMBMznOq0SIJObFGTxhMl2IleUzw3ypVK1Ez8hBSjjrYO4v+WaMTz4XwosV14Ac2jIxJkR32VOmV56MiZu8Btqt2bhOcTk2/EbnHADxk7ztKDXWECP0s4daSWGH/8ViW7uwp/3Hjmj5Omo9UL1S9MQhn2Gl5jb2uWYxNCeXrvxBhIBFAOu/JZmM3RW59yLKB5SdpmBjvLWE+e6XlppBIUttu4w8zbPYYrmH2QjhPIIDZuyTOgib3cgKwEb9J07/S7uKTHuWzXnghQOmm+Oso71sVG/t7idCkZ2EMc1s23sqyI1NVvAGrJmysrTE9QIkXlyJkNLfEV2UR7rd0ptss6nIu9MWXwzNZafWOztyfdxbX5Owo0poS7cv+Q81KJn+Rj7LPHlvDj8P/GsrCRZiIcnegnMHu9AfYDBcJmY9mDzOF/T8p0GjLFGUoOcffQKgzZcFVqZm9opuq9wI0ueY0iQuHPEhZbqIe5YhcxspACLt+1jPOEGWp2EqjftlWhlp+46C8SBRf2gcvRrQBUOvBav5GxeOydmil7WP9pe/IuF8t3dMZg7CnLvw8ntmhmHdu0hPrH8B2zH1IFlqgUjQXZo5k43MIt9c9n5b3hdefBETsnsPb3aiepxFl0X1l9sy4FThLPKUEZio8vXApf0aVqRIVw8NgS4jlxjxhkuZp15jaP2CvU8ef6CipryAoZTfK0ChbQDMJR9mvVWZ4otNDwuXXX0/V5lVKdeuaxqxovWEElrK+DodlwOeW//5RJ0VVVdw6URX35OnDEMpXboE9NqgFZAwQhbRecY5YTuZm+V6WRXDAPmxbHKHY6v29DmJmaclWS8M5RNAX29+Hn6XzbBd7sSkQbQg7ukdaN5rGkWMr4eUtEK2bbQCQuFKMw30L5Y7WQU05VfyxGpF73w01UTpsa63Axlt54FQof7S1vubKXlIb4FAl4pvoe/YcH43zW2cYEGfPOx8jbGD5EOZIC2uqoXCrKWDqRnkR2FpVbcDGJRRdnZ6O+yNC6HPvLNG1oHCaYX4dWDH2Pcn+vWLE3g6QIuvB+m3NK6ZdaED8+xmXbDfZyvxSuMziV1/EkE2wfhplTvnl46YCzTXHv+/w+UKgV0E66wMCTXoe75MN+JtonOo2h6wfoXiBxv22mwjs4W4dJDj8hYMHUwGP1wQS9NSqbxL1ymGWgKXIqRQFS7JxMf408NRSbBdnLzSqn9p0btIpHDvl5yb8hpOQ==",
       "StatusCode": 201,
@@ -109,7 +109,7 @@
         "x-ms-content-crc64": "/ST73Iamlgw=",
         "x-ms-request-id": "d620e3f3-b01e-001e-7c5e-05361a000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-version-id": "2021-02-17T18:58:37.9736327Z"
       },
       "ResponseBody": []
@@ -131,7 +131,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 18:58:37 GMT",
         "x-ms-lease-id": "84f30ca4-82af-d4d2-b714-57e80ce28b43",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -146,7 +146,7 @@
         "x-ms-client-request-id": "f99b59ea-ab8c-660a-e1fa-07f85d5b983c",
         "x-ms-error-code": "LeaseNotPresentWithBlobOperation",
         "x-ms-request-id": "d620e3fe-b01e-001e-075e-05361a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>LeaseNotPresentWithBlobOperation</Code><Message>There is currently no lease on the blob.\n",
@@ -168,7 +168,7 @@
         "x-ms-client-request-id": "b2feb3e0-9246-e2b7-9a22-dafea133209e",
         "x-ms-date": "Wed, 17 Feb 2021 18:58:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -181,7 +181,7 @@
         ],
         "x-ms-client-request-id": "b2feb3e0-9246-e2b7-9a22-dafea133209e",
         "x-ms-request-id": "d620e439-b01e-001e-3a5e-05361a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

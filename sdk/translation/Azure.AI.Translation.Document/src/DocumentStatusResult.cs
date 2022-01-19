@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
@@ -12,6 +13,9 @@ namespace Azure.AI.Translation.Document
     [CodeGenModel("DocumentStatus")]
     public partial class DocumentStatusResult
     {
+        [CodeGenMember("Error")]
+        private readonly JsonElement _error;
+
         /// <summary>
         /// Document Id.
         /// </summary>
@@ -70,7 +74,7 @@ namespace Azure.AI.Translation.Document
         /// document. This property will have a value only when the document
         /// cannot be processed.
         /// </summary>
-        public DocumentTranslationError Error { get; }
+        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
 
         [CodeGenMember("Progress")]
         internal float Progress { get; }

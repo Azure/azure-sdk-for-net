@@ -3,7 +3,7 @@
     "ProtocolName": "Models.NodeAgentInformation",
     "SummaryComment": "Information about the node agent",
     "RemarksComment": "The Batch node agent is a program that runs on each node in the pool and provides Batch capability on the compute node.",
-    "IsConstructorPublic": false,
+    "ConstructorAccess": "internal",
     "Properties": [
         {
             "Key": {

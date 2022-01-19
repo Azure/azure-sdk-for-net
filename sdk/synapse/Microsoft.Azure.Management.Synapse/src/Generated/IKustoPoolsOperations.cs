@@ -24,6 +24,25 @@ namespace Microsoft.Azure.Management.Synapse
     public partial interface IKustoPoolsOperations
     {
         /// <summary>
+        /// Lists eligible SKUs for Kusto Pool resource.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<SkuDescription>>> ListSkusWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Checks that the kusto pool name is valid and is not already in use.
         /// </summary>
         /// <param name='location'>
@@ -58,7 +77,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,7 +99,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -108,7 +127,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Create or update a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -149,7 +168,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Update a Kusto Kusto Pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -185,7 +204,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Deletes a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -210,7 +229,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Stops a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -235,7 +254,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Starts a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -260,7 +279,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Returns the SKUs available for the provided resource.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -289,7 +308,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// queries.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -317,7 +336,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Add a list of language extensions that can run within KQL queries.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -346,7 +365,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// queries.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -375,7 +394,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// were followed by another Kusto Pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -403,7 +422,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Detaches all followers of a database owned by this Kusto Pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -431,7 +450,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Create or update a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -472,7 +491,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Update a Kusto Kusto Pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -508,7 +527,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Deletes a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -533,7 +552,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Stops a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -558,7 +577,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Starts a Kusto pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -583,7 +602,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Add a list of language extensions that can run within KQL queries.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -612,7 +631,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// queries.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.
@@ -640,7 +659,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// Detaches all followers of a database owned by this Kusto Pool.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.

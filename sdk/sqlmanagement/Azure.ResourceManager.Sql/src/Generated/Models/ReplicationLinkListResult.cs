@@ -7,26 +7,31 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents the response to a List database replication link request. </summary>
+    /// <summary> A list of replication links. </summary>
     internal partial class ReplicationLinkListResult
     {
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
         internal ReplicationLinkListResult()
         {
-            Value = new ChangeTrackingList<ReplicationLink>();
+            Value = new ChangeTrackingList<ReplicationLinkData>();
         }
 
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
-        /// <param name="value"> The list of database replication links housed in the database. </param>
-        internal ReplicationLinkListResult(IReadOnlyList<ReplicationLink> value)
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        internal ReplicationLinkListResult(IReadOnlyList<ReplicationLinkData> value, string nextLink)
         {
             Value = value;
+            NextLink = nextLink;
         }
 
-        /// <summary> The list of database replication links housed in the database. </summary>
-        public IReadOnlyList<ReplicationLink> Value { get; }
+        /// <summary> Array of results. </summary>
+        public IReadOnlyList<ReplicationLinkData> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

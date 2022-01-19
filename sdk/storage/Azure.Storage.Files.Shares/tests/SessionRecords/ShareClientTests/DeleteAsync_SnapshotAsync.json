@@ -15,7 +15,7 @@
         "x-ms-date": "Wed, 16 Jun 2021 19:15:39 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "8791e194-910d-f571-183c-8a4f0f1ace36",
         "x-ms-request-id": "0f1ce9bd-f01a-006d-64e3-626e89000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "b8522fb2-da70-9dca-3256-f82c4a852a85",
         "x-ms-date": "Wed, 16 Jun 2021 19:15:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "b8522fb2-da70-9dca-3256-f82c4a852a85",
         "x-ms-request-id": "0f1ce9c0-f01a-006d-66e3-626e89000000",
         "x-ms-snapshot": "2021-06-16T19:15:39.0000000Z",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -82,7 +82,7 @@
         "x-ms-client-request-id": "df9df137-16c8-7fc5-7c09-a58a70d4c11f",
         "x-ms-date": "Wed, 16 Jun 2021 19:15:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -95,7 +95,7 @@
         ],
         "x-ms-client-request-id": "df9df137-16c8-7fc5-7c09-a58a70d4c11f",
         "x-ms-request-id": "0f1ce9c3-f01a-006d-69e3-626e89000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -113,7 +113,7 @@
         "x-ms-client-request-id": "58f46e0b-4be8-59bc-2a86-4461f533ba0c",
         "x-ms-date": "Wed, 16 Jun 2021 19:15:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -135,7 +135,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "0f1ce9c4-f01a-006d-6ae3-626e89000000",
         "x-ms-share-quota": "1",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -153,7 +153,7 @@
         "x-ms-client-request-id": "027ef812-68df-1c37-a922-8e01ffcc213c",
         "x-ms-date": "Wed, 16 Jun 2021 19:15:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -168,7 +168,7 @@
         "x-ms-client-request-id": "027ef812-68df-1c37-a922-8e01ffcc213c",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "0f1ce9c6-f01a-006d-6ce3-626e89000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
@@ -191,7 +191,7 @@
         "x-ms-date": "Wed, 16 Jun 2021 19:15:39 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -204,7 +204,7 @@
         ],
         "x-ms-client-request-id": "fd4e17ff-b7b4-5a2d-8af7-96e50201f4f6",
         "x-ms-request-id": "0f1ce9ca-f01a-006d-6ee3-626e89000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

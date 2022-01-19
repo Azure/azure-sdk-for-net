@@ -7,13 +7,12 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage.Tests.Helpers;
 
-namespace Azure.ResourceManager.Storage.Tests.Tests
+namespace Azure.ResourceManager.Storage.Tests
 {
     public class TableTests : StorageTestBase
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
-        private TableServiceCollection _tableServiceCollection;
         private TableService _tableService;
         private TableCollection _tableCollection;
         public TableTests(bool async) : base(async)
@@ -26,9 +25,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
-            _tableServiceCollection = _storageAccount.GetTableServices();
-            _tableService = await _tableServiceCollection.GetAsync("default");
+            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
+            _tableService = _storageAccount.GetTableService();
+            _tableService = await _tableService.GetAsync();
             _tableCollection = _tableService.GetTables();
         }
 
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 var storageAccountCollection = _resourceGroup.GetStorageAccounts();
                 await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
                 {
-                    await account.DeleteAsync();
+                    await account.DeleteAsync(true);
                 }
                 _resourceGroup = null;
                 _storageAccount = null;
@@ -53,21 +52,21 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             //create table
             string tableName = Recording.GenerateAssetName("testtable");
-            Table table1 = (await _tableCollection.CreateOrUpdateAsync(tableName)).Value;
+            Table table1 = (await _tableCollection.CreateOrUpdateAsync(true, tableName)).Value;
             Assert.IsNotNull(table1);
             Assert.AreEqual(table1.Id.Name, tableName);
 
             //validate if created successfully
             Table table2 = await _tableCollection.GetAsync(tableName);
             AssertTableEqual(table1, table2);
-            Assert.IsTrue(await _tableCollection.CheckIfExistsAsync(tableName));
-            Assert.IsFalse(await _tableCollection.CheckIfExistsAsync(tableName + "1"));
+            Assert.IsTrue(await _tableCollection.ExistsAsync(tableName));
+            Assert.IsFalse(await _tableCollection.ExistsAsync(tableName + "1"));
 
             //delete table
-            await table1.DeleteAsync();
+            await table1.DeleteAsync(true);
 
             //validate if deleted successfully
-            Assert.IsFalse(await _tableCollection.CheckIfExistsAsync(tableName));
+            Assert.IsFalse(await _tableCollection.ExistsAsync(tableName));
             Table table3 = await _tableCollection.GetIfExistsAsync(tableName);
             Assert.IsNull(table3);
         }
@@ -79,8 +78,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create two tables
             string tableName1 = Recording.GenerateAssetName("testtable1");
             string tableName2 = Recording.GenerateAssetName("testtable2");
-            Table table1 = (await _tableCollection.CreateOrUpdateAsync(tableName1)).Value;
-            Table table2 = (await _tableCollection.CreateOrUpdateAsync(tableName2)).Value;
+            Table table1 = (await _tableCollection.CreateOrUpdateAsync(true, tableName1)).Value;
+            Table table2 = (await _tableCollection.CreateOrUpdateAsync(true, tableName2)).Value;
 
             //validate two tables
             Table table3 = null;
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 Cors = cors,
             };
-            _tableService = await _tableService.SetServicePropertiesAsync(parameter);
+            _tableService = (await _tableService.CreateOrUpdateAsync(true, parameter)).Value;
 
             //validate
             Assert.AreEqual(_tableService.Data.Cors.CorsRulesValue.Count, 1);

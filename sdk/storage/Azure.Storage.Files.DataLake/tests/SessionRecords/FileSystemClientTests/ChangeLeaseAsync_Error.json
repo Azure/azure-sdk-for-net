@@ -17,7 +17,7 @@
         "x-ms-lease-id": "295cec05-76e4-9323-89a3-0ebefbcce7bf",
         "x-ms-proposed-lease-id": "295cec05-76e4-9323-89a3-0ebefbcce7bf",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -32,7 +32,7 @@
         "x-ms-client-request-id": "6af30fbe-7256-1a2f-aa77-c92f8f4a0a02",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "7187c1de-d01e-0036-307b-05f22f000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerNotFound</Code><Message>The specified container does not exist.\n",

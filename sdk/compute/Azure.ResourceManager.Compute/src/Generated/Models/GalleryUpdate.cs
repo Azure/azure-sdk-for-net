@@ -23,5 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryPropertiesProvisioningState? ProvisioningState { get; }
         /// <summary> Profile for gallery sharing to subscription or tenant. </summary>
         public SharingProfile SharingProfile { get; set; }
+        /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
+        public SoftDeletePolicy SoftDeletePolicy { get; set; }
     }
 }

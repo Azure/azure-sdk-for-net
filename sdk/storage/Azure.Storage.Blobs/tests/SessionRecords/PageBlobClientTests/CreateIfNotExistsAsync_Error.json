@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "bb3faef3-8023-322e-9d15-5497a227af21",
         "x-ms-date": "Wed, 17 Feb 2021 19:00:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "bb3faef3-8023-322e-9d15-5497a227af21",
         "x-ms-request-id": "93635413-401e-0078-3d5f-05793a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "a9204115-f79e-8a4a-fcb4-2f2f5b3f3d99",
         "x-ms-date": "Wed, 17 Feb 2021 19:00:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "a9204115-f79e-8a4a-fcb4-2f2f5b3f3d99",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "93635420-401e-0078-495f-05793a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidHeaderValue</Code><Message>The value for one of the HTTP headers is not in the correct format.\n",
@@ -88,7 +88,7 @@
         "x-ms-client-request-id": "b3d961b9-57e4-7b12-3b09-64df6e1b2d23",
         "x-ms-date": "Wed, 17 Feb 2021 19:00:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "b3d961b9-57e4-7b12-3b09-64df6e1b2d23",
         "x-ms-request-id": "93635428-401e-0078-515f-05793a000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

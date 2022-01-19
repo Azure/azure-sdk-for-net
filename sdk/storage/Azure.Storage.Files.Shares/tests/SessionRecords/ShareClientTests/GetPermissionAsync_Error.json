@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "9504e189-f485-5190-87f1-04da4a262aa1",
         "x-ms-date": "Tue, 26 Jan 2021 19:24:42 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "9504e189-f485-5190-87f1-04da4a262aa1",
         "x-ms-request-id": "48625a7f-301a-002f-6518-f4d709000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:24:42 GMT",
         "x-ms-file-permission-key": "invalidPermission",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -64,7 +64,7 @@
         "x-ms-client-request-id": "9c8b7c2e-9070-51b4-4d9a-c3c011f47764",
         "x-ms-error-code": "InvalidHeaderValue",
         "x-ms-request-id": "48625a82-301a-002f-6618-f4d709000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidHeaderValue</Code><Message>The value for one of the HTTP headers is not in the correct format.\n",
@@ -87,7 +87,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:24:42 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -100,7 +100,7 @@
         ],
         "x-ms-client-request-id": "cdac4104-8e9b-c731-ac32-cb5f3714c9e4",
         "x-ms-request-id": "48625a83-301a-002f-6718-f4d709000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

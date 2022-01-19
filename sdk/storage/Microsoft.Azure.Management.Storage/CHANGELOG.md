@@ -1,5 +1,13 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 23.1.0
+- Upgrade to rest api version 2021-08-01.
+- Support create/update Storage account with enable/disable Sftp and Localuser.
+- Support CreateOrUpdate/Delete/Get/List/ListKeys/RegeneratePassword on Storage account local users.
+- Support create/update account with AllowedCopyScope.
+- Support create/update account with 2 new ActiveDirectoryProperties: samAccountName, accountType.
+- Support create/update account with new EncryptionIdentity: FederatedIdentityClientId.
+
 ### Changes in 23.0.0
 - Upgrade to rest api version 2021-06-01.
 - Support Storage account HierarchicalNamespace migration.

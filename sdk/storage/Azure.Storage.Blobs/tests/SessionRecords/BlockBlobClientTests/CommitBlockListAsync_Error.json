@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "d4661fbf-f7d8-f10e-02c9-36494e66e354",
         "x-ms-date": "Wed, 17 Feb 2021 18:56:08 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "d4661fbf-f7d8-f10e-02c9-36494e66e354",
         "x-ms-request-id": "961e107a-601e-001d-5d5e-05d77e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -50,7 +50,7 @@
         "x-ms-client-request-id": "725fb1f8-c460-089c-04f1-2d5719c187f9",
         "x-ms-date": "Wed, 17 Feb 2021 18:56:08 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": "﻿<BlockList><Latest>dGVzdC1ibG9jay05NTRkNGFiNC03Mzk2LWQwODAtMDIzNS0zMmI5OWJkY2Y3M2E=</Latest></BlockList>",
       "StatusCode": 400,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "725fb1f8-c460-089c-04f1-2d5719c187f9",
         "x-ms-error-code": "InvalidBlockList",
         "x-ms-request-id": "961e1088-601e-001d-665e-05d77e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidBlockList</Code><Message>The specified block list is invalid.\n",
@@ -87,7 +87,7 @@
         "x-ms-client-request-id": "eac14dcf-847d-b9da-99ec-3984d72d58db",
         "x-ms-date": "Wed, 17 Feb 2021 18:56:08 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -100,7 +100,7 @@
         ],
         "x-ms-client-request-id": "eac14dcf-847d-b9da-99ec-3984d72d58db",
         "x-ms-request-id": "961e109a-601e-001d-755e-05d77e000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

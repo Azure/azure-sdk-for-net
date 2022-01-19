@@ -21,6 +21,7 @@ namespace Azure.Storage.Files.Shares.Models
             int? provisionedIops = default;
             int? provisionedIngressMBps = default;
             int? provisionedEgressMBps = default;
+            int? provisionedBandwidthMiBps = default;
             DateTimeOffset? nextAllowedQuotaDowngradeTime = default;
             DateTimeOffset? deletedTime = default;
             int? remainingRetentionDays = default;
@@ -55,6 +56,10 @@ namespace Azure.Storage.Files.Shares.Models
             if (element.Element("ProvisionedEgressMBps") is XElement provisionedEgressMBpsElement)
             {
                 provisionedEgressMBps = (int?)provisionedEgressMBpsElement;
+            }
+            if (element.Element("ProvisionedBandwidthMiBps") is XElement provisionedBandwidthMiBpsElement)
+            {
+                provisionedBandwidthMiBps = (int?)provisionedBandwidthMiBpsElement;
             }
             if (element.Element("NextAllowedQuotaDowngradeTime") is XElement nextAllowedQuotaDowngradeTimeElement)
             {
@@ -100,7 +105,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 rootSquash = rootSquashElement.Value.ToShareRootSquash();
             }
-            return new SharePropertiesInternal(lastModified, etag, quota, provisionedIops, provisionedIngressMBps, provisionedEgressMBps, nextAllowedQuotaDowngradeTime, deletedTime, remainingRetentionDays, accessTier, accessTierChangeTime, accessTierTransitionState, leaseStatus, leaseState, leaseDuration, enabledProtocols, rootSquash);
+            return new SharePropertiesInternal(lastModified, etag, quota, provisionedIops, provisionedIngressMBps, provisionedEgressMBps, provisionedBandwidthMiBps, nextAllowedQuotaDowngradeTime, deletedTime, remainingRetentionDays, accessTier, accessTierChangeTime, accessTierTransitionState, leaseStatus, leaseState, leaseDuration, enabledProtocols, rootSquash);
         }
     }
 }

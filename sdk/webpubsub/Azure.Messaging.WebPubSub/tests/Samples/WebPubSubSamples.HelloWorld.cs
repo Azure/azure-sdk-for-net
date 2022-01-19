@@ -3,13 +3,11 @@
 
 using System;
 using System.IO;
-using System.Text;
-using System.Threading;
+
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.WebPubSub;
 using Azure.Rest.WebPubSub.Tests;
-using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
@@ -33,6 +31,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubAuthenticate
+            // Create a WebPubSubServiceClient that will authenticate using a key credential.
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
             #endregion
         }

@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
@@ -65,11 +66,11 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 string rgName = "QuickStartRG";
 
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = rgCreateLro.Value;
 ```
 The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionCollection` to manage the resources in a particular subscription. In this example, a `resourceGroupCollection` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupCollection. With that `ResourceGroup` you will be able to get the resource collections to manage all the resources that will be inside it, as it is shown in the next part of this guide.
@@ -103,7 +104,7 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 ```C# Snippet:Create_AvailabilitySet
 string vmName = "quickstartvm";
 AvailabilitySetData aSetData = new AvailabilitySetData(location);
-AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData);
+AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
 AvailabilitySet aset = asetCreateLro.Value;
 string asetId = aset.Id;
 ```
@@ -157,7 +158,7 @@ VirtualNetworkData vnetData = new VirtualNetworkData()
         }
     }
 };
-VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
 VirtualNetwork vnet = vnetCreateLro.Value;
 ```
 
@@ -179,7 +180,7 @@ NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgNa
 ```C# Snippet:Create_NetworkSecurityGroup
 string nsgName = vmName + "_nsg";
 NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
-NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
+NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, nsgName, nsgData);
 NetworkSecurityGroup nsg = nsgCreateLro.Value;
 ```
 
@@ -214,7 +215,7 @@ NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicna
 #### New
 ```C# Snippet:Create_NetworkInterface
 string nicName = vmName + "_nic";
-NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
+NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigurationData()
 {
     Name = "Primary",
     Primary = true,
@@ -225,7 +226,7 @@ NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguratio
 NetworkInterfaceData nicData = new NetworkInterfaceData();
 nicData.Location = location;
 nicData.IpConfigurations.Add(nicIPConfig);
-NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(nicName, nicData);
+NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicData);
 NetworkInterface nic = nicCreateLro.Value;
 ```
 
@@ -289,13 +290,13 @@ VirtualMachineData vmData = new VirtualMachineData(location);
 vmData.OsProfile.AdminUsername = "admin-username";
 vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
 vmData.OsProfile.ComputerName = "computer-name";
-//vmData.AvailabilitySet = new WritableSubResource(); // Uncomment when package is updated
+vmData.AvailabilitySet = new WritableSubResource();
 vmData.AvailabilitySet.Id = aset.Id;
 NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
 nicReference.Id = nic.Id;
 vmData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
-VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
+VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, vmName, vmData)).Value;
 Console.WriteLine("VM ID: " + vm.Id);
 ```
 

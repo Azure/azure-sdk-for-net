@@ -139,8 +139,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin/backupSecurityPIN?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEzNjRmMGYtMzA3Yi00MWM5LTlkNDctYjc0MTNlYzQ1NTM1L3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbi9iYWNrdXBTZWN1cml0eVBJTj9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
+      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin/backupSecurityPIN?api-version=2021-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEzNjRmMGYtMzA3Yi00MWM5LTlkNDctYjc0MTNlYzQ1NTM1L3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbi9iYWNrdXBTZWN1cml0eVBJTj9hcGktdmVyc2lvbj0yMDIxLTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {

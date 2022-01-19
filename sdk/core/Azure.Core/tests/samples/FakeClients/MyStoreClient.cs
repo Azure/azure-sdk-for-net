@@ -37,12 +37,6 @@ namespace Azure.Core.Samples
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
-
-        public override ValueTask<Response<AsyncPageable<Product>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
-
-        public override ValueTask<Response<AsyncPageable<Product>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "<Pending>")]

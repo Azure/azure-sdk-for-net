@@ -265,7 +265,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/tenant/access\",\r\n  \"principalId\": \"integration\",\r\n  \"primaryKey\": \"pVnGb/3LFxod/LiAvrawUFEWsjBati3dNivWsf4D0nDcmOIfEJUcS9lqHg+E0aOxEp6BnOiCCPvgGfY7ZCGP4A==\",\r\n  \"secondaryKey\": \"NeniD1uOos/GgQbILnvQznQl5p2ONQqvjRLASvOsbMx8w60NyFtl/v8BInKOZlzzyijqzIxogxJEJfQiQmDYIw==\",\r\n  \"enabled\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/tenant/access\",\r\n  \"principalId\": \"integration\",\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"NeniD1uOos/GgQbILnvQznQl5p2ONQqvjRLASvOsbMx8w60NyFtl/v8BInKOZlzzyijqzIxogxJEJfQiQmDYIw==\",\r\n  \"enabled\": false\r\n}",
       "StatusCode": 200
     },
     {
@@ -331,7 +331,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/tenant/access\",\r\n  \"principalId\": \"integration\",\r\n  \"primaryKey\": \"LckeytqLou1t7rvA/BctYZAqWOzR6WXCKqWA4s/WRjDqh6Dci7kGF4WEcKtb7qvUE/pYzNkOnsRYxKD1nnTAmA==\",\r\n  \"secondaryKey\": \"NeniD1uOos/GgQbILnvQznQl5p2ONQqvjRLASvOsbMx8w60NyFtl/v8BInKOZlzzyijqzIxogxJEJfQiQmDYIw==\",\r\n  \"enabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/tenant/access\",\r\n  \"principalId\": \"integration\",\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"NeniD1uOos/GgQbILnvQznQl5p2ONQqvjRLASvOsbMx8w60NyFtl/v8BInKOZlzzyijqzIxogxJEJfQiQmDYIw==\",\r\n  \"enabled\": true\r\n}",
       "StatusCode": 200
     },
     {
@@ -397,7 +397,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/tenant/access\",\r\n  \"principalId\": \"integration\",\r\n  \"primaryKey\": \"LckeytqLou1t7rvA/BctYZAqWOzR6WXCKqWA4s/WRjDqh6Dci7kGF4WEcKtb7qvUE/pYzNkOnsRYxKD1nnTAmA==\",\r\n  \"secondaryKey\": \"HNnMxmI1dtJFo4SZry5MTmFFKMx2D3j59/CFufFrP9wTu1jFqOuVvxvq/58XgNYlfFR8iGua+Os60zdgnaTNRg==\",\r\n  \"enabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/tenant/access\",\r\n  \"principalId\": \"integration\",\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"HNnMxmI1dtJFo4SZry5MTmFFKMx2D3j59/CFufFrP9wTu1jFqOuVvxvq/58XgNYlfFR8iGua+Os60zdgnaTNRg==\",\r\n  \"enabled\": true\r\n}",
       "StatusCode": 200
     },
     {
@@ -472,7 +472,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tenant/access\",\r\n  \"type\": \"Microsoft.ApiManagement/service/tenant\",\r\n  \"name\": \"access\",\r\n  \"properties\": {\r\n    \"principalId\": \"integration\",\r\n    \"primaryKey\": \"pVnGb/3LFxod/LiAvrawUFEWsjBati3dNivWsf4D0nDcmOIfEJUcS9lqHg+E0aOxEp6BnOiCCPvgGfY7ZCGP4A==\",\r\n    \"secondaryKey\": \"NeniD1uOos/GgQbILnvQznQl5p2ONQqvjRLASvOsbMx8w60NyFtl/v8BInKOZlzzyijqzIxogxJEJfQiQmDYIw==\",\r\n    \"enabled\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tenant/access\",\r\n  \"type\": \"Microsoft.ApiManagement/service/tenant\",\r\n  \"name\": \"access\",\r\n  \"properties\": {\r\n    \"principalId\": \"integration\",\r\n    \"primaryKey\": \"Sanitized\",\r\n    \"secondaryKey\": \"NeniD1uOos/GgQbILnvQznQl5p2ONQqvjRLASvOsbMx8w60NyFtl/v8BInKOZlzzyijqzIxogxJEJfQiQmDYIw==\",\r\n    \"enabled\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -547,7 +547,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tenant/access\",\r\n  \"type\": \"Microsoft.ApiManagement/service/tenant\",\r\n  \"name\": \"access\",\r\n  \"properties\": {\r\n    \"principalId\": \"integration\",\r\n    \"primaryKey\": \"LckeytqLou1t7rvA/BctYZAqWOzR6WXCKqWA4s/WRjDqh6Dci7kGF4WEcKtb7qvUE/pYzNkOnsRYxKD1nnTAmA==\",\r\n    \"secondaryKey\": \"HNnMxmI1dtJFo4SZry5MTmFFKMx2D3j59/CFufFrP9wTu1jFqOuVvxvq/58XgNYlfFR8iGua+Os60zdgnaTNRg==\",\r\n    \"enabled\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tenant/access\",\r\n  \"type\": \"Microsoft.ApiManagement/service/tenant\",\r\n  \"name\": \"access\",\r\n  \"properties\": {\r\n    \"principalId\": \"integration\",\r\n    \"primaryKey\": \"Sanitized\",\r\n    \"secondaryKey\": \"HNnMxmI1dtJFo4SZry5MTmFFKMx2D3j59/CFufFrP9wTu1jFqOuVvxvq/58XgNYlfFR8iGua+Os60zdgnaTNRg==\",\r\n    \"enabled\": false\r\n  }\r\n}",
       "StatusCode": 200
     },
     {

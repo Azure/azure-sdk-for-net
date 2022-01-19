@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The server connection type. </summary>
-    public enum ServerConnectionType
+    public readonly partial struct ServerConnectionType : IEquatable<ServerConnectionType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ServerConnectionType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServerConnectionType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string DefaultValue = "Default";
+        private const string RedirectValue = "Redirect";
+        private const string ProxyValue = "Proxy";
+
         /// <summary> Default. </summary>
-        Default,
-        /// <summary> Proxy. </summary>
-        Proxy,
+        public static ServerConnectionType Default { get; } = new ServerConnectionType(DefaultValue);
         /// <summary> Redirect. </summary>
-        Redirect
+        public static ServerConnectionType Redirect { get; } = new ServerConnectionType(RedirectValue);
+        /// <summary> Proxy. </summary>
+        public static ServerConnectionType Proxy { get; } = new ServerConnectionType(ProxyValue);
+        /// <summary> Determines if two <see cref="ServerConnectionType"/> values are the same. </summary>
+        public static bool operator ==(ServerConnectionType left, ServerConnectionType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ServerConnectionType"/> values are not the same. </summary>
+        public static bool operator !=(ServerConnectionType left, ServerConnectionType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ServerConnectionType"/>. </summary>
+        public static implicit operator ServerConnectionType(string value) => new ServerConnectionType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ServerConnectionType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ServerConnectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

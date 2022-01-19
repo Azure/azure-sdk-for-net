@@ -32,11 +32,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="name">Transformation name.</param>
         /// <param name="description">Transformation description.</param>
+        /// <param name="dataset">Dataset reference.</param>
+        /// <param name="linkedService">Linked service reference.</param>
         /// <param name="flowlet">Flowlet Reference</param>
-        public Transformation(string name, string description = default(string), DataFlowReference flowlet = default(DataFlowReference))
+        public Transformation(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference))
         {
             Name = name;
             Description = description;
+            Dataset = dataset;
+            LinkedService = linkedService;
             Flowlet = flowlet;
             CustomInit();
         }
@@ -59,6 +63,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets dataset reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataset")]
+        public DatasetReference Dataset { get; set; }
+
+        /// <summary>
+        /// Gets or sets linked service reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "linkedService")]
+        public LinkedServiceReference LinkedService { get; set; }
+
+        /// <summary>
         /// Gets or sets flowlet Reference
         /// </summary>
         [JsonProperty(PropertyName = "flowlet")]
@@ -75,6 +91,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Dataset != null)
+            {
+                Dataset.Validate();
+            }
+            if (LinkedService != null)
+            {
+                LinkedService.Validate();
             }
             if (Flowlet != null)
             {

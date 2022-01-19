@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "536bd20f-9688-9022-fe01-d6d84156f2d1",
         "x-ms-date": "Fri, 14 May 2021 16:55:01 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,12 +30,12 @@
         ],
         "x-ms-client-request-id": "536bd20f-9688-9022-fe01-d6d84156f2d1",
         "x-ms-request-id": "819b5e18-401e-0035-04e1-48b6d6000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-c2001097-21b8-65cd-401b-1859501344af?sv=2020-12-06&st=2021-05-14T15%3A55%3A02Z&se=2021-05-14T17%3A55%3A02Z&sr=c&sp=racwdxlti&sig=Sanitized&restype=container&comp=list",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-c2001097-21b8-65cd-401b-1859501344af?sv=2021-04-10&st=2021-05-14T15%3A55%3A02Z&se=2021-05-14T17%3A55%3A02Z&sr=c&sp=racwdxltfi&sig=Sanitized&restype=container&comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -46,7 +46,7 @@
         ],
         "x-ms-client-request-id": "59ebfdab-c7b5-2c7c-0341-58508a073e30",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -60,7 +60,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "59ebfdab-c7b5-2c7c-0341-58508a073e30",
         "x-ms-request-id": "819b5e2b-401e-0035-12e1-48b6d6000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seanmcccanary3.blob.core.windows.net/\" ContainerName=\"test-container-c2001097-21b8-65cd-401b-1859501344af\"><Blobs /><NextMarker /></EnumerationResults>"
     },
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "536faaaf-94e2-6730-e01d-796598d55c9d",
         "x-ms-date": "Fri, 14 May 2021 16:55:02 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -91,7 +91,7 @@
         ],
         "x-ms-client-request-id": "536faaaf-94e2-6730-e01d-796598d55c9d",
         "x-ms-request-id": "819b5e46-401e-0035-28e1-48b6d6000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

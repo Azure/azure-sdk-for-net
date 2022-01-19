@@ -48,6 +48,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string SrCyrlValue = "sr-Cyrl";
         private const string SrLatnValue = "sr-Latn";
         private const string SkValue = "sk";
+        private const string UnkValue = "unk";
 
         /// <summary> Chinese-Simplified. </summary>
         public static OcrSkillLanguage ZhHans { get; } = new OcrSkillLanguage(ZhHansValue);
@@ -101,6 +102,8 @@ namespace Azure.Search.Documents.Indexes.Models
         public static OcrSkillLanguage SrLatn { get; } = new OcrSkillLanguage(SrLatnValue);
         /// <summary> Slovak. </summary>
         public static OcrSkillLanguage Sk { get; } = new OcrSkillLanguage(SkValue);
+        /// <summary> Unknown.  If the language is explicitly set to &quot;unk&quot;, the language will be auto-detected. </summary>
+        public static OcrSkillLanguage Unk { get; } = new OcrSkillLanguage(UnkValue);
         /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(OcrSkillLanguage left, OcrSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OcrSkillLanguage"/> values are not the same. </summary>

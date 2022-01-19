@@ -7,6 +7,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_KeyVaults_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
@@ -27,8 +28,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the Key vault inside this resource group.
@@ -41,7 +42,7 @@ VaultCollection vaultCollection = resourceGroup.GetVaults();
 string vaultName = "myVault";
 Guid tenantIdGuid = new Guid("Your tenantId");
 string objectId = "Your Object Id";
-Permissions permissions = new Permissions
+AccessPermissions permissions = new AccessPermissions
 {
     Keys = { new KeyPermissions("all") },
     Secrets = { new SecretPermissions("all") },
@@ -50,7 +51,7 @@ Permissions permissions = new Permissions
 };
 AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
 
-VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
+VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new Models.Sku(SkuFamily.A, SkuName.Standard));
 VaultProperties.EnabledForDeployment = true;
 VaultProperties.EnabledForDiskEncryption = true;
 VaultProperties.EnabledForTemplateDeployment = true;
@@ -68,9 +69,9 @@ VaultProperties.NetworkAcls = new NetworkRuleSet()
 };
 VaultProperties.AccessPolicies.Add(AccessPolicy);
 
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS, VaultProperties);
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
 
-var rawVault = await vaultCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
+var rawVault = await vaultCollection.CreateOrUpdateAsync(false, vaultName, parameters).ConfigureAwait(false);
 Vault vault = await rawVault.WaitForCompletionAsync();
 ```
 
@@ -106,7 +107,7 @@ if (vault != null)
     Console.WriteLine(vault.Data.Name);
 }
 
-if (await vaultCollection.CheckIfExistsAsync("bar"))
+if (await vaultCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("KeyVault 'bar' exists.");
 }
@@ -118,5 +119,5 @@ if (await vaultCollection.CheckIfExistsAsync("bar"))
 VaultCollection vaultCollection = resourceGroup.GetVaults();
 
 Vault vault = await vaultCollection.GetAsync("myVault");
-await vault.DeleteAsync();
+await vault.DeleteAsync(true);
 ```

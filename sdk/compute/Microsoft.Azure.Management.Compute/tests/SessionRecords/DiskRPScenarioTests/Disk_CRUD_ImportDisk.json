@@ -530,7 +530,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "757"
+          "755"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -655,7 +655,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "758"
+          "756"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -725,7 +725,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "758"
+          "756"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2298,6 +2298,15 @@
         "x-ms-request-id": [
           "a9f51446-0689-443b-af3c-e2044fce497e"
         ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetOperation3Min;14992,Microsoft.Compute/GetOperation30Min;29990"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0bb0e1e3-0bc4-4427-9889-f831c7411e09"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11987"
         ],
@@ -3190,7 +3199,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "205"
+          "211"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -3476,7 +3485,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "184"
+          "183"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -3674,7 +3683,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "184"
+          "183"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4011,7 +4020,7 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11995"
         ],
         "x-ms-request-id": [
           "c97e1a24-3e1f-463e-9ca8-560e403b67f0"
@@ -4061,8 +4070,14 @@
         "Pragma": [
           "no-cache"
         ],
+        "Location": [
+          "https://management.azure.com/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI4MDM4LUVBU1RVUzIiLCJqb2JMb2NhdGlvbiI6ImVhc3R1czIifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
+          "11993"
         ],
         "x-ms-request-id": [
           "33b63d03-7cf4-46f9-b133-0fc4fd381f41"
@@ -4113,7 +4128,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
+          "11991"
         ],
         "x-ms-request-id": [
           "07f2ffa9-6a94-4ef0-8d2b-10b72fff15be"

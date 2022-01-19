@@ -28,12 +28,21 @@ Programming language to supply to metadata
 .PARAMETER RepoId
 GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 
+.PARAMETER DocValidationImageId
+The docker image id in format of '$containerRegistry/$imageName:$tag'
+e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
+
+.PARAMETER PackageSourceOverride
+Optional parameter to supply a different package source (useful for daily dev
+docs generation from pacakges which are not published to the default feed). This
+variable is meant to be used in the domain-specific business logic in
+&$ValidateDocsMsPackagesFn
 #>
 
 param(
   [Parameter(Mandatory = $true)]
   [array]$PackageInfoJsonLocations,
-  
+
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation, 
 
@@ -41,7 +50,13 @@ param(
   [string]$Language,
 
   [Parameter(Mandatory = $true)]
-  [string]$RepoId
+  [string]$RepoId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$DocValidationImageId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$PackageSourceOverride
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -78,12 +93,25 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
   }
   
+  # Get the first code owners of the package.
+  $author = "ramya-rao-a"
+  $msauthor = "ramyar"
+  Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
+  $codeOwnerArray = ."$PSScriptRoot/get-codeowners.ps1" `
+                    -TargetDirectory $PackageInfo.DirectoryPath 
+  if ($codeOwnerArray) {
+    Write-Host "Code Owners are $($codeOwnerArray -join ",")"
+    $author = $codeOwnerArray[0]
+    $msauthor = $author # This is a placeholder for now. Will change to the right ms alias.
+  }
+  Write-Host "The author of package: $author"
+  Write-Host "The ms author of package: $msauthor"
   $header = @"
 ---
 title: $foundTitle
 keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
-author: maggiepint
-ms.author: magpint
+author: $author
+ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
 ms.prod: azure
@@ -91,13 +119,12 @@ ms.technology: azure
 ms.devlang: $Language
 ms.service: $service
 ---
-
 "@
 
   return "$header`n$ReadmeContent"
 }
 
-function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) { 
+function GetPackageInfoJson ($packageInfoJsonLocation) {
   if (!(Test-Path $packageInfoJsonLocation)) {
     LogWarning "Package metadata not found for $packageInfoJsonLocation"
     return
@@ -105,7 +132,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
-  $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   if ($packageInfo.DevVersion) {
     # If the package is of a dev version there may be language-specific needs to 
     # specify the appropriate version. For example, in the case of JS, the dev 
@@ -118,6 +144,11 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
       $packageInfo.Version = $packageInfo.DevVersion
     }
   }
+  return $packageInfo
+}
+
+function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) { 
+  $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
 
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.GroupId -eq $packageInfo.Group -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
   if ($packageMetadataArray.Count -eq 0) { 
@@ -163,7 +194,18 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     -Value $packageInfoJson
 }
 
-foreach ($packageInfo in $PackageInfoJsonLocations) {
-  Write-Host "Updating metadata for package: $packageInfo"
-  UpdateDocsMsMetadataForPackage $packageInfo
+foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
+  Write-Host "Updating metadata for package: $packageInfoLocation"
+
+  # Convert package metadata json file to metadata json property.
+  $packageInfo = GetPackageInfoJson $packageInfoLocation
+  # Add validation step for daily update and release
+  if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+    &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
+    if ($LASTEXITCODE) {
+      LogError "The package failed Doc.Ms validation. Check https://aka.ms/azsdk/docs/docker for more details on how to diagnose this issue."
+      exit $LASTEXITCODE
+    }
+  }
+  UpdateDocsMsMetadataForPackage $packageInfoLocation $packageInfo
 }

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// Library name
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             public static LibraryResource Get(this ILibraryOperations operations, string resourceGroupName, string libraryName, string workspaceName)
             {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// Library name
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

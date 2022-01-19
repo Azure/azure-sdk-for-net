@@ -16,10 +16,10 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPrediction
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject);
 
 ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
@@ -27,7 +27,7 @@ Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category:{intent.Category}");
-    Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
+    Console.WriteLine($"Confidence:{intent.Confidence}");
     Console.WriteLine();
 }
 
@@ -38,7 +38,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Text: {entity.Text}");
     Console.WriteLine($"Offset: {entity.Offset}");
     Console.WriteLine($"Length: {entity.Length}");
-    Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 }
 ```
@@ -46,10 +46,10 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPredictionAsync
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-    "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject);
 
 ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
@@ -57,7 +57,7 @@ Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category:{intent.Category}");
-    Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
+    Console.WriteLine($"Confidence:{intent.Confidence}");
     Console.WriteLine();
 }
 
@@ -68,7 +68,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Text: {entity.Text}");
     Console.WriteLine($"Offset: {entity.Offset}");
     Console.WriteLine($"Length: {entity.Length}");
-    Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 }
 ```

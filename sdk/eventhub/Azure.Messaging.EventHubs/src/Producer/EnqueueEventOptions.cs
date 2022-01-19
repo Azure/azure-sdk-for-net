@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   are published to the Event Hubs service.
     /// </summary>
     ///
-    internal class EnqueueEventOptions : SendEventOptions
+    public class EnqueueEventOptions : SendEventOptions
     {
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

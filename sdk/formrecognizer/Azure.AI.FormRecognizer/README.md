@@ -24,7 +24,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|-
-|4.0.0-beta.1 | 2.0, 2.1, 2021-09-30-preview
+|4.0.0-beta.X | 2.0, 2.1, 2021-09-30-preview
 |3.1.X        | 2.0, 2.1
 |3.0.X        | 2.0
 

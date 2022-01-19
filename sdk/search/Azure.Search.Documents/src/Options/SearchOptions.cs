@@ -173,6 +173,10 @@ namespace Azure.Search.Documents
         [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
+        /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
+        [CodeGenMember("semanticConfiguration")]
+        public string SemanticConfigurationName { get; set; }
+
         /// <summary> A value that specifies the language of the search query. </summary>
         [CodeGenMember("queryLanguage")]
         public QueryLanguage? QueryLanguage { get; set; }
@@ -328,6 +332,7 @@ namespace Azure.Search.Documents
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
+            destination.SemanticConfigurationName = source.SemanticConfigurationName;
             destination.SemanticFields = source.SemanticFields;
             destination.Size = source.Size;
             destination.Skip = source.Skip;

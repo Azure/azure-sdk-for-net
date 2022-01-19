@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             var declaredType = method.DeclaringType;
             string[] parameterNamesFromAttribute;
 
-            if (declaredType != null && declaredType.IsSubclassOf(typeof(ServerlessHub)))
+            if (declaredType != null && IsServerlessHub(declaredType))
             {
                 // Class based model
                 if (!string.IsNullOrEmpty(hubName) ||
@@ -194,6 +194,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         private static bool HasBindingAttribute(IEnumerable<Attribute> attributes)
         {
             return attributes.Any(attribute => attribute.GetType().GetCustomAttribute<BindingAttribute>(false) != null);
+        }
+
+        private static bool IsServerlessHub(Type type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+            if (type.IsSubclassOf(typeof(ServerlessHub)))
+            {
+                return true;
+            }
+            var baseType = type.BaseType;
+            while (baseType != null)
+            {
+                if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(ServerlessHub<>))
+                {
+                    return true;
+                }
+                baseType = baseType.BaseType;
+            }
+            return false;
         }
     }
 }

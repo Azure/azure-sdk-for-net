@@ -21,23 +21,40 @@ public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
 
-operation-group-to-resource-type:
-  DeploymentOperations: Microsoft.Resources/deployments/operations
-  Deployments: Microsoft.Resources/deployments
-  DeploymentScriptLogs: Microsoft.Resources/deploymentScripts/logs
-operation-group-to-resource:
-  DeploymentOperations: DeploymentOperation
-  Deployments: Deployment
-  DeploymentScripts: DeploymentScript
-  ApplicationDefinitions: ApplicationDefinition
-  DeploymentScriptLogs: ScriptLog
-operation-group-to-parent:
-  Deployments: tenant
-  DeploymentScripts: resourceGroups
+request-path-to-parent:
+  /{scope}/providers/Microsoft.Resources/links: /{linkId}
+  # setting these to the same parent will automatically merge these operations
+  /providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+  /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+  /providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
+  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+request-path-to-scope-resource-types:
+  /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
+    - tenant
+  /{scope}/providers/Microsoft.Resources/deployments:
+    - subscriptions
+    - resourceGroups
+    - managementGroups
+    - tenant
+override-operation-name:
+  DeploymentOperations_ListAtScope: GetDeploymentOperations
+  DeploymentOperations_GetAtScope: GetDeploymentOperation
+  Deployments_CancelAtScope: Cancel
+  Deployments_ValidateAtScope: Validate
+  Deployments_ExportTemplateAtScope: ExportTemplate
+  Deployments_WhatIf: WhatIf
+  Deployments_WhatIfAtManagementGroupScope: WhatIf
+  Deployments_WhatIfAtSubscriptionScope: WhatIf
+  Deployments_WhatIfAtTenantScope: WhatIf
+  Deployments_CheckExistenceAtScope: CheckExistence
+  JitRequests_ListBySubscription: GetJitRequestDefinitions
+
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
-merge-operations:
-  WhatIf: Deployments_WhatIf_POST;Deployments_WhatIfAtTenantScope_POST;Deployments_WhatIfAtManagementGroupScope_POST;Deployments_WhatIfAtSubscriptionScope_POST
 directive:
   - from: resources.json
     where: $.definitions.DeploymentExtended
@@ -45,13 +62,14 @@ directive:
   - from: resources.json
     where: $.definitions.Deployment
     transform: $['x-ms-client-name'] = 'DeploymentInput'
+
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
-  # Keep the get method at each scope so that generator can know the possible values of collection's parent
+  # Keep the get method at each scope so that generator can know the possible values of container's parent
   - remove-operation: Deployments_DeleteAtTenantScope
   - remove-operation: Deployments_CheckExistenceAtTenantScope
   - remove-operation: Deployments_CreateOrUpdateAtTenantScope
-#   - remove-operation: Deployments_GetAtTenantScope
+  - remove-operation: Deployments_GetAtTenantScope
   - remove-operation: Deployments_CancelAtTenantScope
   - remove-operation: Deployments_ValidateAtTenantScope
   - remove-operation: Deployments_ExportTemplateAtTenantScope
@@ -59,7 +77,7 @@ directive:
   - remove-operation: Deployments_DeleteAtManagementGroupScope
   - remove-operation: Deployments_CheckExistenceAtManagementGroupScope
   - remove-operation: Deployments_CreateOrUpdateAtManagementGroupScope
-#   - remove-operation: Deployments_GetAtManagementGroupScope
+  - remove-operation: Deployments_GetAtManagementGroupScope
   - remove-operation: Deployments_CancelAtManagementGroupScope
   - remove-operation: Deployments_ValidateAtManagementGroupScope
   - remove-operation: Deployments_ExportTemplateAtManagementGroupScope
@@ -67,7 +85,7 @@ directive:
   - remove-operation: Deployments_DeleteAtSubscriptionScope
   - remove-operation: Deployments_CheckExistenceAtSubscriptionScope
   - remove-operation: Deployments_CreateOrUpdateAtSubscriptionScope
-#   - remove-operation: Deployments_GetAtSubscriptionScope
+  - remove-operation: Deployments_GetAtSubscriptionScope
   - remove-operation: Deployments_CancelAtSubscriptionScope
   - remove-operation: Deployments_ValidateAtSubscriptionScope
   - remove-operation: Deployments_ExportTemplateAtSubscriptionScope
@@ -75,7 +93,7 @@ directive:
   - remove-operation: Deployments_Delete
   - remove-operation: Deployments_CheckExistence
   - remove-operation: Deployments_CreateOrUpdate
-#   - remove-operation: Deployments_Get
+  - remove-operation: Deployments_Get
   - remove-operation: Deployments_Cancel
   - remove-operation: Deployments_Validate
   - remove-operation: Deployments_ExportTemplate
@@ -101,17 +119,14 @@ directive:
   - rename-operation:
       from: ListOperations
       to: Operations_ListOps
-
-  - rename-operation:
-      from: DeploymentScripts_GetLogs
-      to: DeploymentScriptLogs_GetLogs
-  - rename-operation:
-      from: DeploymentScripts_GetLogsDefault
-      to: DeploymentScriptLogs_GetLogsDefault
   - from: resources.json
     where: $.definitions.DeploymentOperationProperties
     transform: >
       $.properties.statusMessage["x-nullable"] = true;
+  - from: managedapplications.json
+    where: $.definitions.Identity.properties.type["x-ms-enum"]
+    transform: >
+      $.name = "ApplicationResourceIdentityType"
 ```
 
 ### Tag: package-track2-preview

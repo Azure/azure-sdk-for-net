@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Core
 
         internal static string GetUserAgentName(object source, ClientOptions options)
         {
+            return GetUserAgentName(source, options.Diagnostics.ApplicationId);
+        }
+
+        internal static string GetUserAgentName(object source, string? applicationId)
+        {
             const string PackagePrefix = "Azure.";
 
             Assembly assembly = source.GetType().Assembly!;
@@ -37,7 +42,7 @@ namespace Azure.ResourceManager.Core
             AssemblyInformationalVersionAttribute? versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
-                throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
+                throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}' (inferred from the use of options type 'ArmClientOptions').");
             }
 
             string version = versionAttribute.InformationalVersion;
@@ -54,12 +59,12 @@ namespace Azure.ResourceManager.Core
                 version = version.Substring(0, hashSeparator);
             }
 
-            return GetUserAgentName(assemblyName, version, options.Diagnostics.ApplicationId);
+            return GetUserAgentName(assemblyName, version, applicationId);
         }
 
         private static int IndexOfOrdinal(this string s, char c)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             return s.IndexOf(c, StringComparison.Ordinal);
 #else
             return s.IndexOf(c);

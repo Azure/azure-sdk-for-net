@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
+    [Obsolete("Please use UserAssignedIdentities instead.")]
     public class BatchAccountIdentityUserAssignedIdentitiesValue : UserAssignedIdentities
     {
+        public BatchAccountIdentityUserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string))
+        : base(principalId, clientId)
+        {
+        }
     }
 }

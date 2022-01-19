@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusMessage
+    public class ServiceBusMessage : MessageWithMetadata
     {
         /// <summary>
         /// Creates a new message.
@@ -115,7 +116,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
                     kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName)
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName)
                 {
                     continue;
                 }
@@ -155,6 +156,17 @@ namespace Azure.Messaging.ServiceBus
             {
                 AmqpMessage.Body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(value));
             }
+        }
+
+        /// <summary>
+        /// Hidden property that shadows the <see cref="Body"/> property. This is added
+        /// in order to inherit from <see cref="MessageWithMetadata"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => Body;
+            set => Body = value;
         }
 
         /// <summary>
@@ -301,14 +313,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string CorrelationId
         {
-            get => _correlationIdSet ? AmqpMessage.Properties.CorrelationId?.ToString() : AmqpMessage.Properties.CorrelationId.ToString();
+            get => AmqpMessage.Properties.CorrelationId?.ToString();
             set
             {
-                _correlationIdSet = true;
                 AmqpMessage.Properties.CorrelationId = value == null ? null : new AmqpMessageId(value);
             }
         }
-        private bool _correlationIdSet;
 
         /// <summary>Gets or sets an application specific subject.</summary>
         /// <value>The application specific subject.</value>
@@ -338,14 +348,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To
         {
-            get => _toSet ? AmqpMessage.Properties.To?.ToString() : AmqpMessage.Properties.To.ToString();
+            get => AmqpMessage.Properties.To?.ToString();
             set
             {
-                _toSet = true;
                 AmqpMessage.Properties.To = value == null ? null : new AmqpAddress(value);
             }
         }
-        private bool _toSet;
 
         /// <summary>Gets or sets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -353,7 +361,7 @@ namespace Azure.Messaging.ServiceBus
         /// Optionally describes the payload of the message, with a descriptor following the format of
         /// RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public string ContentType
+        public override string ContentType
         {
             get
             {
@@ -365,6 +373,13 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Hidden property that indicates that the <see cref="ServiceBusMessage"/> is not read-only. This is part of
+        /// the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
+
         /// <summary>Gets or sets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>
         /// <remarks>
@@ -375,14 +390,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo
         {
-            get => _replyToSet ? AmqpMessage.Properties.ReplyTo?.ToString() :  AmqpMessage.Properties.ReplyTo.ToString();
+            get => AmqpMessage.Properties.ReplyTo?.ToString();
             set
             {
-                _replyToSet = true;
                 AmqpMessage.Properties.ReplyTo = value == null ? null : new AmqpAddress(value);
             }
         }
-        private bool _replyToSet;
 
         /// <summary>
         /// Gets or sets the date and time in UTC at which the message will be enqueued. This

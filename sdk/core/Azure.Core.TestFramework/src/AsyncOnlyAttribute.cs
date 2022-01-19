@@ -10,7 +10,7 @@ namespace Azure.Core.TestFramework
     /// Marks that a test should only be executed asynchronously (in a test
     /// fixture derived from <see cref="ClientTestBase"/>).
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = true)]
     public class AsyncOnlyAttribute : NUnitAttribute
     {
     }

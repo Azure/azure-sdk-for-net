@@ -1,7 +1,7 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-7ad9ce5d-548e-ae9b-d400-5ef0a13e704b?sv=2020-12-06&st=2021-02-17T21%3A22%3A27Z&se=2021-02-17T23%3A22%3A27Z&sr=c&sp=racwdlmeop&sig=Sanitized&restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-7ad9ce5d-548e-ae9b-d400-5ef0a13e704b?sv=2021-04-10&st=2021-02-17T21%3A22%3A27Z&se=2021-02-17T23%3A22%3A27Z&sr=c&sp=racwdlmeop&sig=Sanitized&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "00b89186-a1d4-71c8-7754-04d6be609494",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -27,7 +27,7 @@
         "x-ms-client-request-id": "00b89186-a1d4-71c8-7754-04d6be609494",
         "x-ms-error-code": "AuthorizationFailure",
         "x-ms-request-id": "edd40caa-a01e-004e-597b-0551d7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>AuthorizationFailure</Code><Message>This request is not authorized to perform this operation.\n",

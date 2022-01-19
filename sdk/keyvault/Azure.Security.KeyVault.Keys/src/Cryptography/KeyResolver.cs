@@ -84,7 +84,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
-                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
+                // Since we already attempted to download the key, do not let the CryptographyClient needlessly try again.
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline, forceRemote: true);
             }
             catch (Exception e)
             {
@@ -116,7 +117,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
-                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
+                // Since we already attempted to download the key, do not let the CryptographyClient needlessly try again.
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline, forceRemote: true);
             }
             catch (Exception e)
             {

@@ -86,6 +86,8 @@
         "attestationUri": "[concat('DOCKER|azsdkengsys.azurecr.io/', parameters('attestationImage'))]",
         "kvApiVersion": "2019-09-01",
         "kvName": "[parameters('baseName')]",
+        "kvAdminDefinitionId": "00482a5a-887f-4fb3-b363-3b7fe8e74483",
+        "kvAdminAssignmentName": "[guid(resourceGroup().id, variables('kvAdminDefinitionId'), parameters('testApplicationOid'))]",
         "hsmApiVersion": "2021-04-01-preview",
         "hsmName": "[concat(parameters('baseName'), 'hsm')]",
         "mgmtApiVersion": "2019-04-01",
@@ -118,67 +120,22 @@
                     "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
-                "accessPolicies": [
-                    {
-                        "tenantId": "[parameters('tenantId')]",
-                        "objectId": "[parameters('testApplicationOid')]",
-                        "permissions": {
-                            "keys": [
-                                "backup",
-                                "create",
-                                "decrypt",
-                                "delete",
-                                "encrypt",
-                                "get",
-                                "import",
-                                "list",
-                                "purge",
-                                "recover",
-                                "release",
-                                "restore",
-                                "rotate",
-                                "sign",
-                                "unwrapKey",
-                                "update",
-                                "verify",
-                                "wrapKey"
-                            ],
-                            "secrets": [
-                                "backup",
-                                "delete",
-                                "get",
-                                "list",
-                                "purge",
-                                "recover",
-                                "restore",
-                                "set"
-                            ],
-                            "certificates": [
-                                "backup",
-                                "create",
-                                "delete",
-                                "deleteissuers",
-                                "get",
-                                "getissuers",
-                                "import",
-                                "list",
-                                "listissuers",
-                                "managecontacts",
-                                "manageissuers",
-                                "purge",
-                                "recover",
-                                "restore",
-                                "setissuers",
-                                "update"
-                            ]
-                        }
-                    }
-                ],
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
                 "enableSoftDelete": true,
+                "enableRbacAuthorization": true,
                 "softDeleteRetentionInDays": 7
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[variables('kvAdminAssignmentName')]",
+            "properties": {
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('kvAdminDefinitionId'))]",
+                "principalId": "[parameters('testApplicationOid')]",
+                "scope": "[resourceGroup().id]"
             }
         },
         {

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
         internal GeoBackupPolicyListResult()
         {
-            Value = new ChangeTrackingList<GeoBackupPolicy>();
+            Value = new ChangeTrackingList<GeoBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
         /// <param name="value"> The list of geo backup policies. </param>
-        internal GeoBackupPolicyListResult(IReadOnlyList<GeoBackupPolicy> value)
+        internal GeoBackupPolicyListResult(IReadOnlyList<GeoBackupPolicyData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of geo backup policies. </summary>
-        public IReadOnlyList<GeoBackupPolicy> Value { get; }
+        public IReadOnlyList<GeoBackupPolicyData> Value { get; }
     }
 }

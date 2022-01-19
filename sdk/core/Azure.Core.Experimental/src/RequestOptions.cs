@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
@@ -14,6 +13,8 @@ namespace Azure
     /// </summary>
     public class RequestOptions
     {
+        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class.
         /// </summary>
@@ -22,67 +23,22 @@ namespace Azure
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequestOptions"/> class using the given <see cref="RequestOptions"/>.
-        /// </summary>
-        /// <param name="statusOption"></param>
-        public RequestOptions(ResponseStatusOption statusOption) => StatusOption = statusOption;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestOptions"/> class.
-        /// </summary>
-        /// <param name="perCall"></param>
-        public RequestOptions(Action<HttpMessage> perCall) => PerCallPolicy = new ActionPolicy(perCall);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestOptions"/> class using the given <see cref="ResponseStatusOption"/>.
-        /// </summary>
-        /// <param name="option"></param>
-        public static implicit operator RequestOptions(ResponseStatusOption option) => new RequestOptions(option);
-
-        /// <summary>
-        /// The token to check for cancellation.
-        /// </summary>
-        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
-
-        /// <summary>
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
-        public ResponseStatusOption StatusOption { get; set; } = ResponseStatusOption.Default;
+        public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
 
         /// <summary>
-        /// A <see cref="HttpPipelinePolicy"/> to use as part of this operation. This policy will be applied at the start
-        /// of the underlying <see cref="HttpPipeline"/>.
+        /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.
+        /// The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
+        /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/>
+        /// otherwise use <see cref="HttpPipelinePosition.PerRetry"/> to run the policy for every retry.
         /// </summary>
-        public HttpPipelinePolicy? PerCallPolicy { get; set; }
-
-        /// <summary>
-        /// Applies options from <see cref="RequestOptions"/> instance to a <see cref="HttpMessage"/>.
-        /// </summary>
-        /// <param name="requestOptions"></param>
-        /// <param name="message"></param>
-        public static void Apply(RequestOptions requestOptions, HttpMessage message)
+        /// <param name="policy">The <see cref="HttpPipelinePolicy"/> instance to be added to the pipeline.</param>
+        /// <param name="position">The position of the policy in the pipeline.</param>
+        public void AddPolicy(HttpPipelinePolicy policy, HttpPipelinePosition position)
         {
-            if (requestOptions == null)
-            {
-                return;
-            }
-
-            if (requestOptions.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
-            }
-        }
-
-        /// <summary>
-        /// An <see cref="HttpPipelineSynchronousPolicy"/> which invokes an action when a request is being sent.
-        /// </summary>
-        internal class ActionPolicy : HttpPipelineSynchronousPolicy
-        {
-            private Action<HttpMessage> Action { get; }
-
-            public ActionPolicy(Action<HttpMessage> action) => Action = action;
-
-            public override void OnSendingRequest(HttpMessage message) => Action.Invoke(message);
+            Policies ??= new();
+            Policies.Add((position, policy));
         }
     }
 }

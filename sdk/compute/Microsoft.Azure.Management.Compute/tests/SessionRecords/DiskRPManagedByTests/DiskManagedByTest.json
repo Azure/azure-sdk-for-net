@@ -92,7 +92,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "99"
+          "98"
         ]
       },
       "ResponseHeaders": {
@@ -124,7 +124,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "234"
+          "231"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -158,7 +158,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "99"
+          "98"
         ]
       },
       "ResponseHeaders": {
@@ -190,7 +190,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "234"
+          "231"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -448,7 +448,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "734"
+          "733"
         ],
         "Content-Type": [
           "application/json"
@@ -511,7 +511,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "722"
+          "721"
         ],
         "Content-Type": [
           "application/json"
@@ -593,7 +593,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "769"
+          "768"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -718,7 +718,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "770"
+          "769"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -788,7 +788,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "770"
+          "769"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1339,7 +1339,7 @@
           "d547412c-9620-4992-affa-29a42341d79b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
           "3c3f01a6-d110-4a37-974d-a9cb1e700b1a"
@@ -1421,7 +1421,7 @@
           "cc62ca3a-feb2-427b-8cf0-3ae580c77b25"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
           "4628dcf8-6af2-4a24-a52a-9725cde87e51"
@@ -1680,7 +1680,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "134"
+          "184"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1980,7 +1980,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;14999,Microsoft.Compute/LowCostGet30Min;119997"
+          "Microsoft.Compute/LowCostGet3Min;14997,Microsoft.Compute/LowCostGet30Min;119973"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

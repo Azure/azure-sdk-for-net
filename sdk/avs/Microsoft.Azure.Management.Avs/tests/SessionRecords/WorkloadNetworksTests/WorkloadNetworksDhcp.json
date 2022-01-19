@@ -1,707 +1,197 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"serverAddresses\": [\n      \"10.1.1.1\",\n      \"10.1.1.2\"\n    ],\n    \"displayName\": \"dhcpRelay\"\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"dhcpType\": \"RELAY\",\r\n    \"serverAddresses\": [\r\n      \"10.1.1.1\",\r\n      \"10.1.1.2\"\r\n    ],\r\n    \"displayName\": \"dhcpRelay\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f67785de-4ee5-4ca6-941f-353c571fc29e"
+          "9edf9e32-8bd8-42fd-971d-fc11a2e50841"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "148"
+          "157"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/c410abfe-940b-4fce-82ed-3d7203411ead?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "187e6be3-adbb-47fe-a330-a3485cac772d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "ff45c02b-7e2b-47fa-bc35-211b4983be31"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232315Z:ff45c02b-7e2b-47fa-bc35-211b4983be31"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:23:14 GMT"
-        ],
-        "Content-Length": [
-          "428"
+          "Fri, 12 Nov 2021 17:41:27 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n  \"name\": \"dhcpRelay\",\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"displayName\": \"dhcpRelay\",\n    \"provisioningState\": \"Building\",\n    \"serverAddresses\": [\n      \"10.1.1.1\",\n      \"10.1.1.2\"\n    ]\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/c410abfe-940b-4fce-82ed-3d7203411ead?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXkvb3BlcmF0aW9uc3RhdHVzZXMvYzQxMGFiZmUtOTQwYi00ZmNlLTgyZWQtM2Q3MjAzNDExZWFkP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
-        ],
-        "x-ms-request-id": [
-          "d7f7203d-e8d1-409b-9e1e-2aa494eae496"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "d5f58abd-3423-4373-92c4-e36b8f35aab0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232326Z:d5f58abd-3423-4373-92c4-e36b8f35aab0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:23:25 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "897"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "379"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:23:15.6744212-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/c410abfe-940b-4fce-82ed-3d7203411ead\",\n  \"name\": \"c410abfe-940b-4fce-82ed-3d7203411ead\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n    \"name\": \"dhcpRelay\",\n    \"properties\": {\n      \"dhcpType\": \"RELAY\",\n      \"displayName\": \"dhcpRelay\",\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 0,\n      \"serverAddresses\": [\n        \"10.1.1.2\",\n        \"10.1.1.1\"\n      ]\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n  },\n  \"startTime\": \"2021-05-25T16:23:14.9102404-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dhcpConfigurations/dhcpConfigurations1\",\r\n  \"name\": \"dhcp1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\",\r\n  \"properties\": {\r\n    \"dhcpType\": \"SERVER\",\r\n    \"displayName\": \"dhcpConfigurations1\",\r\n    \"segments\": [\r\n      \"segment1\",\r\n      \"segment2\"\r\n    ],\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
-        ],
-        "x-ms-request-id": [
-          "b1515842-7bd4-4e66-8ec7-d7061b254e74"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "6dd9aaa8-6090-49a1-ab23-06c00f0f2385"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232326Z:6dd9aaa8-6090-49a1-ab23-06c00f0f2385"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:23:26 GMT"
-        ],
-        "Content-Length": [
-          "442"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n  \"name\": \"dhcpRelay\",\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"displayName\": \"dhcpRelay\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"serverAddresses\": [\n      \"10.1.1.2\",\n      \"10.1.1.1\"\n    ]\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucz9hcGktdmVyc2lvbj0yMDIxLTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c1e374bd-85b4-4c2e-a81b-b80496fa4341"
+          "fccce099-0a89-41b6-a371-81715cd0a23a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
-        ],
-        "x-ms-request-id": [
-          "38898e8f-5950-488f-a194-87186ecd22e6"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "14f53fb2-dfef-481b-a4eb-b60a22db703e"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232328Z:14f53fb2-dfef-481b-a4eb-b60a22db703e"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:23:28 GMT"
-        ],
-        "Content-Length": [
-          "442"
+          "Fri, 12 Nov 2021 17:41:27 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "391"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n  \"name\": \"dhcpRelay\",\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"displayName\": \"dhcpRelay\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"serverAddresses\": [\n      \"10.1.1.2\",\n      \"10.1.1.1\"\n    ]\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dhcpConfigurations/dhcpConfigurations1\",\r\n      \"name\": \"dhcp1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\",\r\n      \"properties\": {\r\n        \"dhcpType\": \"SERVER\",\r\n        \"displayName\": \"dhcpConfigurations1\",\r\n        \"segments\": [\r\n          \"segment1\",\r\n          \"segment2\"\r\n        ],\r\n        \"revision\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
-        ],
-        "x-ms-request-id": [
-          "5d5a3a5b-dcbe-44ef-b466-118c20b928cb"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "29f996ec-cfbb-4ed8-a00a-680c58b5dfa4"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232340Z:29f996ec-cfbb-4ed8-a00a-680c58b5dfa4"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:23:40 GMT"
-        ],
-        "Content-Length": [
-          "450"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n  \"name\": \"dhcpRelay\",\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"displayName\": \"modifiedDhcpRelay\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 1,\n    \"serverAddresses\": [\n      \"10.1.1.2\",\n      \"10.1.1.1\"\n    ]\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4c4c0644-cbbb-4952-a097-6ec3a45dbbdf"
+          "4ac11289-472a-41cd-92f6-d75da1a2dd76"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "x-ms-request-id": [
-          "8a43b340-a144-41c3-8430-b3ce3c27e1b2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "2ad239e1-fecb-4264-b72d-0176d135ca0c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232327Z:2ad239e1-fecb-4264-b72d-0176d135ca0c"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:23:27 GMT"
-        ],
-        "Content-Length": [
-          "454"
+          "Fri, 12 Nov 2021 17:41:27 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "379"
         ]
       },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcprelay\",\n      \"name\": \"dhcprelay\",\n      \"properties\": {\n        \"dhcpType\": \"RELAY\",\n        \"displayName\": \"dhcpRelay\",\n        \"provisioningState\": \"Fulfilled\",\n        \"revision\": 0,\n        \"serverAddresses\": [\n          \"10.1.1.2\",\n          \"10.1.1.1\"\n        ]\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n    }\n  ]\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dhcpConfigurations/dhcpConfigurations1\",\r\n  \"name\": \"dhcp1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\",\r\n  \"properties\": {\r\n    \"dhcpType\": \"SERVER\",\r\n    \"displayName\": \"dhcpConfigurations1\",\r\n    \"segments\": [\r\n      \"segment1\",\r\n      \"segment2\"\r\n    ],\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"serverAddresses\": [\n      \"10.1.1.1\",\n      \"10.1.1.2\"\n    ],\n    \"displayName\": \"modifiedDhcpRelay\"\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"dhcpType\": \"RELAY\",\r\n    \"serverAddresses\": [\r\n      \"10.1.1.1\",\r\n      \"10.1.1.2\"\r\n    ],\r\n    \"displayName\": \"modifiedDhcpRelay\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6ff68e8e-3180-468c-98f0-cffc72daf097"
+          "83fc5f1c-c029-4c21-8c0b-3e74bf4d85d3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "156"
+          "165"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/fc4bf086-6711-4726-82bf-e68777ba79dc?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "da829d46-282f-4990-bf7c-67948c03c736"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "4e841d7d-6f1d-4b86-9611-166853b0e691"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232329Z:4e841d7d-6f1d-4b86-9611-166853b0e691"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:23:29 GMT"
-        ],
-        "Content-Length": [
-          "449"
+          "Fri, 12 Nov 2021 17:41:27 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n  \"name\": \"dhcpRelay\",\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"displayName\": \"modifiedDhcpRelay\",\n    \"provisioningState\": \"Building\",\n    \"revision\": 0,\n    \"serverAddresses\": [\n      \"10.1.1.1\",\n      \"10.1.1.2\"\n    ]\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/fc4bf086-6711-4726-82bf-e68777ba79dc?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXkvb3BlcmF0aW9uc3RhdHVzZXMvZmM0YmYwODYtNjcxMS00NzI2LTgyYmYtZTY4Nzc3YmE3OWRjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
-        ],
-        "x-ms-request-id": [
-          "b4c7d302-3ae0-4fcb-b67a-c70cfbad211b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "4c17b9b4-0eb4-4330-8158-6aeccdc8ac55"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232339Z:4c17b9b4-0eb4-4330-8158-6aeccdc8ac55"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:23:39 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "905"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "379"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:23:36.6713791-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/fc4bf086-6711-4726-82bf-e68777ba79dc\",\n  \"name\": \"fc4bf086-6711-4726-82bf-e68777ba79dc\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n    \"name\": \"dhcpRelay\",\n    \"properties\": {\n      \"dhcpType\": \"RELAY\",\n      \"displayName\": \"modifiedDhcpRelay\",\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 1,\n      \"serverAddresses\": [\n        \"10.1.1.2\",\n        \"10.1.1.1\"\n      ]\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n  },\n  \"startTime\": \"2021-05-25T16:23:29.1569409-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dhcpConfigurations/dhcpConfigurations1\",\r\n  \"name\": \"dhcp1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\",\r\n  \"properties\": {\r\n    \"dhcpType\": \"SERVER\",\r\n    \"displayName\": \"dhcpConfigurations1\",\r\n    \"segments\": [\r\n      \"segment1\",\r\n      \"segment2\"\r\n    ],\r\n    \"revision\": 2\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXk/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "97ab7e80-2569-4dea-b0fa-14f53a76dd07"
+          "972b1682-298e-441f-8acf-978f66804546"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationresults/897a7fb9-83b5-4344-b94a-c5f75c7a65bd?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/897a7fb9-83b5-4344-b94a-c5f75c7a65bd?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "0896f9c9-0a87-47f3-98e4-ee0e1bae8109"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "ba96eb62-3606-4895-aa20-2da5b1df61df"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232341Z:ba96eb62-3606-4895-aa20-2da5b1df61df"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:23:40 GMT"
+          "Fri, 12 Nov 2021 17:41:27 GMT"
         ],
         "Content-Length": [
-          "449"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "0"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay\",\n  \"name\": \"dhcpRelay\",\n  \"properties\": {\n    \"dhcpType\": \"RELAY\",\n    \"displayName\": \"modifiedDhcpRelay\",\n    \"provisioningState\": \"Deleting\",\n    \"revision\": 1,\n    \"serverAddresses\": [\n      \"10.1.1.2\",\n      \"10.1.1.1\"\n    ]\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dhcpConfigurations\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/897a7fb9-83b5-4344-b94a-c5f75c7a65bd?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXkvb3BlcmF0aW9uc3RhdHVzZXMvODk3YTdmYjktODNiNS00MzQ0LWI5NGEtYzVmNzVjN2E2NWJkP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
-        ],
-        "x-ms-request-id": [
-          "ba21f64d-8828-4b18-9be4-caeae92cf648"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "f78d499e-01f5-4ad7-85e3-d15e60d85f2b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232351Z:f78d499e-01f5-4ad7-85e3-d15e60d85f2b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:23:50 GMT"
-        ],
-        "Content-Length": [
-          "441"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:23:44.2844454-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationstatuses/897a7fb9-83b5-4344-b94a-c5f75c7a65bd\",\n  \"name\": \"897a7fb9-83b5-4344-b94a-c5f75c7a65bd\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-25T16:23:40.9821903-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dhcpConfigurations/dhcpRelay/operationresults/897a7fb9-83b5-4344-b94a-c5f75c7a65bd?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2RoY3BDb25maWd1cmF0aW9ucy9kaGNwUmVsYXkvb3BlcmF0aW9ucmVzdWx0cy84OTdhN2ZiOS04M2I1LTQzNDQtYjk0YS1jNWY3NWM3YTY1YmQ/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
-        ],
-        "x-ms-request-id": [
-          "f68ac4dc-4017-4d13-b394-c55b4bb7a5f5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "01afd363-9b59-478b-89aa-8121940d7322"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232351Z:01afd363-9b59-478b-89aa-8121940d7322"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:23:51 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "null",
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "2fdcc35c-1cea-4759-8cbd-d3d02f37745d"
+    "SubscriptionId": "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5"
   }
 }

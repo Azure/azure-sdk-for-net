@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "e17cf0e3-626f-03cf-9529-0a4a48eb9c61",
         "x-ms-date": "Fri, 19 Feb 2021 18:58:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "e17cf0e3-626f-03cf-9529-0a4a48eb9c61",
         "x-ms-request-id": "de675087-901e-0008-37f1-066550000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "cf23d045-1f06-fba3-0a51-6b24cd8aa9d3",
         "x-ms-date": "Fri, 19 Feb 2021 18:58:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -63,12 +63,12 @@
         ],
         "x-ms-client-request-id": "cf23d045-1f06-fba3-0a51-6b24cd8aa9d3",
         "x-ms-request-id": "0c241e14-101f-0064-6ff1-068ec7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-e2f431ad-759f-5cf2-e4c3-3f2cce4c688d/test-directory-cd3710cd-aa96-ca9c-d754-2d07bf820113?sv=2020-12-06&se=2021-02-20T18%3A58%3A34Z&sr=b&sp=racwdlmeop&sig=Sanitized",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-e2f431ad-759f-5cf2-e4c3-3f2cce4c688d/test-directory-cd3710cd-aa96-ca9c-d754-2d07bf820113?sv=2021-04-10&se=2021-02-20T18%3A58%3A34Z&sr=b&sp=racwdlmeop&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -79,7 +79,7 @@
         ],
         "x-ms-client-request-id": "7705d490-cdc8-a25b-88d3-eaa6fb1a28b0",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -107,12 +107,12 @@
         "x-ms-permissions": "rwxr-x---",
         "x-ms-request-id": "de6750a2-901e-0008-4ff1-066550000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-e2f431ad-759f-5cf2-e4c3-3f2cce4c688d/test-directory-cd3710cd-aa96-ca9c-d754-2d07bf820113?sv=2020-12-06&se=2021-02-20T18%3A58%3A34Z&sr=b&sp=racwdlmeop&sig=Sanitized&action=getAccessControl",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-e2f431ad-759f-5cf2-e4c3-3f2cce4c688d/test-directory-cd3710cd-aa96-ca9c-d754-2d07bf820113?sv=2021-04-10&se=2021-02-20T18%3A58%3A34Z&sr=b&sp=racwdlmeop&sig=Sanitized&action=getAccessControl",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -123,7 +123,7 @@
         ],
         "x-ms-client-request-id": "f89475aa-3285-100b-9097-7cfe2ebe8097",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -141,7 +141,7 @@
         "x-ms-owner": "$superuser",
         "x-ms-permissions": "rwxr-x---",
         "x-ms-request-id": "0c241e34-101f-0064-0ff1-068ec7000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -159,7 +159,7 @@
         "x-ms-client-request-id": "85fc942b-2f85-692b-2f2e-e0cc1765fdae",
         "x-ms-date": "Fri, 19 Feb 2021 18:58:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -172,7 +172,7 @@
         ],
         "x-ms-client-request-id": "85fc942b-2f85-692b-2f2e-e0cc1765fdae",
         "x-ms-request-id": "de6750b9-901e-0008-65f1-066550000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

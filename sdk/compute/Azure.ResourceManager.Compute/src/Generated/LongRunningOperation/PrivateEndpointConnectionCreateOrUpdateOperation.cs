@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         PrivateEndpointConnection IOperationSource<PrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateEndpointConnection(_operationBase, PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement));
+            var data = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+            return new PrivateEndpointConnection(_operationBase, data);
         }
 
         async ValueTask<PrivateEndpointConnection> IOperationSource<PrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateEndpointConnection(_operationBase, PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement));
+            var data = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+            return new PrivateEndpointConnection(_operationBase, data);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string largeFaceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string largeFaceListId, string name, string userData = default(string), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a large face list’s largeFaceListId, name, userData and
         /// recognitionModel.
@@ -212,6 +212,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// A value indicating whether the operation should return
         /// 'recognitionModel' in response.
         /// </param>
+        /// <param name='start'>
+        /// Starting large face list id to return (used to list a range of
+        /// large face lists).
+        /// </param>
+        /// <param name='top'>
+        /// Number of large face lists to return starting with the large face
+        /// list id indicated by the 'start' parameter.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -227,7 +235,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<LargeFaceList>>> ListWithHttpMessagesAsync(bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<LargeFaceList>>> ListWithHttpMessagesAsync(bool? returnRecognitionModel = false, string start = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Queue a large face list training task, the training task may not be
         /// started immediately.

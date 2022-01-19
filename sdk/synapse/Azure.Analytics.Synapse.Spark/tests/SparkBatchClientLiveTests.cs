@@ -104,7 +104,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchOperation createOperation = await client.StartCreateSparkBatchJobAsync(createParams);
 
             // Create another SparkBatchOperation
-            SparkBatchOperation anotherOperation = new SparkBatchOperation(int.Parse(createOperation.Id), client, createOperation.CompletionType);
+            SparkBatchOperation anotherOperation =
+                InstrumentOperation(new SparkBatchOperation(int.Parse(createOperation.Id), client, createOperation.CompletionType));
             SparkBatchJob jobCreateResponse = await anotherOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job submission starts successfully

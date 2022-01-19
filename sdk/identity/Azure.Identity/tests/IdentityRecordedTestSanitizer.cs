@@ -1,72 +1,37 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using Azure.Core;
+using System.IO;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
     public class IdentityRecordedTestSanitizer : RecordedTestSanitizer
     {
-        public override void Sanitize(RecordEntry entry)
+        public IdentityRecordedTestSanitizer()
         {
-            if (entry.RequestUri.Split('?')[0].EndsWith("/token"))
+            SanitizedHeaders.Add("secret");
+            AddJsonPathSanitizer("$..refresh_token");
+            AddJsonPathSanitizer("$..access_token");
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(".+", SanitizeValue)
             {
-                SanitizeTokenRequest(entry);
-                SanitizeTokenResponse(entry);
-            }
-
-            base.Sanitize(entry);
-        }
-
-        private void SanitizeTokenRequest(RecordEntry entry)
-        {
-            entry.Request.Body = Encoding.UTF8.GetBytes("Sanitized");
-
-            UpdateSanitizedContentLength(entry.Request.Headers, entry.Request.Body.Length);
-        }
-
-        private void SanitizeTokenResponse(RecordEntry entry)
-        {
-            if (entry.Response.Body == null)
+                Condition = new Condition { UriRegex = ".*/token([?].*)?$" }
+            });
+            HeaderTransforms.Add(new HeaderTransform(
+                "WWW-Authenticate",
+                $"Basic realm={Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key")}")
             {
-                return;
-            }
-            var originalJson = JsonDocument.Parse(entry.Response.Body).RootElement;
-
-            var writer = new ArrayBufferWriter<byte>(entry.Response.Body.Length);
-
-            using var sanitizedJson = new Utf8JsonWriter(writer);
-
-            sanitizedJson.WriteStartObject();
-
-            foreach (JsonProperty prop in originalJson.EnumerateObject())
-            {
-                sanitizedJson.WritePropertyName(prop.Name);
-
-                switch (prop.Name)
+                Condition = new Condition
                 {
-                    case "refresh_token":
-                    case "access_token":
-                        sanitizedJson.WriteStringValue("Sanitized");
-                        break;
-
-                    default:
-                        prop.Value.WriteTo(sanitizedJson);
-                        break;
+                    ResponseHeader = new HeaderCondition
+                    {
+                        Key = "WWW-Authenticate",
+                        ValueRegex = "Basic realm=.*"
+                    }
                 }
-            }
-
-            sanitizedJson.WriteEndObject();
-
-            sanitizedJson.Flush();
-
-            entry.Response.Body = writer.WrittenMemory.ToArray();
+            });
         }
     }
 }

@@ -11,7 +11,7 @@
         "x-ms-client-request-id": "11a60531-379e-0a46-2136-1023fa96583b",
         "x-ms-date": "Tue, 12 Oct 2021 05:53:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -23,7 +23,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "11a60531-379e-0a46-2136-1023fa96583b",
         "x-ms-request-id": "761232ef-201a-006e-732d-bf8fed000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -44,7 +44,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -64,7 +64,7 @@
         "x-ms-file-permission-key": "4010187179898695473*11459378189709739967",
         "x-ms-request-id": "761232f1-201a-006e-742d-bf8fed000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -82,7 +82,7 @@
         "x-ms-date": "Tue, 12 Oct 2021 05:53:04 GMT",
         "x-ms-range": "bytes=0-1023",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "x-ms-write": "update"
       },
       "RequestBody": "oCuqeGP76zhKOxBdyxrp40GGqgK7AXU/l\u002BI97lL4KcN9nvyOofgFNhltx2Mm6D8HTCzidOtVgJ62a\u002BGAvfzlURFN3ywdW0FJgHToTToSGK6iNaIlFbXXJx1d1zYWhHgch3VR2QkS6fDrmfN3bTJkpFIy3ohavztcdbcPwIQLMvz7y8bEwD\u002Bkj0uxOnzCYLrr\u002BDPk5Kbwwsc59GNSAyls4Gf3e6JsoOMSjU48qYW/mhT9I8hQJ05VCwn\u002BisvbUosiRFoUy\u002BUXf1hP0VZXtBhCelpOVeBhG7gZoW\u002BZbRUXNjvDGWQqq88v5aRvAFX3/lfwuxBxjf2rwSmh\u002Byl2fhFCOJoblJq0F86LH2888RtjIaMYqLIEpqk9F1c7ia\u002BluWaSLMi73Gq8PKNB5m2Nb9ANPtmGXdZfPpLw3XxDeI4e5WYJqcRSp0Q5W2sOwr88r6iHLUrWHluPM\u002B42yv/tecQUIgAHhMULu5aUTQJrUHvStC7Tu0tESMYLeXXWHN1FS\u002BKn\u002BZ\u002B\u002BNCrje3K0QdFZJONyYxbRGr150No6/AtPNZ65TwIgw1bbFH8D7z/YkAf1sVSSY7jHdDAkLijFhDgfk0bT\u002BvHOOWCMlk\u002BWzip\u002BoEDSREq2vNHm8tvR\u002B5UuFo9G41z5BZUVJnj0BsxpMKYGpo3o8j/uadd07QgW/T3KXYC/T\u002BrOhJqrvR7RwrUFfME0y1UIRiNQWHmFhRiN/ik7KahMqeG7NyHzPDUgHKchb3BG4THnwhdcb/dxSf\u002BBHb71lpkMudLgeZQ0FAnuLzvSYxWoRh33U2aR7zrqSu4hcR92K4YOFLadZmids64ObT\u002B7n\u002BXp2dah/kIze8mY9i\u002BmEqLpeAS1w09fCuC1WaC3goH6LqsIN5hI1SxD25jsBW8496ALJPU7BtuWic7266Sie/lHnceEndoJoaLXcei2cwRwfGL/q16LvyjQcq7JUemIoV\u002BfpGiotFnFAoJSY5Xy3xbKhW9Bos\u002BavN2ftCssQE\u002B5T9CIF86byMcIOanbOVuS3ZOX/8x6Rv6QBOiKCAAumcIymRTEacdILr2nOWkmv4KCDNaXlUCDPwjR\u002BBLlEcDH2aDnqKBHznTLTtAO0gyUakVlCPsqlwOBr1kL8nC0Yh394F/IPhfiOj5hzEZwdWz7PY7NfwjEnEKcZflGO9sDFuyzEfKtyystg828yMu9ETntD7Xi5\u002BIVOUMcLNgdnP9jXrVavWN5TnFin/w6B9R331S/WSslIS8JndivkJ9SD\u002BbOWWoVYlTVc8FEf0fm2jFupUyEXkPTPjyFUR\u002BLyr7REJAWbK1pYXwA6eZq4KHoI8OmQOpSzrGj\u002BhstkBE0SqgCcm\u002B2z22DBUPQg3RdaV2bnC5b5A==",
@@ -97,7 +97,7 @@
         "x-ms-client-request-id": "39f288dd-371d-057a-59f6-5b3272351d93",
         "x-ms-request-id": "761232f2-201a-006e-752d-bf8fed000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -113,7 +113,7 @@
         "x-ms-date": "Tue, 12 Oct 2021 05:53:04 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -123,7 +123,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "db941e1c-9bc5-ca02-7463-11e4a88fdbf6",
         "x-ms-request-id": "761232f3-201a-006e-762d-bf8fed000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

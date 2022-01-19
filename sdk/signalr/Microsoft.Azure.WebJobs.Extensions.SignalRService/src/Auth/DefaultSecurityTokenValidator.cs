@@ -4,6 +4,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -12,8 +13,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         private const string AuthHeaderName = "Authorization";
         private const string BearerPrefix = "Bearer ";
-        private readonly TokenValidationParameters tokenValidationParameters = new TokenValidationParameters();
-        private readonly JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+        private readonly TokenValidationParameters _tokenValidationParameters = new();
+        private readonly JwtSecurityTokenHandler _handler = new();
 
         public DefaultSecurityTokenValidator(Action<TokenValidationParameters> configureTokenValidationParameters)
         {
@@ -21,20 +22,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 throw new ArgumentNullException(nameof(configureTokenValidationParameters));
             }
-            configureTokenValidationParameters(tokenValidationParameters);
+            configureTokenValidationParameters(_tokenValidationParameters);
         }
 
         public SecurityTokenResult ValidateToken(HttpRequest request)
         {
             try
             {
-                if (request?.Headers.TryGetValue(AuthHeaderName, out var authHeader) == true)
+                var authHeader = default(StringValues);
+                if (request?.Headers.TryGetValue(AuthHeaderName, out authHeader) == true)
                 {
                     var authHeaderValue = authHeader.ToString();
                     if (authHeaderValue.StartsWith(BearerPrefix, StringComparison.OrdinalIgnoreCase))
                     {
                         var token = authHeaderValue.Substring(BearerPrefix.Length);
-                        var principal = handler.ValidateToken(token, tokenValidationParameters, out _);
+                        var principal = _handler.ValidateToken(token, _tokenValidationParameters, out _);
 
                         return SecurityTokenResult.Success(principal);
                     }

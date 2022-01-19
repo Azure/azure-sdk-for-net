@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(vmName, input);
+            VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
             VirtualMachine vm = lro.Value;
             #endregion Snippet:Managing_VirtualMachines_CreateAVirtualMachine
         }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             string vmName = "myVM";
             VirtualMachine vm = await vmCollection.GetAsync(vmName);
-            await vm.DeleteAsync();
+            await vm.DeleteAsync(true);
             #endregion Snippet:Managing_VirtualMachines_DeleteVirtualMachine
         }
     }

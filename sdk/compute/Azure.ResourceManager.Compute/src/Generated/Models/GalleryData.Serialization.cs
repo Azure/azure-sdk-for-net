@@ -8,9 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -46,6 +44,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("sharingProfile");
                 writer.WriteObjectValue(SharingProfile);
             }
+            if (Optional.IsDefined(SoftDeletePolicy))
+            {
+                writer.WritePropertyName("softDeletePolicy");
+                writer.WriteObjectValue(SoftDeletePolicy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Compute
         internal static GalleryData DeserializeGalleryData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.Compute
             Optional<GalleryIdentifier> identifier = default;
             Optional<GalleryPropertiesProvisioningState> provisioningState = default;
             Optional<SharingProfile> sharingProfile = default;
+            Optional<SoftDeletePolicy> softDeletePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -137,11 +141,21 @@ namespace Azure.ResourceManager.Compute
                             sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("softDeletePolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new GalleryData(id, name, type, tags, location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value);
+            return new GalleryData(id, name, type, tags, location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value);
         }
     }
 }

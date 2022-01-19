@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/metadata.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-fafb00ddb273a749834e85d710c3f0f8-71faa6e3eaf5c24c-00",
+        "traceparent": "00-b3806cd1a5628d47b640bff2706ee1de-6b0f44e6f835444d-00",
         "User-Agent": [
-          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211028.1",
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211103.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "13897a0b5e3c9ea2718499155c52bfd5",
+        "x-ms-client-request-id": "025ad4b625e4ded4e2c5d4ad1f7a1177",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,33 +19,34 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "36",
+        "Age": "8",
         "Cache-Control": "max-age=600",
         "Content-Length": "253",
-        "Content-MD5": "HG6aqCROlzQ\u002BQVEKKeYo6Q==",
+        "Content-MD5": "/UQmDZsQJzeHPV71jiPiVQ==",
         "Content-Type": "application/json",
-        "Date": "Thu, 28 Oct 2021 18:27:00 GMT",
-        "ETag": "\u00220x8D999B2770A339A\u0022",
-        "Expires": "Thu, 28 Oct 2021 18:37:00 GMT",
-        "Last-Modified": "Thu, 28 Oct 2021 01:30:03 GMT",
+        "Date": "Thu, 04 Nov 2021 00:17:03 GMT",
+        "ETag": "\u00220x8D99F209C28D31F\u0022",
+        "Expires": "Thu, 04 Nov 2021 00:27:03 GMT",
+        "Last-Modified": "Wed, 03 Nov 2021 23:21:05 GMT",
         "Server": [
           "ECAcc",
           "(sed/E12A)"
         ],
         "X-Cache": "HIT",
-        "x-ms-request-id": "925377cc-d01e-005f-1429-cc72a7000000",
+        "x-ms-error-code": "ConditionNotMet",
+        "x-ms-request-id": "781aff15-e01e-00a8-5511-d106fc000000",
         "x-ms-version": "2018-03-28"
       },
       "ResponseBody": [
         "{\n",
-        "  \u0022commitId\u0022: \u002234095f8f5a10c4a60d9304ce39439425dac7042d\u0022,\n",
+        "  \u0022commitId\u0022: \u002240f66e2f3231c46cc9b46b0feab54a28d9720710\u0022,\n",
         "  \u0022features\u0022: {\n",
         "    \u0022expanded\u0022: true,\n",
         "    \u0022index\u0022: true\n",
         "  },\n",
-        "  \u0022publishDateUtc\u0022: \u00222021-10-28T01:00:53.219829\u002B00:00\u0022,\n",
+        "  \u0022publishDateUtc\u0022: \u00222021-11-03T23:01:02.367781\u002B00:00\u0022,\n",
         "  \u0022sourceRepo\u0022: \u0022Azure/iot-plugandplay-models\u0022,\n",
-        "  \u0022totalModelCount\u0022: 19039\n",
+        "  \u0022totalModelCount\u0022: 19041\n",
         "}"
       ]
     },
@@ -53,12 +54,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/temperaturecontroller-1.expanded.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-fafb00ddb273a749834e85d710c3f0f8-669f73c6ba74de4f-00",
+        "traceparent": "00-b3806cd1a5628d47b640bff2706ee1de-ed00479369e7cc4c-00",
         "User-Agent": [
-          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211028.1",
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211103.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "4578c08ef4bfd0019a7318004db79af8",
+        "x-ms-client-request-id": "9ef35fba9e0ae46b5fa2db01666de563",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -68,11 +69,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "168892",
+        "Age": "3584",
         "Content-Length": "6751",
         "Content-MD5": "BnZpV2\u002B7Z2t0sxAxOhmBdw==",
         "Content-Type": "application/json",
-        "Date": "Thu, 28 Oct 2021 18:27:00 GMT",
+        "Date": "Thu, 04 Nov 2021 00:17:03 GMT",
         "ETag": "\u00220x8D8FED94EBE03D1\u0022",
         "Last-Modified": "Wed, 14 Apr 2021 00:07:35 GMT",
         "Server": [
@@ -81,7 +82,7 @@
         ],
         "X-Cache": "HIT",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "f5306468-301e-0051-6da0-cad0ba000000",
+        "x-ms-request-id": "5a590d23-101e-003b-0408-d19c8d000000",
         "x-ms-version": "2018-03-28"
       },
       "ResponseBody": [
@@ -304,6 +305,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "762446433"
+    "RandomSeed": "370485851"
   }
 }

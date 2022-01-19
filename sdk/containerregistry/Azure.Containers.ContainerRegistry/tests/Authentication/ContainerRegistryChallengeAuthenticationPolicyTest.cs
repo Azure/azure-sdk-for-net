@@ -119,7 +119,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             int refreshTokenRequests = 0;
             int accessTokenRequests = 0;
-            TimeSpan expiryTime = TimeSpan.FromSeconds(5);
+            TimeSpan expiryTime = TimeSpan.FromSeconds(2);
 
             string mockJwt = GetMockJwt(expiryTime);
 
@@ -191,7 +191,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int refreshTokenRequests = 0;
             int accessTokenRequests = 0;
             TimeSpan refreshOffset = TimeSpan.FromSeconds(30);
-            TimeSpan expiryTime = TimeSpan.FromSeconds(35);
+            TimeSpan expiryTime = TimeSpan.FromSeconds(32);
 
             string mockJwt = GetMockJwt(expiryTime);
 
@@ -322,7 +322,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             service => new AcrRefreshToken("TestAcrRefreshToken"),
             (service, scope) =>
             {
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 return new AcrAccessToken("TestAcrAccessToken");
             });
 
@@ -351,7 +351,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             MockAuthenticationClient mockAuthClient = new MockAuthenticationClient(
             service =>
             {
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 throw new InvalidOperationException("Error");
             },
             (service, scope) =>

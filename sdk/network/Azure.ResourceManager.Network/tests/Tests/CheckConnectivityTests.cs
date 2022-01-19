@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             var properties = new NetworkWatcherData { Location = location };
-            await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(networkWatcherName, properties);
+            await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(true, networkWatcherName, properties);
 
             ConnectivityParameters connectivityParameters =
                 new ConnectivityParameters(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
-            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(connectivityParameters);
+            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(true, connectivityParameters);
             Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
 
             //Validation

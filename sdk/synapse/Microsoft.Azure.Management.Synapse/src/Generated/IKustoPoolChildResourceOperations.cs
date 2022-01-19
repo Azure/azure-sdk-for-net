@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// already in use.
         /// </summary>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='kustoPoolName'>
         /// The name of the Kusto pool.

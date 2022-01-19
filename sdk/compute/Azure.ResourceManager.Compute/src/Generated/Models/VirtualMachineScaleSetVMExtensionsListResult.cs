@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionsListResult. </summary>
         internal VirtualMachineScaleSetVMExtensionsListResult()
         {
-            Value = new ChangeTrackingList<VirtualMachineScaleSetVMExtensionData>();
+            Value = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionsListResult. </summary>
         /// <param name="value"> The list of VMSS VM extensions. </param>
-        internal VirtualMachineScaleSetVMExtensionsListResult(IReadOnlyList<VirtualMachineScaleSetVMExtensionData> value)
+        internal VirtualMachineScaleSetVMExtensionsListResult(IReadOnlyList<VirtualMachineScaleSetVmExtensionData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of VMSS VM extensions. </summary>
-        public IReadOnlyList<VirtualMachineScaleSetVMExtensionData> Value { get; }
+        public IReadOnlyList<VirtualMachineScaleSetVmExtensionData> Value { get; }
     }
 }

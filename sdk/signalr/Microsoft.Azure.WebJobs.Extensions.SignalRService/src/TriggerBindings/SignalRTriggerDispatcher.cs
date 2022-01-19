@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     internal class SignalRTriggerDispatcher : ISignalRTriggerDispatcher
     {
         private readonly Dictionary<(string Hub, string Category, string @Event), SignalRMethodExecutor> _executors =
-            new Dictionary<(string, string, string), SignalRMethodExecutor>(TupleStringIgnoreCasesComparer.Instance);
+            new(TupleStringIgnoreCasesComparer.Instance);
 
         private readonly IRequestResolver _resolver;
 

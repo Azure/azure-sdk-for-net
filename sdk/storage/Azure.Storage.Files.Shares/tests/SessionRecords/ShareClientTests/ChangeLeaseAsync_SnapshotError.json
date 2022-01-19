@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "0fb4ae61-8237-aa57-81d2-bba0de3c4d4d",
         "x-ms-date": "Wed, 05 Aug 2020 22:26:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "0fb4ae61-8237-aa57-81d2-bba0de3c4d4d",
         "x-ms-request-id": "4e7a30ac-901a-008f-2777-6b53a8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -49,7 +49,7 @@
         "x-ms-lease-id": "d6139f49-b91b-e207-5cea-d2ce34749762",
         "x-ms-proposed-lease-id": "d6139f49-b91b-e207-5cea-d2ce34749762",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -65,7 +65,7 @@
         "x-ms-client-request-id": "3586ddda-c36c-a8fa-a7d1-b34daf88750d",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "4e7a30af-901a-008f-2877-6b53a8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
@@ -87,7 +87,7 @@
         "x-ms-date": "Wed, 05 Aug 2020 22:26:23 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06",
+        "x-ms-version": "2021-04-10",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -101,7 +101,7 @@
         ],
         "x-ms-client-request-id": "56f4820a-61ed-bef5-e8bd-0968c7c5852a",
         "x-ms-request-id": "4e7a30b0-901a-008f-2977-6b53a8000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     }

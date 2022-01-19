@@ -106,7 +106,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1197"
         ],
         "x-ms-request-id": [
           "dbbac778-327d-4a9f-9946-9b7fc555a901"
@@ -172,7 +172,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1196"
         ],
         "x-ms-request-id": [
           "abbe0d99-ca99-4445-bc06-6f2cbb5a2825"
@@ -482,7 +482,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "201"
+          "200"
         ]
       },
       "ResponseHeaders": {
@@ -530,7 +530,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "757"
+          "755"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -719,7 +719,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "758"
+          "756"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -789,7 +789,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "758"
+          "756"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1706,7 +1706,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1211"
+          "1210"
         ]
       },
       "ResponseHeaders": {
@@ -1754,7 +1754,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "2017"
+          "2016"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2123,7 +2123,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "134"
+          "184"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2245,7 +2245,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "2046"
+          "2045"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2312,7 +2312,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "2046"
+          "2045"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2368,6 +2368,9 @@
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T015509Z:aee39a71-e4bc-456e-8cda-528abfcd7048"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2432,6 +2435,9 @@
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T020028Z:770ff270-3377-4706-bf4d-8823d4634c5b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2624,11 +2630,17 @@
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11981"
         ],
+        "x-ms-request-id": [
+          "176019dc-bc72-4b85-8eb8-ec112e061d87"
+        ],
         "x-ms-correlation-request-id": [
           "36730de9-aea9-46d7-a56f-cfeee885cd2f"
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T015519Z:36730de9-aea9-46d7-a56f-cfeee885cd2f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2668,6 +2680,10 @@
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -3277,7 +3293,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T015650Z:808dd3da-03cb-4aeb-bf9c-20f3544b1077"
@@ -3286,7 +3302,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "757"
+          "753"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -3453,6 +3469,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-request-id": [
           "470c7810-fa1c-4a3b-a94c-c25803b9cefd"
         ],
@@ -3475,7 +3495,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "758"
+          "754"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -3523,6 +3543,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-request-id": [
           "307c1bd5-d31a-467a-87f7-d2126d750d22"
         ],
@@ -3545,7 +3569,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "758"
+          "754"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -3618,7 +3642,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T015653Z:4519ed48-772f-4536-9f11-83eb7c977152"
@@ -3892,7 +3916,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1196"
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T015657Z:b1d5b6cd-b945-4d6b-97e4-0344a50a4200"
@@ -4142,7 +4166,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1210"
+          "1211"
         ]
       },
       "ResponseHeaders": {
@@ -4190,7 +4214,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "2016"
+          "2017"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4559,7 +4583,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "2045"
+          "2046"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4626,7 +4650,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "2045"
+          "2046"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4684,7 +4708,7 @@
           "Enabled"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/DeleteVM3Min;239,Microsoft.Compute/DeleteVM30Min;1196"
+          "Microsoft.Compute/DeleteVM3Min;239,Microsoft.Compute/DeleteVM30Min;1198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -5059,8 +5083,9 @@
         "Pragma": [
           "no-cache"
         ],
-        "Retry-After": [
-          "10"
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -5091,7 +5116,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "134"
+          "1361"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -5581,7 +5606,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1364"
+          "1363"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -6157,6 +6182,9 @@
         ],
         "Date": [
           "Wed, 17 Nov 2021 02:01:43 GMT"
+        ],
+        "Date": [
+          "Fri, 19 Nov 2021 17:19:09 GMT"
         ],
         "Pragma": [
           "no-cache"

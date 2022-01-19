@@ -134,10 +134,10 @@ namespace Azure.IoT.ModelsRepository
                 string parsedDtmi = metadata.Id;
                 if (!parsedDtmi.Equals(targetDtmi, StringComparison.Ordinal))
                 {
-                    ModelsRepositoryEventSource.Instance.IncorrectDtmiCasing(targetDtmi, parsedDtmi);
+                    ModelsRepositoryEventSource.Instance.IncorrectDtmi(targetDtmi, parsedDtmi);
                     string formatErrorMsg =
                         $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, targetDtmi)} " +
-                        string.Format(CultureInfo.InvariantCulture, StandardStrings.IncorrectDtmiCasing, targetDtmi, parsedDtmi);
+                        string.Format(CultureInfo.InvariantCulture, StandardStrings.IncorrectDtmi, targetDtmi, parsedDtmi);
 
                     throw new RequestFailedException(formatErrorMsg, new FormatException(formatErrorMsg));
                 }

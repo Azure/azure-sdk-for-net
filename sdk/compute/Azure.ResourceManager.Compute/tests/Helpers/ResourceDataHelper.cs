@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(set1.ProximityPlacementGroup?.Id, set2.ProximityPlacementGroup?.Id);
         }
 
-        public static AvailabilitySetData GetBasicAvailabilitySetData(Location location)
+        public static AvailabilitySetData GetBasicAvailabilitySetData(AzureLocation location)
         {
             return new AvailabilitySetData(location);
         }
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(group1.SupportAutomaticPlacement, group2.SupportAutomaticPlacement);
         }
 
-        public static DedicatedHostGroupData GetBasicDedicatedHostGroup(Location location, int platformFaultDomainCount)
+        public static DedicatedHostGroupData GetBasicDedicatedHostGroup(AzureLocation location, int platformFaultDomainCount)
         {
             return new DedicatedHostGroupData(location)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(host1.PlatformFaultDomain, host2.PlatformFaultDomain);
         }
 
-        public static DedicatedHostData GetBasicDedicatedHost(Location location, string skuName, int platformFaultDomain)
+        public static DedicatedHostData GetBasicDedicatedHost(AzureLocation location, string skuName, int platformFaultDomain)
         {
             return new DedicatedHostData(location, new Models.Sku()
             {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             AssertTrackedResource(access1, access2);
         }
 
-        public static DiskAccessData GetEmptyDiskAccess(Location location)
+        public static DiskAccessData GetEmptyDiskAccess(AzureLocation location)
         {
             return new DiskAccessData(location);
         }
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(disk1.CreationData?.UploadSizeBytes, disk2.CreationData?.UploadSizeBytes);
         }
 
-        public static DiskData GetEmptyDiskData(Location location, IDictionary<string, string> tags = null)
+        public static DiskData GetEmptyDiskData(AzureLocation location, IDictionary<string, string> tags = null)
         {
             return new DiskData(location)
             {
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(gallery1.Identifier?.UniqueName, gallery2.Identifier?.UniqueName);
         }
 
-        public static GalleryData GetBasicGalleryData(Location location, string description = null)
+        public static GalleryData GetBasicGalleryData(AzureLocation location, string description = null)
         {
             var data = new GalleryData(location)
             {
@@ -165,16 +166,16 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(image1.Identifier.Offer, image2.Identifier.Offer);
             Assert.AreEqual(image1.Identifier.Publisher, image2.Identifier.Publisher);
             Assert.AreEqual(image1.Identifier.Sku, image2.Identifier.Sku);
-            Assert.AreEqual(image1.OsType, image2.OsType);
-            Assert.AreEqual(image1.OsState, image2.OsState);
+            Assert.AreEqual(image1.OSType, image2.OSType);
+            Assert.AreEqual(image1.OSState, image2.OSState);
             Assert.AreEqual(image1.Description, image2.Description);
         }
 
-        public static GalleryImageData GetBasicGalleryImageData(Location location, OperatingSystemTypes osType, GalleryImageIdentifier identifier)
+        public static GalleryImageData GetBasicGalleryImageData(AzureLocation location, OperatingSystemTypes osType, GalleryImageIdentifier identifier)
         {
             var data = new GalleryImageData(location)
             {
-                OsType = osType,
+                OSType = osType,
                 Identifier = identifier
             };
             return data;
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             // adding these checks one by one is so tedious, is there anything we can do about this?
         }
 
-        public static VirtualMachineData GetBasicLinuxVirtualMachineData(Location location, string computerName, ResourceIdentifier nicID, string adminUsername = "adminuser")
+        public static VirtualMachineData GetBasicLinuxVirtualMachineData(AzureLocation location, string computerName, ResourceIdentifier nicID, string adminUsername = "adminuser")
         {
             return new VirtualMachineData(location)
             {
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(vmss1.Name, vmss2.Name);
         }
 
-        public static VirtualMachineScaleSetData GetBasicLinuxVirtualMachineScaleSetData(Location location, string computerNamePrefix, ResourceIdentifier subnetId, int capacity = 2, string adminUsername = "adminuser")
+        public static VirtualMachineScaleSetData GetBasicLinuxVirtualMachineScaleSetData(AzureLocation location, string computerNamePrefix, ResourceIdentifier subnetId, int capacity = 2, string adminUsername = "adminuser")
         {
             return new VirtualMachineScaleSetData(location)
             {

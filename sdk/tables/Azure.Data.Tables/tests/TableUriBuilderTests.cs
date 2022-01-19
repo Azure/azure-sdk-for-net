@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual(443, tableuribuilder.Port);
             Assert.IsNull(tableuribuilder.Sas);
             Assert.AreEqual("", tableuribuilder.Query);
-
+            Assert.AreEqual("table", tableuribuilder.Tablename);
             Assert.AreEqual(originalUri, newUri);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual("account", tableuribuilder.AccountName);
             Assert.IsNull(tableuribuilder.Sas);
             Assert.AreEqual("comp=list", tableuribuilder.Query);
-
+            Assert.AreEqual("", tableuribuilder.Tablename);
             Assert.AreEqual(originalUri, newUri);
         }
 

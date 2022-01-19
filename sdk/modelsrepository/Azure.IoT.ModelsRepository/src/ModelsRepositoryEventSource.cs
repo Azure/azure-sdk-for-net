@@ -25,7 +25,7 @@ namespace Azure.IoT.ModelsRepository
         private const int FailureProcessingRepositoryMetadataEventId = 3001;
         private const int InvalidDtmiInputEventId = 4000;
         private const int ErrorFetchingModelContentEventId = 4004;
-        private const int IncorrectDtmiCasingEventId = 4006;
+        private const int IncorrectDtmiEventId = 4006;
 
         public static ModelsRepositoryEventSource Instance { get; } = new ModelsRepositoryEventSource();
 
@@ -79,12 +79,12 @@ namespace Azure.IoT.ModelsRepository
             }
         }
 
-        [Event(IncorrectDtmiCasingEventId, Level = EventLevel.Error, Message = StandardStrings.IncorrectDtmiCasing)]
-        public void IncorrectDtmiCasing(string expected, string parsed)
+        [Event(IncorrectDtmiEventId, Level = EventLevel.Error, Message = StandardStrings.IncorrectDtmi)]
+        public void IncorrectDtmi(string expected, string parsed)
         {
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
             {
-                WriteEvent(IncorrectDtmiCasingEventId, expected, parsed);
+                WriteEvent(IncorrectDtmiEventId, expected, parsed);
             }
         }
 

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <Description>This is a dummy project used to restore nuget packages used for doc generation</Description>
     <AssemblyTitle>Doc generation Packages</AssemblyTitle>
   </PropertyGroup>

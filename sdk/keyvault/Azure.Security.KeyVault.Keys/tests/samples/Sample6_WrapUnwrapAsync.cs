@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
 
             // Next we'll generate a symmetric key which we will wrap
-            byte[] keyData = AesManaged.Create().Key;
+            byte[] keyData = Aes.Create().Key;
             Debug.WriteLine($"Generated Key: {Convert.ToBase64String(keyData)}");
 
             // Wrap the key using RSAOAEP with the created key.

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "3a07a7bc-6e62-7336-0331-cb373ec82fa2",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "3a07a7bc-6e62-7336-0331-cb373ec82fa2",
         "x-ms-request-id": "eb277193-001a-008d-721a-f4ed10000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "a000fad3-b527-2225-5186-caee4f5f7e08",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -60,7 +60,7 @@
         ],
         "x-ms-client-request-id": "a000fad3-b527-2225-5186-caee4f5f7e08",
         "x-ms-request-id": "eb277198-001a-008d-751a-f4ed10000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": []
     },
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "44649d23-8ec7-a67b-fd30-e15fbd6089cc",
         "x-ms-date": "Tue, 26 Jan 2021 19:34:37 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -94,7 +94,7 @@
         "x-ms-client-request-id": "44649d23-8ec7-a67b-fd30-e15fbd6089cc",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "eb277199-001a-008d-761a-f4ed10000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",

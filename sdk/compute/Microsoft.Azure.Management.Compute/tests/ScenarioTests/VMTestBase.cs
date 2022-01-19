@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 using CM=Microsoft.Azure.Management.Compute.Models;
 using NM=Microsoft.Azure.Management.Network.Models;
@@ -26,6 +27,11 @@ namespace Compute.Tests
 {
     public class VMTestBase
     {
+        static VMTestBase()
+        {
+            RecorderUtilities.JsonPathSanitizers.Add("$..accessSAS");
+        }
+
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";

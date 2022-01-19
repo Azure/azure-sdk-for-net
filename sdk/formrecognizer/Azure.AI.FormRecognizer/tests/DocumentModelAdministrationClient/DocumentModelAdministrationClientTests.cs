@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fakeEndpoint = new Uri("http://notreal.azure.com/");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            options ??= new DocumentAnalysisClientOptions();
+            options ??= new DocumentAnalysisClientOptions(){ Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed}};
             var client = new DocumentModelAdministrationClient(fakeEndpoint, fakeCredential, options);
 
             return client;

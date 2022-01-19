@@ -385,7 +385,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "735"
+          "729"
         ],
         "Content-Type": [
           "application/json"
@@ -448,7 +448,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "723"
+          "717"
         ],
         "Content-Type": [
           "application/json"
@@ -482,7 +482,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "205"
+          "204"
         ]
       },
       "ResponseHeaders": {
@@ -530,7 +530,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "765"
+          "763"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -655,7 +655,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "766"
+          "764"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -725,7 +725,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "766"
+          "764"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1123,6 +1123,10 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-request-id": [
           "85d2d15f-396b-4936-bb7b-6644f1326007"
         ],
@@ -1188,6 +1192,10 @@
         ],
         "ETag": [
           "W/\"4cdf5473-85b4-4b5a-a7ef-1a53dc23a297\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -1288,7 +1296,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "442"
+          "440"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1413,7 +1421,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14999,Microsoft.Compute/GetOperation30Min;29999"
+          "Microsoft.Compute/GetOperation3Min;14999,Microsoft.Compute/GetOperation30Min;29969"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1474,7 +1482,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14998,Microsoft.Compute/GetOperation30Min;29998"
+          "Microsoft.Compute/GetOperation3Min;14998,Microsoft.Compute/GetOperation30Min;29968"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1535,7 +1543,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14997,Microsoft.Compute/GetOperation30Min;29997"
+          "Microsoft.Compute/GetOperation3Min;14997,Microsoft.Compute/GetOperation30Min;29967"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1596,7 +1604,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14995,Microsoft.Compute/GetOperation30Min;29995"
+          "Microsoft.Compute/GetOperation3Min;14994,Microsoft.Compute/GetOperation30Min;29980"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1797,11 +1805,17 @@
         "x-ms-request-id": [
           "26cfe660-522c-4857-83ac-c4699d864432"
         ],
+        "x-ms-request-id": [
+          "704dc217-22ac-47f5-8a90-8e664df0f524"
+        ],
         "x-ms-correlation-request-id": [
           "26cfe660-522c-4857-83ac-c4699d864432"
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T014306Z:26cfe660-522c-4857-83ac-c4699d864432"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1933,11 +1947,17 @@
         "x-ms-request-id": [
           "099a398b-1431-4be1-8d0e-20994c0a97f6"
         ],
+        "x-ms-request-id": [
+          "fa53500e-832f-49c7-85f3-26bfb80c43bc"
+        ],
         "x-ms-correlation-request-id": [
           "099a398b-1431-4be1-8d0e-20994c0a97f6"
         ],
         "x-ms-routing-request-id": [
           "EASTUS2:20211117T014416Z:099a398b-1431-4be1-8d0e-20994c0a97f6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2397,7 +2417,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1259"
+          "1256"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2467,7 +2487,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1259"
+          "1256"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2537,7 +2557,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1258"
+          "1255"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2601,7 +2621,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1304"
+          "1301"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2671,7 +2691,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1304"
+          "1301"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -3087,7 +3107,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1529"
+          "1526"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

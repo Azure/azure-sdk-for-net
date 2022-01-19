@@ -46,6 +46,7 @@ pr:
     - sdk/botservice/Microsoft.Azure.Management.BotService
     - sdk/cdn/Microsoft.Azure.Management.Cdn
     - sdk/changeanalysis/Microsoft.Azure.Management.ChangeAnalysis
+    - sdk/chaos/Microsoft.Azure.Management.Chaos
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
     - sdk/confluent/Microsoft.Azure.Management.Confluent
@@ -133,6 +134,7 @@ pr:
     - sdk/providerhub/Microsoft.Azure.Management.ProviderHub
     - sdk/purview/Microsoft.Azure.Management.Purview
     - sdk/quantum/Microsoft.Azure.Management.Quantum
+    - sdk/quota/Microsoft.Azure.Management.Quota
     - sdk/recoveryservices/Microsoft.Azure.Management.RecoveryServices
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
@@ -171,7 +173,7 @@ variables:
 - name: msBuildLogDir
   value: msbuildlogs
 - name: loggingArgs
-  value: /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
+  value: /clp:ShowtimeStamp /flp:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp1:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp2:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
 - name: RPScopeArgs
   value: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
 - name: timeoutInMinutes

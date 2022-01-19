@@ -12,6 +12,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public void AnalyzeConversationWithLanguage()
         {
             ConversationAnalysisClient client = Client;
@@ -19,23 +20,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Menu",
-                "production", 
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -48,6 +50,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public async Task AnalyzeConversationWithLanguageAsync()
         {
             ConversationAnalysisClient client = Client;
@@ -55,23 +58,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Menu",
-                "production",
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                conversationsProject,
+                options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
-                "Tendremos 2 platos de nigiri de salmón braseado.")
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions()
             {
                 Language = "es"
             };
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
+                "Tendremos 2 platos de nigiri de salmón braseado.",
+                TestEnvironment.Project,
+                options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");

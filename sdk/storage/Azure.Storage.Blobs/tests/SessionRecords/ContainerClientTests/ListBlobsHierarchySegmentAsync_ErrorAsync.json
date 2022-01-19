@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "448ebaba-7ac8-6b94-1d25-f250a25d8967",
         "x-ms-date": "Wed, 17 Feb 2021 02:31:41 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -28,7 +28,7 @@
         "x-ms-client-request-id": "448ebaba-7ac8-6b94-1d25-f250a25d8967",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "b0532e12-601e-008b-0bd5-04deaf000000",
-        "x-ms-version": "2020-12-06"
+        "x-ms-version": "2021-04-10"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerNotFound</Code><Message>The specified container does not exist.\n",
