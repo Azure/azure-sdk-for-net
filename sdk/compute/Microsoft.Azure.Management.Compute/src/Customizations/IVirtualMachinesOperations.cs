@@ -13,11 +13,6 @@
     {
         Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken = default(CancellationToken));
         Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Lists all available virtual machine sizes to which the specified
-        /// virtual machine can be resized.
-
         /// <summary>
         /// The operation to delete a virtual machine.
         /// </summary>
