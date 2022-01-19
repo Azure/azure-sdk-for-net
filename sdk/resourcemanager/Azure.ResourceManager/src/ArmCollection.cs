@@ -19,15 +19,6 @@ namespace Azure.ResourceManager.Core
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmCollection"/> class for mocking.
-        /// </summary>
-        /// <param name="client"> The client context to use. </param>
-        protected internal ArmCollection(ArmClient client)
-            : base(client, ResourceIdentifier.Root)
-        {
-        }
-
         internal ArmCollection(ArmClient client, ResourceIdentifier id)
             : base(client, id)
         {

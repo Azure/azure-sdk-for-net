@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="client"></param>
         internal TenantCollection(ArmClient client)
-            : base(client)
+            : base(client, ResourceIdentifier.Root)
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Tenant.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(Tenant.ResourceType, out var version);

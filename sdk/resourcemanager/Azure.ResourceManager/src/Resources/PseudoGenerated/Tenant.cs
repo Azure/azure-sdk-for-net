@@ -102,6 +102,18 @@ namespace Azure.ResourceManager.Resources
             return func(BaseUri, ArmClient.Credential, ClientOptions, Pipeline);
         }
 
+        /// <summary>
+        /// Provides a way to reuse the protected client context.
+        /// </summary>
+        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
+        /// <param name="func"> The method to pass the internal properties to. </param>
+        /// <returns> Whatever the delegate returns. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T UseClientContext<T>(Func<ArmClient, Uri, DiagnosticsOptions, HttpPipeline, T> func)
+        {
+            return func(ArmClient, BaseUri, DiagnosticOptions, Pipeline);
+        }
+
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>

@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.Core
     public abstract partial class ArmCollection : Azure.ResourceManager.Core.ArmResource
     {
         protected ArmCollection() { }
-        protected internal ArmCollection(Azure.ResourceManager.ArmClient client) { }
         protected ArmCollection(Azure.ResourceManager.Core.ArmResource parent) { }
         protected Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
     }
@@ -1194,6 +1193,8 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.ProviderInfo> GetTenantProviders(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.ProviderInfo> GetTenantProvidersAsync(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual T UseClientContext<T>(System.Func<Azure.ResourceManager.ArmClient, System.Uri, Azure.Core.DiagnosticsOptions, Azure.Core.Pipeline.HttpPipeline, T> func) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T UseClientContext<T>(System.Func<System.Uri, Azure.Core.TokenCredential, Azure.ResourceManager.ArmClientOptions, Azure.Core.Pipeline.HttpPipeline, T> func) { throw null; }
     }
