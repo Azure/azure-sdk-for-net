@@ -222,10 +222,13 @@ namespace ApiManagement.Tests.ResourceProviderTests
                         connection.GroupIds.Contains(privateLinkResourceName) &&
                         connection.PrivateEndpoint.Id == apimPrivateEndpointId);
 
-                // verify that the service is reachable
-                var httpStatusCode = await CallApiServiceEchoApi(testBase);
-                System.Diagnostics.Debug.WriteLine(httpStatusCode);
-                Assert.True(IsSuccessStatusCode((int)httpStatusCode));
+                // run only on live testing because generic HttpClient is not supported in recording
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Live")
+                {
+                    // verify that the service is reachable
+                    var httpStatusCode = await CallApiServiceEchoApi(testBase);
+                    Assert.True(IsSuccessStatusCode((int)httpStatusCode));
+                }
 
                 // disable public network access for the api service and confirm the container is updated with GET
                 apiService.PublicNetworkAccess = "Disabled";
@@ -242,9 +245,13 @@ namespace ApiManagement.Tests.ResourceProviderTests
                         connection.PrivateEndpoint.Id == apimPrivateEndpointId);
                 Assert.True(apiService.PublicNetworkAccess == "Disabled");
 
-                // verify that the service is not reachable
-                httpStatusCode = await CallApiServiceEchoApi(testBase);
-                Assert.False(IsSuccessStatusCode((int)httpStatusCode));
+                // run only on live testing because generic HttpClient is not supported in recording
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Live")
+                {
+                    // verify that the service is not reachable
+                    var httpStatusCode = await CallApiServiceEchoApi(testBase);
+                    Assert.False(IsSuccessStatusCode((int)httpStatusCode));
+                }
 
                 // reject private endpoint and verify
                 // NOTE:wait for the fix
@@ -329,13 +336,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 {
                     var message = new HttpRequestMessage(HttpMethod.Head, url);
                     message.Headers.Add("Ocp-Apim-Subscription-Key", subscriptionKey.PrimaryKey);
-                    System.Diagnostics.Debug.WriteLine(message.ToString());
-                    System.Diagnostics.Debug.WriteLine(subscriptionKey.PrimaryKey);
-                    System.Diagnostics.Debug.WriteLine(apiService.GatewayUrl);
-                    System.Diagnostics.Debug.WriteLine($"/{echoApi.Path}/resource");
                     var response = await httpClient.SendAsync(message);
-                    System.Diagnostics.Debug.WriteLine(response.StatusCode);
-                    System.Diagnostics.Debug.WriteLine(response.ToString());
                     return response.StatusCode;
                 }
             }
