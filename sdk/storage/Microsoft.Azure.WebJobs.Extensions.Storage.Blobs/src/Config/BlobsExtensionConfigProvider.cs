@@ -25,6 +25,7 @@ using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
+// Test comment
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 {
     [Extension("AzureStorageBlobs", "Blobs")]
