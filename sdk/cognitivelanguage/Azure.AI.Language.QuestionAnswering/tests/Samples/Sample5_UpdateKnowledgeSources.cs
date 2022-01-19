@@ -61,12 +61,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(source);
             }
-#endregion
+            #endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
 
-#region Snippet:QuestionAnsweringProjectsClient_UpdateQnas
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateQnas
 
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
@@ -99,14 +99,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(qna);
             }
-#endregion
+            #endregion
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
             Assert.That(qnas.Any(qna => qna.ToString().Contains(question)));
             Assert.That(qnas.Any(qna => qna.ToString().Contains(answer)));
 
-#region Snippet:QuestionAnsweringProjectsClient_UpdateSynonyms
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateSynonyms
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -138,13 +138,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(synonym);
             }
-#endregion
+            #endregion
 
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qna maker")));
 
-#region Snippet:QuestionAnsweringProjectsClient_AddFeedback
+            #region Snippet:QuestionAnsweringProjectsClient_AddFeedback
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -160,7 +160,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRequestContent);
-#endregion
+            #endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
 
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         {
             QuestionAnsweringProjectsClient client = Client;
 
-#region Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync_UpdateSample
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync_UpdateSample
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
             string testProjectName = "{ProjectName}";
@@ -213,12 +213,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(source);
             }
-#endregion
+            #endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
 
-#region Snippet:QuestionAnsweringProjectsClient_UpdateQnasAsync
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateQnasAsync
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
 #if !SNIPPET
@@ -251,14 +251,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(qna);
             }
-#endregion
+            #endregion
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
             Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
             Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
 
-#region Snippet:QuestionAnsweringProjectsClient_UpdateSynonymsAsync
+            #region Snippet:QuestionAnsweringProjectsClient_UpdateSynonymsAsync
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -290,13 +290,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(synonym);
             }
-#endregion
+            #endregion
 
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna maker")));
 
-#region Snippet:QuestionAnsweringProjectsClient_AddFeedbackAsync
+            #region Snippet:QuestionAnsweringProjectsClient_AddFeedbackAsync
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -312,7 +312,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
-#endregion
+            #endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
 
