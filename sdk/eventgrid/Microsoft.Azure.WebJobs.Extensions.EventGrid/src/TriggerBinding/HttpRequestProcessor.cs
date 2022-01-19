@@ -35,14 +35,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             HttpRequestMessage req,
             string functionName,
             Func<JArray, string, CancellationToken, Task<HttpResponseMessage>> eventsFunc,
-            bool hasEventGridEvent,
-            bool hasCloudEvent,
+            BindingType bindingType,
             CancellationToken cancellationToken)
         {
             // CloudEvent subscription validation handshake
             if (req.Method == HttpMethod.Options)
             {
-                if (hasEventGridEvent)
+                if (bindingType == BindingType.EventGridEvent)
                 {
                     return new HttpResponseMessage(HttpStatusCode.Conflict)
                     {
@@ -63,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             // EventGridEvent Subscription validation handshake
             if (string.Equals(eventTypeHeader, SubscriptionValidationEvent, StringComparison.OrdinalIgnoreCase))
             {
-                if (hasCloudEvent)
+                if (bindingType == BindingType.CloudEvent)
                 {
                     return new HttpResponseMessage(HttpStatusCode.Conflict)
                     {
