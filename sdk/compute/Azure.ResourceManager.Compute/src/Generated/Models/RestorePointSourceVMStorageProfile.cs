@@ -11,26 +11,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the storage profile. </summary>
-    public partial class RestorePointSourceVMStorageProfile
+    public partial class RestorePointSourceVmStorageProfile
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVMStorageProfile. </summary>
-        internal RestorePointSourceVMStorageProfile()
+        /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
+        internal RestorePointSourceVmStorageProfile()
         {
-            DataDisks = new ChangeTrackingList<RestorePointSourceVMDataDisk>();
+            DataDisks = new ChangeTrackingList<RestorePointSourceVmDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVMStorageProfile. </summary>
-        /// <param name="osDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
+        /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
+        /// <param name="oSDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
         /// <param name="dataDisks"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
-        internal RestorePointSourceVMStorageProfile(RestorePointSourceVmosDisk osDisk, IReadOnlyList<RestorePointSourceVMDataDisk> dataDisks)
+        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk oSDisk, IReadOnlyList<RestorePointSourceVmDataDisk> dataDisks)
         {
-            OsDisk = osDisk;
+            OSDisk = oSDisk;
             DataDisks = dataDisks;
         }
 
         /// <summary> Gets the OS disk of the VM captured at the time of the restore point creation. </summary>
-        public RestorePointSourceVmosDisk OsDisk { get; }
+        public RestorePointSourceVmOSDisk OSDisk { get; }
         /// <summary> Gets the data disks of the VM captured at the time of the restore point creation. </summary>
-        public IReadOnlyList<RestorePointSourceVMDataDisk> DataDisks { get; }
+        public IReadOnlyList<RestorePointSourceVmDataDisk> DataDisks { get; }
     }
 }

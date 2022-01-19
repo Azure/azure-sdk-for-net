@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances which are already running the latest available OS version are not affected. </summary>
-    public partial class VirtualMachineScaleSetStartOSUpgradeVirtualMachineScaleSetRollingUpgradeOperation : Operation
+    public partial class VirtualMachineScaleSetStartOSUpgradeOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetStartOSUpgradeVirtualMachineScaleSetRollingUpgradeOperation for mocking. </summary>
-        protected VirtualMachineScaleSetStartOSUpgradeVirtualMachineScaleSetRollingUpgradeOperation()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetStartOSUpgradeOperation for mocking. </summary>
+        protected VirtualMachineScaleSetStartOSUpgradeOperation()
         {
         }
 
-        internal VirtualMachineScaleSetStartOSUpgradeVirtualMachineScaleSetRollingUpgradeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetStartOSUpgradeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetStartOSUpgradeVirtualMachineScaleSetRollingUpgradeOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetStartOSUpgradeOperation");
         }
 
         /// <inheritdoc />

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ApplicationProfile. </summary>
         public ApplicationProfile()
         {
-            GalleryApplications = new ChangeTrackingList<VMGalleryApplication>();
+            GalleryApplications = new ChangeTrackingList<VmGalleryApplication>();
         }
 
         /// <summary> Initializes a new instance of ApplicationProfile. </summary>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        internal ApplicationProfile(IList<VMGalleryApplication> galleryApplications)
+        internal ApplicationProfile(IList<VmGalleryApplication> galleryApplications)
         {
             GalleryApplications = galleryApplications;
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VMGalleryApplication> GalleryApplications { get; }
+        public IList<VmGalleryApplication> GalleryApplications { get; }
     }
 }

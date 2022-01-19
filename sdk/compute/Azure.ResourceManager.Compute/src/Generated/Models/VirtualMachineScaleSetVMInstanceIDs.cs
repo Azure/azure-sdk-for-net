@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies a list of virtual machine instance IDs from the VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMInstanceIDs
+    public partial class VirtualMachineScaleSetVmInstanceIds
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMInstanceIDs. </summary>
-        public VirtualMachineScaleSetVMInstanceIDs()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmInstanceIds. </summary>
+        public VirtualMachineScaleSetVmInstanceIds()
         {
             InstanceIds = new ChangeTrackingList<string>();
         }

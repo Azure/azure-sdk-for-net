@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionUpdate : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetVmExtensionUpdateOptions : SubResourceReadOnly
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionUpdate. </summary>
-        public VirtualMachineScaleSetVMExtensionUpdate()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionUpdateOptions. </summary>
+        public VirtualMachineScaleSetVmExtensionUpdateOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionUpdate. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionUpdateOptions. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="type"> Resource type. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineScaleSetVMExtensionUpdate(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, bool? suppressFailures) : base(id)
+        internal VirtualMachineScaleSetVmExtensionUpdateOptions(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, bool? suppressFailures) : base(id)
         {
             Name = name;
             Type = type;

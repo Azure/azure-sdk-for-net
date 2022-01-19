@@ -10,24 +10,24 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
-    public partial class RestorePointSourceVmosDisk
+    public partial class RestorePointSourceVmOSDisk
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVmosDisk. </summary>
-        internal RestorePointSourceVmosDisk()
+        /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
+        internal RestorePointSourceVmOSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmosDisk. </summary>
-        /// <param name="osType"> Gets the Operating System type. </param>
+        /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
+        /// <param name="oSType"> Gets the Operating System type. </param>
         /// <param name="encryptionSettings"> Gets the disk encryption settings. </param>
         /// <param name="name"> Gets the disk name. </param>
         /// <param name="caching"> Gets the caching type. </param>
         /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVmosDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
+        internal RestorePointSourceVmOSDisk(OperatingSystemType? oSType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
         {
-            OsType = osType;
+            OSType = oSType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Caching = caching;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the Operating System type. </summary>
-        public OperatingSystemType? OsType { get; }
+        public OperatingSystemType? OSType { get; }
         /// <summary> Gets the disk encryption settings. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; }
         /// <summary> Gets the disk name. </summary>

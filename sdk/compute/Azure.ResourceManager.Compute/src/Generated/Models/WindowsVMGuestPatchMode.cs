@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false&lt;br /&gt;&lt;br /&gt; **AutomaticByOS** - The virtual machine will automatically be updated by the OS. The property WindowsConfiguration.enableAutomaticUpdates must be true. &lt;br /&gt;&lt;br /&gt; **AutomaticByPlatform** - the virtual machine will automatically updated by the platform. The properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true. </summary>
-    public readonly partial struct WindowsVMGuestPatchMode : IEquatable<WindowsVMGuestPatchMode>
+    public readonly partial struct WindowsVmGuestPatchMode : IEquatable<WindowsVmGuestPatchMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="WindowsVMGuestPatchMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsVmGuestPatchMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WindowsVMGuestPatchMode(string value)
+        public WindowsVmGuestPatchMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.Compute.Models
         private const string AutomaticByPlatformValue = "AutomaticByPlatform";
 
         /// <summary> Manual. </summary>
-        public static WindowsVMGuestPatchMode Manual { get; } = new WindowsVMGuestPatchMode(ManualValue);
+        public static WindowsVmGuestPatchMode Manual { get; } = new WindowsVmGuestPatchMode(ManualValue);
         /// <summary> AutomaticByOS. </summary>
-        public static WindowsVMGuestPatchMode AutomaticByOS { get; } = new WindowsVMGuestPatchMode(AutomaticByOSValue);
+        public static WindowsVmGuestPatchMode AutomaticByOS { get; } = new WindowsVmGuestPatchMode(AutomaticByOSValue);
         /// <summary> AutomaticByPlatform. </summary>
-        public static WindowsVMGuestPatchMode AutomaticByPlatform { get; } = new WindowsVMGuestPatchMode(AutomaticByPlatformValue);
-        /// <summary> Determines if two <see cref="WindowsVMGuestPatchMode"/> values are the same. </summary>
-        public static bool operator ==(WindowsVMGuestPatchMode left, WindowsVMGuestPatchMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="WindowsVMGuestPatchMode"/> values are not the same. </summary>
-        public static bool operator !=(WindowsVMGuestPatchMode left, WindowsVMGuestPatchMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WindowsVMGuestPatchMode"/>. </summary>
-        public static implicit operator WindowsVMGuestPatchMode(string value) => new WindowsVMGuestPatchMode(value);
+        public static WindowsVmGuestPatchMode AutomaticByPlatform { get; } = new WindowsVmGuestPatchMode(AutomaticByPlatformValue);
+        /// <summary> Determines if two <see cref="WindowsVmGuestPatchMode"/> values are the same. </summary>
+        public static bool operator ==(WindowsVmGuestPatchMode left, WindowsVmGuestPatchMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="WindowsVmGuestPatchMode"/> values are not the same. </summary>
+        public static bool operator !=(WindowsVmGuestPatchMode left, WindowsVmGuestPatchMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="WindowsVmGuestPatchMode"/>. </summary>
+        public static implicit operator WindowsVmGuestPatchMode(string value) => new WindowsVmGuestPatchMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WindowsVMGuestPatchMode other && Equals(other);
+        public override bool Equals(object obj) => obj is WindowsVmGuestPatchMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(WindowsVMGuestPatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WindowsVmGuestPatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

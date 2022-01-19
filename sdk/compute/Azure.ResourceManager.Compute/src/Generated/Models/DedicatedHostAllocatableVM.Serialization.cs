@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostAllocatableVM
+    public partial class DedicatedHostAllocatableVm
     {
-        internal static DedicatedHostAllocatableVM DeserializeDedicatedHostAllocatableVM(JsonElement element)
+        internal static DedicatedHostAllocatableVm DeserializeDedicatedHostAllocatableVm(JsonElement element)
         {
             Optional<string> vmSize = default;
             Optional<double> count = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHostAllocatableVM(vmSize.Value, Optional.ToNullable(count));
+            return new DedicatedHostAllocatableVm(vmSize.Value, Optional.ToNullable(count));
         }
     }
 }

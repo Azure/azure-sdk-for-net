@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set VM Reimage Parameters. </summary>
-    public partial class VirtualMachineScaleSetVMReimageParameters : VirtualMachineReimageParameters
+    public partial class VirtualMachineScaleSetVmReimageOptions : VirtualMachineReimageParameters
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMReimageParameters. </summary>
-        public VirtualMachineScaleSetVMReimageParameters()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmReimageOptions. </summary>
+        public VirtualMachineScaleSetVmReimageOptions()
         {
         }
     }

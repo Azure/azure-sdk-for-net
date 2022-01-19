@@ -10,21 +10,21 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a data disk. </summary>
-    public partial class RestorePointSourceVMDataDisk
+    public partial class RestorePointSourceVmDataDisk
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVMDataDisk. </summary>
-        internal RestorePointSourceVMDataDisk()
+        /// <summary> Initializes a new instance of RestorePointSourceVmDataDisk. </summary>
+        internal RestorePointSourceVmDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVMDataDisk. </summary>
+        /// <summary> Initializes a new instance of RestorePointSourceVmDataDisk. </summary>
         /// <param name="lun"> Gets the logical unit number. </param>
         /// <param name="name"> Gets the disk name. </param>
         /// <param name="caching"> Gets the caching type. </param>
         /// <param name="diskSizeGB"> Gets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVMDataDisk(int? lun, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
+        internal RestorePointSourceVmDataDisk(int? lun, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
         {
             Lun = lun;
             Name = name;

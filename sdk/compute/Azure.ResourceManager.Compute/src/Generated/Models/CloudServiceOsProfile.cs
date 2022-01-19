@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the OS profile for the cloud service. </summary>
-    public partial class CloudServiceOsProfile
+    public partial class CloudServiceOSProfile
     {
-        /// <summary> Initializes a new instance of CloudServiceOsProfile. </summary>
-        public CloudServiceOsProfile()
+        /// <summary> Initializes a new instance of CloudServiceOSProfile. </summary>
+        public CloudServiceOSProfile()
         {
             Secrets = new ChangeTrackingList<CloudServiceVaultSecretGroup>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceOsProfile. </summary>
+        /// <summary> Initializes a new instance of CloudServiceOSProfile. </summary>
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the role instances. </param>
-        internal CloudServiceOsProfile(IList<CloudServiceVaultSecretGroup> secrets)
+        internal CloudServiceOSProfile(IList<CloudServiceVaultSecretGroup> secrets)
         {
             Secrets = secrets;
         }
