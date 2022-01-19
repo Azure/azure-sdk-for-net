@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         /// <param name="targetResourceName">Gets or sets the target Resource
         /// name.</param>
+        /// <param name="tags">Gets or sets the Resource tags.</param>
         /// <param name="sku">Gets or sets load balancer sku
         /// (Basic/Standard).</param>
         /// <param name="frontendIPConfigurations">Gets or sets the frontend IP
@@ -46,9 +47,10 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// all frontend IP configurations. Note this is given
         /// precedence only if frontend IP configurations settings are not
         /// present.</param>
-        public LoadBalancerResourceSettings(string targetResourceName, string sku = default(string), IList<LBFrontendIPConfigurationResourceSettings> frontendIPConfigurations = default(IList<LBFrontendIPConfigurationResourceSettings>), IList<LBBackendAddressPoolResourceSettings> backendAddressPools = default(IList<LBBackendAddressPoolResourceSettings>), string zones = default(string))
+        public LoadBalancerResourceSettings(string targetResourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), string sku = default(string), IList<LBFrontendIPConfigurationResourceSettings> frontendIPConfigurations = default(IList<LBFrontendIPConfigurationResourceSettings>), IList<LBBackendAddressPoolResourceSettings> backendAddressPools = default(IList<LBBackendAddressPoolResourceSettings>), string zones = default(string))
             : base(targetResourceName)
         {
+            Tags = tags;
             Sku = sku;
             FrontendIPConfigurations = frontendIPConfigurations;
             BackendAddressPools = backendAddressPools;
@@ -60,6 +62,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets load balancer sku (Basic/Standard).

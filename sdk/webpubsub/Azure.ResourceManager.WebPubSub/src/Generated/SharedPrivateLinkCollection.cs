@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary> A class representing collection of SharedPrivateLink and their operations over its parent. </summary>
     public partial class SharedPrivateLinkCollection : ArmCollection, IEnumerable<SharedPrivateLink>, IAsyncEnumerable<SharedPrivateLink>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SharedPrivateLinksRestOperations _sharedPrivateLinksRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.WebPubSub
         {
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SharedPrivateLinkCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SharedPrivateLinkCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _sharedPrivateLinksRestClient = new SharedPrivateLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WebPubSub.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != WebPubSub.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebPubSub.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SharedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(string sharedPrivateLinkName, SharedPrivateLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SharedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SharedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(string sharedPrivateLinkName, SharedPrivateLinkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SharedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
@@ -183,9 +188,9 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _sharedPrivateLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,14 +210,14 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(sharedPrivateLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _sharedPrivateLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse())
-                    : Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SharedPrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new SharedPrivateLink(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,14 +230,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
                 throw new ArgumentNullException(nameof(sharedPrivateLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +255,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
             if (sharedPrivateLinkName == null)
             {
                 throw new ArgumentNullException(nameof(sharedPrivateLinkName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -363,6 +368,6 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SharedPrivateLink, SharedPrivateLinkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SharedPrivateLink, SharedPrivateLinkData> Construct() { }
     }
 }

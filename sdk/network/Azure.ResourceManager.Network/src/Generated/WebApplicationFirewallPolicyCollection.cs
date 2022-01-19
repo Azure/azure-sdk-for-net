@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of WebApplicationFirewallPolicy and their operations over its parent. </summary>
     public partial class WebApplicationFirewallPolicyCollection : ArmCollection, IEnumerable<WebApplicationFirewallPolicy>, IAsyncEnumerable<WebApplicationFirewallPolicy>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly WebApplicationFirewallPoliciesRestOperations _webApplicationFirewallPoliciesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WebApplicationFirewallPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WebApplicationFirewallPolicyCreateOrUpdateOperation CreateOrUpdate(string policyName, WebApplicationFirewallPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WebApplicationFirewallPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebApplicationFirewallPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string policyName, WebApplicationFirewallPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebApplicationFirewallPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
@@ -184,9 +190,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _webApplicationFirewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +212,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<WebApplicationFirewallPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,14 +232,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string policyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
                 throw new ArgumentNullException(nameof(policyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -410,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WebApplicationFirewallPolicy, WebApplicationFirewallPolicyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, WebApplicationFirewallPolicy, WebApplicationFirewallPolicyData> Construct() { }
     }
 }

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ApplicationGatewayPrivateEndpointConnection IOperationSource<ApplicationGatewayPrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ApplicationGatewayPrivateEndpointConnection(_operationBase, ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement));
+            var data = ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement);
+            return new ApplicationGatewayPrivateEndpointConnection(_operationBase, data);
         }
 
         async ValueTask<ApplicationGatewayPrivateEndpointConnection> IOperationSource<ApplicationGatewayPrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ApplicationGatewayPrivateEndpointConnection(_operationBase, ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement));
+            var data = ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement);
+            return new ApplicationGatewayPrivateEndpointConnection(_operationBase, data);
         }
     }
 }

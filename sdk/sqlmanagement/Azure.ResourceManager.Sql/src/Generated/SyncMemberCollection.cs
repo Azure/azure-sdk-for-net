@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of SyncMember and their operations over its parent. </summary>
     public partial class SyncMemberCollection : ArmCollection, IEnumerable<SyncMember>, IAsyncEnumerable<SyncMember>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SyncMembersRestOperations _syncMembersRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SyncMemberCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SyncMemberCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SyncMemberCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _syncMembersRestClient = new SyncMembersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SyncGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SyncGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SyncGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SyncMemberCreateOrUpdateOperation CreateOrUpdate(string syncMemberName, SyncMemberData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SyncMemberCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string syncMemberName, SyncMemberData parameters, CancellationToken cancellationToken = default)
         {
             if (syncMemberName == null)
             {
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SyncMemberCreateOrUpdateOperation> CreateOrUpdateAsync(string syncMemberName, SyncMemberData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SyncMemberCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string syncMemberName, SyncMemberData parameters, CancellationToken cancellationToken = default)
         {
             if (syncMemberName == null)
             {
@@ -195,9 +200,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _syncMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, syncMemberName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SyncMember>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncMember(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SyncMember>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncMember(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,14 +222,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(syncMemberName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _syncMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, syncMemberName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SyncMember>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncMember(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SyncMember>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncMember(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -237,14 +242,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string syncMemberName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string syncMemberName, CancellationToken cancellationToken = default)
         {
             if (syncMemberName == null)
             {
                 throw new ArgumentNullException(nameof(syncMemberName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +267,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
             if (syncMemberName == null)
             {
                 throw new ArgumentNullException(nameof(syncMemberName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncMemberCollection.Exists");
             scope.Start();
             try
             {
@@ -381,6 +386,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SyncMember, SyncMemberData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SyncMember, SyncMemberData> Construct() { }
     }
 }

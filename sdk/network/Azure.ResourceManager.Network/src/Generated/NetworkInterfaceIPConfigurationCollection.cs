@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of NetworkInterfaceIPConfiguration and their operations over its parent. </summary>
     public partial class NetworkInterfaceIPConfigurationCollection : ArmCollection, IEnumerable<NetworkInterfaceIPConfiguration>, IAsyncEnumerable<NetworkInterfaceIPConfiguration>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NetworkInterfaceIPConfigurationsRestOperations _networkInterfaceIPConfigurationsRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkInterfaceIPConfigurationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => NetworkInterface.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != NetworkInterface.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkInterface.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -114,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfaceIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,14 +141,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _networkInterfaceIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkInterfaceIPConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceIPConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +161,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +186,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             if (ipConfigurationName == null)
             {
                 throw new ArgumentNullException(nameof(ipConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -294,6 +299,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkInterfaceIPConfiguration, NetworkInterfaceIPConfigurationData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkInterfaceIPConfiguration, NetworkInterfaceIPConfigurationData> Construct() { }
     }
 }

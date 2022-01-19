@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -158,10 +156,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstanceData DeserializeManagedInstanceData(JsonElement element)
         {
-            Optional<Models.ResourceIdentity> identity = default;
+            Optional<ResourceIdentity> identity = default;
             Optional<Sku> sku = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -201,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Models.ResourceIdentity.DeserializeResourceIdentity(property.Value);
+                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))

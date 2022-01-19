@@ -113,7 +113,8 @@ namespace Azure.Core.TestFramework
                     var excludedHeaders = new List<string>(_matcher.LegacyExcludedHeaders)
                     {
                         "Content-Type",
-                        "Content-Length"
+                        "Content-Length",
+                        "Connection"
                     };
 
                     // temporary until custom matcher supports both excluded and ignored
@@ -149,6 +150,11 @@ namespace Azure.Core.TestFramework
             foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
+            }
+
+            foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
+            {
+                await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
             }
         }
 
@@ -327,9 +333,9 @@ namespace Azure.Core.TestFramework
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
         {
-            if (!_useLegacyTransport)
+            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
             {
-                return new ProxyTransport(_proxy, currentTransport, this);
+                return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
             }
             return Mode switch
             {
@@ -406,6 +412,10 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
+                    if (Variables.Count == 0)
+                    {
+                        throw new TestRecordingMismatchException("The recording contains no variables.");
+                    }
                     Variables.TryGetValue(variableName, out string value);
                     return value;
                 default:

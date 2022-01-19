@@ -8,20 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of Probe and their operations over its parent. </summary>
     public partial class ProbeCollection : ArmCollection, IEnumerable<Probe>, IAsyncEnumerable<Probe>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LoadBalancerProbesRestOperations _loadBalancerProbesRestClient;
@@ -31,16 +30,22 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ProbeCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProbeCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ProbeCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _loadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => LoadBalancer.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != LoadBalancer.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -114,9 +119,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _loadBalancerProbesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Probe>(null, response.GetRawResponse())
-                    : Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Probe>(null, response.GetRawResponse());
+                return Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,14 +141,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _loadBalancerProbesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Probe>(null, response.GetRawResponse())
-                    : Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Probe>(null, response.GetRawResponse());
+                return Response.FromValue(new Probe(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +161,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string probeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string probeName, CancellationToken cancellationToken = default)
         {
             if (probeName == null)
             {
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +186,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string probeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string probeName, CancellationToken cancellationToken = default)
         {
             if (probeName == null)
             {
                 throw new ArgumentNullException(nameof(probeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProbeCollection.Exists");
             scope.Start();
             try
             {
@@ -294,6 +299,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Probe, ProbeData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, Probe, ProbeData> Construct() { }
     }
 }

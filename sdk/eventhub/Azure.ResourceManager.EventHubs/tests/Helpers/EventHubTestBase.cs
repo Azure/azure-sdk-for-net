@@ -10,22 +10,23 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
 using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
 {
     [ClientTestFixture]
     public class EventHubTestBase:ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
     {
-        public static Location DefaultLocation => Location.EastUS2;
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected EventHubTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        protected EventHubTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }
 
-        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
+        public EventHubTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }

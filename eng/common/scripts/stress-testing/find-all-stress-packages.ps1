@@ -9,7 +9,7 @@ class StressTestPackageInfo {
     [string]$ReleaseName
 }
 
-function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [boolean]$CI = $false) {
+function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [switch]$CI) {
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
 
@@ -18,7 +18,7 @@ function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [bool
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
         if (matchesAnnotations $chart $filters) {
-            $packages += NewStressTestPackageInfo $chart $chartFile $CI
+            $packages += NewStressTestPackageInfo -chart $chart -chartFile $chartFile -CI:$CI
         }
     }
 
@@ -39,7 +39,7 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     return $true
 }
 
-function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartFile, [boolean]$CI) {
+function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartFile, [switch]$CI) {
     $namespace = if ($CI) {
         $chart.annotations.namespace
     } else {

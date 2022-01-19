@@ -29,3 +29,5 @@ extends:
     Artifacts:
     - name: Azure.Data.Tables
       safeName: AzureDataTables
+    - name: Microsoft.Azure.WebJobs.Extensions.Tables
+      safeName: MicrosoftAzureWebJobsExtensionsTables

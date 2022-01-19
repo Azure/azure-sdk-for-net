@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         EncryptionProtector IOperationSource<EncryptionProtector>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new EncryptionProtector(_operationBase, EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement));
+            var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
+            return new EncryptionProtector(_operationBase, data);
         }
 
         async ValueTask<EncryptionProtector> IOperationSource<EncryptionProtector>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new EncryptionProtector(_operationBase, EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement));
+            var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
+            return new EncryptionProtector(_operationBase, data);
         }
     }
 }

@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of GalleryApplicationVersion and their operations over its parent. </summary>
     public partial class GalleryApplicationVersionCollection : ArmCollection, IEnumerable<GalleryApplicationVersion>, IAsyncEnumerable<GalleryApplicationVersion>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GalleryApplicationVersionsRestOperations _galleryApplicationVersionsRestClient;
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationVersionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GalleryApplicationVersionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _galleryApplicationVersionsRestClient = new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => GalleryApplication.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != GalleryApplication.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GalleryApplication.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public virtual GalleryApplicationVersionCreateOrUpdateOperation CreateOrUpdate(string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationVersionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationVersionName == null)
             {
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> or <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public async virtual Task<GalleryApplicationVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationVersionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string galleryApplicationVersionName, GalleryApplicationVersionData galleryApplicationVersion, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationVersionName == null)
             {
@@ -186,9 +191,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryApplicationVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<GalleryApplicationVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<GalleryApplicationVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,14 +214,14 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _galleryApplicationVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<GalleryApplicationVersion>(null, response.GetRawResponse())
-                    : Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<GalleryApplicationVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,14 +235,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationVersionName == null)
             {
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +261,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationVersionName == null)
             {
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -369,6 +374,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, GalleryApplicationVersion, GalleryApplicationVersionData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, GalleryApplicationVersion, GalleryApplicationVersionData> Construct() { }
     }
 }

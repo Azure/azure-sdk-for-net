@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     public static class CompatibilityLevel
     {
         public const string OneFullStopZero = "1.0";
+        public const string OneFullStopTwo = "1.2";
     }
 }

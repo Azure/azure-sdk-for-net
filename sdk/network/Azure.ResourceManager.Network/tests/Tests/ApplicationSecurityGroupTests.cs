@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName("test_application_security_group_");
 
             // create
-            var applicationSecurityGroupResponse = await collection.CreateOrUpdate(name, new ApplicationSecurityGroupData()
+            var applicationSecurityGroupResponse = await collection.CreateOrUpdate(true, name, new ApplicationSecurityGroupData()
             {
                 Location = TestEnvironment.Location,
             }).WaitForCompletionAsync();
 
-            Assert.True(await collection.CheckIfExistsAsync(name));
+            Assert.True(await collection.ExistsAsync(name));
 
             var applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
             ValidateCommon(applicationSecurityGroupData, name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Tests
             applicationSecurityGroupData.Tags.Add("tag2", "value2");
 
             // update
-            applicationSecurityGroupResponse = await collection.CreateOrUpdate(name, applicationSecurityGroupData).WaitForCompletionAsync();
+            applicationSecurityGroupResponse = await collection.CreateOrUpdate(true, name, applicationSecurityGroupData).WaitForCompletionAsync();
             applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await applicationSecurityGroup.DeleteAsync();
+            await applicationSecurityGroup.DeleteAsync(true);
 
-            Assert.False(await collection.CheckIfExistsAsync(name));
+            Assert.False(await collection.ExistsAsync(name));
 
             applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);

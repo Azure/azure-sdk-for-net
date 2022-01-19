@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -32,13 +34,13 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task GlobalSetUp()
         {
             Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallRG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.20.0.0/16", }
@@ -48,17 +50,17 @@ namespace Azure.ResourceManager.Network.Tests
                     new SubnetData() { Name = "AzureFirewallSubnet", AddressPrefix = "10.20.2.0/26", },
                 },
             };
-            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("vnet-"), vnetData);
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("vnet-"), vnetData);
             _network = vnetLro.Value;
             _networkIdentifier = _network.Id;
 
             PublicIPAddressData ipData = new PublicIPAddressData()
             {
-                Location = Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 PublicIPAllocationMethod = IPAllocationMethod.Static,
                 Sku = new PublicIPAddressSku() { Name = PublicIPAddressSkuName.Standard },
             };
-            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("publicIp-"), ipData);
+            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("publicIp-"), ipData);
             _publicIPAddress = ipLro.Value;
             _publicIPAddressIdentifier = _publicIPAddress.Id;
 
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeTearDown]
         public async Task GlobalTearDown()
         {
-            await _resourceGroup.DeleteAsync();
+            await _resourceGroup.DeleteAsync(true);
         }
 
         [SetUp]
@@ -84,24 +86,24 @@ namespace Azure.ResourceManager.Network.Tests
         [TearDown]
         public async Task Teardown()
         {
-            if (await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName))
+            if (await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName))
             {
                 AzureFirewall firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
-                await firewall.DeleteAsync();
+                await firewall.DeleteAsync(true);
             }
         }
 
         public async Task<AzureFirewall> CreateFirewallAsync()
         {
             AzureFirewallData firewallData = new AzureFirewallData();
-            firewallData.Location = Location.WestUS2;
+            firewallData.Location = AzureLocation.WestUS2;
             firewallData.IpConfigurations.Add(new AzureFirewallIPConfiguration()
             {
                 Name = "fwpip",
                 PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
-                Subnet = new WritableSubResource() { Id = _networkIdentifier.ToString() + "/subnets/AzureFirewallSubnet" },
+                Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
             });
-            var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(_firewallName, firewallData)).WaitForCompletionAsync();
+            var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(true, _firewallName, firewallData)).WaitForCompletionAsync();
             return firewallLro.Value;
         }
 
@@ -135,11 +137,11 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             await CreateFirewallAsync();
-            Assert.True(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName));
-            Assert.False(await _resourceGroup.GetAzureFirewalls().CheckIfExistsAsync(_firewallName + "0"));
+            Assert.True(await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName));
+            Assert.False(await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName + "0"));
         }
 
         [Test]
@@ -150,7 +152,7 @@ namespace Azure.ResourceManager.Network.Tests
             List<AzureFirewall> firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, firewallList.Count);
 
-            await firewall.DeleteAsync();
+            await firewall.DeleteAsync(true);
             firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, firewallList.Count);
         }

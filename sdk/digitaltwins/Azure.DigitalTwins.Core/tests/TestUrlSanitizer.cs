@@ -14,11 +14,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
         public TestUrlSanitizer()
         {
-            UriRegexSanitizers.Add(
-                new UriRegexSanitizer(@"https://(?<host>[^/]+)/", FAKE_HOST)
-                {
-                    GroupForReplace = "host"
-                });
+            ReplaceHostInUri(FAKE_HOST);
         }
 
         public override string SanitizeUri(string uri)

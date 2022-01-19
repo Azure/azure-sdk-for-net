@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     Description = buildModelOptions.ModelDescription
                 };
 
-                var response = ServiceClient.DocumentAnalysisBuildDocumentModel(request, cancellationToken);
+                var response = ServiceClient.BuildDocumentModel(request, cancellationToken);
                 return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -193,7 +193,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     Description = buildModelOptions.ModelDescription
                 };
 
-                var response = await ServiceClient.DocumentAnalysisBuildDocumentModelAsync(request, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceClient.BuildDocumentModelAsync(request, cancellationToken).ConfigureAwait(false);
                 return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -222,7 +222,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<DocumentModel> response = ServiceClient.DocumentAnalysisGetModel(modelId, cancellationToken);
+                Response<DocumentModel> response = ServiceClient.GetModel(modelId, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,7 +248,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<DocumentModel> response = await ServiceClient.DocumentAnalysisGetModelAsync(modelId, cancellationToken).ConfigureAwait(false);
+                Response<DocumentModel> response = await ServiceClient.GetModelAsync(modelId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,7 +273,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                return ServiceClient.DocumentAnalysisDeleteModel(modelId, cancellationToken);
+                return ServiceClient.DeleteModel(modelId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -297,7 +297,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                return await ServiceClient.DocumentAnalysisDeleteModelAsync(modelId, cancellationToken).ConfigureAwait(false);
+                return await ServiceClient.DeleteModelAsync(modelId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -320,7 +320,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    Response<GetModelsResponse> response = ServiceClient.DocumentAnalysisGetModels(cancellationToken);
+                    Response<GetModelsResponse> response = ServiceClient.GetModels(cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -337,7 +337,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    Response<GetModelsResponse> response = ServiceClient.DocumentAnalysisGetModelsNextPage(nextLink, cancellationToken);
+                    Response<GetModelsResponse> response = ServiceClient.GetModelsNextPage(nextLink, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -364,7 +364,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    Response<GetModelsResponse> response = await ServiceClient.DocumentAnalysisGetModelsAsync(cancellationToken).ConfigureAwait(false);
+                    Response<GetModelsResponse> response = await ServiceClient.GetModelsAsync(cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -381,7 +381,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    Response<GetModelsResponse> response = await ServiceClient.DocumentAnalysisGetModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    Response<GetModelsResponse> response = await ServiceClient.GetModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -407,7 +407,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<GetInfoResponse> response = ServiceClient.DocumentAnalysisGetInfo(cancellationToken);
+                Response<GetInfoResponse> response = ServiceClient.GetInfo(cancellationToken);
                 return Response.FromValue(response.Value.CustomDocumentModels, response.GetRawResponse());
             }
             catch (Exception e)
@@ -430,7 +430,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<GetInfoResponse> response = await ServiceClient.DocumentAnalysisGetInfoAsync(cancellationToken).ConfigureAwait(false);
+                Response<GetInfoResponse> response = await ServiceClient.GetInfoAsync(cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.CustomDocumentModels, response.GetRawResponse());
             }
             catch (Exception e)
@@ -456,7 +456,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = ServiceClient.DocumentAnalysisGetOperation(operationId, cancellationToken);
+                var response = ServiceClient.GetOperation(operationId, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -482,7 +482,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = await ServiceClient.DocumentAnalysisGetOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceClient.GetOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -506,7 +506,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    var response = ServiceClient.DocumentAnalysisGetOperations(cancellationToken);
+                    var response = ServiceClient.GetOperations(cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -523,7 +523,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    var response = ServiceClient.DocumentAnalysisGetOperationsNextPage(nextLink, cancellationToken);
+                    var response = ServiceClient.GetOperationsNextPage(nextLink, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -550,7 +550,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    var response = await ServiceClient.DocumentAnalysisGetOperationsAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await ServiceClient.GetOperationsAsync(cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -567,7 +567,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
                 try
                 {
-                    var response = await ServiceClient.DocumentAnalysisGetOperationsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    var response = await ServiceClient.GetOperationsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -602,7 +602,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = ServiceClient.DocumentAnalysisCopyDocumentModelTo(modelId, target, cancellationToken);
+                var response = ServiceClient.CopyDocumentModelTo(modelId, target, cancellationToken);
                 return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
@@ -631,7 +631,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = await ServiceClient.DocumentAnalysisCopyDocumentModelToAsync(modelId, target, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceClient.CopyDocumentModelToAsync(modelId, target, cancellationToken).ConfigureAwait(false);
                 return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
             }
             catch (Exception e)
@@ -663,7 +663,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = ServiceClient.DocumentAnalysisAuthorizeCopyDocumentModel(request, cancellationToken);
+                var response = ServiceClient.AuthorizeCopyDocumentModel(request, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -695,7 +695,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var response = await ServiceClient.DocumentAnalysisAuthorizeCopyDocumentModelAsync(request, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceClient.AuthorizeCopyDocumentModelAsync(request, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -738,7 +738,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     Description = modelDescription
                 };
 
-                var response = ServiceClient.DocumentAnalysisComposeDocumentModel(composeRequest, cancellationToken);
+                var response = ServiceClient.ComposeDocumentModel(composeRequest, cancellationToken);
                 return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)
@@ -777,7 +777,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     Description = modelDescription
                 };
 
-                var response = await ServiceClient.DocumentAnalysisComposeDocumentModelAsync(composeRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceClient.ComposeDocumentModelAsync(composeRequest, cancellationToken).ConfigureAwait(false);
                 return new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
             }
             catch (Exception e)

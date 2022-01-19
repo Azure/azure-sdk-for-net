@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a SqlDatabase along with the instance operations that can be performed on it. </summary>
     public partial class SqlDatabase : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SqlDatabase"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabasesRestOperations _databasesRestClient;
         private readonly DatabaseColumnsRestOperations _databaseColumnsRestClient;
@@ -39,11 +45,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "SqlDatabase"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SqlDatabase(ArmResource options, SqlDatabaseData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SqlDatabase(ArmResource options, SqlDatabaseData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseColumnsRestClient = new DatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -52,6 +58,9 @@ namespace Azure.ResourceManager.Sql
             _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseOperationsRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseUsagesRestClient = new DatabaseUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabase"/> class. </summary>
@@ -67,6 +76,9 @@ namespace Azure.ResourceManager.Sql
             _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseOperationsRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseUsagesRestClient = new DatabaseUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabase"/> class. </summary>
@@ -85,13 +97,13 @@ namespace Azure.ResourceManager.Sql
             _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseOperationsRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _databaseUsagesRestClient = new DatabaseUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -106,6 +118,12 @@ namespace Azure.ResourceManager.Sql
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
@@ -157,17 +175,37 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
@@ -176,7 +214,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
@@ -201,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
@@ -229,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.AddTag");
@@ -258,7 +296,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.AddTag");
@@ -286,7 +324,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.SetTags");
@@ -315,7 +353,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.SetTags");
@@ -344,7 +382,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
@@ -372,7 +410,7 @@ namespace Azure.ResourceManager.Sql
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
@@ -400,7 +438,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseUpdateOperation> UpdateAsync(DatabaseUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseUpdateOperation> UpdateAsync(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -432,7 +470,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseUpdateOperation Update(DatabaseUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseUpdateOperation Update(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -462,6 +500,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns database metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
@@ -494,6 +533,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns database metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
@@ -579,7 +619,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseFailoverOperation> FailoverAsync(ReplicaType? replicaType = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseFailoverOperation> FailoverAsync(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
@@ -605,7 +645,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseFailoverOperation Failover(ReplicaType? replicaType = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseFailoverOperation Failover(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
@@ -630,7 +670,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Pauses a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabasePauseOperation> PauseAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabasePauseOperation> PauseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
@@ -655,7 +695,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Pauses a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabasePauseOperation Pause(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabasePauseOperation Pause(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
@@ -680,7 +720,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Resumes a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseResumeOperation> ResumeAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseResumeOperation> ResumeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
@@ -705,7 +745,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Resumes a database. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseResumeOperation Resume(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseResumeOperation Resume(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
@@ -730,7 +770,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Upgrades a data warehouse. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseUpgradeDataWarehouseOperation> UpgradeDataWarehouseAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseUpgradeDataWarehouseOperation> UpgradeDataWarehouseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
@@ -755,7 +795,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Upgrades a data warehouse. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseUpgradeDataWarehouseOperation UpgradeDataWarehouse(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseUpgradeDataWarehouseOperation UpgradeDataWarehouse(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
@@ -838,7 +878,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseImportOperation> ImportAsync(ImportExistingDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseImportOperation> ImportAsync(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -870,7 +910,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseImportOperation Import(ImportExistingDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseImportOperation Import(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -902,7 +942,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseExportOperation> ExportAsync(ExportDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseExportOperation> ExportAsync(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -934,7 +974,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseExportOperation Export(ExportDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseExportOperation Export(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1058,7 +1098,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RestorePointCreateOperation> CreateRestorePointAsync(CreateDatabaseRestorePointDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<RestorePointCreateOperation> CreateRestorePointAsync(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1090,7 +1130,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual RestorePointCreateOperation CreateRestorePoint(CreateDatabaseRestorePointDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual RestorePointCreateOperation CreateRestorePoint(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1411,7 +1451,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseExtensionCreateOrUpdateOperation> CreateOrUpdateDatabaseExtensionAsync(string extensionName, DatabaseExtensions parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseExtensionCreateOrUpdateOperation> CreateOrUpdateDatabaseExtensionAsync(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
@@ -1448,7 +1488,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseExtensionCreateOrUpdateOperation CreateOrUpdateDatabaseExtension(string extensionName, DatabaseExtensions parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseExtensionCreateOrUpdateOperation CreateOrUpdateDatabaseExtension(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
@@ -1768,11 +1808,11 @@ namespace Azure.ResourceManager.Sql
 
         #region DataMaskingPolicy
 
-        /// <summary> Gets a collection of DataMaskingPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DataMaskingPolicies and their operations over a SqlDatabase. </returns>
-        public DataMaskingPolicyCollection GetDataMaskingPolicies()
+        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
+        public virtual DataMaskingPolicy GetDataMaskingPolicy()
         {
-            return new DataMaskingPolicyCollection(this);
+            return new DataMaskingPolicy(this, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
         }
         #endregion
 
@@ -1780,7 +1820,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of GeoBackupPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of GeoBackupPolicies and their operations over a SqlDatabase. </returns>
-        public GeoBackupPolicyCollection GetGeoBackupPolicies()
+        public virtual GeoBackupPolicyCollection GetGeoBackupPolicies()
         {
             return new GeoBackupPolicyCollection(this);
         }
@@ -1790,7 +1830,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ReplicationLinks in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ReplicationLinks and their operations over a SqlDatabase. </returns>
-        public ReplicationLinkCollection GetReplicationLinks()
+        public virtual ReplicationLinkCollection GetReplicationLinks()
         {
             return new ReplicationLinkCollection(this);
         }
@@ -1800,7 +1840,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ExtendedDatabaseBlobAuditingPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ExtendedDatabaseBlobAuditingPolicies and their operations over a SqlDatabase. </returns>
-        public ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
+        public virtual ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
         {
             return new ExtendedDatabaseBlobAuditingPolicyCollection(this);
         }
@@ -1810,7 +1850,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of DatabaseBlobAuditingPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of DatabaseBlobAuditingPolicies and their operations over a SqlDatabase. </returns>
-        public DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
+        public virtual DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
         {
             return new DatabaseBlobAuditingPolicyCollection(this);
         }
@@ -1820,7 +1860,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDatabaseAdvisors in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ServerDatabaseAdvisors and their operations over a SqlDatabase. </returns>
-        public ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
+        public virtual ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
         {
             return new ServerDatabaseAdvisorCollection(this);
         }
@@ -1830,9 +1870,9 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
-        public DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
+        public virtual DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
         {
-            return new DatabaseAutomaticTuning(this, Id + "/automaticTuning/current");
+            return new DatabaseAutomaticTuning(this, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
         #endregion
 
@@ -1840,7 +1880,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDatabaseSchemas in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ServerDatabaseSchemas and their operations over a SqlDatabase. </returns>
-        public ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
+        public virtual ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
         {
             return new ServerDatabaseSchemaCollection(this);
         }
@@ -1850,7 +1890,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of DatabaseSecurityAlertPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of DatabaseSecurityAlertPolicies and their operations over a SqlDatabase. </returns>
-        public DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
+        public virtual DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
         {
             return new DatabaseSecurityAlertPolicyCollection(this);
         }
@@ -1860,7 +1900,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDatabaseVulnerabilityAssessments in the SqlDatabase. </summary>
         /// <returns> An object representing collection of ServerDatabaseVulnerabilityAssessments and their operations over a SqlDatabase. </returns>
-        public ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
+        public virtual ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
         {
             return new ServerDatabaseVulnerabilityAssessmentCollection(this);
         }
@@ -1870,7 +1910,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of DataWarehouseUserActivities in the SqlDatabase. </summary>
         /// <returns> An object representing collection of DataWarehouseUserActivities and their operations over a SqlDatabase. </returns>
-        public DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
+        public virtual DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
         {
             return new DataWarehouseUserActivitiesCollection(this);
         }
@@ -1880,7 +1920,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of LongTermRetentionPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of LongTermRetentionPolicies and their operations over a SqlDatabase. </returns>
-        public LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
+        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
         {
             return new LongTermRetentionPolicyCollection(this);
         }
@@ -1890,9 +1930,9 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
-        public MaintenanceWindowOptions GetMaintenanceWindowOptions()
+        public virtual MaintenanceWindowOptions GetMaintenanceWindowOptions()
         {
-            return new MaintenanceWindowOptions(this, Id + "/maintenanceWindowOptions/current");
+            return new MaintenanceWindowOptions(this, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
         }
         #endregion
 
@@ -1900,9 +1940,9 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
-        public MaintenanceWindows GetMaintenanceWindows()
+        public virtual MaintenanceWindows GetMaintenanceWindows()
         {
-            return new MaintenanceWindows(this, Id + "/maintenanceWindows/current");
+            return new MaintenanceWindows(this, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
         }
         #endregion
 
@@ -1910,7 +1950,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RestorePoints in the SqlDatabase. </summary>
         /// <returns> An object representing collection of RestorePoints and their operations over a SqlDatabase. </returns>
-        public RestorePointCollection GetRestorePoints()
+        public virtual RestorePointCollection GetRestorePoints()
         {
             return new RestorePointCollection(this);
         }
@@ -1920,7 +1960,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of SyncGroups in the SqlDatabase. </summary>
         /// <returns> An object representing collection of SyncGroups and their operations over a SqlDatabase. </returns>
-        public SyncGroupCollection GetSyncGroups()
+        public virtual SyncGroupCollection GetSyncGroups()
         {
             return new SyncGroupCollection(this);
         }
@@ -1930,7 +1970,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of WorkloadGroups in the SqlDatabase. </summary>
         /// <returns> An object representing collection of WorkloadGroups and their operations over a SqlDatabase. </returns>
-        public WorkloadGroupCollection GetWorkloadGroups()
+        public virtual WorkloadGroupCollection GetWorkloadGroups()
         {
             return new WorkloadGroupCollection(this);
         }
@@ -1940,7 +1980,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptions in the SqlDatabase. </summary>
         /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptions and their operations over a SqlDatabase. </returns>
-        public LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
+        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
         {
             return new LogicalDatabaseTransparentDataEncryptionCollection(this);
         }
@@ -1950,7 +1990,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of BackupShortTermRetentionPolicies in the SqlDatabase. </summary>
         /// <returns> An object representing collection of BackupShortTermRetentionPolicies and their operations over a SqlDatabase. </returns>
-        public BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
+        public virtual BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
         {
             return new BackupShortTermRetentionPolicyCollection(this);
         }
@@ -1960,7 +2000,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of LedgerDigestUploads in the SqlDatabase. </summary>
         /// <returns> An object representing collection of LedgerDigestUploads and their operations over a SqlDatabase. </returns>
-        public LedgerDigestUploadsCollection GetLedgerDigestUploads()
+        public virtual LedgerDigestUploadsCollection GetLedgerDigestUploads()
         {
             return new LedgerDigestUploadsCollection(this);
         }

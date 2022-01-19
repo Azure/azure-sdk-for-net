@@ -488,6 +488,58 @@
           }
         }
       }
+    },
+    "/admin/addtransform?overload=HeaderTransform": {
+      "post": {
+        "summary": "Add a header transform.",
+        "description": "Add a header transform.",
+        "operationId": "TestProxy_AddHeaderTransform",
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of transform.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "HeaderTransform"
+            ],
+            "x-ms-enum": {
+              "name": "MatcherType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the transform to.",
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "body",
+            "description": "The body for a header transform.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HeaderTransform"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -514,19 +566,47 @@
         "modelAsString": false
       }
     },
+    "TransformType": {
+      "type": "string",
+      "enum": [
+        "HeaderTransform"
+      ],
+      "x-ms-enum": {
+        "name": "TransformType",
+        "modelAsString": false
+      }
+    },
     "CustomDefaultMatcher": {
       "type": "object",
       "properties": {
-        "nonDefaultHeaderExclusions" : {
+        "excludedHeaders": {
           "type": "string"
         },
-        "compareBodies" : {
+        "compareBodies": {
           "type": "boolean"
         }
       },
       "required": [
-        "nonDefaultHeaderExclusions",
+        "excludedHeaders",
         "compareBodies"
+      ]
+    },
+    "HeaderTransform": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "condition": {
+          "$ref": "#/definitions/Condition"
+        }
+      },
+      "required": [
+        "key",
+        "value"
       ]
     },
     "BodyKeySanitizer": {
@@ -554,19 +634,22 @@
       "type": "object",
       "description": "Sanitizer for a request body",
       "properties": {
-        "value": {
+        "regex": {
           "type": "string"
         },
-        "regex": {
+        "value": {
           "type": "string"
         },
         "groupForReplace": {
           "type": "string"
+        },
+        "condition": {
+          "$ref": "#/definitions/Condition"
         }
       },
       "required": [
-        "value",
-        "regex"
+        "regex",
+        "value"
       ]
     },
     "HeaderRegexSanitizer": {
@@ -609,6 +692,31 @@
         "regex",
         "value"
       ]
+    },
+    "Condition": {
+      "type": "object",
+      "description": "Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed.",
+      "properties": {
+        "uriRegex": {
+          "type": "string"
+        },
+        "responseHeader": {
+          "$ref": "#/definitions/HeaderCondition"
+        }
+      },
+      "required": []
+    },
+    "HeaderCondition": {
+      "type": "object",
+      "description": "Header condition to apply",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "valueRegex": {
+          "type": "string"
+        }
+      }
     }
   }
 }

@@ -6,23 +6,24 @@ using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(Location.WestUS, new Sku { Name = skuName });
+        public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = skuName });
 
-        public static ProfileData CreateAfdProfileData(SkuName skuName) => new ProfileData("Global", new Sku { Name = skuName });
+        public static ProfileData CreateAfdProfileData(SkuName skuName) => new ProfileData("Global", new Models.Sku { Name = skuName });
 
-        public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(Location.WestUS)
+        public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(AzureLocation.WestUS)
         {
             IsHttpAllowed = true,
             IsHttpsAllowed = true,
             OptimizationType = OptimizationType.GeneralWebDelivery
         };
 
-        public static AfdEndpointData CreateAfdEndpointData() => new AfdEndpointData(Location.WestUS)
+        public static AfdEndpointData CreateAfdEndpointData() => new AfdEndpointData(AzureLocation.WestUS)
         {
             OriginResponseTimeoutSeconds = 60
         };
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             },
             AzureDnsZone = new WritableSubResource
             {
-                Id = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/cdntest/providers/Microsoft.Network/dnszones/azuretest.net"
+                Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/cdntest/providers/Microsoft.Network/dnszones/azuretest.net")
             }
         };
 
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 WafPolicy = new WritableSubResource
                 {
-                    Id = "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf"
+                    Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/testAFDWaf")
                 }
             }
         };
@@ -136,14 +137,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Parameters = new CustomerCertificateParameters(new WritableSubResource
             {
-                Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
+                Id = new ResourceIdentifier("/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert")
             })
             {
                 UseLatestVersion = true
             }
         };
 
-        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new Sku
+        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new Models.Sku
         {
             Name = SkuName.StandardMicrosoft
         });
