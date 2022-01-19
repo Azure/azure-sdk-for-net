@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ namespace Azure.ResourceManager.Core
     {
         private TagResource _tagResource;
         private Tenant _tenant;
+        private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
         /// initialize.
@@ -142,6 +145,23 @@ namespace Azure.ResourceManager.Core
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => new AzureLocation(l));
+        }
+
+        /// <summary>
+        /// Gets a cached client to use for extension methods.
+        /// </summary>
+        /// <typeparam name="T"> The type of client to get. </typeparam>
+        /// <param name="func"> The constructor factory for the client. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public T GetCachedClient<T>(Func<ArmClient, T> func)
+            where T : class
+        {
+            if (!_clientCache.TryGetValue(typeof(T), out object client))
+            {
+                client = func(ArmClient);
+                _clientCache.TryAdd(typeof(T), client);
+            }
+            return client as T;
         }
     }
 }
