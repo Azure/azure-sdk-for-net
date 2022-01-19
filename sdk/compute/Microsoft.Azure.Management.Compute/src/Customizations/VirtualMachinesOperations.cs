@@ -5,6 +5,11 @@
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Azure.Management.Compute.Models;
+    using System.Net.Http;
+    using Newtonsoft.Json;
+    using System.Linq;
+    using System.Net;
 
     /// <summary>
     /// VirtualMachinesOperations operations.
@@ -169,7 +174,7 @@
             return _result;
         }
 
-        public async Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {

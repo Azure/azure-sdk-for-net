@@ -21,12 +21,7 @@
             }
         }
 
-        public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly)
-        {
-            return operations.ListAllAsync(statusOnly).GetAwaiter().GetResult();
-        }
-
-        public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly, CancellationToken cancellationToken)
         {
             using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, null, cancellationToken).ConfigureAwait(false))
             {
