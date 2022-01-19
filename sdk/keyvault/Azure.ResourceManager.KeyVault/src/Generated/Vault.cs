@@ -109,6 +109,9 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_Get
         /// <summary> Gets the specified Azure key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Vault>> GetAsync(CancellationToken cancellationToken = default)
@@ -129,6 +132,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_Get
         /// <summary> Gets the specified Azure key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Vault> Get(CancellationToken cancellationToken = default)
@@ -185,6 +191,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_Delete
         /// <summary> Deletes the specified Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,6 +216,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_Delete
         /// <summary> Deletes the specified Azure key vault. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,6 +241,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_Update
         /// <summary> Update a key vault in the specified subscription. </summary>
         /// <param name="parameters"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,6 +269,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_Update
         /// <summary> Update a key vault in the specified subscription. </summary>
         /// <param name="parameters"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -279,6 +297,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_UpdateAccessPolicy
         /// <summary> Update access policies in a key vault in the specified subscription. </summary>
         /// <param name="operationKind"> Name of the operation. </param>
         /// <param name="parameters"> Access policy to merge into the vault. </param>
@@ -305,6 +326,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: Vaults_UpdateAccessPolicy
         /// <summary> Update access policies in a key vault in the specified subscription. </summary>
         /// <param name="operationKind"> Name of the operation. </param>
         /// <param name="parameters"> Access policy to merge into the vault. </param>
@@ -331,6 +355,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateLinkResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: PrivateLinkResources_ListByVault
         /// <summary> Gets the private link resources supported for the key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -354,6 +381,9 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateLinkResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+        /// OperationId: PrivateLinkResources_ListByVault
         /// <summary> Gets the private link resources supported for the key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -377,6 +407,16 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
+        #region VaultKey
+
+        /// <summary> Gets a collection of VaultKeys in the Vault. </summary>
+        /// <returns> An object representing collection of VaultKeys and their operations over a Vault. </returns>
+        public virtual VaultKeyCollection GetVaultKeys()
+        {
+            return new VaultKeyCollection(this);
+        }
+        #endregion
+
         #region PrivateEndpointConnection
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the Vault. </summary>
@@ -384,6 +424,16 @@ namespace Azure.ResourceManager.KeyVault
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
+        }
+        #endregion
+
+        #region Secret
+
+        /// <summary> Gets a collection of Secrets in the Vault. </summary>
+        /// <returns> An object representing collection of Secrets and their operations over a Vault. </returns>
+        public virtual SecretCollection GetSecrets()
+        {
+            return new SecretCollection(this);
         }
         #endregion
     }

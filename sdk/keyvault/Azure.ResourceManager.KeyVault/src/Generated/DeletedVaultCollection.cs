@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.KeyVault
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Vaults_GetDeleted
         /// <summary> Gets the deleted Azure key vault. </summary>
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
@@ -82,6 +85,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Vaults_GetDeleted
         /// <summary> Gets the deleted Azure key vault. </summary>
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>

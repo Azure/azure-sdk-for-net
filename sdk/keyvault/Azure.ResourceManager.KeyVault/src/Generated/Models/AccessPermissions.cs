@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Permissions the identity has for keys, secrets, certificates and storage. </summary>
-    public partial class Permissions
+    public partial class AccessPermissions
     {
-        /// <summary> Initializes a new instance of Permissions. </summary>
-        public Permissions()
+        /// <summary> Initializes a new instance of AccessPermissions. </summary>
+        public AccessPermissions()
         {
             Keys = new ChangeTrackingList<KeyPermissions>();
             Secrets = new ChangeTrackingList<SecretPermissions>();
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             Storage = new ChangeTrackingList<StoragePermissions>();
         }
 
-        /// <summary> Initializes a new instance of Permissions. </summary>
+        /// <summary> Initializes a new instance of AccessPermissions. </summary>
         /// <param name="keys"> Permissions to keys. </param>
         /// <param name="secrets"> Permissions to secrets. </param>
         /// <param name="certificates"> Permissions to certificates. </param>
         /// <param name="storage"> Permissions to storage accounts. </param>
-        internal Permissions(IList<KeyPermissions> keys, IList<SecretPermissions> secrets, IList<CertificatePermissions> certificates, IList<StoragePermissions> storage)
+        internal AccessPermissions(IList<KeyPermissions> keys, IList<SecretPermissions> secrets, IList<CertificatePermissions> certificates, IList<StoragePermissions> storage)
         {
             Keys = keys;
             Secrets = secrets;
