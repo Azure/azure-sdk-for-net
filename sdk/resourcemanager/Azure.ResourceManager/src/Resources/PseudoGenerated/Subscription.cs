@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, ArmClient.Credential, new ArmClientOptions(), Pipeline);
+            return func(BaseUri, ArmClient.Credential, ClientOptions, Pipeline);
         }
 
         internal static void ValidateResourceId(ResourceIdentifier id)

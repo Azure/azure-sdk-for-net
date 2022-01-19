@@ -114,6 +114,8 @@ namespace Azure.ResourceManager
                 Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Scope));
             }
 
+            ClientOptions = options.Clone();
+
             DiagnosticOptions = options.Diagnostics;
 
             CopyApiVersionOverrides(options);
@@ -166,6 +168,11 @@ namespace Azure.ResourceManager
         /// Gets the base URI of the service.
         /// </summary>
         protected internal virtual Uri BaseUri { get; private set; }
+
+        /// <summary>
+        /// Gets the client options
+        /// </summary>
+        protected internal virtual ArmClientOptions ClientOptions { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
@@ -325,7 +332,7 @@ namespace Azure.ResourceManager
         [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, Credential, new ArmClientOptions(), Pipeline);
+            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
         /// <summary>

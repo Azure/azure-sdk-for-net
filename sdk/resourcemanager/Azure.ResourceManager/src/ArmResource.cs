@@ -22,6 +22,24 @@ namespace Azure.ResourceManager.Core
         private Tenant _tenant;
 
         /// <summary>
+        /// initialize.
+        /// </summary>
+        /// <param name="clientOptions"></param>
+        /// <param name="credential"></param>
+        /// <param name="uri"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="id"></param>
+#pragma warning disable CA1801 // Review unused parameters
+        protected ArmResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            Id = id;
+            ClientOptions = clientOptions;
+            BaseUri = uri;
+            Pipeline = pipeline;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class for mocking.
         /// </summary>
         protected ArmResource()
@@ -49,6 +67,9 @@ namespace Azure.ResourceManager.Core
 
             ArmClient = armClient;
             Id = id;
+            ClientOptions = armClient.ClientOptions;
+            BaseUri = armClient.BaseUri;
+            Pipeline = armClient.Pipeline;
         }
 
         private Tenant Tenant => _tenant ??= new Tenant(ArmClient);
@@ -60,9 +81,14 @@ namespace Azure.ResourceManager.Core
 
         internal DiagnosticsOptions DiagnosticOptions => ArmClient.DiagnosticOptions;
 
-        internal HttpPipeline Pipeline => ArmClient.Pipeline;
+        internal HttpPipeline Pipeline { get; }
 
-        internal Uri BaseUri => ArmClient.BaseUri;
+        internal Uri BaseUri { get; }
+
+        /// <summary>
+        /// Gets client options
+        /// </summary>
+        protected internal ArmClientOptions ClientOptions { get; }
 
         /// <summary>
         /// Gets the resource identifier.
