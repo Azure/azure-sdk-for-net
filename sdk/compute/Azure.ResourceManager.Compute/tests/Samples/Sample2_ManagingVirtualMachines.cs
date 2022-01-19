@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 {
                     VmSize = VirtualMachineSizeTypes.StandardF2
                 },
-                OsProfile = new OSProfile()
+                OSProfile = new OSProfile()
                 {
                     AdminUsername = "adminUser",
                     ComputerName = "myVM",
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 },
                 StorageProfile = new StorageProfile()
                 {
-                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
                     {
-                        OsType = OperatingSystemTypes.Linux,
+                        OSType = OperatingSystemTypes.Linux,
                         Caching = CachingTypes.ReadWrite,
                         ManagedDisk = new ManagedDiskParameters()
                         {
