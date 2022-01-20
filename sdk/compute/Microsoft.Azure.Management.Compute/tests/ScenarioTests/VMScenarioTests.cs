@@ -140,7 +140,7 @@ namespace Compute.Tests
                 ImageReference image = new ImageReference(publisher: "MICROSOFTWINDOWSSERVER", offer: "WINDOWS-CVM", version: "20348.230.2109130355", sku: "2022-DATACENTER-CVM");
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
                 VMDiskSecurityProfile diskSecurityProfile = new VMDiskSecurityProfile(securityEncryptionType: "VMGuestStateOnly");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ConfidentialVM", vmSize: "StandardDC2asV5", hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ConfidentialVM", vmSize: "Standard_DC2as_v5", hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, securityType: "ConfidentialVM", imageReference: image, validateListAvailableSize: false, diskSecurityProfile: diskSecurityProfile);
             }
             finally

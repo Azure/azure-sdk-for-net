@@ -589,7 +589,7 @@ namespace Compute.Tests
                         subnet: vmssSubnet,
                         capacity: 2);
                     String vmssFilterMatch = $"'virtualMachineScaleSet/id' eq '/subscriptions/{m_subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'";
-                    var listResponse = m_CrpClient.VirtualMachines.ListAll(vmssFilterMatch);
+                    var listResponse = m_CrpClient.VirtualMachines.ListAll(null, vmssFilterMatch);
 
                     var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                     foreach (VirtualMachine vm in listResponse)
@@ -597,15 +597,12 @@ namespace Compute.Tests
                         Assert.True(string.Equals(vm.VirtualMachineScaleSet.Id, vmss.Id, StringComparison.OrdinalIgnoreCase));
                     }
 
-                    passed = true;
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                 }
                 finally
                 {
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
                 }
-
-                Assert.True(passed);
             }
         }
 
