@@ -12,6 +12,8 @@ skip-csproj: true
 output-folder: Generated/
 override-operation-name:
   CheckNameAvailability: CheckDeviceUpdateNameAvailability
+mgmt-debug:
+  show-request-path: true
 directive:
   - from: swagger-document
     where: $.definitions.GroupInformation
@@ -58,7 +60,6 @@ directive:
   - remove-operation: Accounts_Head
   - remove-operation: Instances_Head
   - remove-operation: Operations_List
-  - remove-operation: DeviceUpdateAccounts_Update
   - rename-model:
       from: AccountUpdate
       to: DeviceUpdateAccountUpdateOptions

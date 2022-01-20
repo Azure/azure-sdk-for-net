@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             return new DeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CheckNameAvailability
         /// <summary> Checks ADU resource name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="request"> Check Name Availability Request. </param>
@@ -64,6 +67,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CheckNameAvailability
         /// <summary> Checks ADU resource name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="request"> Check Name Availability Request. </param>
@@ -96,6 +102,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DeviceUpdateAccounts_ListBySubscription
         /// <summary> Lists the DeviceUpdateAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,6 +151,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DeviceUpdateAccounts_ListBySubscription
         /// <summary> Lists the DeviceUpdateAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

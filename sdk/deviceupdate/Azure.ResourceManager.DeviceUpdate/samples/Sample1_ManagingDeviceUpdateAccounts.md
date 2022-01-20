@@ -63,6 +63,23 @@ await foreach (DeviceUpdateAccount account in response)
 }
 ```
 
+***Update an account***
+
+```C# Snippet:Managing_Accounts_UpdateAnAccount
+// First we need to get the account collection from the specific resource group
+DeviceUpdateAccountCollection accountCollection = resourceGroup.GetDeviceUpdateAccounts();
+// Now we can get the account with GetAsync()
+DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
+// With UpdateAsync(), we can update the account
+DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOptions()
+{
+    Location = AzureLocation.WestUS2,
+    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
+};
+DeviceUpdateAccountUpdateOperation lro = await account.UpdateAsync(true, updateOptions);
+account = lro.Value;
+```
+
 ***Delete an account***
 
 ```C# Snippet:Managing_Accounts_DeleteAnAccount
