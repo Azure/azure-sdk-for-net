@@ -83,7 +83,7 @@ namespace Azure.Core.TestFramework
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    var recordResponse = await _proxy.Client.StartRecordAsync(_sessionFile);
+                    var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile));
                     RecordingId = recordResponse.Headers.XRecordingId;
                     await AddProxySanitizersAsync();
 
@@ -92,7 +92,7 @@ namespace Azure.Core.TestFramework
                     ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = null;
                     try
                     {
-                        playbackResponse = await _proxy.Client.StartPlaybackAsync(_sessionFile);
+                        playbackResponse = await _proxy.Client.StartPlaybackAsync(new StartInformation(_sessionFile));
                     }
                     catch (RequestFailedException ex)
                         when (ex.Status == 404)
