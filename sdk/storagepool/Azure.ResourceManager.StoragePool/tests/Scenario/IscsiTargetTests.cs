@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.StoragePool.Tests
         public async Task Setup()
         {
             _resourceGroup = await CreateResourceGroupAsync();
-            SubnetResourceId = "<insert-subnet-resource-id>";
-            ManagedDiskId = "<insert-managed-disk-resource-id>";
+            SubnetResourceId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/synthetics-permanent-canadacentral/providers/Microsoft.Network/virtualNetworks/synthetics-vnet/subnets/synthetics-subnet";
+            ManagedDiskId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/synthetics-permanent-canadacentral/providers/Microsoft.Compute/disks/synthetics-test-disk";
         }
 
         [Test]

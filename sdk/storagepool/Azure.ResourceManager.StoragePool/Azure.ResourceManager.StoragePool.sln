@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StoragePool", "src\Azure.ResourceManager.StoragePool.csproj", "{A10BAB45-6250-41CA-8506-403799AD6C1B}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{77EE59F4-F06D-4FAE-974B-F6DF9B566575}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{EA11A031-A97F-49A1-8AE9-2619B97C015F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Compute", "..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj", "{F9140D0D-C254-435D-9280-B0E7CC77B56E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,18 @@ Global
 		{EA11A031-A97F-49A1-8AE9-2619B97C015F}.Release|x64.Build.0 = Release|Any CPU
 		{EA11A031-A97F-49A1-8AE9-2619B97C015F}.Release|x86.ActiveCfg = Release|Any CPU
 		{EA11A031-A97F-49A1-8AE9-2619B97C015F}.Release|x86.Build.0 = Release|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Debug|x64.Build.0 = Debug|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Debug|x86.Build.0 = Debug|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Release|x64.ActiveCfg = Release|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Release|x64.Build.0 = Release|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Release|x86.ActiveCfg = Release|Any CPU
+		{F9140D0D-C254-435D-9280-B0E7CC77B56E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
