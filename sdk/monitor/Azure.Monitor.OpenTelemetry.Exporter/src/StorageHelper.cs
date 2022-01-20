@@ -10,19 +10,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class StorageHelper
     {
-        private static string defaultStorageLocation;
+        private static string defaultStorageDirectory;
         private const string nonWindowsVarTmp = "/var/tmp/";
         private const string nonWindowsTmp = "/tmp/";
 
-        internal static string GetDefaultStorageLocation()
+        internal static string GetdefaultStorageDirectory()
         {
-            if (defaultStorageLocation != null)
+            if (defaultStorageDirectory != null)
             {
-                return defaultStorageLocation;
+                return defaultStorageDirectory;
             }
             else
             {
-                string folderPath;
+                string dirPath;
                 IDictionary environmentVars = Environment.GetEnvironmentVariables();
 
                 if (IsWindowsOS())
@@ -30,21 +30,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     string localAppData = environmentVars["LOCALAPPDATA"].ToString();
                     if (localAppData != null)
                     {
-                        folderPath = TryCreateTelemetryFolder(localAppData);
-                        if (folderPath != null)
+                        dirPath = CreateTelemetryDirectory(localAppData);
+                        if (dirPath != null)
                         {
-                            defaultStorageLocation = folderPath;
-                            return defaultStorageLocation;
+                            defaultStorageDirectory = dirPath;
+                            return defaultStorageDirectory;
                         }
 
                         string temp = environmentVars["TEMP"].ToString();
                         if (temp != null)
                         {
-                            folderPath = TryCreateTelemetryFolder(temp);
-                            if (folderPath != null)
+                            dirPath = CreateTelemetryDirectory(temp);
+                            if (dirPath != null)
                             {
-                                defaultStorageLocation = folderPath;
-                                return defaultStorageLocation;
+                                defaultStorageDirectory = dirPath;
+                                return defaultStorageDirectory;
                             }
                         }
                     }
@@ -54,30 +54,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     string tmpdir = environmentVars["TMPDIR"].ToString();
                     if (tmpdir != null)
                     {
-                        folderPath = TryCreateTelemetryFolder(tmpdir);
-                        if (folderPath != null)
+                        dirPath = CreateTelemetryDirectory(tmpdir);
+                        if (dirPath != null)
                         {
-                            defaultStorageLocation = folderPath;
-                            return defaultStorageLocation;
+                            defaultStorageDirectory = dirPath;
+                            return defaultStorageDirectory;
                         }
                     }
 
-                    folderPath = TryCreateTelemetryFolder(nonWindowsVarTmp);
-                    if (folderPath != null)
+                    dirPath = CreateTelemetryDirectory(nonWindowsVarTmp);
+                    if (dirPath != null)
                     {
-                        defaultStorageLocation = folderPath;
-                        return defaultStorageLocation;
+                        defaultStorageDirectory = dirPath;
+                        return defaultStorageDirectory;
                     }
 
-                    folderPath = TryCreateTelemetryFolder(nonWindowsTmp);
-                    if (folderPath != null)
+                    dirPath = CreateTelemetryDirectory(nonWindowsTmp);
+                    if (dirPath != null)
                     {
-                        defaultStorageLocation = folderPath;
-                        return defaultStorageLocation;
+                        defaultStorageDirectory = dirPath;
+                        return defaultStorageDirectory;
                     }
                 }
 
-                return defaultStorageLocation;
+                return defaultStorageDirectory;
             }
         }
 
@@ -86,13 +86,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="path">Base directory.</param>
         /// <returns>Directory path if it is created else null.</returns>
-        private static string TryCreateTelemetryFolder(string path)
+        private static string CreateTelemetryDirectory(string path)
         {
             try
             {
-                string telemetryPath = Path.Combine(path, "Microsoft", "ApplicationInsights");
-                Directory.CreateDirectory(telemetryPath);
-                return telemetryPath;
+                string telemetryDirPath = Path.Combine(path, "Microsoft", "ApplicationInsights");
+                Directory.CreateDirectory(telemetryDirPath);
+                return telemetryDirPath;
             }
             catch (Exception ex)
             {

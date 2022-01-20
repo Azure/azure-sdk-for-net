@@ -48,6 +48,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             V2020_09_15_Preview = 1,
         }
 
-        public string StorageFolder { get; set; }
+        public string StorageDirectory { get; set; }
     }
 }
