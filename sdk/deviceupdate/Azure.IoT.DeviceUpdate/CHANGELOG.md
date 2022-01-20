@@ -11,8 +11,6 @@
 ### Breaking Changes
 - Removed all models
 
-### Bugs Fixed
-
 ### Other Changes
 - Release Azure Device Update for IoT Hub library with protocol methods.
 
