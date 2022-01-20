@@ -7,9 +7,9 @@ Run `generate.ps1` in this directory or run `dotnet build /t:GenerateCode` to ge
 > see <https://aka.ms/autorest>
 
 ``` yaml
-tag: package-2020-10-31
+tag: package-2021-06-30-preview
 require: 
-  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/14fb40342c19f8b483e132038f8424ee62b745d9/specification/digitaltwins/data-plane/readme.md
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1233f92f47db0cc4201cb4065180d9f4b67d2b6b/specification/digitaltwins/data-plane/readme.md
 ```
 
 ### Directives
