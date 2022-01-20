@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             ClientOptions.TryGetApiVersion(Id.ResourceType, out string apiVersion);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(this, subscription);
+            _providerCollection = new ProviderCollection(ArmClient, subscription);
         }
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             ClientOptions.TryGetApiVersion(Id.ResourceType, out string apiVersion);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(this, subscription);
+            _providerCollection = new ProviderCollection(ArmClient, subscription);
         }
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class. </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             ClientOptions.TryGetApiVersion(Id.ResourceType, out string apiVersion);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(this, subscription);
+            _providerCollection = new ProviderCollection(ArmClient, subscription);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>

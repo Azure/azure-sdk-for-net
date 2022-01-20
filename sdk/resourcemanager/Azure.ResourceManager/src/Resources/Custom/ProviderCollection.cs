@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Resources
 #endif
         }
 
-        internal ProviderCollection(ArmResource operations, ResourceIdentifier id)
-            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), id)
+        internal ProviderCollection(ArmClient armClient, ResourceIdentifier id)
+            : base(armClient, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);

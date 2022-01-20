@@ -17,17 +17,21 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class Subscription : ArmResource
     {
-        /// <summary>
-        /// Provides a way to reuse the protected client context.
-        /// </summary>
-        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
-        /// <param name="func"> The method to pass the internal properties to. </param>
-        /// <returns> Whatever the delegate returns. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
+        /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal Subscription(ArmClient options, ResourceIdentifier id) : base(options, id)
         {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resources

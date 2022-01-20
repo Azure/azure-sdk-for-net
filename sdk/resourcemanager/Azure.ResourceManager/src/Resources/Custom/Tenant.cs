@@ -45,12 +45,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="Subscription"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        internal Tenant(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
-            : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.Root)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        internal Tenant(ArmClient client)
+            : base(client, ResourceIdentifier.Root)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);
@@ -59,19 +56,6 @@ namespace Azure.ResourceManager.Resources
 #if DEBUG
             ValidateResourceId(Id);
 #endif
-        }
-
-        /// <summary>
-        /// Provides a way to reuse the protected client context.
-        /// </summary>
-        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
-        /// <param name="func"> The method to pass the internal properties to. </param>
-        /// <returns> Whatever the delegate returns. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
-        {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
         /// <summary>

@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Initializes a new instance of the <see cref="TenantCollection"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
-        internal TenantCollection(ClientContext clientContext)
-            : base(clientContext)
+        /// <param name="client"></param>
+        internal TenantCollection(ArmClient client)
+            : base(client, ResourceIdentifier.Root)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             ClientOptions.TryGetApiVersion(Tenant.ResourceType, out var apiVersion);
