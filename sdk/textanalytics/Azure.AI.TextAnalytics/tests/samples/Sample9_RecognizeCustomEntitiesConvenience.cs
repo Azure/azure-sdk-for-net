@@ -13,7 +13,6 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        [Ignore("")]
         public void RecognizeCustomEntitiesConvenience()
         {
             // Create a text analytics client.
