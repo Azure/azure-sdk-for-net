@@ -19,6 +19,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [NonParallelizable]
     public class HttpClientTransportFunctionalTest : TransportFunctionalTests
     {
         private static RemoteCertificateValidationCallback certCallback = (_, _, _, _) => true;
@@ -37,6 +38,7 @@ namespace Azure.Core.Tests
         }
 
 #if NET461
+        // These setup and teardown actions require that entire test class be NonParallelizable.
         [OneTimeSetUp]
         public void TestSetup()
         {
@@ -90,7 +92,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [NonParallelizable]
         public async Task CookiesCanBeEnabledUsingSwitch()
         {
             using var appContextSwitch = new TestAppContextSwitch("Azure.Core.Pipeline.HttpClientTransport.EnableCookies", "true");
@@ -99,7 +100,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [NonParallelizable]
         public async Task CookiesCanBeEnabledUsingEnvVar()
         {
             using var envVar = new TestEnvVar("AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES", "true");
