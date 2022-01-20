@@ -548,7 +548,6 @@ namespace Compute.Tests
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
                 VirtualMachineScaleSet inputVMScaleSet;
 
-                bool passed = false;
                 try
                 {
                     Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
