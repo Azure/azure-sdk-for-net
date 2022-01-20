@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- OutputModelUri now returns a uri to a .zip file containing the .ou file instead of the .ou file itself when using the default service version
 
 ### Key Bugs Fixed
 
