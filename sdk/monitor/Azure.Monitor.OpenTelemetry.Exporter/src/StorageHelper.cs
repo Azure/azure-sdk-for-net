@@ -10,7 +10,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class StorageHelper
     {
-        private static readonly IDictionary environmentVars = Environment.GetEnvironmentVariables();
         private static string defaultStorageLocation;
         private const string nonWindowsVarTmp = "/var/tmp/";
         private const string nonWindowsTmp = "/tmp/";
@@ -24,6 +23,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             else
             {
                 string folderPath;
+                IDictionary environmentVars = Environment.GetEnvironmentVariables();
+
                 if (IsWindowsOS())
                 {
                     string localAppData = environmentVars["LOCALAPPDATA"].ToString();
