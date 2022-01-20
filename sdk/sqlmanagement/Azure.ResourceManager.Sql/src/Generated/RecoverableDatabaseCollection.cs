@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of RecoverableDatabaseCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RecoverableDatabaseCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _recoverableDatabasesRestClient = new RecoverableDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(RecoverableDatabase.ResourceType, out string apiVersion);
+            _recoverableDatabasesRestClient = new RecoverableDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _recoverableDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoverableDatabase(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _recoverableDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RecoverableDatabase(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,9 +127,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _recoverableDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +149,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _recoverableDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse())
-                    : Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<RecoverableDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabase(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +201,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecoverableDatabaseCollection.Exists");
             scope.Start();
             try
             {
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _recoverableDatabasesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableDatabase(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableDatabase(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +256,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _recoverableDatabasesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableDatabase(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableDatabase(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

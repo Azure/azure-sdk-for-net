@@ -40,14 +40,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitPeering"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ExpressRouteCircuitPeering(ArmResource options, ExpressRouteCircuitPeeringData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ExpressRouteCircuitPeering(ArmResource options, ExpressRouteCircuitPeeringData data) : base(options, new ResourceIdentifier(data.Id))
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _expressRouteCircuitsRestClient = new ExpressRouteCircuitsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _expressRouteCircuitsRestClient = new ExpressRouteCircuitsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,8 +60,9 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteCircuitPeering(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _expressRouteCircuitsRestClient = new ExpressRouteCircuitsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _expressRouteCircuitsRestClient = new ExpressRouteCircuitsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,8 +77,9 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteCircuitPeering(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _expressRouteCircuitsRestClient = new ExpressRouteCircuitsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _expressRouteCircuitsRestClient = new ExpressRouteCircuitsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -151,7 +154,17 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeering.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -159,13 +172,23 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeering.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified peering from the specified express route circuit. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCircuitPeeringDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitPeeringDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeering.Delete");
             scope.Start();
@@ -187,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified peering from the specified express route circuit. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCircuitPeeringDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitPeeringDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeering.Delete");
             scope.Start();
@@ -196,7 +219,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitPeeringsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ExpressRouteCircuitPeeringDeleteOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitPeeringsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -207,11 +230,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised ARP table associated with the express route circuit in a resource group. </summary>
-        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitListArpTableOperation> GetArpTableExpressRouteCircuitAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitPeeringGetArpTableExpressRouteCircuitOperation> GetArpTableExpressRouteCircuitAsync(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
@@ -223,7 +246,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteCircuitsRestClient.ListArpTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitListArpTableOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                var operation = new ExpressRouteCircuitPeeringGetArpTableExpressRouteCircuitOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,11 +259,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised ARP table associated with the express route circuit in a resource group. </summary>
-        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public virtual ExpressRouteCircuitListArpTableOperation GetArpTableExpressRouteCircuit(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitPeeringGetArpTableExpressRouteCircuitOperation GetArpTableExpressRouteCircuit(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
@@ -252,7 +275,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteCircuitsRestClient.ListArpTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken);
-                var operation = new ExpressRouteCircuitListArpTableOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                var operation = new ExpressRouteCircuitPeeringGetArpTableExpressRouteCircuitOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -265,11 +288,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
-        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitListRoutesTableOperation> GetRoutesTableExpressRouteCircuitAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitPeeringGetRoutesTableExpressRouteCircuitOperation> GetRoutesTableExpressRouteCircuitAsync(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
@@ -281,7 +304,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteCircuitsRestClient.ListRoutesTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitListRoutesTableOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                var operation = new ExpressRouteCircuitPeeringGetRoutesTableExpressRouteCircuitOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -294,11 +317,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
-        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public virtual ExpressRouteCircuitListRoutesTableOperation GetRoutesTableExpressRouteCircuit(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitPeeringGetRoutesTableExpressRouteCircuitOperation GetRoutesTableExpressRouteCircuit(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
@@ -310,7 +333,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteCircuitsRestClient.ListRoutesTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken);
-                var operation = new ExpressRouteCircuitListRoutesTableOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                var operation = new ExpressRouteCircuitPeeringGetRoutesTableExpressRouteCircuitOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -323,11 +346,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised routes table summary associated with the express route circuit in a resource group. </summary>
-        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitListRoutesTableSummaryOperation> GetRoutesTableSummaryExpressRouteCircuitAsync(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitPeeringGetRoutesTableSummaryExpressRouteCircuitOperation> GetRoutesTableSummaryExpressRouteCircuitAsync(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
@@ -339,7 +362,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteCircuitsRestClient.ListRoutesTableSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitListRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                var operation = new ExpressRouteCircuitPeeringGetRoutesTableSummaryExpressRouteCircuitOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,11 +375,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised routes table summary associated with the express route circuit in a resource group. </summary>
-        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
-        public virtual ExpressRouteCircuitListRoutesTableSummaryOperation GetRoutesTableSummaryExpressRouteCircuit(string devicePath, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitPeeringGetRoutesTableSummaryExpressRouteCircuitOperation GetRoutesTableSummaryExpressRouteCircuit(bool waitForCompletion, string devicePath, CancellationToken cancellationToken = default)
         {
             if (devicePath == null)
             {
@@ -368,7 +391,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteCircuitsRestClient.ListRoutesTableSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, cancellationToken);
-                var operation = new ExpressRouteCircuitListRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
+                var operation = new ExpressRouteCircuitPeeringGetRoutesTableSummaryExpressRouteCircuitOperation(_clientDiagnostics, Pipeline, _expressRouteCircuitsRestClient.CreateListRoutesTableSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

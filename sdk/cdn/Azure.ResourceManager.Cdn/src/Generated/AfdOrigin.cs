@@ -39,13 +39,14 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Initializes a new instance of the <see cref = "AfdOrigin"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal AfdOrigin(ArmResource options, AfdOriginData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal AfdOrigin(ArmResource options, AfdOriginData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdOrigin(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Cdn
         internal AfdOrigin(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -147,7 +150,17 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("AfdOrigin.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -155,13 +168,23 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("AfdOrigin.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes an existing origin within an origin group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AfdOriginDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdOriginDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AfdOrigin.Delete");
             scope.Start();
@@ -183,7 +206,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing origin within an origin group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AfdOriginDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdOriginDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AfdOrigin.Delete");
             scope.Start();
@@ -192,7 +215,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _afdOriginsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AfdOriginDeleteOperation(_clientDiagnostics, Pipeline, _afdOriginsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -203,11 +226,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing origin within an origin group. </summary>
-        /// <param name="originUpdateProperties"> Origin properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="originUpdateProperties"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originUpdateProperties"/> is null. </exception>
-        public async virtual Task<AfdOriginUpdateOperation> UpdateAsync(AfdOriginUpdateOptions originUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdOriginUpdateOperation> UpdateAsync(bool waitForCompletion, AfdOriginUpdateOptions originUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (originUpdateProperties == null)
             {
@@ -232,11 +255,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Updates an existing origin within an origin group. </summary>
-        /// <param name="originUpdateProperties"> Origin properties. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="originUpdateProperties"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originUpdateProperties"/> is null. </exception>
-        public virtual AfdOriginUpdateOperation Update(AfdOriginUpdateOptions originUpdateProperties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdOriginUpdateOperation Update(bool waitForCompletion, AfdOriginUpdateOptions originUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (originUpdateProperties == null)
             {

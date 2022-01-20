@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerAdvisorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerAdvisorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerAdvisorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAdvisorsRestClient = new ServerAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerAdvisor.ResourceType, out string apiVersion);
+            _serverAdvisorsRestClient = new ServerAdvisorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerAdvisor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerAdvisor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,9 +127,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerAdvisor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerAdvisor>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +149,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _serverAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerAdvisor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerAdvisor>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerAdvisor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +201,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(advisorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAdvisorCollection.Exists");
             scope.Start();
             try
             {
@@ -229,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _serverAdvisorsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _serverAdvisorsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerAdvisor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

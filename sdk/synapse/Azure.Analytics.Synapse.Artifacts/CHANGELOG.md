@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.13 (Unreleased)
+## 1.0.0-preview.14 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.13 (2022-01-11)
+- Added `MetastoreOperations`.
 
 ## 1.0.0-preview.12 (2021-11-09)
 - Added data flow flowlet

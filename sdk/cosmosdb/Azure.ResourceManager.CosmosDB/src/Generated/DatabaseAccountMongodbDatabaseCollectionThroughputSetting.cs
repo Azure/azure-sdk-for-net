@@ -39,14 +39,15 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of the <see cref = "DatabaseAccountMongodbDatabaseCollectionThroughputSetting"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DatabaseAccountMongodbDatabaseCollectionThroughputSetting(ArmResource options, ThroughputSettingsData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DatabaseAccountMongodbDatabaseCollectionThroughputSetting(ArmResource options, ThroughputSettingsData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +76,8 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccountMongodbDatabaseCollectionThroughputSetting(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _mongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -152,7 +155,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -160,15 +173,25 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the RUs per second of an Azure Cosmos DB MongoDB collection. </summary>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB collection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<MongoDBResourceUpdateMongoDBCollectionThroughputOperation> CreateOrUpdateAsync(ThroughputSettingsUpdateOptions updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountMongodbDatabaseCollectionThroughputSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {
@@ -180,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoDBResourcesRestClient.UpdateMongoDBCollectionThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MongoDBResourceUpdateMongoDBCollectionThroughputOperation(this, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var operation = new DatabaseAccountMongodbDatabaseCollectionThroughputSettingCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -193,11 +216,11 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update the RUs per second of an Azure Cosmos DB MongoDB collection. </summary>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB collection. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual MongoDBResourceUpdateMongoDBCollectionThroughputOperation CreateOrUpdate(ThroughputSettingsUpdateOptions updateThroughputParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountMongodbDatabaseCollectionThroughputSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {
@@ -209,7 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoDBResourcesRestClient.UpdateMongoDBCollectionThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
-                var operation = new MongoDBResourceUpdateMongoDBCollectionThroughputOperation(this, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var operation = new DatabaseAccountMongodbDatabaseCollectionThroughputSettingCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.AddTag");
@@ -239,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _mongoDBResourcesRestClient.GetMongoDBCollectionThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -259,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.AddTag");
@@ -268,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _mongoDBResourcesRestClient.GetMongoDBCollectionThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -287,17 +310,17 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _mongoDBResourcesRestClient.GetMongoDBCollectionThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -316,17 +339,17 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _mongoDBResourcesRestClient.GetMongoDBCollectionThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -345,7 +368,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.RemoveTag");
@@ -354,7 +377,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _mongoDBResourcesRestClient.GetMongoDBCollectionThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -373,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.RemoveTag");
@@ -382,7 +405,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _mongoDBResourcesRestClient.GetMongoDBCollectionThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -396,14 +419,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from manual throughput to autoscale. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<MongoDBResourceMigrateMongoDBCollectionToAutoscaleOperation> MigrateMongoDBCollectionToAutoscaleAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToAutoscaleOperation> MigrateMongoDBCollectionToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.MigrateMongoDBCollectionToAutoscale");
             scope.Start();
             try
             {
                 var response = await _mongoDBResourcesRestClient.MigrateMongoDBCollectionToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MongoDBResourceMigrateMongoDBCollectionToAutoscaleOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToAutoscaleOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -418,14 +441,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from manual throughput to autoscale. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual MongoDBResourceMigrateMongoDBCollectionToAutoscaleOperation MigrateMongoDBCollectionToAutoscale(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToAutoscaleOperation MigrateMongoDBCollectionToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.MigrateMongoDBCollectionToAutoscale");
             scope.Start();
             try
             {
                 var response = _mongoDBResourcesRestClient.MigrateMongoDBCollectionToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new MongoDBResourceMigrateMongoDBCollectionToAutoscaleOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToAutoscaleOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -440,14 +463,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from autoscale to manual throughput. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<MongoDBResourceMigrateMongoDBCollectionToManualThroughputOperation> MigrateMongoDBCollectionToManualThroughputAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToManualThroughputOperation> MigrateMongoDBCollectionToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.MigrateMongoDBCollectionToManualThroughput");
             scope.Start();
             try
             {
                 var response = await _mongoDBResourcesRestClient.MigrateMongoDBCollectionToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MongoDBResourceMigrateMongoDBCollectionToManualThroughputOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToManualThroughputOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -462,14 +485,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB MongoDB collection from autoscale to manual throughput. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual MongoDBResourceMigrateMongoDBCollectionToManualThroughputOperation MigrateMongoDBCollectionToManualThroughput(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToManualThroughputOperation MigrateMongoDBCollectionToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseCollectionThroughputSetting.MigrateMongoDBCollectionToManualThroughput");
             scope.Start();
             try
             {
                 var response = _mongoDBResourcesRestClient.MigrateMongoDBCollectionToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new MongoDBResourceMigrateMongoDBCollectionToManualThroughputOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new DatabaseAccountMongodbDatabaseCollectionThroughputSettingMigrateMongoDBCollectionToManualThroughputOperation(_clientDiagnostics, Pipeline, _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

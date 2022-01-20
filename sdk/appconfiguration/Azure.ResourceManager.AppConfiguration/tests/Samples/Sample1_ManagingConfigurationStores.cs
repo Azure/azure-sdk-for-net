@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
             {
                 PublicNetworkAccess = PublicNetworkAccess.Disabled
             };
-            ConfigurationStore configurationStore = await (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+            ConfigurationStore configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
 
             #endregion
         }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
             ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
             ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
-            await (await configStore.DeleteAsync()).WaitForCompletionResponseAsync();
+            await configStore.DeleteAsync(true);
             #endregion
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
             // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = (await rgCollection.CreateOrUpdateAsync(true ,rgName, new ResourceGroupData(location))).Value;
             #endregion
 
             this.resourceGroup = resourceGroup;

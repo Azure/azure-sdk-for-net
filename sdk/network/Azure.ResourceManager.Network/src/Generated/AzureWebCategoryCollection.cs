@@ -17,6 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -32,12 +33,13 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of AzureWebCategoryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureWebCategoryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AzureWebCategoryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webCategoriesRestClient = new WebCategoriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AzureWebCategory.ResourceType, out string apiVersion);
+            _webCategoriesRestClient = new WebCategoriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AzureWebCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,9 +126,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AzureWebCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +149,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AzureWebCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
             scope.Start();
             try
             {
@@ -227,7 +229,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _webCategoriesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _webCategoriesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -265,7 +267,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _webCategoriesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -280,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _webCategoriesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

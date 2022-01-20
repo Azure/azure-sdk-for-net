@@ -33,12 +33,13 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkSecurityGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkSecurityGroupsRestClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(NetworkSecurityGroup.ResourceType, out string apiVersion);
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,12 +54,12 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates a network security group in the specified resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network security group operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkSecurityGroupCreateOrUpdateOperation CreateOrUpdate(string networkSecurityGroupName, NetworkSecurityGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkSecurityGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (networkSecurityGroupName == null)
             {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkSecurityGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters, cancellationToken);
-                var operation = new NetworkSecurityGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response);
+                var operation = new NetworkSecurityGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,12 +88,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a network security group in the specified resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network security group operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkSecurityGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string networkSecurityGroupName, NetworkSecurityGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkSecurityGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (networkSecurityGroupName == null)
             {
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkSecurityGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkSecurityGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response);
+                var operation = new NetworkSecurityGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkSecurityGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkSecurityGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,9 +194,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkSecurityGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkSecurityGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkSecurityGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,14 +217,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _networkSecurityGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkSecurityGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<NetworkSecurityGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +271,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkSecurityGroupsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _networkSecurityGroupsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkSecurityGroupsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _networkSecurityGroupsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkSecurityGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

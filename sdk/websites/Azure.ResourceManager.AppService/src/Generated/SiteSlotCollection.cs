@@ -31,12 +31,13 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteSlot.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_CreateOrUpdateSlot
         /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateSlotOperation CreateOrUpdate(string slot, WebSiteData siteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SiteSlotCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (slot == null)
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.CreateOrUpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope, cancellationToken);
-                var operation = new WebAppCreateOrUpdateSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response);
+                var operation = new SiteSlotCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_CreateOrUpdateSlot
         /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateSlotOperation> CreateOrUpdateAsync(string slot, WebSiteData siteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteSlotCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             if (slot == null)
             {
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.CreateOrUpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateOrUpdateSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response);
+                var operation = new SiteSlotCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlot(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlot(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,9 +201,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +223,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(slot));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlot>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlot(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlot>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(slot));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.Exists");
             scope.Start();
             try
             {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListSlots(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListSlotsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +345,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListSlotsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListSlotsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlot(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

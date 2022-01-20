@@ -3,6 +3,7 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
+- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable.
 
 ### Breaking Changes
 

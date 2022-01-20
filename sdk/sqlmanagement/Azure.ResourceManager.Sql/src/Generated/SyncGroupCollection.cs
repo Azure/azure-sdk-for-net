@@ -31,12 +31,13 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SyncGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SyncGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _syncGroupsRestClient = new SyncGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SyncGroup.ResourceType, out string apiVersion);
+            _syncGroupsRestClient = new SyncGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// OperationId: SyncGroups_CreateOrUpdate
         /// <summary> Creates or updates a sync group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SyncGroupCreateOrUpdateOperation CreateOrUpdate(string syncGroupName, SyncGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SyncGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (syncGroupName == null)
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _syncGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters, cancellationToken);
-                var operation = new SyncGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _syncGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
+                var operation = new SyncGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _syncGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// OperationId: SyncGroups_CreateOrUpdate
         /// <summary> Creates or updates a sync group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="parameters"> The requested sync group resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SyncGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string syncGroupName, SyncGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SyncGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (syncGroupName == null)
             {
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _syncGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _syncGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
+                var operation = new SyncGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _syncGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _syncGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SyncGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _syncGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SyncGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,9 +201,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _syncGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SyncGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SyncGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +223,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(syncGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _syncGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SyncGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SyncGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(syncGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _syncGroupsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _syncGroupsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +345,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _syncGroupsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _syncGroupsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

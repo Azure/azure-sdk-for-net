@@ -44,10 +44,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/oauth2/exchange", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
@@ -140,10 +137,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendPath("/oauth2/token", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");

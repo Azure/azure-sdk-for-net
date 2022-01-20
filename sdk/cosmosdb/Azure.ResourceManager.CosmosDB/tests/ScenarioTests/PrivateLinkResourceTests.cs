@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete();
+                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(true);
             }
         }
 

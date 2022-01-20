@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         SecurityPartnerProvider IOperationSource<SecurityPartnerProvider>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SecurityPartnerProvider(_operationBase, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement));
+            var data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement);
+            return new SecurityPartnerProvider(_operationBase, data);
         }
 
         async ValueTask<SecurityPartnerProvider> IOperationSource<SecurityPartnerProvider>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SecurityPartnerProvider(_operationBase, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement));
+            var data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement);
+            return new SecurityPartnerProvider(_operationBase, data);
         }
     }
 }

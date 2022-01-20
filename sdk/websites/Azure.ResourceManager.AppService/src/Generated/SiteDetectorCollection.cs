@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteDetectorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDetectorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteDetectorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteDetector.ResourceType, out string apiVersion);
+            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _diagnosticsRestClient.GetSiteDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDetector(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _diagnosticsRestClient.GetSiteDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteDetector(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,9 +136,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _diagnosticsRestClient.GetSiteDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +161,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _diagnosticsRestClient.GetSiteDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteDetector>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDetector(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(detectorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -246,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteDetectorResponses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -261,7 +263,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _diagnosticsRestClient.ListSiteDetectorResponsesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,7 +289,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteDetectorResponsesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -302,7 +304,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _diagnosticsRestClient.ListSiteDetectorResponsesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDatabaseSchemaTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerDatabaseSchemaTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseSchemaTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseTablesRestClient = new DatabaseTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerDatabaseSchemaTable.ResourceType, out string apiVersion);
+            _databaseTablesRestClient = new DatabaseTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _databaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchemaTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _databaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseSchemaTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,9 +127,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +149,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _databaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +201,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.Exists");
             scope.Start();
             try
             {
@@ -229,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _databaseTablesRestClient.ListBySchema(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,7 +246,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _databaseTablesRestClient.ListBySchemaNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _databaseTablesRestClient.ListBySchemaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -286,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _databaseTablesRestClient.ListBySchemaNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

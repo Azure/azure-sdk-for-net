@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        private static CustomLocationsRestOperations GetCustomLocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static CustomLocationsRestOperations GetCustomLocationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new CustomLocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new CustomLocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /providers/Microsoft.ExtendedLocation/operations
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                CustomLocationsRestOperations restOperations = GetCustomLocationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<CustomLocationOperation>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCustomLocations");
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                CustomLocationsRestOperations restOperations = GetCustomLocationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<CustomLocationOperation> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCustomLocations");

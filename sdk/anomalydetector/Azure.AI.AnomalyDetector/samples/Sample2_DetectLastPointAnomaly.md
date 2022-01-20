@@ -53,15 +53,28 @@ Call the client's `DetectLastPointAsync` method with the `DetectRequest` object 
 //detect
 Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
 
-LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
+try
+{
+    LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
 
-if (result.IsAnomaly)
-{
-    Console.WriteLine("The latest point was detected as an anomaly.");
+    if (result.IsAnomaly)
+    {
+        Console.WriteLine("The latest point was detected as an anomaly.");
+    }
+    else
+    {
+        Console.WriteLine("The latest point was not detected as an anomaly.");
+    }
 }
-else
+catch (RequestFailedException ex)
 {
-    Console.WriteLine("The latest point was not detected as an anomaly.");
+    Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+    throw;
+}
+catch (Exception ex)
+{
+    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    throw;
 }
 ```
 To see the full example source files, see:

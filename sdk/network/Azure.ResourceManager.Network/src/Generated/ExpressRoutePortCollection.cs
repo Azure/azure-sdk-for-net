@@ -33,12 +33,13 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRoutePortCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRoutePortsRestClient = new ExpressRoutePortsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ExpressRoutePort.ResourceType, out string apiVersion);
+            _expressRoutePortsRestClient = new ExpressRoutePortsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,12 +54,12 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates the specified ExpressRoutePort resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="parameters"> Parameters supplied to the create ExpressRoutePort operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ExpressRoutePortCreateOrUpdateOperation CreateOrUpdate(string expressRoutePortName, ExpressRoutePortData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRoutePortCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string expressRoutePortName, ExpressRoutePortData parameters, CancellationToken cancellationToken = default)
         {
             if (expressRoutePortName == null)
             {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRoutePortsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken);
-                var operation = new ExpressRoutePortCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRoutePortsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
+                var operation = new ExpressRoutePortCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRoutePortsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,12 +88,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates the specified ExpressRoutePort resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="parameters"> Parameters supplied to the create ExpressRoutePort operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ExpressRoutePortCreateOrUpdateOperation> CreateOrUpdateAsync(string expressRoutePortName, ExpressRoutePortData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRoutePortCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string expressRoutePortName, ExpressRoutePortData parameters, CancellationToken cancellationToken = default)
         {
             if (expressRoutePortName == null)
             {
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRoutePortsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRoutePortCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRoutePortsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
+                var operation = new ExpressRoutePortCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRoutePortsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRoutePortsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePort(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRoutePortsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRoutePort(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,9 +191,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRoutePortsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRoutePort>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRoutePort>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +213,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _expressRoutePortsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRoutePort>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRoutePort>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePort(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRoutePortsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _expressRoutePortsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRoutePortsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _expressRoutePortsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePort(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

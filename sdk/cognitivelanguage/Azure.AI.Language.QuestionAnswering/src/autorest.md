@@ -50,6 +50,8 @@ directive:
 
 ### OperationId renames QuestionAnsweringAuthoring -> QuestionAnsweringProjects
 
+<!-- TODO: If these transforms are not needed, remove them. https://github.com/Azure/azure-sdk-for-net/issues/26173 -->
+
 ```yaml
 directive:
   - from: swagger-document

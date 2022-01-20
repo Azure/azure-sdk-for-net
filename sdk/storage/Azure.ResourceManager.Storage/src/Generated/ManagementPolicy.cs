@@ -39,14 +39,15 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of the <see cref = "ManagementPolicy"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ManagementPolicy(ArmResource options, ManagementPolicyData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ManagementPolicy(ArmResource options, ManagementPolicyData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.Storage
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +76,8 @@ namespace Azure.ResourceManager.Storage
         internal ManagementPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _managementPoliciesRestClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -152,7 +155,17 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -160,13 +173,23 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementPolicyDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementPolicyDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.Delete");
             scope.Start();
@@ -188,7 +211,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementPolicyDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagementPolicyDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.Delete");
             scope.Start();
@@ -197,7 +220,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _managementPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ManagementPolicyDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -208,11 +231,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
-        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public async virtual Task<ManagementPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(ManagementPolicyData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ManagementPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
             {
@@ -237,11 +260,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
-        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ManagementPolicyCreateOrUpdateOperation CreateOrUpdate(ManagementPolicyData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagementPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ManagementPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
             {

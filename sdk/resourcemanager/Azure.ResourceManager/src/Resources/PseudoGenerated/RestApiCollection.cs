@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _nameSpace;
+        private readonly ProviderCollection _providerCollection;
 
         /// <summary> Represents the REST operations. </summary>
         private RestOperations _restClient;
@@ -35,22 +36,37 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of RestApiCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
+        /// <param name="operation"> The resource representing the parent resource. </param>
         /// <param name="nameSpace"> The namespace for the rest apis. </param>
-        internal RestApiCollection(ClientContext parent, string nameSpace) : base(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline)
+        internal RestApiCollection(ArmResource operation, string nameSpace)
+            : base(operation)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _nameSpace = nameSpace;
-            _restClient = new RestOperations(_nameSpace, ClientOptions.ApiVersions.GetApiVersionForNamespace(nameSpace), _clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
+            _providerCollection = new ProviderCollection(this, Id);
         }
 
-        internal static void ValidateResourceId(ResourceIdentifier id)
+
+        private RestOperations GetRestClient(CancellationToken cancellationToken = default)
         {
-            if (id.ResourceType != ResourceIdentifier.Root.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceIdentifier.Root.ResourceType), nameof(id));
+            return _restClient ??= new RestOperations(
+                _nameSpace,
+                _providerCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
+                _clientDiagnostics,
+                Pipeline,
+                ClientOptions,
+                BaseUri);
+        }
+
+        private async Task<RestOperations> GetRestClientAsync(CancellationToken cancellationToken = default)
+        {
+            return _restClient ??= new RestOperations(
+                _nameSpace,
+                await _providerCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
+                _clientDiagnostics,
+                Pipeline,
+                ClientOptions,
+                BaseUri);
         }
 
         /// <summary> Gets a list of operations. </summary>
@@ -64,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(cancellationToken: cancellationToken);
+                    var response = GetRestClient().List(cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -87,7 +103,8 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var restClient = await GetRestClientAsync().ConfigureAwait(false);
+                    var response = await restClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

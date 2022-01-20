@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         PrivateLinkService IOperationSource<PrivateLinkService>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateLinkService(_operationBase, PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement));
+            var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
+            return new PrivateLinkService(_operationBase, data);
         }
 
         async ValueTask<PrivateLinkService> IOperationSource<PrivateLinkService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateLinkService(_operationBase, PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement));
+            var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
+            return new PrivateLinkService(_operationBase, data);
         }
     }
 }

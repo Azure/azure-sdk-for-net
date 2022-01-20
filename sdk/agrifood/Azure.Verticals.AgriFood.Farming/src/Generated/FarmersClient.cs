@@ -41,14 +41,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public FarmersClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -96,6 +90,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetFarmerAsync(string farmerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetFarmer");
             scope.Start();
             try
@@ -148,6 +144,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetFarmer(string farmerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetFarmer");
             scope.Start();
             try
@@ -213,6 +211,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -278,6 +278,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string farmerId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
             scope.Start();
             try
@@ -318,6 +320,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string farmerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.Delete");
             scope.Start();
             try
@@ -358,6 +362,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string farmerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.Delete");
             scope.Start();
             try
@@ -416,6 +422,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -474,6 +482,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -680,6 +690,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -740,6 +753,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
             using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
             scope.Start();
             try

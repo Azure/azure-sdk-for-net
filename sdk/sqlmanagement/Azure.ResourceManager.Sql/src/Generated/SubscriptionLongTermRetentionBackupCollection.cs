@@ -36,15 +36,17 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionLongTermRetentionBackupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionLongTermRetentionBackupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
         internal SubscriptionLongTermRetentionBackupCollection(ArmResource parent, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _longTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SubscriptionLongTermRetentionBackup.ResourceType, out string apiVersion);
+            _longTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
             _locationName = locationName;
             _longTermRetentionServerName = longTermRetentionServerName;
             _longTermRetentionDatabaseName = longTermRetentionDatabaseName;
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _longTermRetentionBackupsRestClient.Get(Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionLongTermRetentionBackup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _longTermRetentionBackupsRestClient.GetAsync(Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionLongTermRetentionBackup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,9 +139,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _longTermRetentionBackupsRestClient.Get(Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionLongTermRetentionBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionLongTermRetentionBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +161,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _longTermRetentionBackupsRestClient.GetAsync(Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionLongTermRetentionBackup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionLongTermRetentionBackup>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +213,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(backupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Exists");
             scope.Start();
             try
             {
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _longTermRetentionBackupsRestClient.ListByDatabase(Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,7 +259,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _longTermRetentionBackupsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,7 +287,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _longTermRetentionBackupsRestClient.ListByDatabaseAsync(Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +302,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _longTermRetentionBackupsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, _locationName, _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

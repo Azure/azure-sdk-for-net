@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
@@ -29,12 +30,13 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedVaultCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeletedVaultCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DeletedVault.ResourceType, out string apiVersion);
+            _vaultsRestClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,6 +50,9 @@ namespace Azure.ResourceManager.KeyVault
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Vaults_GetDeleted
         /// <summary> Gets the deleted Azure key vault. </summary>
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
@@ -71,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = _vaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -80,6 +85,9 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Vaults_GetDeleted
         /// <summary> Gets the deleted Azure key vault. </summary>
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="vaultName"> The name of the vault. </param>
@@ -103,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = await _vaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedVault(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,9 +141,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _vaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedVault>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,14 +168,14 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _vaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeletedVault>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedVault>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedVault(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,7 +230,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedVaultCollection.Exists");
             scope.Start();
             try
             {

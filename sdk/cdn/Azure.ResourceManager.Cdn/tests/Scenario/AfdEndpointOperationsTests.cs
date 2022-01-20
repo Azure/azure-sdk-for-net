@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            await afdEndpointInstance.DeleteAsync();
+            await afdEndpointInstance.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdEndpointInstance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 OriginResponseTimeoutSeconds = 30
             };
             updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await afdEndpointInstance.UpdateAsync(updateOptions);
+            var lro = await afdEndpointInstance.UpdateAsync(true, updateOptions);
             AfdEndpoint updatedAfdEndpointInstance = lro.Value;
             ResourceDataHelper.AssertAfdEndpointUpdate(updatedAfdEndpointInstance, updateOptions);
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 "/*"
             });
-            Assert.DoesNotThrowAsync(async () => await afdEndpointInstance.PurgeContentAsync(purgeParameters));
+            Assert.DoesNotThrowAsync(async () => await afdEndpointInstance.PurgeContentAsync(true, purgeParameters));
         }
 
         [TestCase]

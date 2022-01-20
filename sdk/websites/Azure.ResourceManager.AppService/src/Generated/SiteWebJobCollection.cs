@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteWebJobCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteWebJobCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteWebJobCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteWebJob.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteWebJob(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteWebJob(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,9 +127,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +149,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteWebJob>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteWebJob(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +201,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(webJobName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.Exists");
             scope.Start();
             try
             {
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListWebJobs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListWebJobsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListWebJobsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListWebJobsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

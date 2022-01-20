@@ -31,12 +31,13 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of HubVirtualNetworkConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubVirtualNetworkConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HubVirtualNetworkConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _hubVirtualNetworkConnectionsRestClient = new HubVirtualNetworkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(HubVirtualNetworkConnection.ResourceType, out string apiVersion);
+            _hubVirtualNetworkConnectionsRestClient = new HubVirtualNetworkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates a hub virtual network connection if it doesn&apos;t exist else updates the existing one. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
-        public virtual HubVirtualNetworkConnectionCreateOrUpdateOperation CreateOrUpdate(string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual HubVirtualNetworkConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _hubVirtualNetworkConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters, cancellationToken);
-                var operation = new HubVirtualNetworkConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters).Request, response);
+                var operation = new HubVirtualNetworkConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,12 +86,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a hub virtual network connection if it doesn&apos;t exist else updates the existing one. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
-        public async virtual Task<HubVirtualNetworkConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<HubVirtualNetworkConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _hubVirtualNetworkConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new HubVirtualNetworkConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters).Request, response);
+                var operation = new HubVirtualNetworkConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, hubVirtualNetworkConnectionParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 var response = _hubVirtualNetworkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HubVirtualNetworkConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HubVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _hubVirtualNetworkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HubVirtualNetworkConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HubVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,9 +189,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _hubVirtualNetworkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<HubVirtualNetworkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new HubVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HubVirtualNetworkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new HubVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +211,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _hubVirtualNetworkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<HubVirtualNetworkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new HubVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HubVirtualNetworkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new HubVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _hubVirtualNetworkConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _hubVirtualNetworkConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _hubVirtualNetworkConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _hubVirtualNetworkConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HubVirtualNetworkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

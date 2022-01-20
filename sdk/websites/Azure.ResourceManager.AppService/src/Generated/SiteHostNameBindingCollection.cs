@@ -31,12 +31,13 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteHostNameBindingCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteHostNameBindingCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteHostNameBindingCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteHostNameBinding.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_CreateOrUpdateHostNameBinding
         /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateHostNameBindingOperation CreateOrUpdate(string hostName, HostNameBindingData hostNameBinding, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SiteHostNameBindingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
         {
             if (hostName == null)
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.CreateOrUpdateHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, hostNameBinding, cancellationToken);
-                var operation = new WebAppCreateOrUpdateHostNameBindingOperation(Parent, response);
+                var operation = new SiteHostNameBindingCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_CreateOrUpdateHostNameBinding
         /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateHostNameBindingOperation> CreateOrUpdateAsync(string hostName, HostNameBindingData hostNameBinding, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteHostNameBindingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
         {
             if (hostName == null)
             {
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.CreateOrUpdateHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, hostNameBinding, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateOrUpdateHostNameBindingOperation(Parent, response);
+                var operation = new SiteHostNameBindingCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHostNameBinding(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteHostNameBinding(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,9 +201,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteHostNameBinding>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteHostNameBinding>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +223,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteHostNameBinding>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteHostNameBinding>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.Exists");
             scope.Start();
             try
             {
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListHostNameBindings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webAppsRestClient.ListHostNameBindingsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +345,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListHostNameBindingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webAppsRestClient.ListHostNameBindingsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

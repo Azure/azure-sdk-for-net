@@ -29,8 +29,8 @@ namespace Azure.AI.TextAnalytics
             }
 
             return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
+                ? await diagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(errorCode, errorMessage), errorInfo).ConfigureAwait(false)
+                : diagnostics.CreateRequestFailedException(response, new ResponseError(errorCode, errorMessage), errorInfo);
         }
     }
 }

@@ -56,8 +56,8 @@
     "deserializable",
     "deserializes",
     "diagnoser",
-    "dotnetcli",
     "dont",
+    "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
@@ -73,23 +73,24 @@
     "otel",
     "overridden",
     "parallelization",
+    "personalizer",
     "pkcs",
     "pstn",
     "pwsh",
     "referer",
     "renormalize",
     "retriable",
+    "signup",
     "skus",
     "structs",
     "uints",
+    "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
-    "westus",
-    "xunit",
     "vnet",
-    "unencrypted",
-    "personalizer"
+    "westus",
+    "xunit"
   ],
   "overrides": [
     {
@@ -116,7 +117,8 @@
         "vhds",
         "swappable",
         "ssdzrs",
-        "dscp"
+        "dscp",
+        "vmguest"
       ]
     },
     {
@@ -130,13 +132,17 @@
     {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
+        "Cpus",
         "Ctlr",
         "Lsilogic",
         "Lsilogicsas",
         "Pcnet",
         "Pmem",
         "Pvscsi",
-        "Sesparse"
+        "Sesparse",
+        "VCenter",
+        "VMware",
+        "vSphere"
       ]
     },
     {
@@ -184,9 +190,11 @@
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
+        "echsm",
         "getsas",
         "listsas",
         "oaep",
+        "rsahsm",
         "setsas",
         "mhsm",
         "mhsmip"
@@ -199,14 +207,14 @@
     {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
-        "Droppeded",
         "CIAS",
-        "Vcores",
-        "Unrestorable",
-        "Stdev",
+        "Droppeded",
+        "Nchar",
         "Ntext",
         "Nvarchar",
-        "Stdev"
+        "Stdev",
+        "Unrestorable",
+        "Vcores"
       ]
     },
     {
@@ -278,6 +286,7 @@
         "sybase",
         "sybase",
         "teradata",
+        "updation",
         "usql",
         "vertica",
         "xero"
