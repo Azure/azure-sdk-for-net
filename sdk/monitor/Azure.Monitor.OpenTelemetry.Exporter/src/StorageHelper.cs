@@ -23,54 +23,55 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             else
             {
-                bool result;
+                string folderPath;
                 if (IsWindowsOS())
                 {
-                    string localAppData = GetTelemetrySubDirectory(environmentVars["LOCALAPPDATA"].ToString());
+                    string localAppData = environmentVars["LOCALAPPDATA"].ToString();
                     if (localAppData != null)
                     {
-                        result = TryCreateTelemetryFolder(localAppData);
-                        if (result)
+                        folderPath = TryCreateTelemetryFolder(localAppData);
+                        if (folderPath != null)
                         {
                             defaultStorageLocation = localAppData;
                             return defaultStorageLocation;
                         }
 
-                        string temp = GetTelemetrySubDirectory(environmentVars["TEMP"].ToString());
-                        result = TryCreateTelemetryFolder(temp);
-                        if (result)
+                        string temp = environmentVars["TEMP"].ToString();
+                        if (temp != null)
                         {
-                            defaultStorageLocation = temp;
-                            return defaultStorageLocation;
+                            folderPath = TryCreateTelemetryFolder(temp);
+                            if (folderPath != null)
+                            {
+                                defaultStorageLocation = temp;
+                                return defaultStorageLocation;
+                            }
                         }
                     }
                 }
                 else
                 {
-                    string tmpdir = GetTelemetrySubDirectory(environmentVars["TMPDIR"].ToString());
+                    string tmpdir = environmentVars["TMPDIR"].ToString();
                     if (tmpdir != null)
                     {
-                        result = TryCreateTelemetryFolder(tmpdir);
-                        if (result)
+                        folderPath = TryCreateTelemetryFolder(tmpdir);
+                        if (folderPath != null)
                         {
                             defaultStorageLocation = tmpdir;
                             return defaultStorageLocation;
                         }
                     }
 
-                    string usrTmp = GetTelemetrySubDirectory(nonWindowsVarTmp);
-                    result = TryCreateTelemetryFolder(usrTmp);
-                    if (result)
+                    folderPath = TryCreateTelemetryFolder(nonWindowsVarTmp);
+                    if (folderPath != null)
                     {
-                        defaultStorageLocation = usrTmp;
+                        defaultStorageLocation = folderPath;
                         return defaultStorageLocation;
                     }
 
-                    string tmp = GetTelemetrySubDirectory(nonWindowsTmp);
-                    result = TryCreateTelemetryFolder(tmp);
-                    if (result)
+                    folderPath = TryCreateTelemetryFolder(nonWindowsTmp);
+                    if (folderPath != null)
                     {
-                        defaultStorageLocation = tmp;
+                        defaultStorageLocation = folderPath;
                         return defaultStorageLocation;
                     }
                 }
@@ -79,22 +80,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        private static string GetTelemetrySubDirectory(string temp)
-        {
-            return Path.Combine(temp, "Microsoft", "ApplicationInsights");
-        }
-
-        private static bool TryCreateTelemetryFolder(string path)
+        /// <summary>
+        /// Creates directory for storing telemetry.
+        /// </summary>
+        /// <param name="path">Base directory.</param>
+        /// <returns></returns>
+        private static string TryCreateTelemetryFolder(string path)
         {
             try
             {
-                Directory.CreateDirectory(path);
-                return true;
+                string telemetryPath = Path.Combine(path, "Microsoft", "ApplicationInsights");
+                Directory.CreateDirectory(telemetryPath);
+                return telemetryPath;
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"ErrorCreatingDefaultStorageFolder{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
-                return false;
+                return null;
             }
         }
 
