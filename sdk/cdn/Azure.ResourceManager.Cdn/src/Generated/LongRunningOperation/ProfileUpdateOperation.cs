@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal ProfileUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Profile>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "ProfileUpdateOperation");
+            _operation = new OperationInternals<Profile>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ProfileUpdateOperation");
             _operationBase = operationsBase;
         }
 
