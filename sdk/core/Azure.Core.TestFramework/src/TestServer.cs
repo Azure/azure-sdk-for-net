@@ -37,14 +37,7 @@ namespace Azure.Core.TestFramework
                     {
                         if (https)
                         {
-                            listenOptions.UseHttps(
-                                Path.Combine(
-                                    TestEnvironment.RepositoryRoot,
-                                    "eng",
-                                    "common",
-                                    "testproxy",
-                                    "dotnet-devcert.pfx"),
-                                "password");
+                            listenOptions.UseHttps(TestEnvironment.DevCertPath, TestEnvironment.DevCertPassword);
                         }
                     });
                 })

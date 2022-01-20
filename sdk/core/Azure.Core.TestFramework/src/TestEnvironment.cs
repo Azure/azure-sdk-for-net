@@ -28,6 +28,15 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
+        public static string DevCertPath { get; } = Path.Combine(
+            RepositoryRoot,
+            "eng",
+            "common",
+            "testproxy",
+            "dotnet-devcert.pfx");
+
+        public const string DevCertPassword = "password";
+
         private static readonly Dictionary<Type, Task> s_environmentStateCache = new();
 
         private readonly string _prefix;
