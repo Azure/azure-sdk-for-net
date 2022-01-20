@@ -10,7 +10,7 @@ This tutorial has following sections:
 - [Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)](#azure-sdk-code-geneneration-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
   - [Setup your repo](#setup-your-repo)
-  - [Create starting package](#create-starting-package)
+  - [Create starter package](#create-starter-package)
   - [Add package ship requirements](#add-package-ship-requirements)
     - [Tests](#tests)
     - [Samples](#samples)
@@ -37,7 +37,7 @@ This tutorial has following sections:
 - Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
 - Create a branch to work in. 
 
-## Create starting package
+## Create starter package  
 
 For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
 
@@ -66,7 +66,7 @@ Create a SDK library project, configuration file, or solution based on the speci
 
 - install dotnet template
   
-navigate to the sdk repo root director, and run the following commands:
+navigate to the sdk repo root directory, and run the following commands:
 
 ```
 dotnet new --install sdk/template-dpg/Azure.ServiceTemplate.Template
