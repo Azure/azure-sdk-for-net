@@ -34,7 +34,7 @@
 //            string rgName = "QuickStartRG";
 
 //            ResourceGroupData rgData = new ResourceGroupData(location);
-//            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+//            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 //            ResourceGroup resourceGroup = rgCreateLro.Value;
             #endregion
 

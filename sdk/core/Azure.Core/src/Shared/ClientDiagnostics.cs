@@ -25,14 +25,14 @@ namespace Azure.Core.Pipeline
         private readonly HttpMessageSanitizer _sanitizer;
 
         public ClientDiagnostics(ClientOptions options)
-            : this(options.GetType().Namespace!,
-            GetResourceProviderNamespace(options.GetType().Assembly),
-            options.Diagnostics)
+                    : this(options.GetType().Namespace!,
+                    GetResourceProviderNamespace(options.GetType().Assembly),
+                    options.Diagnostics)
         {
         }
 
-        public ClientDiagnostics(string optionsNameSpace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions)
-            : base(optionsNameSpace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled)
+        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions)
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled)
         {
             _sanitizer = CreateMessageSanitizer(diagnosticsOptions);
         }

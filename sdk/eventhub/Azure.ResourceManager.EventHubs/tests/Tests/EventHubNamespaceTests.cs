@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubNamespace namespace2 = null;
 
             //validate
-            await foreach (EventHubNamespace eventHubNamespace in DefaultSubscription.GetNamespacesAsync())
+            await foreach (EventHubNamespace eventHubNamespace in DefaultSubscription.GetEventHubNamespacesAsync())
             {
                 count++;
                 if (eventHubNamespace.Id.Name == namespaceName1)

@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Network.Tests
                     }
             };
             var virtualNetworkCollection = GetVirtualNetworkCollection(resourceGroup);
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(waitForCompletion: false, vnetName, vnetdata);
+            var putVnetResponseOperation = InstrumentOperation(await virtualNetworkCollection.CreateOrUpdateAsync(waitForCompletion: false, vnetName, vnetdata));
             var vnet = await putVnetResponseOperation.WaitForCompletionAsync();
 
             //create VMs
