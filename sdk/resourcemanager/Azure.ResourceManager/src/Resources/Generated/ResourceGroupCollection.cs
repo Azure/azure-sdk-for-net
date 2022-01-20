@@ -48,12 +48,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual ResourceGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
             if (parameters == null)
             {
@@ -85,12 +86,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ResourceGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
             if (parameters == null)
             {
@@ -120,12 +122,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
         public virtual Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Get");
@@ -150,12 +152,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
         public async virtual Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Get");
@@ -177,12 +179,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
         public virtual Response<ResourceGroup> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
@@ -204,12 +206,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
         public async virtual Task<Response<ResourceGroup>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
@@ -231,12 +233,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Exists");
@@ -256,12 +258,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            if (string.IsNullOrEmpty(resourceGroupName))
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentException($"Parameter {nameof(resourceGroupName)} cannot be null or empty", nameof(resourceGroupName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Exists");

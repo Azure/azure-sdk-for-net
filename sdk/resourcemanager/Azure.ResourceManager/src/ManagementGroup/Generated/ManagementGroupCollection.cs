@@ -65,12 +65,13 @@ namespace Azure.ResourceManager.Management
         /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="createManagementGroupRequest"/> is null. </exception>
         public virtual ManagementGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
             if (createManagementGroupRequest == null)
             {
@@ -107,12 +108,13 @@ namespace Azure.ResourceManager.Management
         /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="createManagementGroupRequest"/> is null. </exception>
         public async virtual Task<ManagementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
             if (createManagementGroupRequest == null)
             {
@@ -149,12 +151,12 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
         public virtual Response<ManagementGroup> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.Get");
@@ -186,12 +188,12 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
         public async virtual Task<Response<ManagementGroup>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.Get");
@@ -217,12 +219,12 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
         public virtual Response<ManagementGroup> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
@@ -248,12 +250,12 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
         public async virtual Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
@@ -279,12 +281,12 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
@@ -308,12 +310,12 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
+            if (string.IsNullOrEmpty(groupId))
             {
-                throw new ArgumentNullException(nameof(groupId));
+                throw new ArgumentException($"Parameter {nameof(groupId)} cannot be null or empty", nameof(groupId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupCollection.Exists");

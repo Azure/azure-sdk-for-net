@@ -31,6 +31,7 @@ input-file:
 # temporarily using a local file to work around an autorest bug that loses extensions during deduplication of schemas: https://github.com/Azure/autorest/issues/4267
 #  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ac3be41ee22ada179ab7b970e98f1289188b3bae/specification/common-types/resource-management/v2/types.json
   - $(this-folder)/types.json
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -53,36 +54,29 @@ directive:
   - from: types.json
     where: $.definitions.*
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true
-  - from: types.json
-    where: $.definitions.*
-    transform: >
-      $["x-namespace"] = "Azure.ResourceManager.Models"
-  - from: types.json
-    where: $.definitions.*
-    transform: >
-      $["x-accessibility"] = "public"
-  - from: types.json
-    where: $.definitions.*
-    transform: >
-      $["x-csharp-formats"] = "json"
-  - from: types.json
-    where: $.definitions.*
-    transform: >
-      $["x-csharp-usage"] = "model,input,output"
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
     where: $.definitions.*.properties[?(@.enum)]
     transform: >
       $["x-namespace"] = "Azure.ResourceManager.Models"
-  - from: types.json
-    where: $.definitions.*.properties[?(@.enum)]
-    transform: >
-      $["x-accessibility"] = "public"
+      $["x-accessibility"] = "public";
 # Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
   - from: types.json
     where: $.definitions.systemData.properties.*
     transform: >
       $["readOnly"] = true
+  - from: managedidentity.json
+    where: $.definitions.*
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
 ```
 
 ### Tag: package-resources
@@ -281,15 +275,17 @@ directive:
         }
       }
     reason: add a fake tenant get operation so that we can generate a tenant where all the Get[TenantResources] operations can be autogen in it. The get operation will be removed with codegen suppress attributes.
+  - from: resources.json
+    where: $.definitions.Identity
+    transform: >
+      $["x-ms-client-name"] = "ResourceIdentity";
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
-  - from: resources.json,
+  - from: policyAssignments.json
     where: $.definitions.Identity
-    transform: 'return undefined'
-  - rename-model:
-      from: Identity
-      to: PolicyAssignmentIdentity
+    transform: >
+      $["x-ms-client-name"] = "PolicyAssignmentIdentity";
   - from: locks.json
     where: $.paths..parameters[?(@.name === "scope")]
     transform: >

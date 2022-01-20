@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is null or empty. </exception>
         public async virtual Task<Response<ProviderData>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceProviderNamespace == null)
+            if (string.IsNullOrEmpty(resourceProviderNamespace))
             {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+                throw new ArgumentException($"Parameter {nameof(resourceProviderNamespace)} cannot be null or empty", nameof(resourceProviderNamespace));
             }
 
             using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is null or empty. </exception>
         public virtual Response<ProviderData> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceProviderNamespace == null)
+            if (string.IsNullOrEmpty(resourceProviderNamespace))
             {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+                throw new ArgumentException($"Parameter {nameof(resourceProviderNamespace)} cannot be null or empty", nameof(resourceProviderNamespace));
             }
 
             using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");

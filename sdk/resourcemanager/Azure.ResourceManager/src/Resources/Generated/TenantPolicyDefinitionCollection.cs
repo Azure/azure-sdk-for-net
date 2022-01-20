@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the built-in policy definition with the given name. </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is null or empty. </exception>
         public virtual Response<TenantPolicyDefinition> Get(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
+            if (string.IsNullOrEmpty(policyDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policyDefinitionName)} cannot be null or empty", nameof(policyDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.Get");
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the built-in policy definition with the given name. </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is null or empty. </exception>
         public async virtual Task<Response<TenantPolicyDefinition>> GetAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
+            if (string.IsNullOrEmpty(policyDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policyDefinitionName)} cannot be null or empty", nameof(policyDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.Get");
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is null or empty. </exception>
         public virtual Response<TenantPolicyDefinition> GetIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
+            if (string.IsNullOrEmpty(policyDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policyDefinitionName)} cannot be null or empty", nameof(policyDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetIfExists");
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is null or empty. </exception>
         public async virtual Task<Response<TenantPolicyDefinition>> GetIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
+            if (string.IsNullOrEmpty(policyDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policyDefinitionName)} cannot be null or empty", nameof(policyDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetIfExists");
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
+            if (string.IsNullOrEmpty(policyDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policyDefinitionName)} cannot be null or empty", nameof(policyDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.Exists");
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
+            if (string.IsNullOrEmpty(policyDefinitionName))
             {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
+                throw new ArgumentException($"Parameter {nameof(policyDefinitionName)} cannot be null or empty", nameof(policyDefinitionName));
             }
 
             using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.Exists");

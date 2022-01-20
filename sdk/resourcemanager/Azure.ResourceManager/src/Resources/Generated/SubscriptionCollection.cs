@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets details about a specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is null or empty. </exception>
         public virtual Response<Subscription> Get(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
-                throw new ArgumentNullException(nameof(subscriptionId));
+                throw new ArgumentException($"Parameter {nameof(subscriptionId)} cannot be null or empty", nameof(subscriptionId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.Get");
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets details about a specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is null or empty. </exception>
         public async virtual Task<Response<Subscription>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
-                throw new ArgumentNullException(nameof(subscriptionId));
+                throw new ArgumentException($"Parameter {nameof(subscriptionId)} cannot be null or empty", nameof(subscriptionId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.Get");
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is null or empty. </exception>
         public virtual Response<Subscription> GetIfExists(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
-                throw new ArgumentNullException(nameof(subscriptionId));
+                throw new ArgumentException($"Parameter {nameof(subscriptionId)} cannot be null or empty", nameof(subscriptionId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.GetIfExists");
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is null or empty. </exception>
         public async virtual Task<Response<Subscription>> GetIfExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
-                throw new ArgumentNullException(nameof(subscriptionId));
+                throw new ArgumentException($"Parameter {nameof(subscriptionId)} cannot be null or empty", nameof(subscriptionId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.GetIfExists");
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is null or empty. </exception>
         public virtual Response<bool> Exists(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
-                throw new ArgumentNullException(nameof(subscriptionId));
+                throw new ArgumentException($"Parameter {nameof(subscriptionId)} cannot be null or empty", nameof(subscriptionId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.Exists");
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is null or empty. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
-                throw new ArgumentNullException(nameof(subscriptionId));
+                throw new ArgumentException($"Parameter {nameof(subscriptionId)} cannot be null or empty", nameof(subscriptionId));
             }
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionCollection.Exists");
