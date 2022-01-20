@@ -1,7 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
+## 1.0.0-beta.3 (2022-01-17)
 
 ## 1.0.0-beta.2 (2021-04-06)
 * Update root namespace from Azure.Iot.DeviceUpdate to Azure.IoT.DeviceUpdate
