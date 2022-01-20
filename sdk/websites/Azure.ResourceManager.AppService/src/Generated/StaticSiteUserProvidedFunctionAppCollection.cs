@@ -31,12 +31,13 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteUserProvidedFunctionAppCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteUserProvidedFunctionAppCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(StaticSiteUserProvidedFunctionApp.ResourceType, out string apiVersion);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,13 +55,13 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// OperationId: StaticSites_RegisterUserProvidedFunctionAppWithStaticSite
         /// <summary> Description for Register a user provided function app with a static site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="functionAppName"> Name of the function app to register with the static site. </param>
         /// <param name="staticSiteUserProvidedFunctionEnvelope"> A JSON representation of the user provided function app properties. See example. </param>
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="staticSiteUserProvidedFunctionEnvelope"/> is null. </exception>
-        public virtual StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation CreateOrUpdate(string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, cancellationToken);
-                var operation = new StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
+                var operation = new StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -92,13 +93,13 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// OperationId: StaticSites_RegisterUserProvidedFunctionAppWithStaticSite
         /// <summary> Description for Register a user provided function app with a static site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="functionAppName"> Name of the function app to register with the static site. </param>
         /// <param name="staticSiteUserProvidedFunctionEnvelope"> A JSON representation of the user provided function app properties. See example. </param>
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="staticSiteUserProvidedFunctionEnvelope"/> is null. </exception>
-        public async virtual Task<StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation> CreateOrUpdateAsync(string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData staticSiteUserProvidedFunctionEnvelope, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             if (functionAppName == null)
             {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteRegisterUserProvidedFunctionAppWithStaticSiteOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
+                var operation = new StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,9 +203,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,14 +225,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteUserProvidedFunctionApp>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,7 +277,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(functionAppName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

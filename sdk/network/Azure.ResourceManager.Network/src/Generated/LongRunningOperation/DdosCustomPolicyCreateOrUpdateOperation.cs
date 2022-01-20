@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         DdosCustomPolicy IOperationSource<DdosCustomPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DdosCustomPolicy(_operationBase, DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement));
+            var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
+            return new DdosCustomPolicy(_operationBase, data);
         }
 
         async ValueTask<DdosCustomPolicy> IOperationSource<DdosCustomPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DdosCustomPolicy(_operationBase, DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement));
+            var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
+            return new DdosCustomPolicy(_operationBase, data);
         }
     }
 }

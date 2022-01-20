@@ -159,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             string content = await input.Content.ReadAsStringAsync().ConfigureAwait(false);
             var headers = input.Headers;
 
-            return await _httpRequestProcessor.ProcessAsync(input, functionName, ProcessEventsAsync, cancellationToken).ConfigureAwait(false);
+            return await _httpRequestProcessor.ProcessAsync(input, functionName, ProcessEventsAsync, BindingType.Unknown, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

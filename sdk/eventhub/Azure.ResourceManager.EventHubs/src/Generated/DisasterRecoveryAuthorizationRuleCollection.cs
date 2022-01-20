@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        /// <summary> Initializes a new instance of DisasterRecoveryAuthorizationRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryAuthorizationRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DisasterRecoveryAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DisasterRecoveryAuthorizationRule.ResourceType, out string apiVersion);
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _disasterRecoveryConfigsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DisasterRecoveryAuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _disasterRecoveryConfigsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DisasterRecoveryAuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,9 +121,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _disasterRecoveryConfigsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DisasterRecoveryAuthorizationRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecoveryAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +143,14 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _disasterRecoveryConfigsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DisasterRecoveryAuthorizationRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DisasterRecoveryAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new DisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +195,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = _disasterRecoveryConfigsRestClient.ListAuthorizationRules(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = _disasterRecoveryConfigsRestClient.ListAuthorizationRulesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,7 +259,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await _disasterRecoveryConfigsRestClient.ListAuthorizationRulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,7 +274,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await _disasterRecoveryConfigsRestClient.ListAuthorizationRulesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

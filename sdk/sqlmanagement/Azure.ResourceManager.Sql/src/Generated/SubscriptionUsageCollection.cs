@@ -18,6 +18,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -33,13 +34,15 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionUsageCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionUsageCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal SubscriptionUsageCollection(ArmResource parent, string locationName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subscriptionUsagesRestClient = new SubscriptionUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SubscriptionUsage.ResourceType, out string apiVersion);
+            _subscriptionUsagesRestClient = new SubscriptionUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
             _locationName = locationName;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _subscriptionUsagesRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _subscriptionUsagesRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionUsage(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,9 +133,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _subscriptionUsagesRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,14 +155,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(usageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _subscriptionUsagesRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +207,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(usageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
             try
             {
@@ -233,7 +236,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _subscriptionUsagesRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,7 +251,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _subscriptionUsagesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,7 +277,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _subscriptionUsagesRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -289,7 +292,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _subscriptionUsagesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        private static ApplicationsRestOperations GetApplicationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ApplicationsRestOperations GetApplicationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ApplicationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ApplicationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static JitRequestsRestOperations GetJitRequestsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static JitRequestsRestOperations GetJitRequestsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new JitRequestsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new JitRequestsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DeploymentScriptsRestOperations GetDeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DeploymentScriptsRestOperations GetDeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DeploymentScriptsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DeploymentScriptsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static TemplateSpecsRestOperations GetTemplateSpecsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static TemplateSpecsRestOperations GetTemplateSpecsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new TemplateSpecsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new TemplateSpecsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the Applications for this <see cref="Subscription" />. </summary>
@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(Application.ResourceType, out string apiVersion);
+                ApplicationsRestOperations restOperations = GetApplicationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<Application>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplications");
@@ -105,7 +106,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(Application.ResourceType, out string apiVersion);
+                ApplicationsRestOperations restOperations = GetApplicationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<Application> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplications");
@@ -178,7 +180,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetJitRequestsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(JitRequestDefinition.ResourceType, out string apiVersion);
+                JitRequestsRestOperations restOperations = GetJitRequestsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<JitRequestDefinition>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
@@ -208,7 +211,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetJitRequestsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(JitRequestDefinition.ResourceType, out string apiVersion);
+                JitRequestsRestOperations restOperations = GetJitRequestsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<JitRequestDefinition> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
@@ -266,7 +270,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DeploymentScript.ResourceType, out string apiVersion);
+                DeploymentScriptsRestOperations restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DeploymentScript>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeploymentScripts");
@@ -311,7 +316,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DeploymentScript.ResourceType, out string apiVersion);
+                DeploymentScriptsRestOperations restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DeploymentScript> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeploymentScripts");
@@ -385,7 +391,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetTemplateSpecsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(TemplateSpec.ResourceType, out string apiVersion);
+                TemplateSpecsRestOperations restOperations = GetTemplateSpecsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<TemplateSpec>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetTemplateSpecs");
@@ -431,7 +438,8 @@ namespace Azure.ResourceManager.Resources
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetTemplateSpecsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(TemplateSpec.ResourceType, out string apiVersion);
+                TemplateSpecsRestOperations restOperations = GetTemplateSpecsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<TemplateSpec> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetTemplateSpecs");

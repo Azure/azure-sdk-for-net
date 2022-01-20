@@ -19,6 +19,9 @@ no-property-type-replacement:
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - AfdCustomDomainHttpsParametersSecret
+override-operation-name:
+  CheckNameAvailability: CheckCdnNameAvailability
+  CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
 directive:
   - from: swagger-document
     where: $.definitions.DeliveryRuleAction.properties.name
@@ -218,7 +221,6 @@ directive:
   - remove-operation: AFDProfiles_CheckHostNameAvailability
   - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
-#  - remove-operation: CheckNameAvailability
   - from: swagger-document
     where: $.definitions.AFDEndpointProtocols
     transform: >

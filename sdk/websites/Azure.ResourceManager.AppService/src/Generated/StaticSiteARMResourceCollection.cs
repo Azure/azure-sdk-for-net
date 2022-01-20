@@ -33,12 +33,13 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteARMResourceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteARMResourceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteARMResourceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(StaticSiteARMResource.ResourceType, out string apiVersion);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: StaticSites_CreateOrUpdateStaticSite
         /// <summary> Description for Creates a new static site in an existing resource group, or updates an existing static site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the static site to create or update. </param>
         /// <param name="staticSiteEnvelope"> A JSON representation of the staticsite properties. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="staticSiteEnvelope"/> is null. </exception>
-        public virtual StaticSiteCreateOrUpdateStaticSiteOperation CreateOrUpdate(string name, StaticSiteARMResourceData staticSiteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual StaticSiteARMResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.CreateOrUpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope, cancellationToken);
-                var operation = new StaticSiteCreateOrUpdateStaticSiteOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response);
+                var operation = new StaticSiteARMResourceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: StaticSites_CreateOrUpdateStaticSite
         /// <summary> Description for Creates a new static site in an existing resource group, or updates an existing static site. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the static site to create or update. </param>
         /// <param name="staticSiteEnvelope"> A JSON representation of the staticsite properties. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="staticSiteEnvelope"/> is null. </exception>
-        public async virtual Task<StaticSiteCreateOrUpdateStaticSiteOperation> CreateOrUpdateAsync(string name, StaticSiteARMResourceData staticSiteEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<StaticSiteARMResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSitesRestClient.CreateOrUpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteCreateOrUpdateStaticSiteOperation(Parent, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response);
+                var operation = new StaticSiteARMResourceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _staticSitesRestClient.GetStaticSite(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StaticSiteARMResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _staticSitesRestClient.GetStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new StaticSiteARMResource(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,9 +203,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.GetStaticSite(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteARMResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteARMResource>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,14 +225,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _staticSitesRestClient.GetStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<StaticSiteARMResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<StaticSiteARMResource>(null, response.GetRawResponse());
+                return Response.FromValue(new StaticSiteARMResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,7 +277,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _staticSitesRestClient.GetStaticSitesByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _staticSitesRestClient.GetStaticSitesByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _staticSitesRestClient.GetStaticSitesByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _staticSitesRestClient.GetStaticSitesByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

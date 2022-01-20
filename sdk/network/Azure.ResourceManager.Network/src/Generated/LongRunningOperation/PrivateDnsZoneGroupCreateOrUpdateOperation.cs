@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         PrivateDnsZoneGroup IOperationSource<PrivateDnsZoneGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateDnsZoneGroup(_operationBase, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement));
+            var data = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement);
+            return new PrivateDnsZoneGroup(_operationBase, data);
         }
 
         async ValueTask<PrivateDnsZoneGroup> IOperationSource<PrivateDnsZoneGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateDnsZoneGroup(_operationBase, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement));
+            var data = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement);
+            return new PrivateDnsZoneGroup(_operationBase, data);
         }
     }
 }

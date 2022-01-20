@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedInstanceLongTermRetentionPolicy IOperationSource<ManagedInstanceLongTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstanceLongTermRetentionPolicy(_operationBase, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement));
+            var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
+            return new ManagedInstanceLongTermRetentionPolicy(_operationBase, data);
         }
 
         async ValueTask<ManagedInstanceLongTermRetentionPolicy> IOperationSource<ManagedInstanceLongTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstanceLongTermRetentionPolicy(_operationBase, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement));
+            var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
+            return new ManagedInstanceLongTermRetentionPolicy(_operationBase, data);
         }
     }
 }

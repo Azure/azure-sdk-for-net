@@ -94,6 +94,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
@@ -172,6 +174,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Create(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
@@ -250,6 +254,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
@@ -328,6 +334,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Update(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
@@ -387,6 +395,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
@@ -446,6 +456,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
@@ -478,6 +490,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
@@ -510,6 +524,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Delete(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try

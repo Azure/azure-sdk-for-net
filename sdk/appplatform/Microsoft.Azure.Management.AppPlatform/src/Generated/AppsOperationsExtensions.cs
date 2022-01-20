@@ -321,6 +321,60 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
+            /// Set existing Deployment under the app as active
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='activeDeploymentCollection'>
+            /// A list of Deployment name to be active.
+            /// </param>
+            public static AppResource SetActiveDeployments(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection)
+            {
+                return operations.SetActiveDeploymentsAsync(resourceGroupName, serviceName, appName, activeDeploymentCollection).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Set existing Deployment under the app as active
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='activeDeploymentCollection'>
+            /// A list of Deployment name to be active.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppResource> SetActiveDeploymentsAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SetActiveDeploymentsWithHttpMessagesAsync(resourceGroupName, serviceName, appName, activeDeploymentCollection, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Check the resource name is valid as well as not in use.
             /// </summary>
             /// <param name='operations'>
@@ -522,6 +576,60 @@ namespace Microsoft.Azure.Management.AppPlatform
             public static async Task<AppResource> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Set existing Deployment under the app as active
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='activeDeploymentCollection'>
+            /// A list of Deployment name to be active.
+            /// </param>
+            public static AppResource BeginSetActiveDeployments(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection)
+            {
+                return operations.BeginSetActiveDeploymentsAsync(resourceGroupName, serviceName, appName, activeDeploymentCollection).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Set existing Deployment under the app as active
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='activeDeploymentCollection'>
+            /// A list of Deployment name to be active.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppResource> BeginSetActiveDeploymentsAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginSetActiveDeploymentsWithHttpMessagesAsync(resourceGroupName, serviceName, appName, activeDeploymentCollection, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

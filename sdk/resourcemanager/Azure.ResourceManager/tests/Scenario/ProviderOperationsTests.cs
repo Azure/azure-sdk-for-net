@@ -44,26 +44,8 @@ namespace Azure.ResourceManager.Tests
             ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
             Response<Provider> response = await providerCollection.GetAsync("microsoft.compute");
             var result = response.Value;
-            var register = await result.RegisterAsync("microsoft.insights");
+            var register = await result.RegisterAsync();
             Assert.IsNotNull(register);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task RegisterNullException()
-        {
-            ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
-            Response<Provider> response = await providerCollection.GetAsync("microsoft.insights");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => {await response.Value.RegisterAsync(null); });
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task RegisterEmptyException()
-        {
-            ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
-            Response<Provider> response = await providerCollection.GetAsync("microsoft.insights");
-            Assert.ThrowsAsync<RequestFailedException>(async () => {await response.Value.RegisterAsync(""); });
         }
 
         [TestCase]
@@ -73,7 +55,7 @@ namespace Azure.ResourceManager.Tests
             ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
             Response<Provider> response = await providerCollection.GetAsync("microsoft.insights");
             var result = response.Value;
-            var unregister = await result.UnregisterAsync("microsoft.insights");
+            var unregister = await result.UnregisterAsync();
             Assert.IsNotNull(unregister);
         }
 
@@ -83,7 +65,6 @@ namespace Azure.ResourceManager.Tests
         {
             ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
             Response<Provider> response = await providerCollection.GetAsync("microsoft.insights");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => {await response.Value.UnregisterAsync(null); });
         }
 
         [TestCase]
@@ -92,7 +73,6 @@ namespace Azure.ResourceManager.Tests
         {
             ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
             Response<Provider> response = await providerCollection.GetAsync("microsoft.insights");
-            Assert.ThrowsAsync<RequestFailedException>(async () => {await response.Value.UnregisterAsync(""); });
         }
     }
 }

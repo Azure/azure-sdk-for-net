@@ -33,12 +33,13 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of DscpConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DscpConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DscpConfigurationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dscpConfigurationRestClient = new DscpConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DscpConfiguration.ResourceType, out string apiVersion);
+            _dscpConfigurationRestClient = new DscpConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,12 +54,12 @@ namespace Azure.ResourceManager.Network
         // Collection level operations.
 
         /// <summary> Creates or updates a DSCP Configuration. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters supplied to the create or update dscp configuration operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DscpConfigurationCreateOrUpdateOperation CreateOrUpdate(string dscpConfigurationName, DscpConfigurationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DscpConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (dscpConfigurationName == null)
             {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _dscpConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters, cancellationToken);
-                var operation = new DscpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters).Request, response);
+                var operation = new DscpConfigurationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,12 +88,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a DSCP Configuration. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters supplied to the create or update dscp configuration operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DscpConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(string dscpConfigurationName, DscpConfigurationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DscpConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (dscpConfigurationName == null)
             {
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _dscpConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DscpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters).Request, response);
+                var operation = new DscpConfigurationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 var response = _dscpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DscpConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscpConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _dscpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DscpConfiguration(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscpConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,9 +191,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _dscpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DscpConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new DscpConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DscpConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new DscpConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +213,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _dscpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DscpConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new DscpConfiguration(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DscpConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new DscpConfiguration(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(dscpConfigurationName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DscpConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _dscpConfigurationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _dscpConfigurationRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _dscpConfigurationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _dscpConfigurationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DscpConfiguration(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

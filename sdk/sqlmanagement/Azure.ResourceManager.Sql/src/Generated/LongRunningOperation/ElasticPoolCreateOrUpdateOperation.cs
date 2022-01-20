@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ElasticPool IOperationSource<ElasticPool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ElasticPool(_operationBase, ElasticPoolData.DeserializeElasticPoolData(document.RootElement));
+            var data = ElasticPoolData.DeserializeElasticPoolData(document.RootElement);
+            return new ElasticPool(_operationBase, data);
         }
 
         async ValueTask<ElasticPool> IOperationSource<ElasticPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ElasticPool(_operationBase, ElasticPoolData.DeserializeElasticPoolData(document.RootElement));
+            var data = ElasticPoolData.DeserializeElasticPoolData(document.RootElement);
+            return new ElasticPool(_operationBase, data);
         }
     }
 }

@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicyDefinitionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinitionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SubscriptionPolicyDefinitionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SubscriptionPolicyDefinition.ResourceType, out string apiVersion);
+            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: PolicyDefinitions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy definition in the given subscription with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(string policyDefinitionName, PolicyDefinitionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SubscriptionPolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, policyDefinitionName, parameters, cancellationToken);
-                var operation = new PolicyDefinitionCreateOrUpdateOperation(Parent, response);
+                var operation = new SubscriptionPolicyDefinitionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: PolicyDefinitions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy definition in the given subscription with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
         /// <param name="parameters"> The policy definition properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(string policyDefinitionName, PolicyDefinitionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SubscriptionPolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             if (policyDefinitionName == null)
             {
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, policyDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyDefinitionCreateOrUpdateOperation(Parent, response);
+                var operation = new SubscriptionPolicyDefinitionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policyDefinitionsRestClient.Get(Id.SubscriptionId, policyDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicyDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policyDefinitionsRestClient.GetAsync(Id.SubscriptionId, policyDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionPolicyDefinition(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,9 +202,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyDefinitionsRestClient.Get(Id.SubscriptionId, policyDefinitionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionPolicyDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionPolicyDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,14 +224,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _policyDefinitionsRestClient.GetAsync(Id.SubscriptionId, policyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SubscriptionPolicyDefinition>(null, response.GetRawResponse())
-                    : Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SubscriptionPolicyDefinition>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicyDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(policyDefinitionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -306,7 +307,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _policyDefinitionsRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _policyDefinitionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _policyDefinitionsRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _policyDefinitionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

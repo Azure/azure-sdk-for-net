@@ -30,12 +30,13 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementLockObjectCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementLockObjectCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagementLockObjectCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagementLockObject.ResourceType, out string apiVersion);
+            _managementLocksRestClient = new ManagementLocksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
 
         // Collection level operations.
@@ -44,12 +45,12 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: ManagementLocks_CreateOrUpdateByScope
         /// <summary> Create or update a management lock by scope. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagementLockCreateOrUpdateByScopeOperation CreateOrUpdate(string lockName, ManagementLockObjectData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagementLockObjectCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
             {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLocksRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
-                var operation = new ManagementLockCreateOrUpdateByScopeOperation(Parent, response);
+                var operation = new ManagementLockObjectCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,12 +82,12 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: ManagementLocks_CreateOrUpdateByScope
         /// <summary> Create or update a management lock by scope. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagementLockCreateOrUpdateByScopeOperation> CreateOrUpdateAsync(string lockName, ManagementLockObjectData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementLockObjectCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
             {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLocksRestClient.CreateOrUpdateByScopeAsync(Id, lockName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockCreateOrUpdateByScopeOperation(Parent, response);
+                var operation = new ManagementLockObjectCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _managementLocksRestClient.GetByScope(Id, lockName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLockObject(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _managementLocksRestClient.GetByScopeAsync(Id, lockName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementLockObject(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,9 +191,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLocksRestClient.GetByScope(Id, lockName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagementLockObject>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagementLockObject>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +213,14 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(lockName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managementLocksRestClient.GetByScopeAsync(Id, lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagementLockObject>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagementLockObject>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementLockObject(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(lockName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectCollection.Exists");
             scope.Start();
             try
             {
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _managementLocksRestClient.ListByScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _managementLocksRestClient.ListByScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -336,7 +337,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _managementLocksRestClient.ListByScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,7 +352,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _managementLocksRestClient.ListByScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockObject(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

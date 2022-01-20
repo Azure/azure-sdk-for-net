@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRoutePort IOperationSource<ExpressRoutePort>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRoutePort(_operationBase, ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement));
+            var data = ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement);
+            return new ExpressRoutePort(_operationBase, data);
         }
 
         async ValueTask<ExpressRoutePort> IOperationSource<ExpressRoutePort>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRoutePort(_operationBase, ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement));
+            var data = ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement);
+            return new ExpressRoutePort(_operationBase, data);
         }
     }
 }

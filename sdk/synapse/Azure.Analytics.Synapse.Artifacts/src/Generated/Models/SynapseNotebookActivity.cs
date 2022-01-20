@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Notebook = notebook;
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, NotebookParameter>();
             Type = "SynapseNotebook";
         }
 
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="notebook"> Synapse notebook reference. </param>
         /// <param name="parameters"> Notebook parameters. </param>
-        internal SynapseNotebookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, IDictionary<string, object> parameters) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SynapseNotebookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, IDictionary<string, NotebookParameter> parameters) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Notebook = notebook;
             Parameters = parameters;
@@ -55,6 +55,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Synapse notebook reference. </summary>
         public SynapseNotebookReference Notebook { get; set; }
         /// <summary> Notebook parameters. </summary>
-        public IDictionary<string, object> Parameters { get; }
+        public IDictionary<string, NotebookParameter> Parameters { get; }
     }
 }
