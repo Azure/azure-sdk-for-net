@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.Identity
 {
@@ -60,6 +61,8 @@ namespace Azure.Identity
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
         /// </summary>
         public string ManagedIdentityClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
+
+        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
