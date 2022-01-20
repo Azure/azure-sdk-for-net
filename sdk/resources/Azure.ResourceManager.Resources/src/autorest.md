@@ -123,6 +123,10 @@ directive:
     where: $.definitions.DeploymentOperationProperties
     transform: >
       $.properties.statusMessage["x-nullable"] = true;
+  - from: managedapplications.json
+    where: $.definitions.Identity.properties.type["x-ms-enum"]
+    transform: >
+      $.name = "ApplicationResourceIdentityType"
 ```
 
 ### Tag: package-track2-preview

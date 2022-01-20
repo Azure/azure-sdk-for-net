@@ -41,14 +41,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public HarvestDataClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -126,6 +120,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetHarvestDataAsync(string farmerId, string harvestDataId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
+
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.GetHarvestData");
             scope.Start();
             try
@@ -208,6 +205,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetHarvestData(string farmerId, string harvestDataId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
+
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.GetHarvestData");
             scope.Start();
             try
@@ -332,6 +332,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string harvestDataId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
+
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
             scope.Start();
             try
@@ -456,6 +459,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string farmerId, string harvestDataId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
+
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
             scope.Start();
             try
@@ -497,6 +503,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string farmerId, string harvestDataId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
+
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Delete");
             scope.Start();
             try
@@ -538,6 +547,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string farmerId, string harvestDataId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
+
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Delete");
             scope.Start();
             try
@@ -664,10 +676,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetAllHarvestDataByFarmerIdAsync(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "HarvestDataClient.GetAllHarvestDataByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -796,10 +805,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetAllHarvestDataByFarmerId(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "HarvestDataClient.GetAllHarvestDataByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)

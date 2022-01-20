@@ -11,6 +11,11 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
     lenient-model-deduplication: true
+
+override-operation-name:
+    Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
+    DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+
 directive:
     - rename-model:
         from: SBNamespace

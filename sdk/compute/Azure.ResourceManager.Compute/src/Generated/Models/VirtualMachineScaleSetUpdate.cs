@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? SinglePlacementGroup { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
-        /// <summary> Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in. </summary>
+        /// <summary> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </summary>
         public ScaleInPolicy ScaleInPolicy { get; set; }
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
         public WritableSubResource ProximityPlacementGroup { get; set; }

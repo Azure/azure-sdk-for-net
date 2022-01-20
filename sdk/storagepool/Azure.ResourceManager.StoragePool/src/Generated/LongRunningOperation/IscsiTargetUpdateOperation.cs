@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.StoragePool.Models
         IscsiTarget IOperationSource<IscsiTarget>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new IscsiTarget(_operationBase, IscsiTargetData.DeserializeIscsiTargetData(document.RootElement));
+            var data = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
+            return new IscsiTarget(_operationBase, data);
         }
 
         async ValueTask<IscsiTarget> IOperationSource<IscsiTarget>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new IscsiTarget(_operationBase, IscsiTargetData.DeserializeIscsiTargetData(document.RootElement));
+            var data = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
+            return new IscsiTarget(_operationBase, data);
         }
     }
 }

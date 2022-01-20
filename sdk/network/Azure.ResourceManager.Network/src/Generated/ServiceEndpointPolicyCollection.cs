@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ServiceEndpointPolicy and their operations over its parent. </summary>
     public partial class ServiceEndpointPolicyCollection : ArmCollection, IEnumerable<ServiceEndpointPolicy>, IAsyncEnumerable<ServiceEndpointPolicy>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServiceEndpointPoliciesRestOperations _serviceEndpointPoliciesRestClient;
@@ -33,26 +33,33 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceEndpointPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServiceEndpointPolicy.ResourceType, out string apiVersion);
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates or updates a service Endpoint Policies. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update service endpoint policy operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServiceEndpointPolicyCreateOrUpdateOperation CreateOrUpdate(string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServiceEndpointPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (serviceEndpointPolicyName == null)
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _serviceEndpointPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken);
-                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
+                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,12 +88,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a service Endpoint Policies. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update service endpoint policy operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServiceEndpointPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServiceEndpointPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (serviceEndpointPolicyName == null)
             {
@@ -102,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _serviceEndpointPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
+                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = _serviceEndpointPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _serviceEndpointPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceEndpointPolicy(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,9 +194,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _serviceEndpointPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceEndpointPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceEndpointPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +217,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _serviceEndpointPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceEndpointPolicy>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceEndpointPolicy>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +271,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _serviceEndpointPoliciesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +312,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _serviceEndpointPoliciesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -328,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _serviceEndpointPoliciesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,7 +350,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _serviceEndpointPoliciesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

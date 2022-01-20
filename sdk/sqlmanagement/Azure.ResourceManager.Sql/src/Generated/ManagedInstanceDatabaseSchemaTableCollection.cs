@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,12 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of DatabaseTable and their operations over its parent. </summary>
     public partial class ManagedInstanceDatabaseSchemaTableCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseSchemaTable>, IAsyncEnumerable<ManagedInstanceDatabaseSchemaTable>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagedDatabaseTablesRestOperations _managedDatabaseTablesRestClient;
@@ -30,16 +31,23 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDatabaseSchemaTableCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaTableCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceDatabaseSchemaTableCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseTablesRestClient = new ManagedDatabaseTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagedInstanceDatabaseSchemaTable.ResourceType, out string apiVersion);
+            _managedDatabaseTablesRestClient = new ManagedDatabaseTablesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ManagedInstanceDatabaseSchema.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ManagedInstanceDatabaseSchema.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceDatabaseSchema.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -64,7 +72,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,9 +127,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceDatabaseSchemaTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceDatabaseSchemaTable>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +149,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managedDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceDatabaseSchemaTable>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstanceDatabaseSchemaTable>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +201,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.Exists");
             scope.Start();
             try
             {
@@ -223,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedDatabaseTablesRestClient.ListBySchema(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -238,7 +246,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedDatabaseTablesRestClient.ListBySchemaNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -265,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedDatabaseTablesRestClient.ListBySchemaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -280,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedDatabaseTablesRestClient.ListBySchemaNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTable(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

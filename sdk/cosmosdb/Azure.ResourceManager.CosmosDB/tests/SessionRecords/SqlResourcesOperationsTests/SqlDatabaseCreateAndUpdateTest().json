@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -45,7 +45,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/Default-CosmosDB-9950?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/Default-CosmosDB-9950?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3083,7 +3083,7 @@
             "id": "databaseName7923",
             "_rid": "rbczAA==",
             "_self": "dbs/rbczAA==/",
-            "_etag": "\u00220000cf0c-0000-0100-0000-612dfac40000\u0022",
+            "_etag": "\"0000cf0c-0000-0100-0000-612dfac40000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1630403268
@@ -3131,7 +3131,7 @@
             "id": "databaseName7923",
             "_rid": "rbczAA==",
             "_self": "dbs/rbczAA==/",
-            "_etag": "\u00220000cf0c-0000-0100-0000-612dfac40000\u0022",
+            "_etag": "\"0000cf0c-0000-0100-0000-612dfac40000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1630403268
@@ -3636,7 +3636,7 @@
             "id": "databaseName7923",
             "_rid": "rbczAA==",
             "_self": "dbs/rbczAA==/",
-            "_etag": "\u00220000cf0c-0000-0100-0000-612dfac40000\u0022",
+            "_etag": "\"0000cf0c-0000-0100-0000-612dfac40000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1630403268
@@ -3684,7 +3684,7 @@
             "id": "databaseName7923",
             "_rid": "rbczAA==",
             "_self": "dbs/rbczAA==/",
-            "_etag": "\u00220000cf0c-0000-0100-0000-612dfac40000\u0022",
+            "_etag": "\"0000cf0c-0000-0100-0000-612dfac40000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1630403268

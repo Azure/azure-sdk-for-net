@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -26,16 +28,23 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of ServerfarmHybridConnectionNamespaceRelayCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerfarmHybridConnectionNamespaceRelayCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerfarmHybridConnectionNamespaceRelayCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerfarmHybridConnectionNamespaceRelay.ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => AppServicePlan.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != AppServicePlan.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServicePlan.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -65,7 +74,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _appServicePlansRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +109,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _appServicePlansRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,9 +139,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServicePlansRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerfarmHybridConnectionNamespaceRelay>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerfarmHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +166,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _appServicePlansRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerfarmHybridConnectionNamespaceRelay>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerfarmHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerfarmHybridConnectionNamespaceRelay(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +228,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(relayName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelayCollection.Exists");
             scope.Start();
             try
             {

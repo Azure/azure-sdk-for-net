@@ -18,20 +18,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Creates or updates a custom IP prefix. </summary>
-    public partial class CustomIPPrefixCreateOrUpdateOperation : Operation<CustomIpPrefix>, IOperationSource<CustomIpPrefix>
+    public partial class CustomIpPrefixCreateOrUpdateOperation : Operation<CustomIpPrefix>, IOperationSource<CustomIpPrefix>
     {
         private readonly OperationInternals<CustomIpPrefix> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of CustomIPPrefixCreateOrUpdateOperation for mocking. </summary>
-        protected CustomIPPrefixCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of CustomIpPrefixCreateOrUpdateOperation for mocking. </summary>
+        protected CustomIpPrefixCreateOrUpdateOperation()
         {
         }
 
-        internal CustomIPPrefixCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CustomIpPrefixCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CustomIpPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomIPPrefixCreateOrUpdateOperation");
+            _operation = new OperationInternals<CustomIpPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomIpPrefixCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         CustomIpPrefix IOperationSource<CustomIpPrefix>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CustomIpPrefix(_operationBase, CustomIpPrefixData.DeserializeCustomIpPrefixData(document.RootElement));
+            var data = CustomIpPrefixData.DeserializeCustomIpPrefixData(document.RootElement);
+            return new CustomIpPrefix(_operationBase, data);
         }
 
         async ValueTask<CustomIpPrefix> IOperationSource<CustomIpPrefix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CustomIpPrefix(_operationBase, CustomIpPrefixData.DeserializeCustomIpPrefixData(document.RootElement));
+            var data = CustomIpPrefixData.DeserializeCustomIpPrefixData(document.RootElement);
+            return new CustomIpPrefix(_operationBase, data);
         }
     }
 }

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         VirtualMachine IOperationSource<VirtualMachine>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualMachine(_operationBase, VirtualMachineData.DeserializeVirtualMachineData(document.RootElement));
+            var data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement);
+            return new VirtualMachine(_operationBase, data);
         }
 
         async ValueTask<VirtualMachine> IOperationSource<VirtualMachine>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualMachine(_operationBase, VirtualMachineData.DeserializeVirtualMachineData(document.RootElement));
+            var data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement);
+            return new VirtualMachine(_operationBase, data);
         }
     }
 }

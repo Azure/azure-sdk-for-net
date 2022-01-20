@@ -1,5 +1,13 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 8.0.0-preview
+
+- Switch the .NET client to use api-version `2021-08-01`
+- new entities added, are `Hostname Configuration`, `AccessType`, `CertificateSource`, `ConnectionStatus`, `HTTPHeader`, `IssueType`, `PlatformVersion`, `SystemData`.
+- Added support for `PrivateLink`.
+- Added support for OpenAPI info contact, license, TOS support.
+- Added List operations to get `OutboundNetworkDependenciesEndpoints`.
+
 ### Changes in 7.0.0-preview
 
 - Switch the .NET client to use api-version `2020-12-01`

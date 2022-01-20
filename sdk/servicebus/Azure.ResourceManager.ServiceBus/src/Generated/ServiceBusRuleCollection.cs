@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of ServiceBusRule and their operations over its parent. </summary>
     public partial class ServiceBusRuleCollection : ArmCollection, IEnumerable<ServiceBusRule>, IAsyncEnumerable<ServiceBusRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RulesRestOperations _rulesRestClient;
@@ -31,26 +31,33 @@ namespace Azure.ResourceManager.ServiceBus
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _rulesRestClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServiceBusRule.ResourceType, out string apiVersion);
+            _rulesRestClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServiceBusSubscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServiceBusSubscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusSubscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates a new rule and updates an existing rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="parameters"> Parameters supplied to create a rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual RuleCreateOrUpdateOperation CreateOrUpdate(string ruleName, ServiceBusRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServiceBusRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -66,7 +73,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _rulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, parameters, cancellationToken);
-                var operation = new RuleCreateOrUpdateOperation(Parent, response);
+                var operation = new ServiceBusRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -79,12 +86,12 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Creates a new rule and updates an existing rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="parameters"> Parameters supplied to create a rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RuleCreateOrUpdateOperation> CreateOrUpdateAsync(string ruleName, ServiceBusRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServiceBusRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -100,7 +107,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _rulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RuleCreateOrUpdateOperation(Parent, response);
+                var operation = new ServiceBusRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +137,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _rulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _rulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,9 +189,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _rulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusRule>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,14 +211,14 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _rulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusRule>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +263,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -284,7 +291,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = _rulesRestClient.ListBySubscriptions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +306,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = _rulesRestClient.ListBySubscriptionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,7 +331,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await _rulesRestClient.ListBySubscriptionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,7 +346,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await _rulesRestClient.ListBySubscriptionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

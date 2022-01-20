@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             string afdRuleName = Recording.GenerateAssetName("AFDRule");
             AfdRule afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
-            await afdRule.DeleteAsync();
+            await afdRule.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdRule.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             };
             updateOptions.Conditions.Add(ResourceDataHelper.CreateDeliveryRuleCondition());
             updateOptions.Actions.Add(ResourceDataHelper.UpdateDeliveryRuleOperation());
-            var lro = await afdRule.UpdateAsync(updateOptions);
+            var lro = await afdRule.UpdateAsync(true, updateOptions);
             AfdRule updatedAfdRule = lro.Value;
             ResourceDataHelper.AssertAfdRuleUpdate(updatedAfdRule, updateOptions);
         }

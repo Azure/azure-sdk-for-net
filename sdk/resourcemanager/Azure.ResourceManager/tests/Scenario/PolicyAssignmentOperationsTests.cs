@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignment policyAssignment = await CreatePolicyAssignment(subscription, policyAssignmentName);
-            await policyAssignment.DeleteAsync();
+            await policyAssignment.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policyAssignment.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

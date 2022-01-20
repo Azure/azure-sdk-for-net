@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineScaleSetVMExtensionsListResult DeserializeVirtualMachineScaleSetVMExtensionsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualMachineScaleSetVMExtensionData>> value = default;
+            Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineScaleSetVMExtensionData> array = new List<VirtualMachineScaleSetVMExtensionData>();
+                    List<VirtualMachineScaleSetVmExtensionData> array = new List<VirtualMachineScaleSetVmExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetVMExtensionData.DeserializeVirtualMachineScaleSetVMExtensionData(item));
+                        array.Add(VirtualMachineScaleSetVmExtensionData.DeserializeVirtualMachineScaleSetVmExtensionData(item));
                     }
                     value = array;
                     continue;

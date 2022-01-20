@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="Deployment" /> object. </returns>
         public static Deployment GetDeployment(this ArmClient armClient, ResourceIdentifier id)
         {
+            Deployment.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Deployment(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="Application" /> object. </returns>
         public static Application GetApplication(this ArmClient armClient, ResourceIdentifier id)
         {
+            Application.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Application(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ApplicationDefinition" /> object. </returns>
         public static ApplicationDefinition GetApplicationDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            ApplicationDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="JitRequestDefinition" /> object. </returns>
         public static JitRequestDefinition GetJitRequestDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
+            JitRequestDefinition.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new JitRequestDefinition(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="DeploymentScript" /> object. </returns>
         public static DeploymentScript GetDeploymentScript(this ArmClient armClient, ResourceIdentifier id)
         {
+            DeploymentScript.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeploymentScript(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ScriptLog" /> object. </returns>
         public static ScriptLog GetScriptLog(this ArmClient armClient, ResourceIdentifier id)
         {
+            ScriptLog.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScriptLog(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpec" /> object. </returns>
         public static TemplateSpec GetTemplateSpec(this ArmClient armClient, ResourceIdentifier id)
         {
+            TemplateSpec.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TemplateSpec(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -97,6 +104,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpecVersion" /> object. </returns>
         public static TemplateSpecVersion GetTemplateSpecVersion(this ArmClient armClient, ResourceIdentifier id)
         {
+            TemplateSpecVersion.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TemplateSpecVersion(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

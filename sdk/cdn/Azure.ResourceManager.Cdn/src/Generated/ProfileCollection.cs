@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of Profile and their operations over its parent. </summary>
     public partial class ProfileCollection : ArmCollection, IEnumerable<Profile>, IAsyncEnumerable<Profile>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ProfilesRestOperations _profilesRestClient;
@@ -33,26 +33,33 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of ProfileCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProfileCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ProfileCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(Profile.ResourceType, out string apiVersion);
+            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates a new CDN profile with a profile name under the specified subscription and resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="profile"> Profile properties needed to create a new profile. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
-        public virtual ProfileCreateOperation CreateOrUpdate(string profileName, ProfileData profile, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string profileName, ProfileData profile, CancellationToken cancellationToken = default)
         {
             if (profileName == null)
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _profilesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken);
-                var operation = new ProfileCreateOperation(Parent, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
+                var operation = new ProfileCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,12 +88,12 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new CDN profile with a profile name under the specified subscription and resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="profile"> Profile properties needed to create a new profile. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
-        public async virtual Task<ProfileCreateOperation> CreateOrUpdateAsync(string profileName, ProfileData profile, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string profileName, ProfileData profile, CancellationToken cancellationToken = default)
         {
             if (profileName == null)
             {
@@ -102,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _profilesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileCreateOperation(Parent, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
+                var operation = new ProfileCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Profile(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Profile(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,9 +191,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Profile>(null, response.GetRawResponse())
-                    : Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Profile>(null, response.GetRawResponse());
+                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +213,14 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Profile>(null, response.GetRawResponse())
-                    : Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<Profile>(null, response.GetRawResponse());
+                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +265,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -284,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _profilesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +306,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _profilesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +329,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _profilesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _profilesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

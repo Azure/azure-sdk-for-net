@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerAzureADOnlyAuthentication IOperationSource<ServerAzureADOnlyAuthentication>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerAzureADOnlyAuthentication(_operationBase, ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement);
+            return new ServerAzureADOnlyAuthentication(_operationBase, data);
         }
 
         async ValueTask<ServerAzureADOnlyAuthentication> IOperationSource<ServerAzureADOnlyAuthentication>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerAzureADOnlyAuthentication(_operationBase, ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement);
+            return new ServerAzureADOnlyAuthentication(_operationBase, data);
         }
     }
 }

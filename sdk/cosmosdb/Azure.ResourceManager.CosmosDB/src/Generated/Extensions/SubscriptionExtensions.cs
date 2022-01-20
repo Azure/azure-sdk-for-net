@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -32,14 +33,14 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        private static DatabaseAccountsRestOperations GetDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DatabaseAccountsRestOperations GetDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static RestorableDatabaseAccountsRestOperations GetRestorableDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static RestorableDatabaseAccountsRestOperations GetRestorableDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new RestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new RestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the DatabaseAccounts for this <see cref="Subscription" />. </summary>
@@ -51,7 +52,8 @@ namespace Azure.ResourceManager.CosmosDB
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DatabaseAccount.ResourceType, out string apiVersion);
+                DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DatabaseAccount>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatabaseAccounts");
@@ -81,7 +83,8 @@ namespace Azure.ResourceManager.CosmosDB
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DatabaseAccount.ResourceType, out string apiVersion);
+                DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DatabaseAccount> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatabaseAccounts");
@@ -130,24 +133,24 @@ namespace Azure.ResourceManager.CosmosDB
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the RestorableDatabaseAccountData for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the RestorableDatabaseAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RestorableDatabaseAccountData> GetRestorableDatabaseAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RestorableDatabaseAccount> GetRestorableDatabaseAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<RestorableDatabaseAccountData>> FirstPageFunc(int? pageSizeHint)
+                RestorableDatabaseAccountsRestOperations restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
+                async Task<Page<RestorableDatabaseAccount>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorableDatabaseAccounts");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -160,24 +163,24 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
 
-        /// <summary> Lists the RestorableDatabaseAccountData for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the RestorableDatabaseAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RestorableDatabaseAccountData> GetRestorableDatabaseAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<RestorableDatabaseAccount> GetRestorableDatabaseAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<RestorableDatabaseAccountData> FirstPageFunc(int? pageSizeHint)
+                RestorableDatabaseAccountsRestOperations restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
+                Page<RestorableDatabaseAccount> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorableDatabaseAccounts");
                     scope.Start();
                     try
                     {
                         var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(subscription, value)), null, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {

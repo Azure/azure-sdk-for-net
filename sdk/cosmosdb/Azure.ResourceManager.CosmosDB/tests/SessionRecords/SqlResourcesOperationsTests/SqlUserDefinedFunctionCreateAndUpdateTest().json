@@ -20,7 +20,7 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName4977",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}"
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('First Hello World');}"
           },
           "options": {}
         }
@@ -248,10 +248,10 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName4977",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('First Hello World');}",
             "_rid": "rbczAOyNJUoBAAAAAAAAYA==",
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/udfs/rbczAOyNJUoBAAAAAAAAYA==/",
-            "_etag": "\u0022c3036968-0000-0100-0000-612dfafe0000\u0022",
+            "_etag": "\"c3036968-0000-0100-0000-612dfafe0000\"",
             "_ts": 1630403326
           }
         }
@@ -295,10 +295,10 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName4977",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('First Hello World');}",
             "_rid": "rbczAOyNJUoBAAAAAAAAYA==",
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/udfs/rbczAOyNJUoBAAAAAAAAYA==/",
-            "_etag": "\u0022c3036968-0000-0100-0000-612dfafe0000\u0022",
+            "_etag": "\"c3036968-0000-0100-0000-612dfafe0000\"",
             "_ts": 1630403326
           }
         }
@@ -324,7 +324,7 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName4977",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}"
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}"
           },
           "options": {}
         }
@@ -585,10 +585,10 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName4977",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "_rid": "rbczAOyNJUoBAAAAAAAAYA==",
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/udfs/rbczAOyNJUoBAAAAAAAAYA==/",
-            "_etag": "\u0022c3031869-0000-0100-0000-612dfb050000\u0022",
+            "_etag": "\"c3031869-0000-0100-0000-612dfb050000\"",
             "_ts": 1630403333
           }
         }
@@ -632,10 +632,10 @@
         "properties": {
           "resource": {
             "id": "userDefinedFunctionName4977",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "_rid": "rbczAOyNJUoBAAAAAAAAYA==",
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/udfs/rbczAOyNJUoBAAAAAAAAYA==/",
-            "_etag": "\u0022c3031869-0000-0100-0000-612dfb050000\u0022",
+            "_etag": "\"c3031869-0000-0100-0000-612dfb050000\"",
             "_ts": 1630403333
           }
         }
