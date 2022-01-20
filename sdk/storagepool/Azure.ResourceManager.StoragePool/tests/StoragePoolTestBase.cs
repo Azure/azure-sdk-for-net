@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.StoragePool.Tests
                     {
                         { "test", "env" }
                     }
-                });
+                },
+                true);
             return rgOp.Value;
         }
     }
