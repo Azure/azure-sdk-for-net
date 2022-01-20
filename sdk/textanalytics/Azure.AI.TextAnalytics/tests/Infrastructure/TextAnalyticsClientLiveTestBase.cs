@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Tests
             // While we use a persistent resource for live tests, we need to increase our retries.
             // We should remove when having dynamic resource again
             // Issue: https://github.com/Azure/azure-sdk-for-net/issues/25041
-            options.Retry.MaxRetries = 6;
+            options.Retry.MaxRetries = 20;
 
             if (useTokenCredential)
             {
