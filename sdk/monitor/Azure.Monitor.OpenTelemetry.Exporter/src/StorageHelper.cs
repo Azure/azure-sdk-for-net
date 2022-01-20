@@ -84,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Creates directory for storing telemetry.
         /// </summary>
         /// <param name="path">Base directory.</param>
-        /// <returns></returns>
+        /// <returns>Directory path if it is created else null.</returns>
         private static string TryCreateTelemetryFolder(string path)
         {
             try
