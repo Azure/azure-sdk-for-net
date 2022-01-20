@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -36,7 +37,14 @@ namespace Azure.Core.TestFramework
                     {
                         if (https)
                         {
-                            listenOptions.UseHttps();
+                            listenOptions.UseHttps(
+                                Path.Combine(
+                                    TestEnvironment.RepositoryRoot,
+                                    "eng",
+                                    "common",
+                                    "testproxy",
+                                    "dotnet-devcert.pfx"),
+                                "password");
                         }
                     });
                 })
