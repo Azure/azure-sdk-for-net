@@ -26,7 +26,7 @@ directive:
     transform: $['x-ms-client-name'] = 'DeviceUpdateInstance'
   - remove-operation: Accounts_Head
   - remove-operation: Instances_Head
-  - remove-operation: Operations_List
+#  - remove-operation: Operations_List
   - rename-model:
       from: AccountUpdate
       to: DeviceUpdateAccountUpdateOptions
