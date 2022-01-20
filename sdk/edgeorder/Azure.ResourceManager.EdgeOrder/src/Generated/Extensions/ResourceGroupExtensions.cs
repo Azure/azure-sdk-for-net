@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.EdgeOrder
         }
         #endregion
 
-        private static EdgeOrderManagementRestOperations GetEdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static EdgeOrderManagementRestOperations GetEdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrderResource> GetOrderAtResourceGroupLevelAsync(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<OrderResource> GetOrderResourcesAsync(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<OrderResource>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderAtResourceGroupLevel");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderResources");
                     scope.Start();
                     try
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
                 async Task<Page<OrderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderAtResourceGroupLevel");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderResources");
                     scope.Start();
                     try
                     {
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrderResource> GetOrderAtResourceGroupLevel(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<OrderResource> GetOrderResources(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<OrderResource> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderAtResourceGroupLevel");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderResources");
                     scope.Start();
                     try
                     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
                 Page<OrderResource> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderAtResourceGroupLevel");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetOrderResources");
                     scope.Start();
                     try
                     {

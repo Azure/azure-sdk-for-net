@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.AppService
         internal TopLevelDomainCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(TopLevelDomain.ResourceType, out string apiVersion);
+            _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomain(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -102,7 +104,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TopLevelDomain(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +232,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _topLevelDomainsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,7 +247,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _topLevelDomainsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,7 +273,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _topLevelDomainsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -286,7 +288,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _topLevelDomainsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

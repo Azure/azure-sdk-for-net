@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var description = "This is a gallery for test";
             var update = new GalleryImageUpdate()
             {
-                OsType = OperatingSystemTypes.Linux, // We have to put this here, otherwise we get a 409 Changing property 'galleryImage.properties.osType' is not allowed.
+                OSType = OperatingSystemTypes.Linux, // We have to put this here, otherwise we get a 409 Changing property 'galleryImage.properties.osType' is not allowed.
                 Description = description
             };
             var lro = await image.UpdateAsync(true, update);

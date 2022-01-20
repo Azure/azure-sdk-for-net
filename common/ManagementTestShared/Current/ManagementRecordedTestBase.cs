@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.TestFramework
                 var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync();
+                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync(true);
                 }
             }
         }

@@ -42,74 +42,74 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        private static AppServiceCertificateOrdersRestOperations GetAppServiceCertificateOrdersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AppServiceCertificateOrdersRestOperations GetAppServiceCertificateOrdersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AppServiceCertificateOrdersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AppServiceCertificateOrdersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DomainsRestOperations GetDomainsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DomainsRestOperations GetDomainsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DomainsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DomainsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AppServiceEnvironmentsRestOperations GetAppServiceEnvironmentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AppServiceEnvironmentsRestOperations GetAppServiceEnvironmentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AppServiceEnvironmentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AppServiceEnvironmentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AppServicePlansRestOperations GetAppServicePlansRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AppServicePlansRestOperations GetAppServicePlansRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AppServicePlansRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AppServicePlansRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static CertificatesRestOperations GetCertificatesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static CertificatesRestOperations GetCertificatesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new CertificatesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new CertificatesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DeletedWebAppsRestOperations GetDeletedWebAppsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DeletedWebAppsRestOperations GetDeletedWebAppsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DeletedWebAppsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DeletedWebAppsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static GlobalRestOperations GetGlobalRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static GlobalRestOperations GetGlobalRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new GlobalRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new GlobalRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static KubeEnvironmentsRestOperations GetKubeEnvironmentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static KubeEnvironmentsRestOperations GetKubeEnvironmentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new KubeEnvironmentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new KubeEnvironmentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ProviderRestOperations GetProviderRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ProviderRestOperations GetProviderRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ProviderRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static RecommendationsRestOperations GetRecommendationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static RecommendationsRestOperations GetRecommendationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new RecommendationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new RecommendationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ResourceHealthMetadataRestOperations GetResourceHealthMetadataRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ResourceHealthMetadataRestOperations GetResourceHealthMetadataRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ResourceHealthMetadataRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ResourceHealthMetadataRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static WebSiteManagementRestOperations GetWebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static WebSiteManagementRestOperations GetWebSiteManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new WebSiteManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new WebSiteManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static StaticSitesRestOperations GetStaticSitesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static StaticSitesRestOperations GetStaticSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new StaticSitesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new StaticSitesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static WebAppsRestOperations GetWebAppsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static WebAppsRestOperations GetWebAppsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new WebAppsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new WebAppsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
@@ -124,7 +124,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServiceCertificateOrder.ResourceType, out string apiVersion);
+                AppServiceCertificateOrdersRestOperations restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AppServiceCertificateOrder>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceCertificateOrders");
@@ -172,7 +173,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServiceCertificateOrder.ResourceType, out string apiVersion);
+                AppServiceCertificateOrdersRestOperations restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AppServiceCertificateOrder> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceCertificateOrders");
@@ -258,7 +260,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    AppServiceCertificateOrdersRestOperations restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.ValidatePurchaseInformationAsync(subscription.Id.SubscriptionId, appServiceCertificateOrder, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -293,7 +295,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    AppServiceCertificateOrdersRestOperations restOperations = GetAppServiceCertificateOrdersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.ValidatePurchaseInformation(subscription.Id.SubscriptionId, appServiceCertificateOrder, cancellationToken);
                     return response;
                 }
@@ -328,7 +330,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckAvailabilityAsync(subscription.Id.SubscriptionId, identifier, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -363,7 +365,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckAvailability(subscription.Id.SubscriptionId, identifier, cancellationToken);
                     return response;
                 }
@@ -383,15 +385,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceDomain> GetDomainsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AppServiceDomain> GetAppServiceDomainsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServiceDomain.ResourceType, out string apiVersion);
+                DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AppServiceDomain>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDomains");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceDomains");
                     scope.Start();
                     try
                     {
@@ -406,7 +409,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<AppServiceDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDomains");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceDomains");
                     scope.Start();
                     try
                     {
@@ -431,15 +434,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServiceDomain> GetDomains(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<AppServiceDomain> GetAppServiceDomains(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServiceDomain.ResourceType, out string apiVersion);
+                DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AppServiceDomain> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDomains");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceDomains");
                     scope.Start();
                     try
                     {
@@ -454,7 +458,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<AppServiceDomain> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDomains");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceDomains");
                     scope.Start();
                     try
                     {
@@ -515,7 +519,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.GetControlCenterSsoRequestAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -543,7 +547,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.GetControlCenterSsoRequest(subscription.Id.SubscriptionId, cancellationToken);
                     return response;
                 }
@@ -575,7 +579,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<NameIdentifier>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRecommendationsDomains");
@@ -630,7 +634,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDomainsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                DomainsRestOperations restOperations = GetDomainsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<NameIdentifier> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRecommendationsDomains");
@@ -678,7 +682,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAppServiceEnvironmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServiceEnvironment.ResourceType, out string apiVersion);
+                AppServiceEnvironmentsRestOperations restOperations = GetAppServiceEnvironmentsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AppServiceEnvironment>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceEnvironments");
@@ -726,7 +731,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAppServiceEnvironmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServiceEnvironment.ResourceType, out string apiVersion);
+                AppServiceEnvironmentsRestOperations restOperations = GetAppServiceEnvironmentsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AppServiceEnvironment> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServiceEnvironments");
@@ -806,7 +812,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAppServicePlansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServicePlan.ResourceType, out string apiVersion);
+                AppServicePlansRestOperations restOperations = GetAppServicePlansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AppServicePlan>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServicePlans");
@@ -858,7 +865,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAppServicePlansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AppServicePlan.ResourceType, out string apiVersion);
+                AppServicePlansRestOperations restOperations = GetAppServicePlansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AppServicePlan> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAppServicePlans");
@@ -935,7 +943,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCertificatesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(Certificate.ResourceType, out string apiVersion);
+                CertificatesRestOperations restOperations = GetCertificatesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<Certificate>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCertificates");
@@ -984,7 +993,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCertificatesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(Certificate.ResourceType, out string apiVersion);
+                CertificatesRestOperations restOperations = GetCertificatesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<Certificate> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCertificates");
@@ -1057,7 +1067,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedSite> GetDeletedWebAppsByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DeletedSite> GetDeletedSitesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1067,10 +1077,10 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                DeletedWebAppsRestOperations restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<DeletedSite>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedSitesByLocation");
                     scope.Start();
                     try
                     {
@@ -1085,7 +1095,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<DeletedSite>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedSitesByLocation");
                     scope.Start();
                     try
                     {
@@ -1112,7 +1122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedSite> GetDeletedWebAppsByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<DeletedSite> GetDeletedSitesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1122,10 +1132,10 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                DeletedWebAppsRestOperations restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<DeletedSite> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedSitesByLocation");
                     scope.Start();
                     try
                     {
@@ -1140,7 +1150,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<DeletedSite> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedWebAppsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedSitesByLocation");
                     scope.Start();
                     try
                     {
@@ -1213,7 +1223,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DeletedWebAppsRestOperations restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.GetDeletedWebAppByLocationAsync(subscription.Id.SubscriptionId, location, deletedSiteId, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new DeletedSite(subscription, response.Value), response.GetRawResponse());
                 }
@@ -1253,7 +1263,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DeletedWebAppsRestOperations restOperations = GetDeletedWebAppsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.GetDeletedWebAppByLocation(subscription.Id.SubscriptionId, location, deletedSiteId, cancellationToken);
                     return Response.FromValue(new DeletedSite(subscription, response.Value), response.GetRawResponse());
                 }
@@ -1293,7 +1303,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetGlobalRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    GlobalRestOperations restOperations = GetGlobalRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.GetSubscriptionOperationWithAsyncResponseAsync(subscription.Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -1333,7 +1343,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetGlobalRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    GlobalRestOperations restOperations = GetGlobalRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.GetSubscriptionOperationWithAsyncResponse(subscription.Id.SubscriptionId, location, operationId, cancellationToken);
                     return response;
                 }
@@ -1358,7 +1368,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetKubeEnvironmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(KubeEnvironment.ResourceType, out string apiVersion);
+                KubeEnvironmentsRestOperations restOperations = GetKubeEnvironmentsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<KubeEnvironment>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetKubeEnvironments");
@@ -1406,7 +1417,8 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetKubeEnvironmentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(KubeEnvironment.ResourceType, out string apiVersion);
+                KubeEnvironmentsRestOperations restOperations = GetKubeEnvironmentsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<KubeEnvironment> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetKubeEnvironments");
@@ -1483,7 +1495,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableStacksOnPremProviders");
@@ -1532,7 +1544,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetProviderRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ProviderRestOperations restOperations = GetProviderRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableStacksOnPremProviders");
@@ -1582,7 +1594,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRecommendationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                RecommendationsRestOperations restOperations = GetRecommendationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AppServiceRecommendation>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRecommendations");
@@ -1632,7 +1644,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRecommendationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                RecommendationsRestOperations restOperations = GetRecommendationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AppServiceRecommendation> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRecommendations");
@@ -1683,7 +1695,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetRecommendationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    RecommendationsRestOperations restOperations = GetRecommendationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.ResetAllFiltersAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -1711,7 +1723,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetRecommendationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    RecommendationsRestOperations restOperations = GetRecommendationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.ResetAllFilters(subscription.Id.SubscriptionId, cancellationToken);
                     return response;
                 }
@@ -1746,7 +1758,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetRecommendationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    RecommendationsRestOperations restOperations = GetRecommendationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.DisableRecommendationForSubscriptionAsync(subscription.Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -1781,7 +1793,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetRecommendationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    RecommendationsRestOperations restOperations = GetRecommendationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.DisableRecommendationForSubscription(subscription.Id.SubscriptionId, name, cancellationToken);
                     return response;
                 }
@@ -1806,7 +1818,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ResourceHealthMetadataRestOperations restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllResourceHealthMetadata");
@@ -1854,7 +1866,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ResourceHealthMetadataRestOperations restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllResourceHealthMetadata");
@@ -1904,7 +1916,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<BillingMeter>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBillingMeters");
@@ -1954,7 +1966,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<BillingMeter> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBillingMeters");
@@ -2000,7 +2012,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -2010,11 +2022,11 @@ namespace Azure.ResourceManager.AppService
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppServiceNameAvailability");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, name, type, isFqdn, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -2037,7 +2049,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<ResourceNameAvailability> CheckNameAvailability(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this Subscription subscription, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -2047,11 +2059,11 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckAppServiceNameAvailability");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, name, type, isFqdn, cancellationToken);
                     return response;
                 }
@@ -2079,7 +2091,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.GetSubscriptionDeploymentLocationsAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -2107,7 +2119,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.GetSubscriptionDeploymentLocations(subscription.Id.SubscriptionId, cancellationToken);
                     return response;
                 }
@@ -2136,7 +2148,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<GeoRegion>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetGeoRegions");
@@ -2188,7 +2200,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<GeoRegion> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetGeoRegions");
@@ -2243,7 +2255,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<IdentifierData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSiteIdentifiersAssignedToHostName");
@@ -2298,7 +2310,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<IdentifierData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSiteIdentifiersAssignedToHostName");
@@ -2346,7 +2358,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<PremierAddOnOffer>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPremierAddOnOffers");
@@ -2394,7 +2406,7 @@ namespace Azure.ResourceManager.AppService
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<PremierAddOnOffer> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPremierAddOnOffers");
@@ -2445,7 +2457,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.ListSkusAsync(subscription.Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -2473,7 +2485,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.ListSkus(subscription.Id.SubscriptionId, cancellationToken);
                     return response;
                 }
@@ -2508,7 +2520,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.VerifyHostingEnvironmentVnetAsync(subscription.Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -2543,7 +2555,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    WebSiteManagementRestOperations restOperations = GetWebSiteManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.VerifyHostingEnvironmentVnet(subscription.Id.SubscriptionId, parameters, cancellationToken);
                     return response;
                 }
@@ -2583,7 +2595,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetStaticSitesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    StaticSitesRestOperations restOperations = GetStaticSitesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.PreviewWorkflowAsync(subscription.Id.SubscriptionId, location, staticSitesWorkflowPreviewRequest, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -2623,7 +2635,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var restOperations = GetStaticSitesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    StaticSitesRestOperations restOperations = GetStaticSitesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.PreviewWorkflow(subscription.Id.SubscriptionId, location, staticSitesWorkflowPreviewRequest, cancellationToken);
                     return response;
                 }
@@ -2643,15 +2655,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StaticSiteARMResource> GetStaticSitesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<StaticSiteARMResource> GetStaticSiteARMResourcesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetStaticSitesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(StaticSiteARMResource.ResourceType, out string apiVersion);
+                StaticSitesRestOperations restOperations = GetStaticSitesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<StaticSiteARMResource>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSites");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSiteARMResources");
                     scope.Start();
                     try
                     {
@@ -2666,7 +2679,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<StaticSiteARMResource>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSites");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSiteARMResources");
                     scope.Start();
                     try
                     {
@@ -2691,15 +2704,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StaticSiteARMResource> GetStaticSites(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<StaticSiteARMResource> GetStaticSiteARMResources(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetStaticSitesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(StaticSiteARMResource.ResourceType, out string apiVersion);
+                StaticSitesRestOperations restOperations = GetStaticSitesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<StaticSiteARMResource> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSites");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSiteARMResources");
                     scope.Start();
                     try
                     {
@@ -2714,7 +2728,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<StaticSiteARMResource> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSites");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetStaticSiteARMResources");
                     scope.Start();
                     try
                     {
@@ -2767,15 +2781,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebSite> GetWebAppsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebSite> GetWebSitesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(WebSite.ResourceType, out string apiVersion);
+                WebAppsRestOperations restOperations = GetWebAppsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<WebSite>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebApps");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebSites");
                     scope.Start();
                     try
                     {
@@ -2790,7 +2805,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<WebSite>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebApps");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebSites");
                     scope.Start();
                     try
                     {
@@ -2815,15 +2830,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebSite> GetWebApps(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<WebSite> GetWebSites(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebAppsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(WebSite.ResourceType, out string apiVersion);
+                WebAppsRestOperations restOperations = GetWebAppsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<WebSite> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebApps");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebSites");
                     scope.Start();
                     try
                     {
@@ -2838,7 +2854,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<WebSite> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebApps");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebSites");
                     scope.Start();
                     try
                     {

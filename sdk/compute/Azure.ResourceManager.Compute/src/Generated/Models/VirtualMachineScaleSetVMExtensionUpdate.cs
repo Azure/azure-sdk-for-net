@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        internal VirtualMachineScaleSetVMExtensionUpdate(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings) : base(id)
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        internal VirtualMachineScaleSetVMExtensionUpdate(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, bool? suppressFailures) : base(id)
         {
             Name = name;
             Type = type;
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
             Settings = settings;
             ProtectedSettings = protectedSettings;
+            SuppressFailures = suppressFailures;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -61,5 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
         public object Settings { get; set; }
         /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>
         public object ProtectedSettings { get; set; }
+        /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
+        public bool? SuppressFailures { get; set; }
     }
 }

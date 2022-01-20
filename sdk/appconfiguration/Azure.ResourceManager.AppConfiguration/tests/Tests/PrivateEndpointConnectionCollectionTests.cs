@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string VnetName = Recording.GenerateAssetName("vnetname");
                 string SubnetName = Recording.GenerateAssetName("subnetname");
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
-                ResGroup = await (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
+                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
                 ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
                 {

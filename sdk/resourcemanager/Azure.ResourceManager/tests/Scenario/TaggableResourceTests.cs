@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests
         {
             if (key is null)
             {
-                var ex = Assert.ThrowsAsync<ArgumentException>(async () => await _rg.AddTagAsync(key, value));
+                var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(key, value));
                 Assert.That(ex.Message.Contains("key provided cannot be null or a whitespace"));
             }
             else if (value is null)

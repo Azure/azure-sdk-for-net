@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteConfigSnapshotCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteConfigSnapshot.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigSnapshot(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigSnapshot(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
