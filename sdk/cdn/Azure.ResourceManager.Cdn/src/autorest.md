@@ -204,24 +204,24 @@ directive:
           "name": "transformCategory",
           "modelAsString": true
       }
-  - from: swagger-document
-    where: $.paths
-    transform: >
-      for (var key in $) {
-          for (var method in $[key]) {
-              const oldOperationId = $[key][method]['operationId']
-              if (oldOperationId.startsWith('AFD')) {
-                  const newOperationId = oldOperationId.replace('AFD', 'Afd')
-                  $[key][method]['operationId'] = newOperationId
-              }
-              if (oldOperationId.startsWith('Routes') || oldOperationId.startsWith('RuleSets') || oldOperationId.startsWith('Rules') || oldOperationId.startsWith('SecurityPolicies') || oldOperationId.startsWith('Secrets')) {
-                  const newOperationId = 'Afd' + oldOperationId
-                  $[key][method]['operationId'] = newOperationId
-              }
-              if (oldOperationId.startsWith('Endpoint') || oldOperationId.startsWith('Origin') || oldOperationId.startsWith('OriginGroup') || oldOperationId.startsWith('CustomDomain')) {
-                  const newOperationId = 'Cdn' + oldOperationId
-                  $[key][method]['operationId'] = newOperationId
-              }
-          }
-      }
+  # - from: swagger-document
+  #   where: $.paths
+  #   transform: >
+  #     for (var key in $) {
+  #         for (var method in $[key]) {
+  #             const oldOperationId = $[key][method]['operationId']
+  #             if (oldOperationId.startsWith('AFD')) {
+  #                 const newOperationId = oldOperationId.replace('AFD', 'Afd')
+  #                 $[key][method]['operationId'] = newOperationId
+  #             }
+  #             if (oldOperationId.startsWith('Routes') || oldOperationId.startsWith('RuleSets') || oldOperationId.startsWith('Rules') || oldOperationId.startsWith('SecurityPolicies') || oldOperationId.startsWith('Secrets')) {
+  #                 const newOperationId = 'Afd' + oldOperationId
+  #                 $[key][method]['operationId'] = newOperationId
+  #             }
+  #             if (oldOperationId.startsWith('Endpoint') || oldOperationId.startsWith('Origin') || oldOperationId.startsWith('OriginGroup') || oldOperationId.startsWith('CustomDomain')) {
+  #                 const newOperationId = 'Cdn' + oldOperationId
+  #                 $[key][method]['operationId'] = newOperationId
+  #             }
+  #         }
+  #     }
 ```
