@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerConnectionPolicy IOperationSource<ServerConnectionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerConnectionPolicy(_operationBase, ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement));
+            var data = ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement);
+            return new ServerConnectionPolicy(_operationBase, data);
         }
 
         async ValueTask<ServerConnectionPolicy> IOperationSource<ServerConnectionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerConnectionPolicy(_operationBase, ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement));
+            var data = ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement);
+            return new ServerConnectionPolicy(_operationBase, data);
         }
     }
 }

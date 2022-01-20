@@ -12,6 +12,7 @@ using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            _eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            _eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
         }
 
         [TearDown]
@@ -39,9 +40,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             List<PrivateEndpointConnection> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             foreach (PrivateEndpointConnection connection in privateEndpointConnections)
             {
-                await connection.DeleteAsync();
+                await connection.DeleteAsync(true);
             }
-            await _eventHubNamespace.DeleteAsync();
+            await _eventHubNamespace.DeleteAsync(true);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
             Assert.AreEqual(PrivateLinkConnectionStatus.Pending, privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
 
-            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(privateEndpointConnection.Data.Name, new PrivateEndpointConnectionData()
+            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(true, privateEndpointConnection.Data.Name, new PrivateEndpointConnectionData()
             {
                 PrivateLinkServiceConnectionState = new Models.ConnectionState()
                 {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             PrivateEndpointConnection privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
             Assert.IsNotNull(privateEndpointConnection);
 
-            await privateEndpointConnection.DeleteAsync();
+            await privateEndpointConnection.DeleteAsync(true);
             privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnection.Data.Name);
             Assert.Null(privateEndpointConnection);
             privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             var vnetName = Recording.GenerateAssetName("vnet-");
             var vnet = new VirtualNetworkData()
             {
-                Location = Resources.Models.Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
@@ -119,12 +120,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
-            VirtualNetwork virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(vnetName, vnet).WaitForCompletionAsync();
+            VirtualNetwork virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(false, vnetName, vnet).WaitForCompletionAsync();
 
             var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
-                Location = Resources.Models.Location.WestUS2,
+                Location = AzureLocation.WestUS2,
                 Subnet = virtualNetwork.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
                     new PrivateLinkServiceConnection
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 },
             };
 
-            return await _resourceGroup.GetPrivateEndpoints().CreateOrUpdate(name, privateEndpointData).WaitForCompletionAsync();
+            return await _resourceGroup.GetPrivateEndpoints().CreateOrUpdate(false, name, privateEndpointData).WaitForCompletionAsync();
         }
 
         private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, PrivateEndpointConnection actualValue)

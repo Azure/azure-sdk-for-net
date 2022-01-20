@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.HDInsight.J
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.HDInsight.Job.Tests", "tests\Microsoft.Azure.HDInsight.Job.Tests.csproj", "{A28C288F-9F7C-49D9-883C-E396AEC4F3E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{6D9BBCED-797E-40AE-99FD-2C542D6C53B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{A0C13F68-670D-4E73-80A9-8F8C074603CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A28C288F-9F7C-49D9-883C-E396AEC4F3E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A28C288F-9F7C-49D9-883C-E396AEC4F3E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A28C288F-9F7C-49D9-883C-E396AEC4F3E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D9BBCED-797E-40AE-99FD-2C542D6C53B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D9BBCED-797E-40AE-99FD-2C542D6C53B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D9BBCED-797E-40AE-99FD-2C542D6C53B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D9BBCED-797E-40AE-99FD-2C542D6C53B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C13F68-670D-4E73-80A9-8F8C074603CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C13F68-670D-4E73-80A9-8F8C074603CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C13F68-670D-4E73-80A9-8F8C074603CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C13F68-670D-4E73-80A9-8F8C074603CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

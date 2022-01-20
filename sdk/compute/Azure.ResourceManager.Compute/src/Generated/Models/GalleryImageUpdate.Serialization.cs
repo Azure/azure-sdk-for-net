@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("releaseNoteUri");
                 writer.WriteStringValue(ReleaseNoteUri);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToSerialString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OsState))
+            if (Optional.IsDefined(OSState))
             {
                 writer.WritePropertyName("osState");
-                writer.WriteStringValue(OsState.Value.ToSerialString());
+                writer.WriteStringValue(OSState.Value.ToSerialString());
             }
             if (Optional.IsDefined(HyperVGeneration))
             {

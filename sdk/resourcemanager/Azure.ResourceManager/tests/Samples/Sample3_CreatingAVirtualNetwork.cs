@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -18,8 +19,8 @@ namespace Azure.ResourceManager.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
             string rgName = "myResourceGroup";
-            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Creating_A_Virtual_Network_CreateResourceGroup
         }

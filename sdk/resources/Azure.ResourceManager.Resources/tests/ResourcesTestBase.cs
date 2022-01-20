@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Resources.Tests
             Client = GetArmClient();
         }
 
-        protected static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(Location.WestUS2, ApplicationLockLevel.None)
+        protected static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(AzureLocation.WestUS2, ApplicationLockLevel.None)
         {
             DisplayName = displayName,
             Description = $"{displayName} description",
             PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
         };
 
-        protected static ApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ApplicationData(Location.WestUS2, "ServiceCatalog")
+        protected static ApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
         {
             ApplicationDefinitionId = applicationDefinitionId,
             ManagedResourceGroupId = managedResourceGroupId,
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {
-            var userAssignedIdentities = new GenericResourceData(Location.WestUS2);
+            var userAssignedIdentities = new GenericResourceData(AzureLocation.WestUS2);
             return userAssignedIdentities;
         }
 
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             //The user assigned identities was created firstly in Portal due to the unexpected behavior of using generic resource to create the user assigned identities.
             string rgName4Identities = "rg-for-DeployScript";
-            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName4Identities, rgData);
+            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(true, rgName4Identities, rgData);
             ResourceGroup rg4Identities = lro.Value;
             GenericResourceData userAssignedIdentitiesData = ConstructGenericUserAssignedIdentities();
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
-            var lro2 = await sub.GetGenericResources().CreateOrUpdateAsync(userAssignedIdentitiesId, userAssignedIdentitiesData);
+            var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(true, userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
             var managedIdentity = new ManagedServiceIdentity()
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Tests
             TimeSpan RetentionInterval = new TimeSpan(1, 2, 0, 0, 0);
             string ScriptContent = "param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld";
             string ScriptArguments = "'Hello World'";
-            return new AzurePowerShellScript(Location.WestUS2, RetentionInterval, AzurePowerShellVersion)
+            return new AzurePowerShellScript(AzureLocation.WestUS2, RetentionInterval, AzurePowerShellVersion)
             {
                 Identity = managedIdentity,
                 ScriptContent = ScriptContent,
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Resources.Tests
             };
         }
 
-        protected static TemplateSpecData CreateTemplateSpecData(string displayName) => new TemplateSpecData(Location.WestUS2)
+        protected static TemplateSpecData CreateTemplateSpecData(string displayName) => new TemplateSpecData(AzureLocation.WestUS2)
         {
             Description = "Description of my Template Spec",
             DisplayName = $"{displayName} (Test)"
         };
 
-        protected static TemplateSpecVersionData CreateTemplateSpecVersionData() => new TemplateSpecVersionData(Location.WestUS2)
+        protected static TemplateSpecVersionData CreateTemplateSpecVersionData() => new TemplateSpecVersionData(AzureLocation.WestUS2)
         {
             Description = "My first version",
             MainTemplate = JsonDocument.Parse(File.ReadAllText(Path.Combine(

@@ -92,6 +92,16 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
+        #region CapacityReservationGroup
+        /// <summary> Gets an object representing a CapacityReservationGroupCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="CapacityReservationGroupCollection" /> object. </returns>
+        public static CapacityReservationGroupCollection GetCapacityReservationGroups(this ResourceGroup resourceGroup)
+        {
+            return new CapacityReservationGroupCollection(resourceGroup);
+        }
+        #endregion
+
         #region Disk
         /// <summary> Gets an object representing a DiskCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>

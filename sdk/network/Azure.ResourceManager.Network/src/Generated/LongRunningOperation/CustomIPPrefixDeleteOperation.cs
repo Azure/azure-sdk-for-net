@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Deletes the specified custom IP prefix. </summary>
-    public partial class CustomIPPrefixDeleteOperation : Operation
+    public partial class CustomIpPrefixDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of CustomIPPrefixDeleteOperation for mocking. </summary>
-        protected CustomIPPrefixDeleteOperation()
+        /// <summary> Initializes a new instance of CustomIpPrefixDeleteOperation for mocking. </summary>
+        protected CustomIpPrefixDeleteOperation()
         {
         }
 
-        internal CustomIPPrefixDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CustomIpPrefixDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomIPPrefixDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomIpPrefixDeleteOperation");
         }
 
         /// <inheritdoc />

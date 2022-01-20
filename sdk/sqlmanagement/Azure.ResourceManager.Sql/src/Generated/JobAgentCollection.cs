@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of JobAgent and their operations over its parent. </summary>
     public partial class JobAgentCollection : ArmCollection, IEnumerable<JobAgent>, IAsyncEnumerable<JobAgent>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly JobAgentsRestOperations _jobAgentsRestClient;
@@ -32,16 +31,23 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of JobAgentCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobAgentCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal JobAgentCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobAgentsRestClient = new JobAgentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(JobAgent.ResourceType, out string apiVersion);
+            _jobAgentsRestClient = new JobAgentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SqlServer.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SqlServer.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -49,12 +55,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: JobAgents_CreateOrUpdate
         /// <summary> Creates or updates a job agent. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="jobAgentName"> The name of the job agent to be created or updated. </param>
         /// <param name="parameters"> The requested job agent resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JobAgentCreateOrUpdateOperation CreateOrUpdate(string jobAgentName, JobAgentData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual JobAgentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
         {
             if (jobAgentName == null)
             {
@@ -70,7 +76,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobAgentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters, cancellationToken);
-                var operation = new JobAgentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _jobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters).Request, response);
+                var operation = new JobAgentCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _jobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -86,12 +92,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: JobAgents_CreateOrUpdate
         /// <summary> Creates or updates a job agent. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="jobAgentName"> The name of the job agent to be created or updated. </param>
         /// <param name="parameters"> The requested job agent resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JobAgentCreateOrUpdateOperation> CreateOrUpdateAsync(string jobAgentName, JobAgentData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<JobAgentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
         {
             if (jobAgentName == null)
             {
@@ -107,7 +113,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _jobAgentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new JobAgentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _jobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters).Request, response);
+                var operation = new JobAgentCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _jobAgentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +146,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _jobAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobAgent(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobAgent(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _jobAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JobAgent(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobAgent(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,9 +201,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<JobAgent>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobAgent(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobAgent>(null, response.GetRawResponse());
+                return Response.FromValue(new JobAgent(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,14 +223,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _jobAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<JobAgent>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobAgent(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<JobAgent>(null, response.GetRawResponse());
+                return Response.FromValue(new JobAgent(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,7 +275,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.Exists");
             scope.Start();
             try
             {
@@ -298,7 +304,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _jobAgentsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -313,7 +319,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _jobAgentsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,7 +345,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _jobAgentsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -354,7 +360,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _jobAgentsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new JobAgent(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -381,6 +387,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, JobAgent, JobAgentData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, JobAgent, JobAgentData> Construct() { }
     }
 }

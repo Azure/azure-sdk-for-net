@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         Snapshot IOperationSource<Snapshot>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Snapshot(_operationBase, SnapshotData.DeserializeSnapshotData(document.RootElement));
+            var data = SnapshotData.DeserializeSnapshotData(document.RootElement);
+            return new Snapshot(_operationBase, data);
         }
 
         async ValueTask<Snapshot> IOperationSource<Snapshot>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Snapshot(_operationBase, SnapshotData.DeserializeSnapshotData(document.RootElement));
+            var data = SnapshotData.DeserializeSnapshotData(document.RootElement);
+            return new Snapshot(_operationBase, data);
         }
     }
 }

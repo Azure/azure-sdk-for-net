@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,12 +18,12 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of VirtualCluster and their operations over its parent. </summary>
     public partial class VirtualClusterCollection : ArmCollection, IEnumerable<VirtualCluster>, IAsyncEnumerable<VirtualCluster>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualClustersRestOperations _virtualClustersRestClient;
@@ -32,16 +33,23 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualClusterCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualClusterCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualClusterCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualClustersRestClient = new VirtualClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(VirtualCluster.ResourceType, out string apiVersion);
+            _virtualClustersRestClient = new VirtualClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -66,7 +74,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _virtualClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualCluster(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -96,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _virtualClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualCluster(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,9 +129,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _virtualClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,14 +151,14 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualCluster>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualCluster>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualCluster(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(virtualClusterName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -224,7 +232,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _virtualClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,7 +247,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _virtualClustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -265,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _virtualClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -280,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _virtualClustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,6 +361,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualCluster, VirtualClusterData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualCluster, VirtualClusterData> Construct() { }
     }
 }

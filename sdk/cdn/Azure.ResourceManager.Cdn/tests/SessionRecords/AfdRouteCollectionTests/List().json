@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -45,12 +45,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "21",
+        "Content-Length": "31",
         "Content-Type": "application/json",
         "traceparent": "00-112a864f0cfd7541affdf1b2838148f3-92490f94cb66044d-00",
         "User-Agent": [
@@ -61,6 +61,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus"
       },
       "StatusCode": 201,
@@ -7066,11 +7067,11 @@
       "RequestBody": {
         "properties": {
           "originGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
           },
           "ruleSets": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
             }
           ],
           "patternsToMatch": [
@@ -7111,12 +7112,12 @@
           "queryStringCachingBehavior": "NotSet",
           "customDomains": [],
           "originGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
           },
           "originPath": null,
           "ruleSets": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
             }
           ],
           "supportedProtocols": [
@@ -8545,12 +8546,12 @@
           "queryStringCachingBehavior": "NotSet",
           "customDomains": [],
           "originGroup": {
-            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
+            "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
           },
           "originPath": null,
           "ruleSets": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
             }
           ],
           "supportedProtocols": [
@@ -8614,12 +8615,12 @@
               "queryStringCachingBehavior": "NotSet",
               "customDomains": [],
               "originGroup": {
-                "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
+                "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/originGroups/AFDOriginGroup-3727"
               },
               "originPath": null,
               "ruleSets": [
                 {
-                  "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
+                  "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8791/providers/Microsoft.Cdn/profiles/AFDProfile-5078/rulesets/AFDRuleSet332"
                 }
               ],
               "supportedProtocols": [

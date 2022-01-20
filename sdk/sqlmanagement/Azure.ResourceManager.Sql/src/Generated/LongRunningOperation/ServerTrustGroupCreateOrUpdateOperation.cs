@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerTrustGroup IOperationSource<ServerTrustGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerTrustGroup(_operationBase, ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement));
+            var data = ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement);
+            return new ServerTrustGroup(_operationBase, data);
         }
 
         async ValueTask<ServerTrustGroup> IOperationSource<ServerTrustGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerTrustGroup(_operationBase, ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement));
+            var data = ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement);
+            return new ServerTrustGroup(_operationBase, data);
         }
     }
 }

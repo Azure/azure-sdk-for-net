@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-01-11)
+
+### Features Added
+
+- Adds stable features and bug fixes from the earlier preview releases.
+### Breaking Changes
+
+- Renamed `ArtifactManifestOrderBy` to `ArtifactManifestOrder`.
+- Renamed `ArtifactTagOrderBy` to `ArtifactTagOrder`.
+
 
 ## 1.0.0-beta.5 (2021-11-18)
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Communication
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> Returns a <see cref="CommunicationService" /> object. </returns>
         public static CommunicationService GetCommunicationService(this ArmClient armClient, ResourceIdentifier id)
         {
+            CommunicationService.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CommunicationService(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineTemplateData(Location location) : base(location)
+        public VirtualMachineTemplateData(AzureLocation location) : base(location)
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
             Disks = new ChangeTrackingList<VirtualDisk>();
@@ -44,13 +42,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the virtual machine template. </param>
         /// <param name="moName"> Gets or sets the vCenter Managed Object name for the virtual machine template. </param>
         /// <param name="memorySizeMB"> Gets or sets memory size in MBs for the template. </param>
-        /// <param name="numCPUs"> Gets or sets the number of vCPUs for the template. </param>
+        /// <param name="numCpus"> Gets or sets the number of vCPUs for the template. </param>
         /// <param name="numCoresPerSocket">
         /// Gets or sets the number of cores per socket for the template.
         /// Defaults to 1 if unspecified.
         /// </param>
-        /// <param name="osType"> Gets or sets the type of the os. </param>
-        /// <param name="osName"> Gets or sets os name. </param>
+        /// <param name="oSType"> Gets or sets the type of the os. </param>
+        /// <param name="oSName"> Gets or sets os name. </param>
         /// <param name="folderPath"> Gets or sets the folder path of the template. </param>
         /// <param name="networkInterfaces"> Gets or sets the network interfaces of the template. </param>
         /// <param name="disks"> Gets or sets the disks the template. </param>
@@ -60,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="firmwareType"> Firmware type. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CheckNameAvailabilityRequest extendedLocation, SystemData systemData, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCPUs, int? numCoresPerSocket, OsType? osType, string osName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, tags, location)
+        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, SystemData systemData, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCpus, int? numCoresPerSocket, OSType? oSType, string oSName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SystemData = systemData;
@@ -71,10 +69,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             InventoryItemId = inventoryItemId;
             MoName = moName;
             MemorySizeMB = memorySizeMB;
-            NumCPUs = numCPUs;
+            NumCpus = numCpus;
             NumCoresPerSocket = numCoresPerSocket;
-            OsType = osType;
-            OsName = osName;
+            OSType = oSType;
+            OSName = oSName;
             FolderPath = folderPath;
             NetworkInterfaces = networkInterfaces;
             Disks = disks;
@@ -87,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Gets or sets the extended location. </summary>
-        public CheckNameAvailabilityRequest ExtendedLocation { get; set; }
+        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The system data. </summary>
         public SystemData SystemData { get; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
@@ -108,16 +106,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Gets or sets memory size in MBs for the template. </summary>
         public int? MemorySizeMB { get; }
         /// <summary> Gets or sets the number of vCPUs for the template. </summary>
-        public int? NumCPUs { get; }
+        public int? NumCpus { get; }
         /// <summary>
         /// Gets or sets the number of cores per socket for the template.
         /// Defaults to 1 if unspecified.
         /// </summary>
         public int? NumCoresPerSocket { get; }
         /// <summary> Gets or sets the type of the os. </summary>
-        public OsType? OsType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets or sets os name. </summary>
-        public string OsName { get; }
+        public string OSName { get; }
         /// <summary> Gets or sets the folder path of the template. </summary>
         public string FolderPath { get; }
         /// <summary> Gets or sets the network interfaces of the template. </summary>

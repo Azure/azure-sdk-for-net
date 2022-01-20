@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -45,12 +45,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1749?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1749?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "21",
+        "Content-Length": "31",
         "Content-Type": "application/json",
         "traceparent": "00-e5456a04f1316242a50478dc7178c1ad-7ab18d4daac7f14b-00",
         "User-Agent": [
@@ -61,6 +61,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus"
       },
       "StatusCode": 201,
@@ -5366,7 +5367,7 @@
         "properties": {
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1749/providers/Microsoft.Cdn/profiles/profile-874/endpoints/endpoint-5487/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1749/providers/Microsoft.Cdn/profiles/profile-874/endpoints/endpoint-5487/origins/testOrigin"
             }
           ]
         }
@@ -5400,7 +5401,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1749/providers/Microsoft.Cdn/profiles/profile-874/endpoints/endpoint-5487/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1749/providers/Microsoft.Cdn/profiles/profile-874/endpoints/endpoint-5487/origins/testOrigin"
             }
           ],
           "resourceState": "Creating",
@@ -7386,7 +7387,7 @@
           "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": null,
           "origins": [
             {
-              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1749/providers/Microsoft.Cdn/profiles/profile-874/endpoints/endpoint-5487/origins/testOrigin"
+              "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1749/providers/Microsoft.Cdn/profiles/profile-874/endpoints/endpoint-5487/origins/testOrigin"
             }
           ],
           "resourceState": "Active",

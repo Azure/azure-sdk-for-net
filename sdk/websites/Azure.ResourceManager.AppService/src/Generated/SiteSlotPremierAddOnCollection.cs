@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
@@ -27,16 +28,23 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotPremierAddOnCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotPremierAddOnCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotPremierAddOnCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(SiteSlotPremierAddOn.ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SiteSlot.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SiteSlot.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -44,12 +52,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// OperationId: WebApps_AddPremierAddOnSlot
         /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public virtual WebAppAddPremierAddOnSlotOperation CreateOrUpdate(string premierAddOnName, PremierAddOnData premierAddOn, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SiteSlotPremierAddOnCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
@@ -65,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.AddPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, premierAddOn, cancellationToken);
-                var operation = new WebAppAddPremierAddOnSlotOperation(Parent, response);
+                var operation = new SiteSlotPremierAddOnCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,12 +89,12 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// OperationId: WebApps_AddPremierAddOnSlot
         /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public async virtual Task<WebAppAddPremierAddOnSlotOperation> CreateOrUpdateAsync(string premierAddOnName, PremierAddOnData premierAddOn, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteSlotPremierAddOnCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             if (premierAddOnName == null)
             {
@@ -102,7 +110,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webAppsRestClient.AddPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, premierAddOn, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppAddPremierAddOnSlotOperation(Parent, response);
+                var operation = new SiteSlotPremierAddOnCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +143,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPremierAddOn(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOn(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotPremierAddOn(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOn(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,9 +198,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotPremierAddOn>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotPremierAddOn(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotPremierAddOn>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOn(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,14 +220,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotPremierAddOn>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotPremierAddOn(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotPremierAddOn>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOn(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,7 +272,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(premierAddOnName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPremierAddOnCollection.Exists");
             scope.Start();
             try
             {
@@ -279,6 +287,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteSlotPremierAddOn, PremierAddOnData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotPremierAddOn, PremierAddOnData> Construct() { }
     }
 }

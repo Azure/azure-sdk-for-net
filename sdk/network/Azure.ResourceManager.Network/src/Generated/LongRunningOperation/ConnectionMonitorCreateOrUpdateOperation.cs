@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ConnectionMonitor IOperationSource<ConnectionMonitor>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ConnectionMonitor(_operationBase, ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement));
+            var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
+            return new ConnectionMonitor(_operationBase, data);
         }
 
         async ValueTask<ConnectionMonitor> IOperationSource<ConnectionMonitor>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ConnectionMonitor(_operationBase, ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement));
+            var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
+            return new ConnectionMonitor(_operationBase, data);
         }
     }
 }

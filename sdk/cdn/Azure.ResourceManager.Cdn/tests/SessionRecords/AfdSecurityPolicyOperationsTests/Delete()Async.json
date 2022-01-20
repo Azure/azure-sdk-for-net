@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -45,12 +45,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-7445?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-7445?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "21",
+        "Content-Length": "31",
         "Content-Type": "application/json",
         "traceparent": "00-9bf2cfd8721e5641a5c2aff72defb675-096060faed368d40-00",
         "User-Agent": [
@@ -61,6 +61,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus"
       },
       "StatusCode": 201,
@@ -5486,7 +5487,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-7445/providers/Microsoft.Cdn/profiles/AFDProfile-8897/afdEndpoints/AFDEndpoint-8596"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-7445/providers/Microsoft.Cdn/profiles/AFDProfile-8897/afdEndpoints/AFDEndpoint-8596"
                   }
                 ],
                 "patternsToMatch": [
@@ -5530,7 +5531,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-7445/providers/Microsoft.Cdn/profiles/AFDProfile-8897/afdEndpoints/AFDEndpoint-8596"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-7445/providers/Microsoft.Cdn/profiles/AFDProfile-8897/afdEndpoints/AFDEndpoint-8596"
                   }
                 ],
                 "patternsToMatch": [
@@ -6918,7 +6919,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-7445/providers/Microsoft.Cdn/profiles/AFDProfile-8897/afdEndpoints/AFDEndpoint-8596"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-7445/providers/Microsoft.Cdn/profiles/AFDProfile-8897/afdEndpoints/AFDEndpoint-8596"
                   }
                 ],
                 "patternsToMatch": [

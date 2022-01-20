@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> Client options for FarmBeatsClient. </summary>
+    /// <summary> Client options for FarmBeats library clients. </summary>
     public partial class FarmBeatsClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_03_31_preview;

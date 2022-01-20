@@ -4,6 +4,7 @@
 #region Snippet:Manage_Accounts_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -26,8 +27,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             #region Snippet:Managing_Accounts_CreateAnAccount
             // Get the account collection from the specific resource group and create an account
             string accountName = "myAccount";
-            DeviceUpdateAccountData input = new DeviceUpdateAccountData(Location.WestUS2);
-            DeviceUpdateAccountCreateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(accountName, input);
+            DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
+            DeviceUpdateAccountCreateOrUpdateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
             DeviceUpdateAccount account = lro.Value;
             #endregion Snippet:Managing_Accounts_CreateAnAccount
         }
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Now we can get the account with GetAsync()
             DeviceUpdateAccount account = await accountCollection.GetAsync("myAccount");
             // With DeleteAsync(), we can delete the account
-            await account.DeleteAsync();
+            await account.DeleteAsync(true);
             #endregion Snippet:Managing_Accounts_DeleteAnAccount
         }
 
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            AzureLocation location = AzureLocation.WestUS2;
+            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 
