@@ -29,6 +29,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
+            if (options.StorageFolder == null)
+            {
+                options.StorageFolder = StorageHelper.GetDefaultStorageLocation();
+            }
+
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
             return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
         }
