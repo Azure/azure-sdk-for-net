@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -42,8 +43,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
                     {
                         { "test", "env" }
                     }
-                },
-                true);
+                });
             return rgOp.Value;
         }
     }

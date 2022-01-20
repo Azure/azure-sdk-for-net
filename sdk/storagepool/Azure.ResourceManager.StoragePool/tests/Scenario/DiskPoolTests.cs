@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             diskPoolCreate.AdditionalCapabilities.Add("DiskPool.SkipInfrastructureDeployment");
 
             // create disk pool
-            var response = await diskPoolCollection.CreateOrUpdateAsync(diskPoolName, diskPoolCreate, true);
+            var response = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
             var diskPool = response.Value;
 
             // update disk pool
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
                 {
                     Id = new ResourceIdentifier(ManagedDiskId),
                 });
-            var updateResponse = await diskPoolCollection.CreateOrUpdateAsync(diskPoolName, diskPoolCreate, true);
+            var updateResponse = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
             diskPool = updateResponse.Value;
 
             // stop disk pool

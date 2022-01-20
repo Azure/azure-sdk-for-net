@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
                });
 
             // create disk pool
-            var response = await diskPoolCollection.CreateOrUpdateAsync(diskPoolName, diskPoolCreate, true);
+            var response = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
             var diskPool = response.Value;
 
             // create iSCSI target
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var iscsiTargetName = Recording.GenerateAssetName("target-");
             var iscsiTargetCreate = new IscsiTargetCreate(IscsiTargetAclMode.Dynamic);
 
-            var targetCreateResponse = await targetCollection.CreateOrUpdateAsync(iscsiTargetName, iscsiTargetCreate, true);
+            var targetCreateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
             var iscsiTarget = targetCreateResponse.Value;
 
             // update iSCSI target
             iscsiTargetCreate.Luns.Add(new IscsiLun("lun0", ManagedDiskId));
-            var targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(iscsiTargetName, iscsiTargetCreate, true);
+            var targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
             iscsiTarget = targetUpdateResponse.Value;
 
             // delete iSCSI target
