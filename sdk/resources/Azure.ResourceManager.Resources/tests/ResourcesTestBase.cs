@@ -78,6 +78,35 @@ namespace Azure.ResourceManager.Resources.Tests
             return tmpDeploymentProperties;
         }
 
+        protected static DeploymentProperties CreateDeploymentPropertiesUsingString()
+        {
+            DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
+            tmpDeploymentProperties.Template = File.ReadAllText(Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "Scenario",
+            "DeploymentTemplates",
+            $"storage-template.json"));
+            tmpDeploymentProperties.Parameters = File.ReadAllText(Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "Scenario",
+            "DeploymentTemplates",
+            $"storage-parameters.json"));
+            return tmpDeploymentProperties;
+        }
+
+        protected static DeploymentProperties CreateDeploymentPropertiesUsingJsonElement()
+        {
+            DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new TemplateLink();
+            tmpDeploymentProperties.TemplateLink.Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json";
+            var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
+            //convert this object to JsonElement
+            var parametersString = JsonSerializer.Serialize(parametersObject);
+            var parameters = JsonDocument.Parse(parametersString).RootElement;
+            tmpDeploymentProperties.Parameters = parameters;
+            return tmpDeploymentProperties;
+        }
+
         protected static DeploymentInput CreateDeploymentData(DeploymentProperties deploymentProperties) => new DeploymentInput(deploymentProperties);
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
