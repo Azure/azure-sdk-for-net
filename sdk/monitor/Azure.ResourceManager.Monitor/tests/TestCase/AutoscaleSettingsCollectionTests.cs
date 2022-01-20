@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Tests.TestsCase
         {
             var container = await GetAutoscaleSettingsCollectionAsync();
             var name = Recording.GenerateAssetName("testAutoscaleSettings");
-            var input = ResourceDataHelper.GetBasicAutoscaleSettingData("westus");
+            var input = ResourceDataHelper.GetBasicAutoscaleSettingData("eastus");
             var lro = await container.CreateOrUpdateAsync(true, name, input);
             var autoscaleSetting = lro.Value;
             Assert.AreEqual(name, autoscaleSetting.Data.Name);

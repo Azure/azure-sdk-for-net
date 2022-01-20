@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Monitor.Tests
             var fixDate = new TimeWindow("UTC", DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
             var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
             var recurrence = new Recurrence(RecurrenceFrequency.Week, Schedule);
-            ScaleCapacity scaleCapacity = new ScaleCapacity("1", "100", "1");
+            ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
             IEnumerable<ScaleRule> rules = new List<ScaleRule>()
             {
-                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ChangeCount, "1", TimeSpan.FromMinutes(20)))
+                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ChangeCount, "1", TimeSpan.FromMinutes(20)))
             };
             IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 Enabled = true,
                 TargetResourceLocation = location,
-                TargetResourceUri = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm",
+                TargetResourceUri = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
                 Notifications =
                 {
                     new AutoscaleNotification()
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.Monitor.Tests
                     RetentionPolicy= new RetentionPolicy(false, 0)
                 }
             };
-            var data = new DiagnosticSettingsData();
-            //var data = new DiagnosticSettingsData("/subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6/providers/microsoft.insights/diagnosticSettings/mysetting", "mysetting", "", "", "", "", "myeventhub", metricSettings, logSettings, "WsId", "Dedicated");
+            //var data = new DiagnosticSettingsData();
+            var data = new DiagnosticSettingsData(ResourceIdentifier.Root, "mysetting", "", "", "", "", "myeventhub", metricSettings, logSettings, "WsId", "Dedicated");
             return data;
         }
         #endregion
