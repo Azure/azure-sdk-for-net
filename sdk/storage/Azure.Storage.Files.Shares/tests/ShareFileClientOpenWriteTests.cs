@@ -11,7 +11,6 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -135,6 +134,12 @@ namespace Azure.Storage.Files.Shares.Tests
         #region Tests
         [RecordedTest]
         public override Task OpenWriteAsync_AccessConditionsFail()
+        {
+            TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "Share Files don't support match/modified access conditions");
+            return Task.CompletedTask;
+        }
+
+        public override Task OpenWriteAsync_ModifiedDuringWrite()
         {
             TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "Share Files don't support match/modified access conditions");
             return Task.CompletedTask;

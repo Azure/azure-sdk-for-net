@@ -464,7 +464,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_ModifiedDuringWrite()
+        public virtual async Task OpenWriteAsync_ModifiedDuringWrite()
         {
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
