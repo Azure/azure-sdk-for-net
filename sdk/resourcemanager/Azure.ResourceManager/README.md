@@ -88,7 +88,7 @@ This object provides most of the logical collection operations.
 | Iterate/List | GetAll() |
 | Index | Get(string name) |
 | Add | CreateOrUpdate(string name, [Resource]Data data) |
-| Contains | CheckIfExists(string name) |
+| Contains | Exists(string name) |
 | TryGet | GetIfExists(string name) |
 
 For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
@@ -195,13 +195,13 @@ Console.WriteLine(availabilitySet.Data.Name);
 
 ## Check if a [Resource] exists
 
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Collection class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `Exists()` methods, which can be invoked from any [Resource]Collection class.
 
-`GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
+`GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `Exists()` and `ExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
 
 Before these methods were introduced you would need to catch the `RequestFailedException` and inspect the status code for 404.
 
-```C# Snippet:Readme_OldCheckIfExistsRG
+```C# Snippet:Readme_OldExistsRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
@@ -219,12 +219,12 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 
 Now with these convenience methods we can simply do the following.
 
-```C# Snippet:Readme_CheckIfExistssRG
+```C# Snippet:Readme_ExistsRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
-bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
+bool exists = await subscription.GetResourceGroups().ExistsAsync(rgName);
 
 if (exists)
 {
@@ -273,7 +273,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -307,7 +307,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-await resourceGroup.DeleteAsync();
+await resourceGroup.DeleteAsync(true);
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.

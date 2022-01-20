@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="properties">Properties of the Deployment
         /// resource</param>
         /// <param name="sku">Sku of the Deployment resource</param>
-        public DeploymentResource(string id = default(string), string name = default(string), string type = default(string), DeploymentResourceProperties properties = default(DeploymentResourceProperties), Sku sku = default(Sku))
-            : base(id, name, type)
+        public DeploymentResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), DeploymentResourceProperties properties = default(DeploymentResourceProperties), Sku sku = default(Sku))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             Sku = sku;

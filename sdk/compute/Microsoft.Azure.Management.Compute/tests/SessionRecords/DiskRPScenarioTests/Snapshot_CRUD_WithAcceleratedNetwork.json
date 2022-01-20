@@ -1036,7 +1036,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-11-30T14:54:52.8164754-08:00\",\r\n  \"endTime\": \"2021-11-30T14:54:53.0039911-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"https://md-jtl4rvfhds4n.z14.blob.storage.azure.net/g33k3sxqmzxk/abcd?sv=2018-03-28&sr=b&si=903dc8ba-3cd6-4138-9438-a8b85085b3c1&sig=2Dm61Pv4GppRkhUUisxC%2FQ95vuQdMDgThlRY%2BxjISZQ%3D\"\r\n    }\r\n  },\r\n  \"name\": \"8e2e0108-6044-4b0c-a65b-61ae38b16332\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-11-30T14:54:52.8164754-08:00\",\r\n  \"endTime\": \"2021-11-30T14:54:53.0039911-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"Sanitized\"\r\n    }\r\n  },\r\n  \"name\": \"8e2e0108-6044-4b0c-a65b-61ae38b16332\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1100,7 +1100,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"accessSAS\": \"https://md-jtl4rvfhds4n.z14.blob.storage.azure.net/g33k3sxqmzxk/abcd?sv=2018-03-28&sr=b&si=903dc8ba-3cd6-4138-9438-a8b85085b3c1&sig=2Dm61Pv4GppRkhUUisxC%2FQ95vuQdMDgThlRY%2BxjISZQ%3D\"\r\n}",
+      "ResponseBody": "{\r\n  \"accessSAS\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.StoragePool
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _iscsiTargetsRestClient = new IscsiTargetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _iscsiTargetsRestClient = new IscsiTargetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.StoragePool
         internal IscsiTarget(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _iscsiTargetsRestClient = new IscsiTargetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _iscsiTargetsRestClient = new IscsiTargetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.StoragePool
         internal IscsiTarget(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _iscsiTargetsRestClient = new IscsiTargetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _iscsiTargetsRestClient = new IscsiTargetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -224,7 +227,7 @@ namespace Azure.ResourceManager.StoragePool
                 var response = _iscsiTargetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new IscsiTargetDeleteOperation(_clientDiagnostics, Pipeline, _iscsiTargetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -238,8 +241,8 @@ namespace Azure.ResourceManager.StoragePool
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
         /// OperationId: IscsiTargets_Update
         /// <summary> Update an iSCSI Target. </summary>
-        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetUpdatePayload"/> is null. </exception>
         public async virtual Task<IscsiTargetUpdateOperation> UpdateAsync(bool waitForCompletion, IscsiTargetUpdate iscsiTargetUpdatePayload, CancellationToken cancellationToken = default)
@@ -270,8 +273,8 @@ namespace Azure.ResourceManager.StoragePool
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}
         /// OperationId: IscsiTargets_Update
         /// <summary> Update an iSCSI Target. </summary>
-        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="iscsiTargetUpdatePayload"> Request payload for iSCSI Target update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetUpdatePayload"/> is null. </exception>
         public virtual IscsiTargetUpdateOperation Update(bool waitForCompletion, IscsiTargetUpdate iscsiTargetUpdatePayload, CancellationToken cancellationToken = default)

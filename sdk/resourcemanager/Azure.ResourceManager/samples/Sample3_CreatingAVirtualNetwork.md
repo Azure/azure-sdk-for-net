@@ -24,7 +24,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 string rgName = "myResourceGroup";
 ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 ## Create a Virtual Network

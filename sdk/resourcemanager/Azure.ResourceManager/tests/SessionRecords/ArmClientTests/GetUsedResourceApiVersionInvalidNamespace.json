@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "traceparent": "00-ef512996c26f494597c9b6e52679cfca-96ab3b8b390f4740-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "781d09b0fe24adf933cdc5aeb6ed8106",
         "x-ms-return-client-request-id": "true"
       },
@@ -16,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 09 Dec 2021 00:11:22 GMT",
+        "Date": "Mon, 17 Jan 2022 02:22:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "510431d6-309f-415a-86ef-1a544fc9d8c4",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "510431d6-309f-415a-86ef-1a544fc9d8c4",
-        "x-ms-routing-request-id": "WESTUS2:20211209T001122Z:510431d6-309f-415a-86ef-1a544fc9d8c4"
+        "x-ms-correlation-request-id": "d82f5030-faa1-4ebf-9601-92a24d89e68b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "d82f5030-faa1-4ebf-9601-92a24d89e68b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022205Z:d82f5030-faa1-4ebf-9601-92a24d89e68b"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -46,12 +47,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Fake?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Fake?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20211208.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "0fd56ddcdeebdb1b4368501a88a26af1",
         "x-ms-return-client-request-id": "true"
       },
@@ -61,16 +62,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 09 Dec 2021 00:11:22 GMT",
+        "Date": "Mon, 17 Jan 2022 02:22:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "24457a8e-1880-4f86-8469-00f660fbd429",
+        "x-ms-correlation-request-id": "12fe5b19-0b3e-45f5-b940-9decc514d7a6",
         "x-ms-failure-cause": "gateway",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "24457a8e-1880-4f86-8469-00f660fbd429",
-        "x-ms-routing-request-id": "WESTUS2:20211209T001122Z:24457a8e-1880-4f86-8469-00f660fbd429"
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "12fe5b19-0b3e-45f5-b940-9decc514d7a6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022205Z:12fe5b19-0b3e-45f5-b940-9decc514d7a6"
       },
       "ResponseBody": {
         "error": {
@@ -82,7 +83,7 @@
   ],
   "Variables": {
     "RandomSeed": "358489190",
-    "RESOURCE_MANAGER_URL": null,
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

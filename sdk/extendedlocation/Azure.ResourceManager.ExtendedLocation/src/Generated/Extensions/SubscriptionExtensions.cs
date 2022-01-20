@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.ExtendedLocation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocation
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static CustomLocationsRestOperations GetCustomLocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static CustomLocationsRestOperations GetCustomLocationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new CustomLocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new CustomLocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.ExtendedLocation
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(CustomLocation.ResourceType, out string apiVersion);
+                CustomLocationsRestOperations restOperations = GetCustomLocationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<CustomLocation>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomLocations");
@@ -86,7 +88,8 @@ namespace Azure.ResourceManager.ExtendedLocation
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(CustomLocation.ResourceType, out string apiVersion);
+                CustomLocationsRestOperations restOperations = GetCustomLocationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<CustomLocation> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomLocations");

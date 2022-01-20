@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/Default-CosmosDB-1624?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/Default-CosmosDB-1624?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1218,8 +1218,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write database",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Create a database. Only applicable to API types: \u0027sql\u0027, \u0027mongodb\u0027, \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write database",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Create a database. Only applicable to API types: 'sql', 'mongodb', 'gremlin'."
             }
           },
           {
@@ -1227,8 +1227,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read database(s)",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a database or list all the databases. Only applicable to API types: \u0027sql\u0027, \u0027mongodb\u0027, \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read database(s)",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a database or list all the databases. Only applicable to API types: 'sql', 'mongodb', 'gremlin'."
             }
           },
           {
@@ -1236,8 +1236,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete database",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete a database. Only applicable to API types: \u0027sql\u0027, \u0027mongodb\u0027, \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Delete database",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Delete a database. Only applicable to API types: 'sql', 'mongodb', 'gremlin'."
             }
           },
           {
@@ -1245,8 +1245,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027sql\u0027, \u0027mongodb\u0027, \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'sql', 'mongodb', 'gremlin'."
             }
           },
           {
@@ -1254,8 +1254,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Container",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write container",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Create or update a container. Only applicable to API types: \u0027sql\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write container",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Create or update a container. Only applicable to API types: 'sql'."
             }
           },
           {
@@ -1263,8 +1263,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Container",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read container(s)",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a container or list all the containers. Only applicable to API types: \u0027sql\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read container(s)",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a container or list all the containers. Only applicable to API types: 'sql'."
             }
           },
           {
@@ -1272,8 +1272,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Container",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete container",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete a container. Only applicable to API types: \u0027sql\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Delete container",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Delete a container. Only applicable to API types: 'sql'."
             }
           },
           {
@@ -1281,8 +1281,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Container",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027sql\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'sql'."
             }
           },
           {
@@ -1290,8 +1290,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write table",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Create or update a table. Only applicable to API types: \u0027table\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write table",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Create or update a table. Only applicable to API types: 'table'."
             }
           },
           {
@@ -1299,8 +1299,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read table(s)",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a table or list all the tables. Only applicable to API types: \u0027table\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read table(s)",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a table or list all the tables. Only applicable to API types: 'table'."
             }
           },
           {
@@ -1308,8 +1308,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete table",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete a table. Only applicable to API types: \u0027table\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Delete table",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Delete a table. Only applicable to API types: 'table'."
             }
           },
           {
@@ -1317,8 +1317,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027table\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'table'."
             }
           },
           {
@@ -1326,8 +1326,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Collection",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write collection",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Create or update a collection. Only applicable to API types: \u0027mongodb\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write collection",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Create or update a collection. Only applicable to API types: 'mongodb'."
             }
           },
           {
@@ -1335,8 +1335,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Collection",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read collection(s)",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a collection or list all the collections. Only applicable to API types: \u0027mongodb\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read collection(s)",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a collection or list all the collections. Only applicable to API types: 'mongodb'."
             }
           },
           {
@@ -1344,8 +1344,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Collection",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete collection",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete a collection. Only applicable to API types: \u0027mongodb\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Delete collection",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Delete a collection. Only applicable to API types: 'mongodb'."
             }
           },
           {
@@ -1353,8 +1353,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Collection",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027mongodb\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'mongodb'."
             }
           },
           {
@@ -1362,8 +1362,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Keyspace",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write keyspace",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Create a keyspace. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write keyspace",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Create a keyspace. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1371,8 +1371,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Keyspace",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read keyspace(s)",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a keyspace or list all the keyspaces. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read keyspace(s)",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a keyspace or list all the keyspaces. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1380,8 +1380,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Keyspace",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete keyspace",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete a keyspace. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Delete keyspace",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Delete a keyspace. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1389,8 +1389,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Keyspace",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1398,8 +1398,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write table",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Create or update a table. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write table",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Create or update a table. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1407,8 +1407,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read table(s)",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a table or list all the tables. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read table(s)",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a table or list all the tables. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1416,8 +1416,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete table",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete a table. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Delete table",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Delete a table. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1425,8 +1425,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027cassandra\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'cassandra'."
             }
           },
           {
@@ -1434,8 +1434,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Graph",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write graph",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Create or update a graph. Only applicable to API types: \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write graph",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Create or update a graph. Only applicable to API types: 'gremlin'."
             }
           },
           {
@@ -1443,8 +1443,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Graph",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read graph(s)",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a graph or list all the graphs. Only applicable to API types: \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read graph(s)",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a graph or list all the graphs. Only applicable to API types: 'gremlin'."
             }
           },
           {
@@ -1452,8 +1452,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Graph",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete graph",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Delete a graph. Only applicable to API types: \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Delete graph",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Delete a graph. Only applicable to API types: 'gremlin'."
             }
           },
           {
@@ -1461,8 +1461,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Graph",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027gremlin\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'gremlin'."
             }
           },
           {
@@ -1470,8 +1470,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write database throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Update a database throughput. Only applicable to API types: \u0027sql\u0027, \u0027mongodb\u0027, \u0027gremlin\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write database throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Update a database throughput. Only applicable to API types: 'sql', 'mongodb', 'gremlin'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1479,8 +1479,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read database throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a database throughput. Only applicable to API types: \u0027sql\u0027, \u0027mongodb\u0027, \u0027gremlin\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read database throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a database throughput. Only applicable to API types: 'sql', 'mongodb', 'gremlin'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1488,8 +1488,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027sql\u0027, \u0027mongodb\u0027, \u0027gremlin\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'sql', 'mongodb', 'gremlin'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1497,8 +1497,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Container throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write container throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Update a container throughput. Only applicable to API types: \u0027sql\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write container throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Update a container throughput. Only applicable to API types: 'sql'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1506,8 +1506,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Container throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read container throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a container throughput. Only applicable to API types: \u0027sql\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read container throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a container throughput. Only applicable to API types: 'sql'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1515,8 +1515,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Container throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027sql\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'sql'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1524,8 +1524,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write table throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Update a table throughput. Only applicable to API types: \u0027table\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write table throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Update a table throughput. Only applicable to API types: 'table'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1533,8 +1533,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read table throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a table throughput. Only applicable to API types: \u0027table\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read table throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a table throughput. Only applicable to API types: 'table'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1542,8 +1542,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027table\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'table'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1551,8 +1551,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Collection throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write collection throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Update a collection throughput. Only applicable to API types: \u0027mongodb\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write collection throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Update a collection throughput. Only applicable to API types: 'mongodb'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1560,8 +1560,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Collection throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read collection throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a collection throughput. Only applicable to API types: \u0027mongodb\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read collection throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a collection throughput. Only applicable to API types: 'mongodb'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1569,8 +1569,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Collection throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027mongodb\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'mongodb'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1578,8 +1578,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Keyspace throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write keyspace throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Update a keyspace throughput. Only applicable to API types: \u0027cassandra\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write keyspace throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Update a keyspace throughput. Only applicable to API types: 'cassandra'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1587,8 +1587,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Keyspace throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read keyspace throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a keyspace throughput. Only applicable to API types: \u0027cassandra\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read keyspace throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a keyspace throughput. Only applicable to API types: 'cassandra'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1596,8 +1596,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Keyspace throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027cassandra\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'cassandra'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1605,8 +1605,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write table throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Update a table throughput. Only applicable to API types: \u0027cassandra\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write table throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Update a table throughput. Only applicable to API types: 'cassandra'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1614,8 +1614,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read table throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a table throughput. Only applicable to API types: \u0027cassandra\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read table throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a table throughput. Only applicable to API types: 'cassandra'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1623,8 +1623,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Table throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027cassandra\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'cassandra'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1632,8 +1632,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Graph throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Write gremlin throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Update a graph throughput. Only applicable to API types: \u0027gremlin\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Write gremlin throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Update a graph throughput. Only applicable to API types: 'gremlin'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1641,8 +1641,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Graph throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read graph throughput",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read a graph throughput. Only applicable to API types: \u0027gremlin\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read graph throughput",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read a graph throughput. Only applicable to API types: 'gremlin'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -1650,8 +1650,8 @@
             "display": {
               "Provider": "Microsoft DocumentDB",
               "Resource": "Graph throughput setting",
-              "Operation": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read operation results",
-              "Description": "(Deprecated. Please use resource paths without \u0027/apis/\u0027 segment) Read status of the asynchronous operation. Only applicable to API types: \u0027gremlin\u0027. Only applicable for setting types: \u0027throughput\u0027."
+              "Operation": "(Deprecated. Please use resource paths without '/apis/' segment) Read operation results",
+              "Description": "(Deprecated. Please use resource paths without '/apis/' segment) Read status of the asynchronous operation. Only applicable to API types: 'gremlin'. Only applicable for setting types: 'throughput'."
             }
           },
           {
@@ -4344,7 +4344,7 @@
                     "name": "AvailableStorage",
                     "displayName": "(deprecated) Available Storage",
                     "internalMetricName": "AvailableStorage",
-                    "displayDescription": "\u0022Available Storage\u0022 will be removed from Azure Monitor at the end of September 2023. Cosmos DB collection storage size is now unlimited. The only restriction is that the storage size for each logical partition key is 20GB. You can enable PartitionKeyStatistics in Diagnostic Log to know the storage consumption for top partition keys. For more info about Cosmos DB storage quota, please check this doc https://docs.microsoft.com/en-us/azure/cosmos-db/concepts-limits. After deprecation, the remaining alert rules still defined on the deprecated metric will be automatically disabled post the deprecation date.",
+                    "displayDescription": "\"Available Storage\" will be removed from Azure Monitor at the end of September 2023. Cosmos DB collection storage size is now unlimited. The only restriction is that the storage size for each logical partition key is 20GB. You can enable PartitionKeyStatistics in Diagnostic Log to know the storage consumption for top partition keys. For more info about Cosmos DB storage quota, please check this doc https://docs.microsoft.com/en-us/azure/cosmos-db/concepts-limits. After deprecation, the remaining alert rules still defined on the deprecated metric will be automatically disabled post the deprecation date.",
                     "unit": "Bytes",
                     "aggregationType": "Total",
                     "lockAggregationType": "Total",

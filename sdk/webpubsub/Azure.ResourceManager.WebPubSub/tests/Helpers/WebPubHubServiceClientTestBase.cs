@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 
         protected async Task<ResourceGroup> CreateResourceGroup(string name)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
+            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(true,name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
 
         protected async Task<ResourceGroup> CreateResourceGroup(string name, string location)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
+            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(true,name, new ResourceGroupData(location))).Value;
         }
 
         protected async Task<WebPubSub> CreateDefaultWebPubSub(string webPubSubName, AzureLocation location, ResourceGroup resourceGroup)

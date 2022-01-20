@@ -53,7 +53,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
                 Assert.NotNull(createdService.Certificates);
                 Assert.Single(createdService.Certificates);

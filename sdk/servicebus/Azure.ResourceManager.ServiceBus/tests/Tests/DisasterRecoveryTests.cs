@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             }
 
             //check name availability
-            CheckNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckNameAvailabilityDisasterRecoveryConfigAsync(new CheckNameAvailability(disasterRecoveryName));
+            CheckNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckDisasterRecoveryNameAvailabilityAsync(new CheckNameAvailability(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
             List<NamespaceDisasterRecoveryConfigAuthorizationRule> rules = await disasterRecovery.GetNamespaceDisasterRecoveryConfigAuthorizationRules().GetAllAsync().ToEnumerableAsync();

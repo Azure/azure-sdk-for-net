@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            Assert.DoesNotThrowAsync(async () => await aset.DeleteAsync());
+            Assert.DoesNotThrowAsync(async () => await aset.DeleteAsync(true));
 
             var fakeId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(new ResourceIdentifier(fakeId)));
@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly] // Playback error: Fast polling interval of 00:00:00 detected in playback mode. Please use the default WaitForCompletion(). The test framework would automatically reduce the interval in playback.
         public async Task StartDelete()
         {
             var rgOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
@@ -186,13 +187,13 @@ namespace Azure.ResourceManager.Tests
 
             var data = ConstructGenericAvailabilitySet();
             data.Tags.Add("key", "value");
-            var asetOp = await aset.UpdateAsync(data);
+            var asetOp = await aset.UpdateAsync(true, data);
             aset = asetOp.Value;
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await aset.UpdateAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await aset.UpdateAsync(true, null));
         }
 
         [TestCase]
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Tests
 
             var data = ConstructGenericAvailabilitySet();
             data.Tags.Add("key", "value");
-            var updateOp = await aset.UpdateAsync(data, false);
+            var updateOp = await aset.UpdateAsync(false, data);
             aset = await updateOp.WaitForCompletionAsync();
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                var updateOp = await aset.UpdateAsync(null, false);
+                var updateOp = await aset.UpdateAsync(false, null);
                 _ = await updateOp.WaitForCompletionAsync();
             });
         }

@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         internal DataWarehouseUserActivitiesCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataWarehouseUserActivitiesRestClient = new DataWarehouseUserActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DataWarehouseUserActivities.ResourceType, out string apiVersion);
+            _dataWarehouseUserActivitiesRestClient = new DataWarehouseUserActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _dataWarehouseUserActivitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataWarehouseUserActivities(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _dataWarehouseUserActivitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataWarehouseUserActivities(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivities(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _dataWarehouseUserActivitiesRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _dataWarehouseUserActivitiesRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _dataWarehouseUserActivitiesRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _dataWarehouseUserActivitiesRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataWarehouseUserActivities(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
