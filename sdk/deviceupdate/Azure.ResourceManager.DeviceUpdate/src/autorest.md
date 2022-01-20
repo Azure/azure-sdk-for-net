@@ -24,9 +24,11 @@ directive:
   - from: swagger-document
     where: $.definitions.Instance
     transform: $['x-ms-client-name'] = 'DeviceUpdateInstance'
-  - remove-operation: Accounts_Head
-  - remove-operation: Instances_Head
-#  - remove-operation: Operations_List
+  - from: swagger-document
+    where: $.definitions.ConnectionDetails.properties.privateIpAddress
+    transform: $['x-ms-client-name'] = 'privateIPAddress'
+  - remove-operation: Accounts_Head  # Not supported yet
+  - remove-operation: Instances_Head # Not supported yet
   - rename-model:
       from: AccountUpdate
       to: DeviceUpdateAccountUpdateOptions

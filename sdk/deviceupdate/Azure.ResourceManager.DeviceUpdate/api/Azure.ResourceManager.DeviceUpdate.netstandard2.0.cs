@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string Id { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
         public string MemberName { get { throw null; } }
-        public string PrivateIpAddress { get { throw null; } }
+        public string PrivateIPAddress { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.CreatedByType>
