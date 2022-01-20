@@ -239,61 +239,6 @@ namespace Azure.ResourceManager
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
-        /// <summary>
-        /// Get the operations for a list of specific resources.
-        /// </summary>
-        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
-        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResource> GetGenericResources(params ResourceIdentifier[] ids)
-        {
-            return GetGenericResourceOperationsInternal(ids);
-        }
-
-        /// <summary>
-        /// Get the operations for a list of specific resources.
-        /// </summary>
-        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
-        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResource> GetGenericResources(IEnumerable<ResourceIdentifier> ids)
-        {
-            return GetGenericResourceOperationsInternal(ids);
-        }
-
-        /// <summary>
-        /// Get the operations for a list of specific resources.
-        /// </summary>
-        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
-        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResource> GetGenericResources(params string[] ids)
-        {
-            return GetGenericResourceOperationsInternal(ids.Select(id => new ResourceIdentifier(id)));
-        }
-
-        /// <summary>
-        /// Get the operations for a list of specific resources.
-        /// </summary>
-        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
-        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResource> GetGenericResources(IEnumerable<string> ids)
-        {
-            return GetGenericResourceOperationsInternal(ids.Select(id => new ResourceIdentifier(id)));
-        }
-
-        private IReadOnlyList<GenericResource> GetGenericResourceOperationsInternal(IEnumerable<ResourceIdentifier> ids)
-        {
-            if (ids == null)
-            {
-                throw new ArgumentNullException(nameof(ids));
-            }
-
-            var genericResourceOperations = new ChangeTrackingList<GenericResource>();
-            foreach (string id in ids)
-            {
-                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), new ResourceIdentifier(id)));
-            }
-            return genericResourceOperations;
-        }
-
         /// <summary> Gets a collection of GenericResources. </summary>
         /// <returns> An object representing collection of GenericResources and their operations. </returns>
         public virtual GenericResourceCollection GetGenericResources() => _tenant.GetGenericResources();
