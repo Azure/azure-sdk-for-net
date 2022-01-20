@@ -28,12 +28,7 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
-        public static string DevCertPath { get; } = Path.Combine(
-            RepositoryRoot,
-            "eng",
-            "common",
-            "testproxy",
-            "dotnet-devcert.pfx");
+        public static string DevCertPath { get; }
 
         public const string DevCertPassword = "password";
 
@@ -131,6 +126,13 @@ namespace Azure.Core.TestFramework
             }
 
             RepositoryRoot = directoryInfo?.Parent?.FullName;
+
+            DevCertPath = Path.Combine(
+                RepositoryRoot,
+                "eng",
+                "common",
+                "testproxy",
+                "dotnet-devcert.pfx");
         }
 
         public RecordedTestMode? Mode { get; set; }
