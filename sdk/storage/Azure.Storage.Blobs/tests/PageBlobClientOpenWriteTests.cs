@@ -73,15 +73,15 @@ namespace Azure.Storage.Blobs.Tests
         {
             if (metadata != default)
             {
-                Assert.Inconclusive("PageBlobClient.OpenWriteAsync() does not support metadata.");
+                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "PageBlobClient.OpenWriteAsync() does not support metadata.");
             }
             if (tags != default)
             {
-                Assert.Inconclusive("PageBlobClient.OpenWriteAsync() does not support tags.");
+                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "PageBlobClient.OpenWriteAsync() does not support tags.");
             }
             if (httpHeaders != default)
             {
-                Assert.Inconclusive("PageBlobClient.OpenWriteAsync() does not support httpHeaders.");
+                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "PageBlobClient.OpenWriteAsync() does not support httpHeaders.");
             }
 
             PageBlobRequestConditions pageConditions = conditions == default ? default : new PageBlobRequestConditions

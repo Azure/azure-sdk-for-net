@@ -190,7 +190,7 @@ namespace Azure.Storage.Test.Shared
             TResourceClient client = GetResourceClient(disposingContainer.Container);
 
             // Act
-            using (Stream stream = await OpenWriteAsync(client, maxDataSize: Constants.KB, overwrite: true))
+            using (Stream stream = await OpenWriteAsync(client, maxDataSize: 175, overwrite: true))
             {
                 using (var writer = new StreamWriter(stream, Encoding.ASCII))
                 {
@@ -577,7 +577,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_AccessConditionsFail()
+        public virtual async Task OpenWriteAsync_AccessConditionsFail()
         {
             foreach (AccessConditionParameters parameters in Conditions.AccessConditionsFail_Data)
             {

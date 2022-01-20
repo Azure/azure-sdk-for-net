@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -69,15 +71,15 @@ namespace Azure.Storage.Blobs.Tests
         {
             if (metadata != default)
             {
-                Assert.Inconclusive("PageBlobClient.OpenWriteAsync() does not support metadata.");
+                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "AppendBlobClient.OpenWriteAsync() does not support metadata.");
             }
             if (tags != default)
             {
-                Assert.Inconclusive("PageBlobClient.OpenWriteAsync() does not support tags.");
+                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "AppendBlobClient.OpenWriteAsync() does not support tags.");
             }
             if (httpHeaders != default)
             {
-                Assert.Inconclusive("PageBlobClient.OpenWriteAsync() does not support httpHeaders.");
+                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "AppendBlobClient.OpenWriteAsync() does not support httpHeaders.");
             }
 
             AppendBlobRequestConditions appendConditions = conditions == default ? default : new AppendBlobRequestConditions
@@ -95,5 +97,39 @@ namespace Azure.Storage.Blobs.Tests
                 ProgressHandler = progressHandler
             });
         }
+
+        #region Tests
+        [RecordedTest]
+        public async Task OpenWriteAsync_AppendExistingBlob()
+        {
+            await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
+            AppendBlobClient blob = GetResourceClient(disposingContainer.Container);
+            await blob.CreateAsync();
+
+            byte[] originalData = GetRandomBuffer(Constants.KB);
+            using Stream originalStream = new MemoryStream(originalData);
+
+            await blob.AppendBlockAsync(content: originalStream);
+
+            byte[] newData = GetRandomBuffer(Constants.KB);
+            using Stream newStream = new MemoryStream(newData);
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(overwrite: false);
+            await newStream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
+
+            // Assert
+            byte[] expectedData = new byte[2 * Constants.KB];
+            Array.Copy(originalData, 0, expectedData, 0, Constants.KB);
+            Array.Copy(newData, 0, expectedData, Constants.KB, Constants.KB);
+
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, 2 * Constants.KB));
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+        #endregion
     }
 }
