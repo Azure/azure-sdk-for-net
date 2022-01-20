@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         folderPath = TryCreateTelemetryFolder(localAppData);
                         if (folderPath != null)
                         {
-                            defaultStorageLocation = localAppData;
+                            defaultStorageLocation = folderPath;
                             return defaultStorageLocation;
                         }
 
@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                             folderPath = TryCreateTelemetryFolder(temp);
                             if (folderPath != null)
                             {
-                                defaultStorageLocation = temp;
+                                defaultStorageLocation = folderPath;
                                 return defaultStorageLocation;
                             }
                         }
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         folderPath = TryCreateTelemetryFolder(tmpdir);
                         if (folderPath != null)
                         {
-                            defaultStorageLocation = tmpdir;
+                            defaultStorageLocation = folderPath;
                             return defaultStorageLocation;
                         }
                     }
