@@ -186,7 +186,7 @@ The [Managed identity authentication](https://docs.microsoft.com/azure/active-di
 |`AZURE_CLIENT_ID`|id of an Azure Active Directory application
 |`AZURE_TENANT_ID`|id of the application's Azure Active Directory tenant
 |`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PEM-encoded certificate file including private key (without password protection)
-|`AZURE_CLIENT_CERTIFICATE_ENABLE_SNI`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
+|`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 
 #### Username and password
 |variable name|value

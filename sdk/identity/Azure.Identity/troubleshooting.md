@@ -69,7 +69,7 @@ AZURE_CLIENT_SECRET |    One of the application's client secrets. |
 AZURE_CLIENT_ID    | ID of an Azure Active Directory application. |
 AZURE_TENANT_ID    | ID of the application's Azure Active Directory tenant. |
 AZURE_CLIENT_CERTIFICATE_PATH |    Path to a PEM-encoded certificate file including private key (must be without password protection). |
-AZURE_CLIENT_CERTIFICATE_ENABLE_SNI |    (Optional) Send certificate chain in x5c header to support subject name / issuer based authentication. |
+AZURE_CLIENT_SEND_CERTIFICATE_CHAIN |    (Optional) Send certificate chain in x5c header to support subject name / issuer based authentication. |
 
 ##### Username and password
 

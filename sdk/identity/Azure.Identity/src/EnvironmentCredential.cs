@@ -19,7 +19,7 @@ namespace Azure.Identity
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
     /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>A path to certificate and private key pair in PEM or PFX format, which can authenticate the App Registration.</description></item>
-    /// <item><term>AZURE_CLIENT_CERTIFICATE_ENABLE_SNI</term><description>Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
+    /// <item><term>AZURE_CLIENT_SEND_CERTIFICATE_CHAIN</term><description>Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
@@ -61,7 +61,7 @@ namespace Azure.Identity
             string clientId = EnvironmentVariables.ClientId;
             string clientSecret = EnvironmentVariables.ClientSecret;
             string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
-            string clientCertificateEnableSni = EnvironmentVariables.ClientCertificateEnableSni;
+            string clientSendCertificateChain = EnvironmentVariables.ClientSendCertificateChain;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
@@ -77,8 +77,8 @@ namespace Azure.Identity
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
-                    bool sendCertificateChain = !string.IsNullOrEmpty(clientCertificateEnableSni) &&
-                        (clientCertificateEnableSni == "1" || clientCertificateEnableSni == "true");
+                    bool sendCertificateChain = !string.IsNullOrEmpty(clientSendCertificateChain) &&
+                        (clientSendCertificateChain == "1" || clientSendCertificateChain == "true");
 
                     ClientCertificateCredentialOptions clientCertificateCredentialOptions = new ClientCertificateCredentialOptions
                     {
