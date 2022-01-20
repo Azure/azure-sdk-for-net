@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             return new DeviceUpdateRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DeviceUpdateAccountsRestOperations GetDeviceUpdateAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
+        private static AccountsRestOperations GetAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+            return new AccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeviceUpdateAccounts_ListBySubscription
+        /// OperationId: Accounts_ListBySubscription
         /// <summary> Lists the DeviceUpdateAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 options.TryGetApiVersion(DeviceUpdateAccount.ResourceType, out string apiVersion);
-                DeviceUpdateAccountsRestOperations restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
+                AccountsRestOperations restOperations = GetAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DeviceUpdateAccount>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeviceUpdateAccounts_ListBySubscription
+        /// OperationId: Accounts_ListBySubscription
         /// <summary> Lists the DeviceUpdateAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 options.TryGetApiVersion(DeviceUpdateAccount.ResourceType, out string apiVersion);
-                DeviceUpdateAccountsRestOperations restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
+                AccountsRestOperations restOperations = GetAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DeviceUpdateAccount> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");
