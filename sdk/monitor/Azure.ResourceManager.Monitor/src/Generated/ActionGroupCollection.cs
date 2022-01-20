@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of ActionGroup and their operations over its parent. </summary>
     public partial class ActionGroupCollection : ArmCollection, IEnumerable<ActionGroup>, IAsyncEnumerable<ActionGroup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ActionGroupsRestOperations _actionGroupsRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of ActionGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ActionGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ActionGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _actionGroupsRestClient = new ActionGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
-        public virtual ActionGroupCreateOrUpdateOperation CreateOrUpdate(string actionGroupName, ActionGroupData actionGroup, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ActionGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             if (actionGroupName == null)
             {
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
-        public async virtual Task<ActionGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string actionGroupName, ActionGroupData actionGroup, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ActionGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
         {
             if (actionGroupName == null)
             {
@@ -196,9 +202,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _actionGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ActionGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ActionGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ActionGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ActionGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,14 +224,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(actionGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _actionGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ActionGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new ActionGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ActionGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ActionGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(actionGroupName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ActionGroupCollection.Exists");
             scope.Start();
             try
             {

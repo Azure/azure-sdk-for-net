@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Monitor.Models
         ScopedPrivateLink IOperationSource<ScopedPrivateLink>.CreateResult(Azure.Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ScopedPrivateLink(_operationBase, ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement));
+            var data = ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement);
+            return new ScopedPrivateLink(_operationBase, data);
         }
 
         async ValueTask<ScopedPrivateLink> IOperationSource<ScopedPrivateLink>.CreateResultAsync(Azure.Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ScopedPrivateLink(_operationBase, ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement));
+            var data = ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement);
+            return new ScopedPrivateLink(_operationBase, data);
         }
     }
 }

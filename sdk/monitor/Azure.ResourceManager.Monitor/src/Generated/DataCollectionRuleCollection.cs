@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of DataCollectionRule and their operations over its parent. </summary>
     public partial class DataCollectionRuleCollection : ArmCollection, IEnumerable<DataCollectionRule>, IAsyncEnumerable<DataCollectionRule>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DataCollectionRulesRestOperations _dataCollectionRulesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataCollectionRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DataCollectionRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _dataCollectionRulesRestClient = new DataCollectionRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public virtual DataCollectionRuleCreateOperation CreateOrUpdate(string dataCollectionRuleName, DataCollectionRuleData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DataCollectionRuleCreateOperation CreateOrUpdate(bool waitForCompletion, string dataCollectionRuleName, DataCollectionRuleData body = null, CancellationToken cancellationToken = default)
         {
             if (dataCollectionRuleName == null)
             {
@@ -88,7 +94,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public async virtual Task<DataCollectionRuleCreateOperation> CreateOrUpdateAsync(string dataCollectionRuleName, DataCollectionRuleData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DataCollectionRuleCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dataCollectionRuleName, DataCollectionRuleData body = null, CancellationToken cancellationToken = default)
         {
             if (dataCollectionRuleName == null)
             {
@@ -188,9 +194,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DataCollectionRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataCollectionRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataCollectionRule>(null, response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,14 +216,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(dataCollectionRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _dataCollectionRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DataCollectionRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new DataCollectionRule(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DataCollectionRule>(null, response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +268,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(dataCollectionRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DataCollectionRuleCollection.Exists");
             scope.Start();
             try
             {

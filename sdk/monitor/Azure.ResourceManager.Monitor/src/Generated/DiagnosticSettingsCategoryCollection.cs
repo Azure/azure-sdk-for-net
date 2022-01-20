@@ -19,7 +19,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of DiagnosticSettingsCategory and their operations over its parent. </summary>
-    public partial class DiagnosticSettingsCategoryCollection : ArmCollection, IEnumerable<DiagnosticSettingsCategory>
+    public partial class DiagnosticSettingsCategoryCollection : ArmCollection, IEnumerable<DiagnosticSettingsCategory>, IAsyncEnumerable<DiagnosticSettingsCategory>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticSettingsCategoryRestOperations _diagnosticSettingsCategoryRestClient;
@@ -29,21 +29,12 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiagnosticSettingsCategoryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <summary> Verify that the input resource Id is a valid collection for this type. </summary>
-        /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
         }
 
         // Collection level operations.
@@ -124,9 +115,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _diagnosticSettingsCategoryRestClient.Get(Id, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,14 +137,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _diagnosticSettingsCategoryRestClient.GetAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +189,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Exists");
             scope.Start();
             try
             {
@@ -217,20 +208,25 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: DiagnosticSettingsCategory_List
         /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<DiagnosticSettingsCategory>> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiagnosticSettingsCategory> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
-            scope.Start();
-            try
+            Page<DiagnosticSettingsCategory> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _diagnosticSettingsCategoryRestClient.List(Id, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Parent, value)).ToArray() as IReadOnlyList<DiagnosticSettingsCategory>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _diagnosticSettingsCategoryRestClient.List(Id, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
@@ -238,30 +234,40 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: DiagnosticSettingsCategory_List
         /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<DiagnosticSettingsCategory>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiagnosticSettingsCategory> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<DiagnosticSettingsCategory>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _diagnosticSettingsCategoryRestClient.ListAsync(Id, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Parent, value)).ToArray() as IReadOnlyList<DiagnosticSettingsCategory>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _diagnosticSettingsCategoryRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         IEnumerator<DiagnosticSettingsCategory> IEnumerable<DiagnosticSettingsCategory>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<DiagnosticSettingsCategory> IAsyncEnumerable<DiagnosticSettingsCategory>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of LogProfile and their operations over its parent. </summary>
     public partial class LogProfileCollection : ArmCollection, IEnumerable<LogProfile>, IAsyncEnumerable<LogProfile>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly LogProfilesRestOperations _logProfilesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of LogProfileCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogProfileCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LogProfileCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _logProfilesRestClient = new LogProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual LogProfileCreateOrUpdateOperation CreateOrUpdate(string logProfileName, LogProfileData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual LogProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
             if (logProfileName == null)
             {
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<LogProfileCreateOrUpdateOperation> CreateOrUpdateAsync(string logProfileName, LogProfileData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<LogProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
             if (logProfileName == null)
             {
@@ -196,9 +202,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _logProfilesRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<LogProfile>(null, response.GetRawResponse())
-                    : Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LogProfile>(null, response.GetRawResponse());
+                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,14 +224,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(logProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _logProfilesRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<LogProfile>(null, response.GetRawResponse())
-                    : Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<LogProfile>(null, response.GetRawResponse());
+                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(logProfileName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.Exists");
             scope.Start();
             try
             {

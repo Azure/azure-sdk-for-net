@@ -25,16 +25,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="criteria"> defines the specific alert criteria information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="criteria"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public MetricAlertData(AzureLocation location, int severity, bool enabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
         {
             if (scopes == null)
             {
                 throw new ArgumentNullException(nameof(scopes));
-            }
-            if (criteria == null)
-            {
-                throw new ArgumentNullException(nameof(criteria));
             }
 
             Severity = severity;

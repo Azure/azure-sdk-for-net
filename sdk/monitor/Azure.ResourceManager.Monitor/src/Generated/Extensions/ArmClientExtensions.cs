@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="AutoscaleSetting" /> object. </returns>
         public static AutoscaleSetting GetAutoscaleSetting(this ArmClient armClient, ResourceIdentifier id)
         {
+            AutoscaleSetting.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AutoscaleSetting(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="AlertRule" /> object. </returns>
         public static AlertRule GetAlertRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            AlertRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AlertRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="LogProfile" /> object. </returns>
         public static LogProfile GetLogProfile(this ArmClient armClient, ResourceIdentifier id)
         {
+            LogProfile.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LogProfile(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DiagnosticSettings" /> object. </returns>
         public static DiagnosticSettings GetDiagnosticSettings(this ArmClient armClient, ResourceIdentifier id)
         {
+            DiagnosticSettings.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiagnosticSettings(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DiagnosticSettingsCategory" /> object. </returns>
         public static DiagnosticSettingsCategory GetDiagnosticSettingsCategory(this ArmClient armClient, ResourceIdentifier id)
         {
+            DiagnosticSettingsCategory.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiagnosticSettingsCategory(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="ActionGroup" /> object. </returns>
         public static ActionGroup GetActionGroup(this ArmClient armClient, ResourceIdentifier id)
         {
+            ActionGroup.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ActionGroup(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="MetricAlert" /> object. </returns>
         public static MetricAlert GetMetricAlert(this ArmClient armClient, ResourceIdentifier id)
         {
+            MetricAlert.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MetricAlert(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -97,6 +104,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="LogSearchRule" /> object. </returns>
         public static LogSearchRule GetLogSearchRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            LogSearchRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new LogSearchRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -108,6 +116,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatus" /> object. </returns>
         public static VmInsightsOnboardingStatus GetVmInsightsOnboardingStatus(this ArmClient armClient, ResourceIdentifier id)
         {
+            VmInsightsOnboardingStatus.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VmInsightsOnboardingStatus(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -119,6 +128,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="PrivateLinkScope" /> object. </returns>
         public static PrivateLinkScope GetPrivateLinkScope(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateLinkScope.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkScope(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -130,6 +140,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="PrivateLink" /> object. </returns>
         public static PrivateLink GetPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
+            PrivateEndpointConnection.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -152,6 +164,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="ScopedPrivateLink" /> object. </returns>
         public static ScopedPrivateLink GetScopedPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
+            ScopedPrivateLink.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScopedPrivateLink(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -163,6 +176,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="ActivityLogAlert" /> object. </returns>
         public static ActivityLogAlert GetActivityLogAlert(this ArmClient armClient, ResourceIdentifier id)
         {
+            ActivityLogAlert.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ActivityLogAlert(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -174,6 +188,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DataCollectionEndpoint" /> object. </returns>
         public static DataCollectionEndpoint GetDataCollectionEndpoint(this ArmClient armClient, ResourceIdentifier id)
         {
+            DataCollectionEndpoint.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionEndpoint(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -185,6 +200,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DataCollectionRuleAssociation" /> object. </returns>
         public static DataCollectionRuleAssociation GetDataCollectionRuleAssociation(this ArmClient armClient, ResourceIdentifier id)
         {
+            DataCollectionRuleAssociation.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionRuleAssociation(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
@@ -196,6 +212,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DataCollectionRule" /> object. </returns>
         public static DataCollectionRule GetDataCollectionRule(this ArmClient armClient, ResourceIdentifier id)
         {
+            DataCollectionRule.ValidateResourceId(id);
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DataCollectionRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion

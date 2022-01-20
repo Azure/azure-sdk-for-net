@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of AutoscaleSetting and their operations over its parent. </summary>
     public partial class AutoscaleSettingCollection : ArmCollection, IEnumerable<AutoscaleSetting>, IAsyncEnumerable<AutoscaleSetting>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AutoscaleSettingsRestOperations _autoscaleSettingsRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettingCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutoscaleSettingCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AutoscaleSettingCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _autoscaleSettingsRestClient = new AutoscaleSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual AutoscaleSettingCreateOrUpdateOperation CreateOrUpdate(string autoscaleSettingName, AutoscaleSettingData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AutoscaleSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
             if (autoscaleSettingName == null)
             {
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<AutoscaleSettingCreateOrUpdateOperation> CreateOrUpdateAsync(string autoscaleSettingName, AutoscaleSettingData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AutoscaleSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
             if (autoscaleSettingName == null)
             {
@@ -196,9 +202,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _autoscaleSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,14 +224,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(autoscaleSettingName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _autoscaleSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(autoscaleSettingName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
             scope.Start();
             try
             {

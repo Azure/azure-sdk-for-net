@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Tests.TestCase
             var collection = (await CreateResourceGroupAsync()).GetActivityLogAlerts();
             var subID = DefaultSubscription.Id;
             var input = ResourceDataHelper.GetBasicActivityLogAlertData("Global", subID);
-            var lro = await collection.CreateOrUpdateAsync(activityLogAlertName, input);
+            var lro = await collection.CreateOrUpdateAsync(true, activityLogAlertName, input);
             return lro.Value;
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Tests.TestCase
         {
             var activityLogAlertName = Recording.GenerateAssetName("testActivityLogAlert-");
             var ActivityLogAlert = await CreateActivityLogAlertAsync(activityLogAlertName);
-            await ActivityLogAlert.DeleteAsync();
+            await ActivityLogAlert.DeleteAsync(true);
         }
 
         [TestCase]

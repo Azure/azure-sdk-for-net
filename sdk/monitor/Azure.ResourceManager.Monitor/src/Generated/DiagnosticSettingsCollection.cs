@@ -20,7 +20,7 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of DiagnosticSettings and their operations over its parent. </summary>
-    public partial class DiagnosticSettingsCollection : ArmCollection, IEnumerable<DiagnosticSettings>
+    public partial class DiagnosticSettingsCollection : ArmCollection, IEnumerable<DiagnosticSettings>, IAsyncEnumerable<DiagnosticSettings>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DiagnosticSettingsRestOperations _diagnosticSettingsRestClient;
@@ -30,21 +30,12 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiagnosticSettingsCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _diagnosticSettingsRestClient = new DiagnosticSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.Root.ResourceType;
-
-        /// <summary> Verify that the input resource Id is a valid collection for this type. </summary>
-        /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
         }
 
         // Collection level operations.
@@ -58,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DiagnosticSettingCreateOrUpdateOperation CreateOrUpdate(string name, DiagnosticSettingsData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DiagnosticSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -95,7 +86,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DiagnosticSettingCreateOrUpdateOperation> CreateOrUpdateAsync(string name, DiagnosticSettingsData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DiagnosticSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -199,9 +190,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _diagnosticSettingsRestClient.Get(Id, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DiagnosticSettings>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiagnosticSettings(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiagnosticSettings>(null, response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettings(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,14 +212,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _diagnosticSettingsRestClient.GetAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DiagnosticSettings>(null, response.GetRawResponse())
-                    : Response.FromValue(new DiagnosticSettings(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DiagnosticSettings>(null, response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettings(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,7 +264,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.Exists");
             scope.Start();
             try
             {
@@ -292,20 +283,25 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: DiagnosticSettings_List
         /// <summary> Gets the active diagnostic settings list for the specified resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<DiagnosticSettings>> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiagnosticSettings" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiagnosticSettings> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.GetAll");
-            scope.Start();
-            try
+            Page<DiagnosticSettings> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _diagnosticSettingsRestClient.List(Id, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(value => new DiagnosticSettings(Parent, value)).ToArray() as IReadOnlyList<DiagnosticSettings>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _diagnosticSettingsRestClient.List(Id, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettings(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings
@@ -313,30 +309,40 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: DiagnosticSettings_List
         /// <summary> Gets the active diagnostic settings list for the specified resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<DiagnosticSettings>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiagnosticSettings" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiagnosticSettings> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.GetAll");
-            scope.Start();
-            try
+            async Task<Page<DiagnosticSettings>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _diagnosticSettingsRestClient.ListAsync(Id, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(value => new DiagnosticSettings(Parent, value)).ToArray() as IReadOnlyList<DiagnosticSettings>, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _diagnosticSettingsRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettings(Parent, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         IEnumerator<DiagnosticSettings> IEnumerable<DiagnosticSettings>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<DiagnosticSettings> IAsyncEnumerable<DiagnosticSettings>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,14 +40,17 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Initializes a new instance of the <see cref = "MetricAlert"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal MetricAlert(ArmResource options, MetricAlertData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal MetricAlert(ArmResource options, MetricAlertData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _metricAlertsRestClient = new MetricAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _metricAlertsStatusRestClient = new MetricAlertsStatusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="MetricAlert"/> class. </summary>
@@ -57,6 +61,9 @@ namespace Azure.ResourceManager.Monitor
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _metricAlertsRestClient = new MetricAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _metricAlertsStatusRestClient = new MetricAlertsStatusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="MetricAlert"/> class. </summary>
@@ -70,13 +77,13 @@ namespace Azure.ResourceManager.Monitor
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _metricAlertsRestClient = new MetricAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
             _metricAlertsStatusRestClient = new MetricAlertsStatusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/metricAlerts";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,6 +98,12 @@ namespace Azure.ResourceManager.Monitor
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
@@ -144,7 +157,17 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -152,7 +175,17 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
@@ -161,7 +194,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Delete an alert rule definition. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<MetricAlertDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<MetricAlertDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.Delete");
             scope.Start();
@@ -186,7 +219,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Delete an alert rule definition. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual MetricAlertDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual MetricAlertDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.Delete");
             scope.Start();
@@ -214,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.AddTag");
@@ -243,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.AddTag");
@@ -271,7 +304,7 @@ namespace Azure.ResourceManager.Monitor
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.SetTags");
@@ -300,7 +333,7 @@ namespace Azure.ResourceManager.Monitor
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.SetTags");
@@ -329,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.RemoveTag");
@@ -357,7 +390,7 @@ namespace Azure.ResourceManager.Monitor
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
             }
 
             using var scope = _clientDiagnostics.CreateScope("MetricAlert.RemoveTag");
@@ -438,20 +471,25 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: MetricAlertsStatus_List
         /// <summary> Retrieve an alert rule status. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<MetricAlertStatus>>> GetMetricAlertsStatusesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricAlertStatus> GetMetricAlertsStatusesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatuses");
-            scope.Start();
-            try
+            async Task<Page<MetricAlertStatus>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _metricAlertsStatusRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatuses");
+                scope.Start();
+                try
+                {
+                    var response = await _metricAlertsStatusRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status
@@ -459,20 +497,25 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: MetricAlertsStatus_List
         /// <summary> Retrieve an alert rule status. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<MetricAlertStatus>> GetMetricAlertsStatuses(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricAlertStatus> GetMetricAlertsStatuses(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatuses");
-            scope.Start();
-            try
+            Page<MetricAlertStatus> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _metricAlertsStatusRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatuses");
+                scope.Start();
+                try
+                {
+                    var response = _metricAlertsStatusRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}
@@ -482,25 +525,30 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="statusName"> The name of the status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
-        public async virtual Task<Response<IReadOnlyList<MetricAlertStatus>>> GetMetricAlertsStatusesByNameAsync(string statusName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricAlertStatus> GetMetricAlertsStatusesByNameAsync(string statusName, CancellationToken cancellationToken = default)
         {
             if (statusName == null)
             {
                 throw new ArgumentNullException(nameof(statusName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatusesByName");
-            scope.Start();
-            try
+            async Task<Page<MetricAlertStatus>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _metricAlertsStatusRestClient.ListByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatusesByName");
+                scope.Start();
+                try
+                {
+                    var response = await _metricAlertsStatusRestClient.ListByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}
@@ -510,25 +558,30 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="statusName"> The name of the status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
-        public virtual Response<IReadOnlyList<MetricAlertStatus>> GetMetricAlertsStatusesByName(string statusName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricAlertStatus> GetMetricAlertsStatusesByName(string statusName, CancellationToken cancellationToken = default)
         {
             if (statusName == null)
             {
                 throw new ArgumentNullException(nameof(statusName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatusesByName");
-            scope.Start();
-            try
+            Page<MetricAlertStatus> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _metricAlertsStatusRestClient.ListByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("MetricAlert.GetMetricAlertsStatusesByName");
+                scope.Start();
+                try
+                {
+                    var response = _metricAlertsStatusRestClient.ListByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

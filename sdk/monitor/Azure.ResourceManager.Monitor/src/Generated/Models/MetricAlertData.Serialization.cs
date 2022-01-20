@@ -60,8 +60,15 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("targetResourceRegion");
                 writer.WriteStringValue(TargetResourceRegion);
             }
-            writer.WritePropertyName("criteria");
-            writer.WriteObjectValue(Criteria);
+            if (Criteria != null)
+            {
+                writer.WritePropertyName("criteria");
+                writer.WriteObjectValue(Criteria);
+            }
+            else
+            {
+                writer.WriteNull("criteria");
+            }
             if (Optional.IsDefined(AutoMitigate))
             {
                 writer.WritePropertyName("autoMitigate");
@@ -189,6 +196,11 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("criteria"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                criteria = null;
+                                continue;
+                            }
                             criteria = MetricAlertCriteria.DeserializeMetricAlertCriteria(property0.Value);
                             continue;
                         }

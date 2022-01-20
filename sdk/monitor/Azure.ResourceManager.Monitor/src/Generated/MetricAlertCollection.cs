@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of MetricAlert and their operations over its parent. </summary>
     public partial class MetricAlertCollection : ArmCollection, IEnumerable<MetricAlert>, IAsyncEnumerable<MetricAlert>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MetricAlertsRestOperations _metricAlertsRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of MetricAlertCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MetricAlertCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal MetricAlertCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _metricAlertsRestClient = new MetricAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual MetricAlertCreateOrUpdateOperation CreateOrUpdate(string ruleName, MetricAlertData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual MetricAlertCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, MetricAlertData parameters, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<MetricAlertCreateOrUpdateOperation> CreateOrUpdateAsync(string ruleName, MetricAlertData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<MetricAlertCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, MetricAlertData parameters, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -196,9 +202,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _metricAlertsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<MetricAlert>(null, response.GetRawResponse())
-                    : Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<MetricAlert>(null, response.GetRawResponse());
+                return Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,14 +224,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _metricAlertsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<MetricAlert>(null, response.GetRawResponse())
-                    : Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<MetricAlert>(null, response.GetRawResponse());
+                return Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.Exists");
             scope.Start();
             try
             {

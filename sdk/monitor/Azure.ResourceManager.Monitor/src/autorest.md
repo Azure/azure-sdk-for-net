@@ -25,6 +25,10 @@ directive:
     where: $.definitions.ActivityLogAlert.properties.actions
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.MetricAlertProperties.properties.criteria
+    transform: >
+        $["x-nullable"] = true;
   - rename-model:
       from: AzureMonitorPrivateLinkScope
       to: PrivateLinkScope

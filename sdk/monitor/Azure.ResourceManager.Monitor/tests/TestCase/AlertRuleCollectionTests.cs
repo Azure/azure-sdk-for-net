@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Monitor.Tests.TestsCase
         {
             var container = await GetAlertRuleCollectionAsync();
             var name = Recording.GenerateAssetName("testAlertRule");
-            var input = ResourceDataHelper.GetBasicAlertRuleData("global");
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var input = ResourceDataHelper.GetBasicAlertRuleData("eastus", DefaultSubscription.Id);
+            var lro = await container.CreateOrUpdateAsync(false, name, input);
             var alert = lro.Value;
             Assert.AreEqual(name, alert.Data.Name);
         }
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Monitor.Tests.TestsCase
         public async Task Get()
         {
             var collection = await GetAlertRuleCollectionAsync();
-            var actionGroupName = Recording.GenerateAssetName("testAlertRule");
-            var input = ResourceDataHelper.GetBasicAlertRuleData("global");
-            var lro = await collection.CreateOrUpdateAsync(actionGroupName, input);
+            var actionGroupName = Recording.GenerateAssetName("testAlertRule", DefaultSubscription.Id);
+            var input = ResourceDataHelper.GetBasicAlertRuleData("eastus", DefaultSubscription.Id);
+            var lro = await collection.CreateOrUpdateAsync(true, actionGroupName, input);
             AlertRule alert1 = lro.Value;
             AlertRule alert2 = await collection.GetAsync(actionGroupName);
             ResourceDataHelper.AssertAlertRule(alert1.Data, alert2.Data);
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Monitor.Tests.TestsCase
         public async Task GetAll()
         {
             var collection = await GetAlertRuleCollectionAsync();
-            var input = ResourceDataHelper.GetBasicAlertRuleData("global");
-            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testAlertRule"), input);
-            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testAlertRule"), input);
+            var input = ResourceDataHelper.GetBasicAlertRuleData("eastus", DefaultSubscription.Id);
+            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
+            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
             int count = 0;
             await foreach (var alertRule in collection.GetAllAsync())
             {

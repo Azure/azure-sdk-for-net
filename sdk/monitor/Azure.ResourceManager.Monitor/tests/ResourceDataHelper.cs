@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Monitor.Tests
         #endregion
 
         #region ActivityLogAlert
-        public static void AssertActivityLogAlert(ActivityLogAlertData alert1, ActivityLogAlertData alert2)
+        public static void AssertActivityLogAlert(ActivityLogAlertData data1, ActivityLogAlertData data2)
         {
-            AssertTrackedResource(alert1, alert2);
-            Assert.AreEqual(alert1.Description, alert2.Description);
+            AssertTrackedResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
         }
 
         public static ActivityLogAlertData GetBasicActivityLogAlertData(AzureLocation location, string subID)
@@ -90,22 +90,26 @@ namespace Azure.ResourceManager.Monitor.Tests
         #endregion
 
         #region AlertRule
-        public static void AssertAlertRule(AlertRuleData alert1, AlertRuleData alert2)
+        public static void AssertAlertRule(AlertRuleData data1, AlertRuleData data2)
         {
-            AssertTrackedResource(alert1, alert2);
-            Assert.AreEqual(alert1.Description, alert2.Description);
+            AssertTrackedResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
         }
 
-        public static AlertRuleData GetBasicAlertRuleData(AzureLocation location)
+        public static AlertRuleData GetBasicAlertRuleData(AzureLocation location, string subID)
         {
-            RuleDataSource ruleDataSource = new RuleDataSource()
+            RuleDataSource ruleDataSource = new RuleMetricDataSource("Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource", subID, "id", location, "CpuPercentage", "Requests");
             {
-                ResourceUri = "resUri1",
-                MetricNamespace = "CpuPercentage"
+                //ResourceUri = subID,
+                //MetricNamespace = "CpuPercentage",
+                //OdataType = "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
             };
-            var ruleCondition = new RuleCondition()
+            var ruleCondition = new ThresholdRuleCondition(ConditionOperator.GreaterThan, 3.0)
             {
                 DataSource = ruleDataSource,
+                OdataType = "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
+                WindowSize = TimeSpan.FromMinutes(5),
+                TimeAggregation = TimeAggregationOperator.Total,
             };
             var data = new AlertRuleData(location, "alertRule", true, ruleCondition)
             {
@@ -123,20 +127,141 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static AutoscaleSettingData GetBasicAutoscaleSettingData(AzureLocation location)
         {
-            var fixDate = new TimeWindow(DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
+            var fixDate = new TimeWindow("UTC", DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
             var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
             var recurrence = new Recurrence(RecurrenceFrequency.Week, Schedule);
             ScaleCapacity scaleCapacity = new ScaleCapacity("1", "100", "1");
             IEnumerable<ScaleRule> rules = new List<ScaleRule>()
             {
-                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.NotEquals, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, TimeSpan.FromMinutes(20)))
+                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ChangeCount, "1", TimeSpan.FromMinutes(20)))
             };
             IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
             {
-                new AutoscaleProfile("Profiles1", scaleCapacity, rules),
-                //new AutoscaleProfile("Profiles2", scaleCapacity, rules, fixDate, null),
+                //new AutoscaleProfile("Profiles1", scaleCapacity, rules),
+                new AutoscaleProfile("Profiles2", scaleCapacity, rules)
+                {
+                    FixedDate = fixDate,
+                    //Recurrence = recurrence,
+                },
+                new AutoscaleProfile("Profiles3", scaleCapacity, rules)
+                {
+                    Recurrence = recurrence,
+                    FixedDate = null,
+                },
             };
             var data = new AutoscaleSettingData(location, profiles)
+            {
+                Enabled = true,
+                TargetResourceLocation = location,
+                TargetResourceUri = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm",
+                Notifications =
+                {
+                    new AutoscaleNotification()
+                    {
+                        Operation = "Scale",
+                        Email = new EmailNotification()
+                        {
+                            SendToSubscriptionAdministrator = true,
+                            SendToSubscriptionCoAdministrators = true,
+                            CustomEmails =
+                            {
+                                "gu@ms.com",
+                                "ge@ns.net"
+                            }
+                        },
+                        Webhooks =
+                        {
+                            new WebhookNotification()
+                            {
+                                ServiceUri = "http://myservice.com",
+                                Properties = {}
+                            }
+                        }
+                    },
+                },
+                Tags = {},
+            };
+            return data;
+        }
+        #endregion
+
+        #region DiagnosticSettings
+        public static void AssertDiagnosticSetting(DiagnosticSettingsData data1, DiagnosticSettingsData data2)
+        {
+            //AssertTrackedResource(data1, data2);
+            Assert.AreEqual(data1.Id, data2.Id);
+            Assert.AreEqual(data1.Name, data2.Name);
+        }
+
+        public static DiagnosticSettingsData GetBasicDiagnosticSettingsData()
+        {
+            IList<MetricSettings> metricSettings = new List<MetricSettings>()
+            {
+                new MetricSettings(true)
+                {
+                    Category = "WorkflowMetrics",
+                    RetentionPolicy = new RetentionPolicy(false, 0),
+                }
+            };
+            IList<LogSettings> logSettings = new List<LogSettings>()
+            {
+                new LogSettings(true)
+                {
+                    Category = "allLogs",
+                    RetentionPolicy= new RetentionPolicy(false, 0)
+                }
+            };
+            var data = new DiagnosticSettingsData();
+            //var data = new DiagnosticSettingsData("/subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6/providers/microsoft.insights/diagnosticSettings/mysetting", "mysetting", "", "", "", "", "myeventhub", metricSettings, logSettings, "WsId", "Dedicated");
+            return data;
+        }
+        #endregion
+
+        #region LogProfile
+        public static void AssertLogProfile(LogProfileData data1, LogProfileData data2)
+        {
+            AssertTrackedResource(data1, data2);
+            Assert.AreEqual(data1.ServiceBusRuleId, data2.ServiceBusRuleId);
+        }
+
+        public static LogProfileData GetBasicLogProfileData(AzureLocation location)
+        {
+            IEnumerable<string> locations = new List<string>()
+            {
+                "global",
+                "eastus"
+            };
+            IEnumerable<string> categories = new List<string>()
+            {
+                "Delete",
+                "write"
+            };
+            RetentionPolicy retentionPolicy = new RetentionPolicy(true, 4);
+            var data = new LogProfileData(location, locations, categories, retentionPolicy)
+            {
+                ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                //StorageAccountId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-6327/providers/Microsoft.Storage/storageAccounts/teststoragemgmt2325"
+            };
+            return data;
+        }
+        #endregion
+
+        #region MetricAlert
+        public static void AssertMetricAlert(MetricAlertData data1, MetricAlertData data2)
+        {
+            AssertTrackedResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
+        }
+
+        public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, string subID)
+        {
+            IEnumerable<string> scopes = new List<string>()
+            {
+                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo2",
+                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo3"
+            };
+
+            var data = new MetricAlertData(location, 3, true, scopes, new TimeSpan(0, 5, 0), new TimeSpan(0, 5, 0), null)
             {
             };
             return data;

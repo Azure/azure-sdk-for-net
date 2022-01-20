@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of PrivateLinkScope and their operations over its parent. </summary>
     public partial class PrivateLinkScopeCollection : ArmCollection, IEnumerable<PrivateLinkScope>, IAsyncEnumerable<PrivateLinkScope>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PrivateLinkScopesRestOperations _privateLinkScopesRestClient;
@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopeCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLinkScopeCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateLinkScopeCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _privateLinkScopesRestClient = new PrivateLinkScopesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="azureMonitorPrivateLinkScopePayload"/> is null. </exception>
-        public virtual PrivateLinkScopeCreateOrUpdateOperation CreateOrUpdate(string scopeName, PrivateLinkScopeData azureMonitorPrivateLinkScopePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual PrivateLinkScopeCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string scopeName, PrivateLinkScopeData azureMonitorPrivateLinkScopePayload, CancellationToken cancellationToken = default)
         {
             if (scopeName == null)
             {
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="azureMonitorPrivateLinkScopePayload"/> is null. </exception>
-        public async virtual Task<PrivateLinkScopeCreateOrUpdateOperation> CreateOrUpdateAsync(string scopeName, PrivateLinkScopeData azureMonitorPrivateLinkScopePayload, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<PrivateLinkScopeCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string scopeName, PrivateLinkScopeData azureMonitorPrivateLinkScopePayload, CancellationToken cancellationToken = default)
         {
             if (scopeName == null)
             {
@@ -196,9 +202,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _privateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLinkScope>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLinkScope(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLinkScope>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkScope(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,14 +224,14 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(scopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _privateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateLinkScope>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateLinkScope(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<PrivateLinkScope>(null, response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkScope(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentNullException(nameof(scopeName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
