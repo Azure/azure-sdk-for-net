@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The audience used to retrieve an AAD token.
         /// </summary>
-        public StorageAudience? StorageAudience { get; set; }
+        public BlobAudience? Audience { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the

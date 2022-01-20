@@ -9,51 +9,51 @@ namespace Azure.Storage
     /// <summary>
     /// Audience for retrieving and AAD token.
     /// </summary>
-    public readonly struct StorageAudience : IEquatable<StorageAudience>
+    public readonly struct BlobAudience : IEquatable<BlobAudience>
     {
         private readonly string _value;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="StorageAudience"/>.
+        /// Initializes a new instance of <see cref="BlobAudience"/>.
         /// </summary>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="value"/> is null.
         /// </exception>
-        public StorageAudience(string value)
+        public BlobAudience(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StorageValue = "Storage";
-        private const string DiskComputeValue = "DiskCompute";
+        private const string StorageValue = "https://storage.azure.com/.default";
+        private const string DiskComputeValue = "https://disk.compute.azure.com/.default";
 
         /// <summary>
         /// Storage audience.
         /// </summary>
-        public static StorageAudience Storage { get; } = new StorageAudience(StorageValue);
+        public static BlobAudience Storage { get; } = new BlobAudience(StorageValue);
 
         /// <summary>
         /// Disk compute audience.
         /// </summary>
-        public static StorageAudience DiskCompute { get; } = new StorageAudience(DiskComputeValue);
+        public static BlobAudience DiskCompute { get; } = new BlobAudience(DiskComputeValue);
 
         /// <summary>
-        /// Determines if two <see cref="StorageAudience"/> values are the same.
+        /// Determines if two <see cref="BlobAudience"/> values are the same.
         /// </summary>
-        public static bool operator ==(StorageAudience left, StorageAudience right) => left.Equals(right);
+        public static bool operator ==(BlobAudience left, BlobAudience right) => left.Equals(right);
 
         /// <summary>
-        /// Determines if two <see cref="StorageAudience"/> values are not the same.
+        /// Determines if two <see cref="BlobAudience"/> values are not the same.
         /// </summary>
-        public static bool operator !=(StorageAudience left, StorageAudience right) => !left.Equals(right);
+        public static bool operator !=(BlobAudience left, BlobAudience right) => !left.Equals(right);
 
         /// <summary>
-        /// Converts a string to a <see cref="StorageAudience"/>.
+        /// Converts a string to a <see cref="BlobAudience"/>.
         /// </summary>
-        public static implicit operator StorageAudience(string value) => new StorageAudience(value);
+        public static implicit operator BlobAudience(string value) => new BlobAudience(value);
 
         /// <inheritdoc/>
-        public bool Equals(StorageAudience other)
+        public bool Equals(BlobAudience other)
             => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.Storage
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => obj is StorageAudience && Equals((StorageAudience)obj);
+            => obj is BlobAudience && Equals((BlobAudience)obj);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

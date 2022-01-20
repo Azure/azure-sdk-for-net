@@ -1,21 +1,21 @@
 namespace Azure.Storage
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageAudience : System.IEquatable<Azure.Storage.StorageAudience>
+    public readonly partial struct BlobAudience : System.IEquatable<Azure.Storage.BlobAudience>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public StorageAudience(string value) { throw null; }
-        public static Azure.Storage.StorageAudience DiskCompute { get { throw null; } }
-        public static Azure.Storage.StorageAudience Storage { get { throw null; } }
-        public bool Equals(Azure.Storage.StorageAudience other) { throw null; }
+        public BlobAudience(string value) { throw null; }
+        public static Azure.Storage.BlobAudience DiskCompute { get { throw null; } }
+        public static Azure.Storage.BlobAudience Storage { get { throw null; } }
+        public bool Equals(Azure.Storage.BlobAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Storage.StorageAudience left, Azure.Storage.StorageAudience right) { throw null; }
-        public static implicit operator Azure.Storage.StorageAudience (string value) { throw null; }
-        public static bool operator !=(Azure.Storage.StorageAudience left, Azure.Storage.StorageAudience right) { throw null; }
+        public static bool operator ==(Azure.Storage.BlobAudience left, Azure.Storage.BlobAudience right) { throw null; }
+        public static implicit operator Azure.Storage.BlobAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.BlobAudience left, Azure.Storage.BlobAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
@@ -73,11 +73,11 @@ namespace Azure.Storage.Blobs
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
         public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_02_12) { }
+        public Azure.Storage.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
-        public Azure.Storage.StorageAudience? StorageAudience { get { throw null; } set { } }
         public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
