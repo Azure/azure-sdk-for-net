@@ -47,7 +47,7 @@ All Device Update for IoT Hub service operations will throw a RequestFailedExcep
 
 For example, if you use the `GetUpdateAsync` operation and the model you are looking for doesn't exist, you can catch that specific [HttpStatusCode](https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1) to decide the operation that follows in that case.
 
-```c#
+```csharp
 try
 {
     Response update = await _updatesClient.GetUpdateAsync(
