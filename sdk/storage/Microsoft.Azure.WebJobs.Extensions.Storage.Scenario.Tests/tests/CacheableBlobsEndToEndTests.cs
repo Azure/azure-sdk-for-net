@@ -260,7 +260,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 BlockBlobClient blob = BlobContainer.GetBlockBlobClient(InputBlobName);
                 await blob.UploadTextAsync(TestData);
 
-                // Get information about the uplodaded blob
+                // Get information about the uploaded blob
                 BlobProperties blobProperties = await blob.GetPropertiesAsync();
                 string blobId = blob.Uri.ToString();
                 string blobVersion = blobProperties.ETag.ToString();

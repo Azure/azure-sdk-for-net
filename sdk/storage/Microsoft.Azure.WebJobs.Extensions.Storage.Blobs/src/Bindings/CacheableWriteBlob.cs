@@ -26,14 +26,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         private readonly BlobWithContainer<BlobBaseClient> _blob;
 
         /// <summary>
-        /// Desribes the shared memory region containing this object.
+        /// Describes the shared memory region containing this object.
         /// </summary>
         private readonly SharedMemoryMetadata _cacheObject;
 
         /// <summary>
         /// </summary>
         /// <param name="blob">Blob for this object in storage.</param>
-        /// <param name="cacheObject">Desribes the shared memory region containing this object.</param>
+        /// <param name="cacheObject">Describes the shared memory region containing this object.</param>
         /// <param name="blobStream">Stream to use for writing this object to storage.</param>
         /// <param name="functionDataCache">Cache in which to put this object when required.</param>
         public CacheableWriteBlob(BlobWithContainer<BlobBaseClient> blob, SharedMemoryMetadata cacheObject, Stream blobStream, IFunctionDataCache functionDataCache)

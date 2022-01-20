@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         /// Create a <see cref="CacheableWriteBlob"/> to use for a test.
         /// </summary>
         /// <param name="blob">Blob for this object in storage.</param>
-        /// <param name="cacheObject">Desribes the shared memory region containing this object.</param>
+        /// <param name="cacheObject">Describes the shared memory region containing this object.</param>
         /// <param name="blobStream">Stream to use for writing this object to storage.</param>
         /// <param name="functionDataCache">Cache in which to put this object when required.</param>
         /// <returns>A <see cref="CacheableWriteBlob"/> object to use for a test.</returns>

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         /// Used when the object was found in the cache.
         /// </summary>
         /// <param name="cacheKey">Key associated to this object to address it in the <see cref="IFunctionDataCache"/>.</param>
-        /// <param name="cacheObject">Desribes the shared memory region containing this object.</param>
+        /// <param name="cacheObject">Describes the shared memory region containing this object.</param>
         /// <param name="functionDataCache">Cache in which to put this object when required.</param>
         public CacheableReadBlob(FunctionDataCacheKey cacheKey, SharedMemoryMetadata cacheObject, IFunctionDataCache functionDataCache)
         {
