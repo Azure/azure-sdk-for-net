@@ -16,6 +16,9 @@
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @christothes
 
+# Extensions
+/sdk/extensions/                                @jsquire
+
 # PRLabel: %EngSys
 /sdk/template/                                  @chidozieononiwu @weshaggard @benbp
 
