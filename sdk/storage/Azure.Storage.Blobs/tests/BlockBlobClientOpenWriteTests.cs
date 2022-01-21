@@ -29,12 +29,11 @@ namespace Azure.Storage.Blobs.Tests
 
             string blobName = resourceName ?? GetNewResourceName();
 
-            if (options == null)
+            if (options != null)
             {
-                return container.GetBlockBlobClient(blobName);
+                container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
             }
 
-            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
             return InstrumentClient(container.GetBlockBlobClient(blobName));
         }
 
