@@ -82,7 +82,7 @@ function New-DataPlanePackageFolder() {
         Write-Error "Error: input file should not be empty."
         exit 1
     }
-    dotnet new -i $sdkPath/sdk/template-dpg/Azure.ServiceTemplate.Template
+    dotnet new -i $sdkPath/eng/templates/Azure.ServiceTemplate.Template
     Write-Host "Create project folder $projectFolder"
     New-Item -Path $projectFolder -ItemType Directory
     Set-Location $projectFolder
