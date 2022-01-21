@@ -4,13 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void RecognizeCustomEntitiesConvenience()
@@ -18,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = CreateTextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Create input documents.
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well

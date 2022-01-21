@@ -4,13 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples: TextAnalyticsSampleBase
     {
         [Test]
         public async Task AnalyzeHealthcareEntitiesConvenienceAsync()
@@ -18,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = CreateTextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsyncAll
             #region Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsync

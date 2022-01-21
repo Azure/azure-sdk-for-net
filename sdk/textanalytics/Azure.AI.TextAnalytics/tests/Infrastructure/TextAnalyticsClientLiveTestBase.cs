@@ -15,6 +15,8 @@ namespace Azure.AI.TextAnalytics.Tests
     TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
+        internal const int MaxRetriesCount = 20;
+
         /// <summary>
         /// The version of the REST API to test against.  This will be passed
         /// to the .ctor via ClientTestFixture's values.
@@ -43,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Tests
             // While we use a persistent resource for live tests, we need to increase our retries.
             // We should remove when having dynamic resource again
             // Issue: https://github.com/Azure/azure-sdk-for-net/issues/25041
-            options.Retry.MaxRetries = 20;
+            options.Retry.MaxRetries = MaxRetriesCount;
 
             if (useTokenCredential)
             {
