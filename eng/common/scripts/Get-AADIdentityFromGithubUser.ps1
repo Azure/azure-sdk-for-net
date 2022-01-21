@@ -22,11 +22,11 @@ param(
   [string]$ClientSecret,
 
   [Parameter(Mandatory = $true)]
-  [string]$GithubName
+  [string]$GithubUser
 )
 . "${PSScriptRoot}\logging.ps1"
 
-$OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links/github/$GithubName"
+$OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links/github/$GithubUser"
 
 function Generate-AadToken ($TenantId, $ClientId, $ClientSecret) {
     $LoginAPIBaseURI = "https://login.microsoftonline.com/$TenantId/oauth2/token"
@@ -60,9 +60,9 @@ $Headers = @{
 }
 
 try {
-    $aadToken = Generate-AadToken -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret
-    $Headers["Authorization"] = "Bearer $aadToken"
-    Write-Host "Fetching ms alias for github identity: $GithubName."
+    $opsAuthToken = Generate-AadToken -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret
+    $Headers["Authorization"] = "Bearer $opsAuthToken"
+    Write-Host "Fetching aad identity for github user: $GithubName."
     $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers
 }
 catch { 
@@ -76,4 +76,4 @@ if ($resp.aad) {
     return $resp.aad.alias
 }
 
-LogError "Failed to retrieve the ms alias from given github identity: $GithubName."
+LogError "Failed to retrieve the aad identity from given github user: $GithubName."
