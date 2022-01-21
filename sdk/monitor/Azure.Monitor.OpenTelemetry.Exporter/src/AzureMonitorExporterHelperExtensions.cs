@@ -29,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
+            // TODO: Allow disabling offline storage.
             if (options.StorageDirectory == null)
             {
                 options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();

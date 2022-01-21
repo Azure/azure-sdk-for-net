@@ -12,6 +12,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private static string defaultStorageDirectory;
         private const string nonWindowsVarTmp = "/var/tmp/";
+
+        // TODO: investigate if /tmp/ should be used.
         private const string nonWindowsTmp = "/tmp/";
 
         internal static string GetDefaultStorageDirectory()
