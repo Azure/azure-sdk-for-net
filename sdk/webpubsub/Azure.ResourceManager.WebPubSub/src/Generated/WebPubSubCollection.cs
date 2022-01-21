@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual WebPubSubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<WebPubSubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Get the resource and its properties. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<WebPubSub> Get(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Get the resource and its properties. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async virtual Task<Response<WebPubSub>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<WebPubSub> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async virtual Task<Response<WebPubSub>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();

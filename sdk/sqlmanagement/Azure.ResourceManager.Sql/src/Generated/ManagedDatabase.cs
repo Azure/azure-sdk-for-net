@@ -260,10 +260,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<ManagedDatabase>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.AddTag");
             scope.Start();
@@ -289,10 +286,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<ManagedDatabase> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.AddTag");
             scope.Start();
@@ -375,10 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<ManagedDatabase>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
             scope.Start();
@@ -403,10 +394,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<ManagedDatabase> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
             scope.Start();
@@ -587,13 +575,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get query by query id. </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public async virtual Task<Response<ManagedInstanceQuery>> GetManagedDatabaseQueryAsync(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
             scope.Start();
@@ -615,13 +601,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get query by query id. </summary>
         /// <param name="queryId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual Response<ManagedInstanceQuery> GetManagedDatabaseQuery(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
             scope.Start();
@@ -646,14 +630,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         /// <returns> An async collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             async Task<Page<QueryStatistics>> FirstPageFunc(int? pageSizeHint)
             {
@@ -697,14 +679,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="endTime"> End time for observed period. </param>
         /// <param name="interval"> The time step to be used to summarize the metric values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         /// <returns> A collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QueryStatistics> GetQueryStatistics(string queryId, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             Page<QueryStatistics> FirstPageFunc(int? pageSizeHint)
             {

@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to create or update virtual network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualNetworkGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to create or update virtual network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<VirtualNetworkGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualNetworkGatewayName, VirtualNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified virtual network gateway by resource group. </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public virtual Response<VirtualNetworkGateway> Get(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified virtual network gateway by resource group. </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetworkGateway>> GetAsync(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public virtual Response<VirtualNetworkGateway> GetIfExists(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetworkGateway>> GetIfExistsAsync(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayCollection.Exists");
             scope.Start();

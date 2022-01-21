@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<SiteSlotInstanceProcess> Get(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotInstanceProcess>> GetAsync(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<SiteSlotInstanceProcess> GetIfExists(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotInstanceProcess>> GetIfExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<bool> Exists(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.Exists");
             scope.Start();

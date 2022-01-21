@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="parameters"> The OutboundFirewallRule to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> or <paramref name="parameters"/> is null. </exception>
         public virtual OutboundFirewallRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string outboundRuleFqdn, OutboundFirewallRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="parameters"> The OutboundFirewallRule to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<OutboundFirewallRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string outboundRuleFqdn, OutboundFirewallRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an outbound firewall rule. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
         public virtual Response<OutboundFirewallRule> Get(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
             using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an outbound firewall rule. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
         public async virtual Task<Response<OutboundFirewallRule>> GetAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
             using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
         public virtual Response<OutboundFirewallRule> GetIfExists(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
             using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
         public async virtual Task<Response<OutboundFirewallRule>> GetIfExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
             using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
         public virtual Response<bool> Exists(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
             using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="outboundRuleFqdn"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleFqdn == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleFqdn));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleFqdn, nameof(outboundRuleFqdn));
 
             using var scope = _clientDiagnostics.CreateScope("OutboundFirewallRuleCollection.Exists");
             scope.Start();

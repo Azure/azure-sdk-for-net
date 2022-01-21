@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a replication link. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<ReplicationLink> Get(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a replication link. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async virtual Task<Response<ReplicationLink>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<ReplicationLink> GetIfExists(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async virtual Task<Response<ReplicationLink>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<bool> Exists(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
             scope.Start();

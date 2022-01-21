@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
         public virtual SecurityRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
             if (securityRuleParameters == null)
             {
                 throw new ArgumentNullException(nameof(securityRuleParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
         public async virtual Task<SecurityRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
             if (securityRuleParameters == null)
             {
                 throw new ArgumentNullException(nameof(securityRuleParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get the specified network security rule. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
         public virtual Response<SecurityRule> Get(string securityRuleName, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get the specified network security rule. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
         public async virtual Task<Response<SecurityRule>> GetAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
         public virtual Response<SecurityRule> GetIfExists(string securityRuleName, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
         public async virtual Task<Response<SecurityRule>> GetIfExistsAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityRuleName, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleCollection.Exists");
             scope.Start();

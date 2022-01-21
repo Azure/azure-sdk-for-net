@@ -54,13 +54,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified load balancer load balancing rule. </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual Response<LoadBalancingRule> Get(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
             scope.Start();
@@ -81,13 +79,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified load balancer load balancing rule. </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public async virtual Task<Response<LoadBalancingRule>> GetAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
             scope.Start();
@@ -108,13 +104,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual Response<LoadBalancingRule> GetIfExists(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();
@@ -135,13 +129,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public async virtual Task<Response<LoadBalancingRule>> GetIfExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();
@@ -162,13 +154,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
@@ -187,13 +177,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();

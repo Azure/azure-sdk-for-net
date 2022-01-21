@@ -60,13 +60,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<RestorableDatabaseAccount> Get(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public async virtual Task<Response<RestorableDatabaseAccount>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<RestorableDatabaseAccount> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public async virtual Task<Response<RestorableDatabaseAccount>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<bool> Exists(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.Exists");
             scope.Start();

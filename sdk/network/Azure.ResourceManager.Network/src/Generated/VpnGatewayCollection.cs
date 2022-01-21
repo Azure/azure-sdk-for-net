@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="vpnGatewayParameters"> Parameters supplied to create or Update a virtual wan vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="vpnGatewayParameters"/> is null. </exception>
         public virtual VpnGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string gatewayName, VpnGatewayData vpnGatewayParameters, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (vpnGatewayParameters == null)
             {
                 throw new ArgumentNullException(nameof(vpnGatewayParameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="vpnGatewayParameters"> Parameters supplied to create or Update a virtual wan vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="vpnGatewayParameters"/> is null. </exception>
         public async virtual Task<VpnGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string gatewayName, VpnGatewayData vpnGatewayParameters, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (vpnGatewayParameters == null)
             {
                 throw new ArgumentNullException(nameof(vpnGatewayParameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a virtual wan vpn gateway. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<VpnGateway> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a virtual wan vpn gateway. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<VpnGateway>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<VpnGateway> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<VpnGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnGatewayCollection.Exists");
             scope.Start();

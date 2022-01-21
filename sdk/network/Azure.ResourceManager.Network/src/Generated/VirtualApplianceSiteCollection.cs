@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualApplianceSiteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string siteName, VirtualApplianceSiteData parameters, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Site operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<VirtualApplianceSiteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string siteName, VirtualApplianceSiteData parameters, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Virtual Appliance Site. </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<VirtualApplianceSite> Get(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Virtual Appliance Site. </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public async virtual Task<Response<VirtualApplianceSite>> GetAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<VirtualApplianceSite> GetIfExists(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public async virtual Task<Response<VirtualApplianceSite>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<bool> Exists(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();

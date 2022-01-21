@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get database schema. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<ServerDatabaseSchema> Get(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get database schema. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public async virtual Task<Response<ServerDatabaseSchema>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<ServerDatabaseSchema> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public async virtual Task<Response<ServerDatabaseSchema>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
             scope.Start();

@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual VMwareHostCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string hostName, VMwareHostData body = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
             scope.Start();
@@ -94,13 +92,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public async virtual Task<VMwareHostCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hostName, VMwareHostData body = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
             scope.Start();
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements host GET method. </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<VMwareHost> Get(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Get");
             scope.Start();
@@ -155,13 +149,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements host GET method. </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public async virtual Task<Response<VMwareHost>> GetAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Get");
             scope.Start();
@@ -182,13 +174,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<VMwareHost> GetIfExists(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public async virtual Task<Response<VMwareHost>> GetIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
             scope.Start();
@@ -236,13 +224,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<bool> Exists(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Exists");
             scope.Start();
@@ -261,13 +247,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Exists");
             scope.Start();

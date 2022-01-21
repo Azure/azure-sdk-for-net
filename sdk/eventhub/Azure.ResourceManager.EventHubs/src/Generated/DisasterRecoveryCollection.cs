@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
         public virtual DisasterRecoveryCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<DisasterRecoveryCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<DisasterRecovery> Get(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
             using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<DisasterRecovery>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
             using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<DisasterRecovery> GetIfExists(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
             using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<DisasterRecovery>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
             using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<bool> Exists(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
             using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
             using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
             scope.Start();

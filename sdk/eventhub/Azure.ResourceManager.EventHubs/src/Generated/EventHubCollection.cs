@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual EventHubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string eventHubName, EventHubData parameters, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<EventHubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string eventHubName, EventHubData parameters, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual Response<EventHub> Get(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public async virtual Task<Response<EventHub>> GetAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual Response<EventHub> GetIfExists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public async virtual Task<Response<EventHub>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual Response<bool> Exists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Exists");
             scope.Start();

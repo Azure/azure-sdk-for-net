@@ -60,13 +60,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="requestMessage"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
         public virtual SourceControlCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
             if (requestMessage == null)
             {
                 throw new ArgumentNullException(nameof(requestMessage));
@@ -97,13 +95,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="requestMessage"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
         public async virtual Task<SourceControlCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
             if (requestMessage == null)
             {
                 throw new ArgumentNullException(nameof(requestMessage));
@@ -132,13 +128,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         public virtual Response<SourceControl> Get(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
             using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.Get");
             scope.Start();
@@ -162,13 +156,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         public async virtual Task<Response<SourceControl>> GetAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
             using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.Get");
             scope.Start();
@@ -189,13 +181,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         public virtual Response<SourceControl> GetIfExists(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
             using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.GetIfExists");
             scope.Start();
@@ -216,13 +206,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         public async virtual Task<Response<SourceControl>> GetIfExistsAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
             using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.GetIfExists");
             scope.Start();
@@ -243,13 +231,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         public virtual Response<bool> Exists(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
             using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.Exists");
             scope.Start();
@@ -268,13 +254,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            if (sourceControlType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlType));
-            }
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
             using var scope = _clientDiagnostics.CreateScope("SourceControlCollection.Exists");
             scope.Start();

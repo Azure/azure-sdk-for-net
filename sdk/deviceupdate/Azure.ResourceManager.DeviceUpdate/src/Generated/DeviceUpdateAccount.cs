@@ -244,10 +244,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<DeviceUpdateAccount>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccount.AddTag");
             scope.Start();
@@ -273,10 +270,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<DeviceUpdateAccount> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccount.AddTag");
             scope.Start();
@@ -359,10 +353,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<DeviceUpdateAccount>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccount.RemoveTag");
             scope.Start();
@@ -387,10 +378,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<DeviceUpdateAccount> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccount.RemoveTag");
             scope.Start();

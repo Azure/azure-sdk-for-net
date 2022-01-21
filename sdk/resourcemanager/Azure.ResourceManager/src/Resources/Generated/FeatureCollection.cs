@@ -45,13 +45,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the preview feature with the specified name. </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<Feature> Get(string featureName, CancellationToken cancellationToken = default)
         {
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Get");
             scope.Start();
@@ -75,13 +73,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the preview feature with the specified name. </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<Feature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Get");
             scope.Start();
@@ -102,13 +98,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
@@ -129,13 +123,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
@@ -156,13 +148,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public virtual Response<bool> Exists(string featureName, CancellationToken cancellationToken = default)
         {
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Exists");
             scope.Start();
@@ -181,13 +171,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Exists");
             scope.Start();

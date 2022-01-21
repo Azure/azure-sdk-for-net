@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Bastion Host operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual BastionHostCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Bastion Host operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<BastionHostCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Bastion Host. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual Response<BastionHost> Get(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Bastion Host. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public async virtual Task<Response<BastionHost>> GetAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual Response<BastionHost> GetIfExists(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public async virtual Task<Response<BastionHost>> GetIfExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual Response<bool> Exists(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _clientDiagnostics.CreateScope("BastionHostCollection.Exists");
             scope.Start();

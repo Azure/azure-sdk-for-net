@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a database service objective. </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual Response<ServiceObjective> Get(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a database service objective. </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public async virtual Task<Response<ServiceObjective>> GetAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual Response<ServiceObjective> GetIfExists(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public async virtual Task<Response<ServiceObjective>> GetIfExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();

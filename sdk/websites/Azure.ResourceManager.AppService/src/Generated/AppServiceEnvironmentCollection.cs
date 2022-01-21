@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
         public virtual AppServiceEnvironmentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (hostingEnvironmentEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
         public async virtual Task<AppServiceEnvironmentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (hostingEnvironmentEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
@@ -133,13 +129,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the properties of an App Service Environment. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
@@ -163,13 +157,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the properties of an App Service Environment. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
@@ -190,13 +182,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<AppServiceEnvironment> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
@@ -217,13 +207,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<AppServiceEnvironment>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
@@ -244,13 +232,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();
@@ -269,13 +255,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();

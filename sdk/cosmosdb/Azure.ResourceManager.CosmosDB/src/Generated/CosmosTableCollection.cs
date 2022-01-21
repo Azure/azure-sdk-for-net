@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="createUpdateTableParameters"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
         public virtual CosmosTableCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             if (createUpdateTableParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateTableParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="createUpdateTableParameters"> The parameters to provide for the current Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="createUpdateTableParameters"/> is null. </exception>
         public async virtual Task<CosmosTableCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string tableName, TableCreateUpdateOptions createUpdateTableParameters, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             if (createUpdateTableParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateTableParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Tables under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<CosmosTable> Get(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Tables under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<CosmosTable>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<CosmosTable> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<CosmosTable>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("CosmosTableCollection.Exists");
             scope.Start();

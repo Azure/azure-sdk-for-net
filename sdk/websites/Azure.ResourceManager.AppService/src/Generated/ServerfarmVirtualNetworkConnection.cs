@@ -246,13 +246,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public async virtual Task<Response<VnetRoute>> CreateOrUpdateVnetRouteAsync(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
             {
                 throw new ArgumentNullException(nameof(route));
@@ -279,13 +277,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public virtual Response<VnetRoute> CreateOrUpdateVnetRoute(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
             {
                 throw new ArgumentNullException(nameof(route));
@@ -311,13 +307,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public async virtual Task<Response> DeleteVnetRouteAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnection.DeleteVnetRoute");
             scope.Start();
@@ -339,13 +333,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response DeleteVnetRoute(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnection.DeleteVnetRoute");
             scope.Start();
@@ -368,13 +360,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public async virtual Task<Response<VnetRoute>> UpdateVnetRouteAsync(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
             {
                 throw new ArgumentNullException(nameof(route));
@@ -401,13 +391,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public virtual Response<VnetRoute> UpdateVnetRoute(string routeName, VnetRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
             {
                 throw new ArgumentNullException(nameof(route));

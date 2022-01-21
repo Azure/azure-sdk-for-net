@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="parameters"> The requested virtual Network Rule Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualNetworkRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualNetworkRuleName, VirtualNetworkRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="parameters"> The requested virtual Network Rule Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<VirtualNetworkRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualNetworkRuleName, VirtualNetworkRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a virtual network rule. </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<VirtualNetworkRule> Get(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a virtual network rule. </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetworkRule>> GetAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<VirtualNetworkRule> GetIfExists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetworkRule>> GetIfExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Exists");
             scope.Start();

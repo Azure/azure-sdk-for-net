@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public virtual WebSiteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (siteEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(siteEnvelope));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public async virtual Task<WebSiteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (siteEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(siteEnvelope));
@@ -133,13 +129,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<WebSite> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.Get");
             scope.Start();
@@ -163,13 +157,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<WebSite>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.Get");
             scope.Start();
@@ -190,13 +182,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<WebSite> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
             scope.Start();
@@ -217,13 +207,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<WebSite>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
             scope.Start();
@@ -244,13 +232,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.Exists");
             scope.Start();
@@ -269,13 +255,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("WebSiteCollection.Exists");
             scope.Start();

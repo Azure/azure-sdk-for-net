@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
         public virtual AfdOriginCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             if (origin == null)
             {
                 throw new ArgumentNullException(nameof(origin));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originName"> Name of the origin that is unique within the profile. </param>
         /// <param name="origin"> Origin properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
         public async virtual Task<AfdOriginCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             if (origin == null)
             {
                 throw new ArgumentNullException(nameof(origin));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing origin within an origin group. </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
         public virtual Response<AfdOrigin> Get(string originName, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing origin within an origin group. </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
         public async virtual Task<Response<AfdOrigin>> GetAsync(string originName, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
         public virtual Response<AfdOrigin> GetIfExists(string originName, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
         public async virtual Task<Response<AfdOrigin>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
         public virtual Response<bool> Exists(string originName, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
-            if (originName == null)
-            {
-                throw new ArgumentNullException(nameof(originName));
-            }
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Exists");
             scope.Start();

@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="parameters"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ServerJobAgentJobStepCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="parameters"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServerJobAgentJobStepCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string stepName, JobStepData parameters, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job step in a job&apos;s current version. </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual Response<ServerJobAgentJobStep> Get(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobStepCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job step in a job&apos;s current version. </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public async virtual Task<Response<ServerJobAgentJobStep>> GetAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobStepCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual Response<ServerJobAgentJobStep> GetIfExists(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobStepCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public async virtual Task<Response<ServerJobAgentJobStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobStepCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual Response<bool> Exists(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobStepCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobStepCollection.Exists");
             scope.Start();

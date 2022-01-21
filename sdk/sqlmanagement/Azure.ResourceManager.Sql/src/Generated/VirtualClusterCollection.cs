@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a virtual cluster. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual Response<VirtualCluster> Get(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Get");
             scope.Start();
@@ -89,13 +87,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a virtual cluster. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public async virtual Task<Response<VirtualCluster>> GetAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Get");
             scope.Start();
@@ -116,13 +112,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual Response<VirtualCluster> GetIfExists(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
             scope.Start();
@@ -143,13 +137,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public async virtual Task<Response<VirtualCluster>> GetIfExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
             scope.Start();
@@ -170,13 +162,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();
@@ -195,13 +185,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();

@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> The custom domain to create. </param>
         /// <param name="staticSiteCustomDomainRequestPropertiesEnvelope"> A JSON representation of the static site custom domain request properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="staticSiteCustomDomainRequestPropertiesEnvelope"/> is null. </exception>
         public virtual StaticSiteCustomDomainOverviewARMResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             if (staticSiteCustomDomainRequestPropertiesEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="domainName"> The custom domain to create. </param>
         /// <param name="staticSiteCustomDomainRequestPropertiesEnvelope"> A JSON representation of the static site custom domain request properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="staticSiteCustomDomainRequestPropertiesEnvelope"/> is null. </exception>
         public async virtual Task<StaticSiteCustomDomainOverviewARMResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             if (staticSiteCustomDomainRequestPropertiesEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets an existing custom domain for a particular static site. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<StaticSiteCustomDomainOverviewARMResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets an existing custom domain for a particular static site. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public async virtual Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<StaticSiteCustomDomainOverviewARMResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public async virtual Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResourceCollection.Exists");
             scope.Start();

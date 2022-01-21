@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual EventHubAuthorizationRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string authorizationRuleName, AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<EventHubAuthorizationRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string authorizationRuleName, AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<EventHubAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public async virtual Task<Response<EventHubAuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<EventHubAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public async virtual Task<Response<EventHubAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.Exists");
             scope.Start();

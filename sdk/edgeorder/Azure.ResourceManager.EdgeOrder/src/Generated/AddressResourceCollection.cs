@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
         public virtual AddressResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             if (addressResource == null)
             {
                 throw new ArgumentNullException(nameof(addressResource));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
         public async virtual Task<AddressResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             if (addressResource == null)
             {
                 throw new ArgumentNullException(nameof(addressResource));
@@ -133,13 +129,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Gets information about the specified address. </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
         public virtual Response<AddressResource> Get(string addressName, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Get");
             scope.Start();
@@ -163,13 +157,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Gets information about the specified address. </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
         public async virtual Task<Response<AddressResource>> GetAsync(string addressName, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Get");
             scope.Start();
@@ -190,13 +182,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
         public virtual Response<AddressResource> GetIfExists(string addressName, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
             scope.Start();
@@ -217,13 +207,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
         public async virtual Task<Response<AddressResource>> GetIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
             scope.Start();
@@ -244,13 +232,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
         public virtual Response<bool> Exists(string addressName, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Exists");
             scope.Start();
@@ -269,13 +255,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string addressName, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Exists");
             scope.Start();

@@ -54,13 +54,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Get a shared gallery image version by subscription id or tenant id. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual Response<SharedGalleryImageVersion> Get(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Get");
             scope.Start();
@@ -82,13 +80,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Get a shared gallery image version by subscription id or tenant id. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public async virtual Task<Response<SharedGalleryImageVersion>> GetAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Get");
             scope.Start();
@@ -110,13 +106,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual Response<SharedGalleryImageVersion> GetIfExists(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
             scope.Start();
@@ -138,13 +132,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public async virtual Task<Response<SharedGalleryImageVersion>> GetIfExistsAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
             scope.Start();
@@ -166,13 +158,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Exists");
             scope.Start();
@@ -191,13 +181,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Exists");
             scope.Start();

@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="originGroup"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> or <paramref name="originGroup"/> is null. </exception>
         public virtual CdnOriginGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
             if (originGroup == null)
             {
                 throw new ArgumentNullException(nameof(originGroup));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="originGroup"> Origin group properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> or <paramref name="originGroup"/> is null. </exception>
         public async virtual Task<CdnOriginGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
             if (originGroup == null)
             {
                 throw new ArgumentNullException(nameof(originGroup));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing origin group within an endpoint. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual Response<CdnOriginGroup> Get(string originGroupName, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing origin group within an endpoint. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public async virtual Task<Response<CdnOriginGroup>> GetAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual Response<CdnOriginGroup> GetIfExists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public async virtual Task<Response<CdnOriginGroup>> GetIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            if (originGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(originGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
             scope.Start();

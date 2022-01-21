@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
         public virtual HubVirtualNetworkConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             if (hubVirtualNetworkConnectionParameters == null)
             {
                 throw new ArgumentNullException(nameof(hubVirtualNetworkConnectionParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the HubVirtualNetworkConnection. </param>
         /// <param name="hubVirtualNetworkConnectionParameters"> Parameters supplied to create or update a hub virtual network connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="hubVirtualNetworkConnectionParameters"/> is null. </exception>
         public async virtual Task<HubVirtualNetworkConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, HubVirtualNetworkConnectionData hubVirtualNetworkConnectionParameters, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             if (hubVirtualNetworkConnectionParameters == null)
             {
                 throw new ArgumentNullException(nameof(hubVirtualNetworkConnectionParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<HubVirtualNetworkConnection> Get(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public async virtual Task<Response<HubVirtualNetworkConnection>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<HubVirtualNetworkConnection> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public async virtual Task<Response<HubVirtualNetworkConnection>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             using var scope = _clientDiagnostics.CreateScope("HubVirtualNetworkConnectionCollection.Exists");
             scope.Start();
