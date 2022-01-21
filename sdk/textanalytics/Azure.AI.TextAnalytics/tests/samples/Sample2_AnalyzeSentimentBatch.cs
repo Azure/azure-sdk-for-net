@@ -16,11 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-#if SNIPPET
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-#else
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
-#endif
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
             string documentA = @"The food and service were unacceptable, but the concierge were nice.

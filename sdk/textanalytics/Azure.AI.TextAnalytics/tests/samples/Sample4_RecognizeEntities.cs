@@ -14,11 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-#if SNIPPET
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-#else
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
-#endif
 
             #region Snippet:RecognizeEntities
             string document = @"We love this trail and make the trip every year. The views are breathtaking and well

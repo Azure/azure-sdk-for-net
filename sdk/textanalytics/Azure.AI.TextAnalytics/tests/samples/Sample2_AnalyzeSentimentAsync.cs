@@ -15,11 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-#if SNIPPET
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-#else
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
-#endif
 
             string document = @"I had the best day of my life. I decided to go sky-diving and it
                                 made me appreciate my whole life so much more.
