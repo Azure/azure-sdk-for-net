@@ -355,7 +355,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("Ignore this test for now as it is flaky. TODO: create GitHub issue.")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26528")]
         public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
         {
             TextAnalyticsClient client = GetClient();
