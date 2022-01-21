@@ -49,8 +49,6 @@ function Generate-AadToken ($TenantId, $ClientId, $ClientSecret) {
         exit 1
     }
     
-    $resp | Write-Verbose
-    
     return $resp.access_token
 } 
 
