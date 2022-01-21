@@ -1,6 +1,6 @@
 parameters:
   - name: DaysValid
-    default: 365
+    default: 730
     type: number
 
 steps:
