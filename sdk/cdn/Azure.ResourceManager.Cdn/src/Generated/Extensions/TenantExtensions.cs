@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        private static CdnManagementRestOperations GetCdnManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static CdnManagementRestOperations GetCdnManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new CdnManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new CdnManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static EdgeNodesRestOperations GetEdgeNodesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static EdgeNodesRestOperations GetEdgeNodesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new EdgeNodesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new EdgeNodesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityAsync(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Cdn
             return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CheckCdnNameAvailability");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckNameAvailability(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityInput == null)
             {
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Cdn
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CheckNameAvailability");
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CheckCdnNameAvailability");
                 scope.Start();
                 try
                 {
-                    var restOperations = GetCdnManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    CdnManagementRestOperations restOperations = GetCdnManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameAvailability(checkNameAvailabilityInput, cancellationToken);
                     return response;
                 }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeNodesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeNodesRestOperations restOperations = GetEdgeNodesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<EdgeNode>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetEdgeNodes");
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEdgeNodesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EdgeNodesRestOperations restOperations = GetEdgeNodesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<EdgeNode> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetEdgeNodes");

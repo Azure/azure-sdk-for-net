@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _sqlContainer.Delete();
-            _sqlDatabase.Delete();
-            _databaseAccount.Delete();
+            _sqlContainer.Delete(true);
+            _sqlDatabase.Delete(true);
+            _databaseAccount.Delete(true);
         }
 
         [SetUp]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             SqlTrigger trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
             if (trigger != null)
             {
-                await trigger.DeleteAsync();
+                await trigger.DeleteAsync(true);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 }"
             });
 
-            trigger = await SqlTriggerCollection.CreateOrUpdate(_triggerName, updateOptions).WaitForCompletionAsync();
+            trigger = await SqlTriggerCollection.CreateOrUpdate(false, _triggerName, updateOptions).WaitForCompletionAsync();
             Assert.AreEqual(_triggerName, trigger.Data.Resource.Id);
             Assert.That(trigger.Data.Resource.Body, Contains.Substring("Second Hello World"));
             Assert.AreEqual(trigger.Data.Resource.TriggerOperation, TriggerOperation.Create);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlTriggerDelete()
         {
             var trigger = await CreateSqlTrigger(null);
-            await trigger.DeleteAsync();
+            await trigger.DeleteAsync(true);
 
             trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
             Assert.Null(trigger);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await SqlTriggerCollection.CreateOrUpdateAsync(_triggerName, sqlDatabaseCreateUpdateOptions);
+            var sqlContainerLro = await SqlTriggerCollection.CreateOrUpdateAsync(true, _triggerName, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 

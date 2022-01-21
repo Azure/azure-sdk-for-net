@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// pairs that describe the resource.</param>
         /// <param name="properties">Properties of the Service resource</param>
         /// <param name="sku">Sku of the Service resource</param>
-        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterResourceProperties properties = default(ClusterResourceProperties), Sku sku = default(Sku))
-            : base(id, name, type, location, tags)
+        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterResourceProperties properties = default(ClusterResourceProperties), Sku sku = default(Sku))
+            : base(id, name, type, systemData, location, tags)
         {
             Properties = properties;
             Sku = sku;

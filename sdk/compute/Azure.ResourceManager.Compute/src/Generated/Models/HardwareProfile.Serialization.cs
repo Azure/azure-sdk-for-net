@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("vmSize");
                 writer.WriteStringValue(VmSize.Value.ToString());
             }
+            if (Optional.IsDefined(VmSizeProperties))
+            {
+                writer.WritePropertyName("vmSizeProperties");
+                writer.WriteObjectValue(VmSizeProperties);
+            }
             writer.WriteEndObject();
         }
 
         internal static HardwareProfile DeserializeHardwareProfile(JsonElement element)
         {
             Optional<VirtualMachineSizeTypes> vmSize = default;
+            Optional<VmSizeProperties> vmSizeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Compute.Models
                     vmSize = new VirtualMachineSizeTypes(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("vmSizeProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vmSizeProperties = VmSizeProperties.DeserializeVmSizeProperties(property.Value);
+                    continue;
+                }
             }
-            return new HardwareProfile(Optional.ToNullable(vmSize));
+            return new HardwareProfile(Optional.ToNullable(vmSize), vmSizeProperties.Value);
         }
     }
 }

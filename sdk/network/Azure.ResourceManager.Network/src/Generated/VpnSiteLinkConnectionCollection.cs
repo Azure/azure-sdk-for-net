@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -31,13 +32,14 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VpnSiteLinkConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnSiteLinkConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VpnSiteLinkConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnSiteLinkConnectionsRestClient = new VpnSiteLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _vpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string apiVersion);
+            _vpnSiteLinkConnectionsRestClient = new VpnSiteLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _vpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a vpn site link connection. </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<VpnSiteLinkConnection> Get(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (linkConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(linkConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
             scope.Start();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnSiteLinkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -81,13 +81,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a vpn site link connection. </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public async virtual Task<Response<VpnSiteLinkConnection>> GetAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (linkConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(linkConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
             scope.Start();
@@ -96,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnSiteLinkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VpnSiteLinkConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,22 +106,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<VpnSiteLinkConnection> GetIfExists(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (linkConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(linkConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _vpnSiteLinkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,22 +131,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public async virtual Task<Response<VpnSiteLinkConnection>> GetIfExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (linkConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(linkConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _vpnSiteLinkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,13 +156,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (linkConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(linkConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
             scope.Start();
@@ -187,15 +179,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (linkConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(linkConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -221,7 +211,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _vpnLinkConnectionsRestClient.ListByVpnConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -236,7 +226,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _vpnLinkConnectionsRestClient.ListByVpnConnectionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,7 +249,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _vpnLinkConnectionsRestClient.ListByVpnConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _vpnLinkConnectionsRestClient.ListByVpnConnectionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

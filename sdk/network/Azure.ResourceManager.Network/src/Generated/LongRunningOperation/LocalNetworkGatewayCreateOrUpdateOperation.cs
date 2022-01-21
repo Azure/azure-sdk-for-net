@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         LocalNetworkGateway IOperationSource<LocalNetworkGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new LocalNetworkGateway(_operationBase, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement));
+            var data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement);
+            return new LocalNetworkGateway(_operationBase, data);
         }
 
         async ValueTask<LocalNetworkGateway> IOperationSource<LocalNetworkGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new LocalNetworkGateway(_operationBase, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement));
+            var data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement);
+            return new LocalNetworkGateway(_operationBase, data);
         }
     }
 }

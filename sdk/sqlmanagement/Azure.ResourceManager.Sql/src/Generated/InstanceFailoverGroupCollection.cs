@@ -34,13 +34,15 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InstanceFailoverGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal InstanceFailoverGroupCollection(ArmResource parent, string locationName) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(InstanceFailoverGroup.ResourceType, out string apiVersion);
+            _instanceFailoverGroupsRestClient = new InstanceFailoverGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
             _locationName = locationName;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -59,17 +61,15 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: InstanceFailoverGroups_CreateOrUpdate
         /// <summary> Creates or updates a failover group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="parameters"> The failover group parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual InstanceFailoverGroupCreateOrUpdateOperation CreateOrUpdate(string failoverGroupName, InstanceFailoverGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual InstanceFailoverGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _instanceFailoverGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters, cancellationToken);
-                var operation = new InstanceFailoverGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response);
+                var operation = new InstanceFailoverGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -96,17 +96,15 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: InstanceFailoverGroups_CreateOrUpdate
         /// <summary> Creates or updates a failover group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="parameters"> The failover group parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<InstanceFailoverGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string failoverGroupName, InstanceFailoverGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<InstanceFailoverGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -117,7 +115,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _instanceFailoverGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InstanceFailoverGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response);
+                var operation = new InstanceFailoverGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,13 +133,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a failover group. </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual Response<InstanceFailoverGroup> Get(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Get");
             scope.Start();
@@ -150,7 +146,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _instanceFailoverGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstanceFailoverGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,13 +161,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a failover group. </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public async virtual Task<Response<InstanceFailoverGroup>> GetAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Get");
             scope.Start();
@@ -180,7 +174,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _instanceFailoverGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new InstanceFailoverGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,22 +186,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual Response<InstanceFailoverGroup> GetIfExists(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _instanceFailoverGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<InstanceFailoverGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<InstanceFailoverGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,22 +211,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public async virtual Task<Response<InstanceFailoverGroup>> GetIfExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _instanceFailoverGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<InstanceFailoverGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<InstanceFailoverGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new InstanceFailoverGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,13 +236,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Exists");
             scope.Start();
@@ -271,15 +259,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -308,7 +294,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _instanceFailoverGroupsRestClient.ListByLocation(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,7 +309,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _instanceFailoverGroupsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,7 +335,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _instanceFailoverGroupsRestClient.ListByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -364,7 +350,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _instanceFailoverGroupsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstanceFailoverGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

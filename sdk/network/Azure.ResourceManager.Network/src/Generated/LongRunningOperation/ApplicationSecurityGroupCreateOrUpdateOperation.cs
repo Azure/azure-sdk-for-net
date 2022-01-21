@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ApplicationSecurityGroup IOperationSource<ApplicationSecurityGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ApplicationSecurityGroup(_operationBase, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement));
+            var data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement);
+            return new ApplicationSecurityGroup(_operationBase, data);
         }
 
         async ValueTask<ApplicationSecurityGroup> IOperationSource<ApplicationSecurityGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ApplicationSecurityGroup(_operationBase, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement));
+            var data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement);
+            return new ApplicationSecurityGroup(_operationBase, data);
         }
     }
 }

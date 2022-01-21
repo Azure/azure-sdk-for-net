@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         EventHubCluster IOperationSource<EventHubCluster>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new EventHubCluster(_operationBase, EventHubClusterData.DeserializeEventHubClusterData(document.RootElement));
+            var data = EventHubClusterData.DeserializeEventHubClusterData(document.RootElement);
+            return new EventHubCluster(_operationBase, data);
         }
 
         async ValueTask<EventHubCluster> IOperationSource<EventHubCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new EventHubCluster(_operationBase, EventHubClusterData.DeserializeEventHubClusterData(document.RootElement));
+            var data = EventHubClusterData.DeserializeEventHubClusterData(document.RootElement);
+            return new EventHubCluster(_operationBase, data);
         }
     }
 }

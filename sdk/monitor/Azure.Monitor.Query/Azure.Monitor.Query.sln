@@ -13,10 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.Query", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.Query.Tests", "tests\Azure.Monitor.Query.Tests.csproj", "{57982C70-975B-475E-B4F4-D20E9EC9F7FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Experimental", "..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{F630F933-5163-4878-B107-3D664FA8B89B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{753CF76A-180D-483D-93B8-BA7F243C5100}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.Query.Perf", "perf\Azure.Monitor.Query.Perf.csproj", "{E05FEA47-C575-44E1-83DA-A269A30122B1}"
 EndProject
 Global

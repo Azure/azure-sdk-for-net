@@ -39,13 +39,14 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "StaticSiteARMResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal StaticSiteARMResource(ArmResource options, StaticSiteARMResourceData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal StaticSiteARMResource(ArmResource options, StaticSiteARMResourceData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteARMResource(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteARMResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -153,7 +156,17 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -161,7 +174,17 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
@@ -170,14 +193,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a static site. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<StaticSiteDeleteStaticSiteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<StaticSiteARMResourceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.Delete");
             scope.Start();
             try
             {
                 var response = await _staticSitesRestClient.DeleteStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteDeleteStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new StaticSiteARMResourceDeleteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -195,16 +218,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a static site. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual StaticSiteDeleteStaticSiteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual StaticSiteARMResourceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.Delete");
             scope.Start();
             try
             {
                 var response = _staticSitesRestClient.DeleteStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StaticSiteDeleteStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new StaticSiteARMResourceDeleteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -276,14 +299,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the list of users of a static site. </summary>
         /// <param name="authprovider"> The auth provider for the users. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
         /// <returns> An async collection of <see cref="StaticSiteUserARMResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteUserARMResource> GetUsersAsync(string authprovider, CancellationToken cancellationToken = default)
         {
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
             async Task<Page<StaticSiteUserARMResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -324,14 +345,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the list of users of a static site. </summary>
         /// <param name="authprovider"> The auth provider for the users. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
         /// <returns> A collection of <see cref="StaticSiteUserARMResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteUserARMResource> GetUsers(string authprovider, CancellationToken cancellationToken = default)
         {
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
             Page<StaticSiteUserARMResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -373,17 +392,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="authprovider"> The auth provider for this user. </param>
         /// <param name="userid"> The user id of the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> or <paramref name="userid"/> is null. </exception>
         public async virtual Task<Response> DeleteUserAsync(string authprovider, string userid, CancellationToken cancellationToken = default)
         {
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.DeleteUser");
             scope.Start();
@@ -406,17 +420,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="authprovider"> The auth provider for this user. </param>
         /// <param name="userid"> The user id of the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> or <paramref name="userid"/> is null. </exception>
         public virtual Response DeleteUser(string authprovider, string userid, CancellationToken cancellationToken = default)
         {
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.DeleteUser");
             scope.Start();
@@ -440,17 +449,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userid"> The user id of the user. </param>
         /// <param name="staticSiteUserEnvelope"> A JSON representation of the StaticSiteUser properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/>, <paramref name="userid"/>, or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
         public async virtual Task<Response<StaticSiteUserARMResource>> UpdateUserAsync(string authprovider, string userid, StaticSiteUserARMResource staticSiteUserEnvelope, CancellationToken cancellationToken = default)
         {
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
             if (staticSiteUserEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(staticSiteUserEnvelope));
@@ -478,17 +482,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userid"> The user id of the user. </param>
         /// <param name="staticSiteUserEnvelope"> A JSON representation of the StaticSiteUser properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/>, <paramref name="userid"/>, or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
         public virtual Response<StaticSiteUserARMResource> UpdateUser(string authprovider, string userid, StaticSiteUserARMResource staticSiteUserEnvelope, CancellationToken cancellationToken = default)
         {
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
             if (staticSiteUserEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(staticSiteUserEnvelope));
@@ -682,14 +681,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Detaches a static site. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<StaticSiteDetachStaticSiteOperation> DetachAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<StaticSiteARMResourceDetachOperation> DetachAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.Detach");
             scope.Start();
             try
             {
                 var response = await _staticSitesRestClient.DetachStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteDetachStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new StaticSiteARMResourceDetachOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -707,16 +706,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Detaches a static site. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual StaticSiteDetachStaticSiteOperation Detach(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual StaticSiteARMResourceDetachOperation Detach(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResource.Detach");
             scope.Start();
             try
             {
                 var response = _staticSitesRestClient.DetachStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StaticSiteDetachStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new StaticSiteARMResourceDetachOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDetachStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -1088,11 +1087,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// OperationId: StaticSites_CreateZipDeploymentForStaticSite
         /// <summary> Description for Deploys zipped content to a static site. </summary>
-        /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
-        public async virtual Task<StaticSiteCreateZipDeploymentForStaticSiteOperation> CreateZipDeploymentForStaticSiteAsync(StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<StaticSiteARMResourceCreateZipDeploymentForStaticSiteOperation> CreateZipDeploymentForStaticSiteAsync(bool waitForCompletion, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             if (staticSiteZipDeploymentEnvelope == null)
             {
@@ -1104,7 +1103,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSitesRestClient.CreateZipDeploymentForStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
+                var operation = new StaticSiteARMResourceCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1120,11 +1119,11 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// OperationId: StaticSites_CreateZipDeploymentForStaticSite
         /// <summary> Description for Deploys zipped content to a static site. </summary>
-        /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
-        public virtual StaticSiteCreateZipDeploymentForStaticSiteOperation CreateZipDeploymentForStaticSite(StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual StaticSiteARMResourceCreateZipDeploymentForStaticSiteOperation CreateZipDeploymentForStaticSite(bool waitForCompletion, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             if (staticSiteZipDeploymentEnvelope == null)
             {
@@ -1136,9 +1135,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSitesRestClient.CreateZipDeploymentForStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope, cancellationToken);
-                var operation = new StaticSiteCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
+                var operation = new StaticSiteARMResourceCreateZipDeploymentForStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateCreateZipDeploymentForStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteZipDeploymentEnvelope).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

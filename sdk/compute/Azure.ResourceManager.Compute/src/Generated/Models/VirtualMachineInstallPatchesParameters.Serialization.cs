@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maximumDuration");
-            writer.WriteStringValue(MaximumDuration);
+            if (Optional.IsDefined(MaximumDuration))
+            {
+                writer.WritePropertyName("maximumDuration");
+                writer.WriteStringValue(MaximumDuration);
+            }
             writer.WritePropertyName("rebootSetting");
             writer.WriteStringValue(RebootSetting.ToString());
             if (Optional.IsDefined(WindowsParameters))

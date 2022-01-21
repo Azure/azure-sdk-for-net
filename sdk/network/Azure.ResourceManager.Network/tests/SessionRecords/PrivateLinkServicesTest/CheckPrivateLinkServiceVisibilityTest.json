@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -6770,12 +6770,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/cplsrg1386?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/cplsrg1386?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "22",
+        "Content-Length": "32",
         "Content-Type": "application/json",
         "traceparent": "00-d89d953ecf1ce542922da753beb2df03-b86ae044eeb00c4b-00",
         "User-Agent": [
@@ -6786,7 +6786,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "West US"
+        "location": "West US",
+        "tags": {}
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -6895,7 +6896,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -6935,10 +6936,10 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "      \u0022visible\u0022: false\r\n",
+        "  \"status\": \"Succeeded\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"output\": {\r\n",
+        "      \"visible\": false\r\n",
         "    }\r\n",
         "  }\r\n",
         "}"
@@ -6982,7 +6983,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022visible\u0022: false\r\n",
+        "  \"visible\": false\r\n",
         "}"
       ]
     }

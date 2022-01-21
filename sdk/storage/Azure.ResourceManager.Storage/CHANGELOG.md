@@ -116,7 +116,7 @@ Models.Sku sku = new Models.Sku(SkuName.PremiumLRS);
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Models.Sku(SkuName.StandardGRS), Kind.Storage, AzureLocation.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
+StorageAccount account = storageAccountCollection.CreateOrUpdate(true, accountName, parameters).Value;
 ```
 
 #### Object Model Changes

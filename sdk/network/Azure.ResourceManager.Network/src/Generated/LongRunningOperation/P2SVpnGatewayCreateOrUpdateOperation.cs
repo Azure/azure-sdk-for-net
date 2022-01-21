@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         P2SVpnGateway IOperationSource<P2SVpnGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new P2SVpnGateway(_operationBase, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement));
+            var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
+            return new P2SVpnGateway(_operationBase, data);
         }
 
         async ValueTask<P2SVpnGateway> IOperationSource<P2SVpnGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new P2SVpnGateway(_operationBase, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement));
+            var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
+            return new P2SVpnGateway(_operationBase, data);
         }
     }
 }

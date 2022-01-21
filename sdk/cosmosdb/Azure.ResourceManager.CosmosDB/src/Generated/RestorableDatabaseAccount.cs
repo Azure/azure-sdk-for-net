@@ -45,19 +45,20 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Initializes a new instance of the <see cref = "RestorableDatabaseAccount"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal RestorableDatabaseAccount(ArmResource options, RestorableDatabaseAccountData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal RestorableDatabaseAccount(ArmResource options, RestorableDatabaseAccountData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,13 +70,14 @@ namespace Azure.ResourceManager.CosmosDB
         internal RestorableDatabaseAccount(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,13 +92,14 @@ namespace Azure.ResourceManager.CosmosDB
         internal RestorableDatabaseAccount(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccountsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -171,7 +174,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccount.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -179,7 +192,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RestorableDatabaseAccount.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Show the event feed of all mutations done on all the Azure Cosmos DB SQL databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission. </summary>
