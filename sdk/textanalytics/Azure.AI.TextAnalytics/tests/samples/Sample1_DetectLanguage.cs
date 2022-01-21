@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    public partial class TextAnalyticsSamples: TextAnalyticsSampleBase
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void DetectLanguage()

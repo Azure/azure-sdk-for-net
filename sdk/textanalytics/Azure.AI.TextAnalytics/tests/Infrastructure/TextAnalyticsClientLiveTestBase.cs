@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Tests
     TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        internal const int MaxRetriesCount = 20;
+        internal const int MaxRetriesCount = 12;
 
         /// <summary>
         /// The version of the REST API to test against.  This will be passed
