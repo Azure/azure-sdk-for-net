@@ -11,12 +11,12 @@ using Azure.ResourceManager.Resources;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Monitor.Tests.TestsCase
+namespace Azure.ResourceManager.Monitor.Tests
 {
     public class AutoscaleSettingsCollectionTests : MonitorTestBase
     {
         public AutoscaleSettingsCollectionTests(bool isAsync)
-           : base(isAsync, RecordedTestMode.Record)
+           : base(isAsync)
         {
         }
         private async Task<AutoscaleSettingCollection> GetAutoscaleSettingsCollectionAsync()

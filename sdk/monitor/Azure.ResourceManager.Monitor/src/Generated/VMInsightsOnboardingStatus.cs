@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -45,7 +46,8 @@ namespace Azure.ResourceManager.Monitor
             _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vMInsightsRestClient = new VMInsightsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _vMInsightsRestClient = new VMInsightsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,7 +60,8 @@ namespace Azure.ResourceManager.Monitor
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vMInsightsRestClient = new VMInsightsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _vMInsightsRestClient = new VMInsightsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +76,8 @@ namespace Azure.ResourceManager.Monitor
         internal VmInsightsOnboardingStatus(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vMInsightsRestClient = new VMInsightsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _vMInsightsRestClient = new VMInsightsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

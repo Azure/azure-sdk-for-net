@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionRuleAssociationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DataCollectionRuleAssociation.ResourceType, out string apiVersion);
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
 
         // Collection level operations.
@@ -44,12 +45,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /{resourceUri}
         /// OperationId: DataCollectionRuleAssociations_Create
         /// <summary> Creates or updates an association. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="body"> The payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        public virtual DataCollectionRuleAssociationCreateOperation CreateOrUpdate(bool waitForCompletion, string associationName, DataCollectionRuleAssociationData body = null, CancellationToken cancellationToken = default)
+        public virtual DataCollectionRuleAssociationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string associationName, DataCollectionRuleAssociationData body = null, CancellationToken cancellationToken = default)
         {
             if (associationName == null)
             {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionRuleAssociationsRestClient.Create(Id, associationName, body, cancellationToken);
-                var operation = new DataCollectionRuleAssociationCreateOperation(Parent, response);
+                var operation = new DataCollectionRuleAssociationCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /{resourceUri}
         /// OperationId: DataCollectionRuleAssociations_Create
         /// <summary> Creates or updates an association. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="body"> The payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
-        public async virtual Task<DataCollectionRuleAssociationCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string associationName, DataCollectionRuleAssociationData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<DataCollectionRuleAssociationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string associationName, DataCollectionRuleAssociationData body = null, CancellationToken cancellationToken = default)
         {
             if (associationName == null)
             {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _dataCollectionRuleAssociationsRestClient.CreateAsync(Id, associationName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCollectionRuleAssociationCreateOperation(Parent, response);
+                var operation = new DataCollectionRuleAssociationCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _dataCollectionRuleAssociationsRestClient.Get(Id, associationName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRuleAssociation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _dataCollectionRuleAssociationsRestClient.GetAsync(Id, associationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionRuleAssociation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _dataCollectionRuleAssociationsRestClient.ListByResource(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _dataCollectionRuleAssociationsRestClient.ListByResourceNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _dataCollectionRuleAssociationsRestClient.ListByResourceAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _dataCollectionRuleAssociationsRestClient.ListByResourceNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociation(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

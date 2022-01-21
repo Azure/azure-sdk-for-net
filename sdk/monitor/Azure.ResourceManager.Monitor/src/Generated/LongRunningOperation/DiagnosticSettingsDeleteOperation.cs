@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Deletes a private endpoint connection with a given name. </summary>
-    public partial class PrivateLinkScopedResourceDeleteOperation : Operation
+    /// <summary> Deletes existing diagnostic settings for the specified resource. </summary>
+    public partial class DiagnosticSettingsDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceDeleteOperation for mocking. </summary>
-        protected PrivateLinkScopedResourceDeleteOperation()
+        /// <summary> Initializes a new instance of DiagnosticSettingsDeleteOperation for mocking. </summary>
+        protected DiagnosticSettingsDeleteOperation()
         {
         }
 
-        internal PrivateLinkScopedResourceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
+        internal DiagnosticSettingsDeleteOperation(Azure.Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkScopedResourceDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

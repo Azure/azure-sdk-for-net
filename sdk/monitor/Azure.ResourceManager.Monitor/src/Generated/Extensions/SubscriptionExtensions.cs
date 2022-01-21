@@ -32,54 +32,54 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        private static AutoscaleSettingsRestOperations GetAutoscaleSettingsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AutoscaleSettingsRestOperations GetAutoscaleSettingsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AutoscaleSettingsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AutoscaleSettingsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AlertRulesRestOperations GetAlertRulesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AlertRulesRestOperations GetAlertRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AlertRulesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AlertRulesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ActionGroupsRestOperations GetActionGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ActionGroupsRestOperations GetActionGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ActionGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ActionGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ActivityLogsRestOperations GetActivityLogsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ActivityLogsRestOperations GetActivityLogsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ActivityLogsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ActivityLogsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static MetricAlertsRestOperations GetMetricAlertsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static MetricAlertsRestOperations GetMetricAlertsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new MetricAlertsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new MetricAlertsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ScheduledQueryRulesRestOperations GetScheduledQueryRulesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ScheduledQueryRulesRestOperations GetScheduledQueryRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ScheduledQueryRulesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ScheduledQueryRulesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static PrivateLinkScopesRestOperations GetPrivateLinkScopesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static PrivateLinkScopesRestOperations GetPrivateLinkScopesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new PrivateLinkScopesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new PrivateLinkScopesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ActivityLogAlertsRestOperations GetActivityLogAlertsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ActivityLogAlertsRestOperations GetActivityLogAlertsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ActivityLogAlertsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ActivityLogAlertsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DataCollectionEndpointsRestOperations GetDataCollectionEndpointsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DataCollectionEndpointsRestOperations GetDataCollectionEndpointsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DataCollectionEndpointsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DataCollectionEndpointsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DataCollectionRulesRestOperations GetDataCollectionRulesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DataCollectionRulesRestOperations GetDataCollectionRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DataCollectionRulesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DataCollectionRulesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings
@@ -94,7 +94,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAutoscaleSettingsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AutoscaleSetting.ResourceType, out string apiVersion);
+                AutoscaleSettingsRestOperations restOperations = GetAutoscaleSettingsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AutoscaleSetting>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoscaleSettings");
@@ -142,7 +143,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAutoscaleSettingsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AutoscaleSetting.ResourceType, out string apiVersion);
+                AutoscaleSettingsRestOperations restOperations = GetAutoscaleSettingsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AutoscaleSetting> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoscaleSettings");
@@ -218,7 +220,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAlertRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AlertRule.ResourceType, out string apiVersion);
+                AlertRulesRestOperations restOperations = GetAlertRulesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AlertRule>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAlertRules");
@@ -251,7 +254,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAlertRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AlertRule.ResourceType, out string apiVersion);
+                AlertRulesRestOperations restOperations = GetAlertRulesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AlertRule> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAlertRules");
@@ -305,11 +309,11 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: ActionGroups_PostTestNotifications
         /// <summary> Send test notifications to a set of provided receivers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static async Task<ActionGroupPostTestNotificationsOperation> PostTestNotificationsActionGroupAsync(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public static async Task<PostTestNotificationsActionGroupOperation> PostTestNotificationsActionGroupAsync(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
             if (notificationRequest == null)
             {
@@ -323,9 +327,9 @@ namespace Azure.ResourceManager.Monitor
                 scope.Start();
                 try
                 {
-                    var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ActionGroupsRestOperations restOperations = GetActionGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.PostTestNotificationsAsync(subscription.Id.SubscriptionId, notificationRequest, cancellationToken).ConfigureAwait(false);
-                    var operation = new ActionGroupPostTestNotificationsOperation(clientDiagnostics, pipeline, restOperations.CreatePostTestNotificationsRequest(subscription.Id.SubscriptionId, notificationRequest).Request, response);
+                    var operation = new PostTestNotificationsActionGroupOperation(clientDiagnostics, pipeline, restOperations.CreatePostTestNotificationsRequest(subscription.Id.SubscriptionId, notificationRequest).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -344,11 +348,11 @@ namespace Azure.ResourceManager.Monitor
         /// OperationId: ActionGroups_PostTestNotifications
         /// <summary> Send test notifications to a set of provided receivers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static ActionGroupPostTestNotificationsOperation PostTestNotificationsActionGroup(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public static PostTestNotificationsActionGroupOperation PostTestNotificationsActionGroup(this Subscription subscription, bool waitForCompletion, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
             if (notificationRequest == null)
             {
@@ -362,9 +366,9 @@ namespace Azure.ResourceManager.Monitor
                 scope.Start();
                 try
                 {
-                    var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ActionGroupsRestOperations restOperations = GetActionGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.PostTestNotifications(subscription.Id.SubscriptionId, notificationRequest, cancellationToken);
-                    var operation = new ActionGroupPostTestNotificationsOperation(clientDiagnostics, pipeline, restOperations.CreatePostTestNotificationsRequest(subscription.Id.SubscriptionId, notificationRequest).Request, response);
+                    var operation = new PostTestNotificationsActionGroupOperation(clientDiagnostics, pipeline, restOperations.CreatePostTestNotificationsRequest(subscription.Id.SubscriptionId, notificationRequest).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -400,7 +404,7 @@ namespace Azure.ResourceManager.Monitor
                 scope.Start();
                 try
                 {
-                    var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ActionGroupsRestOperations restOperations = GetActionGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.GetTestNotificationsAsync(subscription.Id.SubscriptionId, notificationId, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -435,7 +439,7 @@ namespace Azure.ResourceManager.Monitor
                 scope.Start();
                 try
                 {
-                    var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ActionGroupsRestOperations restOperations = GetActionGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.GetTestNotifications(subscription.Id.SubscriptionId, notificationId, cancellationToken);
                     return response;
                 }
@@ -455,15 +459,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActionGroup> GetActionGroupsBySubscriptionIdAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ActionGroup> GetActionGroupsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ActionGroup.ResourceType, out string apiVersion);
+                ActionGroupsRestOperations restOperations = GetActionGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ActionGroup>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActionGroupsBySubscriptionId");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActionGroups");
                     scope.Start();
                     try
                     {
@@ -488,15 +493,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActionGroup> GetActionGroupsBySubscriptionId(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ActionGroup> GetActionGroups(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetActionGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ActionGroup.ResourceType, out string apiVersion);
+                ActionGroupsRestOperations restOperations = GetActionGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ActionGroup> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActionGroupsBySubscriptionId");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActionGroups");
                     scope.Start();
                     try
                     {
@@ -562,7 +568,7 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetActivityLogsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ActivityLogsRestOperations restOperations = GetActivityLogsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<EventData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogs");
@@ -618,7 +624,7 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetActivityLogsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ActivityLogsRestOperations restOperations = GetActivityLogsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<EventData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogs");
@@ -666,7 +672,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetMetricAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(MetricAlert.ResourceType, out string apiVersion);
+                MetricAlertsRestOperations restOperations = GetMetricAlertsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<MetricAlert>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetMetricAlerts");
@@ -699,7 +706,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetMetricAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(MetricAlert.ResourceType, out string apiVersion);
+                MetricAlertsRestOperations restOperations = GetMetricAlertsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<MetricAlert> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetMetricAlerts");
@@ -756,15 +764,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LogSearchRule> GetScheduledQueryRulesAsync(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LogSearchRule> GetLogSearchRulesAsync(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetScheduledQueryRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(LogSearchRule.ResourceType, out string apiVersion);
+                ScheduledQueryRulesRestOperations restOperations = GetScheduledQueryRulesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<LogSearchRule>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetScheduledQueryRules");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLogSearchRules");
                     scope.Start();
                     try
                     {
@@ -790,15 +799,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LogSearchRule> GetScheduledQueryRules(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<LogSearchRule> GetLogSearchRules(this Subscription subscription, string filter = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetScheduledQueryRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(LogSearchRule.ResourceType, out string apiVersion);
+                ScheduledQueryRulesRestOperations restOperations = GetScheduledQueryRulesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<LogSearchRule> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetScheduledQueryRules");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLogSearchRules");
                     scope.Start();
                     try
                     {
@@ -856,7 +866,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkScopesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PrivateLinkScope.ResourceType, out string apiVersion);
+                PrivateLinkScopesRestOperations restOperations = GetPrivateLinkScopesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<PrivateLinkScope>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkScopes");
@@ -904,7 +915,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkScopesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PrivateLinkScope.ResourceType, out string apiVersion);
+                PrivateLinkScopesRestOperations restOperations = GetPrivateLinkScopesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<PrivateLinkScope> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkScopes");
@@ -975,15 +987,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActivityLogAlert> GetActivityLogAlertsBySubscriptionIdAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ActivityLogAlert> GetActivityLogAlertsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetActivityLogAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ActivityLogAlert.ResourceType, out string apiVersion);
+                ActivityLogAlertsRestOperations restOperations = GetActivityLogAlertsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ActivityLogAlert>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogAlertsBySubscriptionId");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogAlerts");
                     scope.Start();
                     try
                     {
@@ -1008,15 +1021,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActivityLogAlert> GetActivityLogAlertsBySubscriptionId(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ActivityLogAlert> GetActivityLogAlerts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetActivityLogAlertsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ActivityLogAlert.ResourceType, out string apiVersion);
+                ActivityLogAlertsRestOperations restOperations = GetActivityLogAlertsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ActivityLogAlert> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogAlertsBySubscriptionId");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetActivityLogAlerts");
                     scope.Start();
                     try
                     {
@@ -1074,7 +1088,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDataCollectionEndpointsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DataCollectionEndpoint.ResourceType, out string apiVersion);
+                DataCollectionEndpointsRestOperations restOperations = GetDataCollectionEndpointsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DataCollectionEndpoint>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionEndpoints");
@@ -1122,7 +1137,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDataCollectionEndpointsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DataCollectionEndpoint.ResourceType, out string apiVersion);
+                DataCollectionEndpointsRestOperations restOperations = GetDataCollectionEndpointsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DataCollectionEndpoint> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionEndpoints");
@@ -1198,7 +1214,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDataCollectionRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DataCollectionRule.ResourceType, out string apiVersion);
+                DataCollectionRulesRestOperations restOperations = GetDataCollectionRulesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DataCollectionRule>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionRules");
@@ -1246,7 +1263,8 @@ namespace Azure.ResourceManager.Monitor
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDataCollectionRulesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DataCollectionRule.ResourceType, out string apiVersion);
+                DataCollectionRulesRestOperations restOperations = GetDataCollectionRulesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DataCollectionRule> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDataCollectionRules");

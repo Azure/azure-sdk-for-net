@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal AutoscaleSettingCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _autoscaleSettingsRestClient = new AutoscaleSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AutoscaleSetting.ResourceType, out string apiVersion);
+            _autoscaleSettingsRestClient = new AutoscaleSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,9 +57,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: AutoscaleSettings_CreateOrUpdate
         /// <summary> Creates or updates an autoscale setting. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual AutoscaleSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _autoscaleSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken);
-                var operation = new AutoscaleSettingCreateOrUpdateOperation(Parent, response);
+                var operation = new AutoscaleSettingCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: AutoscaleSettings_CreateOrUpdate
         /// <summary> Creates or updates an autoscale setting. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<AutoscaleSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _autoscaleSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AutoscaleSettingCreateOrUpdateOperation(Parent, response);
+                var operation = new AutoscaleSettingCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _autoscaleSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoscaleSetting(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _autoscaleSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AutoscaleSetting(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _autoscaleSettingsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _autoscaleSettingsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _autoscaleSettingsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _autoscaleSettingsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

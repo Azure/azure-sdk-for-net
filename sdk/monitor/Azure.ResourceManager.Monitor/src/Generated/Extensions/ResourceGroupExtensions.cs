@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
@@ -110,9 +109,9 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        private static PrivateLinkScopeOperationStatusRestOperations GetPrivateLinkScopeOperationStatusRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static PrivateLinkScopeOperationStatusRestOperations GetPrivateLinkScopeOperationStatusRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new PrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new PrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.Monitor
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    PrivateLinkScopeOperationStatusRestOperations restOperations = GetPrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.GetAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, asyncOperationId, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Monitor
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    PrivateLinkScopeOperationStatusRestOperations restOperations = GetPrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.Get(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, asyncOperationId, cancellationToken);
                     return response;
                 }

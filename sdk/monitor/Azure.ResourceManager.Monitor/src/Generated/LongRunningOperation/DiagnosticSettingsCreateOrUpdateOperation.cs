@@ -16,16 +16,16 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Creates or updates diagnostic settings for the specified resource. </summary>
-    public partial class DiagnosticSettingCreateOrUpdateOperation : Operation<DiagnosticSettings>
+    public partial class DiagnosticSettingsCreateOrUpdateOperation : Operation<DiagnosticSettings>
     {
         private readonly OperationOrResponseInternals<DiagnosticSettings> _operation;
 
-        /// <summary> Initializes a new instance of DiagnosticSettingCreateOrUpdateOperation for mocking. </summary>
-        protected DiagnosticSettingCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of DiagnosticSettingsCreateOrUpdateOperation for mocking. </summary>
+        protected DiagnosticSettingsCreateOrUpdateOperation()
         {
         }
 
-        internal DiagnosticSettingCreateOrUpdateOperation(ArmResource operationsBase, Response<DiagnosticSettingsData> response)
+        internal DiagnosticSettingsCreateOrUpdateOperation(ArmResource operationsBase, Response<DiagnosticSettingsData> response)
         {
             _operation = new OperationOrResponseInternals<DiagnosticSettings>(Azure.Response.FromValue(new DiagnosticSettings(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -15,26 +15,26 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Updates an existing LogProfilesResource. To update other fields use the CreateOrUpdate method. </summary>
-    public partial class LogProfileUpdateOperation : Operation<LogProfile>
+    /// <summary> Creates or updates an log search rule. </summary>
+    public partial class LogSearchRuleCreateOrUpdateOperation : Operation<LogSearchRule>
     {
-        private readonly OperationOrResponseInternals<LogProfile> _operation;
+        private readonly OperationOrResponseInternals<LogSearchRule> _operation;
 
-        /// <summary> Initializes a new instance of LogProfileUpdateOperation for mocking. </summary>
-        protected LogProfileUpdateOperation()
+        /// <summary> Initializes a new instance of LogSearchRuleCreateOrUpdateOperation for mocking. </summary>
+        protected LogSearchRuleCreateOrUpdateOperation()
         {
         }
 
-        internal LogProfileUpdateOperation(ArmResource operationsBase, Response<LogProfileData> response)
+        internal LogSearchRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<LogSearchRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<LogProfile>(Azure.Response.FromValue(new LogProfile(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<LogSearchRule>(Azure.Response.FromValue(new LogSearchRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override LogProfile Value => _operation.Value;
+        public override LogSearchRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogProfile>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<LogSearchRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogProfile>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<LogSearchRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

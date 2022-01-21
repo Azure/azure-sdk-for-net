@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        private static EventCategoriesRestOperations GetEventCategoriesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static EventCategoriesRestOperations GetEventCategoriesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new EventCategoriesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new EventCategoriesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static TenantActivityLogsRestOperations GetTenantActivityLogsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static TenantActivityLogsRestOperations GetTenantActivityLogsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new TenantActivityLogsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new TenantActivityLogsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// RequestPath: /providers/Microsoft.Insights/eventcategories
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEventCategoriesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EventCategoriesRestOperations restOperations = GetEventCategoriesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<LocalizableString>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetEventCategories");
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetEventCategoriesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                EventCategoriesRestOperations restOperations = GetEventCategoriesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<LocalizableString> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetEventCategories");
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetTenantActivityLogsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                TenantActivityLogsRestOperations restOperations = GetTenantActivityLogsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<EventData>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetTenantActivityLogs");
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetTenantActivityLogsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                TenantActivityLogsRestOperations restOperations = GetTenantActivityLogsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<EventData> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetTenantActivityLogs");

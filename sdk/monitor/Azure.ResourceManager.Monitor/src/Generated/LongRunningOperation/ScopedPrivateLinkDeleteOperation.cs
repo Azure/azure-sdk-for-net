@@ -10,22 +10,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Deletes a Log Search rule. </summary>
-    public partial class ScheduledQueryRuleDeleteOperation : Operation
+    /// <summary> Deletes a private endpoint connection with a given name. </summary>
+    public partial class ScopedPrivateLinkDeleteOperation : Operation
     {
-        private readonly OperationOrResponseInternals _operation;
+        private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleDeleteOperation for mocking. </summary>
-        protected ScheduledQueryRuleDeleteOperation()
+        /// <summary> Initializes a new instance of ScopedPrivateLinkDeleteOperation for mocking. </summary>
+        protected ScopedPrivateLinkDeleteOperation()
         {
         }
 
-        internal ScheduledQueryRuleDeleteOperation(Azure.Response response)
+        internal ScopedPrivateLinkDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
         {
-            _operation = new OperationOrResponseInternals(response);
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ScopedPrivateLinkDeleteOperation");
         }
 
         /// <inheritdoc />

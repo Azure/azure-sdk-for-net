@@ -15,26 +15,26 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Update log search Rule. </summary>
-    public partial class ScheduledQueryRuleUpdateOperation : Operation<LogSearchRule>
+    /// <summary> Creates or updates a data collection rule. </summary>
+    public partial class DataCollectionRuleCreateOrUpdateOperation : Operation<DataCollectionRule>
     {
-        private readonly OperationOrResponseInternals<LogSearchRule> _operation;
+        private readonly OperationOrResponseInternals<DataCollectionRule> _operation;
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleUpdateOperation for mocking. </summary>
-        protected ScheduledQueryRuleUpdateOperation()
+        /// <summary> Initializes a new instance of DataCollectionRuleCreateOrUpdateOperation for mocking. </summary>
+        protected DataCollectionRuleCreateOrUpdateOperation()
         {
         }
 
-        internal ScheduledQueryRuleUpdateOperation(ArmResource operationsBase, Response<LogSearchRuleData> response)
+        internal DataCollectionRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<DataCollectionRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<LogSearchRule>(Azure.Response.FromValue(new LogSearchRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DataCollectionRule>(Azure.Response.FromValue(new DataCollectionRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override LogSearchRule Value => _operation.Value;
+        public override DataCollectionRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public override ValueTask<Azure.Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogSearchRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<DataCollectionRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogSearchRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<DataCollectionRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

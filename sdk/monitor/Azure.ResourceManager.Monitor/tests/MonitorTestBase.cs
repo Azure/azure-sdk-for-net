@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

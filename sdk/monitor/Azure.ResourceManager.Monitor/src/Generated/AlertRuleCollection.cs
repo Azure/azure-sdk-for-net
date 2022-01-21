@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal AlertRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _alertRulesRestClient = new AlertRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AlertRule.ResourceType, out string apiVersion);
+            _alertRulesRestClient = new AlertRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,9 +57,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: AlertRules_CreateOrUpdate
         /// <summary> Creates or updates a classic metric alert rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual AlertRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, AlertRuleData parameters, CancellationToken cancellationToken = default)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _alertRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken);
-                var operation = new AlertRuleCreateOrUpdateOperation(Parent, response);
+                var operation = new AlertRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: AlertRules_CreateOrUpdate
         /// <summary> Creates or updates a classic metric alert rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<AlertRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, AlertRuleData parameters, CancellationToken cancellationToken = default)
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _alertRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AlertRuleCreateOrUpdateOperation(Parent, response);
+                var operation = new AlertRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _alertRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _alertRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AlertRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _alertRulesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertRule(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AlertRule(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _alertRulesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertRule(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AlertRule(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

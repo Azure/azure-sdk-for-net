@@ -18,20 +18,20 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
-    public partial class PrivateLinkScopedResourceCreateOrUpdateOperation : Operation<ScopedPrivateLink>, IOperationSource<ScopedPrivateLink>
+    public partial class ScopedPrivateLinkCreateOrUpdateOperation : Operation<ScopedPrivateLink>, IOperationSource<ScopedPrivateLink>
     {
         private readonly OperationInternals<ScopedPrivateLink> _operation;
 
         private readonly ArmResource _operationBase;
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceCreateOrUpdateOperation for mocking. </summary>
-        protected PrivateLinkScopedResourceCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of ScopedPrivateLinkCreateOrUpdateOperation for mocking. </summary>
+        protected ScopedPrivateLinkCreateOrUpdateOperation()
         {
         }
 
-        internal PrivateLinkScopedResourceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
+        internal ScopedPrivateLinkCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
         {
-            _operation = new OperationInternals<ScopedPrivateLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkScopedResourceCreateOrUpdateOperation");
+            _operation = new OperationInternals<ScopedPrivateLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ScopedPrivateLinkCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

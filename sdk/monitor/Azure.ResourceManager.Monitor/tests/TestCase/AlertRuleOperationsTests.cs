@@ -8,12 +8,12 @@ using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Monitor.Tests;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Monitor.Tests.TestCase
+namespace Azure.ResourceManager.Monitor.Tests
 {
     public class AlertRuleOperationsTests : MonitorTestBase
     {
         public AlertRuleOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 

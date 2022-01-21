@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal LogProfileCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _logProfilesRestClient = new LogProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(LogProfile.ResourceType, out string apiVersion);
+            _logProfilesRestClient = new LogProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,9 +57,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: LogProfiles_CreateOrUpdate
         /// <summary> Create or update a log profile in Azure Monitoring REST API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual LogProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _logProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, logProfileName, parameters, cancellationToken);
-                var operation = new LogProfileCreateOrUpdateOperation(Parent, response);
+                var operation = new LogProfileCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: LogProfiles_CreateOrUpdate
         /// <summary> Create or update a log profile in Azure Monitoring REST API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<LogProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _logProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, logProfileName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LogProfileCreateOrUpdateOperation(Parent, response);
+                var operation = new LogProfileCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _logProfilesRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogProfile(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _logProfilesRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LogProfile(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _logProfilesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _logProfilesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Monitor
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Monitor
         internal ScopedPrivateLink(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Monitor
         internal ScopedPrivateLink(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -190,14 +193,14 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Deletes a private endpoint connection with a given name. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateLinkScopedResourceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ScopedPrivateLinkDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLink.Delete");
             scope.Start();
             try
             {
                 var response = await _privateLinkScopedResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateLinkScopedResourceDeleteOperation(_clientDiagnostics, Pipeline, _privateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ScopedPrivateLinkDeleteOperation(_clientDiagnostics, Pipeline, _privateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,16 +218,16 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Deletes a private endpoint connection with a given name. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateLinkScopedResourceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ScopedPrivateLinkDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLink.Delete");
             scope.Start();
             try
             {
                 var response = _privateLinkScopedResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PrivateLinkScopedResourceDeleteOperation(_clientDiagnostics, Pipeline, _privateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ScopedPrivateLinkDeleteOperation(_clientDiagnostics, Pipeline, _privateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Monitor
             HasData = true;
             _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionRuleAssociation(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionRuleAssociation(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -224,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _dataCollectionRuleAssociationsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
                 var operation = new DataCollectionRuleAssociationDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
