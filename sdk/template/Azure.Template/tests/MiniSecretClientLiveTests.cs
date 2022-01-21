@@ -8,18 +8,16 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests
 {
-    [ClientTestFixture(
-        // List all supported service versions below.
-        MiniSecretClientOptions.ServiceVersion.V7_0
-    )]
+    // When necessary, use the [ClientTestFixture] to test multiple versions.
+    // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#support-multi-service-version-testing.
     public class MiniSecretClientLiveTests: RecordedTestBase<MiniSecretClientTestEnvironment>
     {
-        private readonly MiniSecretClientOptions.ServiceVersion _serviceVersion;
-
-        public MiniSecretClientLiveTests(bool isAsync, MiniSecretClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, null /* RecordedTestMode.Record /* delete "null /* " to re-record */)
+        public MiniSecretClientLiveTests(bool isAsync)
+            // Delete null and the opening comment to re-record, or change to debug live tests.
+            // You can also change eng/nunit.runsettings to set the TestMode parameter.
+            // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#test-settings.
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         {
-            _serviceVersion = serviceVersion;
         }
 
         private MiniSecretClient CreateClient()
@@ -27,7 +25,7 @@ namespace Azure.Template.Tests
             return InstrumentClient(new MiniSecretClient(
                 new Uri(TestEnvironment.KeyVaultUri),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MiniSecretClientOptions(_serviceVersion))
+                InstrumentClientOptions(new MiniSecretClientOptions())
             ));
         }
 
@@ -38,7 +36,7 @@ namespace Azure.Template.Tests
 
             var secret = await client.GetSecretAsync("TestSecret");
 
-            Assert.AreEqual(TestEnvironment.KeyVaultSecret, secret.Value.Value);
+            Assert.AreEqual("Very secret value", secret.Value.Value);
         }
     }
 }
