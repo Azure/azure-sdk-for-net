@@ -1,5 +1,9 @@
 # Release History
 
+## 3.0.0-preview.5 (2022-01-23)
+
+- Fix release issues
+
 ## 3.0.0-preview.4 (2022-01-18)
 
 - Added operation `AnomalyDetectorClient.LastDetectAnomaly`
