@@ -26,12 +26,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ForceDeletion))
+            {
+                writer.WritePropertyName("forceDeletion");
+                writer.WriteBooleanValue(ForceDeletion.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static ScaleInPolicy DeserializeScaleInPolicy(JsonElement element)
         {
             Optional<IList<VirtualMachineScaleSetScaleInRules>> rules = default;
+            Optional<bool> forceDeletion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"))
@@ -49,8 +55,18 @@ namespace Azure.ResourceManager.Compute.Models
                     rules = array;
                     continue;
                 }
+                if (property.NameEquals("forceDeletion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    forceDeletion = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ScaleInPolicy(Optional.ToList(rules));
+            return new ScaleInPolicy(Optional.ToList(rules), Optional.ToNullable(forceDeletion));
         }
     }
 }

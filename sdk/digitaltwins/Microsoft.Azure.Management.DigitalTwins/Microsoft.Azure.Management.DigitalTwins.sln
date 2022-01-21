@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 		AzSdk.RP.props = AzSdk.RP.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{92B69DB4-B0A2-4314-9EBE-8F135C31C777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{F591832C-1139-4C1A-AB54-7ED99D054CF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{B94C7A88-E9F4-4238-99D7-B698EE6219F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B94C7A88-E9F4-4238-99D7-B698EE6219F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B94C7A88-E9F4-4238-99D7-B698EE6219F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B69DB4-B0A2-4314-9EBE-8F135C31C777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B69DB4-B0A2-4314-9EBE-8F135C31C777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B69DB4-B0A2-4314-9EBE-8F135C31C777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B69DB4-B0A2-4314-9EBE-8F135C31C777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F591832C-1139-4C1A-AB54-7ED99D054CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F591832C-1139-4C1A-AB54-7ED99D054CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F591832C-1139-4C1A-AB54-7ED99D054CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F591832C-1139-4C1A-AB54-7ED99D054CF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,12 +37,19 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="version">Version of the Service</param>
         /// <param name="serviceId">ServiceInstanceEntity GUID which uniquely
         /// identifies a created resource</param>
-        public ClusterResourceProperties(string provisioningState = default(string), NetworkProfile networkProfile = default(NetworkProfile), int? version = default(int?), string serviceId = default(string))
+        /// <param name="powerState">Power state of the Service. Possible
+        /// values include: 'Running', 'Stopped'</param>
+        /// <param name="fqdn">Fully qualified dns name of the service
+        /// instance</param>
+        public ClusterResourceProperties(string provisioningState = default(string), NetworkProfile networkProfile = default(NetworkProfile), int? version = default(int?), string serviceId = default(string), string powerState = default(string), bool? zoneRedundant = default(bool?), string fqdn = default(string))
         {
             ProvisioningState = provisioningState;
             NetworkProfile = networkProfile;
             Version = version;
             ServiceId = serviceId;
+            PowerState = powerState;
+            ZoneRedundant = zoneRedundant;
+            Fqdn = fqdn;
             CustomInit();
         }
 
@@ -77,6 +84,24 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "serviceId")]
         public string ServiceId { get; private set; }
+
+        /// <summary>
+        /// Gets power state of the Service. Possible values include:
+        /// 'Running', 'Stopped'
+        /// </summary>
+        [JsonProperty(PropertyName = "powerState")]
+        public string PowerState { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
+
+        /// <summary>
+        /// Gets fully qualified dns name of the service instance
+        /// </summary>
+        [JsonProperty(PropertyName = "fqdn")]
+        public string Fqdn { get; private set; }
 
     }
 }

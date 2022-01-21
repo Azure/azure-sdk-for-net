@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
             ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
-            Assert.IsTrue(await providerCollection.CheckIfExistsAsync("microsoft.insights"));
-            var response = await providerCollection.CheckIfExistsAsync("DoesNotExist");
+            Assert.IsTrue(await providerCollection.ExistsAsync("microsoft.insights"));
+            var response = await providerCollection.ExistsAsync("DoesNotExist");
             Assert.False(response);
         }
     }

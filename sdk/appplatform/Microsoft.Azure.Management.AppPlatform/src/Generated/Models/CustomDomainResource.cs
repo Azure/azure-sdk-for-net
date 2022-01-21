@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="properties">Properties of the custom domain
         /// resource.</param>
-        public CustomDomainResource(string id = default(string), string name = default(string), string type = default(string), CustomDomainProperties properties = default(CustomDomainProperties))
-            : base(id, name, type)
+        public CustomDomainResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), CustomDomainProperties properties = default(CustomDomainProperties))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             CustomInit();
