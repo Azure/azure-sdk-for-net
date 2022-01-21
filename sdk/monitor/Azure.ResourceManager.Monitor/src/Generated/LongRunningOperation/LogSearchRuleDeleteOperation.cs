@@ -13,17 +13,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Deletes existing diagnostic settings for the specified resource. </summary>
-    public partial class DiagnosticSettingDeleteOperation : Operation
+    /// <summary> Deletes a Log Search rule. </summary>
+    public partial class LogSearchRuleDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of DiagnosticSettingDeleteOperation for mocking. </summary>
-        protected DiagnosticSettingDeleteOperation()
+        /// <summary> Initializes a new instance of LogSearchRuleDeleteOperation for mocking. </summary>
+        protected LogSearchRuleDeleteOperation()
         {
         }
 
-        internal DiagnosticSettingDeleteOperation(Azure.Response response)
+        internal LogSearchRuleDeleteOperation(Azure.Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

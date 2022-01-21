@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal ActivityLogAlertCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _activityLogAlertsRestClient = new ActivityLogAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ActivityLogAlert.ResourceType, out string apiVersion);
+            _activityLogAlertsRestClient = new ActivityLogAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,9 +57,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ActivityLogAlerts_CreateOrUpdate
         /// <summary> Create a new activity log alert or update an existing one. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="activityLogAlert"/> is null. </exception>
         public virtual ActivityLogAlertCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _activityLogAlertsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken);
-                var operation = new ActivityLogAlertCreateOrUpdateOperation(Parent, response);
+                var operation = new ActivityLogAlertCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ActivityLogAlerts_CreateOrUpdate
         /// <summary> Create a new activity log alert or update an existing one. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="activityLogAlert"/> is null. </exception>
         public async virtual Task<ActivityLogAlertCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _activityLogAlertsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken).ConfigureAwait(false);
-                var operation = new ActivityLogAlertCreateOrUpdateOperation(Parent, response);
+                var operation = new ActivityLogAlertCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _activityLogAlertsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ActivityLogAlert(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActivityLogAlert(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _activityLogAlertsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ActivityLogAlert(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActivityLogAlert(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _activityLogAlertsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _activityLogAlertsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

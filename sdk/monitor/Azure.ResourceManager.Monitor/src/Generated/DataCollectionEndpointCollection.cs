@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionEndpointCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataCollectionEndpointsRestClient = new DataCollectionEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DataCollectionEndpoint.ResourceType, out string apiVersion);
+            _dataCollectionEndpointsRestClient = new DataCollectionEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: DataCollectionEndpoints_Create
         /// <summary> Creates or updates a data collection endpoint. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="body"> The payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public virtual DataCollectionEndpointCreateOperation CreateOrUpdate(bool waitForCompletion, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
+        public virtual DataCollectionEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
         {
             if (dataCollectionEndpointName == null)
             {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, body, cancellationToken);
-                var operation = new DataCollectionEndpointCreateOperation(Parent, response);
+                var operation = new DataCollectionEndpointCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -89,12 +90,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: DataCollectionEndpoints_Create
         /// <summary> Creates or updates a data collection endpoint. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="body"> The payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public async virtual Task<DataCollectionEndpointCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<DataCollectionEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
         {
             if (dataCollectionEndpointName == null)
             {
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _dataCollectionEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCollectionEndpointCreateOperation(Parent, response);
+                var operation = new DataCollectionEndpointCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _dataCollectionEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionEndpoint(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _dataCollectionEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionEndpoint(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionEndpoint(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _dataCollectionEndpointsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _dataCollectionEndpointsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _dataCollectionEndpointsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,7 +354,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _dataCollectionEndpointsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

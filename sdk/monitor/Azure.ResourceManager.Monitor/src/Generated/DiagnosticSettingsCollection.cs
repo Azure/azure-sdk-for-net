@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Monitor
         internal DiagnosticSettingsCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diagnosticSettingsRestClient = new DiagnosticSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DiagnosticSettings.ResourceType, out string apiVersion);
+            _diagnosticSettingsRestClient = new DiagnosticSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
 
         // Collection level operations.
@@ -44,12 +45,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /{resourceUri}
         /// OperationId: DiagnosticSettings_CreateOrUpdate
         /// <summary> Creates or updates diagnostic settings for the specified resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DiagnosticSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
+        public virtual DiagnosticSettingsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _diagnosticSettingsRestClient.CreateOrUpdate(Id, name, parameters, cancellationToken);
-                var operation = new DiagnosticSettingCreateOrUpdateOperation(Parent, response);
+                var operation = new DiagnosticSettingsCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,12 +82,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /{resourceUri}
         /// OperationId: DiagnosticSettings_CreateOrUpdate
         /// <summary> Creates or updates diagnostic settings for the specified resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DiagnosticSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<DiagnosticSettingsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, DiagnosticSettingsData parameters, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _diagnosticSettingsRestClient.CreateOrUpdateAsync(Id, name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DiagnosticSettingCreateOrUpdateOperation(Parent, response);
+                var operation = new DiagnosticSettingsCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _diagnosticSettingsRestClient.Get(Id, name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticSettings(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettings(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _diagnosticSettingsRestClient.GetAsync(Id, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DiagnosticSettings(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettings(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _diagnosticSettingsRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettings(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettings(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _diagnosticSettingsRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettings(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettings(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

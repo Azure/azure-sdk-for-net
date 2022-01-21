@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Send test notifications to a set of provided receivers. </summary>
-    public partial class ActionGroupPostTestNotificationsOperation : Operation<TestNotificationResponse>, IOperationSource<TestNotificationResponse>
+    public partial class PostTestNotificationsActionGroupOperation : Operation<TestNotificationResponse>, IOperationSource<TestNotificationResponse>
     {
         private readonly OperationInternals<TestNotificationResponse> _operation;
 
-        /// <summary> Initializes a new instance of ActionGroupPostTestNotificationsOperation for mocking. </summary>
-        protected ActionGroupPostTestNotificationsOperation()
+        /// <summary> Initializes a new instance of PostTestNotificationsActionGroupOperation for mocking. </summary>
+        protected PostTestNotificationsActionGroupOperation()
         {
         }
 
-        internal ActionGroupPostTestNotificationsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
+        internal PostTestNotificationsActionGroupOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
         {
-            _operation = new OperationInternals<TestNotificationResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ActionGroupPostTestNotificationsOperation");
+            _operation = new OperationInternals<TestNotificationResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PostTestNotificationsActionGroupOperation");
         }
 
         /// <inheritdoc />

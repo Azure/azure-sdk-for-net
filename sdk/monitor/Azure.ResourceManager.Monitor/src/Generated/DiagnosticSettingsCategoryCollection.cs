@@ -15,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Monitor
         internal DiagnosticSettingsCategoryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DiagnosticSettingsCategory.ResourceType, out string apiVersion);
+            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
 
         // Collection level operations.
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _diagnosticSettingsCategoryRestClient.Get(Id, name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticSettingsCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _diagnosticSettingsCategoryRestClient.GetAsync(Id, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DiagnosticSettingsCategory(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _diagnosticSettingsCategoryRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,7 +246,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _diagnosticSettingsCategoryRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

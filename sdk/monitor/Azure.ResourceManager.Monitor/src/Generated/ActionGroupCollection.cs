@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal ActionGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _actionGroupsRestClient = new ActionGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ActionGroup.ResourceType, out string apiVersion);
+            _actionGroupsRestClient = new ActionGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,9 +57,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ActionGroups_CreateOrUpdate
         /// <summary> Create a new action group or update an existing one. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
         public virtual ActionGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _actionGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, actionGroup, cancellationToken);
-                var operation = new ActionGroupCreateOrUpdateOperation(Parent, response);
+                var operation = new ActionGroupCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ActionGroups_CreateOrUpdate
         /// <summary> Create a new action group or update an existing one. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
         /// <param name="actionGroup"> The action group to create or use for the update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="actionGroup"/> is null. </exception>
         public async virtual Task<ActionGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string actionGroupName, ActionGroupData actionGroup, CancellationToken cancellationToken = default)
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _actionGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, actionGroup, cancellationToken).ConfigureAwait(false);
-                var operation = new ActionGroupCreateOrUpdateOperation(Parent, response);
+                var operation = new ActionGroupCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _actionGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ActionGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActionGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _actionGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ActionGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActionGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _actionGroupsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActionGroup(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActionGroup(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _actionGroupsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActionGroup(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActionGroup(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

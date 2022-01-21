@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Monitor.Tests.TestsCase
+namespace Azure.ResourceManager.Monitor.Tests
 {
     public class AutoscaleSettingsCollectionTests : MonitorTestBase
     {

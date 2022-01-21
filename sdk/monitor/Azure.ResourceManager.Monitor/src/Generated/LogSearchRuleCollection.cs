@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal LogSearchRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _scheduledQueryRulesRestClient = new ScheduledQueryRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(LogSearchRule.ResourceType, out string apiVersion);
+            _scheduledQueryRulesRestClient = new ScheduledQueryRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ScheduledQueryRules_CreateOrUpdate
         /// <summary> Creates or updates an log search rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ScheduledQueryRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
+        public virtual LogSearchRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _scheduledQueryRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken);
-                var operation = new ScheduledQueryRuleCreateOrUpdateOperation(Parent, response);
+                var operation = new LogSearchRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ScheduledQueryRules_CreateOrUpdate
         /// <summary> Creates or updates an log search rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ScheduledQueryRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<LogSearchRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _scheduledQueryRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ScheduledQueryRuleCreateOrUpdateOperation(Parent, response);
+                var operation = new LogSearchRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _scheduledQueryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogSearchRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogSearchRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _scheduledQueryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LogSearchRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogSearchRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,7 +307,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _scheduledQueryRulesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -333,7 +334,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _scheduledQueryRulesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

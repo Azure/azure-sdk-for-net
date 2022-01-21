@@ -16,16 +16,16 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Creates or updates an association. </summary>
-    public partial class DataCollectionRuleAssociationCreateOperation : Operation<DataCollectionRuleAssociation>
+    public partial class DataCollectionRuleAssociationCreateOrUpdateOperation : Operation<DataCollectionRuleAssociation>
     {
         private readonly OperationOrResponseInternals<DataCollectionRuleAssociation> _operation;
 
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationCreateOperation for mocking. </summary>
-        protected DataCollectionRuleAssociationCreateOperation()
+        /// <summary> Initializes a new instance of DataCollectionRuleAssociationCreateOrUpdateOperation for mocking. </summary>
+        protected DataCollectionRuleAssociationCreateOrUpdateOperation()
         {
         }
 
-        internal DataCollectionRuleAssociationCreateOperation(ArmResource operationsBase, Response<DataCollectionRuleAssociationData> response)
+        internal DataCollectionRuleAssociationCreateOrUpdateOperation(ArmResource operationsBase, Response<DataCollectionRuleAssociationData> response)
         {
             _operation = new OperationOrResponseInternals<DataCollectionRuleAssociation>(Azure.Response.FromValue(new DataCollectionRuleAssociation(operationsBase, response.Value), response.GetRawResponse()));
         }

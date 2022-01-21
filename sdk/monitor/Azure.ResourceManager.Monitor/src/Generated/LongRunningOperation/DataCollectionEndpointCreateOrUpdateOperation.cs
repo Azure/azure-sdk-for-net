@@ -16,16 +16,16 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Creates or updates a data collection endpoint. </summary>
-    public partial class DataCollectionEndpointCreateOperation : Operation<DataCollectionEndpoint>
+    public partial class DataCollectionEndpointCreateOrUpdateOperation : Operation<DataCollectionEndpoint>
     {
         private readonly OperationOrResponseInternals<DataCollectionEndpoint> _operation;
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointCreateOperation for mocking. </summary>
-        protected DataCollectionEndpointCreateOperation()
+        /// <summary> Initializes a new instance of DataCollectionEndpointCreateOrUpdateOperation for mocking. </summary>
+        protected DataCollectionEndpointCreateOrUpdateOperation()
         {
         }
 
-        internal DataCollectionEndpointCreateOperation(ArmResource operationsBase, Response<DataCollectionEndpointData> response)
+        internal DataCollectionEndpointCreateOrUpdateOperation(ArmResource operationsBase, Response<DataCollectionEndpointData> response)
         {
             _operation = new OperationOrResponseInternals<DataCollectionEndpoint>(Azure.Response.FromValue(new DataCollectionEndpoint(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static AlertRuleData GetBasicAlertRuleData(AzureLocation location, string subID)
         {
-            RuleDataSource ruleDataSource = new RuleMetricDataSource("Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource", subID, "id", location, "CpuPercentage", "Requests");
+            RuleDataSource ruleDataSource = new RuleMetricDataSource("Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/microsoft.insights/activityLogAlerts/aaa", "id", location, "CpuPercentage", "Requests");
             {
                 //ResourceUri = subID,
                 //MetricNamespace = "CpuPercentage",
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
             IEnumerable<ScaleRule> rules = new List<ScaleRule>()
             {
-                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ChangeCount, "1", TimeSpan.FromMinutes(20)))
+                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.Metric/namespaces/testnamespacemgmt7892", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ChangeCount, "1", TimeSpan.FromMinutes(20)))
             };
             IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 }
             };
             //var data = new DiagnosticSettingsData();
-            var data = new DiagnosticSettingsData(ResourceIdentifier.Root, "mysetting", "", "", "", "", "myeventhub", metricSettings, logSettings, "WsId", "Dedicated");
+            var data = new DiagnosticSettingsData(ResourceIdentifier.Root, "mysetting", "Microsoft.Insights/diagnosticSettings", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8010", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412", "myeventhub", metricSettings, logSettings, "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c", "Dedicated");
             return data;
         }
         #endregion

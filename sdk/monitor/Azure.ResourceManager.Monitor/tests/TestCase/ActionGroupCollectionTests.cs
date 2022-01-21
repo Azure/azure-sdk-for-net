@@ -9,7 +9,7 @@ using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Tests;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Monitor.Tests.TestsCase
+namespace Azure.ResourceManager.Monitor.Tests
 {
     public class ActionGroupCollectionTests : MonitorTestBase
     {

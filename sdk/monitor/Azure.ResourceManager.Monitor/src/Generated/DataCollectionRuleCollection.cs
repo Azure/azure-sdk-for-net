@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _dataCollectionRulesRestClient = new DataCollectionRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DataCollectionRule.ResourceType, out string apiVersion);
+            _dataCollectionRulesRestClient = new DataCollectionRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: DataCollectionRules_Create
         /// <summary> Creates or updates a data collection rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
         /// <param name="body"> The payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public virtual DataCollectionRuleCreateOperation CreateOrUpdate(bool waitForCompletion, string dataCollectionRuleName, DataCollectionRuleData body = null, CancellationToken cancellationToken = default)
+        public virtual DataCollectionRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string dataCollectionRuleName, DataCollectionRuleData body = null, CancellationToken cancellationToken = default)
         {
             if (dataCollectionRuleName == null)
             {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionRulesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, body, cancellationToken);
-                var operation = new DataCollectionRuleCreateOperation(Parent, response);
+                var operation = new DataCollectionRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -89,12 +90,12 @@ namespace Azure.ResourceManager.Monitor
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: DataCollectionRules_Create
         /// <summary> Creates or updates a data collection rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
         /// <param name="body"> The payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
-        public async virtual Task<DataCollectionRuleCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dataCollectionRuleName, DataCollectionRuleData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<DataCollectionRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dataCollectionRuleName, DataCollectionRuleData body = null, CancellationToken cancellationToken = default)
         {
             if (dataCollectionRuleName == null)
             {
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _dataCollectionRulesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCollectionRuleCreateOperation(Parent, response);
+                var operation = new DataCollectionRuleCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _dataCollectionRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _dataCollectionRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionRule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _dataCollectionRulesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _dataCollectionRulesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _dataCollectionRulesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,7 +354,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _dataCollectionRulesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
