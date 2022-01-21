@@ -73,7 +73,7 @@ A real-world example of this may be the skill level of a particular worker or th
 
 ### Label Selectors
 Label selectors can be attached to a job in order to target a subset of workers serving the queue.
-A real-world example of this may be a condition on an incoming call that the agent must have a minimum level of knowledge of a partiuclar product.
+A real-world example of this may be a condition on an incoming call that the agent must have a minimum level of knowledge of a particular product.
 
 ### Classification policy
 A classification policy can be used to dynamically select a queue, determine job priority and attach worker label selectors to a job by leveraging a rules engine.
