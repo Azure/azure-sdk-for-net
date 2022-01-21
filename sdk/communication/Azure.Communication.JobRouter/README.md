@@ -11,7 +11,7 @@ This package contains a C# SDK for Azure Communication Services for JobRouter.
 Install the Azure Communication JobRouter client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.Chat 
+dotnet add package Azure.Communication.JobRouter 
 ``` 
 
 ### Prerequisites
@@ -36,34 +36,82 @@ var routerClient new RouterClient("<Communication Service Connection String>");
 
 ## Key concepts
 
+### Job
+A Job represents the unit of work, which needs to be routed to an available Worker. 
+A real-world example of this may be an incoming call or chat in the context of a call center.
+
+### Worker
+A Worker represents the supply available to handle a Job. Each worker registers with with or more queues to receive jobs.
+A real-world example of this may be an agent working in a call center.
+
+### Queue
+A Queue represents an ordered list of jobs waiting to be served by a worker.  Workers will register with a queue to receive work from it.
+A real-world example of this may be a call queue in a call center.
+
+## Channel
+A Channel represents a grouping of jobs by some type.  When a worker registers to receive work, they must also specify for which channels they can handle work, and how much of each can they handle concurrently.
+A real-world example of this may be `voice calls` or `chats` in a call center.
+
+### Offer
+An Offer is extended by JobRouter to a worker to handle a particular job when it determines a match, this notification is normally delivered via [EventGrid][subscribe_events].  The worker can either accept or decline the offer using th JobRouter API, or it will expire according to the time to live configured on the distribution policy.
+A real-world example of this may be the ringing of an agent in a call center.
 
 ### Distribution Policy
+A Distribution Policy represents a configuration set that governs how jobs in a queue are distributed to workers registered with that queue.
+This configuration includes how long an Offer is valid before it expires and the dsitribution mode, which define the order in which workers are picked when there are multiple available.
+
+#### Distribution Mode
+The 3 types of modes are
+- **Round Robin**: Workers are ordered by `Id` and the next worker after the previous one that got an offer is picked.
+- **Longest Idle**: The worker that has not been working on a job for the longest.
+- **Best Worker**: You can specify an expression to compare 2 workers to determine which one to pick.
+
+### Labels
+You can attach labels to workers, jobs and queues.  These are key value pairs that can be of `string`, `number` or `boolean` data types.
+A real-world example of this may be the skill level of a particular worker or the team or geographic location.
+
+### Label Selectors
+Label selectors can be attached to a job in order to target a subset of workers serving the queue.
+A real-world example of this may be a condition on an incoming call that the agent must have a minimum level of knowledge of a partiuclar product.
+
+### Classification policy
+A classification policy can be used to dynamically select a queue, determine job priority and attach worker label selectors to a job by leveraging a rules engine.
+
+### Exception policy
+An exception policy controls the behavior of a Job based on a trigger and executes a desired action. The exception policy is attached to a Queue so it can control the behavior of Jobs in the Queue.
+
+
+## Example
+
+### Distribution Policy
+Before we can create a Queue, we need a Distribution Policy.
 
 ```c# Snippet:Azure_Communication_JobRouter_Tests_Samples_DistributionPolicy
 ```
 
 ### Queue
-
+Next, we can create the queue.
 ```c# Snippet:Azure_Communication_JobRouter_Tests_Samples_Queue
 ```
 
 ### Job
-
+Now, we can submit a job directly to that queue.
 ```c# Snippet:Azure_Communication_JobRouter_Tests_Samples_Job
 ```
 
 ### Worker
-
+Now, we register a worker to receive work from that queue.
 ```c# Snippet:Azure_Communication_JobRouter_Tests_Samples_Worker
 ```
 
 ### Offer
-
+We should get a [RouterWorkerOfferIssued][offer_issued_event_schema] from our [EventGrid subscription][subscribe_events].
+However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
 ```c# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
 ```
 
 ## Next steps
-[Read more about Chat in Azure Communication Services][nextsteps]
+[Read more about JobRouter in Azure Communication Services][nextsteps]
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -87,3 +135,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/src
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [package]: https://www.nuget.org/packages/Azure.Communication.JobRouter
+[classification_concepts]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/classification-concepts
+[subscribe_events]: https://docs.microsoft.com/en-us/azure/communication-services/how-tos/router-sdk/subscribe-events
+[offer_issued_event_schema]: https://docs.microsoft.com/en-us/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
 using Azure.Communication.JobRouter.Models;
+#endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-#endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 
 namespace Azure.Communication.JobRouter.Tests.Samples
 {
@@ -28,9 +28,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 id: "distribution-policy-1",
                 name: "My Distribution Policy",
                 offerTTL: TimeSpan.FromSeconds(30),
-                mode: new LongestIdleMode(
-                    minConcurrentOffers: 1,
-                    maxConcurrentOffers: 10)
+                mode: new LongestIdleMode()
             );
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_DistributionPolicy
 
@@ -44,7 +42,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Job
             var job = await routerClient.CreateJobAsync(
-                channelId: ManagedChannels.AcsChatChannel,
+                channelId: "my-channel",
                 channelReference: "12345",
                 queueId: queue.Value.Id,
                 priority: 1,
@@ -65,13 +63,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 },
                 channelConfigurations: new List<ChannelConfiguration>
                 {
-                    new ChannelConfiguration(ManagedChannels.AcsChatChannel, 1)
+                    new ChannelConfiguration("my-channel", 1)
                 }
             );
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
             var result = await routerClient.GetWorkerAsync(worker.Value.Id);
+            foreach (var offer in result.Value.Offers)
+            {
+                Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
+            }
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker
         }
     }
