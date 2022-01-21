@@ -210,17 +210,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async virtual Task<Response> DeletePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
             scope.Start();
@@ -243,17 +238,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public virtual Response DeletePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
             scope.Start();
@@ -276,17 +266,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public async virtual Task<Response<PredefinedTagValue>> CreateOrUpdatePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
             scope.Start();
@@ -309,17 +294,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public virtual Response<PredefinedTagValue> CreateOrUpdatePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
             scope.Start();
@@ -341,13 +321,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public async virtual Task<Response<PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
             scope.Start();
@@ -369,13 +347,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public virtual Response<PredefinedTag> CreateOrUpdatePredefinedTag(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
             scope.Start();
@@ -397,13 +373,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public async virtual Task<Response> DeletePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
             scope.Start();
@@ -425,13 +399,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public virtual Response DeletePredefinedTag(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
             scope.Start();

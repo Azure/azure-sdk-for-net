@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("additionalCapabilities");
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile");
-                writer.WriteObjectValue(OsProfile);
+                writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
@@ -113,20 +113,20 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             Optional<bool> latestModelApplied = default;
             Optional<string> vmId = default;
-            Optional<VirtualMachineScaleSetVMInstanceView> instanceView = default;
+            Optional<VirtualMachineScaleSetVmInstanceView> instanceView = default;
             Optional<HardwareProfile> hardwareProfile = default;
             Optional<StorageProfile> storageProfile = default;
             Optional<AdditionalCapabilities> additionalCapabilities = default;
             Optional<OSProfile> osProfile = default;
             Optional<SecurityProfile> securityProfile = default;
             Optional<NetworkProfile> networkProfile = default;
-            Optional<VirtualMachineScaleSetVMNetworkProfileConfiguration> networkProfileConfiguration = default;
+            Optional<VirtualMachineScaleSetVmNetworkProfileConfiguration> networkProfileConfiguration = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<WritableSubResource> availabilitySet = default;
             Optional<string> provisioningState = default;
             Optional<string> licenseType = default;
             Optional<string> modelDefinitionApplied = default;
-            Optional<VirtualMachineScaleSetVMProtectionPolicy> protectionPolicy = default;
+            Optional<VirtualMachineScaleSetVmProtectionPolicy> protectionPolicy = default;
             Optional<string> userData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            instanceView = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(property0.Value);
+                            instanceView = VirtualMachineScaleSetVmInstanceView.DeserializeVirtualMachineScaleSetVmInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkProfileConfiguration = VirtualMachineScaleSetVMNetworkProfileConfiguration.DeserializeVirtualMachineScaleSetVMNetworkProfileConfiguration(property0.Value);
+                            networkProfileConfiguration = VirtualMachineScaleSetVmNetworkProfileConfiguration.DeserializeVirtualMachineScaleSetVmNetworkProfileConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectionPolicy = VirtualMachineScaleSetVMProtectionPolicy.DeserializeVirtualMachineScaleSetVMProtectionPolicy(property0.Value);
+                            protectionPolicy = VirtualMachineScaleSetVmProtectionPolicy.DeserializeVirtualMachineScaleSetVmProtectionPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userData"))

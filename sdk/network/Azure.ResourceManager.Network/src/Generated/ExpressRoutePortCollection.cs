@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="parameters"> Parameters supplied to the create ExpressRoutePort operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ExpressRoutePortCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string expressRoutePortName, ExpressRoutePortData parameters, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="parameters"> Parameters supplied to the create ExpressRoutePort operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ExpressRoutePortCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string expressRoutePortName, ExpressRoutePortData parameters, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the requested ExpressRoutePort resource. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<ExpressRoutePort> Get(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the requested ExpressRoutePort resource. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public async virtual Task<Response<ExpressRoutePort>> GetAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<ExpressRoutePort> GetIfExists(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public async virtual Task<Response<ExpressRoutePort>> GetIfExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<bool> Exists(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortCollection.Exists");
             scope.Start();

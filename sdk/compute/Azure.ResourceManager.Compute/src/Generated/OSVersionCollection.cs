@@ -60,13 +60,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<OSVersion> Get(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public async virtual Task<Response<OSVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<OSVersion> GetIfExists(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public async virtual Task<Response<OSVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();

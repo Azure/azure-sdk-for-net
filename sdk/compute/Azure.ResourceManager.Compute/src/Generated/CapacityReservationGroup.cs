@@ -234,10 +234,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<CapacityReservationGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroup.AddTag");
             scope.Start();
@@ -263,10 +260,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<CapacityReservationGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroup.AddTag");
             scope.Start();
@@ -349,10 +343,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<CapacityReservationGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroup.RemoveTag");
             scope.Start();
@@ -377,10 +368,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<CapacityReservationGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroup.RemoveTag");
             scope.Start();

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static RestorePointSourceMetadata DeserializeRestorePointSourceMetadata(JsonElement element)
         {
             Optional<HardwareProfile> hardwareProfile = default;
-            Optional<RestorePointSourceVMStorageProfile> storageProfile = default;
+            Optional<RestorePointSourceVmStorageProfile> storageProfile = default;
             Optional<OSProfile> osProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<string> licenseType = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageProfile = RestorePointSourceVMStorageProfile.DeserializeRestorePointSourceVMStorageProfile(property.Value);
+                    storageProfile = RestorePointSourceVmStorageProfile.DeserializeRestorePointSourceVmStorageProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osProfile"))

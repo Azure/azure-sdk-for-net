@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="parameters"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ManagedInstanceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="parameters"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ManagedInstanceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -134,13 +130,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public virtual Response<ManagedInstance> Get(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Get");
             scope.Start();
@@ -165,13 +159,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstance>> GetAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Get");
             scope.Start();
@@ -193,13 +185,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public virtual Response<ManagedInstance> GetIfExists(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExists");
             scope.Start();
@@ -221,13 +211,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstance>> GetIfExistsAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExists");
             scope.Start();
@@ -249,13 +237,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Exists");
             scope.Start();
@@ -275,13 +261,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Exists");
             scope.Start();

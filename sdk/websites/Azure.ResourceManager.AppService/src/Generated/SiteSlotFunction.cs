@@ -244,13 +244,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -277,13 +275,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public virtual Response<KeyInfo> CreateOrUpdateFunctionSecretSlot(string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -309,13 +305,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a function secret. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response> DeleteFunctionSecretSlotAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.DeleteFunctionSecretSlot");
             scope.Start();
@@ -337,13 +331,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a function secret. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response DeleteFunctionSecretSlot(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotFunction.DeleteFunctionSecretSlot");
             scope.Start();

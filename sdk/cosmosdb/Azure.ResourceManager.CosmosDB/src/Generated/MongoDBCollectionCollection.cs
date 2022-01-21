@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="createUpdateMongoDBCollectionParameters"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
         public virtual MongoDBCollectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
             if (createUpdateMongoDBCollectionParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateMongoDBCollectionParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="createUpdateMongoDBCollectionParameters"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
         public async virtual Task<MongoDBCollectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
             if (createUpdateMongoDBCollectionParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateMongoDBCollectionParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual Response<MongoDBCollection> Get(string collectionName, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
             using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public async virtual Task<Response<MongoDBCollection>> GetAsync(string collectionName, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
             using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual Response<MongoDBCollection> GetIfExists(string collectionName, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
             using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public async virtual Task<Response<MongoDBCollection>> GetIfExistsAsync(string collectionName, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
             using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string collectionName, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
             using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string collectionName, CancellationToken cancellationToken = default)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
             using var scope = _clientDiagnostics.CreateScope("MongoDBCollectionCollection.Exists");
             scope.Start();

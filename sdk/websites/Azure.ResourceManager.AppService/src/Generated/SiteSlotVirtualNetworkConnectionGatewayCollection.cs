@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public virtual SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
@@ -93,13 +91,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async virtual Task<SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
@@ -128,13 +124,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<SiteSlotVirtualNetworkConnectionGateway> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
@@ -158,13 +152,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotVirtualNetworkConnectionGateway>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
@@ -185,13 +177,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<SiteSlotVirtualNetworkConnectionGateway> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
@@ -212,13 +202,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotVirtualNetworkConnectionGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
@@ -239,13 +227,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
@@ -264,13 +250,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();

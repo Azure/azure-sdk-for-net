@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OsDiskImage))
+            if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage");
-                writer.WriteObjectValue(OsDiskImage);
+                writer.WriteObjectValue(OSDiskImage);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {

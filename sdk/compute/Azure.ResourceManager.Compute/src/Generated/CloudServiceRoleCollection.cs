@@ -54,13 +54,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a role from a cloud service. </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual Response<CloudServiceRole> Get(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.Get");
             scope.Start();
@@ -81,13 +79,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a role from a cloud service. </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public async virtual Task<Response<CloudServiceRole>> GetAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.Get");
             scope.Start();
@@ -108,13 +104,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual Response<CloudServiceRole> GetIfExists(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
             scope.Start();
@@ -135,13 +129,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public async virtual Task<Response<CloudServiceRole>> GetIfExistsAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
             scope.Start();
@@ -162,13 +154,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.Exists");
             scope.Start();
@@ -187,13 +177,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _clientDiagnostics.CreateScope("CloudServiceRoleCollection.Exists");
             scope.Start();

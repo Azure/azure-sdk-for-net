@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Access.ToString());
             writer.WritePropertyName("durationInSeconds");
             writer.WriteNumberValue(DurationInSeconds);
-            if (Optional.IsDefined(GetSecureVMGuestStateSAS))
+            if (Optional.IsDefined(GetSecureVmGuestStateSAS))
             {
                 writer.WritePropertyName("getSecureVMGuestStateSAS");
-                writer.WriteBooleanValue(GetSecureVMGuestStateSAS.Value);
+                writer.WriteBooleanValue(GetSecureVmGuestStateSAS.Value);
             }
             writer.WriteEndObject();
         }

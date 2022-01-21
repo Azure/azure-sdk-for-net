@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual VirtualMachineTemplateCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualMachineTemplateName, VirtualMachineTemplateData body = null, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
@@ -94,13 +92,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public async virtual Task<VirtualMachineTemplateCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualMachineTemplateName, VirtualMachineTemplateData body = null, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements virtual machine template GET method. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<VirtualMachineTemplate> Get(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Get");
             scope.Start();
@@ -155,13 +149,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements virtual machine template GET method. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public async virtual Task<Response<VirtualMachineTemplate>> GetAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Get");
             scope.Start();
@@ -182,13 +174,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<VirtualMachineTemplate> GetIfExists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public async virtual Task<Response<VirtualMachineTemplate>> GetIfExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
@@ -236,13 +224,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Exists");
             scope.Start();
@@ -261,13 +247,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Exists");
             scope.Start();

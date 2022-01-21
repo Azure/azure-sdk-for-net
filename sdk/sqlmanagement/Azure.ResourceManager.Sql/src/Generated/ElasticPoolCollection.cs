@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="parameters"> The elastic pool parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ElasticPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string elasticPoolName, ElasticPoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="parameters"> The elastic pool parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ElasticPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string elasticPoolName, ElasticPoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an elastic pool. </summary>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual Response<ElasticPool> Get(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets an elastic pool. </summary>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public async virtual Task<Response<ElasticPool>> GetAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual Response<ElasticPool> GetIfExists(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public async virtual Task<Response<ElasticPool>> GetIfExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
             scope.Start();

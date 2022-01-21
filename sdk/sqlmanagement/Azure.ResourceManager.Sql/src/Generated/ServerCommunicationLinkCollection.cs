@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="parameters"> The required parameters for creating a server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ServerCommunicationLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string communicationLinkName, ServerCommunicationLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="parameters"> The required parameters for creating a server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServerCommunicationLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string communicationLinkName, ServerCommunicationLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns a server communication link. </summary>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual Response<ServerCommunicationLink> Get(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns a server communication link. </summary>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public async virtual Task<Response<ServerCommunicationLink>> GetAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual Response<ServerCommunicationLink> GetIfExists(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public async virtual Task<Response<ServerCommunicationLink>> GetIfExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
             scope.Start();

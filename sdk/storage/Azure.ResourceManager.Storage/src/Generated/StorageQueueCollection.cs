@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
         public virtual StorageQueueCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             if (queue == null)
             {
                 throw new ArgumentNullException(nameof(queue));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
         public async virtual Task<StorageQueueCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             if (queue == null)
             {
                 throw new ArgumentNullException(nameof(queue));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<StorageQueue> Get(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public async virtual Task<Response<StorageQueue>> GetAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<StorageQueue> GetIfExists(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public async virtual Task<Response<StorageQueue>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<bool> Exists(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();

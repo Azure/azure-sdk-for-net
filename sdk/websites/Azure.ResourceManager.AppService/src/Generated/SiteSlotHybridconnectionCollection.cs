@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public virtual SiteSlotHybridconnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
@@ -93,13 +91,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection configuration. </param>
         /// <param name="connectionEnvelope"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async virtual Task<SiteSlotHybridconnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string entityName, RelayServiceConnectionEntityData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
@@ -128,13 +124,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual Response<SiteSlotHybridconnection> Get(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.Get");
             scope.Start();
@@ -158,13 +152,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotHybridconnection>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.Get");
             scope.Start();
@@ -185,13 +177,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual Response<SiteSlotHybridconnection> GetIfExists(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.GetIfExists");
             scope.Start();
@@ -212,13 +202,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotHybridconnection>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.GetIfExists");
             scope.Start();
@@ -239,13 +227,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual Response<bool> Exists(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.Exists");
             scope.Start();
@@ -264,13 +250,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.Exists");
             scope.Start();

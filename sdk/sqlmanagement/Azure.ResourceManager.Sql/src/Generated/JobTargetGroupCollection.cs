@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="parameters"> The requested state of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual JobTargetGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string targetGroupName, JobTargetGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="parameters"> The requested state of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<JobTargetGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string targetGroupName, JobTargetGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a target group. </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual Response<JobTargetGroup> Get(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a target group. </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public async virtual Task<Response<JobTargetGroup>> GetAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual Response<JobTargetGroup> GetIfExists(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public async virtual Task<Response<JobTargetGroup>> GetIfExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Exists");
             scope.Start();

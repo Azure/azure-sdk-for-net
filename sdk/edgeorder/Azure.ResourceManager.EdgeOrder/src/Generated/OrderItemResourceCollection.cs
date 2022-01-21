@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
         public virtual OrderItemResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
             if (orderItemResource == null)
             {
                 throw new ArgumentNullException(nameof(orderItemResource));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
         public async virtual Task<OrderItemResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
             if (orderItemResource == null)
             {
                 throw new ArgumentNullException(nameof(orderItemResource));
@@ -134,13 +130,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual Response<OrderItemResource> Get(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.Get");
             scope.Start();
@@ -165,13 +159,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public async virtual Task<Response<OrderItemResource>> GetAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.Get");
             scope.Start();
@@ -193,13 +185,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual Response<OrderItemResource> GetIfExists(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.GetIfExists");
             scope.Start();
@@ -221,13 +211,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public async virtual Task<Response<OrderItemResource>> GetIfExistsAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.GetIfExists");
             scope.Start();
@@ -249,13 +237,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.Exists");
             scope.Start();
@@ -275,13 +261,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _clientDiagnostics.CreateScope("OrderItemResourceCollection.Exists");
             scope.Start();
