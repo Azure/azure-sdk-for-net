@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private endpoint operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual PrivateEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private endpoint operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<PrivateEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<PrivateEndpoint> Get(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public async virtual Task<Response<PrivateEndpoint>> GetAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
             scope.Start();
@@ -181,13 +173,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<PrivateEndpoint> GetIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public async virtual Task<Response<PrivateEndpoint>> GetIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
             scope.Start();
@@ -237,13 +225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
@@ -263,13 +249,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();

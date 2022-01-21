@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVMExtensionUpdate : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVmExtensionUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetVMExtensionUpdate DeserializeVirtualMachineScaleSetVMExtensionUpdate(JsonElement element)
+        internal static VirtualMachineScaleSetVmExtensionUpdateOptions DeserializeVirtualMachineScaleSetVmExtensionUpdateOptions(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> type = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMExtensionUpdate(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToNullable(suppressFailures));
+            return new VirtualMachineScaleSetVmExtensionUpdateOptions(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToNullable(suppressFailures));
         }
     }
 }

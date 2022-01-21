@@ -8,18 +8,15 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.Core.TestFramework.Models
 {
-    public partial class VirtualMachineScaleSetVMReimageParameters : IUtf8JsonSerializable
+    public partial class StartInformation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TempDisk))
-            {
-                writer.WritePropertyName("tempDisk");
-                writer.WriteBooleanValue(TempDisk.Value);
-            }
+            writer.WritePropertyName("x-recording-file");
+            writer.WriteStringValue(XRecordingFile);
             writer.WriteEndObject();
         }
     }

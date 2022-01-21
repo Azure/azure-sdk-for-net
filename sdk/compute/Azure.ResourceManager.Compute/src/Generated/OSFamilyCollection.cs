@@ -60,13 +60,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         public virtual Response<OSFamily> Get(string osFamilyName, CancellationToken cancellationToken = default)
         {
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
+            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
             using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         public async virtual Task<Response<OSFamily>> GetAsync(string osFamilyName, CancellationToken cancellationToken = default)
         {
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
+            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
             using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         public virtual Response<OSFamily> GetIfExists(string osFamilyName, CancellationToken cancellationToken = default)
         {
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
+            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
             using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         public async virtual Task<Response<OSFamily>> GetIfExistsAsync(string osFamilyName, CancellationToken cancellationToken = default)
         {
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
+            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
             using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         public virtual Response<bool> Exists(string osFamilyName, CancellationToken cancellationToken = default)
         {
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
+            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
             using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string osFamilyName, CancellationToken cancellationToken = default)
         {
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
+            Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
             using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Exists");
             scope.Start();

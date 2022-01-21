@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public virtual SiteSlotCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             if (siteEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(siteEnvelope));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
         public async virtual Task<SiteSlotCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             if (siteEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(siteEnvelope));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual Response<SiteSlot> Get(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public async virtual Task<Response<SiteSlot>> GetAsync(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual Response<SiteSlot> GetIfExists(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public async virtual Task<Response<SiteSlot>> GetIfExistsAsync(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual Response<bool> Exists(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotCollection.Exists");
             scope.Start();

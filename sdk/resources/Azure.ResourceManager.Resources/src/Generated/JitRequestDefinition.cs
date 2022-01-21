@@ -232,10 +232,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<JitRequestDefinition>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinition.AddTag");
             scope.Start();
@@ -261,10 +258,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<JitRequestDefinition> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinition.AddTag");
             scope.Start();
@@ -347,10 +341,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<JitRequestDefinition>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinition.RemoveTag");
             scope.Start();
@@ -375,10 +366,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<JitRequestDefinition> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinition.RemoveTag");
             scope.Start();

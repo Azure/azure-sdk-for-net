@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceSku> Get(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
             scope.Start();
@@ -83,13 +81,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
             scope.Start();
@@ -110,13 +106,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceSku> GetIfExists(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
             scope.Start();
@@ -137,13 +131,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
             scope.Start();
@@ -164,13 +156,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<bool> Exists(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();
@@ -189,13 +179,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();

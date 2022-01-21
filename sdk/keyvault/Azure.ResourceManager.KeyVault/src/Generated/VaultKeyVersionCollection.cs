@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets the specified version of the specified key in the specified key vault. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public virtual Response<VaultKeyVersion> Get(string keyVersion, CancellationToken cancellationToken = default)
         {
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
             using var scope = _clientDiagnostics.CreateScope("VaultKeyVersionCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets the specified version of the specified key in the specified key vault. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public async virtual Task<Response<VaultKeyVersion>> GetAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
             using var scope = _clientDiagnostics.CreateScope("VaultKeyVersionCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public virtual Response<VaultKeyVersion> GetIfExists(string keyVersion, CancellationToken cancellationToken = default)
         {
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
             using var scope = _clientDiagnostics.CreateScope("VaultKeyVersionCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public async virtual Task<Response<VaultKeyVersion>> GetIfExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
             using var scope = _clientDiagnostics.CreateScope("VaultKeyVersionCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public virtual Response<bool> Exists(string keyVersion, CancellationToken cancellationToken = default)
         {
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
             using var scope = _clientDiagnostics.CreateScope("VaultKeyVersionCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyVersion"> The version of the key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
             using var scope = _clientDiagnostics.CreateScope("VaultKeyVersionCollection.Exists");
             scope.Start();

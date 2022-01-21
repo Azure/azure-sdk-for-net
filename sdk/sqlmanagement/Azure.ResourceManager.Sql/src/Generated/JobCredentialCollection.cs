@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="parameters"> The requested job credential state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual JobCredentialCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="parameters"> The requested job credential state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<JobCredentialCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a jobs credential. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual Response<JobCredential> Get(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a jobs credential. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public async virtual Task<Response<JobCredential>> GetAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual Response<JobCredential> GetIfExists(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public async virtual Task<Response<JobCredential>> GetIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual Response<bool> Exists(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _clientDiagnostics.CreateScope("JobCredentialCollection.Exists");
             scope.Start();

@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the network profile. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network profile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual NetworkProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the network profile. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network profile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<NetworkProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual Response<NetworkProfile> Get(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public async virtual Task<Response<NetworkProfile>> GetAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
@@ -181,13 +173,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual Response<NetworkProfile> GetIfExists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public async virtual Task<Response<NetworkProfile>> GetIfExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
@@ -237,13 +225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
@@ -263,13 +249,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();

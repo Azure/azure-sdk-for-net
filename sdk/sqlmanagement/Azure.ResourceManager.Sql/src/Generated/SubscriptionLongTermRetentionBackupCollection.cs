@@ -69,13 +69,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a long term retention backup. </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<SubscriptionLongTermRetentionBackup> Get(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Get");
             scope.Start();
@@ -99,13 +97,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a long term retention backup. </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public async virtual Task<Response<SubscriptionLongTermRetentionBackup>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Get");
             scope.Start();
@@ -126,13 +122,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<SubscriptionLongTermRetentionBackup> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.GetIfExists");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public async virtual Task<Response<SubscriptionLongTermRetentionBackup>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.GetIfExists");
             scope.Start();
@@ -180,13 +172,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Exists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Exists");
             scope.Start();

@@ -55,13 +55,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual SchemaGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string schemaGroupName, SchemaGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -88,13 +86,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<SchemaGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string schemaGroupName, SchemaGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -119,13 +115,11 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual Response<SchemaGroup> Get(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.Get");
             scope.Start();
@@ -145,13 +139,11 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public async virtual Task<Response<SchemaGroup>> GetAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.Get");
             scope.Start();
@@ -172,13 +164,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual Response<SchemaGroup> GetIfExists(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.GetIfExists");
             scope.Start();
@@ -199,13 +189,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public async virtual Task<Response<SchemaGroup>> GetIfExistsAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.GetIfExists");
             scope.Start();
@@ -226,13 +214,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.Exists");
             scope.Start();
@@ -251,13 +237,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string schemaGroupName, CancellationToken cancellationToken = default)
         {
-            if (schemaGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("SchemaGroupCollection.Exists");
             scope.Start();

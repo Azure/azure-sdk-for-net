@@ -46,13 +46,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual DeploymentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -80,13 +78,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<DeploymentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -112,13 +108,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<Deployment> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Get");
             scope.Start();
@@ -139,13 +133,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployment. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<Deployment>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Get");
             scope.Start();
@@ -166,13 +158,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<Deployment> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<Deployment>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
             scope.Start();
@@ -220,13 +208,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<bool> Exists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Exists");
             scope.Start();
@@ -245,13 +231,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Exists");
             scope.Start();

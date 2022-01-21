@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="parameters"> Parameters supplied to create a subscription resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ServiceBusSubscriptionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string subscriptionName, ServiceBusSubscriptionData parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="parameters"> Parameters supplied to create a subscription resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServiceBusSubscriptionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string subscriptionName, ServiceBusSubscriptionData parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Returns a subscription description for the specified topic. </summary>
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
         public virtual Response<ServiceBusSubscription> Get(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Returns a subscription description for the specified topic. </summary>
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusSubscription>> GetAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
         public virtual Response<ServiceBusSubscription> GetIfExists(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusSubscription>> GetIfExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
         public virtual Response<bool> Exists(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusSubscriptionCollection.Exists");
             scope.Start();

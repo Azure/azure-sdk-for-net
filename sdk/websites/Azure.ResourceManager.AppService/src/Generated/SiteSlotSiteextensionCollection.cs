@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual SiteSlotSiteextensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.CreateOrUpdate");
             scope.Start();
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public async virtual Task<SiteSlotSiteextensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.CreateOrUpdate");
             scope.Start();
@@ -121,13 +117,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual Response<SiteSlotSiteextension> Get(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotSiteextension>> GetAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual Response<SiteSlotSiteextension> GetIfExists(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotSiteextension>> GetIfExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual Response<bool> Exists(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotSiteextensionCollection.Exists");
             scope.Start();

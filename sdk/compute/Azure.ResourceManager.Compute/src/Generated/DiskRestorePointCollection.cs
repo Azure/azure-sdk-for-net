@@ -54,13 +54,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Get disk restorePoint resource. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual Response<DiskRestorePoint> Get(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
             scope.Start();
@@ -81,13 +79,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Get disk restorePoint resource. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public async virtual Task<Response<DiskRestorePoint>> GetAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
             scope.Start();
@@ -108,13 +104,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual Response<DiskRestorePoint> GetIfExists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
             scope.Start();
@@ -135,13 +129,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public async virtual Task<Response<DiskRestorePoint>> GetIfExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
             scope.Start();
@@ -162,13 +154,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual Response<bool> Exists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();
@@ -187,13 +177,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();

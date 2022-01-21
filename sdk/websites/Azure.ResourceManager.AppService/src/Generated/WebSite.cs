@@ -1988,17 +1988,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -2026,17 +2021,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
         public virtual Response<KeyInfo> CreateOrUpdateHostSecret(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -2063,17 +2053,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response> DeleteHostSecretAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.DeleteHostSecret");
             scope.Start();
@@ -2096,17 +2081,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public virtual Response DeleteHostSecret(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.DeleteHostSecret");
             scope.Start();
@@ -2558,13 +2538,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public async virtual Task<Response<NetworkFeaturesData>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkFeatures");
             scope.Start();
@@ -2586,13 +2564,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeaturesData> GetNetworkFeatures(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkFeatures");
             scope.Start();
@@ -2614,13 +2590,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public async virtual Task<Response<object>> GetNetworkTraceOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperation");
             scope.Start();
@@ -2642,13 +2616,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<object> GetNetworkTraceOperation(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperation");
             scope.Start();
@@ -2816,14 +2788,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTracesAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             async Task<Page<NetworkTrace>> FirstPageFunc(int? pageSizeHint)
             {
@@ -2849,14 +2819,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTraces(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Page<NetworkTrace> FirstPageFunc(int? pageSizeHint)
             {
@@ -2882,13 +2850,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public async virtual Task<Response<object>> GetNetworkTraceOperationV2Async(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperationV2");
             scope.Start();
@@ -2910,13 +2876,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<object> GetNetworkTraceOperationV2(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperationV2");
             scope.Start();
@@ -2938,14 +2902,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTracesV2Async(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             async Task<Page<NetworkTrace>> FirstPageFunc(int? pageSizeHint)
             {
@@ -2971,14 +2933,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTracesV2(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Page<NetworkTrace> FirstPageFunc(int? pageSizeHint)
             {

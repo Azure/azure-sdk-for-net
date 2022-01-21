@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="queueName"> The queue name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ServiceBusQueueCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="queueName"> The queue name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServiceBusQueueCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Returns a description for the specified queue. </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<ServiceBusQueue> Get(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Returns a description for the specified queue. </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusQueue>> GetAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<ServiceBusQueue> GetIfExists(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusQueue>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<bool> Exists(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
             using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Exists");
             scope.Start();

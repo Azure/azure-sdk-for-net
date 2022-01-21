@@ -287,9 +287,9 @@ VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, input
 #### New
 ```C# Snippet:Create_VirtualMachine
 //            VirtualMachineData vmData = new VirtualMachineData(location);
-//            vmData.OsProfile.AdminUsername = "admin-username";
-//            vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
-//            vmData.OsProfile.ComputerName = "computer-name";
+//            vmData.OSProfile.AdminUsername = "admin-username";
+//            vmData.OSProfile.AdminPassword = "admin-p4$$w0rd";
+//            vmData.OSProfile.ComputerName = "computer-name";
 //            vmData.AvailabilitySet = new WritableSubResource();
 //            vmData.AvailabilitySet.Id = aset.Id;
 //            NetworkInterfaceReference nicReference = new NetworkInterfaceReference();

@@ -54,13 +54,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a VPN site link. </summary>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
         public virtual Response<VpnSiteLink> Get(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.Get");
             scope.Start();
@@ -81,13 +79,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a VPN site link. </summary>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
         public async virtual Task<Response<VpnSiteLink>> GetAsync(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.Get");
             scope.Start();
@@ -108,13 +104,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
         public virtual Response<VpnSiteLink> GetIfExists(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.GetIfExists");
             scope.Start();
@@ -135,13 +129,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
         public async virtual Task<Response<VpnSiteLink>> GetIfExistsAsync(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.GetIfExists");
             scope.Start();
@@ -162,13 +154,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.Exists");
             scope.Start();
@@ -187,13 +177,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string vpnSiteLinkName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkCollection.Exists");
             scope.Start();

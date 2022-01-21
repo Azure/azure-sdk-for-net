@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
         public virtual TemplateSpecCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
             if (templateSpec == null)
             {
                 throw new ArgumentNullException(nameof(templateSpec));
@@ -91,13 +89,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
         public async virtual Task<TemplateSpecCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
             if (templateSpec == null)
             {
                 throw new ArgumentNullException(nameof(templateSpec));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<TemplateSpec> Get(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Get");
             scope.Start();
@@ -152,13 +146,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<TemplateSpec>> GetAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Get");
             scope.Start();
@@ -180,13 +172,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<TemplateSpec> GetIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
             scope.Start();
@@ -208,13 +198,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<TemplateSpec>> GetIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
             scope.Start();
@@ -236,13 +224,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<bool> Exists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
@@ -262,13 +248,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _clientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
