@@ -17,7 +17,11 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = CreateTextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+#if SNIPPET
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+#else
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+#endif
 
             string documentA = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
                                 Steve Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped

@@ -15,7 +15,11 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = CreateTextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+#if SNIPPET
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+#else
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+#endif
 
             string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
                                 little sister thinks it is funny, I am worried it has the cold that I got last week.
