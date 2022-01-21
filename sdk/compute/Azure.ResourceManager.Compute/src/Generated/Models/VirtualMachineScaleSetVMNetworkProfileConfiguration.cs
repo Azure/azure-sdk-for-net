@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set VM network profile. </summary>
-    public partial class VirtualMachineScaleSetVMNetworkProfileConfiguration
+    public partial class VirtualMachineScaleSetVmNetworkProfileConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMNetworkProfileConfiguration. </summary>
-        public VirtualMachineScaleSetVMNetworkProfileConfiguration()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmNetworkProfileConfiguration. </summary>
+        public VirtualMachineScaleSetVmNetworkProfileConfiguration()
         {
             NetworkInterfaceConfigurations = new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMNetworkProfileConfiguration. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmNetworkProfileConfiguration. </summary>
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
-        internal VirtualMachineScaleSetVMNetworkProfileConfiguration(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations)
+        internal VirtualMachineScaleSetVmNetworkProfileConfiguration(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations)
         {
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
         }

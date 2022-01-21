@@ -10,14 +10,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The VMGuestPatchClassificationWindows. </summary>
-    public readonly partial struct VMGuestPatchClassificationWindows : IEquatable<VMGuestPatchClassificationWindows>
+    /// <summary> The VmGuestPatchClassificationWindows. </summary>
+    public readonly partial struct VmGuestPatchClassificationWindows : IEquatable<VmGuestPatchClassificationWindows>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="VMGuestPatchClassificationWindows"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmGuestPatchClassificationWindows"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VMGuestPatchClassificationWindows(string value)
+        public VmGuestPatchClassificationWindows(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -32,33 +32,33 @@ namespace Azure.ResourceManager.Compute.Models
         private const string UpdatesValue = "Updates";
 
         /// <summary> Critical. </summary>
-        public static VMGuestPatchClassificationWindows Critical { get; } = new VMGuestPatchClassificationWindows(CriticalValue);
+        public static VmGuestPatchClassificationWindows Critical { get; } = new VmGuestPatchClassificationWindows(CriticalValue);
         /// <summary> Security. </summary>
-        public static VMGuestPatchClassificationWindows Security { get; } = new VMGuestPatchClassificationWindows(SecurityValue);
+        public static VmGuestPatchClassificationWindows Security { get; } = new VmGuestPatchClassificationWindows(SecurityValue);
         /// <summary> UpdateRollUp. </summary>
-        public static VMGuestPatchClassificationWindows UpdateRollUp { get; } = new VMGuestPatchClassificationWindows(UpdateRollUpValue);
+        public static VmGuestPatchClassificationWindows UpdateRollUp { get; } = new VmGuestPatchClassificationWindows(UpdateRollUpValue);
         /// <summary> FeaturePack. </summary>
-        public static VMGuestPatchClassificationWindows FeaturePack { get; } = new VMGuestPatchClassificationWindows(FeaturePackValue);
+        public static VmGuestPatchClassificationWindows FeaturePack { get; } = new VmGuestPatchClassificationWindows(FeaturePackValue);
         /// <summary> ServicePack. </summary>
-        public static VMGuestPatchClassificationWindows ServicePack { get; } = new VMGuestPatchClassificationWindows(ServicePackValue);
+        public static VmGuestPatchClassificationWindows ServicePack { get; } = new VmGuestPatchClassificationWindows(ServicePackValue);
         /// <summary> Definition. </summary>
-        public static VMGuestPatchClassificationWindows Definition { get; } = new VMGuestPatchClassificationWindows(DefinitionValue);
+        public static VmGuestPatchClassificationWindows Definition { get; } = new VmGuestPatchClassificationWindows(DefinitionValue);
         /// <summary> Tools. </summary>
-        public static VMGuestPatchClassificationWindows Tools { get; } = new VMGuestPatchClassificationWindows(ToolsValue);
+        public static VmGuestPatchClassificationWindows Tools { get; } = new VmGuestPatchClassificationWindows(ToolsValue);
         /// <summary> Updates. </summary>
-        public static VMGuestPatchClassificationWindows Updates { get; } = new VMGuestPatchClassificationWindows(UpdatesValue);
-        /// <summary> Determines if two <see cref="VMGuestPatchClassificationWindows"/> values are the same. </summary>
-        public static bool operator ==(VMGuestPatchClassificationWindows left, VMGuestPatchClassificationWindows right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="VMGuestPatchClassificationWindows"/> values are not the same. </summary>
-        public static bool operator !=(VMGuestPatchClassificationWindows left, VMGuestPatchClassificationWindows right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VMGuestPatchClassificationWindows"/>. </summary>
-        public static implicit operator VMGuestPatchClassificationWindows(string value) => new VMGuestPatchClassificationWindows(value);
+        public static VmGuestPatchClassificationWindows Updates { get; } = new VmGuestPatchClassificationWindows(UpdatesValue);
+        /// <summary> Determines if two <see cref="VmGuestPatchClassificationWindows"/> values are the same. </summary>
+        public static bool operator ==(VmGuestPatchClassificationWindows left, VmGuestPatchClassificationWindows right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="VmGuestPatchClassificationWindows"/> values are not the same. </summary>
+        public static bool operator !=(VmGuestPatchClassificationWindows left, VmGuestPatchClassificationWindows right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationWindows"/>. </summary>
+        public static implicit operator VmGuestPatchClassificationWindows(string value) => new VmGuestPatchClassificationWindows(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VMGuestPatchClassificationWindows other && Equals(other);
+        public override bool Equals(object obj) => obj is VmGuestPatchClassificationWindows other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(VMGuestPatchClassificationWindows other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VmGuestPatchClassificationWindows other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVMStorageProfile
+    public partial class RestorePointSourceVmStorageProfile
     {
-        internal static RestorePointSourceVMStorageProfile DeserializeRestorePointSourceVMStorageProfile(JsonElement element)
+        internal static RestorePointSourceVmStorageProfile DeserializeRestorePointSourceVmStorageProfile(JsonElement element)
         {
-            Optional<RestorePointSourceVmosDisk> osDisk = default;
-            Optional<IReadOnlyList<RestorePointSourceVMDataDisk>> dataDisks = default;
+            Optional<RestorePointSourceVmOSDisk> osDisk = default;
+            Optional<IReadOnlyList<RestorePointSourceVmDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"))
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osDisk = RestorePointSourceVmosDisk.DeserializeRestorePointSourceVmosDisk(property.Value);
+                    osDisk = RestorePointSourceVmOSDisk.DeserializeRestorePointSourceVmOSDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"))
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorePointSourceVMDataDisk> array = new List<RestorePointSourceVMDataDisk>();
+                    List<RestorePointSourceVmDataDisk> array = new List<RestorePointSourceVmDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointSourceVMDataDisk.DeserializeRestorePointSourceVMDataDisk(item));
+                        array.Add(RestorePointSourceVmDataDisk.DeserializeRestorePointSourceVmDataDisk(item));
                     }
                     dataDisks = array;
                     continue;
                 }
             }
-            return new RestorePointSourceVMStorageProfile(osDisk.Value, Optional.ToList(dataDisks));
+            return new RestorePointSourceVmStorageProfile(osDisk.Value, Optional.ToList(dataDisks));
         }
     }
 }

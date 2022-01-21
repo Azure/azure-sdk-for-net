@@ -11,9 +11,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmosDisk
+    public partial class RestorePointSourceVmOSDisk
     {
-        internal static RestorePointSourceVmosDisk DeserializeRestorePointSourceVmosDisk(JsonElement element)
+        internal static RestorePointSourceVmOSDisk DeserializeRestorePointSourceVmOSDisk(JsonElement element)
         {
             Optional<OperatingSystemType> osType = default;
             Optional<DiskEncryptionSettings> encryptionSettings = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointSourceVmosDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
+            return new RestorePointSourceVmOSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
         }
     }
 }

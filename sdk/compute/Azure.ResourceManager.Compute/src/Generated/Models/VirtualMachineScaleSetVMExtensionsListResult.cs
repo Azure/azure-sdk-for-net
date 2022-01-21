@@ -12,17 +12,17 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VMSS VM Extension operation response. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionsListResult
+    public partial class VirtualMachineScaleSetVmExtensionsListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionsListResult. </summary>
-        internal VirtualMachineScaleSetVMExtensionsListResult()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsListResult. </summary>
+        internal VirtualMachineScaleSetVmExtensionsListResult()
         {
             Value = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionsListResult. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsListResult. </summary>
         /// <param name="value"> The list of VMSS VM extensions. </param>
-        internal VirtualMachineScaleSetVMExtensionsListResult(IReadOnlyList<VirtualMachineScaleSetVmExtensionData> value)
+        internal VirtualMachineScaleSetVmExtensionsListResult(IReadOnlyList<VirtualMachineScaleSetVmExtensionData> value)
         {
             Value = value;
         }

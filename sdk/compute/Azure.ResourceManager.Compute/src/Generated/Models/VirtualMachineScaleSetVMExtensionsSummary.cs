@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Extensions summary for virtual machines of a virtual machine scale set. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionsSummary
+    public partial class VirtualMachineScaleSetVmExtensionsSummary
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionsSummary. </summary>
-        internal VirtualMachineScaleSetVMExtensionsSummary()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsSummary. </summary>
+        internal VirtualMachineScaleSetVmExtensionsSummary()
         {
             StatusesSummary = new ChangeTrackingList<VirtualMachineStatusCodeCount>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionsSummary. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsSummary. </summary>
         /// <param name="name"> The extension name. </param>
         /// <param name="statusesSummary"> The extensions information. </param>
-        internal VirtualMachineScaleSetVMExtensionsSummary(string name, IReadOnlyList<VirtualMachineStatusCodeCount> statusesSummary)
+        internal VirtualMachineScaleSetVmExtensionsSummary(string name, IReadOnlyList<VirtualMachineStatusCodeCount> statusesSummary)
         {
             Name = name;
             StatusesSummary = statusesSummary;

@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - The virtual machine&apos;s default patching configuration is used. &lt;br /&gt;&lt;br /&gt; **AutomaticByPlatform** - The virtual machine will be automatically updated by the platform. The property provisionVMAgent must be true. </summary>
-    public readonly partial struct LinuxVMGuestPatchMode : IEquatable<LinuxVMGuestPatchMode>
+    public readonly partial struct LinuxVmGuestPatchMode : IEquatable<LinuxVmGuestPatchMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="LinuxVMGuestPatchMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinuxVMGuestPatchMode(string value)
+        public LinuxVmGuestPatchMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.Compute.Models
         private const string AutomaticByPlatformValue = "AutomaticByPlatform";
 
         /// <summary> ImageDefault. </summary>
-        public static LinuxVMGuestPatchMode ImageDefault { get; } = new LinuxVMGuestPatchMode(ImageDefaultValue);
+        public static LinuxVmGuestPatchMode ImageDefault { get; } = new LinuxVmGuestPatchMode(ImageDefaultValue);
         /// <summary> AutomaticByPlatform. </summary>
-        public static LinuxVMGuestPatchMode AutomaticByPlatform { get; } = new LinuxVMGuestPatchMode(AutomaticByPlatformValue);
-        /// <summary> Determines if two <see cref="LinuxVMGuestPatchMode"/> values are the same. </summary>
-        public static bool operator ==(LinuxVMGuestPatchMode left, LinuxVMGuestPatchMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="LinuxVMGuestPatchMode"/> values are not the same. </summary>
-        public static bool operator !=(LinuxVMGuestPatchMode left, LinuxVMGuestPatchMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LinuxVMGuestPatchMode"/>. </summary>
-        public static implicit operator LinuxVMGuestPatchMode(string value) => new LinuxVMGuestPatchMode(value);
+        public static LinuxVmGuestPatchMode AutomaticByPlatform { get; } = new LinuxVmGuestPatchMode(AutomaticByPlatformValue);
+        /// <summary> Determines if two <see cref="LinuxVmGuestPatchMode"/> values are the same. </summary>
+        public static bool operator ==(LinuxVmGuestPatchMode left, LinuxVmGuestPatchMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LinuxVmGuestPatchMode"/> values are not the same. </summary>
+        public static bool operator !=(LinuxVmGuestPatchMode left, LinuxVmGuestPatchMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="LinuxVmGuestPatchMode"/>. </summary>
+        public static implicit operator LinuxVmGuestPatchMode(string value) => new LinuxVmGuestPatchMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LinuxVMGuestPatchMode other && Equals(other);
+        public override bool Equals(object obj) => obj is LinuxVmGuestPatchMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(LinuxVMGuestPatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LinuxVmGuestPatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

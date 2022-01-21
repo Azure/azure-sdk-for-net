@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VMSizeProperties : IUtf8JsonSerializable
+    public partial class VmSizeProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static VMSizeProperties DeserializeVMSizeProperties(JsonElement element)
+        internal static VmSizeProperties DeserializeVmSizeProperties(JsonElement element)
         {
             Optional<int> vCPUsAvailable = default;
             Optional<int> vCPUsPerCore = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VMSizeProperties(Optional.ToNullable(vCPUsAvailable), Optional.ToNullable(vCPUsPerCore));
+            return new VmSizeProperties(Optional.ToNullable(vCPUsAvailable), Optional.ToNullable(vCPUsPerCore));
         }
     }
 }

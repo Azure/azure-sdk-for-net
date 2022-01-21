@@ -11,9 +11,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVMDataDisk
+    public partial class RestorePointSourceVmDataDisk
     {
-        internal static RestorePointSourceVMDataDisk DeserializeRestorePointSourceVMDataDisk(JsonElement element)
+        internal static RestorePointSourceVmDataDisk DeserializeRestorePointSourceVmDataDisk(JsonElement element)
         {
             Optional<int> lun = default;
             Optional<string> name = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointSourceVMDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
+            return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
         }
     }
 }

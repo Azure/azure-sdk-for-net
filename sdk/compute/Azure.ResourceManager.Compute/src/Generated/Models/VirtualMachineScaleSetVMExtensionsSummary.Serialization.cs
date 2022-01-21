@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVMExtensionsSummary
+    public partial class VirtualMachineScaleSetVmExtensionsSummary
     {
-        internal static VirtualMachineScaleSetVMExtensionsSummary DeserializeVirtualMachineScaleSetVMExtensionsSummary(JsonElement element)
+        internal static VirtualMachineScaleSetVmExtensionsSummary DeserializeVirtualMachineScaleSetVmExtensionsSummary(JsonElement element)
         {
             Optional<string> name = default;
             Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMExtensionsSummary(name.Value, Optional.ToList(statusesSummary));
+            return new VirtualMachineScaleSetVmExtensionsSummary(name.Value, Optional.ToList(statusesSummary));
         }
     }
 }

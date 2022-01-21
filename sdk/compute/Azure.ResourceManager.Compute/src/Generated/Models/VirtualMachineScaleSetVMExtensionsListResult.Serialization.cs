@@ -12,9 +12,9 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVMExtensionsListResult
+    public partial class VirtualMachineScaleSetVmExtensionsListResult
     {
-        internal static VirtualMachineScaleSetVMExtensionsListResult DeserializeVirtualMachineScaleSetVMExtensionsListResult(JsonElement element)
+        internal static VirtualMachineScaleSetVmExtensionsListResult DeserializeVirtualMachineScaleSetVmExtensionsListResult(JsonElement element)
         {
             Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMExtensionsListResult(Optional.ToList(value));
+            return new VirtualMachineScaleSetVmExtensionsListResult(Optional.ToList(value));
         }
     }
 }

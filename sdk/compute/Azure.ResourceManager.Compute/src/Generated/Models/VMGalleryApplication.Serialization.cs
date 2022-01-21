@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VMGalleryApplication : IUtf8JsonSerializable
+    public partial class VmGalleryApplication : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static VMGalleryApplication DeserializeVMGalleryApplication(JsonElement element)
+        internal static VmGalleryApplication DeserializeVmGalleryApplication(JsonElement element)
         {
             Optional<string> tags = default;
             Optional<int> order = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VMGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value);
+            return new VmGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value);
         }
     }
 }

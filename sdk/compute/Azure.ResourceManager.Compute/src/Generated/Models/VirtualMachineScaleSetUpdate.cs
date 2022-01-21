@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
         /// <summary> The virtual machine profile. </summary>
-        public VirtualMachineScaleSetUpdateVMProfile VirtualMachineProfile { get; set; }
+        public VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile { get; set; }
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
         public bool? Overprovision { get; set; }
         /// <summary> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </summary>
-        public bool? DoNotRunExtensionsOnOverprovisionedVMs { get; set; }
+        public bool? DoNotRunExtensionsOnOverprovisionedVms { get; set; }
         /// <summary> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </summary>
         public bool? SinglePlacementGroup { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
