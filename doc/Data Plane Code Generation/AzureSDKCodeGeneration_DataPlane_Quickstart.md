@@ -1,4 +1,5 @@
 # Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)
+
 The purpose of the Azure SDK is to provide a unified developer experience across Azure services. In this tutorial, we will walk through creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have a standardized API based on the  [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 We will use the swagger file which contains a REST API definition based on [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md). We will use the swagger to generate SDK using [autorest.csharp](https://github.com/Azure/autorest.csharp).
@@ -35,26 +36,31 @@ This tutorial has following sections:
 ## Setup your repo
 
 - Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
-- Create a branch to work in. 
+- Create a branch to work in.
+
+**Note**: 
 
 ## Create starter package  
 
 For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
 
 You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
+
 ```
 eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<source> -sdkPath <sdkrepoRootPath> -inputfiles <inputfilelink> -securityScope <securityScope> -securityHeaderName <securityHeaderName>
 ```
 
 e.g.
+
 ```
 pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service sample -namespace Azure.Template.Sample -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 ```
 
 **Note**:
-- Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-lis): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
+
+- Use one of the following pre-approved namespace groups (<https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-lis>): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 - namespace is the shipped package name, it should be `Azure.<group>.<service>`
-- inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink, e.g. https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json.
+- inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink, e.g. <https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json>.
 
 - Both AADToken and AzureKey authentication are supported. If your service support AADToken, just set the parameter **securityScope**(the security scope), and if your service support AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service support two authentications.
 
@@ -79,7 +85,9 @@ dotnet new --install sdk/template-dpg/Azure.ServiceTemplate.Template
 ```
 sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryName [Client-Library-Title] --swagger [input-swagger-file-path] --securityScopes [security-scopes] --force
 ```
+
 e.g.
+
 ```
 dotnet new dataplane --libraryName DeviceUpdate --swagger https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2021-06-01-preview/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
 ```
@@ -113,7 +121,8 @@ After you run the GenerateCode command, you should find a **Generated** folder i
 
 If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [sdk\template-dpg\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
 
-e.g. Running the script for a project in `sdk\deviceupdate` would look like this: 
+e.g. Running the script for a project in `sdk\deviceupdate` would look like this:
+
 ```
 eng\scripts\Export-API.ps1 deviceupdate
 ```
@@ -122,21 +131,24 @@ eng\scripts\Export-API.ps1 deviceupdate
 
 Before the library package can be released, you will need to add several requirements manually, including tests, samples, README, and CHANGELOG.
 You can refer to following guideline to add those requirements:
-- Tests: https://azure.github.io/azure-sdk/general_implementation.html#testing
-- README/Samples/Changelog: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository
-- Other release concerns: https://azure.github.io/azure-sdk/policies_releases.html
+
+- Tests: <https://azure.github.io/azure-sdk/general_implementation.html#testing>
+- README/Samples/Changelog: <https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository>
+- Other release concerns: <https://azure.github.io/azure-sdk/policies_releases.html>
 
 ### Tests
 
 In this section, we will talk about adding unit tests and live tests and how to run them. You will notice that there is a test project under `Azure.<group>.<service>\tests`.
 
 Here is the step by step process to add tests:requirements
+
 - Add other client parameters in `<client-name>ClientTestEnvironment.cs`
-- Update `<client-name>ClientTest.cs`. 
+- Update `<client-name>ClientTest.cs`.
   - Comment-out the 'CreateClient' method, and update the new <service>Client statement.
   - remove all the template project tests, and write the tests according to the commented Test method template. Please refer to [Using the TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
 
-**Note**: 
+**Note**:
+
 - Before running live tests you will need to create live test resources, please refer to [Live Test Resource Management](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manage resources and update test environment.
 - `Azure.<group>.<service>` is the Azure SDK package name and `<client-name>` is a client name, C# generator will generate a client which you can find in `Azure.<group>.<service>/Generated` directory.
 
@@ -166,9 +178,10 @@ Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.
 
 ### Customize
 
-In `Azure.<group>.<service>` project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger. 
+In `Azure.<group>.<service>` project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger.
 
 You can customize your client libray in two ways:
+
 - Customizations can be done as a transform in `autorest.md`. e.g.
 
 ```yaml
@@ -186,6 +199,7 @@ directive:
         $.format = "url";
       }
 ```
+
 - Add convenience APIs.
 
 **Learn more**: The [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
