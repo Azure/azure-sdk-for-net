@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="parameters"> Parameters supplied to the update JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual JitRequestDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string jitRequestName, JitRequestDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -91,13 +89,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="parameters"> Parameters supplied to the update JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<JitRequestDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string jitRequestName, JitRequestDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -123,13 +119,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the JIT request. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual Response<JitRequestDefinition> Get(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.Get");
             scope.Start();
@@ -150,13 +144,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the JIT request. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public async virtual Task<Response<JitRequestDefinition>> GetAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.Get");
             scope.Start();
@@ -177,13 +169,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual Response<JitRequestDefinition> GetIfExists(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetIfExists");
             scope.Start();
@@ -204,13 +194,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public async virtual Task<Response<JitRequestDefinition>> GetIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.GetIfExists");
             scope.Start();
@@ -231,13 +219,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual Response<bool> Exists(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.Exists");
             scope.Start();
@@ -256,13 +242,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionCollection.Exists");
             scope.Start();

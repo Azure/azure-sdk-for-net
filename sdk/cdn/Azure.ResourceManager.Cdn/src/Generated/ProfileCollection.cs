@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="profile"> Profile properties needed to create a new profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
         public virtual ProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string profileName, ProfileData profile, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             if (profile == null)
             {
                 throw new ArgumentNullException(nameof(profile));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="profile"> Profile properties needed to create a new profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
         public async virtual Task<ProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string profileName, ProfileData profile, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             if (profile == null)
             {
                 throw new ArgumentNullException(nameof(profile));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<Profile> Get(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public async virtual Task<Response<Profile>> GetAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<Profile> GetIfExists(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public async virtual Task<Response<Profile>> GetIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<bool> Exists(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Exists");
             scope.Start();

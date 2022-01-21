@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="instance"> Instance details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="instance"/> is null. </exception>
         public virtual DeviceUpdateInstanceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
             if (instance == null)
             {
                 throw new ArgumentNullException(nameof(instance));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="instance"> Instance details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="instance"/> is null. </exception>
         public async virtual Task<DeviceUpdateInstanceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
             if (instance == null)
             {
                 throw new ArgumentNullException(nameof(instance));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Returns instance details for the given instance and account name. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<DeviceUpdateInstance> Get(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Returns instance details for the given instance and account name. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public async virtual Task<Response<DeviceUpdateInstance>> GetAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<DeviceUpdateInstance> GetIfExists(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public async virtual Task<Response<DeviceUpdateInstance>> GetIfExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();

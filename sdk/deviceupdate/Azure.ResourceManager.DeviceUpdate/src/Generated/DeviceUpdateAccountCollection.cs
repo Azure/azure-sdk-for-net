@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="accountName"> Account name. </param>
         /// <param name="account"> Account details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="account"/> is null. </exception>
         public virtual DeviceUpdateAccountCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             if (account == null)
             {
                 throw new ArgumentNullException(nameof(account));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="accountName"> Account name. </param>
         /// <param name="account"> Account details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="account"/> is null. </exception>
         public async virtual Task<DeviceUpdateAccountCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             if (account == null)
             {
                 throw new ArgumentNullException(nameof(account));
@@ -133,13 +129,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Returns account details for the given account name. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<DeviceUpdateAccount> Get(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.Get");
             scope.Start();
@@ -163,13 +157,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Returns account details for the given account name. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public async virtual Task<Response<DeviceUpdateAccount>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.Get");
             scope.Start();
@@ -190,13 +182,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<DeviceUpdateAccount> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.GetIfExists");
             scope.Start();
@@ -217,13 +207,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public async virtual Task<Response<DeviceUpdateAccount>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.GetIfExists");
             scope.Start();
@@ -244,13 +232,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.Exists");
             scope.Start();
@@ -269,13 +255,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateAccountCollection.Exists");
             scope.Start();

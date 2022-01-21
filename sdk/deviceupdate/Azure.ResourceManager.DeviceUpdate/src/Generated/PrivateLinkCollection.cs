@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Get the specified private link resource associated with the device update account. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<PrivateLink> Get(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Get the specified private link resource associated with the device update account. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public async virtual Task<Response<PrivateLink>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<PrivateLink> GetIfExists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public async virtual Task<Response<PrivateLink>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkCollection.Exists");
             scope.Start();

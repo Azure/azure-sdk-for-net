@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<SiteWebJob> Get(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public async virtual Task<Response<SiteWebJob>> GetAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<SiteWebJob> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public async virtual Task<Response<SiteWebJob>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteWebJobCollection.Exists");
             scope.Start();

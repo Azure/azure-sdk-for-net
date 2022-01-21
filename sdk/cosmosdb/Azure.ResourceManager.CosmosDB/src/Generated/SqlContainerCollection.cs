@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
         public virtual SqlContainerCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             if (createUpdateSqlContainerParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
         public async virtual Task<SqlContainerCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             if (createUpdateSqlContainerParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the SQL container under an existing Azure Cosmos DB database account. </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<SqlContainer> Get(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the SQL container under an existing Azure Cosmos DB database account. </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public async virtual Task<Response<SqlContainer>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<SqlContainer> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public async virtual Task<Response<SqlContainer>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Exists");
             scope.Start();

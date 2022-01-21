@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="parameters"> The shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual SharedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="parameters"> The shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<SharedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Get the specified shared private link resource. </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
         public virtual Response<SharedPrivateLink> Get(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Get the specified shared private link resource. </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
         public async virtual Task<Response<SharedPrivateLink>> GetAsync(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
         public virtual Response<SharedPrivateLink> GetIfExists(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
         public async virtual Task<Response<SharedPrivateLink>> GetIfExistsAsync(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string sharedPrivateLinkName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
 
             using var scope = _clientDiagnostics.CreateScope("SharedPrivateLinkCollection.Exists");
             scope.Start();

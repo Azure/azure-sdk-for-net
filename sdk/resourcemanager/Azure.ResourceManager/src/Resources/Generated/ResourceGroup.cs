@@ -250,10 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.AddTag");
             scope.Start();
@@ -279,10 +276,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<ResourceGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.AddTag");
             scope.Start();
@@ -365,10 +359,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
             scope.Start();
@@ -393,10 +384,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
             scope.Start();

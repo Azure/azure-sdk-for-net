@@ -236,10 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<Profile>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("Profile.AddTag");
             scope.Start();
@@ -265,10 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<Profile> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("Profile.AddTag");
             scope.Start();
@@ -351,10 +345,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<Profile>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("Profile.RemoveTag");
             scope.Start();
@@ -379,10 +370,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<Profile> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("Profile.RemoveTag");
             scope.Start();

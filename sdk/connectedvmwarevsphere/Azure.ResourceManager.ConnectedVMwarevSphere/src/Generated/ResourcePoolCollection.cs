@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public virtual ResourcePoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.CreateOrUpdate");
             scope.Start();
@@ -94,13 +92,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public async virtual Task<ResourcePoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.CreateOrUpdate");
             scope.Start();
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements resourcePool GET method. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public virtual Response<ResourcePool> Get(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Get");
             scope.Start();
@@ -155,13 +149,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements resourcePool GET method. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public async virtual Task<Response<ResourcePool>> GetAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Get");
             scope.Start();
@@ -182,13 +174,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public virtual Response<ResourcePool> GetIfExists(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public async virtual Task<Response<ResourcePool>> GetIfExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExists");
             scope.Start();
@@ -236,13 +224,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Exists");
             scope.Start();
@@ -261,13 +247,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            if (resourcePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(resourcePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
             using var scope = _clientDiagnostics.CreateScope("ResourcePoolCollection.Exists");
             scope.Start();

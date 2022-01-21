@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
         public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
             {
                 throw new ArgumentNullException(nameof(subnetParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
         public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
             {
                 throw new ArgumentNullException(nameof(subnetParameters));
@@ -123,13 +119,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual Response<Subnet> Get(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public async virtual Task<Response<Subnet>> GetAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Get");
             scope.Start();
@@ -179,13 +171,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual Response<Subnet> GetIfExists(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();
@@ -207,13 +197,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public async virtual Task<Response<Subnet>> GetIfExistsAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();
@@ -235,13 +223,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual Response<bool> Exists(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();
@@ -261,13 +247,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();

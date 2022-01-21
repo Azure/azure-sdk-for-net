@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual VMwareClusterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -94,13 +92,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<VMwareClusterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements cluster GET method. </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<VMwareCluster> Get(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Get");
             scope.Start();
@@ -155,13 +149,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements cluster GET method. </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<VMwareCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Get");
             scope.Start();
@@ -182,13 +174,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<VMwareCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<VMwareCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExists");
             scope.Start();
@@ -236,13 +224,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Exists");
             scope.Start();
@@ -261,13 +247,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Exists");
             scope.Start();

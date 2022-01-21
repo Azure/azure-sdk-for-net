@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualRouterPeeringCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string peeringName, VirtualRouterPeeringData parameters, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<VirtualRouterPeeringCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string peeringName, VirtualRouterPeeringData parameters, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Virtual Router Peering. </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<VirtualRouterPeering> Get(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Virtual Router Peering. </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<VirtualRouterPeering>> GetAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<VirtualRouterPeering> GetIfExists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<VirtualRouterPeering>> GetIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<bool> Exists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringCollection.Exists");
             scope.Start();

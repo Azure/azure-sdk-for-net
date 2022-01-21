@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadClassifierName"> The name of the workload classifier to create/update. </param>
         /// <param name="parameters"> The properties of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual WorkloadClassifierCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="workloadClassifierName"> The name of the workload classifier to create/update. </param>
         /// <param name="parameters"> The properties of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<WorkloadClassifierCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a workload classifier. </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual Response<WorkloadClassifier> Get(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
             using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a workload classifier. </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public async virtual Task<Response<WorkloadClassifier>> GetAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
             using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual Response<WorkloadClassifier> GetIfExists(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
             using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public async virtual Task<Response<WorkloadClassifier>> GetIfExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
             using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual Response<bool> Exists(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
             using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            if (workloadClassifierName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadClassifierName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
 
             using var scope = _clientDiagnostics.CreateScope("WorkloadClassifierCollection.Exists");
             scope.Start();

@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a restore point. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a restore point. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public async virtual Task<Response<RestorePoint>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual Response<RestorePoint> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public async virtual Task<Response<RestorePoint>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual Response<bool> Exists(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();

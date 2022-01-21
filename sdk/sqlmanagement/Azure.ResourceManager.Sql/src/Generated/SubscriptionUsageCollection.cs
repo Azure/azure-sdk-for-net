@@ -63,13 +63,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a subscription usage metric. </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<SubscriptionUsage> Get(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
             scope.Start();
@@ -93,13 +91,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a subscription usage metric. </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public async virtual Task<Response<SubscriptionUsage>> GetAsync(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
             scope.Start();
@@ -120,13 +116,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<SubscriptionUsage> GetIfExists(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();
@@ -147,13 +141,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public async virtual Task<Response<SubscriptionUsage>> GetIfExistsAsync(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();
@@ -174,13 +166,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<bool> Exists(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
@@ -199,13 +189,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();

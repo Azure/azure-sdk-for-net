@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual NatGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string natGatewayName, NatGatewayData parameters, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<NatGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string natGatewayName, NatGatewayData parameters, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
         public virtual Response<NatGateway> Get(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
         public async virtual Task<Response<NatGateway>> GetAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.Get");
             scope.Start();
@@ -181,13 +173,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
         public virtual Response<NatGateway> GetIfExists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
         public async virtual Task<Response<NatGateway>> GetIfExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.GetIfExists");
             scope.Start();
@@ -237,13 +225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.Exists");
             scope.Start();
@@ -263,13 +249,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (natGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(natGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("NatGatewayCollection.Exists");
             scope.Start();

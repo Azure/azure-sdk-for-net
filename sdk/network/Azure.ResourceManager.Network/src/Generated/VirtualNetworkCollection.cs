@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualNetworkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualNetworkName, VirtualNetworkData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<VirtualNetworkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualNetworkName, VirtualNetworkData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<VirtualNetwork> Get(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetwork>> GetAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Get");
             scope.Start();
@@ -181,13 +173,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<VirtualNetwork> GetIfExists(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public async virtual Task<Response<VirtualNetwork>> GetIfExistsAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.GetIfExists");
             scope.Start();
@@ -237,13 +225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Exists");
             scope.Start();
@@ -263,13 +249,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkCollection.Exists");
             scope.Start();

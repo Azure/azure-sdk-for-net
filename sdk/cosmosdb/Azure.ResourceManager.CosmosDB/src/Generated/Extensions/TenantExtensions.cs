@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
@@ -27,13 +28,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
@@ -59,13 +58,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static Response<bool> CheckNameExistsDatabaseAccount(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
             {

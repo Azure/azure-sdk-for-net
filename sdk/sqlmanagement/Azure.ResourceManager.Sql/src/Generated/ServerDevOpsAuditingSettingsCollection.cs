@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="parameters"> Properties of DevOps audit settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ServerDevOpsAuditingSettingsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettingsData parameters, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="parameters"> Properties of DevOps audit settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServerDevOpsAuditingSettingsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string devOpsAuditingSettingsName, ServerDevOpsAuditingSettingsData parameters, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server&apos;s DevOps audit settings. </summary>
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual Response<ServerDevOpsAuditingSettings> Get(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server&apos;s DevOps audit settings. </summary>
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public async virtual Task<Response<ServerDevOpsAuditingSettings>> GetAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual Response<ServerDevOpsAuditingSettings> GetIfExists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public async virtual Task<Response<ServerDevOpsAuditingSettings>> GetIfExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual Response<bool> Exists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDevOpsAuditingSettingsCollection.Exists");
             scope.Start();

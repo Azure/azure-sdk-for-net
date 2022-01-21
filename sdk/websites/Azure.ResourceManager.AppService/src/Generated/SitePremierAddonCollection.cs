@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public virtual SitePremierAddonCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             if (premierAddOn == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOn));
@@ -93,13 +91,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
         public async virtual Task<SitePremierAddonCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             if (premierAddOn == null)
             {
                 throw new ArgumentNullException(nameof(premierAddOn));
@@ -128,13 +124,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named add-on of an app. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual Response<SitePremierAddon> Get(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Get");
             scope.Start();
@@ -158,13 +152,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named add-on of an app. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public async virtual Task<Response<SitePremierAddon>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Get");
             scope.Start();
@@ -185,13 +177,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual Response<SitePremierAddon> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
             scope.Start();
@@ -212,13 +202,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public async virtual Task<Response<SitePremierAddon>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
             scope.Start();
@@ -239,13 +227,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual Response<bool> Exists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Exists");
             scope.Start();
@@ -264,13 +250,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePremierAddonCollection.Exists");
             scope.Start();

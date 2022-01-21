@@ -232,10 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<CassandraTable>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTable.AddTag");
             scope.Start();
@@ -261,10 +258,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<CassandraTable> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTable.AddTag");
             scope.Start();
@@ -347,10 +341,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<CassandraTable>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTable.RemoveTag");
             scope.Start();
@@ -375,10 +366,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<CassandraTable> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraTable.RemoveTag");
             scope.Start();

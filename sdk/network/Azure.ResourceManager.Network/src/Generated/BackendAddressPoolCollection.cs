@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual BackendAddressPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<BackendAddressPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets load balancer backend address pool. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual Response<BackendAddressPool> Get(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets load balancer backend address pool. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public async virtual Task<Response<BackendAddressPool>> GetAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual Response<BackendAddressPool> GetIfExists(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public async virtual Task<Response<BackendAddressPool>> GetIfExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Exists");
             scope.Start();

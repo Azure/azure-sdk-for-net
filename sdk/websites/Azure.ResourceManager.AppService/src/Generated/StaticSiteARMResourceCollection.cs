@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the static site to create or update. </param>
         /// <param name="staticSiteEnvelope"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="staticSiteEnvelope"/> is null. </exception>
         public virtual StaticSiteARMResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (staticSiteEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(staticSiteEnvelope));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the static site to create or update. </param>
         /// <param name="staticSiteEnvelope"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="staticSiteEnvelope"/> is null. </exception>
         public async virtual Task<StaticSiteARMResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (staticSiteEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(staticSiteEnvelope));
@@ -133,13 +129,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the details of a static site. </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<StaticSiteARMResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.Get");
             scope.Start();
@@ -163,13 +157,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the details of a static site. </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<StaticSiteARMResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.Get");
             scope.Start();
@@ -190,13 +182,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<StaticSiteARMResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.GetIfExists");
             scope.Start();
@@ -217,13 +207,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<StaticSiteARMResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.GetIfExists");
             scope.Start();
@@ -244,13 +232,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.Exists");
             scope.Start();
@@ -269,13 +255,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("StaticSiteARMResourceCollection.Exists");
             scope.Start();

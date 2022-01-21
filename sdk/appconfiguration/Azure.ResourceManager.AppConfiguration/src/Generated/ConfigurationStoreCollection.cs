@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
         public virtual ConfigurationStoreCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             if (configStoreCreationParameters == null)
             {
                 throw new ArgumentNullException(nameof(configStoreCreationParameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
         public async virtual Task<ConfigurationStoreCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             if (configStoreCreationParameters == null)
             {
                 throw new ArgumentNullException(nameof(configStoreCreationParameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Gets the properties of the specified configuration store. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<ConfigurationStore> Get(string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Gets the properties of the specified configuration store. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> GetAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<ConfigurationStore> GetIfExists(string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<ConfigurationStore>> GetIfExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public virtual Response<bool> Exists(string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _clientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
             scope.Start();

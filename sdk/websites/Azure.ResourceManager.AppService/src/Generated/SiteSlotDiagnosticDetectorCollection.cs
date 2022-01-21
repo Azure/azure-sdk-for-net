@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Detector. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<SiteSlotDiagnosticDetector> Get(string detectorName, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Detector. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotDiagnosticDetector>> GetAsync(string detectorName, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<SiteSlotDiagnosticDetector> GetIfExists(string detectorName, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotDiagnosticDetector>> GetIfExistsAsync(string detectorName, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string detectorName, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string detectorName, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.Exists");
             scope.Start();

@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="runCommand"> Parameters supplied to the Create Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="runCommand"/> is null. </exception>
         public virtual VirtualMachineScaleSetVirtualMachineRunCommandCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string runCommandName, VirtualMachineRunCommandData runCommand, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             if (runCommand == null)
             {
                 throw new ArgumentNullException(nameof(runCommand));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="runCommand"> Parameters supplied to the Create Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="runCommand"/> is null. </exception>
         public async virtual Task<VirtualMachineScaleSetVirtualMachineRunCommandCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string runCommandName, VirtualMachineRunCommandData runCommand, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             if (runCommand == null)
             {
                 throw new ArgumentNullException(nameof(runCommand));
@@ -123,13 +119,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual Response<VirtualMachineScaleSetVirtualMachineRunCommand> Get(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public async virtual Task<Response<VirtualMachineScaleSetVirtualMachineRunCommand>> GetAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.Get");
             scope.Start();
@@ -179,13 +171,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual Response<VirtualMachineScaleSetVirtualMachineRunCommand> GetIfExists(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.GetIfExists");
             scope.Start();
@@ -207,13 +197,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public async virtual Task<Response<VirtualMachineScaleSetVirtualMachineRunCommand>> GetIfExistsAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.GetIfExists");
             scope.Start();
@@ -235,13 +223,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual Response<bool> Exists(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.Exists");
             scope.Start();
@@ -261,13 +247,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVirtualMachineRunCommandCollection.Exists");
             scope.Start();

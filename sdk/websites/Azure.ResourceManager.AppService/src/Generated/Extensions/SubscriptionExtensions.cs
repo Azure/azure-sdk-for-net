@@ -1065,14 +1065,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedSite> GetDeletedSitesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1120,14 +1118,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedSite> GetDeletedSitesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1204,17 +1200,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is null. </exception>
         public static async Task<Response<DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
@@ -1244,17 +1235,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedSiteId"/> is null. </exception>
         public static Response<DeletedSite> GetDeletedWebAppByLocationDeletedWebApp(this Subscription subscription, string location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1284,17 +1270,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
         public static async Task<Response> GetSubscriptionOperationWithAsyncResponseGlobalAsync(this Subscription subscription, string location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
@@ -1324,17 +1305,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
         public static Response GetSubscriptionOperationWithAsyncResponseGlobal(this Subscription subscription, string location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1743,13 +1719,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public static async Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(this Subscription subscription, string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
@@ -1778,13 +1752,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public static Response DisableRecommendationForSubscriptionRecommendation(this Subscription subscription, string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -2576,13 +2548,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="staticSitesWorkflowPreviewRequest"/> is null. </exception>
         public static async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowStaticSiteAsync(this Subscription subscription, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (staticSitesWorkflowPreviewRequest == null)
             {
                 throw new ArgumentNullException(nameof(staticSitesWorkflowPreviewRequest));
@@ -2616,13 +2586,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="staticSitesWorkflowPreviewRequest"/> is null. </exception>
         public static Response<StaticSitesWorkflowPreview> PreviewWorkflowStaticSite(this Subscription subscription, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (staticSitesWorkflowPreviewRequest == null)
             {
                 throw new ArgumentNullException(nameof(staticSitesWorkflowPreviewRequest));

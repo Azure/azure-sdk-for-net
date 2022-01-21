@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all scale-out instances of an app. </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<SiteSlotInstance> Get(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all scale-out instances of an app. </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotInstance>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<SiteSlotInstance> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotInstance>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<bool> Exists(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotInstanceCollection.Exists");
             scope.Start();

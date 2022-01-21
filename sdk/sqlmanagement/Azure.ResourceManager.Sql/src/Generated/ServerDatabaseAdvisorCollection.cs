@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a database advisor. </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual Response<ServerDatabaseAdvisor> Get(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a database advisor. </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public async virtual Task<Response<ServerDatabaseAdvisor>> GetAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual Response<ServerDatabaseAdvisor> GetIfExists(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public async virtual Task<Response<ServerDatabaseAdvisor>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual Response<bool> Exists(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseAdvisorCollection.Exists");
             scope.Start();
