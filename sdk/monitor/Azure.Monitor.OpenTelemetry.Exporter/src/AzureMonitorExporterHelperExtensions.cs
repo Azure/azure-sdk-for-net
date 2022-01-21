@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             configure?.Invoke(options);
 
             // TODO: Allow disabling offline storage.
-            // TODO: Fallback to default location if location provided by customer does not work.
+            // TODO: Fallback to default location if location provided via options does not work.
             if (options.StorageDirectory == null)
             {
                 options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
