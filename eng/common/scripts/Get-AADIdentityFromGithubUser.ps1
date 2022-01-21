@@ -76,4 +76,4 @@ if ($resp.aad) {
     return $resp.aad.alias
 }
 
-LogError "Failed to retrieve the aad identity from given github user: $GithubName."
+LogError "Failed to retrieve the aad identity from given github user: $GithubName"
