@@ -1,5 +1,15 @@
 # Release History
 
+## 3.0.0-preview.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 3.0.0-preview.5 (2022-01-23)
 
 - Fix release issues
