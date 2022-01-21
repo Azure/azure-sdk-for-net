@@ -62,7 +62,7 @@ $Headers = @{
 try {
     $opsAuthToken = Generate-AadToken -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret
     $Headers["Authorization"] = "Bearer $opsAuthToken"
-    Write-Host "Fetching aad identity for github user: $GithubName."
+    Write-Host "Fetching aad identity for github user: $GithubName"
     $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers
 }
 catch { 
