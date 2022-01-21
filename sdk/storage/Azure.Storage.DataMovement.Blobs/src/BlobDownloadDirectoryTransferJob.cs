@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement.Blobs
     ///
     /// TODO: better description
     /// </summary>
-    internal class BlobDownloadDirectoryTransferJob : StorageTransferJob
+    internal class BlobDownloadDirectoryTransferJob : TransferJobInternal
     {
         /// <summary>
         /// The source blob where it's contents will be downloaded when the job is performed.

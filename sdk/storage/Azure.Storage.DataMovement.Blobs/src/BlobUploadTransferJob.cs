@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Uploading BLobTransfer Job
     /// </summary>
-    internal class BlobUploadTransferJob : StorageTransferJob
+    internal class BlobUploadTransferJob : TransferJobInternal
     {
         /// <summary>
         /// The path to the local file where the contents to be upload to the blob is stored.

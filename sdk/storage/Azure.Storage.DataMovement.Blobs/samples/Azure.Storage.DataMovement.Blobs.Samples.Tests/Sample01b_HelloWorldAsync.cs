@@ -418,9 +418,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             IList<string> list = blobTransferManager.ListJobs();
 
             // Get Job information with using Job Id
-            StorageTransferJob job = blobTransferManager.GetJob(downloadDirectoryJobId3);
+            StorageTransferJobDetails job = blobTransferManager.GetJob(downloadDirectoryJobId3);
             // Get Job information using job id from list
-            StorageTransferJob job2 = blobTransferManager.GetJob(list[1]);
+            StorageTransferJobDetails job2 = blobTransferManager.GetJob(list[1]);
 
             // Pause transfers
             blobTransferManager.PauseTransfers();

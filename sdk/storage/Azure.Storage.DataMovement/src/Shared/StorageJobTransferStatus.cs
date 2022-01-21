@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// Defines the status of the <see cref="StorageTransferJob"/>.
+    /// Defines the status of the <see cref="TransferJobInternal"/>.
     /// </summary>
     public enum StorageJobTransferStatus
     {

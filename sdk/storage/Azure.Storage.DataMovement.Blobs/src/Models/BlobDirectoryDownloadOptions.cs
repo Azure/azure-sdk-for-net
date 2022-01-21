@@ -31,6 +31,9 @@ namespace Azure.Storage.DataMovement.Blobs.Models
 
         /// <summary>
         /// Setting to upload ONLY the contents of the directory. Default set to false.
+        ///
+        /// TODO: better description
+        /// TODO: better naming
         /// </summary>
         public bool ContentsOnly { get; set; }
     }

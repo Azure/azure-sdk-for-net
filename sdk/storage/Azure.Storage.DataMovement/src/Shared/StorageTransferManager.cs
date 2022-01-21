@@ -30,12 +30,12 @@ namespace Azure.Storage.DataMovement
         /// also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
         /// part of DMLib instead of scanning right before the job is benefical.
         /// </summary>
-        private List<StorageTransferJob> _totalJobs;
+        private List<TransferJobInternal> _totalJobs;
 
         /// <summary>
         /// To hold the jobs to scan
         /// </summary>
-        protected internal List<StorageTransferJob> TotalJobs => _totalJobs;
+        protected internal List<TransferJobInternal> TotalJobs => _totalJobs;
 
         // Not sure if we should keep the jobs that in in progress here
         // private IList<StorageTransferJob> _jobsInProgress;
@@ -57,14 +57,21 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private StorageManagerTransferStatus _managerTransferStatus;
 
+        /// <summary>
+        /// Constructor for mocking
+        /// </summary>
+        protected internal StorageTransferManager()
+        {
+        }
+
         ///<summary>
         /// Initializes a new instance of the <see cref="StorageTransferManager"/>
         /// class.
         /// </summary>
         /// <param name="options">Directory path where transfer state is kept.</param>
-        public StorageTransferManager(StorageTransferManagerOptions options = default)
+        public StorageTransferManager(StorageTransferManagerOptions options)
         {
-            _totalJobs = new List<StorageTransferJob>();
+            _totalJobs = new List<TransferJobInternal>();
             _options = options;
             _managerTransferStatus = StorageManagerTransferStatus.Idle;
         }
@@ -84,9 +91,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        public virtual StorageTransferJob GetJob(string jobId)
+        public virtual StorageTransferJobDetails GetJob(string jobId)
         {
-            return new StorageTransferJob(string.IsNullOrEmpty(jobId) ? Guid.NewGuid().ToString() : jobId);
+            return new StorageTransferJobDetails();
         }
 
         /// <summary>
@@ -99,7 +106,7 @@ namespace Azure.Storage.DataMovement
         {
             _managerTransferStatus = StorageManagerTransferStatus.Pausing;
 
-            foreach (StorageTransferJob job in _totalJobs)
+            foreach (TransferJobInternal job in _totalJobs)
             {
                 job.CancellationTokenSource.Cancel(true);
                 //TODO: log cancellation of job
@@ -123,7 +130,7 @@ namespace Azure.Storage.DataMovement
             // This would remove all transfers from the queue and not log the current progress
             // to the file. Maybe we would also remove the file too as a part of cleanup.
             _managerTransferStatus = StorageManagerTransferStatus.Cancelling;
-            foreach (StorageTransferJob job in _totalJobs)
+            foreach (TransferJobInternal job in _totalJobs)
             {
                 // Probably look to do this in parallel.
                 // TODO: catch any errors that fly up the stack and attempt
@@ -154,7 +161,7 @@ namespace Azure.Storage.DataMovement
                 throw new Exception("Please wait until all transfer jobs have cancelled");
             }
             _managerTransferStatus = StorageManagerTransferStatus.Cleaning;
-            foreach (StorageTransferJob job in _totalJobs)
+            foreach (TransferJobInternal job in _totalJobs)
             {
                 // Probably look to do this in parallel.
                 // TODO: catch any errors that fly up the stack and attempt

@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// TODO; descriptions and comments for this entire class
     /// TODO: Add possible options bag for copy transfer
     /// </summary>
-    internal class BlobServiceCopyDirectoryTransferJob : StorageTransferJob
+    internal class BlobServiceCopyDirectoryTransferJob : TransferJobInternal
     {
         private Uri _sourceDirectoryUri;
 

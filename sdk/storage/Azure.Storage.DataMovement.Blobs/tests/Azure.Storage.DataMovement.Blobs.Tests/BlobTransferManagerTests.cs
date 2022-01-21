@@ -83,7 +83,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 ConcurrencyForLocalFilesystemListing = 1
             };
 
-            BlobTransferManager blobtransferManager0 = new BlobTransferManager();
             BlobTransferManager blobTransferManager1 = new BlobTransferManager(managerOptions);
         }
 

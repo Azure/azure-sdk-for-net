@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement
     /// Stores the information of the Transfer Job.
     /// TODO: better description
     /// </summary>
-    public class StorageTransferJob
+    public class TransferJobInternal
     {
         /// <summary>
         /// Job Id in form of a Guid
@@ -38,9 +38,16 @@ namespace Azure.Storage.DataMovement
         internal PlanJobWriter PlanJobWriter { get; set; }
 
         /// <summary>
+        /// Constructor for mocking
+        /// </summary>
+        internal protected TransferJobInternal()
+        {
+        }
+
+        /// <summary>
         /// Create Storage Transfer Job.
         /// </summary>
-        public StorageTransferJob(string jobId, string loggerFolderPath = default)
+        internal protected TransferJobInternal(string jobId, string loggerFolderPath = default)
         {
             JobId = jobId;
             string folderPath = String.IsNullOrEmpty(loggerFolderPath) ? Constants.DataMovement.DefaultLogTransferFiles : loggerFolderPath;

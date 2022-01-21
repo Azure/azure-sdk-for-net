@@ -14,10 +14,10 @@ namespace Azure.Storage.DataMovement
     public class PathTransferSkippedEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageTransferJob"/> of an action that failed to
+        /// Gets the <see cref="TransferJobInternal"/> of an action that failed to
         /// complete.  The value might be null.
         /// </summary>
-        public StorageTransferJob Job { get; }
+        public TransferJobInternal Job { get; }
 
         /// <summary>
         /// Gets the <see cref="IOException"/> caused by an action that failed to
@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement
         /// <see cref="PathTransferFailedEventArgs"/> class.
         /// </summary>
         /// <param name="job">
-        /// The <see cref="StorageTransferJob"/> raising the event.
+        /// The <see cref="TransferJobInternal"/> raising the event.
         /// </param>
         /// <param name="exception">
         /// the <see cref="IOException"/> caused by an action that failed to
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         public PathTransferSkippedEventArgs(
-            StorageTransferJob job,
+            TransferJobInternal job,
             IOException exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken = default)

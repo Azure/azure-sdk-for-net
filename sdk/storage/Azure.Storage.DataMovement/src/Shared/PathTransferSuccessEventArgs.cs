@@ -13,10 +13,10 @@ namespace Azure.Storage.DataMovement
     public class PathTransferSuccessEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageTransferJob"/> raising the
+        /// Gets the <see cref="TransferJobInternal"/> raising the
         /// event.
         /// </summary>
-        public StorageTransferJob Job { get; }
+        public TransferJobInternal Job { get; }
 
         /// <summary>
         /// Gets the <see cref="Response{T}"/> of the job
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
         /// class.
         /// </summary>
         /// <param name="job">
-        /// The <see cref="StorageTransferJob"/> raising the event.
+        /// The <see cref="TransferJobInternal"/> raising the event.
         /// </param>
         /// <param name="response">
         /// The <see cref="Response{T}"/> that was added, sent,
@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement
         /// are null.
         /// </exception>
         public PathTransferSuccessEventArgs(
-            StorageTransferJob job,
+            TransferJobInternal job,
             Response response,
             bool isRunningSynchronously,
             CancellationToken cancellationToken = default)

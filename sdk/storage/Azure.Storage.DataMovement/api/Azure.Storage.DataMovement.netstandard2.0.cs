@@ -63,6 +63,11 @@ namespace Azure.Storage.DataMovement.Models
         Panic = 5,
         Fatal = 6,
     }
+    public enum ServiceCopyMethod
+    {
+        ServiceSideAsyncCopy = 0,
+        ServiceSideSyncCopy = 1,
+    }
     public enum StorageJobTransferStatus
     {
         Queued = 0,

@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Blob Directory Upload Job
     /// </summary>
-    internal class BlobUploadDirectoryTransferJob : StorageTransferJob
+    internal class BlobUploadDirectoryTransferJob : TransferJobInternal
     {
         private string _sourceLocalPath;
 

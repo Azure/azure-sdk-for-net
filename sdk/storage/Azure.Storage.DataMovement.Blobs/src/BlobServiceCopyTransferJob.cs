@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// TODO; descriptions and comments for this entire class
     /// TODO: Add possible options bag for copy transfer
     /// </summary>
-    internal class BlobServiceCopyTransferJob : StorageTransferJob
+    internal class BlobServiceCopyTransferJob : TransferJobInternal
     {
         internal BlobBaseClient _destinationBlobClient;
 

@@ -12,9 +12,9 @@ namespace Azure.Storage.DataMovement
     public class DataMovementFailedEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageTransferJob"/> that was performing the Job.
+        /// Gets the <see cref="TransferJobInternal"/> that was performing the Job.
         /// </summary>
-        public StorageTransferJob Job { get; }
+        public TransferJobInternal Job { get; }
 
         /// <summary>
         /// Gets the <see cref="RequestFailedException"/> that was thrown during the job.
@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Initializes a new instance of the <see cref="DataMovementFailedEventArgs"/>.
         /// </summary>
-        /// <param name="job">The <see cref="StorageTransferJob"/> that has received invalid message.</param>
+        /// <param name="job">The <see cref="TransferJobInternal"/> that has received invalid message.</param>
         /// <param name="exception">The <see cref="RequestFailedException"/> thrown during the job</param>
         /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement
         /// Thrown if <paramref name="job"/> is null.
         /// </exception>
         public DataMovementFailedEventArgs(
-            StorageTransferJob job,
+            TransferJobInternal job,
             RequestFailedException exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)

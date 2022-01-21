@@ -10,7 +10,7 @@ using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class BlobDownloadTransferJob : StorageTransferJob
+    internal class BlobDownloadTransferJob : TransferJobInternal
     {
         // Might have to change BlobBaseClient to other client, when we do page blob and append blob
         internal BlobBaseClient _sourceBlobClient;

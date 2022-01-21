@@ -30,12 +30,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         internal BlobJobTransferScheduler jobTransferScheduler { get; set; }
 
+        /// <summary>
+        /// Constructor for mocking
+        /// </summary>
+        protected internal BlobTransferManager()
+        {
+        }
+
         ///<summary>
         /// Initializes a new instance of the <see cref="StorageTransferManager"/>
         /// class.
         /// </summary>
         /// <param name="options">Directory path where transfer state is kept.</param>
-        public BlobTransferManager(StorageTransferManagerOptions options = default)
+        public BlobTransferManager(StorageTransferManagerOptions options)
             : base(options)
         {
             jobTransferScheduler = new BlobJobTransferScheduler(options?.ConcurrencyForLocalFilesystemListing, options?.ConcurrencyForServiceListing);
@@ -234,11 +241,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        public override StorageTransferJob GetJob(string jobId)
+        public override StorageTransferJobDetails GetJob(string jobId)
         {
-            //TODO: change to transfer blob transfer job, or create Storage transfer job to be more generic informaiton
-            // this will be more clear in teh champion scenario
-            return new StorageTransferJob(string.IsNullOrEmpty(jobId) ? Guid.NewGuid().ToString() : jobId);
+            //TODO: stub
+            return new StorageTransferJobDetails();
         }
     }
 }
