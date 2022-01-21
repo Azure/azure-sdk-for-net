@@ -190,17 +190,20 @@ namespace Azure.Storage.Test.Shared
             TResourceClient client = GetResourceClient(disposingContainer.Container);
 
             // Act
-            using (Stream stream = await OpenWriteAsync(client, maxDataSize: 175, overwrite: true))
+            const int a = 100;
+            const int b = 50;
+            const int c = 25;
+            using (Stream stream = await OpenWriteAsync(client, maxDataSize: a + b + c, overwrite: true))
             {
                 using (var writer = new StreamWriter(stream, Encoding.ASCII))
                 {
-                    writer.Write(new string('A', 100));
+                    writer.Write(new string('A', a));
                     writer.Flush();
 
-                    writer.Write(new string('B', 50));
+                    writer.Write(new string('B', b));
                     writer.Flush();
 
-                    writer.Write(new string('C', 25));
+                    writer.Write(new string('C', c));
                     writer.Flush();
                 }
             }
