@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class ActionGroupOperationTests : MonitorTestBase
     {
         public ActionGroupOperationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 

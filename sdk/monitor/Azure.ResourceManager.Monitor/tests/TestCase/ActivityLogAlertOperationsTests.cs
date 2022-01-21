@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class ActivityLogAlertOperationsTests : MonitorTestBase
     {
         public ActivityLogAlertOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 

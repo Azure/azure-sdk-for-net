@@ -13,16 +13,22 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class MetricAlertOperationsTests : MonitorTestBase
     {
         public MetricAlertOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
         private async Task<MetricAlert> CreateMetricAlertAsync(string alertName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetMetricAlerts();
-            var input = ResourceDataHelper.GetBasicMetricAlertData("global", DefaultSubscription.Id);
-            var lro = await collection.CreateOrUpdateAsync(true, alertName, input);
-            return lro.Value;
+            var resourceGroup = await CreateResourceGroupAsync().ConfigureAwait(false);
+            var metricAlertCollection = resourceGroup.GetMetricAlerts();
+            var actionGroupCollection = resourceGroup.GetActionGroups();
+
+            var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
+            var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            var metricAlert = await metricAlertCollection.CreateOrUpdateAsync(true, alertName, metricAlertData);
+            return metricAlert.Value;
         }
 
         [TestCase]

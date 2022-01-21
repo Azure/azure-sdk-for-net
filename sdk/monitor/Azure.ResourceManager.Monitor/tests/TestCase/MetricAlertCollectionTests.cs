@@ -14,38 +14,44 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class MetricAlertCollectionTests : MonitorTestBase
     {
         public MetricAlertCollectionTests(bool isAsync)
-           : base(isAsync, RecordedTestMode.Record)
+           : base(isAsync)
         {
-        }
-
-        private async Task<MetricAlertCollection> GetMetricAlertCollectionAsync()
-        {
-            var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetMetricAlerts();
         }
 
         [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var container = await GetMetricAlertCollectionAsync();
-            var name = Recording.GenerateAssetName("testMetricAlert");
-            var input = ResourceDataHelper.GetBasicMetricAlertData("global",DefaultSubscription.Id);
-            var lro = await container.CreateOrUpdateAsync(true, name, input);
-            var alert = lro.Value;
-            Assert.AreEqual(name, alert.Data.Name);
+            var resourceGroup = await CreateResourceGroupAsync().ConfigureAwait(false);
+            var metricAlertCollection = resourceGroup.GetMetricAlerts();
+            var actionGroupCollection = resourceGroup.GetActionGroups();
+
+            var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
+            var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            var metricAlertName = Recording.GenerateAssetName("testMetricAlert");
+            var metricAlert = (await metricAlertCollection.CreateOrUpdateAsync(true, metricAlertName, metricAlertData)).Value;
+            Assert.AreEqual(metricAlertName, metricAlert.Data.Name);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            var collection = await GetMetricAlertCollectionAsync();
-            var alertName = Recording.GenerateAssetName("testMetricAlert-");
-            var input = ResourceDataHelper.GetBasicMetricAlertData("global",DefaultSubscription.Id);
-            var lro = await collection.CreateOrUpdateAsync(true, alertName, input);
-            MetricAlert alert1 = lro.Value;
-            MetricAlert alert2 = await collection.GetAsync(alertName);
+            var resourceGroup = await CreateResourceGroupAsync().ConfigureAwait(false);
+            var metricAlertCollection = resourceGroup.GetMetricAlerts();
+            var actionGroupCollection = resourceGroup.GetActionGroups();
+
+            var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
+            var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            var metricAlertName = Recording.GenerateAssetName("testMetricAlert");
+            var alert1 = (await metricAlertCollection.CreateOrUpdateAsync(true, metricAlertName, metricAlertData)).Value;
+            MetricAlert alert2 = await metricAlertCollection.GetAsync(metricAlertName);
             ResourceDataHelper.AssertMetricAlert(alert1.Data, alert2.Data);
         }
 
@@ -53,16 +59,19 @@ namespace Azure.ResourceManager.Monitor.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            var collection = await GetMetricAlertCollectionAsync();
-            var input = ResourceDataHelper.GetBasicMetricAlertData("global", DefaultSubscription.Id);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testMetricAlert-"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testMetricAlert-"), input);
-            int count = 0;
-            await foreach (var alert in collection.GetAllAsync())
-            {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 2);
+            var resourceGroup = await CreateResourceGroupAsync().ConfigureAwait(false);
+            var metricAlertCollection = resourceGroup.GetMetricAlerts();
+            var actionGroupCollection = resourceGroup.GetActionGroups();
+
+            var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
+            var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+
+            var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
+            _ = await metricAlertCollection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
+            _ = await metricAlertCollection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
+
+            Assert.GreaterOrEqual(metricAlertCollection.GetAllAsync().ToEnumerableAsync().Result.Count, 2);
         }
     }
 }

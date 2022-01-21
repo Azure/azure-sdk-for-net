@@ -253,18 +253,28 @@ namespace Azure.ResourceManager.Monitor.Tests
             Assert.AreEqual(data1.Description, data2.Description);
         }
 
-        public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, string subID)
+        public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, ActionGroup actionGroup)
         {
             IEnumerable<string> scopes = new List<string>()
             {
-                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo2",
-                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo3"
+                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01",
+                // "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM02"
             };
-
-            var data = new MetricAlertData(location, 3, true, scopes, new TimeSpan(0, 5, 0), new TimeSpan(0, 5, 0), null)
+            var metricAlertAction = new MetricAlertAction()
             {
+                ActionGroupId = actionGroup.Id.ToString(),
+                WebHookProperties = { new KeyValuePair<string, string>("key1","value1") }
             };
-            return data;
+            var metricCriteria = new MetricCriteria("High_CPU_80", "Percentage CPU", AggregationTypeEnum.Average, Operator.GreaterThan, 80.50){};
+            return new MetricAlertData(
+                location,
+                3,
+                true,
+                scopes,
+                new TimeSpan(0, 1, 0),
+                new TimeSpan(0, 5, 0),
+                new MetricAlertSingleResourceMultipleMetricCriteria() { AllOf = { metricCriteria } })
+            { Actions = { metricAlertAction } };
         }
         #endregion
     }

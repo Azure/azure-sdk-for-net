@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class AlertRuleCollectionTests : MonitorTestBase
     {
         public AlertRuleCollectionTests(bool isAsync)
-           : base(isAsync, RecordedTestMode.Record)
+           : base(isAsync)
         {
         }
 

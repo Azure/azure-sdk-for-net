@@ -125,7 +125,7 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.13.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.13.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.6.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.30" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.31" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
@@ -266,7 +266,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20220107.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20220119.2</TestProxyVersion>
   </PropertyGroup>
 
 </Project>
