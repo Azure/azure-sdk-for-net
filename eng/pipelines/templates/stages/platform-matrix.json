@@ -26,6 +26,10 @@
     "AdditionalTestArguments": [
         "/p:UseProjectReferenceToAzureClients=false",
         "/p:UseProjectReferenceToAzureClients=true"
+    ],
+    "BuildConfiguration": [
+        "Debug",
+        "Release"
     ]
   },
   "include": [

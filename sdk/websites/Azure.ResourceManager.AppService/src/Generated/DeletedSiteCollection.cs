@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -22,7 +24,6 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of DeletedSite and their operations over its parent. </summary>
     public partial class DeletedSiteCollection : ArmCollection, IEnumerable<DeletedSite>, IAsyncEnumerable<DeletedSite>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly GlobalRestOperations _globalRestClient;
@@ -33,17 +34,24 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSiteCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedSiteCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeletedSiteCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _globalRestClient = new GlobalRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _deletedWebAppsRestClient = new DeletedWebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DeletedSite.ResourceType, out string apiVersion);
+            _globalRestClient = new GlobalRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _deletedWebAppsRestClient = new DeletedWebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -68,7 +76,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _globalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedSite(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -98,7 +106,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _globalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedSite(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,9 +131,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _globalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeletedSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,14 +153,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _globalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeletedSite>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<DeletedSite>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +205,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(deletedSiteId));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeletedSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -226,7 +234,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _deletedWebAppsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,7 +249,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _deletedWebAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -267,7 +275,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _deletedWebAppsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -282,7 +290,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _deletedWebAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedSite(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

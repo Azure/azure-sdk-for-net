@@ -33,7 +33,7 @@ Once you have chosen and configured your credential, you can create instances of
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new FarmClient(new Url("https://<my-account-name>.farmbeats.azure.net"), credential);
+var client = new FarmClient(new Uri("https://<my-account-name>.farmbeats.azure.net"), credential);
 ```
 
 ## Key concepts

@@ -37,5 +37,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string DiskAccessId { get; set; }
         /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }
+        /// <summary> Policy for controlling export on the disk. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> List of supported capabilities (like accelerated networking) for the image from which the OS disk was created. </summary>
+        public SupportedCapabilities SupportedCapabilities { get; set; }
     }
 }

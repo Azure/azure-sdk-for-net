@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="identity">Identity for the resource.</param>
         /// <param name="authentication">This is optional input that contains
         /// the authentication that should be used to generate the
         /// namespace.</param>
@@ -62,9 +63,10 @@ namespace Microsoft.Azure.Management.ExtendedLocation.Models
         /// Location.</param>
         /// <param name="systemData">Metadata pertaining to creation and last
         /// modification of the resource</param>
-        public CustomLocation(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceProperty = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
+        public CustomLocation(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceProperty = default(string), string provisioningState = default(string), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
+            Identity = identity;
             Authentication = authentication;
             ClusterExtensionIds = clusterExtensionIds;
             DisplayName = displayName;
@@ -80,6 +82,12 @@ namespace Microsoft.Azure.Management.ExtendedLocation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets identity for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets this is optional input that contains the

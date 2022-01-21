@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,14 +40,18 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "AppServiceEnvironment"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal AppServiceEnvironment(ArmResource options, AppServiceEnvironmentData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal AppServiceEnvironment(ArmResource options, AppServiceEnvironmentData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironment"/> class. </summary>
@@ -55,8 +60,12 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceEnvironment(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironment"/> class. </summary>
@@ -68,15 +77,16 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceEnvironment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,6 +101,12 @@ namespace Azure.ResourceManager.AppService
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
                 return _data;
             }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
@@ -144,7 +160,17 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -152,17 +178,27 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// OperationId: AppServiceEnvironments_Delete
         /// <summary> Description for Delete an App Service Environment. </summary>
-        /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AppServiceEnvironmentDeleteOperation> DeleteAsync(bool? forceDelete = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AppServiceEnvironmentDeleteOperation> DeleteAsync(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.Delete");
             scope.Start();
@@ -185,10 +221,10 @@ namespace Azure.ResourceManager.AppService
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// OperationId: AppServiceEnvironments_Delete
         /// <summary> Description for Delete an App Service Environment. </summary>
-        /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AppServiceEnvironmentDeleteOperation Delete(bool? forceDelete = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AppServiceEnvironmentDeleteOperation Delete(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.Delete");
             scope.Start();
@@ -197,7 +233,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _appServiceEnvironmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken);
                 var operation = new AppServiceEnvironmentDeleteOperation(_clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -392,20 +428,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServiceEnvironments_ListDiagnostics
         /// <summary> Description for Get diagnostic information for an App Service Environment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<HostingEnvironmentDiagnostics>>> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HostingEnvironmentDiagnostics" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HostingEnvironmentDiagnostics> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetDiagnostics");
-            scope.Start();
-            try
+            async Task<Page<HostingEnvironmentDiagnostics>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _appServiceEnvironmentsRestClient.ListDiagnosticsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetDiagnostics");
+                scope.Start();
+                try
+                {
+                    var response = await _appServiceEnvironmentsRestClient.ListDiagnosticsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics
@@ -413,20 +454,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServiceEnvironments_ListDiagnostics
         /// <summary> Description for Get diagnostic information for an App Service Environment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<HostingEnvironmentDiagnostics>> GetDiagnostics(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HostingEnvironmentDiagnostics" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HostingEnvironmentDiagnostics> GetDiagnostics(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetDiagnostics");
-            scope.Start();
-            try
+            Page<HostingEnvironmentDiagnostics> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _appServiceEnvironmentsRestClient.ListDiagnostics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetDiagnostics");
+                scope.Start();
+                try
+                {
+                    var response = _appServiceEnvironmentsRestClient.ListDiagnostics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}
@@ -572,20 +618,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServiceEnvironments_ListOperations
         /// <summary> Description for List all currently running operations on the App Service Environment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<OperationInformation>>> GetOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationInformation> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetOperations");
-            scope.Start();
-            try
+            async Task<Page<OperationInformation>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _appServiceEnvironmentsRestClient.ListOperationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetOperations");
+                scope.Start();
+                try
+                {
+                    var response = await _appServiceEnvironmentsRestClient.ListOperationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/operations
@@ -593,20 +644,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServiceEnvironments_ListOperations
         /// <summary> Description for List all currently running operations on the App Service Environment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<OperationInformation>> GetOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationInformation> GetOperations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetOperations");
-            scope.Start();
-            try
+            Page<OperationInformation> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _appServiceEnvironmentsRestClient.ListOperations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetOperations");
+                scope.Start();
+                try
+                {
+                    var response = _appServiceEnvironmentsRestClient.ListOperations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/outboundNetworkDependenciesEndpoints
@@ -696,20 +752,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServiceEnvironments_GetPrivateLinkResources
         /// <summary> Description for Gets the private link resources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetPrivateLinkResources");
-            scope.Start();
-            try
+            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _appServiceEnvironmentsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = await _appServiceEnvironmentsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateLinkResources
@@ -717,20 +778,25 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: AppServiceEnvironments_GetPrivateLinkResources
         /// <summary> Description for Gets the private link resources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetPrivateLinkResources");
-            scope.Start();
-            try
+            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _appServiceEnvironmentsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetPrivateLinkResources");
+                scope.Start();
+                try
+                {
+                    var response = _appServiceEnvironmentsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/reboot

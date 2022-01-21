@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ConnectionMonitor and their operations over its parent. </summary>
     public partial class ConnectionMonitorCollection : ArmCollection, IEnumerable<ConnectionMonitor>, IAsyncEnumerable<ConnectionMonitor>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ConnectionMonitorsRestOperations _connectionMonitorsRestClient;
@@ -31,27 +31,34 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ConnectionMonitorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _connectionMonitorsRestClient = new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ConnectionMonitor.ResourceType, out string apiVersion);
+            _connectionMonitorsRestClient = new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => NetworkWatcher.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != NetworkWatcher.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkWatcher.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Create or update a connection monitor. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ConnectionMonitorCreateOrUpdateOperation CreateOrUpdate(string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
         {
             if (connectionMonitorName == null)
             {
@@ -67,7 +74,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _connectionMonitorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken);
-                var operation = new ConnectionMonitorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
+                var operation = new ConnectionMonitorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -80,13 +87,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Create or update a connection monitor. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ConnectionMonitorCreateOrUpdateOperation> CreateOrUpdateAsync(string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
         {
             if (connectionMonitorName == null)
             {
@@ -102,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _connectionMonitorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectionMonitorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
+                var operation = new ConnectionMonitorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 var response = _connectionMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConnectionMonitor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _connectionMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ConnectionMonitor(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,9 +191,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _connectionMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +213,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionMonitorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _connectionMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse())
-                    : Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ConnectionMonitor>(null, response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +265,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(connectionMonitorName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorCollection.Exists");
             scope.Start();
             try
             {
@@ -284,7 +291,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _connectionMonitorsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -307,7 +314,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _connectionMonitorsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(this, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

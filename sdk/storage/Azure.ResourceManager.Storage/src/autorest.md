@@ -17,6 +17,9 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
 
+override-operation-name:
+  StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
+
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
   

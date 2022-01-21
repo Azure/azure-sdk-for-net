@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualNetworkTap and their operations over its parent. </summary>
     public partial class VirtualNetworkTapCollection : ArmCollection, IEnumerable<VirtualNetworkTap>, IAsyncEnumerable<VirtualNetworkTap>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualNetworkTapsRestOperations _virtualNetworkTapsRestClient;
@@ -33,26 +33,33 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkTapCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkTapCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualNetworkTapCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualNetworkTapsRestClient = new VirtualNetworkTapsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(VirtualNetworkTap.ResourceType, out string apiVersion);
+            _virtualNetworkTapsRestClient = new VirtualNetworkTapsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates or updates a Virtual Network Tap. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkTapCreateOrUpdateOperation CreateOrUpdate(string tapName, VirtualNetworkTapData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkTapCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
         {
             if (tapName == null)
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworkTapsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters, cancellationToken);
-                var operation = new VirtualNetworkTapCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualNetworkTapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response);
+                var operation = new VirtualNetworkTapCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualNetworkTapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,12 +88,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a Virtual Network Tap. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkTapCreateOrUpdateOperation> CreateOrUpdateAsync(string tapName, VirtualNetworkTapData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkTapCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
         {
             if (tapName == null)
             {
@@ -102,7 +109,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualNetworkTapsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkTapCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualNetworkTapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response);
+                var operation = new VirtualNetworkTapCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualNetworkTapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualNetworkTapsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkTap(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualNetworkTapsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetworkTap(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,9 +191,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworkTapsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkTap>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualNetworkTap>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,14 +213,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tapName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkTapsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkTap>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualNetworkTap>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkTap(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +265,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tapName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapCollection.Exists");
             scope.Start();
             try
             {
@@ -284,7 +291,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _virtualNetworkTapsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +306,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _virtualNetworkTapsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +329,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _virtualNetworkTapsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,7 +344,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _virtualNetworkTapsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkTap(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

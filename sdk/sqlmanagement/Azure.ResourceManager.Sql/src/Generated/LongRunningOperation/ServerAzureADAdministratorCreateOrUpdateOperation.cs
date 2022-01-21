@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerAzureADAdministrator IOperationSource<ServerAzureADAdministrator>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerAzureADAdministrator(_operationBase, ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement));
+            var data = ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement);
+            return new ServerAzureADAdministrator(_operationBase, data);
         }
 
         async ValueTask<ServerAzureADAdministrator> IOperationSource<ServerAzureADAdministrator>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerAzureADAdministrator(_operationBase, ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement));
+            var data = ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement);
+            return new ServerAzureADAdministrator(_operationBase, data);
         }
     }
 }

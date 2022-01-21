@@ -269,7 +269,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     try
                     {
-                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                         break;
                     }
                     catch (Exception ex)
@@ -344,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 try
                 {
-                    await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                    await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                     break;
                 }
                 catch (Exception ex)
@@ -457,7 +457,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, operationId);
 
-                        link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         // Validate that the batch of messages is not too large to send.  This is done after the link is created to ensure

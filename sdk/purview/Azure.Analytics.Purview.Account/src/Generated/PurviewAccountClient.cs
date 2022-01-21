@@ -41,14 +41,8 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewAccountClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -369,6 +363,8 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> UpdateAccountPropertiesAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
@@ -482,6 +478,8 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response UpdateAccountProperties(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
@@ -627,6 +625,8 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> RegenerateAccessKeyAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
@@ -680,6 +680,8 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response RegenerateAccessKey(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
@@ -1112,6 +1114,24 @@ namespace Azure.Analytics.Purview.Account
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
+        }
+
+        private PurviewResourceSetRule _cachedPurviewResourceSetRule;
+
+        /// <summary> Initializes a new instance of PurviewCollection. </summary>
+        /// <param name="collectionName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
+        {
+            Argument.AssertNotNull(collectionName, nameof(collectionName));
+
+            return new PurviewCollection(_clientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName, _apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
+        public virtual PurviewResourceSetRule GetPurviewResourceSetRuleClient()
+        {
+            return Volatile.Read(ref _cachedPurviewResourceSetRule) ?? Interlocked.CompareExchange(ref _cachedPurviewResourceSetRule, new PurviewResourceSetRule(_clientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewResourceSetRule;
         }
 
         internal HttpMessage CreateGetAccountPropertiesRequest(RequestContext context)

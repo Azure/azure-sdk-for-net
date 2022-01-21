@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ServerAzureADAdministrator and their operations over its parent. </summary>
     public partial class ServerAzureADAdministratorCollection : ArmCollection, IEnumerable<ServerAzureADAdministrator>, IAsyncEnumerable<ServerAzureADAdministrator>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServerAzureADAdministratorsRestOperations _serverAzureADAdministratorsRestClient;
@@ -31,16 +31,23 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ServerAzureADAdministratorCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServerAzureADAdministratorCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerAzureADAdministratorCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAzureADAdministratorsRestClient = new ServerAzureADAdministratorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ServerAzureADAdministrator.ResourceType, out string apiVersion);
+            _serverAzureADAdministratorsRestClient = new ServerAzureADAdministratorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SqlServer.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SqlServer.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -48,12 +55,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerAzureADAdministrators_CreateOrUpdate
         /// <summary> Creates or updates an existing Azure Active Directory administrator. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="parameters"> The requested Azure Active Directory administrator Resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ServerAzureADAdministratorCreateOrUpdateOperation CreateOrUpdate(AdministratorName administratorName, ServerAzureADAdministratorData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServerAzureADAdministratorCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, AdministratorName administratorName, ServerAzureADAdministratorData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -65,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverAzureADAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken);
-                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
+                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,12 +88,12 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: ServerAzureADAdministrators_CreateOrUpdate
         /// <summary> Creates or updates an existing Azure Active Directory administrator. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="parameters"> The requested Azure Active Directory administrator Resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerAzureADAdministratorCreateOrUpdateOperation> CreateOrUpdateAsync(AdministratorName administratorName, ServerAzureADAdministratorData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServerAzureADAdministratorCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, AdministratorName administratorName, ServerAzureADAdministratorData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -98,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverAzureADAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _serverAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
+                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverAzureADAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADAdministrator(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +156,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverAzureADAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerAzureADAdministrator(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,9 +175,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverAzureADAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerAzureADAdministrator>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerAzureADAdministrator>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,14 +191,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerAzureADAdministrator>> GetIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _serverAzureADAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerAzureADAdministrator>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ServerAzureADAdministrator>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Exists");
             scope.Start();
             try
             {
@@ -253,7 +260,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _serverAzureADAdministratorsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -268,7 +275,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _serverAzureADAdministratorsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -294,7 +301,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _serverAzureADAdministratorsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,7 +316,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _serverAzureADAdministratorsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

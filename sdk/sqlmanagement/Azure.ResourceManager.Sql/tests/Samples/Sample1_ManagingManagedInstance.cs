@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 
             this.resourceGroup = resourceGroup;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 Location = AzureLocation.WestUS2,
             };
             string networkSecurityGroupName = "myNetworkSecurityGroup";
-            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
             RouteTableData routeTableData = new RouteTableData()
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 Location = AzureLocation.WestUS2,
             };
             string routeTableName = "myRouteTable";
-            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(routeTableName, routeTableData);
+            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
 
             //3. create vnet(subnet binding NetworkSecurityGroup and RouteTable)
             var vnetData = new VirtualNetworkData()
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 },
             };
             string vnetName = "myVnet";
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 
             //4. create ManagedInstance
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 ZoneRedundant = false,
             };
             string managedInstanceName = "myManagedInstance";
-            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(managedInstanceName, data);
+            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
             ManagedInstance managedInstance = managedInstanceLro.Value;
             #endregion
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
             ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
-            await managedInstance.DeleteAsync();
+            await managedInstance.DeleteAsync(true);
             #endregion
         }
     }

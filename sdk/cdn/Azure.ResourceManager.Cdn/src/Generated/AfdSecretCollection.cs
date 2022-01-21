@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of AfdSecret and their operations over its parent. </summary>
     public partial class AfdSecretCollection : ArmCollection, IEnumerable<AfdSecret>, IAsyncEnumerable<AfdSecret>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AfdSecretsRestOperations _afdSecretsRestClient;
@@ -31,26 +31,33 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecretCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AfdSecretCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdSecretCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _afdSecretsRestClient = new AfdSecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(AfdSecret.ResourceType, out string apiVersion);
+            _afdSecretsRestClient = new AfdSecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Profile.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Profile.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Profile.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates a new Secret within the specified profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="secret"> The Secret properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
-        public virtual AfdSecretCreateOperation CreateOrUpdate(string secretName, AfdSecretData secret, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual AfdSecretCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             if (secretName == null)
             {
@@ -66,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdSecretsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret, cancellationToken);
-                var operation = new AfdSecretCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecretsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response);
+                var operation = new AfdSecretCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdSecretsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -79,12 +86,12 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new Secret within the specified profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="secret"> The Secret properties. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secret"/> is null. </exception>
-        public async virtual Task<AfdSecretCreateOperation> CreateOrUpdateAsync(string secretName, AfdSecretData secret, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdSecretCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string secretName, AfdSecretData secret, CancellationToken cancellationToken = default)
         {
             if (secretName == null)
             {
@@ -100,7 +107,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdSecretsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecretCreateOperation(Parent, _clientDiagnostics, Pipeline, _afdSecretsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response);
+                var operation = new AfdSecretCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdSecretsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, secret).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +137,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = _afdSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdSecret(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
                 var response = await _afdSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdSecret(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,9 +189,9 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecret>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,14 +211,14 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _afdSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AfdSecret>(null, response.GetRawResponse())
-                    : Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<AfdSecret>(null, response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AfdSecretCollection.Exists");
             scope.Start();
             try
             {
@@ -282,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _afdSecretsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +304,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = _afdSecretsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _afdSecretsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,7 +342,7 @@ namespace Azure.ResourceManager.Cdn
                 try
                 {
                     var response = await _afdSecretsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdSecret(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
