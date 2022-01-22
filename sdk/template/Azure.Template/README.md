@@ -72,20 +72,12 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 * [Get the thing](#get-the-thing)
 * [List the things](#list-the-things)
 
-### Create the thing
-
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
-
-```Python
-thing = client.create_thing(id, name)
-thing.save()
-```
-
-### Get the thing
+### Get a secret
 
 The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
 ```C# Snippet:GetSecret
+string endpoint = "https://myvault.vault.azure.net";
 var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
 
 SecretBundle secret = client.GetSecret("TestSecret");
