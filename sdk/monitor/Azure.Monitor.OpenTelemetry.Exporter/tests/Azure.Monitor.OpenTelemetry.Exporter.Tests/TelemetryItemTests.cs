@@ -11,25 +11,10 @@ using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class TelemetryItemTests
+    public class TelemetryItemTests : ActivityListenerInitializer
     {
-        private const string ResourcePropertyName = "OTel.Resource";
         private const string ActivitySourceName = "TelemetryItemTests";
         private const string ActivityName = "TestActivity";
-
-        static TelemetryItemTests()
-        {
-            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
-            Activity.ForceDefaultIdFormat = true;
-
-            var listener = new ActivityListener
-            {
-                ShouldListenTo = _ => true,
-                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
-            };
-
-            ActivitySource.AddActivityListener(listener);
-        }
 
         [Fact]
         public void GeneratePartAEnvelope_DefaultActivity_DefaultResource()
@@ -43,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var resource = CreateTestResource();
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
@@ -70,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
             var resourceParser = new ResourceParser();
@@ -97,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
             var resource = CreateTestResource();
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
             var resourceParser = new ResourceParser();
@@ -143,7 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 expectedOperationName = $"GET {route}";
             }
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
@@ -166,7 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/path?id=1");
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
@@ -186,7 +171,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             activity.DisplayName = "displayname";
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
@@ -205,7 +190,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
@@ -224,7 +209,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             activity.SetTag(SemanticConventions.AttributeNetPeerIp, "127.0.0.1");
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
@@ -244,7 +229,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var userAgent = "Mozilla / 5.0(Windows NT 10.0;WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 91.0.4472.101 Safari / 537.36";
             activity.SetTag(SemanticConventions.AttributeHttpUserAgent, userAgent);
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
@@ -261,7 +246,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 null,
                 startTime: DateTime.UtcNow);
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
             Assert.Null(telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
@@ -277,7 +262,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 null,
                 startTime: DateTime.UtcNow);
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
 
             Assert.Null(telemetryItem.Tags["ai.user.userAgent"]);
@@ -294,7 +279,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
             var resource = CreateTestResource();
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
             var resourceParser = new ResourceParser();
@@ -315,7 +300,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
             var resource = CreateTestResource(null, null, "serviceinstance");
 
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
             var resourceParser = new ResourceParser();
@@ -342,10 +327,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
             }
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             var telemetryItem = new TelemetryItem(activity, ref monitorTags);
-            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
+            var requestData = new RequestData(2, activity, ref monitorTags);
 
             Assert.Equal(requestData.Name, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
