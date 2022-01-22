@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +16,11 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
+        private List<int>? _nonErrorStatusCodes;
+
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
+
+        internal bool HasResponseClassifier { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -51,6 +57,57 @@ namespace Azure
         {
             Policies ??= new();
             Policies.Add((position, policy));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="statusCodes">Status codes that will not be considered to be error status codes for the scope of the service method call.</param>
+        public void NotError(IEnumerable<int> statusCodes)
+        {
+            _nonErrorStatusCodes ??= new();
+            _nonErrorStatusCodes.AddRange(statusCodes);
+            HasResponseClassifier = true;
+        }
+
+        internal ResponseClassifier GetResponseClassifier(ResponseClassifier inner)
+        {
+            // TODO: come up with something cleaner here
+            return new PerCallResponseClassifier(inner, _nonErrorStatusCodes);
+        }
+
+        private class PerCallResponseClassifier : ResponseClassifier
+        {
+            private readonly ResponseClassifier _inner;
+            private readonly IEnumerable<int> _nonErrorStatusCodes;
+
+            public PerCallResponseClassifier(ResponseClassifier inner, IEnumerable<int> statusCodes)
+            {
+                _inner = inner;
+                _nonErrorStatusCodes = statusCodes;
+            }
+
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                return _inner.IsRetriableResponse(message);
+            }
+
+            public override bool IsRetriableException(Exception exception)
+            {
+                return _inner.IsRetriableException(exception);
+            }
+
+            public override bool IsRetriable(HttpMessage message, Exception exception)
+            {
+                return _inner.IsRetriable(message, exception);
+            }
+
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                if (_nonErrorStatusCodes.Contains(message.Response.Status))
+                    return false;
+
+                return _inner.IsErrorResponse(message);
+            }
         }
     }
 }

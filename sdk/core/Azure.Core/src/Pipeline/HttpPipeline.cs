@@ -104,7 +104,7 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage(RequestContext? context)
         {
             var message = CreateMessage();
-            message.AddPolicies(context);
+            message.ApplyRequestContext(context);
             return message;
         }
 
