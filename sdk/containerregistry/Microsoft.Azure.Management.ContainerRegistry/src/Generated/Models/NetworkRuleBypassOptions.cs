@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for PipelineSourceType.
+    /// Defines values for NetworkRuleBypassOptions.
     /// </summary>
-    public static class PipelineSourceType
+    public static class NetworkRuleBypassOptions
     {
-        public const string AzureStorageBlobContainer = "AzureStorageBlobContainer";
+        public const string AzureServices = "AzureServices";
+        public const string None = "None";
     }
 }

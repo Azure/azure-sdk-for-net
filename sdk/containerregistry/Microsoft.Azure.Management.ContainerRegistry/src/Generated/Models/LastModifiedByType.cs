@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for TokenStatus.
+    /// Defines values for LastModifiedByType.
     /// </summary>
-    public static class TokenStatus
+    public static class LastModifiedByType
     {
-        public const string Enabled = "enabled";
-        public const string Disabled = "disabled";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

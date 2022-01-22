@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="status">The status of the webhook at the time the
         /// operation was called. Possible values include: 'enabled',
         /// 'disabled'</param>
@@ -53,8 +55,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// webhook at the time the operation was called. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Canceled'</param>
-        public Webhook(string location, IList<string> actions, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string status = default(string), string scope = default(string), string provisioningState = default(string))
-            : base(location, id, name, type, tags)
+        public Webhook(string location, IList<string> actions, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string status = default(string), string scope = default(string), string provisioningState = default(string))
+            : base(location, id, name, type, tags, systemData)
         {
             Status = status;
             Scope = scope;
