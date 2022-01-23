@@ -13,8 +13,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class TraceHelper
     {
-        // TODO: Remove this constant. This cannot be constant and input should come from exporter options.
-        // This also needs a change in schema as currently the version integer and needs to changed as float or string.
         private const int version = 2;
         private const int MaxlinksAllowed = 100;
 

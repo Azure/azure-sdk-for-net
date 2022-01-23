@@ -11,8 +11,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class LogsHelper
     {
-        // TODO: Remove this constant. This cannot be constant and input should come from exporter options.
-        // This also needs a change in schema as currently the version integer and needs to changed as float or string.
         private const int version = 2;
 
         internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, string roleName, string roleInstance, string instrumentationKey)
