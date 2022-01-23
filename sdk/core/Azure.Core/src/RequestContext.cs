@@ -17,6 +17,7 @@ namespace Azure
     public class RequestContext
     {
         private List<int>? _nonErrorStatusCodes;
+        private ResponseClassifier _responseClassifier;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
