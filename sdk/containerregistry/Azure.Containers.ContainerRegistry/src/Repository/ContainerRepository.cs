@@ -76,17 +76,20 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<ContainerRepositoryProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetProperties)}");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext()
             {
-                return await _restClient.GetPropertiesAsync(Name, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken,
+                ErrorOptions = ErrorOptions.NoThrow
+            };
+
+            // Call LLC service method
+            Response response = await _restClient.GetPropertiesAsync(Name, context).ConfigureAwait(false);
+
+            // Deserialize model type
+            ContainerRepositoryProperties value = ContainerRepositoryProperties.FromResponse(response);
+
+            // Create Response<T> to return
+            return Response.FromValue(value, response);
         }
 
         /// <summary> Get the properties of the repository. </summary>

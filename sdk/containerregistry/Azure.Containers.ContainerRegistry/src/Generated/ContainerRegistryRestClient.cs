@@ -470,6 +470,38 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal HttpMessage CreateGetPropertiesRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+
+        public async Task<Response> GetPropertiesAsync(string name, RequestContext context = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetProperties)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPropertiesRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateDeleteRepositoryRequest(string name)
         {
             var message = _pipeline.CreateMessage();

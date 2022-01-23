@@ -13,6 +13,12 @@ namespace Azure.Containers.ContainerRegistry
 {
     public partial class ContainerRepositoryProperties
     {
+        internal static ContainerRepositoryProperties FromResponse(Response response)
+        {
+            var doc = JsonDocument.Parse(response.Content.ToString());
+            return DeserializeContainerRepositoryProperties(doc.RootElement);
+        }
+
         internal static ContainerRepositoryProperties DeserializeContainerRepositoryProperties(JsonElement element)
         {
             string registry = default;
