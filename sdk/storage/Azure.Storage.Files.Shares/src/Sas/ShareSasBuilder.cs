@@ -152,7 +152,7 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// This contains the list of permissions that can be set for a file's access policy.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -172,7 +172,7 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Container Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// This contains the list of permissions that can be set for a file's access policy.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
