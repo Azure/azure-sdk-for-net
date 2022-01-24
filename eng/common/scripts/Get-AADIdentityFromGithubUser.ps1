@@ -24,7 +24,7 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$GithubUser
 )
-. "${PSScriptRoot}\logging.ps1"
+. "${PSScriptRoot}\common.ps1"
 
 $OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links/github/$GithubUser"
 
