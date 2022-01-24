@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
             IEnumerable<ScaleRule> rules = new List<ScaleRule>()
             {
-                new ScaleRule(new MetricTrigger("CpuPercentage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.Metric/namespaces/testnamespacemgmt7892", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 80.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ChangeCount, "1", TimeSpan.FromMinutes(20)))
+                new ScaleRule(new MetricTrigger("AbandonMessage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 70.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
             };
             IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
             {

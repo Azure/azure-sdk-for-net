@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Tests
 {
     public class MonitorTestBase : ManagementRecordedTestBase<MonitorManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS2;
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription { get; private set; }
 

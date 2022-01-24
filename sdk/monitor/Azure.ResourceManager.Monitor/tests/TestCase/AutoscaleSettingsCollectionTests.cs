@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Tests
 {
     public class AutoscaleSettingsCollectionTests : MonitorTestBase
     {
-        public AutoscaleSettingsCollectionTests(bool isAsync)
+        public AutoscaleSettingsCollectionTests(bool isAsync, RecordedTestMode mode)
            : base(isAsync)
         {
         }
