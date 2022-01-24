@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("placementProfile");
                 writer.WriteObjectValue(PlacementProfile);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile");
-                writer.WriteObjectValue(OsProfile);
+                writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> templateId = default;
             Optional<string> vCenterId = default;
             Optional<PlacementProfile> placementProfile = default;
-            Optional<OsProfile> osProfile = default;
+            Optional<OSProfile> osProfile = default;
             Optional<HardwareProfile> hardwareProfile = default;
             Optional<NetworkProfile> networkProfile = default;
             Optional<StorageProfile> storageProfile = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osProfile = OsProfile.DeserializeOsProfile(property0.Value);
+                            osProfile = OSProfile.DeserializeOSProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"))

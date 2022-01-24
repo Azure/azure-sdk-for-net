@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of IpGroup and their operations over its parent. </summary>
     public partial class IpGroupCollection : ArmCollection, IEnumerable<IpGroup>, IAsyncEnumerable<IpGroup>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly IpGroupsRestOperations _ipGroupsRestClient;
@@ -33,31 +33,36 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of IpGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IpGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal IpGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _ipGroupsRestClient = new IpGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(IpGroup.ResourceType, out string apiVersion);
+            _ipGroupsRestClient = new IpGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates or updates an ipGroups in a specified resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual IpGroupCreateOrUpdateOperation CreateOrUpdate(string ipGroupsName, IpGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual IpGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -68,7 +73,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ipGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters, cancellationToken);
-                var operation = new IpGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ipGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response);
+                var operation = new IpGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _ipGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,17 +86,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates an ipGroups in a specified resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<IpGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string ipGroupsName, IpGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<IpGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _ipGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new IpGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _ipGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response);
+                var operation = new IpGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _ipGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,13 +121,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual Response<IpGroup> Get(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.Get");
             scope.Start();
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ipGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IpGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,13 +147,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public async virtual Task<Response<IpGroup>> GetAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.Get");
             scope.Start();
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ipGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new IpGroup(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,22 +173,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual Response<IpGroup> GetIfExists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _ipGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<IpGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IpGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,22 +199,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public async virtual Task<Response<IpGroup>> GetIfExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _ipGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<IpGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<IpGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,13 +225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.Exists");
             scope.Start();
@@ -256,15 +249,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("IpGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +281,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _ipGroupsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = _ipGroupsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -328,7 +319,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _ipGroupsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,7 +334,7 @@ namespace Azure.ResourceManager.Network
                 try
                 {
                     var response = await _ipGroupsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IpGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

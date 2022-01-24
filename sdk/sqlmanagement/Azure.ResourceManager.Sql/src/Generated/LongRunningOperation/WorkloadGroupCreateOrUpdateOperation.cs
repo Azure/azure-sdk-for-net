@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         WorkloadGroup IOperationSource<WorkloadGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new WorkloadGroup(_operationBase, WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement));
+            var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
+            return new WorkloadGroup(_operationBase, data);
         }
 
         async ValueTask<WorkloadGroup> IOperationSource<WorkloadGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new WorkloadGroup(_operationBase, WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement));
+            var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
+            return new WorkloadGroup(_operationBase, data);
         }
     }
 }

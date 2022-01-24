@@ -22,6 +22,8 @@ namespace Azure.Core.TestFramework
         public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
         public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new();
 
+        public List<HeaderTransform> HeaderTransforms = new();
+
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
         //  when updating the JsonPathSanitizer logic to avoid changing date formats when deserializing requests.

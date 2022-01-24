@@ -44,10 +44,7 @@ namespace Azure.MixedReality.Authentication
             uri.AppendPath("/Accounts/", false);
             uri.AppendPath(accountId, true);
             uri.AppendPath("/token", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (tokenRequestOptions?.ClientRequestId != null)
             {

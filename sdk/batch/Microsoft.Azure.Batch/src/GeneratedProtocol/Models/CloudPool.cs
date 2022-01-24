@@ -57,12 +57,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// performing the last resize on the Pool.</param>
         /// <param name="currentDedicatedNodes">The number of dedicated Compute
         /// Nodes currently in the Pool.</param>
-        /// <param name="currentLowPriorityNodes">The number of low-priority
-        /// Compute Nodes currently in the Pool.</param>
+        /// <param name="currentLowPriorityNodes">The number of
+        /// Spot/Low-priority Compute Nodes currently in the Pool.</param>
         /// <param name="targetDedicatedNodes">The desired number of dedicated
         /// Compute Nodes in the Pool.</param>
         /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority Compute Nodes in the Pool.</param>
+        /// Spot/Low-priority Compute Nodes in the Pool.</param>
         /// <param name="enableAutoScale">Whether the Pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">A formula for the desired number of
@@ -302,12 +302,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? CurrentDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of low-priority Compute Nodes currently in
-        /// the Pool.
+        /// Gets or sets the number of Spot/Low-priority Compute Nodes
+        /// currently in the Pool.
         /// </summary>
         /// <remarks>
-        /// low-priority Compute Nodes which have been preempted are included
-        /// in this count.
+        /// Spot/Low-priority Compute Nodes which have been preempted are
+        /// included in this count.
         /// </remarks>
         [JsonProperty(PropertyName = "currentLowPriorityNodes")]
         public int? CurrentLowPriorityNodes { get; set; }
@@ -320,8 +320,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority Compute Nodes in
-        /// the Pool.
+        /// Gets or sets the desired number of Spot/Low-priority Compute Nodes
+        /// in the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetLowPriorityNodes")]
         public int? TargetLowPriorityNodes { get; set; }

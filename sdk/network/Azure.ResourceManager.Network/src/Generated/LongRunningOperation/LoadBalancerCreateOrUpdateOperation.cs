@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         LoadBalancer IOperationSource<LoadBalancer>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new LoadBalancer(_operationBase, LoadBalancerData.DeserializeLoadBalancerData(document.RootElement));
+            var data = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
+            return new LoadBalancer(_operationBase, data);
         }
 
         async ValueTask<LoadBalancer> IOperationSource<LoadBalancer>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new LoadBalancer(_operationBase, LoadBalancerData.DeserializeLoadBalancerData(document.RootElement));
+            var data = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
+            return new LoadBalancer(_operationBase, data);
         }
     }
 }

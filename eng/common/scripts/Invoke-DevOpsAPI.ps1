@@ -137,7 +137,7 @@ function Add-RetentionLease {
     $RunId,
     $OwnerId,
     $DaysValid,
-    $Base64AuthToken
+    $Base64EncodedAuthToken
   )
 
   $parameter = @{}

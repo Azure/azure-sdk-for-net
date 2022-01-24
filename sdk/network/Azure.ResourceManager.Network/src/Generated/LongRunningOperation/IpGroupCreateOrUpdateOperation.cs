@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         IpGroup IOperationSource<IpGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new IpGroup(_operationBase, IpGroupData.DeserializeIpGroupData(document.RootElement));
+            var data = IpGroupData.DeserializeIpGroupData(document.RootElement);
+            return new IpGroup(_operationBase, data);
         }
 
         async ValueTask<IpGroup> IOperationSource<IpGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new IpGroup(_operationBase, IpGroupData.DeserializeIpGroupData(document.RootElement));
+            var data = IpGroupData.DeserializeIpGroupData(document.RootElement);
+            return new IpGroup(_operationBase, data);
         }
     }
 }

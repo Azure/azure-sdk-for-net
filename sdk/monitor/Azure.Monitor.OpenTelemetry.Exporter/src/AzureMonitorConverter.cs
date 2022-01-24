@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [TelemetryType.Event] = "EventData",
         };
 
-        internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, Resource resource, string instrumentationKey)
+        internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -35,7 +35,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 MonitorBase telemetryData = new MonitorBase();
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
+                telemetryItem = new TelemetryItem(activity, ref monitorTags);
+                telemetryItem.InstrumentationKey = instrumentationKey;
+                telemetryItem.SetResource(roleName, roleInstance);
 
                 switch (activity.GetTelemetryType())
                 {
@@ -56,14 +58,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItems;
         }
 
-        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, string instrumentationKey)
+        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, string roleName, string roleInstance, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = TelemetryPartA.GetTelemetryItem(logRecord, instrumentationKey);
+                telemetryItem = new TelemetryItem(logRecord);
+                telemetryItem.InstrumentationKey = instrumentationKey;
+                telemetryItem.SetResource(roleName, roleInstance);
                 telemetryItem.Data = new MonitorBase
                 {
                     BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Message],

@@ -8,10 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The EntireDetectResponse. </summary>
+    /// <summary> The response of entire anomaly detection. </summary>
     public partial class EntireDetectResponse
     {
         /// <summary> Initializes a new instance of EntireDetectResponse. </summary>
@@ -57,6 +58,7 @@ namespace Azure.AI.AnomalyDetector.Models
             IsAnomaly = isAnomaly.ToList();
             IsNegativeAnomaly = isNegativeAnomaly.ToList();
             IsPositiveAnomaly = isPositiveAnomaly.ToList();
+            Severity = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of EntireDetectResponse. </summary>
@@ -67,7 +69,8 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <param name="isAnomaly"> IsAnomaly contains anomaly properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series. </param>
         /// <param name="isNegativeAnomaly"> IsNegativeAnomaly contains anomaly status in negative direction for each input point. True means a negative anomaly has been detected. A negative anomaly means the point is detected as an anomaly and its real value is smaller than the expected one. The index of the array is consistent with the input series. </param>
         /// <param name="isPositiveAnomaly"> IsPositiveAnomaly contain anomaly status in positive direction for each input point. True means a positive anomaly has been detected. A positive anomaly means the point is detected as an anomaly and its real value is larger than the expected one. The index of the array is consistent with the input series. </param>
-        internal EntireDetectResponse(int period, IReadOnlyList<float> expectedValues, IReadOnlyList<float> upperMargins, IReadOnlyList<float> lowerMargins, IReadOnlyList<bool> isAnomaly, IReadOnlyList<bool> isNegativeAnomaly, IReadOnlyList<bool> isPositiveAnomaly)
+        /// <param name="severity"> The severity score for each input point. The larger the value is, the more sever the anomaly is. For normal points, the &quot;severity&quot; is always 0. </param>
+        internal EntireDetectResponse(int period, IReadOnlyList<float> expectedValues, IReadOnlyList<float> upperMargins, IReadOnlyList<float> lowerMargins, IReadOnlyList<bool> isAnomaly, IReadOnlyList<bool> isNegativeAnomaly, IReadOnlyList<bool> isPositiveAnomaly, IReadOnlyList<float> severity)
         {
             Period = period;
             ExpectedValues = expectedValues;
@@ -76,6 +79,7 @@ namespace Azure.AI.AnomalyDetector.Models
             IsAnomaly = isAnomaly;
             IsNegativeAnomaly = isNegativeAnomaly;
             IsPositiveAnomaly = isPositiveAnomaly;
+            Severity = severity;
         }
 
         /// <summary> Frequency extracted from the series, zero means no recurrent pattern has been found. </summary>
@@ -92,5 +96,7 @@ namespace Azure.AI.AnomalyDetector.Models
         public IReadOnlyList<bool> IsNegativeAnomaly { get; }
         /// <summary> IsPositiveAnomaly contain anomaly status in positive direction for each input point. True means a positive anomaly has been detected. A positive anomaly means the point is detected as an anomaly and its real value is larger than the expected one. The index of the array is consistent with the input series. </summary>
         public IReadOnlyList<bool> IsPositiveAnomaly { get; }
+        /// <summary> The severity score for each input point. The larger the value is, the more sever the anomaly is. For normal points, the &quot;severity&quot; is always 0. </summary>
+        public IReadOnlyList<float> Severity { get; }
     }
 }

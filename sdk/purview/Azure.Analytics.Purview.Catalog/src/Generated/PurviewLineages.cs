@@ -80,6 +80,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
@@ -143,6 +146,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
@@ -205,6 +211,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
             try
@@ -267,6 +276,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
+
             using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
             try

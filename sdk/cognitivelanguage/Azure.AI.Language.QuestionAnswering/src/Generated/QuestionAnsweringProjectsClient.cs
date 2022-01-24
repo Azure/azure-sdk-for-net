@@ -42,14 +42,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new QuestionAnsweringClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -101,6 +95,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetProjectDetailsAsync(string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
             scope.Start();
             try
@@ -157,6 +153,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetProjectDetails(string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
             scope.Start();
             try
@@ -224,6 +222,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
             scope.Start();
             try
@@ -291,6 +292,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
             scope.Start();
             try
@@ -357,6 +361,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
             scope.Start();
             try
@@ -423,6 +429,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetDeleteStatus(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
             scope.Start();
             try
@@ -491,6 +499,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
             scope.Start();
             try
@@ -559,6 +570,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
             scope.Start();
             try
@@ -626,6 +640,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
             scope.Start();
             try
@@ -693,6 +710,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
             scope.Start();
             try
@@ -761,6 +781,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
             scope.Start();
             try
@@ -829,6 +853,10 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
             scope.Start();
             try
@@ -882,6 +910,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> UpdateSynonymsAsync(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
             scope.Start();
             try
@@ -935,6 +966,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response UpdateSynonyms(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
             scope.Start();
             try
@@ -1002,6 +1036,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
             scope.Start();
             try
@@ -1069,6 +1106,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
             scope.Start();
             try
@@ -1136,6 +1176,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
             scope.Start();
             try
@@ -1203,6 +1246,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
             scope.Start();
             try
@@ -1257,6 +1303,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Response> AddFeedbackAsync(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
             scope.Start();
             try
@@ -1311,6 +1360,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Response AddFeedback(string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
             scope.Start();
             try
@@ -1493,10 +1545,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1555,10 +1604,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetDeployments(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1616,10 +1662,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1677,10 +1720,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1743,10 +1783,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1809,10 +1846,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetSources(string projectName, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1907,10 +1941,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2005,10 +2036,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2054,6 +2082,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(bool waitForCompletion, string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
             try
@@ -2097,6 +2127,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> DeleteProject(bool waitForCompletion, string projectName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
             scope.Start();
             try
@@ -2142,6 +2174,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> ExportAsync(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
             try
@@ -2187,6 +2221,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> Export(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
             scope.Start();
             try
@@ -2295,6 +2331,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> ImportAsync(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
             try
@@ -2403,6 +2441,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> Import(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
             scope.Start();
             try
@@ -2447,6 +2487,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> DeployProjectAsync(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
             try
@@ -2491,6 +2534,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> DeployProject(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
             scope.Start();
             try
@@ -2548,6 +2594,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
             scope.Start();
             try
@@ -2605,6 +2654,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> UpdateSources(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
             scope.Start();
             try
@@ -2684,6 +2736,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
             scope.Start();
             try
@@ -2763,6 +2818,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual Operation<BinaryData> UpdateQnas(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _clientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
             scope.Start();
             try

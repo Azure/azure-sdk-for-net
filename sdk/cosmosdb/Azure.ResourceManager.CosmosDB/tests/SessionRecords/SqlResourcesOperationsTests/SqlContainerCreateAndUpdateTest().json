@@ -434,7 +434,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -481,7 +481,7 @@
             "_rid": "rbczAOyNJUo=",
             "_ts": 1630403296,
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/",
-            "_etag": "\u00220000d60c-0000-0100-0000-612dfae00000\u0022",
+            "_etag": "\"0000d60c-0000-0100-0000-612dfae00000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",
@@ -550,7 +550,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -597,7 +597,7 @@
             "_rid": "rbczAOyNJUo=",
             "_ts": 1630403296,
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/",
-            "_etag": "\u00220000d60c-0000-0100-0000-612dfae00000\u0022",
+            "_etag": "\"0000d60c-0000-0100-0000-612dfae00000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",
@@ -649,7 +649,7 @@
       "ResponseBody": {
         "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/Default-CosmosDB-9950/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7760/sqlDatabases/databaseName7923/containers/containerName1460/throughputSettings/default",
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings",
-        "name": "AD\u002BR",
+        "name": "AD+R",
         "properties": {
           "resource": {
             "throughput": 700,
@@ -1059,7 +1059,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -1106,7 +1106,7 @@
             "_rid": "rbczAOyNJUo=",
             "_ts": 1630403308,
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/",
-            "_etag": "\u00220000db0c-0000-0100-0000-612dfaec0000\u0022",
+            "_etag": "\"0000db0c-0000-0100-0000-612dfaec0000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",
@@ -1175,7 +1175,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -1222,7 +1222,7 @@
             "_rid": "rbczAOyNJUo=",
             "_ts": 1630403308,
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/",
-            "_etag": "\u00220000db0c-0000-0100-0000-612dfaec0000\u0022",
+            "_etag": "\"0000db0c-0000-0100-0000-612dfaec0000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",
@@ -1274,7 +1274,7 @@
       "ResponseBody": {
         "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/Default-CosmosDB-9950/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7760/sqlDatabases/databaseName7923/containers/containerName1460/throughputSettings/default",
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings",
-        "name": "AD\u002BR",
+        "name": "AD+R",
         "properties": {
           "resource": {
             "throughput": 1000,

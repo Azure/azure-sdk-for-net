@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete();
+                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(true);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             MongoDBDatabase database = await MongoDBDatabaseCollection.GetIfExistsAsync(_databaseName);
             if (database != null)
             {
-                await database.DeleteAsync();
+                await database.DeleteAsync(true);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            database = await (await MongoDBDatabaseCollection.CreateOrUpdateAsync(_databaseName, updateOptions)).WaitForCompletionAsync();
+            database = (await MongoDBDatabaseCollection.CreateOrUpdateAsync(true, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, database.Data.Resource.Id);
             database2 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
             VerifyMongoDBDatabases(database, database2);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountMongodbDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountMongodbDatabaseThroughputSetting throughput2 = await throughput.CreateOrUpdate(false, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateMongoDBDatabaseToAutoscale().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = await throughput.MigrateMongoDBDatabaseToAutoscale(false).WaitForCompletionAsync();
             AssertAutoscale(throughputData);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountMongodbDatabaseThroughputSetting throughput = await database.GetDatabaseAccountMongodbDatabaseThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateMongoDBDatabaseToManualThroughput().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = await throughput.MigrateMongoDBDatabaseToManualThroughput(false).WaitForCompletionAsync();
             AssertManualThroughput(throughputData);
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBDatabaseDelete()
         {
             var database = await CreateMongoDBDatabase(null);
-            await database.DeleteAsync();
+            await database.DeleteAsync(true);
 
             database = await MongoDBDatabaseCollection.GetIfExistsAsync(_databaseName);
             Assert.Null(database);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var databaseLro = await collection.CreateOrUpdateAsync(name, mongoDBDatabaseCreateUpdateOptions);
+            var databaseLro = await collection.CreateOrUpdateAsync(true, name, mongoDBDatabaseCreateUpdateOptions);
             return databaseLro.Value;
         }
 
