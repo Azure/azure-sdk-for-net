@@ -93,7 +93,8 @@ function New-DataPlanePackageFolder() {
     }
 
     $libraryName = $namespaceArray[-1]
-    $dotnetNewCmd = "dotnet new dataplane --libraryName $libraryName --swagger $inputfile --includeCI true --force"
+    $groupName = $namespaceArray[1]
+    $dotnetNewCmd = "dotnet new dataplane --libraryName $libraryName --groupName $groupName --swagger $inputfile --includeCI true --force"
     if ($securityScope -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --securityScopes $securityScope";
     }

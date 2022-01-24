@@ -38,6 +38,13 @@
     }
   ],
   "symbols": {
+    "groupName": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": true,
+      "description": "The Azure namespace group the service belongs to. e.g. IoT",
+      "replaces": "GroupName"
+    },
     "libraryName": {
       "type": "parameter",
       "datatype":"text",
@@ -88,9 +95,38 @@
       "datatype": "text",
       "description": "Renames files containing 'Template'",
       "valueSource": "libraryName",
-      "valueTransform": "ProviderShortNameForm",
+      "valueTransform": "ServiceShortNameForm",
       "fileRename": "Template",
       "replaces": "Template"
+    },
+    "ServiceNameLowercase": {
+      "type": "derived",
+      "datatype": "text",
+      "valueSource": "libraryName",
+      "valueTransform": "ServiceNameLowerForm",
+      "replaces": "ServiceNameLowercase"
+    },
+    "PackageSafeName": {
+      "type": "generated",
+      "generator": "join",
+      "replaces": "PackageSafeName",
+      "parameters": {
+        "symbols": [
+          {
+            "type": "const",
+            "value": "Azure"
+          },
+          {
+            "type": "ref",
+            "value": "groupName"
+          },
+          {
+            "type": "ref",
+            "value": "libraryName"
+          }
+        ],
+        "separator": ""
+      }
     },
     "securityTypes": {
       "type": "generated",
@@ -178,7 +214,7 @@
     }
   },
   "forms": {
-    "ProviderShortNameForm": {
+    "ServiceShortNameForm": {
       "identifier": "replace",
       "pattern": "^[mM]icrosoft\\.",
       "replacement": ""
@@ -187,6 +223,12 @@
       "identifier": "chain",
       "steps": [
         "ProviderShortNameForm",
+        "lowerCase"
+      ]
+    },
+    "ServiceNameLowerForm": {
+      "identifier": "chain",
+      "steps": [
         "lowerCase"
       ]
     }
