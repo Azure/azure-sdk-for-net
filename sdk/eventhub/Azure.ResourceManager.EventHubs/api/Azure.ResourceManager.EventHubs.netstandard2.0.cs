@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventHubs
         public string AlternateName { get { throw null; } set { } }
         public string PartnerNamespace { get { throw null; } set { } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
-        public Azure.ResourceManager.EventHubs.Models.ProvisioningStateDR? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.ProvisioningStateDisasterRecovery? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.RoleDisasterRecovery? Role { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
@@ -279,8 +279,8 @@ namespace Azure.ResourceManager.EventHubs
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubNamespace> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubNamespace>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckNameAvailabilityDisasterRecoveryConfig(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityDisasterRecoveryConfigAsync(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckDisasterRecoveryNameAvailability(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.Models.EventHubNamespaceDeleteOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.EventHubs.Models.EventHubNamespaceDeleteOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         public NetworkRuleSetData() { }
         public Azure.ResourceManager.EventHubs.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NetworkRuleSetIpRules> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.NetworkRuleSetIPRules> IPRules { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.PublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public bool? TrustedServiceAccessEnabled { get { throw null; } set { } }
@@ -492,8 +492,8 @@ namespace Azure.ResourceManager.EventHubs
     }
     public static partial class SubscriptionExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult> CheckEventHubNameAvailability(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.EventHubs.Models.CheckNameAvailabilityOptions parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.EventHubs.Models.AvailableCluster> GetAvailableClusterRegionClusters(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.EventHubs.Models.AvailableCluster> GetAvailableClusterRegionClustersAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.EventHubs.EventHubCluster> GetEventHubClusters(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -941,11 +941,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.EventHubs.NetworkRuleSet>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.EventHubs.NetworkRuleSet>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkRuleSetIpRules
+    public partial class NetworkRuleSetIPRules
     {
-        public NetworkRuleSetIpRules() { }
+        public NetworkRuleSetIPRules() { }
         public Azure.ResourceManager.EventHubs.Models.NetworkRuleIPAction? Action { get { throw null; } set { } }
-        public string IpMask { get { throw null; } set { } }
+        public string IPMask { get { throw null; } set { } }
     }
     public partial class NetworkRuleSetListResult
     {
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.PrivateLinkResource> Value { get { throw null; } }
     }
-    public enum ProvisioningStateDR
+    public enum ProvisioningStateDisasterRecovery
     {
         Accepted = 0,
         Succeeded = 1,
