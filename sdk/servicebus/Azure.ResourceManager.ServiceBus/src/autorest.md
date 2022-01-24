@@ -58,7 +58,7 @@ directive:
         to: ServiceBusQueueListResult
     - rename-model:
         from: SBSku
-        to: ServiceBusSku
+        to: Sku
     - rename-model:
         from: SBSubscriptionListResult
         to: ServiceBusSubscriptionListResult
@@ -171,4 +171,11 @@ directive:
     - from: swagger-document
       where: $.definitions.NetworkRuleSetIPRules.properties.ipMask
       transform: $['x-ms-client-name'] = 'iPMask'
+    - from: swagger-document
+      where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
+      transform: >
+        $['x-ms-enum'] = {
+          "name": "ProvisioningStateDisasterRecovery",
+          "modelAsString": false
+        }
 ```

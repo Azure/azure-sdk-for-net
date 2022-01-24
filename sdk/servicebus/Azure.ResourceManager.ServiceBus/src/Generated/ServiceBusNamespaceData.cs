@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string metricId, bool? zoneRedundant, Models.EncryptionProperties encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
+        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string metricId, bool? zoneRedundant, Models.EncryptionProperties encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Properties of SKU. </summary>
-        public ServiceBusSku Sku { get; set; }
+        public Models.Sku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
         public Identity Identity { get; set; }
         /// <summary> The system meta data relating to this resource. </summary>

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceBus
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ProvisioningStateDR> provisioningState = default;
+            Optional<ProvisioningStateDisasterRecovery> provisioningState = default;
             Optional<long> pendingReplicationOperationsCount = default;
             Optional<string> partnerNamespace = default;
             Optional<string> alternateName = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningStateDR();
+                            provisioningState = property0.Value.GetString().ToProvisioningStateDisasterRecovery();
                             continue;
                         }
                         if (property0.NameEquals("pendingReplicationOperationsCount"))
