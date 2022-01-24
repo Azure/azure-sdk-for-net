@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 4.8.1 (2022-01-12)
+
+### Bugs Fixed
+- Fix package icon
+
 ## 4.8.0 (2022-01-11)
 
 ### Features Added

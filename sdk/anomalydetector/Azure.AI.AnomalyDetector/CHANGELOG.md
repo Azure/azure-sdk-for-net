@@ -1,7 +1,29 @@
 # Release History
 
-## 3.0.0-preview.4 (Unreleased)
+## 3.0.0-preview.6 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 3.0.0-preview.5 (2022-01-23)
+
+- Fix release issues
+
+## 3.0.0-preview.4 (2022-01-18)
+
+- Added operation `AnomalyDetectorClient.LastDetectAnomaly`
+- Added 2 optional properties `ImputeMode` and `ImputeFixedValue` to `DetectRequest`.
+- Added 1 optional property `Severity` to `EntireDetectResponse` and `LastDetectResponse`.
+- Removed the optional property `Errors` of `VariableState`.
+- Refactored the optional properties `Contributors` to `Interpretation` of `AnomalyValue`.
+- Removed `AnomalyContributor`.
+- Removed `AnomalyDetectorExportModelHeaders`.
+- Refactored `FillNAMethod` to an extensible enum.
 
 ## 3.0.0-preview.3 (2021-04-15)
 

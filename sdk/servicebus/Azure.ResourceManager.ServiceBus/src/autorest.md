@@ -9,6 +9,13 @@ namespace: Azure.ResourceManager.ServiceBus
 require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/servicebus/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+    lenient-model-deduplication: true
+
+override-operation-name:
+    Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
+    DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+
 directive:
     - rename-model:
         from: SBNamespace

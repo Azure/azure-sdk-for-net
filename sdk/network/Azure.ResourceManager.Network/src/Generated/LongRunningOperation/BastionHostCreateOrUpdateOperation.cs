@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         BastionHost IOperationSource<BastionHost>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new BastionHost(_operationBase, BastionHostData.DeserializeBastionHostData(document.RootElement));
+            var data = BastionHostData.DeserializeBastionHostData(document.RootElement);
+            return new BastionHost(_operationBase, data);
         }
 
         async ValueTask<BastionHost> IOperationSource<BastionHost>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new BastionHost(_operationBase, BastionHostData.DeserializeBastionHostData(document.RootElement));
+            var data = BastionHostData.DeserializeBastionHostData(document.RootElement);
+            return new BastionHost(_operationBase, data);
         }
     }
 }

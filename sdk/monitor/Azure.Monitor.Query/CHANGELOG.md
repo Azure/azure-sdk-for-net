@@ -1,9 +1,15 @@
 # Release History
 
-## 1.1.0-beta.1 (2021-12-07)
+## 1.1.0 (2022-01-12)
 
 ### Features Added
-- Added `LogsTable` and `LogsTableRow` to `MonitorQueryModelFactory`
+Added the following methods to `MonitorQueryModelFactory`:
+- `LogsQueryResult`
+- `LogsTable`
+- `LogsTableRow`
+- `MetricsQueryResult`
+- `MetricValue`
+- `MetricTimeSeriesElement`
 
 ## 1.0.1 (2021-11-09)
 

@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-                ResGroup = await (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
+                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
 
                 ConfigurationStoreName = Recording.GenerateAssetName("testapp-");
                 ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(ConfigurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, ConfigurationStoreName, configurationStoreData)).Value;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task DeleteTest()
         {
-            await (await ConfigStore.DeleteAsync()).WaitForCompletionResponseAsync();
+            await ConfigStore.DeleteAsync(true);
             ConfigurationStore configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(ConfigurationStoreName);
 
             Assert.IsNull(configurationStore);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task UpdateTest()
         {
             ConfigurationStoreUpdateOptions configurationStoreUpdateOptions = new ConfigurationStoreUpdateOptions() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
-            ConfigurationStore configurationStore = await (await ConfigStore.UpdateAsync(configurationStoreUpdateOptions)).WaitForCompletionAsync();
+            ConfigurationStore configurationStore = (await ConfigStore.UpdateAsync(true, configurationStoreUpdateOptions)).Value;
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);
         }

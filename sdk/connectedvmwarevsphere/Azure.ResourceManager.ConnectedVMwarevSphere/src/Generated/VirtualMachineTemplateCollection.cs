@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of VirtualMachineTemplate and their operations over its parent. </summary>
     public partial class VirtualMachineTemplateCollection : ArmCollection, IEnumerable<VirtualMachineTemplate>, IAsyncEnumerable<VirtualMachineTemplate>
-
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachineTemplatesRestOperations _virtualMachineTemplatesRestClient;
@@ -33,16 +33,23 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineTemplateCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineTemplateCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualMachineTemplateCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualMachineTemplatesRestClient = new VirtualMachineTemplatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(VirtualMachineTemplate.ResourceType, out string apiVersion);
+            _virtualMachineTemplatesRestClient = new VirtualMachineTemplatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,24 +57,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: VirtualMachineTemplates_Create
         /// <summary> Create Or Update virtual machine template. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
-        public virtual VirtualMachineTemplateCreateOperation CreateOrUpdate(string virtualMachineTemplateName, VirtualMachineTemplateData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineTemplateCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualMachineTemplateName, VirtualMachineTemplateData body = null, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _virtualMachineTemplatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body, cancellationToken);
-                var operation = new VirtualMachineTemplateCreateOperation(Parent, _clientDiagnostics, Pipeline, _virtualMachineTemplatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response);
+                var operation = new VirtualMachineTemplateCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineTemplatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -83,24 +88,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: VirtualMachineTemplates_Create
         /// <summary> Create Or Update virtual machine template. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
-        public async virtual Task<VirtualMachineTemplateCreateOperation> CreateOrUpdateAsync(string virtualMachineTemplateName, VirtualMachineTemplateData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineTemplateCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualMachineTemplateName, VirtualMachineTemplateData body = null, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _virtualMachineTemplatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineTemplateCreateOperation(Parent, _clientDiagnostics, Pipeline, _virtualMachineTemplatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response);
+                var operation = new VirtualMachineTemplateCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualMachineTemplatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,13 +121,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements virtual machine template GET method. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<VirtualMachineTemplate> Get(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Get");
             scope.Start();
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _virtualMachineTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineTemplate(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineTemplate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,13 +149,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements virtual machine template GET method. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public async virtual Task<Response<VirtualMachineTemplate>> GetAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Get");
             scope.Start();
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _virtualMachineTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachineTemplate(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineTemplate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,22 +174,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<VirtualMachineTemplate> GetIfExists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _virtualMachineTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualMachineTemplate>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineTemplate(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualMachineTemplate>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineTemplate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,22 +199,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public async virtual Task<Response<VirtualMachineTemplate>> GetIfExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _virtualMachineTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualMachineTemplate>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualMachineTemplate(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<VirtualMachineTemplate>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineTemplate(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,13 +224,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Exists");
             scope.Start();
@@ -254,15 +247,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineTemplateCollection.Exists");
             scope.Start();
             try
             {
@@ -291,7 +282,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = _virtualMachineTemplatesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,7 +297,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = _virtualMachineTemplatesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -332,7 +323,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = await _virtualMachineTemplatesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +338,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 try
                 {
                     var response = await _virtualMachineTemplatesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplate(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

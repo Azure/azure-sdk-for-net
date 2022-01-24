@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         protected async Task CommonGlobalSetup()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName($"dbaccount-"),
+            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(false, SessionRecording.GenerateAssetName($"dbaccount-"),
                 new ResourceGroupData(AzureLocation.WestUS2));
             _resourceGroupIdentifier = rgLro.Value.Id;
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             createParameters.Tags.Add("key1", "value1");
             createParameters.Tags.Add("key2", "value2");
             _databaseAccountName = name;
-            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(_databaseAccountName, createParameters);
+            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(true, _databaseAccountName, createParameters);
             return accountLro.Value;
         }
 

@@ -24,14 +24,48 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-C-");
             DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployName, deploymentData)).Value;
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(true, deployName, deploymentData)).Value;
             Assert.AreEqual(deployName, deployment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(null, deploymentData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(deployName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(true, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(true, deployName, null));
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CreateOrUpdateUsingString()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-1-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
+            ResourceGroup rg = lro.Value;
+            string deployExName = Recording.GenerateAssetName("deployEx-C-");
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentPropertiesUsingString());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(true, deployExName, deploymentData)).Value;
+            Assert.AreEqual(deployExName, deployment.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(true, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(true, deployExName, null));
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CreateOrUpdateUsingJsonElement()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-1-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
+            ResourceGroup rg = lro.Value;
+            string deployExName = Recording.GenerateAssetName("deployEx-C-");
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentPropertiesUsingJsonElement());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(true, deployExName, deploymentData)).Value;
+            Assert.AreEqual(deployExName, deployment.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(true, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(true, deployExName, null));
         }
 
         [TestCase]
@@ -41,11 +75,11 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-L-");
             DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            _ = await rg.GetDeployments().CreateOrUpdateAsync(deployName, deploymentData);
+            _ = await rg.GetDeployments().CreateOrUpdateAsync(true, deployName, deploymentData);
             int count = 0;
             await foreach (var tempDeployment in rg.GetDeployments().GetAllAsync())
             {
@@ -61,11 +95,11 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-G-");
             DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployName, deploymentData)).Value;
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(true, deployName, deploymentData)).Value;
             Deployment getDeployment = await rg.GetDeployments().GetAsync(deployName);
             AssertValidDeployment(deployment, getDeployment);
         }

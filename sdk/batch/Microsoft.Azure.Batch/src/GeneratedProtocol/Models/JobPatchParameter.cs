@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="priority">The priority of the Job.</param>
         /// <param name="maxParallelTasks">The maximum number of tasks that can
         /// be executed in parallel for the job.</param>
+        /// <param name="allowTaskPreemption">Whether Tasks in this job can be
+        /// preempted by other high priority jobs</param>
         /// <param name="onAllTasksComplete">The action the Batch service
         /// should take when all Tasks in the Job are in the completed
         /// state.</param>
@@ -43,10 +45,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job's Tasks.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the Job as metadata.</param>
-        public JobPatchParameter(int? priority = default(int?), int? maxParallelTasks = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        public JobPatchParameter(int? priority = default(int?), int? maxParallelTasks = default(int?), bool? allowTaskPreemption = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
             MaxParallelTasks = maxParallelTasks;
+            AllowTaskPreemption = allowTaskPreemption;
             OnAllTasksComplete = onAllTasksComplete;
             Constraints = constraints;
             PoolInfo = poolInfo;
@@ -83,6 +86,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "maxParallelTasks")]
         public int? MaxParallelTasks { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether Tasks in this job can be preempted by other
+        /// high priority jobs
+        /// </summary>
+        /// <remarks>
+        /// If the value is set to True, other high priority jobs submitted to
+        /// the system will take precedence and will be able requeue tasks from
+        /// this job. You can update a job's allowTaskPreemption after it has
+        /// been created using the update job API.
+        /// </remarks>
+        [JsonProperty(PropertyName = "allowTaskPreemption")]
+        public bool? AllowTaskPreemption { get; set; }
 
         /// <summary>
         /// Gets or sets the action the Batch service should take when all

@@ -41,14 +41,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public BoundariesClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -102,6 +96,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -160,6 +156,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
@@ -221,6 +219,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetBoundaryAsync(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
             scope.Start();
             try
@@ -282,6 +283,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetBoundary(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetBoundary");
             scope.Start();
             try
@@ -364,6 +368,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
             try
@@ -446,6 +453,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response CreateOrUpdate(string farmerId, string boundaryId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateOrUpdate");
             scope.Start();
             try
@@ -487,6 +497,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> DeleteAsync(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
             try
@@ -528,6 +541,9 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response Delete(string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.Delete");
             scope.Start();
             try
@@ -578,6 +594,11 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Response> GetOverlapAsync(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            Argument.AssertNotNull(otherFarmerId, nameof(otherFarmerId));
+            Argument.AssertNotNull(otherBoundaryId, nameof(otherBoundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
             try
@@ -628,6 +649,11 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Response GetOverlap(string farmerId, string boundaryId, string otherFarmerId, string otherBoundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            Argument.AssertNotNull(otherFarmerId, nameof(otherFarmerId));
+            Argument.AssertNotNull(otherBoundaryId, nameof(otherBoundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.GetOverlap");
             scope.Start();
             try
@@ -715,10 +741,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetBoundariesByFarmerIdAsync(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "BoundariesClient.GetBoundariesByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -808,10 +831,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetBoundariesByFarmerId(string farmerId, bool? isPrimary = null, string parentType = null, IEnumerable<string> parentIds = null, double? minAcreage = null, double? maxAcreage = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "BoundariesClient.GetBoundariesByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -903,10 +923,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> SearchByFarmerIdAsync(string farmerId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "BoundariesClient.SearchByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -998,10 +1015,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> SearchByFarmerId(string farmerId, RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            if (farmerId == null)
-            {
-                throw new ArgumentNullException(nameof(farmerId));
-            }
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
 
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "BoundariesClient.SearchByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1413,6 +1427,10 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
             try
@@ -1474,6 +1492,10 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, string boundaryId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+
             using var scope = _clientDiagnostics.CreateScope("BoundariesClient.CreateCascadeDeleteJob");
             scope.Start();
             try

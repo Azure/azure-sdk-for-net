@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerCommunicationLink IOperationSource<ServerCommunicationLink>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerCommunicationLink(_operationBase, ServerCommunicationLinkData.DeserializeServerCommunicationLinkData(document.RootElement));
+            var data = ServerCommunicationLinkData.DeserializeServerCommunicationLinkData(document.RootElement);
+            return new ServerCommunicationLink(_operationBase, data);
         }
 
         async ValueTask<ServerCommunicationLink> IOperationSource<ServerCommunicationLink>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerCommunicationLink(_operationBase, ServerCommunicationLinkData.DeserializeServerCommunicationLinkData(document.RootElement));
+            var data = ServerCommunicationLinkData.DeserializeServerCommunicationLinkData(document.RootElement);
+            return new ServerCommunicationLink(_operationBase, data);
         }
     }
 }

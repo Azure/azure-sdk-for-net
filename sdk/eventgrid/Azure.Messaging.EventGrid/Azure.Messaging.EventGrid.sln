@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventGrid",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventGrid.Tests", "tests\Azure.Messaging.EventGrid.Tests.csproj", "{779EF7D4-B9C1-4177-BAA7-CF7CBDEF6A5C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{21CF4B4A-5027-46D0-B50A-976BF8483095}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents", "..\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents\src\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.csproj", "{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests", "..\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents\tests\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests.csproj", "{28B77D76-084F-4C7E-8A1B-631444EED6A2}"
