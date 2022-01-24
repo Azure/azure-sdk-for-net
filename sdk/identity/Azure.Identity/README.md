@@ -125,6 +125,17 @@ var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new
 var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 ```
 
+### Requesting access token for Azure resource with scope
+Sometimes an access token is needed as a bearer token in an OAuth 2.0 flow. The `DefaultAzureCredential` can be used to retrive the access token via the `TokenRequestContext`.
+
+```C# Snippet:AccessToken
+var credential = new DefaultAzureCredential();
+var token = await credential.GetTokenAsync(
+  new TokenRequestContext(new[] { "https://myvault.vault.azure.net/.default" }));
+```
+
+> The scope `.default` is required in [client credentials](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) and [On-Behalf-Of](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) flows as there are not user interaction.
+
 ## Managed Identity Support
 
 The [Managed identity authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) is supported via either the `DefaultAzureCredential` or the `ManagedIdentityCredential` directly for the following Azure Services:
