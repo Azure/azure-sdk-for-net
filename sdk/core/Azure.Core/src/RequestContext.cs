@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,8 +15,8 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private List<int>? _customErrorCodes;
-        private List<int>? _customNonErrorCodes;
+        private int[]? _customErrorCodes;
+        private int[]? _customNonErrorCodes;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
@@ -66,15 +65,21 @@ namespace Azure
         /// <param name="isError">Whether the passed-in status codes will be considered to be error codes for the duration of this request.</param>
         public void ConfigureResponse(int[] statusCodes, bool isError)
         {
-            if (isError)
+            CopyOrMerge(statusCodes, ref isError ? ref _customErrorCodes : ref _customNonErrorCodes);
+        }
+
+        private static void CopyOrMerge(int[] source, ref int[]? target)
+        {
+            if (target == null)
             {
-                _customErrorCodes ??= new();
-                _customErrorCodes.AddRange(statusCodes);
+                target = new int[source.Length];
+                Array.Copy(source, target, source.Length);
             }
-            else
+            else // merge arrays
             {
-                _customNonErrorCodes ??= new();
-                _customNonErrorCodes.AddRange(statusCodes);
+                var origLength = target.Length;
+                Array.Resize(ref target, source.Length + target.Length);
+                Array.Copy(source, 0, target, origLength, source.Length);
             }
         }
 
@@ -86,10 +91,10 @@ namespace Azure
         private class PerCallResponseClassifier : ResponseClassifier
         {
             private readonly ResponseClassifier _inner;
-            private readonly IList<int>? _customErrorCodes;
-            private readonly IList<int>? _customNonErrorCodes;
+            private readonly int[]? _customErrorCodes;
+            private readonly int[]? _customNonErrorCodes;
 
-            public PerCallResponseClassifier(ResponseClassifier inner, IList<int>? errorCodes, IList<int>? nonErrorCodes)
+            public PerCallResponseClassifier(ResponseClassifier inner, int[]? errorCodes, int[]? nonErrorCodes)
             {
                 _inner = inner;
                 _customErrorCodes = errorCodes;
@@ -113,14 +118,12 @@ namespace Azure
 
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (_customErrorCodes != null &&
-                    _customErrorCodes.Contains(message.Response.Status))
+                if (_customErrorCodes?.Contains(message.Response.Status) ?? true)
                 {
                     return true;
                 }
 
-                if (_customNonErrorCodes != null &&
-                    _customNonErrorCodes.Contains(message.Response.Status))
+                if (_customNonErrorCodes?.Contains(message.Response.Status) ?? true)
                 {
                     return false;
                 }
