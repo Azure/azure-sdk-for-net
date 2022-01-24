@@ -109,6 +109,9 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveryConfigs_Get
         /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DisasterRecovery>> GetAsync(CancellationToken cancellationToken = default)
@@ -129,6 +132,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveryConfigs_Get
         /// <summary> Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DisasterRecovery> Get(CancellationToken cancellationToken = default)
@@ -185,6 +191,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveries_Delete
         /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,6 +216,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveries_Delete
         /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,6 +241,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/breakPairing
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveryConfigs_BreakPairing
         /// <summary> This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> BreakPairingAsync(CancellationToken cancellationToken = default)
@@ -247,6 +262,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/breakPairing
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveryConfigs_BreakPairing
         /// <summary> This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response BreakPairing(CancellationToken cancellationToken = default)
@@ -265,6 +283,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/failover
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveryConfigs_FailOver
         /// <summary> Invokes GEO DR failover and reconfigure the alias to point to the secondary namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> FailOverAsync(CancellationToken cancellationToken = default)
@@ -283,6 +304,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/failover
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// OperationId: DisasterRecoveryConfigs_FailOver
         /// <summary> Invokes GEO DR failover and reconfigure the alias to point to the secondary namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response FailOver(CancellationToken cancellationToken = default)

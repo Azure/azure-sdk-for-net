@@ -105,6 +105,9 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// OperationId: DisasterRecoveryConfigs_GetAuthorizationRule
         /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DisasterRecoveryAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
@@ -125,6 +128,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// OperationId: DisasterRecoveryConfigs_GetAuthorizationRule
         /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DisasterRecoveryAuthorizationRule> Get(CancellationToken cancellationToken = default)
@@ -181,6 +187,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// OperationId: DisasterRecoveryConfigs_ListKeys
         /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
@@ -199,6 +208,9 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// OperationId: DisasterRecoveryConfigs_ListKeys
         /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)

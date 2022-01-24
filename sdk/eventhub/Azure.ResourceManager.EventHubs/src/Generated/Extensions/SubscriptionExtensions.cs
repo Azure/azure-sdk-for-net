@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventHubs
             return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Clusters_ListAvailableClusterRegion
         /// <summary> Lists the AvailableClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -62,6 +65,9 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Clusters_ListAvailableClusterRegion
         /// <summary> Lists the AvailableClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,6 +98,9 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Clusters_ListBySubscription
         /// <summary> Lists the EventHubClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,6 +147,9 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Clusters_ListBySubscription
         /// <summary> Lists the EventHubClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -212,6 +224,9 @@ namespace Azure.ResourceManager.EventHubs
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_List
         /// <summary> Lists the EventHubNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -258,6 +273,9 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_List
         /// <summary> Lists the EventHubNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -332,6 +350,9 @@ namespace Azure.ResourceManager.EventHubs
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_CheckNameAvailability
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
@@ -364,6 +385,9 @@ namespace Azure.ResourceManager.EventHubs
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_CheckNameAvailability
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
