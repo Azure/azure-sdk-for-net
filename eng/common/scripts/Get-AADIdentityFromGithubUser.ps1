@@ -73,7 +73,7 @@ catch {
 $resp | Write-Verbose
 
 if ($resp.aad) {
-    Write-Host "Fetched aad identity $($resp.aad.alias)."
+    Write-Host "Fetched aad identity $($resp.aad.alias) for github user $GithubName."
     return $resp.aad.alias
 }
 
