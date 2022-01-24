@@ -73,6 +73,7 @@ catch {
 $resp | Write-Verbose
 
 if ($resp.aad) {
+    Write-Host "Fetched aad identity $($resp.aad.alias)."
     return $resp.aad.alias
 }
 
