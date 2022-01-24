@@ -93,7 +93,7 @@ namespace Azure.Core
                 Policies.AddRange(context.Policies);
             }
 
-            if (context.HasResponseClassifier)
+            if (context.HasCustomClassifier)
             {
                 ResponseClassifier = context.GetResponseClassifier(ResponseClassifier);
             }

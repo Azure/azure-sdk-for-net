@@ -16,12 +16,12 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private List<int>? _nonErrorStatusCodes;
-        private ResponseClassifier _responseClassifier;
+        private List<int>? _customErrorCodes;
+        private List<int>? _customNonErrorCodes;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
-        internal bool HasResponseClassifier { get; private set; }
+        internal bool HasCustomClassifier => _customErrorCodes != null || _customNonErrorCodes != null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -63,28 +63,37 @@ namespace Azure
         /// <summary>
         /// </summary>
         /// <param name="statusCodes">Status codes that will not be considered to be error status codes for the scope of the service method call.</param>
-        public void NotError(IEnumerable<int> statusCodes)
+        /// <param name="isError">Whether the passed-in status codes will be considered to be error codes for the duration of this request.</param>
+        public void ConfigureResponse(int[] statusCodes, bool isError)
         {
-            _nonErrorStatusCodes ??= new();
-            _nonErrorStatusCodes.AddRange(statusCodes);
-            HasResponseClassifier = true;
+            if (isError)
+            {
+                _customErrorCodes ??= new();
+                _customErrorCodes.AddRange(statusCodes);
+            }
+            else
+            {
+                _customNonErrorCodes ??= new();
+                _customNonErrorCodes.AddRange(statusCodes);
+            }
         }
 
         internal ResponseClassifier GetResponseClassifier(ResponseClassifier inner)
         {
-            // TODO: come up with something cleaner here
-            return new PerCallResponseClassifier(inner, _nonErrorStatusCodes);
+            return new PerCallResponseClassifier(inner, _customErrorCodes, _customNonErrorCodes);
         }
 
         private class PerCallResponseClassifier : ResponseClassifier
         {
             private readonly ResponseClassifier _inner;
-            private readonly IEnumerable<int> _nonErrorStatusCodes;
+            private readonly IList<int>? _customErrorCodes;
+            private readonly IList<int>? _customNonErrorCodes;
 
-            public PerCallResponseClassifier(ResponseClassifier inner, IEnumerable<int> statusCodes)
+            public PerCallResponseClassifier(ResponseClassifier inner, IList<int>? errorCodes, IList<int>? nonErrorCodes)
             {
                 _inner = inner;
-                _nonErrorStatusCodes = statusCodes;
+                _customErrorCodes = errorCodes;
+                _customNonErrorCodes = nonErrorCodes;
             }
 
             public override bool IsRetriableResponse(HttpMessage message)
@@ -104,8 +113,17 @@ namespace Azure
 
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (_nonErrorStatusCodes.Contains(message.Response.Status))
+                if (_customErrorCodes != null &&
+                    _customErrorCodes.Contains(message.Response.Status))
+                {
+                    return true;
+                }
+
+                if (_customNonErrorCodes != null &&
+                    _customNonErrorCodes.Contains(message.Response.Status))
+                {
                     return false;
+                }
 
                 return _inner.IsErrorResponse(message);
             }
