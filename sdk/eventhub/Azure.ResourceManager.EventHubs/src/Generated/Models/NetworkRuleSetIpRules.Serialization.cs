@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NetworkRuleSetIpRules : IUtf8JsonSerializable
+    public partial class NetworkRuleSetIPRules : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IpMask))
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask");
-                writer.WriteStringValue(IpMask);
+                writer.WriteStringValue(IPMask);
             }
             if (Optional.IsDefined(Action))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkRuleSetIpRules DeserializeNetworkRuleSetIpRules(JsonElement element)
+        internal static NetworkRuleSetIPRules DeserializeNetworkRuleSetIPRules(JsonElement element)
         {
             Optional<string> ipMask = default;
             Optional<NetworkRuleIPAction> action = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NetworkRuleSetIpRules(ipMask.Value, Optional.ToNullable(action));
+            return new NetworkRuleSetIPRules(ipMask.Value, Optional.ToNullable(action));
         }
     }
 }

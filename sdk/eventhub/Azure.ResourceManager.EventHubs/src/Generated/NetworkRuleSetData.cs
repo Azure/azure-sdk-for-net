@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs
         public NetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<NetworkRuleSetVirtualNetworkRules>();
-            IpRules = new ChangeTrackingList<NetworkRuleSetIpRules>();
+            IPRules = new ChangeTrackingList<NetworkRuleSetIPRules>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
-        /// <param name="ipRules"> List of IpRules. </param>
+        /// <param name="iPRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type, location)
+        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIPRules> iPRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type, location)
         {
             SystemData = systemData;
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
-            IpRules = ipRules;
+            IPRules = iPRules;
             PublicNetworkAccess = publicNetworkAccess;
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> List VirtualNetwork Rules. </summary>
         public IList<NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<NetworkRuleSetIpRules> IpRules { get; }
+        public IList<NetworkRuleSetIPRules> IPRules { get; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         public PublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
     }
