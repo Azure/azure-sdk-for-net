@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual InventoryItemCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.CreateOrUpdate");
             scope.Start();
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public async virtual Task<InventoryItemCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.CreateOrUpdate");
             scope.Start();
@@ -123,13 +119,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements InventoryItem GET method. </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual Response<InventoryItem> Get(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements InventoryItem GET method. </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public async virtual Task<Response<InventoryItem>> GetAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.Get");
             scope.Start();
@@ -180,13 +172,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual Response<InventoryItem> GetIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
             scope.Start();
@@ -207,13 +197,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public async virtual Task<Response<InventoryItem>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
             scope.Start();
@@ -234,13 +222,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.Exists");
             scope.Start();
@@ -259,13 +245,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _clientDiagnostics.CreateScope("InventoryItemCollection.Exists");
             scope.Start();

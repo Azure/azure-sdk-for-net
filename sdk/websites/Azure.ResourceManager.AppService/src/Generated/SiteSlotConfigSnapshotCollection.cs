@@ -54,13 +54,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<SiteSlotConfigSnapshot> Get(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.Get");
             scope.Start();
@@ -84,13 +82,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigSnapshot>> GetAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.Get");
             scope.Start();
@@ -111,13 +107,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<SiteSlotConfigSnapshot> GetIfExists(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.GetIfExists");
             scope.Start();
@@ -138,13 +132,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigSnapshot>> GetIfExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.GetIfExists");
             scope.Start();
@@ -165,13 +157,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.Exists");
             scope.Start();
@@ -190,13 +180,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigSnapshotCollection.Exists");
             scope.Start();

@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> Function name. </param>
         /// <param name="functionEnvelope"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
         public virtual SiteFunctionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
             if (functionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(functionEnvelope));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionName"> Function name. </param>
         /// <param name="functionEnvelope"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
         public async virtual Task<SiteFunctionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string functionName, FunctionEnvelopeData functionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
             if (functionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(functionEnvelope));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual Response<SiteFunction> Get(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public async virtual Task<Response<SiteFunction>> GetAsync(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual Response<SiteFunction> GetIfExists(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public async virtual Task<Response<SiteFunction>> GetIfExistsAsync(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual Response<bool> Exists(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunctionCollection.Exists");
             scope.Start();

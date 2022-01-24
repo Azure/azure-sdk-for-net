@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
         /// <param name="parameters"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ServerKeyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
         /// <param name="parameters"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServerKeyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server key. </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<ServerKey> Get(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server key. </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<ServerKey>> GetAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<ServerKey> GetIfExists(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<ServerKey>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<bool> Exists(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerKeyCollection.Exists");
             scope.Start();

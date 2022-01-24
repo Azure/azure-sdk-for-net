@@ -54,7 +54,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
     {
         VmSize = VirtualMachineSizeTypes.StandardF2
     },
-    OsProfile = new OSProfile()
+    OSProfile = new OSProfile()
     {
         AdminUsername = "adminUser",
         ComputerName = "myVM",
@@ -86,9 +86,9 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
     },
     StorageProfile = new StorageProfile()
     {
-        OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+        OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
         {
-            OsType = OperatingSystemTypes.Linux,
+            OSType = OperatingSystemTypes.Linux,
             Caching = CachingTypes.ReadWrite,
             ManagedDisk = new ManagedDiskParameters()
             {

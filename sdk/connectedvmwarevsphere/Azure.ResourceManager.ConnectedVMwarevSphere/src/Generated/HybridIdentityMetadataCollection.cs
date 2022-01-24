@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public virtual HybridIdentityMetadataCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
             scope.Start();
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public async virtual Task<HybridIdentityMetadataCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string metadataName, HybridIdentityMetadataData body = null, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
             scope.Start();
@@ -123,13 +119,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements HybridIdentityMetadata GET method. </summary>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public virtual Response<HybridIdentityMetadata> Get(string metadataName, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements HybridIdentityMetadata GET method. </summary>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public async virtual Task<Response<HybridIdentityMetadata>> GetAsync(string metadataName, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Get");
             scope.Start();
@@ -180,13 +172,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public virtual Response<HybridIdentityMetadata> GetIfExists(string metadataName, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExists");
             scope.Start();
@@ -207,13 +197,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public async virtual Task<Response<HybridIdentityMetadata>> GetIfExistsAsync(string metadataName, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExists");
             scope.Start();
@@ -234,13 +222,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public virtual Response<bool> Exists(string metadataName, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
             scope.Start();
@@ -259,13 +245,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string metadataName, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
             using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
             scope.Start();

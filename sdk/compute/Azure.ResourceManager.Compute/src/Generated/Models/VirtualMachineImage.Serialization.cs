@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Optional.IsDefined(OsDiskImage))
+            if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage");
-                writer.WriteObjectValue(OsDiskImage);
+                writer.WriteObjectValue(OSDiskImage);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {

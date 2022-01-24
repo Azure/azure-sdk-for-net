@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public virtual AfdRouteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
             {
                 throw new ArgumentNullException(nameof(route));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public async virtual Task<AfdRouteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
             {
                 throw new ArgumentNullException(nameof(route));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<AfdRoute> Get(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public async virtual Task<Response<AfdRoute>> GetAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<AfdRoute> GetIfExists(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public async virtual Task<Response<AfdRoute>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRouteCollection.Exists");
             scope.Start();

@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobAgentName"> The name of the job agent to be created or updated. </param>
         /// <param name="parameters"> The requested job agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual JobAgentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobAgentName"> The name of the job agent to be created or updated. </param>
         /// <param name="parameters"> The requested job agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<JobAgentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job agent. </summary>
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual Response<JobAgent> Get(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job agent. </summary>
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public async virtual Task<Response<JobAgent>> GetAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual Response<JobAgent> GetIfExists(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public async virtual Task<Response<JobAgent>> GetIfExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _clientDiagnostics.CreateScope("JobAgentCollection.Exists");
             scope.Start();

@@ -10,15 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VMScaleSetConvertToSinglePlacementGroupInput : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVmInstanceIds : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActivePlacementGroupId))
+            if (Optional.IsCollectionDefined(InstanceIds))
             {
-                writer.WritePropertyName("activePlacementGroupId");
-                writer.WriteStringValue(ActivePlacementGroupId);
+                writer.WritePropertyName("instanceIds");
+                writer.WriteStartArray();
+                foreach (var item in InstanceIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

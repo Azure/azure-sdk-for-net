@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="createUpdateCassandraKeyspaceParameters"> The parameters to provide for the current Cassandra keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
         public virtual CassandraKeyspaceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyspaceName, CassandraKeyspaceCreateUpdateOptions createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             if (createUpdateCassandraKeyspaceParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateCassandraKeyspaceParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="createUpdateCassandraKeyspaceParameters"> The parameters to provide for the current Cassandra keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
         public async virtual Task<CassandraKeyspaceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyspaceName, CassandraKeyspaceCreateUpdateOptions createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             if (createUpdateCassandraKeyspaceParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateCassandraKeyspaceParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Cassandra keyspaces under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual Response<CassandraKeyspace> Get(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Cassandra keyspaces under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public async virtual Task<Response<CassandraKeyspace>> GetAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual Response<CassandraKeyspace> GetIfExists(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public async virtual Task<Response<CassandraKeyspace>> GetIfExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var scope = _clientDiagnostics.CreateScope("CassandraKeyspaceCollection.Exists");
             scope.Start();

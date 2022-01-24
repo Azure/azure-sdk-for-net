@@ -65,13 +65,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="parameters"> The server trust group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ServerTrustGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string serverTrustGroupName, ServerTrustGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -102,13 +100,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="parameters"> The server trust group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ServerTrustGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string serverTrustGroupName, ServerTrustGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -137,13 +133,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust group. </summary>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual Response<ServerTrustGroup> Get(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Get");
             scope.Start();
@@ -167,13 +161,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server trust group. </summary>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public async virtual Task<Response<ServerTrustGroup>> GetAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Get");
             scope.Start();
@@ -194,13 +186,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual Response<ServerTrustGroup> GetIfExists(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExists");
             scope.Start();
@@ -221,13 +211,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public async virtual Task<Response<ServerTrustGroup>> GetIfExistsAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExists");
             scope.Start();
@@ -248,13 +236,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
             scope.Start();
@@ -273,13 +259,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            if (serverTrustGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(serverTrustGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
             scope.Start();

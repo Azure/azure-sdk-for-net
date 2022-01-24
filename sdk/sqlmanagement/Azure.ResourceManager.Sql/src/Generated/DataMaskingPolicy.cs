@@ -267,13 +267,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<DataMaskingRule>> CreateOrUpdateDataMaskingRuleAsync(string dataMaskingRuleName, DataMaskingRule parameters, CancellationToken cancellationToken = default)
         {
-            if (dataMaskingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataMaskingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -300,13 +298,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual Response<DataMaskingRule> CreateOrUpdateDataMaskingRule(string dataMaskingRuleName, DataMaskingRule parameters, CancellationToken cancellationToken = default)
         {
-            if (dataMaskingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataMaskingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));

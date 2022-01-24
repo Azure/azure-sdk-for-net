@@ -34,7 +34,7 @@ namespace Azure.Core.TestFramework
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateStartPlaybackRequest(string xRecordingFile)
+        internal HttpMessage CreateStartPlaybackRequest(StartInformation body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -43,23 +43,26 @@ namespace Azure.Core.TestFramework
             uri.Reset(endpoint);
             uri.AppendPath("/playback/start", false);
             request.Uri = uri;
-            request.Headers.Add("x-recording-file", xRecordingFile);
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Start playback for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders>> StartPlaybackAsync(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders>> StartPlaybackAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartPlaybackRequest(xRecordingFile);
+            using var message = CreateStartPlaybackRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TestProxyStartPlaybackHeaders(message.Response);
             switch (message.Response.Status)
@@ -82,17 +85,17 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary> Start playback for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> StartPlayback(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> StartPlayback(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartPlaybackRequest(xRecordingFile);
+            using var message = CreateStartPlaybackRequest(body);
             _pipeline.Send(message, cancellationToken);
             var headers = new TestProxyStartPlaybackHeaders(message.Response);
             switch (message.Response.Status)
@@ -171,7 +174,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal HttpMessage CreateStartRecordRequest(string xRecordingFile)
+        internal HttpMessage CreateStartRecordRequest(StartInformation body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -180,22 +183,25 @@ namespace Azure.Core.TestFramework
             uri.Reset(endpoint);
             uri.AppendPath("/record/start", false);
             request.Uri = uri;
-            request.Headers.Add("x-recording-file", xRecordingFile);
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Start recording for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TestProxyStartRecordHeaders>> StartRecordAsync(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<TestProxyStartRecordHeaders>> StartRecordAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartRecordRequest(xRecordingFile);
+            using var message = CreateStartRecordRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TestProxyStartRecordHeaders(message.Response);
             switch (message.Response.Status)
@@ -208,17 +214,17 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary> Start recording for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public ResponseWithHeaders<TestProxyStartRecordHeaders> StartRecord(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<TestProxyStartRecordHeaders> StartRecord(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartRecordRequest(xRecordingFile);
+            using var message = CreateStartRecordRequest(body);
             _pipeline.Send(message, cancellationToken);
             var headers = new TestProxyStartRecordHeaders(message.Response);
             switch (message.Response.Status)

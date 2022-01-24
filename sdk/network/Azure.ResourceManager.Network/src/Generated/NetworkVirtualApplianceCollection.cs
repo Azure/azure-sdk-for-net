@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual NetworkVirtualApplianceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<NetworkVirtualApplianceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public virtual Response<NetworkVirtualAppliance> Get(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualAppliance>> GetAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Get");
             scope.Start();
@@ -181,13 +173,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public virtual Response<NetworkVirtualAppliance> GetIfExists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualAppliance>> GetIfExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExists");
             scope.Start();
@@ -237,13 +225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
             scope.Start();
@@ -263,13 +249,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
             scope.Start();

@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public virtual MachineExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (extensionParameters == null)
             {
                 throw new ArgumentNullException(nameof(extensionParameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public async virtual Task<MachineExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string extensionName, MachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (extensionParameters == null)
             {
                 throw new ArgumentNullException(nameof(extensionParameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> The operation to get the extension. </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<MachineExtension> Get(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> The operation to get the extension. </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public async virtual Task<Response<MachineExtension>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<MachineExtension> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public async virtual Task<Response<MachineExtension>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<bool> Exists(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _clientDiagnostics.CreateScope("MachineExtensionCollection.Exists");
             scope.Start();

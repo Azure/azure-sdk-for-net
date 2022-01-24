@@ -63,13 +63,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a deleted server. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual Response<DeletedServer> Get(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedServerName));
-            }
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Get");
             scope.Start();
@@ -93,13 +91,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a deleted server. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public async virtual Task<Response<DeletedServer>> GetAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedServerName));
-            }
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Get");
             scope.Start();
@@ -120,13 +116,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual Response<DeletedServer> GetIfExists(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedServerName));
-            }
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
             scope.Start();
@@ -147,13 +141,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public async virtual Task<Response<DeletedServer>> GetIfExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedServerName));
-            }
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
             scope.Start();
@@ -174,13 +166,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual Response<bool> Exists(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedServerName));
-            }
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();
@@ -199,13 +189,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            if (deletedServerName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedServerName));
-            }
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();

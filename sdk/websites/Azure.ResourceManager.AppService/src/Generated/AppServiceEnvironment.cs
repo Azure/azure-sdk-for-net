@@ -481,13 +481,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get a diagnostics item for an App Service Environment. </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string diagnosticsName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsName, nameof(diagnosticsName));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetDiagnosticsItem");
             scope.Start();
@@ -509,13 +507,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get a diagnostics item for an App Service Environment. </summary>
         /// <param name="diagnosticsName"> Name of the diagnostics item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public virtual Response<HostingEnvironmentDiagnostics> GetDiagnosticsItem(string diagnosticsName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsName, nameof(diagnosticsName));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironment.GetDiagnosticsItem");
             scope.Start();

@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual Response<SiteSlotConfigAppSetting> Get(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigAppSetting>> GetAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual Response<SiteSlotConfigAppSetting> GetIfExists(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigAppSetting>> GetIfExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual Response<bool> Exists(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigAppSettingCollection.Exists");
             scope.Start();

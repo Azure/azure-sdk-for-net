@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="parameters"> Parameters supplied to the Create capacity reservation Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual CapacityReservationGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string capacityReservationGroupName, CapacityReservationGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="parameters"> Parameters supplied to the Create capacity reservation Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<CapacityReservationGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string capacityReservationGroupName, CapacityReservationGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual Response<CapacityReservationGroup> Get(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroupCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public async virtual Task<Response<CapacityReservationGroup>> GetAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroupCollection.Get");
             scope.Start();
@@ -181,13 +173,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual Response<CapacityReservationGroup> GetIfExists(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroupCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public async virtual Task<Response<CapacityReservationGroup>> GetIfExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroupCollection.GetIfExists");
             scope.Start();
@@ -237,13 +225,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroupCollection.Exists");
             scope.Start();
@@ -263,13 +249,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("CapacityReservationGroupCollection.Exists");
             scope.Start();

@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Diagnostics Category. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual Response<SiteDiagnostic> Get(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get Diagnostics Category. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public async virtual Task<Response<SiteDiagnostic>> GetAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual Response<SiteDiagnostic> GetIfExists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public async virtual Task<Response<SiteDiagnostic>> GetIfExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual Response<bool> Exists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            if (diagnosticCategory == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticCategory));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
             using var scope = _clientDiagnostics.CreateScope("SiteDiagnosticCollection.Exists");
             scope.Start();

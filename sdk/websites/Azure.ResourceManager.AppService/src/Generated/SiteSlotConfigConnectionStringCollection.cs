@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual Response<SiteSlotConfigConnectionString> Get(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            if (connectionStringKey == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStringKey));
-            }
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigConnectionString>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            if (connectionStringKey == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStringKey));
-            }
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual Response<SiteSlotConfigConnectionString> GetIfExists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            if (connectionStringKey == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStringKey));
-            }
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public async virtual Task<Response<SiteSlotConfigConnectionString>> GetIfExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            if (connectionStringKey == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStringKey));
-            }
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            if (connectionStringKey == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStringKey));
-            }
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
-            if (connectionStringKey == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStringKey));
-            }
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotConfigConnectionStringCollection.Exists");
             scope.Start();

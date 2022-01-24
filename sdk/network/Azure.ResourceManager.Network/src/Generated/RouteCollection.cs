@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="routeParameters"> Parameters supplied to the create or update route operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="routeParameters"/> is null. </exception>
         public virtual RouteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeName, RouteData routeParameters, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (routeParameters == null)
             {
                 throw new ArgumentNullException(nameof(routeParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="routeParameters"> Parameters supplied to the create or update route operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="routeParameters"/> is null. </exception>
         public async virtual Task<RouteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeName, RouteData routeParameters, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (routeParameters == null)
             {
                 throw new ArgumentNullException(nameof(routeParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified route from a route table. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<Route> Get(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified route from a route table. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public async virtual Task<Response<Route>> GetAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<Route> GetIfExists(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public async virtual Task<Response<Route>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteCollection.Exists");
             scope.Start();
