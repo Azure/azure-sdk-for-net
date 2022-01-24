@@ -21,23 +21,23 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of ServiceBusAuthorizationRule and their operations over its parent. </summary>
-    public partial class NamespaceDisasterRecoveryConfigAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceDisasterRecoveryConfigAuthorizationRule>, IAsyncEnumerable<NamespaceDisasterRecoveryConfigAuthorizationRule>
+    public partial class NamespaceDisasterRecoveryAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceDisasterRecoveryAuthorizationRule>, IAsyncEnumerable<NamespaceDisasterRecoveryAuthorizationRule>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DisasterRecoveryConfigAuthorizationRulesRestOperations _disasterRecoveryConfigAuthorizationRulesRestClient;
+        private readonly DisasterRecoveryAuthorizationRulesRestOperations _disasterRecoveryAuthorizationRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NamespaceDisasterRecoveryConfigAuthorizationRuleCollection"/> class for mocking. </summary>
-        protected NamespaceDisasterRecoveryConfigAuthorizationRuleCollection()
+        /// <summary> Initializes a new instance of the <see cref="NamespaceDisasterRecoveryAuthorizationRuleCollection"/> class for mocking. </summary>
+        protected NamespaceDisasterRecoveryAuthorizationRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NamespaceDisasterRecoveryConfigAuthorizationRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NamespaceDisasterRecoveryAuthorizationRuleCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal NamespaceDisasterRecoveryConfigAuthorizationRuleCollection(ArmResource parent) : base(parent)
+        internal NamespaceDisasterRecoveryAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(NamespaceDisasterRecoveryConfigAuthorizationRule.ResourceType, out string apiVersion);
-            _disasterRecoveryConfigAuthorizationRulesRestClient = new DisasterRecoveryConfigAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            ClientOptions.TryGetApiVersion(NamespaceDisasterRecoveryAuthorizationRule.ResourceType, out string apiVersion);
+            _disasterRecoveryAuthorizationRulesRestClient = new DisasterRecoveryAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,24 +53,24 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
-        /// OperationId: DisasterRecoveryConfigAuthorizationRules_Get
+        /// OperationId: DisasterRecoveryAuthorizationRules_Get
         /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<NamespaceDisasterRecoveryConfigAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceDisasterRecoveryAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
+                var response = _disasterRecoveryAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceDisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -81,24 +81,24 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
-        /// OperationId: DisasterRecoveryConfigAuthorizationRules_Get
+        /// OperationId: DisasterRecoveryAuthorizationRules_Get
         /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public async virtual Task<Response<NamespaceDisasterRecoveryConfigAuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NamespaceDisasterRecoveryAuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceDisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,18 +112,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<NamespaceDisasterRecoveryConfigAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceDisasterRecoveryAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                var response = _disasterRecoveryAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<NamespaceDisasterRecoveryConfigAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(this, response.Value), response.GetRawResponse());
+                    return Response.FromValue<NamespaceDisasterRecoveryAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceDisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public async virtual Task<Response<NamespaceDisasterRecoveryConfigAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NamespaceDisasterRecoveryAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<NamespaceDisasterRecoveryConfigAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceDisasterRecoveryConfigAuthorizationRule(this, response.Value), response.GetRawResponse());
+                    return Response.FromValue<NamespaceDisasterRecoveryAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceDisasterRecoveryAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.Exists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.Exists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -205,20 +205,20 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
-        /// OperationId: DisasterRecoveryConfigAuthorizationRules_List
+        /// OperationId: DisasterRecoveryAuthorizationRules_List
         /// <summary> Gets the authorization rules for a namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NamespaceDisasterRecoveryConfigAuthorizationRule> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NamespaceDisasterRecoveryAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NamespaceDisasterRecoveryAuthorizationRule> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NamespaceDisasterRecoveryConfigAuthorizationRule> FirstPageFunc(int? pageSizeHint)
+            Page<NamespaceDisasterRecoveryAuthorizationRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _disasterRecoveryConfigAuthorizationRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _disasterRecoveryAuthorizationRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.ServiceBus
                     throw;
                 }
             }
-            Page<NamespaceDisasterRecoveryConfigAuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NamespaceDisasterRecoveryAuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _disasterRecoveryConfigAuthorizationRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _disasterRecoveryAuthorizationRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,20 +246,20 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
-        /// OperationId: DisasterRecoveryConfigAuthorizationRules_List
+        /// OperationId: DisasterRecoveryAuthorizationRules_List
         /// <summary> Gets the authorization rules for a namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NamespaceDisasterRecoveryConfigAuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NamespaceDisasterRecoveryAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NamespaceDisasterRecoveryAuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NamespaceDisasterRecoveryConfigAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NamespaceDisasterRecoveryAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _disasterRecoveryAuthorizationRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -267,14 +267,14 @@ namespace Azure.ResourceManager.ServiceBus
                     throw;
                 }
             }
-            async Task<Page<NamespaceDisasterRecoveryConfigAuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NamespaceDisasterRecoveryAuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryConfigAuthorizationRuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceDisasterRecoveryAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryConfigAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _disasterRecoveryAuthorizationRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceDisasterRecoveryAuthorizationRule(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<NamespaceDisasterRecoveryConfigAuthorizationRule> IEnumerable<NamespaceDisasterRecoveryConfigAuthorizationRule>.GetEnumerator()
+        IEnumerator<NamespaceDisasterRecoveryAuthorizationRule> IEnumerable<NamespaceDisasterRecoveryAuthorizationRule>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -295,12 +295,12 @@ namespace Azure.ResourceManager.ServiceBus
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<NamespaceDisasterRecoveryConfigAuthorizationRule> IAsyncEnumerable<NamespaceDisasterRecoveryConfigAuthorizationRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NamespaceDisasterRecoveryAuthorizationRule> IAsyncEnumerable<NamespaceDisasterRecoveryAuthorizationRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, NamespaceDisasterRecoveryConfigAuthorizationRule, ServiceBusAuthorizationRuleData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NamespaceDisasterRecoveryAuthorizationRule, ServiceBusAuthorizationRuleData> Construct() { }
     }
 }

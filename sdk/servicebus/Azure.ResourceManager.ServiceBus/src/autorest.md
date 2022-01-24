@@ -11,6 +11,8 @@ clear-output-folder: true
 skip-csproj: true
 mgmt-debug:
   show-request-path: true
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: NamespaceDisasterRecoveryAuthorizationRule
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
@@ -35,7 +37,7 @@ directive:
         to: ServiceBusAuthorizationRule
     - rename-model:
         from: NWRuleSetIpRules
-        to: NetworkRuleSetIpRules
+        to: NetworkRuleSetIPRules
     - rename-model:
         from: NWRuleSetVirtualNetworkRules
         to: NetworkRuleSetVirtualNetworkRules
@@ -165,5 +167,8 @@ directive:
         to: ServiceBusNamespaceUpdateOptions
     - from: swagger-document
       where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
-      transform: $['x-ms-client-name'] = iPRules
+      transform: $['x-ms-client-name'] = 'iPRules'
+    - from: swagger-document
+      where: $.definitions.NetworkRuleSetIPRules.properties.ipMask
+      transform: $['x-ms-client-name'] = 'iPMask'
 ```

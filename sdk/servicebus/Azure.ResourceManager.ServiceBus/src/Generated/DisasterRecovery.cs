@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        #region NamespaceDisasterRecoveryConfigAuthorizationRule
+        #region NamespaceDisasterRecoveryAuthorizationRule
 
-        /// <summary> Gets a collection of NamespaceDisasterRecoveryConfigAuthorizationRules in the DisasterRecovery. </summary>
-        /// <returns> An object representing collection of NamespaceDisasterRecoveryConfigAuthorizationRules and their operations over a DisasterRecovery. </returns>
-        public virtual NamespaceDisasterRecoveryConfigAuthorizationRuleCollection GetNamespaceDisasterRecoveryConfigAuthorizationRules()
+        /// <summary> Gets a collection of NamespaceDisasterRecoveryAuthorizationRules in the DisasterRecovery. </summary>
+        /// <returns> An object representing collection of NamespaceDisasterRecoveryAuthorizationRules and their operations over a DisasterRecovery. </returns>
+        public virtual NamespaceDisasterRecoveryAuthorizationRuleCollection GetNamespaceDisasterRecoveryAuthorizationRules()
         {
-            return new NamespaceDisasterRecoveryConfigAuthorizationRuleCollection(this);
+            return new NamespaceDisasterRecoveryAuthorizationRuleCollection(this);
         }
         #endregion
     }

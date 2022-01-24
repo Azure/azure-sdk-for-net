@@ -18,7 +18,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    internal partial class DisasterRecoveryConfigAuthorizationRulesRestOperations
+    internal partial class DisasterRecoveryAuthorizationRulesRestOperations
     {
         private Uri endpoint;
         private string apiVersion;
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ServiceBus
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
 
-        /// <summary> Initializes a new instance of DisasterRecoveryConfigAuthorizationRulesRestOperations. </summary>
+        /// <summary> Initializes a new instance of DisasterRecoveryAuthorizationRulesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public DisasterRecoveryConfigAuthorizationRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
+        public DisasterRecoveryAuthorizationRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? "2021-06-01-preview";
