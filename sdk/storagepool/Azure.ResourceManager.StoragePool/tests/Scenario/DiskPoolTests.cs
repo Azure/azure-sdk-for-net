@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ResourceGroup = Azure.ResourceManager.Resources.ResourceGroup;
 using DiskPoolSku = Azure.ResourceManager.StoragePool.Models.Sku;
 using Azure.ResourceManager.StoragePool.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Azure.ResourceManager.StoragePool.Tests
 {
@@ -44,11 +45,15 @@ namespace Azure.ResourceManager.StoragePool.Tests
             // create disk pool
             var response = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
             var diskPool = response.Value;
+            Assert.AreEqual(diskPoolName, diskPool.Data.Name);
+            Assert.AreEqual(ProvisioningStates.Succeeded, diskPool.Data.ProvisioningState);
 
             // update disk pool -- by adding a new tag
             diskPoolCreate.Tags.Add("tag2", "value2");
             var updateResponse = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
             diskPool = updateResponse.Value;
+            Assert.AreEqual(diskPoolCreate.Tags, diskPool.Data.Tags);
+            Assert.AreEqual(ProvisioningStates.Succeeded, diskPool.Data.ProvisioningState);
 
             // stop disk pool
             var deallocateResponse = await diskPool.DeallocateAsync(true);
@@ -58,6 +63,14 @@ namespace Azure.ResourceManager.StoragePool.Tests
 
             // delete disk pool
             var deleteResponse = await diskPool.DeleteAsync(true);
+
+            try
+            {
+                var getResponse = await diskPoolCollection.GetAsync(diskPoolName);
+            } catch (RequestFailedException e)
+            {
+                Assert.AreEqual(StatusCodes.Status404NotFound, e.Status);
+            }
         }
     }
 }
