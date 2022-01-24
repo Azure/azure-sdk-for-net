@@ -9,13 +9,11 @@ namespace: Azure.ResourceManager.ServiceBus
 require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/servicebus/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
-    lenient-model-deduplication: true
-
+mgmt-debug:
+  show-request-path: true
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
-
 directive:
     - rename-model:
         from: SBNamespace
@@ -124,13 +122,13 @@ directive:
       transform: return "TopicAuthorizationRules_RegenerateKeys"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules'].get.operationId
-      transform: return "DisasterRecoveryConfigAuthorizationRules_List"
+      transform: return "DisasterRecoveryAuthorizationRules_List"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}'].get.operationId
-      transform: return "DisasterRecoveryConfigAuthorizationRules_Get"
+      transform: return "DisasterRecoveryAuthorizationRules_Get"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
-      transform: return "DisasterRecoveryConfigAuthorizationRules_ListKeys"
+      transform: return "DisasterRecoveryAuthorizationRules_ListKeys"
     - rename-model:
         from: ArmDisasterRecovery
         to: DisasterRecovery
@@ -165,5 +163,7 @@ directive:
     - rename-model:
         from: ServiceBusNamespaceUpdateParameters
         to: ServiceBusNamespaceUpdateOptions
-
+    - from: swagger-document
+      where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
+      transform: $['x-ms-client-name'] = iPRules
 ```
