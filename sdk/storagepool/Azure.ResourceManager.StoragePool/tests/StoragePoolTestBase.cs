@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -13,7 +12,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
 {
     public class StoragePoolTestBase : ManagementRecordedTestBase<StoragePoolManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.CanadaCentral;
+        protected AzureLocation DefaultLocation => AzureLocation.AustraliaEast;
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription { get; private set; }
         public StoragePoolTestBase(bool isAsync) : base(isAsync)
@@ -31,9 +30,8 @@ namespace Azure.ResourceManager.StoragePool.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroupAsync()
+        protected async Task<ResourceGroup> CreateResourceGroupAsync(string resourceGroupName)
         {
-            var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 true,
                 resourceGroupName,

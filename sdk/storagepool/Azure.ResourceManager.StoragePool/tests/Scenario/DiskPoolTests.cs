@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 using ResourceGroup = Azure.ResourceManager.Resources.ResourceGroup;
 using DiskPoolSku = Azure.ResourceManager.StoragePool.Models.Sku;
 using Azure.ResourceManager.StoragePool.Models;
-using Azure.ResourceManager.Resources.Models;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Tests
 {
-    [TestFixture(true)]
-    public class DiskPoolTests : DiskPoolTestBase
+    public class DiskPoolTests : StoragePoolTestBase
     {
         private string SubnetResourceId;
-        private string ManagedDiskId;
         protected ResourceGroup _resourceGroup;
 
         public DiskPoolTests(bool isAsync) : base(isAsync)
@@ -27,9 +23,9 @@ namespace Azure.ResourceManager.StoragePool.Tests
         [SetUp]
         public async Task Setup()
         {
-            _resourceGroup = await CreateResourceGroupAsync();
-            SubnetResourceId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/synthetics-permanent-canadacentral/providers/Microsoft.Network/virtualNetworks/synthetics-vnet/subnets/synthetics-subnet";
-            ManagedDiskId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/synthetics-permanent-canadacentral/providers/Microsoft.Compute/disks/synthetics-test-disk";
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            _resourceGroup = await CreateResourceGroupAsync(resourceGroupName);
+            SubnetResourceId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/hakkaraj-rg/providers/Microsoft.Network/VirtualNetworks/diskpool-vnet-ae/subnets/default";
         }
 
         [Test]
@@ -49,12 +45,8 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var response = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
             var diskPool = response.Value;
 
-            // update disk pool
-            diskPoolCreate.Disks.Add(
-                new WritableSubResource()
-                {
-                    Id = new ResourceIdentifier(ManagedDiskId),
-                });
+            // update disk pool -- by adding a new tag
+            diskPoolCreate.Tags.Add("tag2", "value2");
             var updateResponse = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
             diskPool = updateResponse.Value;
 

@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 using ResourceGroup = Azure.ResourceManager.Resources.ResourceGroup;
 using DiskPoolSku = Azure.ResourceManager.StoragePool.Models.Sku;
 using Azure.ResourceManager.StoragePool.Models;
-using Azure.ResourceManager.Resources.Models;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Tests
 {
-    [TestFixture(true)]
-    public class IscsiTargetTests : DiskPoolTestBase
+    public class IscsiTargetTests : StoragePoolTestBase
     {
         private string SubnetResourceId;
-        private string ManagedDiskId;
         protected ResourceGroup _resourceGroup;
 
         public IscsiTargetTests(bool isAsync) : base(isAsync)
@@ -27,9 +23,9 @@ namespace Azure.ResourceManager.StoragePool.Tests
         [SetUp]
         public async Task Setup()
         {
-            _resourceGroup = await CreateResourceGroupAsync();
-            SubnetResourceId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/synthetics-permanent-canadacentral/providers/Microsoft.Network/virtualNetworks/synthetics-vnet/subnets/synthetics-subnet";
-            ManagedDiskId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/synthetics-permanent-canadacentral/providers/Microsoft.Compute/disks/synthetics-test-disk";
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            _resourceGroup = await CreateResourceGroupAsync(resourceGroupName);
+            SubnetResourceId = "/subscriptions/bc675d74-3b9f-48da-866a-a10149531391/resourceGroups/hakkaraj-rg/providers/Microsoft.Network/VirtualNetworks/diskpool-vnet-ae/subnets/default";
         }
 
         [Test]
@@ -42,11 +38,6 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var sku = new DiskPoolSku("Standard_S1");
             var diskPoolCreate = new DiskPoolCreate(sku, DefaultLocation, SubnetResourceId) { };
             diskPoolCreate.AvailabilityZones.Add("1");
-            diskPoolCreate.Disks.Add(
-               new WritableSubResource()
-               {
-                   Id = new ResourceIdentifier(ManagedDiskId),
-               });
 
             // create disk pool
             var response = await diskPoolCollection.CreateOrUpdateAsync(true, diskPoolName, diskPoolCreate);
@@ -60,9 +51,17 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var targetCreateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
             var iscsiTarget = targetCreateResponse.Value;
 
-            // update iSCSI target
-            iscsiTargetCreate.Luns.Add(new IscsiLun("lun0", ManagedDiskId));
+            // update iSCSI target -- by updating the managed by property
+            var dataStoreId = "/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/myResourceGroup/providers/Microsoft.AVS/privateClouds/myPrivateCloud/clusters/Cluster-1/datastores/datastore1";
+            iscsiTargetCreate.ManagedBy = dataStoreId;
+            iscsiTargetCreate.ManagedByExtended.Add(dataStoreId);
             var targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
+            iscsiTarget = targetUpdateResponse.Value;
+
+            // remove managed by reference
+            iscsiTargetCreate.ManagedBy = "";
+            iscsiTargetCreate.ManagedByExtended.Remove(dataStoreId);
+            targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
             iscsiTarget = targetUpdateResponse.Value;
 
             // delete iSCSI target
