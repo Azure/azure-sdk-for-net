@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
@@ -38,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         internal ServiceHubContext HubContext => _hubContext as ServiceHubContext;
 
-        internal string ConnectionName => GetType().GetCustomAttribute<SignalRConnectionAttribute>(true)?.Connection ?? Constants.AzureSignalRConnectionStringName;
+        internal string ConnectionName => SignalRTriggerUtils.GetConnectionNameFromAttribute(GetType()) ?? Constants.AzureSignalRConnectionStringName;
 
         /// <summary>
         /// Leave the parameters to be null when called by Azure Function infrastructure.

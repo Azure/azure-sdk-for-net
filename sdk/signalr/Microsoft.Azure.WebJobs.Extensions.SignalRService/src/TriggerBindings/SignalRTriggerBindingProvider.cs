@@ -12,7 +12,6 @@ using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Logging;
-using static Microsoft.Azure.WebJobs.Extensions.SignalRService.ServerlessHub;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -89,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 hubName = declaredType.Name;
                 category = GetCategoryFromMethodName(method.Name);
                 @event = GetEventFromMethodName(method.Name, category);
-                connectionStringSetting = declaredType.GetCustomAttribute<SignalRConnectionAttribute>()?.Connection ?? attribute.ConnectionStringSetting;
+                connectionStringSetting = SignalRTriggerUtils.GetConnectionNameFromAttribute(declaredType) ?? attribute.ConnectionStringSetting;
             }
             else
             {
