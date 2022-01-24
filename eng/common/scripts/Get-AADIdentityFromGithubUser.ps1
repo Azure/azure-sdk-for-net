@@ -75,3 +75,4 @@ if ($resp.aad) {
 }
 
 LogError "Failed to retrieve the aad identity from given github user: $GithubName"
+exit 1
