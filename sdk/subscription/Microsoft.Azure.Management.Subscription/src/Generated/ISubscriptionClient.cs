@@ -41,12 +41,6 @@ namespace Microsoft.Azure.Management.Subscription
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current
-        /// version is 2021-10-01
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -64,6 +58,16 @@ namespace Microsoft.Azure.Management.Subscription
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the ISubscriptionsOperations.
+        /// </summary>
+        ISubscriptionsOperations Subscriptions { get; }
+
+        /// <summary>
+        /// Gets the ITenantsOperations.
+        /// </summary>
+        ITenantsOperations Tenants { get; }
 
         /// <summary>
         /// Gets the ISubscriptionOperations.

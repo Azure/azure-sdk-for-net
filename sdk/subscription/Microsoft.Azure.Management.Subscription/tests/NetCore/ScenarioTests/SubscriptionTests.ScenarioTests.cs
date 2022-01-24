@@ -9,6 +9,10 @@ using Microsoft.Azure.Test;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
+using Microsoft.Azure.Management.Subscription.Models;
+using System.Collections.Generic;
+using System;
+using System.Threading;
 
 namespace ResourceGroups.Tests
 {
@@ -20,7 +24,195 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetSubscriptionClientWithHandler(context, handler);
+            //client.BaseUri = new Uri("https://centraluseuap.management.azure.com/");
             return client;
+        }
+
+        [Fact]
+        public void Rename()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                /*var result = client.Subscription.Rename(subscriptionId, new Microsoft.Azure.Management.Subscription.Models.SubscriptionName()
+                {
+                    SubscriptionNameProperty = "test-224"
+                });
+
+                Assert.Equal(HttpMethod.Post, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+                Assert.Equal(subscriptionId, result.SubscriptionId);*/
+                Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Rename(subscriptionId, new Microsoft.Azure.Management.Subscription.Models.SubscriptionName()
+                {
+                    SubscriptionNameProperty = "test-224"
+                }));
+            }
+        }
+
+        [Fact]
+        public void Cancel()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var result = client.Subscription.Cancel(subscriptionId);
+
+                Assert.Equal(HttpMethod.Post, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+                Assert.Equal(subscriptionId, result.SubscriptionId);
+                //Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Cancel(subscriptionId));
+            }
+        }
+        [Fact]
+        public void Enable()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                /*var result = client.Subscription.Enable(subscriptionId);
+
+                Assert.Equal(HttpMethod.Post, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+                Assert.Equal(subscriptionId, result.SubscriptionId);*/
+
+                Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Enable(subscriptionId));
+            }
+        }
+
+        [Fact]
+        public void Operations()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var result = client.Operations.List();
+
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+            }
+        }
+
+        [Fact]
+        public void PutAlias()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var aliasName = "test-alias";
+                var putAliasRequestBody = new PutAliasRequest(new PutAliasRequestProperties()
+                {
+                    DisplayName = null,
+                    Workload = "Production",
+                    BillingScope = null,
+                    SubscriptionId = subscriptionId,
+                    AdditionalProperties = new PutAliasRequestAdditionalProperties()
+                    {
+                        ManagementGroupId = null,
+                        Tags = new Dictionary<string, string>() { { "tag1", "Messi" }, { "tag2", "Ronaldo" }, { "tag3", "Lebron" } }
+                    },
+
+                });
+                var result = client.Alias.Create(aliasName, putAliasRequestBody);
+
+                Assert.Equal(HttpMethod.Put, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                /*Assert.Equal(subscriptionId, result.SubscriptionId);
+                Assert.Equal("Pending", result.AcceptOwnershipState);
+                Assert.Equal("abc@test.com", result.BillingOwner);
+                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
+                Assert.Equal("Test Subscription", result.DisplayName);*/
+            }
+        }
+
+        [Fact]
+        public void GetAlias()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var aliasName = "test-alias2";
+                var result = client.Alias.Get(aliasName);
+
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                /*Assert.Equal(subscriptionId, result.SubscriptionId);
+                Assert.Equal("Pending", result.AcceptOwnershipState);
+                Assert.Equal("abc@test.com", result.BillingOwner);
+                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
+                Assert.Equal("Test Subscription", result.DisplayName);*/
+            }
+        }
+
+        [Fact]
+        public void DeleteAlias()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var aliasName = "test-alias";
+                var putAliasRequestBody = new PutAliasRequest();
+                client.Alias.Delete(aliasName);
+
+                Assert.Equal(HttpMethod.Delete, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                /*Assert.Equal(subscriptionId, result.SubscriptionId);
+                Assert.Equal("Pending", result.AcceptOwnershipState);
+                Assert.Equal("abc@test.com", result.BillingOwner);
+                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
+                Assert.Equal("Test Subscription", result.DisplayName);*/
+            }
+        }
+
+        [Fact]
+        public void AcceptOwnership()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                /*var result = client.Subscription.AcceptOwnership(subscriptionId, new AcceptOwnershipRequest()
+                {
+                    Properties = new AcceptOwnershipRequestProperties(
+                        displayName: "AcceptedSubOwnership",
+                        managementGroupId: "",
+                        tags: new Dictionary<string, string>() {
+                            { "tag1", "Messi" },
+                            { "tag2", "Ronaldo" },
+                            { "tag3", "Lebron" }
+                        })
+                });
+
+                Assert.Equal(HttpMethod.Post, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));*/
+
+                Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.AcceptOwnership(subscriptionId, new AcceptOwnershipRequest()));
+            }
         }
 
         [Fact]
@@ -32,20 +224,109 @@ namespace ResourceGroups.Tests
             {
                 var client = GetSubscriptionClient(context, handler);
 
-                var result = client.Subscription.AcceptOwnershipStatus(subscriptionId);
-                
-                Assert.Equal(HttpMethod.Get, handler.Method);
-                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+                /*var result = client.Subscription.AcceptOwnershipStatus(subscriptionId);
 
-                Assert.Equal(subscriptionId, result.SubscriptionId);
-                Assert.Equal("Pending", result.AcceptOwnershipState);
-                Assert.Equal("abc@test.com", result.BillingOwner);
-                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
-                Assert.Equal("Test Subscription", result.DisplayName);
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));*/
+                Assert.Throws<ErrorResponseBodyException>(() => client.Subscription.AcceptOwnershipStatus(subscriptionId));
             }
         }
 
-        /*[Fact]
+        [Fact]
+        public void PutTenantPolicy()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var result = client.SubscriptionPolicy.AddUpdatePolicyForTenant(new PutTenantPolicyRequestProperties()
+                {
+                    BlockSubscriptionsIntoTenant = true,
+                    BlockSubscriptionsLeavingTenant = true,
+                    ExemptedPrincipals = new List<Guid?>()
+                {
+                    Guid.Parse("e879cf0f-2b4d-5431-109a-f72fc9868693"),
+                    Guid.Parse("9792da87-c97b-410d-a97d-27021ba09ce6")
+                }
+                });
+
+                Assert.Equal(HttpMethod.Put, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                /*Assert.Equal(subscriptionId, result.SubscriptionId);
+                Assert.Equal("Pending", result.AcceptOwnershipState);
+                Assert.Equal("abc@test.com", result.BillingOwner);
+                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
+                Assert.Equal("Test Subscription", result.DisplayName);*/
+            }
+        }
+
+        [Fact]
+        public void GetTenantDefaultPolicies()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var result = client.SubscriptionPolicy.GetPolicyForTenant();
+
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                /*Assert.Equal(subscriptionId, result.SubscriptionId);
+                Assert.Equal("Pending", result.AcceptOwnershipState);
+                Assert.Equal("abc@test.com", result.BillingOwner);
+                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
+                Assert.Equal("Test Subscription", result.DisplayName);*/
+            }
+        }
+
+        [Fact]
+        public void GetPolicies()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var result = client.SubscriptionPolicy.ListPolicyForTenant();
+
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                /*Assert.Equal(subscriptionId, result.SubscriptionId);
+                Assert.Equal("Pending", result.AcceptOwnershipState);
+                Assert.Equal("abc@test.com", result.BillingOwner);
+                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
+                Assert.Equal("Test Subscription", result.DisplayName);*/
+            }
+        }
+
+        [Fact]
+        public void GetBillingAccountPolicy()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetSubscriptionClient(context, handler);
+
+                var billingAccountId = "561a5998-da58-5f3d-bd54-d13025c679f5:bb50dbaa-b975-4445-8740-35be408bac21_2019-05-31";
+                /*var result = client.BillingAccount.GetPolicy(billingAccountId);
+
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));*/
+
+                Assert.Throws<ErrorResponseBodyException>(() => _ = client.BillingAccount.GetPolicy(billingAccountId));
+            }
+        }
+
+        [Fact]
         public void ListSubscriptions()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -65,7 +346,7 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(subscriptions.First().State);
             }
         }
-        
+
         [Fact]
         public void GetSubscriptionDetails()
         {
@@ -73,7 +354,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                const string subscriptionId = "11e23d44-5f84-4f2f-908f-e3bd3195243d";
+                //const string subscriptionId = "11e23d44-5f84-4f2f-908f-e3bd3195243d";
                 var client = GetSubscriptionClient(context, handler);
                 //var rmclient = GetResourceManagementClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
@@ -86,6 +367,6 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(subscriptionDetails.DisplayName);
                 Assert.NotNull(subscriptionDetails.State);
             }
-        }*/
+        }
     }
 }

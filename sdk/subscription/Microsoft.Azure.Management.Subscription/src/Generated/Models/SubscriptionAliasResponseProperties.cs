@@ -49,8 +49,9 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// <param name="subscriptionOwnerId">Owner Id of the
         /// subscription</param>
         /// <param name="managementGroupId">The Management Group Id.</param>
+        /// <param name="createdTime">Created Time</param>
         /// <param name="tags">Tags for the subscription</param>
-        public SubscriptionAliasResponseProperties(string subscriptionId = default(string), string displayName = default(string), string provisioningState = default(string), string acceptOwnershipUrl = default(string), string acceptOwnershipState = default(string), string billingScope = default(string), string workload = default(string), string resellerId = default(string), string subscriptionOwnerId = default(string), string managementGroupId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public SubscriptionAliasResponseProperties(string subscriptionId = default(string), string displayName = default(string), string provisioningState = default(string), string acceptOwnershipUrl = default(string), string acceptOwnershipState = default(string), string billingScope = default(string), string workload = default(string), string resellerId = default(string), string subscriptionOwnerId = default(string), string managementGroupId = default(string), string createdTime = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
@@ -62,6 +63,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
             ResellerId = resellerId;
             SubscriptionOwnerId = subscriptionOwnerId;
             ManagementGroupId = managementGroupId;
+            CreatedTime = createdTime;
             Tags = tags;
             CustomInit();
         }
@@ -131,6 +133,12 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         [JsonProperty(PropertyName = "managementGroupId")]
         public string ManagementGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets created Time
+        /// </summary>
+        [JsonProperty(PropertyName = "createdTime")]
+        public string CreatedTime { get; set; }
 
         /// <summary>
         /// Gets or sets tags for the subscription

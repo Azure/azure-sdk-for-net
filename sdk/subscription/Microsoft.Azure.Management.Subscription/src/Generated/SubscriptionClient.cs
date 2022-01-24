@@ -47,12 +47,6 @@ namespace Microsoft.Azure.Management.Subscription
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current version is
-        /// 2021-10-01
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -69,6 +63,16 @@ namespace Microsoft.Azure.Management.Subscription
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the ISubscriptionsOperations.
+        /// </summary>
+        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the ITenantsOperations.
+        /// </summary>
+        public virtual ITenantsOperations Tenants { get; private set; }
 
         /// <summary>
         /// Gets the ISubscriptionOperations.
@@ -336,13 +340,14 @@ namespace Microsoft.Azure.Management.Subscription
         /// </summary>
         private void Initialize()
         {
+            Subscriptions = new SubscriptionsOperations(this);
+            Tenants = new TenantsOperations(this);
             Subscription = new SubscriptionOperations(this);
             Operations = new Operations(this);
             Alias = new AliasOperations(this);
             SubscriptionPolicy = new SubscriptionPolicyOperations(this);
             BillingAccount = new BillingAccountOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
