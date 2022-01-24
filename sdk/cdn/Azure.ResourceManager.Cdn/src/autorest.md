@@ -14,6 +14,7 @@ input-file:
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
+save-inputs: true
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
