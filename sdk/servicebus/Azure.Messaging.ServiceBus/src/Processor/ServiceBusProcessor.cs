@@ -160,7 +160,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         /// <value>
-        /// The maximum duration for lock renewal can be set using <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/>
+        /// The maximum duration for lock renewal is specified using <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/>
         /// and has a default value of 5 minutes.
         /// </value>
         public virtual TimeSpan MaxAutoLockRenewalDuration { get; }
