@@ -329,13 +329,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
                     new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
                 },
-                IpRules =
+                IPRules =
                     {
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.1", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.2", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.3", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.4", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.5", Action = "Allow" }
                     }
             };
             await eventHubNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(true, parameter);
@@ -343,10 +343,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //get the network rule set
             NetworkRuleSet networkRuleSet = await eventHubNamespace.GetNetworkRuleSet().GetAsync();
             Assert.NotNull(networkRuleSet);
-            Assert.NotNull(networkRuleSet.Data.IpRules);
+            Assert.NotNull(networkRuleSet.Data.IPRules);
             Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
             Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules.Count, 3);
-            Assert.AreEqual(networkRuleSet.Data.IpRules.Count, 5);
+            Assert.AreEqual(networkRuleSet.Data.IPRules.Count, 5);
 
             //delete virtual network
             await virtualNetwork.DeleteAsync(true);
