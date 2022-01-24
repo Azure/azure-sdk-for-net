@@ -24,6 +24,8 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$GithubUser
 )
+Set-StrictMode -Version 3
+
 . "${PSScriptRoot}\common.ps1"
 
 $OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links/github/$GithubUser"
