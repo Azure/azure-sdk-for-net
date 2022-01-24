@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         /// <value>
-        /// The receive mode can be set using <see cref="ServiceBusProcessorOptions.ReceiveMode"/>
+        /// The receive mode is specified using <see cref="ServiceBusProcessorOptions.ReceiveMode"/>
         /// and has a default mode of <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </value>
         public virtual ServiceBusReceiveMode ReceiveMode { get; }
