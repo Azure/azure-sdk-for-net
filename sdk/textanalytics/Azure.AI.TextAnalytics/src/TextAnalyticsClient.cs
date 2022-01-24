@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsClient"/>
-        /// class for the specified service instance.
+        /// class for the specified service instance in Azure Public Cloud.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
@@ -41,6 +41,7 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
+            _options.Audience = TextAnalyticsAudience.AzureResourceManagerPublicCloud;
         }
 
         /// <summary>
@@ -59,17 +60,25 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            string scope = options.Audience + "/.default";
+
+            //if no Audience is provided, default to Azure Public Cloud
+            if (options.Audience == null)
+            {
+                scope = TextAnalyticsAudience.AzureResourceManagerPublicCloud + "/.default";
+            }
+
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKeyCredential"/>
-        /// class for the specified service instance.
+        /// class for the specified service instance in Azure Public Cloud.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
@@ -79,6 +88,7 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
+            _options.Audience = TextAnalyticsAudience.AzureResourceManagerPublicCloud;
         }
 
         /// <summary>
@@ -97,6 +107,12 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
+
+            //if no Audience is provided, default to Azure Public Cloud
+            if (options.Audience == null)
+            {
+                options.Audience = TextAnalyticsAudience.AzureResourceManagerPublicCloud;
+            }
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
@@ -1254,7 +1270,7 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            var analyzeSentimentOptions = options != null ? new AnalyzeSentimentOptions (options): new AnalyzeSentimentOptions();
+            var analyzeSentimentOptions = options != null ? new AnalyzeSentimentOptions(options) : new AnalyzeSentimentOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, analyzeSentimentOptions, cancellationToken).ConfigureAwait(false);
@@ -2548,13 +2564,13 @@ namespace Azure.AI.TextAnalytics
         }
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
-            => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage};
+            => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
 
         private MultiLanguageBatchInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
             => new MultiLanguageBatchInput(documents.Select((document, i) => ConvertToMultiLanguageInput(document, language, i)).ToList());
 
         private MultiLanguageBatchInput ConvertToMultiLanguageInputs(IEnumerable<TextDocumentInput> documents)
-            => new MultiLanguageBatchInput(documents.Select((document) => new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _options.DefaultLanguage}).ToList());
+            => new MultiLanguageBatchInput(documents.Select((document) => new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _options.DefaultLanguage }).ToList());
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
             => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
@@ -2565,7 +2581,7 @@ namespace Azure.AI.TextAnalytics
         private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<DetectLanguageInput> documents)
             => new LanguageBatchInput(documents.Select((document) => new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint }).ToList());
 
-        private static IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
+        private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error)
         {
             if (string.IsNullOrEmpty(error.Target))
                 return null;

@@ -48,6 +48,12 @@ namespace Azure.AI.TextAnalytics
         internal ServiceVersion Version { get; }
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with AAD.
+        /// The authentication scope will be set from this audience.
+        /// </summary>
+        public TextAnalyticsAudience? Audience { get; set; }
+
+        /// <summary>
         /// Default country hint value to use in all client calls.
         /// If no value is specified, "us" is set as default.
         /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.
