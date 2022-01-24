@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ApplicationDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -91,13 +89,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ApplicationDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -123,13 +119,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the managed application definition. </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual Response<ApplicationDefinition> Get(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.Get");
             scope.Start();
@@ -150,13 +144,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the managed application definition. </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public async virtual Task<Response<ApplicationDefinition>> GetAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.Get");
             scope.Start();
@@ -177,13 +169,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual Response<ApplicationDefinition> GetIfExists(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetIfExists");
             scope.Start();
@@ -204,13 +194,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public async virtual Task<Response<ApplicationDefinition>> GetIfExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.GetIfExists");
             scope.Start();
@@ -231,13 +219,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.Exists");
             scope.Start();
@@ -256,13 +242,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _clientDiagnostics.CreateScope("ApplicationDefinitionCollection.Exists");
             scope.Start();

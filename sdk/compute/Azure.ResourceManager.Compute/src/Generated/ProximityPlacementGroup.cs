@@ -234,10 +234,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<ProximityPlacementGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroup.AddTag");
             scope.Start();
@@ -263,10 +260,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<ProximityPlacementGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroup.AddTag");
             scope.Start();
@@ -349,10 +343,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<ProximityPlacementGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroup.RemoveTag");
             scope.Start();
@@ -377,10 +368,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<ProximityPlacementGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroup.RemoveTag");
             scope.Start();

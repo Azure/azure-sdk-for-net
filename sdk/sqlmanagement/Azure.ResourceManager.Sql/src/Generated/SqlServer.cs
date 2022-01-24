@@ -270,10 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlServer.AddTag");
             scope.Start();
@@ -299,10 +296,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<SqlServer> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlServer.AddTag");
             scope.Start();
@@ -385,10 +379,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlServer.RemoveTag");
             scope.Start();
@@ -413,10 +404,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<SqlServer> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlServer.RemoveTag");
             scope.Start();

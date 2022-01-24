@@ -50,13 +50,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual PolicyAssignmentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment. </param>
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<PolicyAssignmentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a single policy assignment, given its name and the scope it was created at. </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         public virtual Response<PolicyAssignment> Get(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.Get");
             scope.Start();
@@ -152,13 +146,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a single policy assignment, given its name and the scope it was created at. </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         public async virtual Task<Response<PolicyAssignment>> GetAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.Get");
             scope.Start();
@@ -179,13 +171,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         public virtual Response<PolicyAssignment> GetIfExists(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.GetIfExists");
             scope.Start();
@@ -206,13 +196,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         public async virtual Task<Response<PolicyAssignment>> GetIfExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.GetIfExists");
             scope.Start();
@@ -233,13 +221,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.Exists");
             scope.Start();
@@ -258,13 +244,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentCollection.Exists");
             scope.Start();

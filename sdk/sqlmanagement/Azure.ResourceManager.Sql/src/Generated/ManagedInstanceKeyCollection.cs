@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyName"> The name of the managed instance key to be operated on (updated or created). </param>
         /// <param name="parameters"> The requested managed instance key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ManagedInstanceKeyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyName"> The name of the managed instance key to be operated on (updated or created). </param>
         /// <param name="parameters"> The requested managed instance key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ManagedInstanceKeyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance key. </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<ManagedInstanceKey> Get(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance key. </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstanceKey>> GetAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<ManagedInstanceKey> GetIfExists(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstanceKey>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<bool> Exists(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Exists");
             scope.Start();

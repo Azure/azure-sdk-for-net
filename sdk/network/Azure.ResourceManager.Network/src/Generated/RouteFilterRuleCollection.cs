@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
         public virtual RouteFilterRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (routeFilterRuleParameters == null)
             {
                 throw new ArgumentNullException(nameof(routeFilterRuleParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
         public async virtual Task<RouteFilterRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (routeFilterRuleParameters == null)
             {
                 throw new ArgumentNullException(nameof(routeFilterRuleParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified rule from a route filter. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<RouteFilterRule> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified rule from a route filter. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<RouteFilterRule>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<RouteFilterRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<RouteFilterRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Exists");
             scope.Start();

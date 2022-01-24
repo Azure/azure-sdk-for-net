@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
         public virtual SitePublicCertificateCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
             if (publicCertificate == null)
             {
                 throw new ArgumentNullException(nameof(publicCertificate));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
         public async virtual Task<SitePublicCertificateCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
             if (publicCertificate == null)
             {
                 throw new ArgumentNullException(nameof(publicCertificate));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual Response<SitePublicCertificate> Get(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public async virtual Task<Response<SitePublicCertificate>> GetAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual Response<SitePublicCertificate> GetIfExists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public async virtual Task<Response<SitePublicCertificate>> GetIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
-            if (publicCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
             using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
             scope.Start();

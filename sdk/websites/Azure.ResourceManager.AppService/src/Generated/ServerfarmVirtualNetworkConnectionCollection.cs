@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<ServerfarmVirtualNetworkConnection> Get(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public async virtual Task<Response<ServerfarmVirtualNetworkConnection>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<ServerfarmVirtualNetworkConnection> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public async virtual Task<Response<ServerfarmVirtualNetworkConnection>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.Exists");
             scope.Start();

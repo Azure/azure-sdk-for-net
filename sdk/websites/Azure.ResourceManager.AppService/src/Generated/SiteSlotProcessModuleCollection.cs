@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual Response<SiteSlotProcessModule> Get(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
-            {
-                throw new ArgumentNullException(nameof(baseAddress));
-            }
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public async virtual Task<Response<SiteSlotProcessModule>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
-            {
-                throw new ArgumentNullException(nameof(baseAddress));
-            }
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual Response<SiteSlotProcessModule> GetIfExists(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
-            {
-                throw new ArgumentNullException(nameof(baseAddress));
-            }
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public async virtual Task<Response<SiteSlotProcessModule>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
-            {
-                throw new ArgumentNullException(nameof(baseAddress));
-            }
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public virtual Response<bool> Exists(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
-            {
-                throw new ArgumentNullException(nameof(baseAddress));
-            }
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
-            if (baseAddress == null)
-            {
-                throw new ArgumentNullException(nameof(baseAddress));
-            }
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
             using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.Exists");
             scope.Start();

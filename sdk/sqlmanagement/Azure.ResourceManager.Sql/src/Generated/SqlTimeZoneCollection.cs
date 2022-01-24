@@ -63,13 +63,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance time zone. </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<SqlTimeZone> Get(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            if (timeZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(timeZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
             using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
             scope.Start();
@@ -93,13 +91,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance time zone. </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public async virtual Task<Response<SqlTimeZone>> GetAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            if (timeZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(timeZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
             using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
             scope.Start();
@@ -120,13 +116,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<SqlTimeZone> GetIfExists(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            if (timeZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(timeZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
             using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();
@@ -147,13 +141,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public async virtual Task<Response<SqlTimeZone>> GetIfExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            if (timeZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(timeZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
             using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();
@@ -174,13 +166,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public virtual Response<bool> Exists(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            if (timeZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(timeZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
             using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
@@ -199,13 +189,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string timeZoneId, CancellationToken cancellationToken = default)
         {
-            if (timeZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(timeZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
             using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();

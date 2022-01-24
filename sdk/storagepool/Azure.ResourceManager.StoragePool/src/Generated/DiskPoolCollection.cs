@@ -61,13 +61,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
         public virtual DiskPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
             if (diskPoolCreatePayload == null)
             {
                 throw new ArgumentNullException(nameof(diskPoolCreatePayload));
@@ -98,13 +96,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
         public async virtual Task<DiskPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
             if (diskPoolCreatePayload == null)
             {
                 throw new ArgumentNullException(nameof(diskPoolCreatePayload));
@@ -133,13 +129,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Get a Disk pool. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual Response<DiskPool> Get(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Get");
             scope.Start();
@@ -163,13 +157,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Get a Disk pool. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public async virtual Task<Response<DiskPool>> GetAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Get");
             scope.Start();
@@ -190,13 +182,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual Response<DiskPool> GetIfExists(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
             scope.Start();
@@ -217,13 +207,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public async virtual Task<Response<DiskPool>> GetIfExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
             scope.Start();
@@ -244,13 +232,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Exists");
             scope.Start();
@@ -269,13 +255,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Exists");
             scope.Start();

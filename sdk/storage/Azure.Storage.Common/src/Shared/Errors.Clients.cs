@@ -106,9 +106,11 @@ namespace Azure.Storage
             => new ArgumentException($"The version specified by {paramName} is not supported by this library.");
 
         public static RequestFailedException ClientRequestIdMismatch(ClientDiagnostics clientDiagnostics, Response response, string echo, string original)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(
+            => clientDiagnostics.CreateRequestFailedException(
                 response,
-                $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.", errorCode: response.GetErrorCode(null));
+                new ResponseError(
+                    response.GetErrorCode(null),
+                    $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'."));
 
         public static ArgumentException CannotDeferTransactionalHashVerification()
             => new ArgumentException("Cannot defer transactional hash verification. Returned hash is unavailable to caller.");

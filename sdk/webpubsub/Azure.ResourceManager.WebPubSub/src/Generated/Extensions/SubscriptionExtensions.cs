@@ -37,13 +37,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public static async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -74,13 +72,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public static Response<NameAvailability> CheckWebPubSubNameAvailability(this Subscription subscription, string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -230,14 +226,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -282,14 +276,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRServiceUsage> GetUsages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {

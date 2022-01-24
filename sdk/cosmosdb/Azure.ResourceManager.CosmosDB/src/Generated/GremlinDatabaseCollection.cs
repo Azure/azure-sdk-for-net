@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateGremlinDatabaseParameters"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
         public virtual GremlinDatabaseCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (createUpdateGremlinDatabaseParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateGremlinDatabaseParameters));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateGremlinDatabaseParameters"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
         public async virtual Task<GremlinDatabaseCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (createUpdateGremlinDatabaseParameters == null)
             {
                 throw new ArgumentNullException(nameof(createUpdateGremlinDatabaseParameters));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Gremlin databases under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<GremlinDatabase> Get(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Gets the Gremlin databases under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<GremlinDatabase>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<GremlinDatabase> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<GremlinDatabase>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _clientDiagnostics.CreateScope("GremlinDatabaseCollection.Exists");
             scope.Start();

@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network security group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual NetworkSecurityGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network security group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<NetworkSecurityGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -125,13 +121,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         public virtual Response<NetworkSecurityGroup> Get(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.Get");
             scope.Start();
@@ -153,13 +147,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         public async virtual Task<Response<NetworkSecurityGroup>> GetAsync(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.Get");
             scope.Start();
@@ -181,13 +173,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         public virtual Response<NetworkSecurityGroup> GetIfExists(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.GetIfExists");
             scope.Start();
@@ -209,13 +199,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         public async virtual Task<Response<NetworkSecurityGroup>> GetIfExistsAsync(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.GetIfExists");
             scope.Start();
@@ -237,13 +225,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.Exists");
             scope.Start();
@@ -263,13 +249,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkSecurityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
 
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupCollection.Exists");
             scope.Start();

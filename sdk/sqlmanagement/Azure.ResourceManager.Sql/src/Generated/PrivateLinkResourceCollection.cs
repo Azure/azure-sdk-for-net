@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a private link resource for SQL server. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<PrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a private link resource for SQL server. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<PrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
             scope.Start();

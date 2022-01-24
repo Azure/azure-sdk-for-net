@@ -127,14 +127,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -184,14 +182,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -242,18 +238,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -304,18 +295,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -366,18 +352,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -428,18 +409,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -489,14 +465,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -546,14 +520,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {

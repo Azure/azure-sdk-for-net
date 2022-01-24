@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual CommunicationServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -88,13 +86,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public async virtual Task<CommunicationServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -116,13 +112,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Get the CommunicationService and its properties. </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual Response<CommunicationService> Get(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.Get");
             scope.Start();
@@ -143,13 +137,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Get the CommunicationService and its properties. </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public async virtual Task<Response<CommunicationService>> GetAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.Get");
             scope.Start();
@@ -170,13 +162,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual Response<CommunicationService> GetIfExists(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.GetIfExists");
             scope.Start();
@@ -197,13 +187,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public async virtual Task<Response<CommunicationService>> GetIfExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.GetIfExists");
             scope.Start();
@@ -224,13 +212,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.Exists");
             scope.Start();
@@ -249,13 +235,11 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceCollection.Exists");
             scope.Start();

@@ -55,13 +55,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual TableCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.CreateOrUpdate");
             scope.Start();
@@ -84,13 +82,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<TableCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.CreateOrUpdate");
             scope.Start();
@@ -112,13 +108,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<Table> Get(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.Get");
             scope.Start();
@@ -139,13 +133,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<Table>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.Get");
             scope.Start();
@@ -166,13 +158,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<Table> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.GetIfExists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<Table>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.GetIfExists");
             scope.Start();
@@ -220,13 +208,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.Exists");
             scope.Start();
@@ -245,13 +231,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("TableCollection.Exists");
             scope.Start();

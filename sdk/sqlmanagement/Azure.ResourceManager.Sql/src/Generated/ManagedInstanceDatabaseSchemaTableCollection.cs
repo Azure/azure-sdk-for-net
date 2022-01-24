@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get managed database table. </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<ManagedInstanceDatabaseSchemaTable> Get(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get managed database table. </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstanceDatabaseSchemaTable>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<ManagedInstanceDatabaseSchemaTable> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstanceDatabaseSchemaTable>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.Exists");
             scope.Start();

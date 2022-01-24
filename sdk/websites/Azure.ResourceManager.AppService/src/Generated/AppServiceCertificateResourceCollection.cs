@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keyVaultCertificate"/> is null. </exception>
         public virtual AppServiceCertificateResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (keyVaultCertificate == null)
             {
                 throw new ArgumentNullException(nameof(keyVaultCertificate));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="keyVaultCertificate"> Key vault certificate resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keyVaultCertificate"/> is null. </exception>
         public async virtual Task<AppServiceCertificateResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (keyVaultCertificate == null)
             {
                 throw new ArgumentNullException(nameof(keyVaultCertificate));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the certificate associated with a certificate order. </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<AppServiceCertificateResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get the certificate associated with a certificate order. </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<AppServiceCertificateResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<AppServiceCertificateResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<AppServiceCertificateResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateResourceCollection.Exists");
             scope.Start();

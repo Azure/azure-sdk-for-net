@@ -55,13 +55,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual AfdRuleSetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.CreateOrUpdate");
             scope.Start();
@@ -84,13 +82,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<AfdRuleSetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.CreateOrUpdate");
             scope.Start();
@@ -112,13 +108,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile. </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<AfdRuleSet> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.Get");
             scope.Start();
@@ -139,13 +133,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile. </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<Response<AfdRuleSet>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.Get");
             scope.Start();
@@ -166,13 +158,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<AfdRuleSet> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.GetIfExists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<Response<AfdRuleSet>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.GetIfExists");
             scope.Start();
@@ -220,13 +208,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.Exists");
             scope.Start();
@@ -245,13 +231,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleSetCollection.Exists");
             scope.Start();

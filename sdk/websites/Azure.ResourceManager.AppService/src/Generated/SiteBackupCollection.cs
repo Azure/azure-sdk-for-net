@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a backup of an app by its ID. </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<SiteBackup> Get(string backupId, CancellationToken cancellationToken = default)
         {
-            if (backupId == null)
-            {
-                throw new ArgumentNullException(nameof(backupId));
-            }
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a backup of an app by its ID. </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public async virtual Task<Response<SiteBackup>> GetAsync(string backupId, CancellationToken cancellationToken = default)
         {
-            if (backupId == null)
-            {
-                throw new ArgumentNullException(nameof(backupId));
-            }
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<SiteBackup> GetIfExists(string backupId, CancellationToken cancellationToken = default)
         {
-            if (backupId == null)
-            {
-                throw new ArgumentNullException(nameof(backupId));
-            }
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public async virtual Task<Response<SiteBackup>> GetIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
-            if (backupId == null)
-            {
-                throw new ArgumentNullException(nameof(backupId));
-            }
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public virtual Response<bool> Exists(string backupId, CancellationToken cancellationToken = default)
         {
-            if (backupId == null)
-            {
-                throw new ArgumentNullException(nameof(backupId));
-            }
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backupId"> ID of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
-            if (backupId == null)
-            {
-                throw new ArgumentNullException(nameof(backupId));
-            }
+            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
             using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Exists");
             scope.Start();

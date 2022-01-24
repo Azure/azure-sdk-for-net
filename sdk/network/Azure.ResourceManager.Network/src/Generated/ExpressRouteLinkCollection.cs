@@ -54,13 +54,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<ExpressRouteLink> Get(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
             scope.Start();
@@ -81,13 +79,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public async virtual Task<Response<ExpressRouteLink>> GetAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
             scope.Start();
@@ -108,13 +104,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<ExpressRouteLink> GetIfExists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
             scope.Start();
@@ -135,13 +129,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public async virtual Task<Response<ExpressRouteLink>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
             scope.Start();
@@ -162,13 +154,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
             scope.Start();
@@ -187,13 +177,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
             scope.Start();

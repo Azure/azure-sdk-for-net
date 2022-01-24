@@ -170,14 +170,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -225,14 +223,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -280,14 +276,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceSkuInfo> GetResourceSkusAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -335,14 +329,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceSkuInfo> GetResourceSkus(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {

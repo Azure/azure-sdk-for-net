@@ -493,13 +493,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployments operation. </summary>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public async virtual Task<Response<DeploymentOperation>> GetDeploymentOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperation");
             scope.Start();
@@ -518,13 +516,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployments operation. </summary>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<DeploymentOperation> GetDeploymentOperation(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _clientDiagnostics.CreateScope("Deployment.GetDeploymentOperation");
             scope.Start();

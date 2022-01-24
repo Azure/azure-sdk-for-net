@@ -268,10 +268,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<SqlDatabase>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.AddTag");
             scope.Start();
@@ -297,10 +294,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<SqlDatabase> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.AddTag");
             scope.Start();
@@ -383,10 +377,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<SqlDatabase>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
             scope.Start();
@@ -411,10 +402,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<SqlDatabase> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
             scope.Start();
@@ -1453,13 +1441,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="extensionName"> The String to use. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<SqlDatabaseCreateOrUpdateDatabaseExtensionOperation> CreateOrUpdateDatabaseExtensionAsync(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -1490,13 +1476,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="extensionName"> The String to use. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual SqlDatabaseCreateOrUpdateDatabaseExtensionOperation CreateOrUpdateDatabaseExtension(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));

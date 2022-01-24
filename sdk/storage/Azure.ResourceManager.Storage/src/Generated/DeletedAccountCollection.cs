@@ -54,17 +54,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public virtual Response<DeletedAccount> Get(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.Get");
             scope.Start();
@@ -86,17 +81,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public async virtual Task<Response<DeletedAccount>> GetAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.Get");
             scope.Start();
@@ -118,17 +108,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public virtual Response<DeletedAccount> GetIfExists(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExists");
             scope.Start();
@@ -150,17 +135,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public async virtual Task<Response<DeletedAccount>> GetIfExistsAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExists");
             scope.Start();
@@ -182,17 +162,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public virtual Response<bool> Exists(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
             scope.Start();
@@ -212,17 +187,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (deletedAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
             using var scope = _clientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
             scope.Start();

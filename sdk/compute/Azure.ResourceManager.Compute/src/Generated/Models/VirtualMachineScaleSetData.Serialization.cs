@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("overprovision");
                 writer.WriteBooleanValue(Overprovision.Value);
             }
-            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVMs))
+            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVms))
             {
                 writer.WritePropertyName("doNotRunExtensionsOnOverprovisionedVMs");
-                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVMs.Value);
+                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVms.Value);
             }
             if (Optional.IsDefined(SinglePlacementGroup))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             Optional<UpgradePolicy> upgradePolicy = default;
             Optional<AutomaticRepairsPolicy> automaticRepairsPolicy = default;
-            Optional<VirtualMachineScaleSetVMProfile> virtualMachineProfile = default;
+            Optional<VirtualMachineScaleSetVmProfile> virtualMachineProfile = default;
             Optional<string> provisioningState = default;
             Optional<bool> overprovision = default;
             Optional<bool> doNotRunExtensionsOnOverprovisionedVMs = default;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualMachineProfile = VirtualMachineScaleSetVMProfile.DeserializeVirtualMachineScaleSetVMProfile(property0.Value);
+                            virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

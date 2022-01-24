@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual LocalNetworkGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<LocalNetworkGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified local network gateway in a resource group. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<LocalNetworkGateway> Get(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified local network gateway in a resource group. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<LocalNetworkGateway>> GetAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<LocalNetworkGateway> GetIfExists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<LocalNetworkGateway>> GetIfExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();

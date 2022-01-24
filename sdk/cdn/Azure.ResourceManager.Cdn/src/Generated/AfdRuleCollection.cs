@@ -56,13 +56,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="rule"> The delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="rule"/> is null. </exception>
         public virtual AfdRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, AfdRuleData rule, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (rule == null)
             {
                 throw new ArgumentNullException(nameof(rule));
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="rule"> The delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="rule"/> is null. </exception>
         public async virtual Task<AfdRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, AfdRuleData rule, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (rule == null)
             {
                 throw new ArgumentNullException(nameof(rule));
@@ -122,13 +118,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing delivery rule within a rule set. </summary>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<AfdRule> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.Get");
             scope.Start();
@@ -149,13 +143,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing delivery rule within a rule set. </summary>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<AfdRule>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.Get");
             scope.Start();
@@ -176,13 +168,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<AfdRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.GetIfExists");
             scope.Start();
@@ -203,13 +193,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<AfdRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.GetIfExists");
             scope.Start();
@@ -230,13 +218,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.Exists");
             scope.Start();
@@ -255,13 +241,11 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _clientDiagnostics.CreateScope("AfdRuleCollection.Exists");
             scope.Start();

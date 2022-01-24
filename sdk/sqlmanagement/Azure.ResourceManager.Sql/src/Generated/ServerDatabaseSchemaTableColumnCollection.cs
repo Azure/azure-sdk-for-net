@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get database column. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual Response<ServerDatabaseSchemaTableColumn> Get(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get database column. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public async virtual Task<Response<ServerDatabaseSchemaTableColumn>> GetAsync(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual Response<ServerDatabaseSchemaTableColumn> GetIfExists(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public async virtual Task<Response<ServerDatabaseSchemaTableColumn>> GetIfExistsAsync(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual Response<bool> Exists(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.Exists");
             scope.Start();
