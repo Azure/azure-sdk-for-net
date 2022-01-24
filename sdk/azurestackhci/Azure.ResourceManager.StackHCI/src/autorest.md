@@ -1,4 +1,4 @@
-﻿# Generated code configuration
+# Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
@@ -8,8 +8,9 @@ azure-arm: true
 csharp: true
 library-name: StackHCI
 namespace: Azure.ResourceManager.StackHCI
-require: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/azurestackhci/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/azure.resourcemanager.stackhci/resource-manager/readme.md
 tag: package-2021-09
 output-folder: Generated/
 clear-output-folder: true
+
 ```
