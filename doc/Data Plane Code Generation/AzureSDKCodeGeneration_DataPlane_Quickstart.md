@@ -38,11 +38,23 @@ This tutorial has following sections:
 - Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
 - Create a branch to work in.
 
-**Note**: 
-
 ## Create starter package  
 
-For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
+For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. The started project will be under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. The package will contain several folders and files (see following). Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
+
+```
+sdk\<service name>\<package name>\README.md
+sdk\<service name>\<package name>\api
+sdk\<service name>\<package name>\src
+sdk\<service name>\<package name>\tests
+sdk\<service name>\<package name>\samples
+sdk\<service name>\<package name>\CHANGELOG.md
+```
+
+- `<service name>` - Should be the short name for the azure service. e.g. deviceupdate
+- `<pacakage name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
+  
+We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
 
 You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
@@ -62,7 +74,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 - namespace is the shipped package name, it should be `Azure.<group>.<service>`
 - inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink, e.g. <https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json>.
 
-- Both AADToken and AzureKey authentication are supported. If your service support AADToken, just set the parameter **securityScope**(the security scope), and if your service support AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service support two authentications.
+- Both AADToken and AzureKey authentication are supported. **AzureKey auth** is specific to each service, but generally it is documented by that service. e.g [AzureKey authentication of Azure Storage](https://docs.microsoft.com/azure/storage/blobs/authorize-data-operations-portal#use-the-account-access-key). **AADToken** is for any service that supports [TokenCredential authentication](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). If your service support AADToken, just set the parameter **securityScope**(the security scope), and if your service support AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service support two authentications.
 
 The script `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` will do **step-by-step** as following:
 
@@ -182,6 +194,10 @@ In `Azure.<group>.<service>` project, we have [autorest.md](https://github.com/A
 
 You can customize your client libray in two ways:
 
+- Add convenience APIs.
+
+**Learn more**: The [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
+
 - Customizations can be done as a transform in `autorest.md`. e.g.
 
 ```yaml
@@ -199,7 +215,3 @@ directive:
         $.format = "url";
       }
 ```
-
-- Add convenience APIs.
-
-**Learn more**: The [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
