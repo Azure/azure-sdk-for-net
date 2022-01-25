@@ -222,7 +222,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 StorageTransferManagerOptions options = new StorageTransferManagerOptions();
-                options.TransferResults.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+                options.ProgressHandler.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
                 {
                     if (args.Exception.ErrorCode == "500")
                     {
@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     });
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
-                Progress<StorageTransferResults> blob2Progress = new Progress<StorageTransferResults>();
+                Progress<TransferProgressHandler> blob2Progress = new Progress<TransferProgressHandler>();
                 string uploadDirectoryJobId3 = transferManager.ScheduleUploadDirectory(
                     sourcePath,
                     destinationBlob2,
@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 StorageTransferManagerOptions options = new StorageTransferManagerOptions();
-                options.TransferResults.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+                options.ProgressHandler.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
                 {
                     if (args.Exception.ErrorCode == "500")
                     {
@@ -349,7 +349,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     });
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
-                Progress<StorageTransferResults> blob2Progress = new Progress<StorageTransferResults>();
+                Progress<TransferProgressHandler> blob2Progress = new Progress<TransferProgressHandler>();
                 string downloadDirectoryJobId2 = transferManager.ScheduleDownloadDirectory(
                     sourceBlobDirectory2,
                     downloadPath2,
@@ -390,7 +390,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 TransferStateDirectoryPath = planFile
             };
-            transferManagerOptions.TransferResults.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
+            transferManagerOptions.ProgressHandler.FilesFailedTransferred += async (PathTransferFailedEventArgs args) =>
             {
                 if (args.Exception.ErrorCode == "500")
                 {
@@ -623,7 +623,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
-                Progress<StorageTransferResults> blob2Progress = new Progress<StorageTransferResults>();
+                Progress<TransferProgressHandler> blob2Progress = new Progress<TransferProgressHandler>();
                 string jobId = transferManager.ScheduleDownloadDirectory(
                     sourceDirectoryBlob2,
                     downloadPath2,

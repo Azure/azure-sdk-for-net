@@ -9,9 +9,9 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Contains results for each job.
+    /// Contains the progress and results for the ongoing transfers
     /// </summary>
-    public class StorageTransferResults
+    public class TransferProgressHandler
     {
         /// <summary>
         /// Number of files/blobs transferred succesfully

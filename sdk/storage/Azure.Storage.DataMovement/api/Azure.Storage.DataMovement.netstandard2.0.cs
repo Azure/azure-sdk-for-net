@@ -2,49 +2,51 @@ namespace Azure.Storage.DataMovement
 {
     public partial class DataMovementFailedEventArgs : Azure.SyncAsyncEventArgs
     {
-        public DataMovementFailedEventArgs(Azure.Storage.DataMovement.StorageTransferJob job, Azure.RequestFailedException exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public DataMovementFailedEventArgs(Azure.Storage.DataMovement.TransferJobInternal job, Azure.RequestFailedException exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.RequestFailedException Exception { get { throw null; } }
-        public Azure.Storage.DataMovement.StorageTransferJob Job { get { throw null; } }
+        public Azure.Storage.DataMovement.TransferJobInternal Job { get { throw null; } }
         public Azure.RequestFailedException ReceivedMessage { get { throw null; } }
     }
     public partial class PathTransferFailedEventArgs : Azure.SyncAsyncEventArgs
     {
-        public PathTransferFailedEventArgs(Azure.Storage.DataMovement.StorageTransferJob job, Azure.Storage.DataMovement.Models.TransferJobRequestFailedException exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public PathTransferFailedEventArgs(Azure.Storage.DataMovement.Models.StorageTransferJobDetails job, Azure.Storage.DataMovement.Models.TransferJobRequestFailedException exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.DataMovement.Models.TransferJobRequestFailedException Exception { get { throw null; } }
-        public Azure.Storage.DataMovement.StorageTransferJob Job { get { throw null; } }
+        public Azure.Storage.DataMovement.Models.StorageTransferJobDetails JobDetails { get { throw null; } }
     }
     public partial class PathTransferSkippedEventArgs : Azure.SyncAsyncEventArgs
     {
-        public PathTransferSkippedEventArgs(Azure.Storage.DataMovement.StorageTransferJob job, System.IO.IOException exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public PathTransferSkippedEventArgs(Azure.Storage.DataMovement.TransferJobInternal job, System.IO.IOException exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public System.IO.IOException Exception { get { throw null; } }
-        public Azure.Storage.DataMovement.StorageTransferJob Job { get { throw null; } }
+        public Azure.Storage.DataMovement.TransferJobInternal Job { get { throw null; } }
     }
     public partial class PathTransferSuccessEventArgs : Azure.SyncAsyncEventArgs
     {
-        public PathTransferSuccessEventArgs(Azure.Storage.DataMovement.StorageTransferJob job, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(bool), default(System.Threading.CancellationToken)) { }
-        public Azure.Storage.DataMovement.StorageTransferJob Job { get { throw null; } }
+        public PathTransferSuccessEventArgs(Azure.Storage.DataMovement.TransferJobInternal job, Azure.Response response, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public Azure.Storage.DataMovement.TransferJobInternal Job { get { throw null; } }
         public Azure.Response Response { get { throw null; } }
     }
-    public partial class StorageTransferJob
+    public partial class StorageTransferManager
     {
-        public StorageTransferJob(string jobId, string loggerFolderPath = null) { }
+        protected internal StorageTransferManager() { }
+        public StorageTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
+        protected internal System.Collections.Generic.List<Azure.Storage.DataMovement.TransferJobInternal> TotalJobs { get { throw null; } }
+        public virtual void CancelTransfers() { }
+        public virtual void Clean() { }
+        public virtual Azure.Storage.DataMovement.Models.StorageTransferJobDetails GetJob(string jobId) { throw null; }
+        public virtual System.Collections.Generic.IList<Azure.Storage.DataMovement.Models.StorageTransferJobDetails> ListJobs() { throw null; }
+        public virtual void PauseTransfers() { }
+    }
+    public partial class TransferJobInternal
+    {
+        protected internal TransferJobInternal() { }
+        protected internal TransferJobInternal(string jobId, string loggerFolderPath = null) { }
         public System.Threading.CancellationTokenSource CancellationTokenSource { get { throw null; } set { } }
         public string JobId { get { throw null; } set { } }
         public virtual Azure.Storage.DataMovement.Models.StorageJobTransferStatus GetTransferStatus() { throw null; }
     }
-    public partial class StorageTransferManager
+    public partial class TransferProgressHandler
     {
-        public StorageTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options = null) { }
-        protected internal System.Collections.Generic.List<Azure.Storage.DataMovement.StorageTransferJob> TotalJobs { get { throw null; } }
-        public virtual void CancelTransfers() { }
-        public virtual void Clean() { }
-        public virtual Azure.Storage.DataMovement.StorageTransferJob GetJob(string jobId) { throw null; }
-        public virtual System.Collections.Generic.IList<string> ListJobs() { throw null; }
-        public virtual void PauseTransfers() { }
-    }
-    public partial class StorageTransferResults
-    {
-        public StorageTransferResults() { }
+        public TransferProgressHandler() { }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.PathTransferSkippedEventArgs> DirectoriesSkipped { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.PathTransferSuccessEventArgs> DirectoriesTransferred { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.PathTransferFailedEventArgs> FilesFailedTransferred { add { } remove { } }
@@ -72,8 +74,18 @@ namespace Azure.Storage.DataMovement.Models
     {
         Queued = 0,
         InProgress = 1,
-        CompletedSuccessful = 2,
-        Failed = 3,
+        Completed = 2,
+        CompletedWithErrors = 3,
+        CompletedWithFailures = 4,
+        CompletedWithErrorsAndSkipped = 5,
+    }
+    public partial class StorageTransferJobDetails
+    {
+        protected internal StorageTransferJobDetails() { }
+        protected internal StorageTransferJobDetails(string jobId, Azure.Storage.DataMovement.Models.StorageJobTransferStatus status, System.DateTimeOffset? jobStartTime) { }
+        public string JobId { get { throw null; } }
+        public System.DateTimeOffset? JobStartTime { get { throw null; } }
+        public Azure.Storage.DataMovement.Models.StorageJobTransferStatus Status { get { throw null; } }
     }
     public partial class StorageTransferManagerOptions
     {
@@ -82,8 +94,8 @@ namespace Azure.Storage.DataMovement.Models
         public int ConcurrencyForServiceListing { get { throw null; } set { } }
         public bool ContinueOnLocalFilesystemFailure { get { throw null; } set { } }
         public bool ContinueOnStorageFailure { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.TransferProgressHandler ProgressHandler { get { throw null; } set { } }
         public string TransferLoggerDirectoryPath { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.StorageTransferResults TransferResults { get { throw null; } set { } }
         public string TransferStateDirectoryPath { get { throw null; } set { } }
     }
     public partial class TransferJobRequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable

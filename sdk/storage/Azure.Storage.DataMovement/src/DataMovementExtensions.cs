@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class DataMovementExtensions
     {
-        internal static StorageTransferJobDetails ToBlobTransferCopyJobDetails(this TransferJobInternal transferJob)
+        internal static StorageTransferJobDetails ToStorageTransferJobDetails(this TransferJobInternal transferJob)
         {
             if (transferJob == null)
             {

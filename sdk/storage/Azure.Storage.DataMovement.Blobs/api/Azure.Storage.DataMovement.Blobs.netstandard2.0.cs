@@ -2,8 +2,15 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     public partial class BlobTransferManager : Azure.Storage.DataMovement.StorageTransferManager
     {
-        public BlobTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options = null) : base (default(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions)) { }
-        public override Azure.Storage.DataMovement.StorageTransferJob GetJob(string jobId) { throw null; }
+        protected internal BlobTransferManager() { }
+        public BlobTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
+        public override Azure.Storage.DataMovement.Models.StorageTransferJobDetails GetJob(string jobId) { throw null; }
+        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferCopyDirectoryJobDetails> ListCopyDirectoryJobs() { throw null; }
+        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferDownloadDirectoryJobDetails> ListDownloadDirectoryJobs() { throw null; }
+        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferCopyJobDetails> ListSingleCopyJobs() { throw null; }
+        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferDownloadJobDetails> ListSingleDownloadJobs() { throw null; }
+        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferUploadJobDetails> ListSingleUploadJobs() { throw null; }
+        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferUploadDirectoryJobDetails> ListUploadDirectoryJobs() { throw null; }
         public string ScheduleCopy(System.Uri sourceUri, Azure.Storage.Blobs.BlobClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.Blobs.Models.BlobCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleCopyDirectory(System.Uri sourceUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleDownload(Azure.Storage.Blobs.BlobClient sourceClient, string destinationLocalPath, Azure.Storage.Blobs.Models.BlobDownloadToOptions options = null) { throw null; }
@@ -70,7 +77,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public BlobDirectoryDownloadOptions() { }
         public bool ContentsOnly { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryRequestConditions DirectoryRequestConditions { get { throw null; } set { } }
-        public System.IProgress<Azure.Storage.DataMovement.StorageTransferResults> ProgressHandler { get { throw null; } set { } }
+        public System.IProgress<Azure.Storage.DataMovement.TransferProgressHandler> ProgressHandler { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
     }
     public partial class BlobDirectoryHttpHeaders
@@ -101,7 +108,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public bool ContentsOnly { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryHttpHeaders HttpHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public System.IProgress<Azure.Storage.DataMovement.StorageTransferResults> ProgressHandler { get { throw null; } set { } }
+        public System.IProgress<Azure.Storage.DataMovement.TransferProgressHandler> ProgressHandler { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
     }
@@ -110,11 +117,48 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         ServiceSideAsyncCopy = 0,
         ServiceSideSyncCopy = 1,
     }
-    public partial class BlobSyncCopyOptions
+    public partial class BlobTransferCopyDirectoryJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
     {
-        public BlobSyncCopyOptions() { }
-        public Azure.Storage.Blobs.Models.BlobUploadOptions BlobUploadOptions { get { throw null; } set { } }
-        public Azure.Storage.StorageTransferOptions DownloadTransferOptions { get { throw null; } set { } }
-        public long? MaximumBufferSize { get { throw null; } set { } }
+        internal BlobTransferCopyDirectoryJobDetails() { }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions CopyFromUriOptions { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod CopyMethod { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationDirectoryClient { get { throw null; } }
+        public System.Uri SourceDirectoryUri { get { throw null; } }
+    }
+    public partial class BlobTransferCopyJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
+    {
+        internal BlobTransferCopyJobDetails() { }
+        public Azure.Storage.Blobs.Models.BlobCopyFromUriOptions CopyFromUriOptions { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod CopyMethod { get { throw null; } }
+        public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
+        public System.Uri SourceUri { get { throw null; } }
+    }
+    public partial class BlobTransferDownloadDirectoryJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
+    {
+        internal BlobTransferDownloadDirectoryJobDetails() { }
+        public string DestinationLocalPath { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryDownloadOptions Options { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient SourceBlobClient { get { throw null; } }
+    }
+    public partial class BlobTransferDownloadJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
+    {
+        internal BlobTransferDownloadJobDetails() { }
+        public string DestinationLocalPath { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobDownloadToOptions Options { get { throw null; } }
+        public Azure.Storage.Blobs.Specialized.BlobBaseClient SourceBlobClient { get { throw null; } }
+    }
+    public partial class BlobTransferUploadDirectoryJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
+    {
+        internal BlobTransferUploadDirectoryJobDetails() { }
+        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationBlobClient { get { throw null; } }
+        public string SourceLocalPath { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions UploadOptions { get { throw null; } }
+    }
+    public partial class BlobTransferUploadJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
+    {
+        internal BlobTransferUploadJobDetails() { }
+        public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
+        public string SourceLocalPath { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobUploadOptions UploadOptions { get { throw null; } }
     }
 }

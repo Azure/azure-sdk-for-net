@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal static partial class DataMovementBlobsExtensions
     {
-        internal static BlobTransferUploadJobDetails ToBlobTransferCopyJobDetails(this BlobUploadTransferJob transferJob)
+        internal static BlobTransferUploadJobDetails ToBlobTransferUploadJobDetails(this BlobUploadTransferJob transferJob)
         {
             if (transferJob == null)
             {
@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 options: transferJob.UploadOptions);
         }
 
-        internal static BlobTransferUploadDirectoryJobDetails ToBlobTransferCopyJobDetails(this BlobUploadDirectoryTransferJob transferJob)
+        internal static BlobTransferUploadDirectoryJobDetails ToBlobTransferUploadDirectoryJobDetails(this BlobUploadDirectoryTransferJob transferJob)
         {
             if (transferJob == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 options: transferJob.UploadOptions);
         }
 
-        internal static BlobTransferDownloadJobDetails ToBlobTransferCopyJobDetails(this BlobDownloadTransferJob transferJob)
+        internal static BlobTransferDownloadJobDetails ToBlobTransferDownloadJobDetails(this BlobDownloadTransferJob transferJob)
         {
             if (transferJob == null)
             {
@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 options: transferJob.Options);
         }
 
-        internal static BlobTransferDownloadDirectoryJobDetails ToBlobTransferCopyJobDetails(this BlobDownloadDirectoryTransferJob transferJob)
+        internal static BlobTransferDownloadDirectoryJobDetails ToBlobTransferDownloadDirectoryJobDetails(this BlobDownloadDirectoryTransferJob transferJob)
         {
             if (transferJob == null)
             {

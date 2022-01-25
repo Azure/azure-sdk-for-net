@@ -59,14 +59,6 @@ namespace Azure.Storage
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
     }
-    public partial class StorageTransferStatus
-    {
-        public StorageTransferStatus() { }
-        public long BytesTransferred { get { throw null; } }
-        public long FailedTransfers { get { throw null; } }
-        public long SkippedTransfers { get { throw null; } }
-        public long SuccessfulTransfers { get { throw null; } }
-    }
     public enum TransactionalHashAlgorithm
     {
         None = 0,

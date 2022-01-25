@@ -7,8 +7,8 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Provides data for <see cref="StorageTransferResults"/>
-    /// and <see cref="StorageTransferResults"/> events.
+    /// Provides data for <see cref="TransferProgressHandler"/>
+    /// and <see cref="TransferProgressHandler"/> events.
     /// </summary>
     public class PathTransferSuccessEventArgs : SyncAsyncEventArgs
     {
