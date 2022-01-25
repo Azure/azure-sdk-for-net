@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.HybridConnectivity/operations?api-version=2021-10-06-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29ubmVjdGl2aXR5L29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAyMS0xMC0wNi1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3a9ac5ce-dd1e-4430-9651-753f4a2b0188"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HybridConnectivity.HybridConnectivityManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11998"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "x-ms-request-id": [
+          "bdde30bc-bd5e-437a-8671-67e3c70e61f9"
+        ],
+        "x-ms-correlation-request-id": [
+          "a965bd23-6268-4bd7-86cb-d24b20cda2f2"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS2EUAP:20220208T194011Z:a965bd23-6268-4bd7-86cb-d24b20cda2f2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 08 Feb 2022 19:40:11 GMT"
+        ],
+        "Content-Length": [
+          "2318"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/Locations/OperationStatuses/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"Locations/OperationStatuses\",\r\n        \"operation\": \"read_OperationStatuses\",\r\n        \"description\": \"read OperationStatuses\"\r\n      },\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/operations/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"Operations\",\r\n        \"operation\": \"Get operations\",\r\n        \"description\": \"Get the list of Operations\"\r\n      },\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/endpoints/read\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"endpoints\",\r\n        \"operation\": \"Get/List endpoints\",\r\n        \"description\": \"Get or list of endpoints to the target resource.\"\r\n      },\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/endpoints/write\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"endpoints\",\r\n        \"operation\": \"Create/Update endpoint\",\r\n        \"description\": \"Create or update the endpoint to the target resource.\"\r\n      },\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/endpoints/delete\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"endpoints\",\r\n        \"operation\": \"Delete endpoint\",\r\n        \"description\": \"Deletes the endpoint access to the target resource.\"\r\n      },\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/endpoints/listCredentials/action\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"endpoints\",\r\n        \"operation\": \"List credentials for endpoint access\",\r\n        \"description\": \"List the endpoint access credentials to the resource.\"\r\n      },\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/register/action\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"Microsoft.HybridConnectivity\",\r\n        \"operation\": \"Register the Microsoft.HybridConnectivity\",\r\n        \"description\": \"Register the subscription for Microsoft.HybridConnectivity\"\r\n      },\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.HybridConnectivity/unregister/action\",\r\n      \"isDataAction\": false,\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.HybridConnectivity\",\r\n        \"resource\": \"Microsoft.HybridConnectivity\",\r\n        \"operation\": \"Unregister the Microsoft.HybridConnectivity\",\r\n        \"description\": \"Unregister the subscription for Microsoft.HybridConnectivity\"\r\n      },\r\n      \"properties\": null\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c70e365-4937-4ff9-8524-262064a268d8"
+  }
+}

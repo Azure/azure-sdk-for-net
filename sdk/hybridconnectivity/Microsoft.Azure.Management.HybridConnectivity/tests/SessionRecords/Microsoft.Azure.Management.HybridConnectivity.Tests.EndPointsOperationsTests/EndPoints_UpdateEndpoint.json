@@ -1,0 +1,80 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/1c70e365-4937-4ff9-8524-262064a268d8/resourceGroups/DotnetSDKTest/providers/Microsoft.HybridCompute/machines/LAPTOP-HDUMCR3M/providers/Microsoft.HybridConnectivity/endpoints/default?api-version=2021-10-06-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzFjNzBlMzY1LTQ5MzctNGZmOS04NTI0LTI2MjA2NGEyNjhkOC9yZXNvdXJjZUdyb3Vwcy9Eb3RuZXRTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9tYWNoaW5lcy9MQVBUT1AtSERVTUNSM00vcHJvdmlkZXJzL01pY3Jvc29mdC5IeWJyaWRDb25uZWN0aXZpdHkvZW5kcG9pbnRzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0xMC0wNi1wcmV2aWV3",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"default\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "65e1d16c-9c49-4530-b41c-0094a5429e42"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HybridConnectivity.HybridConnectivityManagementClient/1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "51"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "c4981543-9724-41f3-b63e-a729569637e8"
+        ],
+        "x-ms-correlation-request-id": [
+          "89854095-c93e-4031-a5c0-249aab6cbebf"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS2EUAP:20220208T194023Z:89854095-c93e-4031-a5c0-249aab6cbebf"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 08 Feb 2022 19:40:22 GMT"
+        ],
+        "Content-Length": [
+          "77"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"DisallowedOperation\",\r\n    \"message\": \"Not supported operation.\"\r\n  }\r\n}",
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c70e365-4937-4ff9-8524-262064a268d8"
+  }
+}

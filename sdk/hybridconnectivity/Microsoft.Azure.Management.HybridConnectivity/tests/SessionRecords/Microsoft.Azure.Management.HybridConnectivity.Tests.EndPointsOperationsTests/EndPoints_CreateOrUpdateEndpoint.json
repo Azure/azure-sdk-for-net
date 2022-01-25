@@ -1,0 +1,80 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/1c70e365-4937-4ff9-8524-262064a268d8/resourceGroups/DotnetSDKTest/providers/Microsoft.HybridCompute/machines/LAPTOP-HDUMCR3M/providers/Microsoft.HybridConnectivity/endpoints/default?api-version=2021-10-06-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzFjNzBlMzY1LTQ5MzctNGZmOS04NTI0LTI2MjA2NGEyNjhkOC9yZXNvdXJjZUdyb3Vwcy9Eb3RuZXRTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9tYWNoaW5lcy9MQVBUT1AtSERVTUNSM00vcHJvdmlkZXJzL01pY3Jvc29mdC5IeWJyaWRDb25uZWN0aXZpdHkvZW5kcG9pbnRzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0xMC0wNi1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"default\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e8ea7d9d-ad7a-4540-ac28-cf2ca2d2e664"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HybridConnectivity.HybridConnectivityManagementClient/1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "51"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"1200b2b5-0000-3400-0000-6202c7210000\""
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f7baec2d-fcf7-4e12-949a-a2d2f46ec4e7"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c9736c5-7679-4a36-863a-b5a7defe608f"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS2EUAP:20220208T194017Z:5c9736c5-7679-4a36-863a-b5a7defe608f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 08 Feb 2022 19:40:17 GMT"
+        ],
+        "Content-Length": [
+          "612"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1c70e365-4937-4ff9-8524-262064a268d8/resourceGroups/DotnetSDKTest/providers/Microsoft.HybridCompute/machines/LAPTOP-HDUMCR3M/providers/Microsoft.HybridConnectivity/endpoints/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"microsoft.hybridconnectivity/endpoints\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"e600f1c3-f27f-4cb8-9e64-d7596f944d7d\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-02-08T19:37:48.0424132Z\",\r\n    \"lastModifiedBy\": \"e600f1c3-f27f-4cb8-9e64-d7596f944d7d\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-02-08T19:37:48.0424132Z\"\r\n  },\r\n  \"properties\": {\r\n    \"type\": \"default\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c70e365-4937-4ff9-8524-262064a268d8"
+  }
+}

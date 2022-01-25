@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "hybridconnectivity/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2021-10-06-preview -Namespace "Microsoft.Azure.Management.HybridConnectivity" -SdkGenerationDirectory "$PSScriptRoot\Generated"
