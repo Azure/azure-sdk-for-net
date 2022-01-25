@@ -56,12 +56,8 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetSubscriptionClient(context, handler);
-
-                var result = client.Subscription.Cancel(subscriptionId);
-
-                Assert.Equal(HttpMethod.Post, handler.Method);
-                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-                Assert.Equal(subscriptionId, result.SubscriptionId);
+                //Responds 400 since there are existing resources associated with subscription. Need to delete them before cancelling the subscription
+                Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Cancel(subscriptionId));
             }
         }
         
@@ -73,12 +69,8 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetSubscriptionClient(context, handler);
-
-                var result = client.Subscription.Enable(subscriptionId);
-
-                Assert.Equal(HttpMethod.Post, handler.Method);
-                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-                Assert.Equal(subscriptionId, result.SubscriptionId);
+                //Responds 400 since the subscription is not deactivated
+                Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Enable(subscriptionId));
             }
         }
 

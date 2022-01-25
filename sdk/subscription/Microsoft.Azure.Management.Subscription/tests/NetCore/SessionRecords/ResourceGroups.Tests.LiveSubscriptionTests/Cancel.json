@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/d17ad3ae-320e-42ff-b5a1-705389c6063a/providers/Microsoft.Subscription/cancel?api-version=2021-10-01&IgnoreResourceCheck=true",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDE3YWQzYWUtMzIwZS00MmZmLWI1YTEtNzA1Mzg5YzYwNjNhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL2NhbmNlbD9hcGktdmVyc2lvbj0yMDIxLTEwLTAxJklnbm9yZVJlc291cmNlQ2hlY2s9dHJ1ZQ==",
+      "RequestUri": "/subscriptions/d17ad3ae-320e-42ff-b5a1-705389c6063a/providers/Microsoft.Subscription/cancel?api-version=2021-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDE3YWQzYWUtMzIwZS00MmZmLWI1YTEtNzA1Mzg5YzYwNjNhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL2NhbmNlbD9hcGktdmVyc2lvbj0yMDIxLTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b67184d7-c46e-434e-beaa-c9acc96fc9be"
+          "184e95f3-b316-409c-9649-b6234583ee46"
         ],
         "Accept-Language": [
           "en-US"
@@ -26,20 +26,14 @@
         "Pragma": [
           "no-cache"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
         "MS-CV": [
-          "m5UJfeJwN02vBnatlK+Lhw.0"
+          "9iJ8hLFQkEaEGuAmPM1tRA.0"
         ],
         "x-ms-correlation-request-id": [
-          "79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+          "1ada3441-08f7-4dc8-ab49-84379f8e6201"
         ],
         "request-id": [
-          "79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+          "1ada3441-08f7-4dc8-ab49-84379f8e6201"
         ],
         "x-gsm": [
           "1.0.0.0"
@@ -56,20 +50,23 @@
         "X-Powered-By": [
           "ASP.NET"
         ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
         "x-ms-request-id": [
-          "79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+          "1ada3441-08f7-4dc8-ab49-84379f8e6201"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220125T075335Z:79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+          "WESTUS2:20220125T181712Z:1ada3441-08f7-4dc8-ab49-84379f8e6201"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Tue, 25 Jan 2022 07:53:35 GMT"
+          "Tue, 25 Jan 2022 18:17:12 GMT"
         ],
         "Content-Length": [
-          "57"
+          "329"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -78,8 +75,8 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"subscriptionId\": \"d17ad3ae-320e-42ff-b5a1-705389c6063a\"\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourcesExistingOnSubscription\",\r\n    \"message\": \"There are existing resources associated with subscription. Delete them before cancelling the subscription\"\r\n  },\r\n  \"code\": \"ResourcesExistingOnSubscription\",\r\n  \"message\": \"There are existing resources associated with subscription. Delete them before cancelling the subscription\"\r\n}",
+      "StatusCode": 400
     }
   ],
   "Names": {},

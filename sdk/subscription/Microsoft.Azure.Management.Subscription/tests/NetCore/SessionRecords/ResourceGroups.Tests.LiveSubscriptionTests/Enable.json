@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cad05ed2-2ca0-47af-aff9-ff9dd74c9368"
+          "dfd867c3-711a-4cf6-8d83-6031e7ae98a9"
         ],
         "Accept-Language": [
           "en-US"
@@ -26,20 +26,14 @@
         "Pragma": [
           "no-cache"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
         "MS-CV": [
-          "z0dRWgv9cUW9lGtOPu7BgQ.0"
+          "EkSXoOcHYE+BflytEApYDw.0"
         ],
         "x-ms-correlation-request-id": [
-          "b2769e1d-259d-4c1c-9636-71b806111633"
+          "3f31e502-58ac-4147-92bd-2d65c43c42e4"
         ],
         "request-id": [
-          "b2769e1d-259d-4c1c-9636-71b806111633"
+          "3f31e502-58ac-4147-92bd-2d65c43c42e4"
         ],
         "x-gsm": [
           "1.0.0.0"
@@ -56,20 +50,23 @@
         "X-Powered-By": [
           "ASP.NET"
         ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
         "x-ms-request-id": [
-          "b2769e1d-259d-4c1c-9636-71b806111633"
+          "3f31e502-58ac-4147-92bd-2d65c43c42e4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220125T075640Z:b2769e1d-259d-4c1c-9636-71b806111633"
+          "WESTUS2:20220125T181837Z:3f31e502-58ac-4147-92bd-2d65c43c42e4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Tue, 25 Jan 2022 07:56:39 GMT"
+          "Tue, 25 Jan 2022 18:18:36 GMT"
         ],
         "Content-Length": [
-          "57"
+          "489"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -78,8 +75,8 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"subscriptionId\": \"d17ad3ae-320e-42ff-b5a1-705389c6063a\"\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotAllowed\",\r\n    \"message\": \"Subscription has been marked as active already. Subscription should reflect the correct state shortly. If this doesn't resolve in the next 15 minutes, contact Azure Support(http://aka.ms/createazuresupport)\"\r\n  },\r\n  \"code\": \"NotAllowed\",\r\n  \"message\": \"Subscription has been marked as active already. Subscription should reflect the correct state shortly. If this doesn't resolve in the next 15 minutes, contact Azure Support(http://aka.ms/createazuresupport)\"\r\n}",
+      "StatusCode": 400
     }
   ],
   "Names": {},
