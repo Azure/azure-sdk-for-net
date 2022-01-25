@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Microsoft.RL" VersionOverride="1.0.18120003-INTERNAL" />
   </ItemGroup>
 
 </Project>

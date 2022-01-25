@@ -3,10 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Rl.Net;
 
 namespace Azure.AI.Personalizer
 {
@@ -17,10 +21,17 @@ namespace Azure.AI.Personalizer
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly bool _isLocalInference;
+        private string stringEndpoint;
+        private string apiKey;
+
         internal RankRestClient RankRestClient { get; set; }
         internal EventsRestClient EventsRestClient { get; set; }
         internal MultiSlotRestClient MultiSlotRestClient { get; set; }
         internal MultiSlotEventsRestClient MultiSlotEventsRestClient { get; set; }
+        internal ServiceConfigurationRestClient ServiceConfigurationRestClient { get; set; }
+        internal PolicyRestClient PolicyRestClient { get; set; }
+        internal PersonalizerServiceProperties _personalizerServiceProperties { get; set; }
+        internal PersonalizerPolicy _personalizerPolicy { get; set; }
 
         /// <summary> Initializes a new instance of Personalizer Client for mocking. </summary>
         protected PersonalizerClient()
@@ -46,11 +57,13 @@ namespace Azure.AI.Personalizer
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            string stringEndpoint = endpoint.AbsoluteUri;
+            stringEndpoint = endpoint.AbsoluteUri;
             RankRestClient = new RankRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            PolicyRestClient = new PolicyRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
@@ -62,12 +75,18 @@ namespace Azure.AI.Personalizer
             this(endpoint, credential, options)
         {
             _isLocalInference = isLocalInference;
+            if (isLocalInference)
+            {
+                //Intialize liveModel and call Rank processor
+                //ToDo:TASK 13057958: Working on changes to support token authentication in RLClient
+                //Configuration config = GetConfigurationForLiveModel("Token", "token");
+            }
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public PersonalizerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null){ }
+        public PersonalizerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null) { }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
@@ -83,15 +102,17 @@ namespace Azure.AI.Personalizer
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
+            apiKey = credential.Key;
             options ??= new PersonalizerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
-            string stringEndpoint = endpoint.AbsoluteUri;
+            stringEndpoint = endpoint.AbsoluteUri;
             RankRestClient = new RankRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            PolicyRestClient = new PolicyRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
@@ -103,12 +124,17 @@ namespace Azure.AI.Personalizer
             this(endpoint, credential, options)
         {
             _isLocalInference = isLocalInference;
+            if (isLocalInference)
+            {
+                //Intialize liveModel and Rankprocessor
+                Configuration config = GetConfigurationForLiveModel("apiKey", apiKey);
+            }
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential): this(endpoint, credential, null) { }
+        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, null) { }
 
         /// <summary> Initializes a new instance of MultiSlotEventsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -134,7 +160,15 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return await RankRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                if (_isLocalInference)
+                {
+                    //return RankProcessor result here
+                    return null;
+                }
+                else
+                {
+                    return await RankRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -177,7 +211,15 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return RankRestClient.Rank(options, cancellationToken);
+                if (_isLocalInference)
+                {
+                    //return RankProcessor result here
+                    return null;
+                }
+                else
+                {
+                    return RankRestClient.Rank(options, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -481,6 +523,34 @@ namespace Azure.AI.Personalizer
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the configuration details for the live model to use </summary>
+        internal Configuration GetConfigurationForLiveModel(string authType, string authValue)
+        {
+            _personalizerServiceProperties = ServiceConfigurationRestClient.Get();
+            _personalizerPolicy = PolicyRestClient.Get();
+            Configuration config = new Configuration();
+            // set up the model
+            if (authType == "apiKey")
+            {
+                config["http.api.key"] = authValue;
+            }
+            else
+            {
+                //ToDo: TASK 13057958 Working on changes to support token authentication in RLClient
+                //config["http.token.key"] = authValue;
+            }
+            config["interaction.http.api.host"] = stringEndpoint+"personalizer/v1.1-preview.1/logs/interactions";
+            config["observation.http.api.host"] = stringEndpoint+"personalizer/v1.1-preview.1/logs/observations";
+            //ToDo: TASK 13057958 Working on changes to support model api in RL.Net
+            config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.1/model";
+            config["vw.commandline"] = _personalizerPolicy.Arguments;
+            config["protocol.version"] = "2";
+            config["initial_exploration.epsilon"] = Convert.ToString(_personalizerServiceProperties.ExplorationPercentage, CultureInfo.InvariantCulture);
+            config["rank.learning.mode"] = Convert.ToString(_personalizerServiceProperties.LearningMode, CultureInfo.InvariantCulture);
+            //return the config model
+            return config;
         }
     }
 }
