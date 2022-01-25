@@ -29,6 +29,8 @@ modelerfour:
       ResourceSku: WebPubSubSku
 model-namespace: false
 no-property-type-replacement: PrivateEndpoint
+override-operation-name:
+  WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
 directive:
   # Change SharedPrivateLinkResource to SharedPrivateLink
   ## rename models

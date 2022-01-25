@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -27,12 +28,13 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentRecommendationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HostingEnvironmentRecommendationCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string apiVersion);
+            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,13 +56,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<HostingEnvironmentRecommendation> Get(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
             scope.Start();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentRecommendation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -86,13 +86,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentRecommendation>> GetAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
             scope.Start();
@@ -101,7 +99,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentRecommendation(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,22 +113,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<HostingEnvironmentRecommendation> GetIfExists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,22 +140,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<HostingEnvironmentRecommendation>> GetIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse())
-                    : Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,13 +167,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
@@ -200,15 +192,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {

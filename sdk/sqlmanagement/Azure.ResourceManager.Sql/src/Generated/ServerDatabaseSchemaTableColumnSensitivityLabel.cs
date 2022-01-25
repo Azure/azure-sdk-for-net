@@ -39,14 +39,15 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Initializes a new instance of the <see cref = "ServerDatabaseSchemaTableColumnSensitivityLabel"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ServerDatabaseSchemaTableColumnSensitivityLabel(ArmResource options, SensitivityLabelData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ServerDatabaseSchemaTableColumnSensitivityLabel(ArmResource options, SensitivityLabelData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.Sql
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +76,8 @@ namespace Azure.ResourceManager.Sql
         internal ServerDatabaseSchemaTableColumnSensitivityLabel(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -160,7 +163,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnSensitivityLabel.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -168,7 +181,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnSensitivityLabel.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
@@ -177,14 +200,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the sensitivity label of a given column. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SensitivityLabelDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServerDatabaseSchemaTableColumnSensitivityLabelDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnSensitivityLabel.Delete");
             scope.Start();
             try
             {
                 var response = await _sensitivityLabelsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SensitivityLabelDeleteOperation(response);
+                var operation = new ServerDatabaseSchemaTableColumnSensitivityLabelDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,16 +225,16 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the sensitivity label of a given column. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SensitivityLabelDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServerDatabaseSchemaTableColumnSensitivityLabelDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnSensitivityLabel.Delete");
             scope.Start();
             try
             {
                 var response = _sensitivityLabelsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new SensitivityLabelDeleteOperation(response);
+                var operation = new ServerDatabaseSchemaTableColumnSensitivityLabelDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -225,11 +248,11 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// OperationId: SensitivityLabels_CreateOrUpdate
         /// <summary> Creates or updates the sensitivity label of a given column. </summary>
-        /// <param name="parameters"> The column sensitivity label resource. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SensitivityLabelCreateOrUpdateOperation> CreateOrUpdateAsync(SensitivityLabelData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServerDatabaseSchemaTableColumnSensitivityLabelCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SensitivityLabelData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -241,7 +264,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sensitivityLabelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SensitivityLabelCreateOrUpdateOperation(this, response);
+                var operation = new ServerDatabaseSchemaTableColumnSensitivityLabelCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -257,11 +280,11 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// OperationId: SensitivityLabels_CreateOrUpdate
         /// <summary> Creates or updates the sensitivity label of a given column. </summary>
-        /// <param name="parameters"> The column sensitivity label resource. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SensitivityLabelCreateOrUpdateOperation CreateOrUpdate(SensitivityLabelData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServerDatabaseSchemaTableColumnSensitivityLabelCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SensitivityLabelData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -273,7 +296,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sensitivityLabelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new SensitivityLabelCreateOrUpdateOperation(this, response);
+                var operation = new ServerDatabaseSchemaTableColumnSensitivityLabelCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<int> memorySizeMB = default;
             Optional<int> numCPUs = default;
             Optional<int> numCoresPerSocket = default;
-            Optional<OsType> osType = default;
+            Optional<OSType> osType = default;
             Optional<string> osName = default;
             Optional<string> folderPath = default;
             Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = new OsType(property0.Value.GetString());
+                            osType = new OSType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osName"))

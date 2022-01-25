@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         PublicIPPrefix IOperationSource<PublicIPPrefix>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PublicIPPrefix(_operationBase, PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement));
+            var data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
+            return new PublicIPPrefix(_operationBase, data);
         }
 
         async ValueTask<PublicIPPrefix> IOperationSource<PublicIPPrefix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PublicIPPrefix(_operationBase, PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement));
+            var data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
+            return new PublicIPPrefix(_operationBase, data);
         }
     }
 }

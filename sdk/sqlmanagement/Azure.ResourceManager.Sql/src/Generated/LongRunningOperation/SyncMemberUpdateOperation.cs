@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         SyncMember IOperationSource<SyncMember>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SyncMember(_operationBase, SyncMemberData.DeserializeSyncMemberData(document.RootElement));
+            var data = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
+            return new SyncMember(_operationBase, data);
         }
 
         async ValueTask<SyncMember> IOperationSource<SyncMember>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SyncMember(_operationBase, SyncMemberData.DeserializeSyncMemberData(document.RootElement));
+            var data = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
+            return new SyncMember(_operationBase, data);
         }
     }
 }

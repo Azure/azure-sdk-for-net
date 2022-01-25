@@ -37,10 +37,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="displayName">Unique name of NamedValue. It may contain
         /// only letters, digits, period, dash, and underscore
         /// characters.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Optional tags that when provided can be used to
         /// filter the NamedValue list.</param>
         /// <param name="secret">Determines whether the value is a secret and

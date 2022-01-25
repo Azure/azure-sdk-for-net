@@ -7,6 +7,8 @@ class StressTestPackageInfo {
     [string]$Namespace
     [string]$Directory
     [string]$ReleaseName
+    [string]$Dockerfile
+    [string]$DockerBuildDir
 }
 
 function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [switch]$CI) {
@@ -52,6 +54,8 @@ function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartF
         Namespace = $namespace.ToLower()
         Directory = $chartFile.DirectoryName
         ReleaseName = $chart.name
+        Dockerfile = $chart.annotations.dockerfile
+        DockerBuildDir = $chart.annotations.dockerbuilddir
     }
 }
 

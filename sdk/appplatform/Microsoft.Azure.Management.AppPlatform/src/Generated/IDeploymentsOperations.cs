@@ -345,6 +345,105 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </exception>
         Task<AzureOperationResponse<LogFileUrlResponse>> GetLogFileUrlWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Generate Heap Dump
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the Deployment resource.
+        /// </param>
+        /// <param name='diagnosticParameters'>
+        /// Parameters for the diagnostic operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> GenerateHeapDumpWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Generate Thread Dump
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the Deployment resource.
+        /// </param>
+        /// <param name='diagnosticParameters'>
+        /// Parameters for the diagnostic operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> GenerateThreadDumpWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Start JFR
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the Deployment resource.
+        /// </param>
+        /// <param name='diagnosticParameters'>
+        /// Parameters for the diagnostic operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> StartJFRWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create a new Deployment or update an exiting Deployment.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -536,6 +635,105 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Generate Heap Dump
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the Deployment resource.
+        /// </param>
+        /// <param name='diagnosticParameters'>
+        /// Parameters for the diagnostic operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginGenerateHeapDumpWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Generate Thread Dump
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the Deployment resource.
+        /// </param>
+        /// <param name='diagnosticParameters'>
+        /// Parameters for the diagnostic operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginGenerateThreadDumpWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Start JFR
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the Deployment resource.
+        /// </param>
+        /// <param name='diagnosticParameters'>
+        /// Parameters for the diagnostic operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginStartJFRWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in an App.
         /// </summary>

@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.DeviceUpdate.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -38,13 +39,14 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary> Initializes a new instance of the <see cref = "PrivateLink"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal PrivateLink(ArmResource options, PrivateLinkData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal PrivateLink(ArmResource options, PrivateLinkData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,7 +58,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         internal PrivateLink(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +74,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         internal PrivateLink(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,6 +105,9 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// OperationId: PrivateLinkResources_Get
         /// <summary> Get the specified private link resource associated with the device update account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PrivateLink>> GetAsync(CancellationToken cancellationToken = default)
@@ -121,6 +128,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// OperationId: PrivateLinkResources_Get
         /// <summary> Get the specified private link resource associated with the device update account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateLink> Get(CancellationToken cancellationToken = default)
@@ -146,7 +156,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PrivateLink.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -154,7 +174,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PrivateLink.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

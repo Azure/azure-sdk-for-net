@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static ClustersRestOperations GetClustersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ClustersRestOperations GetClustersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ClustersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ClustersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NamespacesRestOperations GetNamespacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NamespacesRestOperations GetNamespacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the AvailableClusters for this <see cref="Subscription" />. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AvailableCluster>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableClusterRegionClusters");
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AvailableCluster> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableClusterRegionClusters");
@@ -96,15 +96,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventHubCluster> GetClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventHubCluster> GetEventHubClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(EventHubCluster.ResourceType, out string apiVersion);
+                ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<EventHubCluster>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 async Task<Page<EventHubCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
@@ -141,15 +142,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventHubCluster> GetClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<EventHubCluster> GetEventHubClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(EventHubCluster.ResourceType, out string apiVersion);
+                ClustersRestOperations restOperations = GetClustersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<EventHubCluster> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
@@ -164,7 +166,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 Page<EventHubCluster> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
@@ -214,15 +216,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventHubNamespace> GetNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventHubNamespace> GetEventHubNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(EventHubNamespace.ResourceType, out string apiVersion);
+                NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<EventHubNamespace>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
@@ -237,7 +240,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 async Task<Page<EventHubNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
@@ -259,15 +262,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventHubNamespace> GetNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<EventHubNamespace> GetEventHubNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(EventHubNamespace.ResourceType, out string apiVersion);
+                NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<EventHubNamespace> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
@@ -282,7 +286,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 Page<EventHubNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
@@ -347,7 +351,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -379,7 +383,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    NamespacesRestOperations restOperations = GetNamespacesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, parameters, cancellationToken);
                     return response;
                 }

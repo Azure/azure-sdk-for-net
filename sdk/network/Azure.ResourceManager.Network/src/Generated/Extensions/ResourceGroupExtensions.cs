@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -451,43 +450,41 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        private static AvailableResourceGroupDelegationsRestOperations GetAvailableResourceGroupDelegationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AvailableResourceGroupDelegationsRestOperations GetAvailableResourceGroupDelegationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AvailableResourceGroupDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AvailableResourceGroupDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AvailableServiceAliasesRestOperations GetAvailableServiceAliasesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AvailableServiceAliasesRestOperations GetAvailableServiceAliasesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AvailablePrivateEndpointTypesRestOperations GetAvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AvailablePrivateEndpointTypesRestOperations GetAvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static PrivateLinkServicesRestOperations GetPrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static PrivateLinkServicesRestOperations GetPrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableResourceGroupDelegationsRestOperations restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableResourceGroupDelegations");
@@ -527,19 +524,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableResourceGroupDelegationsRestOperations restOperations = GetAvailableResourceGroupDelegationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableResourceGroupDelegations");
@@ -579,19 +574,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableServiceAliasesRestOperations restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AvailableServiceAlias>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableServiceAliases");
@@ -631,19 +624,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableServiceAliasesRestOperations restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AvailableServiceAlias> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableServiceAliases");
@@ -683,19 +674,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailablePrivateEndpointTypesRestOperations restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AvailablePrivateEndpointType>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailablePrivateEndpointTypes");
@@ -735,19 +724,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailablePrivateEndpointTypesRestOperations restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AvailablePrivateEndpointType> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailablePrivateEndpointTypes");
@@ -785,17 +772,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroup resourceGroup, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static async Task<CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroup resourceGroup, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -808,9 +793,9 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -826,17 +811,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroup resourceGroup, string location, CheckPrivateLinkServiceVisibilityRequest parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public static CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroup resourceGroup, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -849,9 +832,9 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckPrivateLinkServiceVisibilityByResourceGroup(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters, cancellationToken);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, location, parameters).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -869,19 +852,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
@@ -921,19 +902,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");

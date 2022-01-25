@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("sharingProfile");
                 writer.WriteObjectValue(SharingProfile);
             }
+            if (Optional.IsDefined(SoftDeletePolicy))
+            {
+                writer.WritePropertyName("softDeletePolicy");
+                writer.WriteObjectValue(SoftDeletePolicy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -59,6 +64,7 @@ namespace Azure.ResourceManager.Compute
             Optional<GalleryIdentifier> identifier = default;
             Optional<GalleryPropertiesProvisioningState> provisioningState = default;
             Optional<SharingProfile> sharingProfile = default;
+            Optional<SoftDeletePolicy> softDeletePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -135,11 +141,21 @@ namespace Azure.ResourceManager.Compute
                             sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("softDeletePolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new GalleryData(id, name, type, tags, location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value);
+            return new GalleryData(id, name, type, tags, location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value);
         }
     }
 }

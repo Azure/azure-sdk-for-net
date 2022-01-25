@@ -40,14 +40,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of the <see cref = "NetworkVirtualAppliance"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkVirtualAppliance(ArmResource options, NetworkVirtualApplianceData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal NetworkVirtualAppliance(ArmResource options, NetworkVirtualApplianceData data) : base(options, new ResourceIdentifier(data.Id))
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,8 +60,9 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualAppliance(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,8 +77,9 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualAppliance(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -153,7 +156,17 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualAppliance.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -161,13 +174,23 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualAppliance.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified Network Virtual Appliance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkVirtualApplianceDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkVirtualApplianceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualAppliance.Delete");
             scope.Start();
@@ -189,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified Network Virtual Appliance. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkVirtualApplianceDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkVirtualApplianceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualAppliance.Delete");
             scope.Start();
@@ -198,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkVirtualAppliancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new NetworkVirtualApplianceDeleteOperation(_clientDiagnostics, Pipeline, _networkVirtualAppliancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -259,17 +282,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates the specified Network Virtual Appliance Inbound Security Rules. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<InboundSecurityRuleCreateOrUpdateOperation> CreateOrUpdateInboundSecurityRuleAsync(string ruleCollectionName, InboundSecurityRule parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation> CreateOrUpdateInboundSecurityRuleAsync(bool waitForCompletion, string ruleCollectionName, InboundSecurityRule parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -280,7 +301,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _inboundSecurityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InboundSecurityRuleCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -293,17 +314,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates the specified Network Virtual Appliance Inbound Security Rules. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual InboundSecurityRuleCreateOrUpdateOperation CreateOrUpdateInboundSecurityRule(string ruleCollectionName, InboundSecurityRule parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation CreateOrUpdateInboundSecurityRule(bool waitForCompletion, string ruleCollectionName, InboundSecurityRule parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -314,7 +333,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _inboundSecurityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters, cancellationToken);
-                var operation = new InboundSecurityRuleCreateOrUpdateOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateInboundSecurityRuleOperation(_clientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

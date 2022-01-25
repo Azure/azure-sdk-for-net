@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
         SharedPrivateLink IOperationSource<SharedPrivateLink>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SharedPrivateLink(_operationBase, SharedPrivateLinkData.DeserializeSharedPrivateLinkData(document.RootElement));
+            var data = SharedPrivateLinkData.DeserializeSharedPrivateLinkData(document.RootElement);
+            return new SharedPrivateLink(_operationBase, data);
         }
 
         async ValueTask<SharedPrivateLink> IOperationSource<SharedPrivateLink>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SharedPrivateLink(_operationBase, SharedPrivateLinkData.DeserializeSharedPrivateLinkData(document.RootElement));
+            var data = SharedPrivateLinkData.DeserializeSharedPrivateLinkData(document.RootElement);
+            return new SharedPrivateLink(_operationBase, data);
         }
     }
 }

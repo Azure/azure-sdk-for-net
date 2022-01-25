@@ -39,13 +39,14 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "ServerfarmHybridConnectionNamespaceRelay"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ServerfarmHybridConnectionNamespaceRelay(ArmResource options, HybridConnectionData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ServerfarmHybridConnectionNamespaceRelay(ArmResource options, HybridConnectionData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmHybridConnectionNamespaceRelay(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal ServerfarmHybridConnectionNamespaceRelay(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -153,7 +156,17 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelay.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -161,7 +174,17 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelay.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -170,14 +193,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Hybrid Connection in use in an App Service plan. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AppServicePlanDeleteHybridConnectionOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServerfarmHybridConnectionNamespaceRelayDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelay.Delete");
             scope.Start();
             try
             {
                 var response = await _appServicePlansRestClient.DeleteHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServicePlanDeleteHybridConnectionOperation(response);
+                var operation = new ServerfarmHybridConnectionNamespaceRelayDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -195,16 +218,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Hybrid Connection in use in an App Service plan. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AppServicePlanDeleteHybridConnectionOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServerfarmHybridConnectionNamespaceRelayDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServerfarmHybridConnectionNamespaceRelay.Delete");
             scope.Start();
             try
             {
                 var response = _appServicePlansRestClient.DeleteHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServicePlanDeleteHybridConnectionOperation(response);
+                var operation = new ServerfarmHybridConnectionNamespaceRelayDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

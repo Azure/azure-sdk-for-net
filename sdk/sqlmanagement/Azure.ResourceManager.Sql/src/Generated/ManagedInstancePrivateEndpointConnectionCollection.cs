@@ -31,12 +31,13 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstancePrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstancePrivateEndpointConnectionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstancePrivateEndpointConnectionsRestClient = new ManagedInstancePrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ManagedInstancePrivateEndpointConnection.ResourceType, out string apiVersion);
+            _managedInstancePrivateEndpointConnectionsRestClient = new ManagedInstancePrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,17 +55,15 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
         /// OperationId: ManagedInstancePrivateEndpointConnections_CreateOrUpdate
         /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="parameters"> The ManagedInstancePrivateEndpointConnection to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation CreateOrUpdate(string privateEndpointConnectionName, ManagedInstancePrivateEndpointConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string privateEndpointConnectionName, ManagedInstancePrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstancePrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters, cancellationToken);
-                var operation = new ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters).Request, response);
+                var operation = new ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -91,17 +90,15 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
         /// OperationId: ManagedInstancePrivateEndpointConnections_CreateOrUpdate
         /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
         /// <param name="parameters"> The ManagedInstancePrivateEndpointConnection to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(string privateEndpointConnectionName, ManagedInstancePrivateEndpointConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointConnectionName, ManagedInstancePrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -112,7 +109,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstancePrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters).Request, response);
+                var operation = new ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstancePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,13 +127,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a private endpoint connection. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<ManagedInstancePrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -145,7 +140,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedInstancePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstancePrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,13 +155,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a private endpoint connection. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstancePrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -175,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedInstancePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstancePrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,22 +180,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<ManagedInstancePrivateEndpointConnection> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _managedInstancePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstancePrivateEndpointConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstancePrivateEndpointConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstancePrivateEndpointConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,22 +205,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstancePrivateEndpointConnection>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _managedInstancePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstancePrivateEndpointConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstancePrivateEndpointConnection(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstancePrivateEndpointConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateEndpointConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,13 +230,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -266,15 +253,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancePrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -303,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedInstancePrivateEndpointConnectionsRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +303,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = _managedInstancePrivateEndpointConnectionsRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +329,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedInstancePrivateEndpointConnectionsRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,7 +344,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await _managedInstancePrivateEndpointConnectionsRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateEndpointConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         DscpConfiguration IOperationSource<DscpConfiguration>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DscpConfiguration(_operationBase, DscpConfigurationData.DeserializeDscpConfigurationData(document.RootElement));
+            var data = DscpConfigurationData.DeserializeDscpConfigurationData(document.RootElement);
+            return new DscpConfiguration(_operationBase, data);
         }
 
         async ValueTask<DscpConfiguration> IOperationSource<DscpConfiguration>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DscpConfiguration(_operationBase, DscpConfigurationData.DeserializeDscpConfigurationData(document.RootElement));
+            var data = DscpConfigurationData.DeserializeDscpConfigurationData(document.RootElement);
+            return new DscpConfiguration(_operationBase, data);
         }
     }
 }

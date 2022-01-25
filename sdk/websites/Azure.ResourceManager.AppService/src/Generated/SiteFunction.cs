@@ -39,13 +39,14 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of the <see cref = "SiteFunction"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SiteFunction(ArmResource options, FunctionEnvelopeData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SiteFunction(ArmResource options, FunctionEnvelopeData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteFunction(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +74,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteFunction(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -153,7 +156,17 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SiteFunction.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -161,7 +174,17 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SiteFunction.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
@@ -170,14 +193,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebAppDeleteFunctionOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteFunctionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteFunction.Delete");
             scope.Start();
             try
             {
                 var response = await _webAppsRestClient.DeleteFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppDeleteFunctionOperation(response);
+                var operation = new SiteFunctionDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -195,16 +218,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebAppDeleteFunctionOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SiteFunctionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SiteFunction.Delete");
             scope.Start();
             try
             {
                 var response = _webAppsRestClient.DeleteFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebAppDeleteFunctionOperation(response);
+                var operation = new SiteFunctionDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -221,13 +244,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretAsync(string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -254,13 +275,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
         public virtual Response<KeyInfo> CreateOrUpdateFunctionSecret(string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -286,13 +305,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a function secret. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response> DeleteFunctionSecretAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunction.DeleteFunctionSecret");
             scope.Start();
@@ -314,13 +331,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a function secret. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response DeleteFunctionSecret(string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _clientDiagnostics.CreateScope("SiteFunction.DeleteFunctionSecret");
             scope.Start();

@@ -39,14 +39,15 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of the <see cref = "FileService"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal FileService(ArmResource options, FileServiceData resource) : base(options, resource.Id)
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal FileService(ArmResource options, FileServiceData data) : base(options, data.Id)
         {
             HasData = true;
-            _data = resource;
+            _data = data;
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.Storage
         {
             Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +76,8 @@ namespace Azure.ResourceManager.Storage
         internal FileService(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _fileServicesRestClient = new FileServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -152,7 +155,17 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("FileService.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
@@ -160,15 +173,25 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("FileService.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<FileServiceSetServicePropertiesOperation> CreateOrUpdateAsync(FileServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<FileServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, FileServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -180,7 +203,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _fileServicesRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new FileServiceSetServicePropertiesOperation(this, response);
+                var operation = new FileServiceCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -193,11 +216,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual FileServiceSetServicePropertiesOperation CreateOrUpdate(FileServiceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual FileServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, FileServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -209,7 +232,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _fileServicesRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new FileServiceSetServicePropertiesOperation(this, response);
+                var operation = new FileServiceCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedDatabase IOperationSource<ManagedDatabase>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedDatabase(_operationBase, ManagedDatabaseData.DeserializeManagedDatabaseData(document.RootElement));
+            var data = ManagedDatabaseData.DeserializeManagedDatabaseData(document.RootElement);
+            return new ManagedDatabase(_operationBase, data);
         }
 
         async ValueTask<ManagedDatabase> IOperationSource<ManagedDatabase>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedDatabase(_operationBase, ManagedDatabaseData.DeserializeManagedDatabaseData(document.RootElement));
+            var data = ManagedDatabaseData.DeserializeManagedDatabaseData(document.RootElement);
+            return new ManagedDatabase(_operationBase, data);
         }
     }
 }

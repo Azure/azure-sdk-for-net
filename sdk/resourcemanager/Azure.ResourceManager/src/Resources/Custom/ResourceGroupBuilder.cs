@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return Collection.CreateOrUpdate(name, Resource, waitForCompletion, cancellationToken);
+            return Collection.CreateOrUpdate(waitForCompletion, name, Resource, cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return await Collection.CreateOrUpdateAsync(name, Resource, waitForCompletion, cancellationToken).ConfigureAwait(false);
+            return await Collection.CreateOrUpdateAsync(waitForCompletion, name, Resource, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

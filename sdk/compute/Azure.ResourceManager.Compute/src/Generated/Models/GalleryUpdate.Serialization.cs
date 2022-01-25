@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("sharingProfile");
                 writer.WriteObjectValue(SharingProfile);
             }
+            if (Optional.IsDefined(SoftDeletePolicy))
+            {
+                writer.WritePropertyName("softDeletePolicy");
+                writer.WriteObjectValue(SoftDeletePolicy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

@@ -24,19 +24,20 @@ namespace Azure.ResourceManager.DeviceUpdate
     public partial class DeviceUpdateInstanceCollection : ArmCollection, IEnumerable<DeviceUpdateInstance>, IAsyncEnumerable<DeviceUpdateInstance>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeviceUpdateInstancesRestOperations _deviceUpdateInstancesRestClient;
+        private readonly InstancesRestOperations _instancesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateInstanceCollection"/> class for mocking. </summary>
         protected DeviceUpdateInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdateInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeviceUpdateInstanceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deviceUpdateInstancesRestClient = new DeviceUpdateInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(DeviceUpdateInstance.ResourceType, out string apiVersion);
+            _instancesRestClient = new InstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -50,18 +51,19 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// OperationId: Instances_Create
         /// <summary> Creates or updates instance. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="instance"> Instance details. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="instance"/> is null. </exception>
-        public virtual DeviceUpdateInstanceCreateOperation CreateOrUpdate(string instanceName, DeviceUpdateInstanceData instance, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual DeviceUpdateInstanceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
             if (instance == null)
             {
                 throw new ArgumentNullException(nameof(instance));
@@ -71,8 +73,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = _deviceUpdateInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance, cancellationToken);
-                var operation = new DeviceUpdateInstanceCreateOperation(Parent, _clientDiagnostics, Pipeline, _deviceUpdateInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance).Request, response);
+                var response = _instancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance, cancellationToken);
+                var operation = new DeviceUpdateInstanceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _instancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -84,18 +86,19 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// OperationId: Instances_Create
         /// <summary> Creates or updates instance. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="instance"> Instance details. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="instance"/> is null. </exception>
-        public async virtual Task<DeviceUpdateInstanceCreateOperation> CreateOrUpdateAsync(string instanceName, DeviceUpdateInstanceData instance, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<DeviceUpdateInstanceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string instanceName, DeviceUpdateInstanceData instance, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
             if (instance == null)
             {
                 throw new ArgumentNullException(nameof(instance));
@@ -105,8 +108,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = await _deviceUpdateInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateInstanceCreateOperation(Parent, _clientDiagnostics, Pipeline, _deviceUpdateInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance).Request, response);
+                var response = await _instancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceUpdateInstanceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _instancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, instance).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,25 +121,26 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// OperationId: Instances_Get
         /// <summary> Returns instance details for the given instance and account name. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<DeviceUpdateInstance> Get(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _deviceUpdateInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken);
+                var response = _instancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceUpdateInstance(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,25 +149,26 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// OperationId: Instances_Get
         /// <summary> Returns instance details for the given instance and account name. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public async virtual Task<Response<DeviceUpdateInstance>> GetAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deviceUpdateInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken).ConfigureAwait(false);
+                var response = await _instancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeviceUpdateInstance(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,22 +180,20 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<DeviceUpdateInstance> GetIfExists(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceUpdateInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
+                var response = _instancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,22 +205,20 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public async virtual Task<Response<DeviceUpdateInstance>> GetIfExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceUpdateInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
+                var response = await _instancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<DeviceUpdateInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,13 +230,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
@@ -254,15 +253,13 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -276,6 +273,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// OperationId: Instances_ListByAccount
         /// <summary> Returns instances for the given account name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceUpdateInstance" /> that may take multiple service requests to iterate over. </returns>
@@ -287,8 +287,8 @@ namespace Azure.ResourceManager.DeviceUpdate
                 scope.Start();
                 try
                 {
-                    var response = _deviceUpdateInstancesRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _instancesRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.DeviceUpdate
                 scope.Start();
                 try
                 {
-                    var response = _deviceUpdateInstancesRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _instancesRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,6 +314,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// OperationId: Instances_ListByAccount
         /// <summary> Returns instances for the given account name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeviceUpdateInstance" /> that may take multiple service requests to iterate over. </returns>
@@ -325,8 +328,8 @@ namespace Azure.ResourceManager.DeviceUpdate
                 scope.Start();
                 try
                 {
-                    var response = await _deviceUpdateInstancesRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _instancesRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -340,8 +343,8 @@ namespace Azure.ResourceManager.DeviceUpdate
                 scope.Start();
                 try
                 {
-                    var response = await _deviceUpdateInstancesRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _instancesRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateInstance(this, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

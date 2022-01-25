@@ -31,12 +31,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Source request conditions.  This parameter is only applicable if the source is a file.
         /// </summary>
-        public ShareFileRequestConditions SourceRequestConditions { get; set; }
+        public ShareFileRequestConditions SourceConditions { get; set; }
 
         /// <summary>
         /// Destination request conditions.
         /// </summary>
-        public ShareFileRequestConditions DestinationRequestConditions { get; set; }
+        public ShareFileRequestConditions DestinationConditions { get; set; }
 
         /// <summary>
         /// Optional SMB properties to set on the destination file or directory.
