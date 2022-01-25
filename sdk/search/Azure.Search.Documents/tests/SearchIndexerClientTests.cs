@@ -648,7 +648,7 @@ namespace Azure.Search.Documents.Tests
 
                     Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
-                    Type _ when t == typeof(AmlSkill) => new AmlSkill(inputs, outputs),
+                    Type _ when t == typeof(AmlSkill) => new AmlSkill(inputs, outputs) { Uri = "https://microsoft.com" },
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };
             }
