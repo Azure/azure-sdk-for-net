@@ -11,4 +11,4 @@ description: Samples for the Azure.ServieTemplat.Template client library.
 
 # Azure.ServiceTemplate.Template Samples
 
-- [Creating Resource](https://github.com/Azure/azure-sdk-for-net/eng/templates/Azure.ServiceTemplate.Template/samples/Sample1_CreateResource.md)
+- [Creating Resource](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/samples/Sample1_CreateResource.md)
