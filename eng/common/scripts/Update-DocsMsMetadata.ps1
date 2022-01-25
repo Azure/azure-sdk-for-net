@@ -122,6 +122,7 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
         -GithubUser $author
     }
     catch {
+      LogError $_
       Write-Host "No msalias fetching from github username: $author. Use github username for default value."
       $msauthor = $author # Default to github username
     }
