@@ -105,6 +105,12 @@ function New-DataPlanePackageFolder() {
     # dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
+
+    # dotnet sln
+    dotnet sln remove src\$namespace.csproj
+    dotnet sln add src\$namespace.csproj
+    dotnet sln remove tests\$namespace.Tests.csproj
+    dotnet sln add tests\$namespace.Tests.csproj
   }
 
   $outputJson = [PSCustomObject]@{

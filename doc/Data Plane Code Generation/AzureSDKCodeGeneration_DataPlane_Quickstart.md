@@ -52,14 +52,14 @@ sdk\<service name>\<package name>\CHANGELOG.md
 ```
 
 - `<service name>` - Should be the short name for the azure service. e.g. deviceupdate
-- `<pacakage name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
+- `<package name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
   
-We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/) to automatically create the project.
+We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates) to automatically create the project.
 
 You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
 ```
-eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<source> -sdkPath <sdkrepoRootPath> -inputfiles <inputfilelink> -securityScope <securityScope> -securityHeaderName <securityHeaderName>
+eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -inputfiles <inputfilelink> -securityScope <securityScope> -securityHeaderName <securityHeaderName>
 ```
 
 e.g.
@@ -70,11 +70,11 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 
 **Note**:
 
-- Use one of the following pre-approved namespace groups (<https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-lis>): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
+- Use one of the following pre-approved namespace groups (<https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list>): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 - namespace is the shipped package name, it should be `Azure.<group>.<service>`
 - inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink, e.g. <https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json>.
 
-- Both AADToken and AzureKey authentication are supported. **AzureKey auth** is specific to each service, but generally it is documented by that service. e.g [AzureKey authentication of Azure Storage](https://docs.microsoft.com/azure/storage/blobs/authorize-data-operations-portal#use-the-account-access-key). **AADToken** is for any service that supports [TokenCredential authentication](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). If your service support AADToken, just set the parameter **securityScope**(the security scope), and if your service support AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service support two authentications.
+- Both AADToken and AzureKey authentication are supported. **AzureKey authentication** is specific to each service, but generally it is documented by that service. e.g [AzureKey authentication of Azure Storage](https://docs.microsoft.com/azure/storage/blobs/authorize-data-operations-portal#use-the-account-access-key). **AADToken** is for any service that supports [TokenCredential authentication](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). If your service supports AADToken, just set the parameter **securityScope**(the security scope), and if your service supports AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service supports two authentications.
 
 The script `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` will do **step-by-step** as following:
 
@@ -84,15 +84,15 @@ Create a SDK library project, configuration file, or solution based on the speci
 
 - install dotnet template
   
-navigate to the sdk repo root directory, and run the following commands:
+Navigate to the sdk repo root directory, and run the following commands:
 
 ```
-dotnet new --install sdk/template-dpg/Azure.ServiceTemplate.Template
+dotnet new --install eng/templates/Azure.ServiceTemplate.Template
 ```
 
 - dotnet new project
   
-  create project folder `Azure.<group>.<service>`. e.g. Azure.IoT.DeviceUpdate under `sdk/<service>` folder, navigate to the project folder, and run 'dotnet new' as following:
+Create project folder `Azure.<group>.<service>`. e.g. Azure.IoT.DeviceUpdate under `sdk/<service>` folder, navigate to the project folder, and run 'dotnet new' as following:
   
 ```
 sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryName [Client-Library-Title] --groupName [namespace-group-name] --swagger [input-swagger-file-path] --securityScopes [security-scopes] --force
@@ -145,7 +145,8 @@ Before the library package can be released, you will need to add several require
 You can refer to following guideline to add those requirements:
 
 - Tests: <https://azure.github.io/azure-sdk/general_implementation.html#testing>
-- README/Samples/Changelog: <https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository>
+- README/Samples: <https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository>
+- Changelog: <https://azure.github.io/azure-sdk/policies_releases.html#change-logs>
 - Other release concerns: <https://azure.github.io/azure-sdk/policies_releases.html>
 
 ### Tests
@@ -190,7 +191,7 @@ Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.
 
 ### Customize
 
-In `Azure.<group>.<service>` project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/src/autorest.md) file which is use to add configuration to generate code based on your swagger.
+In `Azure.<group>.<service>` project, we have autorest.md file which is use to add configuration to generate code based on your swagger. [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) is an example.
 
 You can customize your client libray in two ways:
 
