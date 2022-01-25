@@ -10,15 +10,12 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Properties of a cost threshold item.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class CostThresholdProperties
     {
         /// <summary>
@@ -34,7 +31,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         /// <param name="thresholdId">The ID of the cost threshold
         /// item.</param>
-        /// <param name="thresholdValue">The cost threshold value.</param>
+        /// <param name="percentageThreshold">The value of the percentage cost
+        /// threshold.</param>
         /// <param name="displayOnChart">Indicates whether this threshold will
         /// be displayed on cost charts. Possible values include: 'Enabled',
         /// 'Disabled'</param>
@@ -43,10 +41,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="notificationSent">Indicates the datetime when
         /// notifications were last sent for this threshold.</param>
-        public CostThresholdProperties(string thresholdId = default(string), double? thresholdValue = default(double?), string displayOnChart = default(string), string sendNotificationWhenExceeded = default(string), string notificationSent = default(string))
+        public CostThresholdProperties(string thresholdId = default(string), PercentageCostThresholdProperties percentageThreshold = default(PercentageCostThresholdProperties), string displayOnChart = default(string), string sendNotificationWhenExceeded = default(string), string notificationSent = default(string))
         {
             ThresholdId = thresholdId;
-            ThresholdValue = thresholdValue;
+            PercentageThreshold = percentageThreshold;
             DisplayOnChart = displayOnChart;
             SendNotificationWhenExceeded = sendNotificationWhenExceeded;
             NotificationSent = notificationSent;
@@ -65,10 +63,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string ThresholdId { get; set; }
 
         /// <summary>
-        /// Gets or sets the cost threshold value.
+        /// Gets or sets the value of the percentage cost threshold.
         /// </summary>
-        [JsonProperty(PropertyName = "percentageThreshold.thresholdValue")]
-        public double? ThresholdValue { get; set; }
+        [JsonProperty(PropertyName = "percentageThreshold")]
+        public PercentageCostThresholdProperties PercentageThreshold { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether this threshold will be displayed on

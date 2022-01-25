@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<VirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, ODataQuery<VirtualMachine> odataQuery = default(ODataQuery<VirtualMachine>))
+            public static IPage<LabVirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, ODataQuery<LabVirtualMachine> odataQuery = default(ODataQuery<LabVirtualMachine>))
             {
                 return operations.ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
             }
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, ODataQuery<VirtualMachine> odataQuery = default(ODataQuery<VirtualMachine>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LabVirtualMachine>> ListAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, ODataQuery<LabVirtualMachine> odataQuery = default(ODataQuery<LabVirtualMachine>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, labName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// Specify the $expand query. Example:
             /// 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'
             /// </param>
-            public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string expand = default(string))
+            public static LabVirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string expand = default(string))
             {
                 return operations.GetAsync(resourceGroupName, labName, name, expand).GetAwaiter().GetResult();
             }
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachine> GetAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LabVirtualMachine> GetAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, labName, name, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -138,12 +138,12 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='virtualMachine'>
+            /// <param name='labVirtualMachine'>
             /// A virtual machine.
             /// </param>
-            public static VirtualMachine CreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, VirtualMachine virtualMachine)
+            public static LabVirtualMachine CreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachine labVirtualMachine)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, virtualMachine).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, labVirtualMachine).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -162,15 +162,15 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='virtualMachine'>
+            /// <param name='labVirtualMachine'>
             /// A virtual machine.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachine> CreateOrUpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, VirtualMachine virtualMachine, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LabVirtualMachine> CreateOrUpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachine labVirtualMachine, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, labName, name, virtualMachine, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, labName, name, labVirtualMachine, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -220,14 +220,13 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Allows modifying tags of virtual machines. All other properties will be
-            /// ignored.
+            /// Modify properties of virtual machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -235,24 +234,22 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='virtualMachine'>
-            /// Allows modifying tags of virtual machines. All other properties will be
-            /// ignored.
+            /// <param name='labVirtualMachine'>
+            /// A virtual machine.
             /// </param>
-            public static VirtualMachine Update(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, VirtualMachineFragment virtualMachine)
+            public static LabVirtualMachine Update(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachineFragment labVirtualMachine)
             {
-                return operations.UpdateAsync(resourceGroupName, labName, name, virtualMachine).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, labName, name, labVirtualMachine).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Allows modifying tags of virtual machines. All other properties will be
-            /// ignored.
+            /// Modify properties of virtual machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -260,16 +257,15 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='virtualMachine'>
-            /// Allows modifying tags of virtual machines. All other properties will be
-            /// ignored.
+            /// <param name='labVirtualMachine'>
+            /// A virtual machine.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachine> UpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, VirtualMachineFragment virtualMachine, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LabVirtualMachine> UpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachineFragment labVirtualMachine, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, labName, name, virtualMachine, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, labName, name, labVirtualMachine, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -283,7 +279,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -307,7 +303,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -334,7 +330,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -358,7 +354,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -385,7 +381,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -406,7 +402,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -423,49 +419,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
             }
 
             /// <summary>
-            /// Clears the artifact results of the virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static void ClearArtifactResults(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.ClearArtifactResultsAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Clears the artifact results of the virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task ClearArtifactResultsAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.ClearArtifactResultsWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Detach the specified disk from the virtual machine. This operation can take
             /// a while to complete.
             /// </summary>
@@ -473,7 +426,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -497,7 +450,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -524,7 +477,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -545,7 +498,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -571,7 +524,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -591,7 +544,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -617,7 +570,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -637,7 +590,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -660,7 +613,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -683,7 +636,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -709,7 +662,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -729,7 +682,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -752,7 +705,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -772,7 +725,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -795,7 +748,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -815,7 +768,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -839,7 +792,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -860,7 +813,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -884,7 +837,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -905,7 +858,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -929,7 +882,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -937,12 +890,12 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='virtualMachine'>
+            /// <param name='labVirtualMachine'>
             /// A virtual machine.
             /// </param>
-            public static VirtualMachine BeginCreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, VirtualMachine virtualMachine)
+            public static LabVirtualMachine BeginCreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachine labVirtualMachine)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, labName, name, virtualMachine).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, labName, name, labVirtualMachine).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -953,7 +906,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -961,15 +914,15 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='virtualMachine'>
+            /// <param name='labVirtualMachine'>
             /// A virtual machine.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachine> BeginCreateOrUpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, VirtualMachine virtualMachine, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LabVirtualMachine> BeginCreateOrUpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachine labVirtualMachine, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, labName, name, virtualMachine, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, labName, name, labVirtualMachine, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -982,7 +935,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1002,7 +955,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1026,7 +979,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1050,7 +1003,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1077,7 +1030,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1101,7 +1054,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1128,7 +1081,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1149,7 +1102,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1173,7 +1126,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1197,7 +1150,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1223,7 +1176,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1243,7 +1196,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1266,7 +1219,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1289,7 +1242,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1315,7 +1268,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1335,7 +1288,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1358,7 +1311,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1378,7 +1331,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1401,7 +1354,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1421,7 +1374,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1445,7 +1398,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1466,7 +1419,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1490,7 +1443,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1511,7 +1464,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -1536,7 +1489,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<VirtualMachine> ListNext(this IVirtualMachinesOperations operations, string nextPageLink)
+            public static IPage<LabVirtualMachine> ListNext(this IVirtualMachinesOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -1553,7 +1506,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListNextAsync(this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LabVirtualMachine>> ListNextAsync(this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

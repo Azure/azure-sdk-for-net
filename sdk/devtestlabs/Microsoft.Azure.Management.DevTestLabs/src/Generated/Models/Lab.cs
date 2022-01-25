@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A lab.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Lab : TrackedResource
+    public partial class Lab : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Lab class.
@@ -34,15 +34,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Lab class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="id">The identifier of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="tags">The tags of the resource.</param>
         /// <param name="defaultStorageAccount">The lab's default storage
         /// account.</param>
         /// <param name="defaultPremiumStorageAccount">The lab's default
@@ -54,7 +50,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="vaultName">The lab's Key vault.</param>
         /// <param name="labStorageType">Type of storage used by the lab. It
         /// can be either Premium or Standard. Default is Premium. Possible
-        /// values include: 'Standard', 'Premium', 'StandardSSD'</param>
+        /// values include: 'Standard', 'Premium'</param>
         /// <param name="mandatoryArtifactsResourceIdsLinux">The ordered list
         /// of artifact resource IDs that should be applied on all Linux VM
         /// creations by default, prior to the artifacts specified by the
@@ -73,29 +69,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="environmentPermission">The access rights to be granted
         /// to the user when provisioning an environment. Possible values
         /// include: 'Reader', 'Contributor'</param>
-        /// <param name="title">The plain text title for the lab
-        /// announcement</param>
-        /// <param name="markdown">The markdown text (if any) that this lab
-        /// displays in the UI. If left empty/null, nothing will be
-        /// shown.</param>
-        /// <param name="enabled">Is the lab announcement active/enabled at
-        /// this time?. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="expirationDate">The time at which the announcement
-        /// expires (null for never)</param>
-        /// <param name="expired">Has this announcement expired?</param>
-        /// <param name="provisioningState">The provisioning status of the
-        /// resource.</param>
-        /// <param name="uniqueIdentifier">The unique immutable identifier of a
-        /// resource (Guid).</param>
-        /// <param name="enabled1">Is the lab support banner active/enabled at
-        /// this time?. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="markdown1">The markdown text (if any) that this lab
-        /// displays in the UI. If left empty/null, nothing will be
-        /// shown.</param>
-        /// <param name="vmCreationResourceGroup">The resource group ID in
-        /// which all new lab virtual machines will be created. Ex:
-        /// /subscriptions/subId/resourceGroups/rgName To let DevTest Labs
-        /// manage resource group creation, set this value to null.</param>
+        /// <param name="announcement">The properties of any lab announcement
+        /// associated with this lab</param>
+        /// <param name="support">The properties of any lab support message
+        /// associated with this lab</param>
+        /// <param name="vmCreationResourceGroup">The resource group in which
+        /// lab virtual machines will be created in.</param>
         /// <param name="publicIpId">The public IP address for the lab's load
         /// balancer.</param>
         /// <param name="loadBalancerId">The load balancer used to for lab VMs
@@ -105,41 +84,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// ports.</param>
         /// <param name="extendedProperties">Extended properties of the lab
         /// used for experimental features</param>
-        /// <param name="browserConnect">Is browser connect enabled for the
-        /// lab. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="disableAutoUpgradeCseMinorVersion">Is auto upgrade of
-        /// CSE disabled for the lab?</param>
-        /// <param name="managementIdentities">List of identities which can be
-        /// used for management of resources.</param>
-        /// <param name="isolateLabResources">Indicates whether to create Lab
-        /// resources (e.g. Storage accounts and Key Vaults) in network
-        /// isolation. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="diskEncryptionSetId">Gets or sets resourceId of the
-        /// disk encryption set to use for enabling encryption at rest.</param>
-        /// <param name="labType">Gets or sets the type of key used to encrypt
-        /// the data of the disk. Possible values include:
-        /// 'EncryptionAtRestWithPlatformKey',
-        /// 'EncryptionAtRestWithCustomerKey'</param>
-        /// <param name="defaultSecretName">Default secret for creating virtual
-        /// machines.</param>
-        /// <param name="provisioningState1">The provisioning status of the
+        /// <param name="provisioningState">The provisioning status of the
         /// resource.</param>
-        /// <param name="uniqueIdentifier1">The unique immutable identifier of
-        /// a resource (Guid).</param>
-        /// <param name="type1">Type of identity (SystemAssigned, UserAssigned,
-        /// None). Possible values include: 'None', 'SystemAssigned',
-        /// 'UserAssigned', 'SystemAssigned,UserAssigned'</param>
-        /// <param name="principalId">The principal id of resource
-        /// identity.</param>
-        /// <param name="tenantId">The tenant identifier of resource.</param>
-        /// <param name="clientSecretUrl">The client secret URL of the
-        /// identity.</param>
-        /// <param name="userAssignedIdentities">If Type is 'UserAssigned':
-        /// List of user assigned identities.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource</param>
-        public Lab(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultStorageAccount = default(string), string defaultPremiumStorageAccount = default(string), string artifactsStorageAccount = default(string), string premiumDataDiskStorageAccount = default(string), string vaultName = default(string), string labStorageType = default(string), IList<string> mandatoryArtifactsResourceIdsLinux = default(IList<string>), IList<string> mandatoryArtifactsResourceIdsWindows = default(IList<string>), System.DateTime? createdDate = default(System.DateTime?), string premiumDataDisks = default(string), string environmentPermission = default(string), string title = default(string), string markdown = default(string), string enabled = default(string), System.DateTime? expirationDate = default(System.DateTime?), bool? expired = default(bool?), string provisioningState = default(string), string uniqueIdentifier = default(string), string enabled1 = default(string), string markdown1 = default(string), string vmCreationResourceGroup = default(string), string publicIpId = default(string), string loadBalancerId = default(string), string networkSecurityGroupId = default(string), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), string browserConnect = default(string), bool? disableAutoUpgradeCseMinorVersion = default(bool?), IDictionary<string, object> managementIdentities = default(IDictionary<string, object>), string isolateLabResources = default(string), string diskEncryptionSetId = default(string), string labType = default(string), string defaultSecretName = default(string), string provisioningState1 = default(string), string uniqueIdentifier1 = default(string), string type1 = default(string), string principalId = default(string), string tenantId = default(string), string clientSecretUrl = default(string), IDictionary<string, object> userAssignedIdentities = default(IDictionary<string, object>), SystemData systemData = default(SystemData))
-            : base(location, id, name, type, tags)
+        /// <param name="uniqueIdentifier">The unique immutable identifier of a
+        /// resource (Guid).</param>
+        public Lab(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultStorageAccount = default(string), string defaultPremiumStorageAccount = default(string), string artifactsStorageAccount = default(string), string premiumDataDiskStorageAccount = default(string), string vaultName = default(string), string labStorageType = default(string), IList<string> mandatoryArtifactsResourceIdsLinux = default(IList<string>), IList<string> mandatoryArtifactsResourceIdsWindows = default(IList<string>), System.DateTime? createdDate = default(System.DateTime?), string premiumDataDisks = default(string), string environmentPermission = default(string), LabAnnouncementProperties announcement = default(LabAnnouncementProperties), LabSupportProperties support = default(LabSupportProperties), string vmCreationResourceGroup = default(string), string publicIpId = default(string), string loadBalancerId = default(string), string networkSecurityGroupId = default(string), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             DefaultStorageAccount = defaultStorageAccount;
             DefaultPremiumStorageAccount = defaultPremiumStorageAccount;
@@ -152,35 +102,15 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             CreatedDate = createdDate;
             PremiumDataDisks = premiumDataDisks;
             EnvironmentPermission = environmentPermission;
-            Title = title;
-            Markdown = markdown;
-            Enabled = enabled;
-            ExpirationDate = expirationDate;
-            Expired = expired;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            Enabled1 = enabled1;
-            Markdown1 = markdown1;
+            Announcement = announcement;
+            Support = support;
             VmCreationResourceGroup = vmCreationResourceGroup;
             PublicIpId = publicIpId;
             LoadBalancerId = loadBalancerId;
             NetworkSecurityGroupId = networkSecurityGroupId;
             ExtendedProperties = extendedProperties;
-            BrowserConnect = browserConnect;
-            DisableAutoUpgradeCseMinorVersion = disableAutoUpgradeCseMinorVersion;
-            ManagementIdentities = managementIdentities;
-            IsolateLabResources = isolateLabResources;
-            DiskEncryptionSetId = diskEncryptionSetId;
-            LabType = labType;
-            DefaultSecretName = defaultSecretName;
-            ProvisioningState1 = provisioningState1;
-            UniqueIdentifier1 = uniqueIdentifier1;
-            Type1 = type1;
-            PrincipalId = principalId;
-            TenantId = tenantId;
-            ClientSecretUrl = clientSecretUrl;
-            UserAssignedIdentities = userAssignedIdentities;
-            SystemData = systemData;
+            ProvisioningState = provisioningState;
+            UniqueIdentifier = uniqueIdentifier;
             CustomInit();
         }
 
@@ -202,10 +132,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string DefaultPremiumStorageAccount { get; private set; }
 
         /// <summary>
-        /// Gets or sets the lab's artifact storage account.
+        /// Gets the lab's artifact storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.artifactsStorageAccount")]
-        public string ArtifactsStorageAccount { get; set; }
+        public string ArtifactsStorageAccount { get; private set; }
 
         /// <summary>
         /// Gets the lab's premium data disk storage account.
@@ -222,7 +152,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Gets or sets type of storage used by the lab. It can be either
         /// Premium or Standard. Default is Premium. Possible values include:
-        /// 'Standard', 'Premium', 'StandardSSD'
+        /// 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "properties.labStorageType")]
         public string LabStorageType { get; set; }
@@ -268,72 +198,25 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string EnvironmentPermission { get; set; }
 
         /// <summary>
-        /// Gets or sets the plain text title for the lab announcement
+        /// Gets or sets the properties of any lab announcement associated with
+        /// this lab
         /// </summary>
-        [JsonProperty(PropertyName = "properties.announcement.title")]
-        public string Title { get; set; }
+        [JsonProperty(PropertyName = "properties.announcement")]
+        public LabAnnouncementProperties Announcement { get; set; }
 
         /// <summary>
-        /// Gets or sets the markdown text (if any) that this lab displays in
-        /// the UI. If left empty/null, nothing will be shown.
+        /// Gets or sets the properties of any lab support message associated
+        /// with this lab
         /// </summary>
-        [JsonProperty(PropertyName = "properties.announcement.markdown")]
-        public string Markdown { get; set; }
+        [JsonProperty(PropertyName = "properties.support")]
+        public LabSupportProperties Support { get; set; }
 
         /// <summary>
-        /// Gets or sets is the lab announcement active/enabled at this time?.
-        /// Possible values include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.announcement.enabled")]
-        public string Enabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets the time at which the announcement expires (null for
-        /// never)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.announcement.expirationDate")]
-        public System.DateTime? ExpirationDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets has this announcement expired?
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.announcement.expired")]
-        public bool? Expired { get; set; }
-
-        /// <summary>
-        /// Gets the provisioning status of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.announcement.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets the unique immutable identifier of a resource (Guid).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.announcement.uniqueIdentifier")]
-        public string UniqueIdentifier { get; private set; }
-
-        /// <summary>
-        /// Gets or sets is the lab support banner active/enabled at this
-        /// time?. Possible values include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.support.enabled")]
-        public string Enabled1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the markdown text (if any) that this lab displays in
-        /// the UI. If left empty/null, nothing will be shown.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.support.markdown")]
-        public string Markdown1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resource group ID in which all new lab virtual
-        /// machines will be created. Ex:
-        /// /subscriptions/subId/resourceGroups/rgName To let DevTest Labs
-        /// manage resource group creation, set this value to null.
+        /// Gets the resource group in which lab virtual machines will be
+        /// created in.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmCreationResourceGroup")]
-        public string VmCreationResourceGroup { get; set; }
+        public string VmCreationResourceGroup { get; private set; }
 
         /// <summary>
         /// Gets the public IP address for the lab's load balancer.
@@ -363,114 +246,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public IDictionary<string, string> ExtendedProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets is browser connect enabled for the lab. Possible
-        /// values include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.browserConnect")]
-        public string BrowserConnect { get; set; }
-
-        /// <summary>
-        /// Gets or sets is auto upgrade of CSE disabled for the lab?
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.disableAutoUpgradeCseMinorVersion")]
-        public bool? DisableAutoUpgradeCseMinorVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of identities which can be used for management of
-        /// resources.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.managementIdentities")]
-        public IDictionary<string, object> ManagementIdentities { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates whether to create Lab resources (e.g.
-        /// Storage accounts and Key Vaults) in network isolation. Possible
-        /// values include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isolateLabResources")]
-        public string IsolateLabResources { get; set; }
-
-        /// <summary>
-        /// Gets or sets resourceId of the disk encryption set to use for
-        /// enabling encryption at rest.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.encryption.diskEncryptionSetId")]
-        public string DiskEncryptionSetId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of key used to encrypt the data of the disk.
-        /// Possible values include: 'EncryptionAtRestWithPlatformKey',
-        /// 'EncryptionAtRestWithCustomerKey'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.encryption.type")]
-        public string LabType { get; set; }
-
-        /// <summary>
-        /// Gets or sets default secret for creating virtual machines.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.defaultSecretName")]
-        public string DefaultSecretName { get; set; }
-
-        /// <summary>
         /// Gets the provisioning status of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState1 { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the unique immutable identifier of a resource (Guid).
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
-        public string UniqueIdentifier1 { get; private set; }
+        public string UniqueIdentifier { get; private set; }
 
-        /// <summary>
-        /// Gets or sets type of identity (SystemAssigned, UserAssigned, None).
-        /// Possible values include: 'None', 'SystemAssigned', 'UserAssigned',
-        /// 'SystemAssigned,UserAssigned'
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.type")]
-        public string Type1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the principal id of resource identity.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.principalId")]
-        public string PrincipalId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tenant identifier of resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.tenantId")]
-        public string TenantId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the client secret URL of the identity.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.clientSecretUrl")]
-        public string ClientSecretUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets if Type is 'UserAssigned': List of user assigned
-        /// identities.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.userAssignedIdentities")]
-        public IDictionary<string, object> UserAssignedIdentities { get; set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

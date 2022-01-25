@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,12 +34,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Artifact class.
         /// </summary>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="id">The identifier of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="tags">The tags of the resource.</param>
         /// <param name="title">The artifact's title.</param>
         /// <param name="description">The artifact's description.</param>
         /// <param name="publisher">The artifact's publisher.</param>
@@ -46,10 +47,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="targetOsType">The artifact's target OS.</param>
         /// <param name="parameters">The artifact's parameters.</param>
         /// <param name="createdDate">The artifact's creation date.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource</param>
-        public Artifact(string id = default(string), string name = default(string), string type = default(string), string title = default(string), string description = default(string), string publisher = default(string), string filePath = default(string), string icon = default(string), string targetOsType = default(string), object parameters = default(object), System.DateTime? createdDate = default(System.DateTime?), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public Artifact(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string title = default(string), string description = default(string), string publisher = default(string), string filePath = default(string), string icon = default(string), string targetOsType = default(string), object parameters = default(object), System.DateTime? createdDate = default(System.DateTime?))
+            : base(id, name, type, location, tags)
         {
             Title = title;
             Description = description;
@@ -59,7 +58,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             TargetOsType = targetOsType;
             Parameters = parameters;
             CreatedDate = createdDate;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -115,12 +113,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDate")]
         public System.DateTime? CreatedDate { get; private set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
     }
 }

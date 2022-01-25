@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,59 +22,13 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class CostsOperationsExtensions
     {
             /// <summary>
-            /// List costs in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<LabCost> List(this ICostsOperations operations, string resourceGroupName, string labName, ODataQuery<Cost> odataQuery = default(ODataQuery<Cost>))
-            {
-                return operations.ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List costs in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<LabCost>> ListAsync(this ICostsOperations operations, string resourceGroupName, string labName, ODataQuery<Cost> odataQuery = default(ODataQuery<Cost>), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, labName, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get cost.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -98,7 +51,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -127,7 +80,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -150,7 +103,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -167,40 +120,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
             public static async Task<LabCost> CreateOrUpdateAsync(this ICostsOperations operations, string resourceGroupName, string labName, string name, LabCost labCost, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, labName, name, labCost, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List costs in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<LabCost> ListNext(this ICostsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List costs in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<LabCost>> ListNextAsync(this ICostsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

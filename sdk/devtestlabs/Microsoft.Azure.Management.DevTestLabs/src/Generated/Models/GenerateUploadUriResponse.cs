@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using System.Linq;
 
     /// <summary>
-    /// Response body for generating an upload URI.
+    /// Reponse body for generating an upload URI.
     /// </summary>
     public partial class GenerateUploadUriResponse
     {

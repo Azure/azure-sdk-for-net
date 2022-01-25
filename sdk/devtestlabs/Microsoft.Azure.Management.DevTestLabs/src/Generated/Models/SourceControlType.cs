@@ -18,6 +18,5 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     {
         public const string VsoGit = "VsoGit";
         public const string GitHub = "GitHub";
-        public const string StorageAccount = "StorageAccount";
     }
 }

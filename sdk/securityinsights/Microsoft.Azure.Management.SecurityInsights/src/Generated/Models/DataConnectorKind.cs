@@ -33,6 +33,5 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string MicrosoftThreatIntelligence = "MicrosoftThreatIntelligence";
         public const string GenericUI = "GenericUI";
         public const string APIPolling = "APIPolling";
-        public const string IOT = "IOT";
     }
 }

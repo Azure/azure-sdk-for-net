@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// <summary>
     /// Threat intelligence information object.
     /// </summary>
-    public partial class ThreatIntelligenceInformation
+    public partial class ThreatIntelligenceInformation : ResourceWithEtag
     {
         /// <summary>
         /// Initializes a new instance of the ThreatIntelligenceInformation

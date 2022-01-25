@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// Profile of a lab user.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class User : TrackedResource
+    public partial class User : Resource
     {
         /// <summary>
         /// Initializes a new instance of the User class.
@@ -34,52 +34,27 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the User class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="tags">Resource tags.</param>
-        /// <param name="principalName">Set to the principal name / UPN of the
-        /// client JWT making the request.</param>
-        /// <param name="principalId">Set to the principal Id of the client JWT
-        /// making the request. Service principal will not have the principal
-        /// Id.</param>
-        /// <param name="tenantId">Set to the tenant ID of the client JWT
-        /// making the request.</param>
-        /// <param name="objectId">Set to the object Id of the client JWT
-        /// making the request. Not all users have object Id. For CSP
-        /// (reseller) scenarios for example, object Id is not
-        /// available.</param>
-        /// <param name="appId">Set to the app Id of the client JWT making the
-        /// request.</param>
-        /// <param name="keyVaultUri">The URI of the user's Key vault.</param>
-        /// <param name="keyVaultId">The ID of the user's Key vault.</param>
+        /// <param name="id">The identifier of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="identity">The identity of the user.</param>
+        /// <param name="secretStore">The secret store of the user.</param>
         /// <param name="createdDate">The creation date of the user
         /// profile.</param>
         /// <param name="provisioningState">The provisioning status of the
         /// resource.</param>
         /// <param name="uniqueIdentifier">The unique immutable identifier of a
         /// resource (Guid).</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource</param>
-        public User(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string principalName = default(string), string principalId = default(string), string tenantId = default(string), string objectId = default(string), string appId = default(string), string keyVaultUri = default(string), string keyVaultId = default(string), System.DateTime? createdDate = default(System.DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), SystemData systemData = default(SystemData))
-            : base(location, id, name, type, tags)
+        public User(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), UserIdentity identity = default(UserIdentity), UserSecretStore secretStore = default(UserSecretStore), System.DateTime? createdDate = default(System.DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
-            PrincipalName = principalName;
-            PrincipalId = principalId;
-            TenantId = tenantId;
-            ObjectId = objectId;
-            AppId = appId;
-            KeyVaultUri = keyVaultUri;
-            KeyVaultId = keyVaultId;
+            Identity = identity;
+            SecretStore = secretStore;
             CreatedDate = createdDate;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -89,52 +64,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets set to the principal name / UPN of the client JWT
-        /// making the request.
+        /// Gets or sets the identity of the user.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.identity.principalName")]
-        public string PrincipalName { get; set; }
+        [JsonProperty(PropertyName = "properties.identity")]
+        public UserIdentity Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets set to the principal Id of the client JWT making the
-        /// request. Service principal will not have the principal Id.
+        /// Gets or sets the secret store of the user.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.identity.principalId")]
-        public string PrincipalId { get; set; }
-
-        /// <summary>
-        /// Gets or sets set to the tenant ID of the client JWT making the
-        /// request.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.identity.tenantId")]
-        public string TenantId { get; set; }
-
-        /// <summary>
-        /// Gets or sets set to the object Id of the client JWT making the
-        /// request. Not all users have object Id. For CSP (reseller) scenarios
-        /// for example, object Id is not available.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.identity.objectId")]
-        public string ObjectId { get; set; }
-
-        /// <summary>
-        /// Gets or sets set to the app Id of the client JWT making the
-        /// request.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.identity.appId")]
-        public string AppId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URI of the user's Key vault.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.secretStore.keyVaultUri")]
-        public string KeyVaultUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ID of the user's Key vault.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.secretStore.keyVaultId")]
-        public string KeyVaultId { get; set; }
+        [JsonProperty(PropertyName = "properties.secretStore")]
+        public UserSecretStore SecretStore { get; set; }
 
         /// <summary>
         /// Gets the creation date of the user profile.
@@ -154,21 +93,5 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; private set; }
 
-        /// <summary>
-        /// Gets the system metadata relating to this resource
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

@@ -38,59 +38,32 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// Disabled). Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="taskType">The task type of the schedule (e.g.
         /// LabVmsShutdownTask, LabVmAutoStart).</param>
-        /// <param name="weekdays">The days of the week for which the schedule
-        /// is set (e.g. Sunday, Monday, Tuesday, etc.).</param>
-        /// <param name="time">The time of the day the schedule will
-        /// occur.</param>
-        /// <param name="time1">The time of day the schedule will
-        /// occur.</param>
-        /// <param name="minute">Minutes of the hour the schedule will
-        /// run.</param>
+        /// <param name="weeklyRecurrence">If the schedule will occur only some
+        /// days of the week, specify the weekly recurrence.</param>
+        /// <param name="dailyRecurrence">If the schedule will occur once each
+        /// day of the week, specify the daily recurrence.</param>
+        /// <param name="hourlyRecurrence">If the schedule will occur multiple
+        /// times a day, specify the hourly recurrence.</param>
         /// <param name="timeZoneId">The time zone ID (e.g. Pacific Standard
         /// time).</param>
-        /// <param name="status1">If notifications are enabled for this
-        /// schedule (i.e. Enabled, Disabled). Possible values include:
-        /// 'Enabled', 'Disabled'</param>
-        /// <param name="timeInMinutes">Time in minutes before event at which
-        /// notification will be sent.</param>
-        /// <param name="webhookUrl">The webhook URL to which the notification
-        /// will be sent.</param>
-        /// <param name="emailRecipient">The email recipient to send
-        /// notifications to (can be a list of semi-colon separated email
-        /// addresses).</param>
-        /// <param name="notificationLocale">The locale to use when sending a
-        /// notification (fallback for unsupported languages is EN).</param>
-        /// <param name="createdDate">The creation date of the
-        /// schedule.</param>
+        /// <param name="notificationSettings">Notification settings.</param>
         /// <param name="targetResourceId">The resource ID to which the
         /// schedule belongs</param>
-        /// <param name="provisioningState">The provisioning status of the
-        /// resource.</param>
-        /// <param name="uniqueIdentifier">The unique immutable identifier of a
-        /// resource (Guid).</param>
         /// <param name="name">The name of the virtual machine or
         /// environment</param>
         /// <param name="location">The location of the new virtual machine or
         /// environment</param>
         /// <param name="tags">The tags of the resource.</param>
-        public ScheduleCreationParameter(string status = default(string), string taskType = default(string), IList<string> weekdays = default(IList<string>), string time = default(string), string time1 = default(string), int? minute = default(int?), string timeZoneId = default(string), string status1 = default(string), int? timeInMinutes = default(int?), string webhookUrl = default(string), string emailRecipient = default(string), string notificationLocale = default(string), System.DateTime? createdDate = default(System.DateTime?), string targetResourceId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ScheduleCreationParameter(string status = default(string), string taskType = default(string), WeekDetails weeklyRecurrence = default(WeekDetails), DayDetails dailyRecurrence = default(DayDetails), HourDetails hourlyRecurrence = default(HourDetails), string timeZoneId = default(string), NotificationSettings notificationSettings = default(NotificationSettings), string targetResourceId = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Status = status;
             TaskType = taskType;
-            Weekdays = weekdays;
-            Time = time;
-            Time1 = time1;
-            Minute = minute;
+            WeeklyRecurrence = weeklyRecurrence;
+            DailyRecurrence = dailyRecurrence;
+            HourlyRecurrence = hourlyRecurrence;
             TimeZoneId = timeZoneId;
-            Status1 = status1;
-            TimeInMinutes = timeInMinutes;
-            WebhookUrl = webhookUrl;
-            EmailRecipient = emailRecipient;
-            NotificationLocale = notificationLocale;
-            CreatedDate = createdDate;
+            NotificationSettings = notificationSettings;
             TargetResourceId = targetResourceId;
-            ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
             Name = name;
             Location = location;
             Tags = tags;
@@ -117,29 +90,25 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string TaskType { get; set; }
 
         /// <summary>
-        /// Gets or sets the days of the week for which the schedule is set
-        /// (e.g. Sunday, Monday, Tuesday, etc.).
+        /// Gets or sets if the schedule will occur only some days of the week,
+        /// specify the weekly recurrence.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.weeklyRecurrence.weekdays")]
-        public IList<string> Weekdays { get; set; }
+        [JsonProperty(PropertyName = "properties.weeklyRecurrence")]
+        public WeekDetails WeeklyRecurrence { get; set; }
 
         /// <summary>
-        /// Gets or sets the time of the day the schedule will occur.
+        /// Gets or sets if the schedule will occur once each day of the week,
+        /// specify the daily recurrence.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.weeklyRecurrence.time")]
-        public string Time { get; set; }
+        [JsonProperty(PropertyName = "properties.dailyRecurrence")]
+        public DayDetails DailyRecurrence { get; set; }
 
         /// <summary>
-        /// Gets or sets the time of day the schedule will occur.
+        /// Gets or sets if the schedule will occur multiple times a day,
+        /// specify the hourly recurrence.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dailyRecurrence.time")]
-        public string Time1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets minutes of the hour the schedule will run.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hourlyRecurrence.minute")]
-        public int? Minute { get; set; }
+        [JsonProperty(PropertyName = "properties.hourlyRecurrence")]
+        public HourDetails HourlyRecurrence { get; set; }
 
         /// <summary>
         /// Gets or sets the time zone ID (e.g. Pacific Standard time).
@@ -148,63 +117,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string TimeZoneId { get; set; }
 
         /// <summary>
-        /// Gets or sets if notifications are enabled for this schedule (i.e.
-        /// Enabled, Disabled). Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets notification settings.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.notificationSettings.status")]
-        public string Status1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets time in minutes before event at which notification
-        /// will be sent.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.notificationSettings.timeInMinutes")]
-        public int? TimeInMinutes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the webhook URL to which the notification will be
-        /// sent.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.notificationSettings.webhookUrl")]
-        public string WebhookUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email recipient to send notifications to (can be a
-        /// list of semi-colon separated email addresses).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.notificationSettings.emailRecipient")]
-        public string EmailRecipient { get; set; }
-
-        /// <summary>
-        /// Gets or sets the locale to use when sending a notification
-        /// (fallback for unsupported languages is EN).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.notificationSettings.notificationLocale")]
-        public string NotificationLocale { get; set; }
-
-        /// <summary>
-        /// Gets the creation date of the schedule.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdDate")]
-        public System.DateTime? CreatedDate { get; private set; }
+        [JsonProperty(PropertyName = "properties.notificationSettings")]
+        public NotificationSettings NotificationSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the resource ID to which the schedule belongs
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetResourceId")]
         public string TargetResourceId { get; set; }
-
-        /// <summary>
-        /// Gets the provisioning status of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets the unique immutable identifier of a resource (Guid).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
-        public string UniqueIdentifier { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the virtual machine or environment

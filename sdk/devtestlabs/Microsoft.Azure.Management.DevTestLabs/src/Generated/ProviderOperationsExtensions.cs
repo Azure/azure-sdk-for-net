@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Operation> List(this IProviderOperations operations)
+            public static IPage<OperationMetadata> List(this IProviderOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListAsync(this IProviderOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<OperationMetadata>> ListAsync(this IProviderOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Operation> ListNext(this IProviderOperations operations, string nextPageLink)
+            public static IPage<OperationMetadata> ListNext(this IProviderOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<OperationMetadata>> ListNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

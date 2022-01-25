@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A Policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Policy : TrackedResource
+    public partial class Policy : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Policy class.
@@ -34,15 +34,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Policy class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="id">The identifier of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="tags">The tags of the resource.</param>
         /// <param name="description">The description of the policy.</param>
         /// <param name="status">The status of the policy. Possible values
         /// include: 'Enabled', 'Disabled'</param>
@@ -64,10 +60,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// resource.</param>
         /// <param name="uniqueIdentifier">The unique immutable identifier of a
         /// resource (Guid).</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource</param>
-        public Policy(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string), System.DateTime? createdDate = default(System.DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), SystemData systemData = default(SystemData))
-            : base(location, id, name, type, tags)
+        public Policy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string), System.DateTime? createdDate = default(System.DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             Description = description;
             Status = status;
@@ -78,7 +72,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             CreatedDate = createdDate;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -151,21 +144,5 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; private set; }
 
-        /// <summary>
-        /// Gets the system metadata relating to this resource
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

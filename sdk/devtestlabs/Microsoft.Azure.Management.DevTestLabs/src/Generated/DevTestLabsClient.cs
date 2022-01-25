@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using System.Net.Http;
 
     /// <summary>
-    /// Microsoft DevTest Labs Client
+    /// The DevTest Labs Client.
     /// </summary>
     public partial class DevTestLabsClient : ServiceClient<DevTestLabsClient>, IDevTestLabsClient, IAzureClient
     {
@@ -47,12 +47,12 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
+        /// Client API version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// The ID of the target subscription.
+        /// The subscription ID.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -150,24 +150,9 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public virtual ISchedulesOperations Schedules { get; private set; }
 
         /// <summary>
-        /// Gets the ILabSecretsOperations.
-        /// </summary>
-        public virtual ILabSecretsOperations LabSecrets { get; private set; }
-
-        /// <summary>
         /// Gets the IServiceRunnersOperations.
         /// </summary>
         public virtual IServiceRunnersOperations ServiceRunners { get; private set; }
-
-        /// <summary>
-        /// Gets the ISharedGalleriesOperations.
-        /// </summary>
-        public virtual ISharedGalleriesOperations SharedGalleries { get; private set; }
-
-        /// <summary>
-        /// Gets the ISharedImagesOperations.
-        /// </summary>
-        public virtual ISharedImagesOperations SharedImages { get; private set; }
 
         /// <summary>
         /// Gets the IUsersOperations.
@@ -213,11 +198,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// Gets the IVirtualNetworksOperations.
         /// </summary>
         public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
-
-        /// <summary>
-        /// Gets the IBastionHostsOperations.
-        /// </summary>
-        public virtual IBastionHostsOperations BastionHosts { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DevTestLabsClient class.
@@ -475,10 +455,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             PolicySets = new PolicySetsOperations(this);
             Policies = new PoliciesOperations(this);
             Schedules = new SchedulesOperations(this);
-            LabSecrets = new LabSecretsOperations(this);
             ServiceRunners = new ServiceRunnersOperations(this);
-            SharedGalleries = new SharedGalleriesOperations(this);
-            SharedImages = new SharedImagesOperations(this);
             Users = new UsersOperations(this);
             Disks = new DisksOperations(this);
             Environments = new EnvironmentsOperations(this);
@@ -488,9 +465,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
             VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineSchedules = new VirtualMachineSchedulesOperations(this);
             VirtualNetworks = new VirtualNetworksOperations(this);
-            BastionHosts = new BastionHostsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-09-01";
+            ApiVersion = "2018-09-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

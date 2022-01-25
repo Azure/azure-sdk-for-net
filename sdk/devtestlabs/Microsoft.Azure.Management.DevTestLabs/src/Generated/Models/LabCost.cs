@@ -34,23 +34,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the LabCost class.
         /// </summary>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="status">Target cost status. Possible values include:
-        /// 'Enabled', 'Disabled'</param>
-        /// <param name="target">Lab target cost</param>
-        /// <param name="costThresholds">Cost thresholds.</param>
-        /// <param name="cycleStartDateTime">Reporting cycle start
-        /// date.</param>
-        /// <param name="cycleEndDateTime">Reporting cycle end date.</param>
-        /// <param name="cycleType">Reporting cycle type. Possible values
-        /// include: 'CalendarMonth', 'Custom'</param>
-        /// <param name="estimatedLabCost">The cost component of the cost
-        /// item.</param>
+        /// <param name="id">The identifier of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="targetCost">The target cost properties</param>
+        /// <param name="labCostSummary">The lab cost summary component of the
+        /// cost data.</param>
         /// <param name="labCostDetails">The lab cost details component of the
         /// cost data.</param>
         /// <param name="resourceCosts">The resource cost component of the cost
@@ -64,18 +55,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// resource.</param>
         /// <param name="uniqueIdentifier">The unique immutable identifier of a
         /// resource (Guid).</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource</param>
-        public LabCost(string id = default(string), string name = default(string), string type = default(string), string status = default(string), int? target = default(int?), IList<CostThresholdProperties> costThresholds = default(IList<CostThresholdProperties>), System.DateTime? cycleStartDateTime = default(System.DateTime?), System.DateTime? cycleEndDateTime = default(System.DateTime?), string cycleType = default(string), double? estimatedLabCost = default(double?), IList<LabCostDetailsProperties> labCostDetails = default(IList<LabCostDetailsProperties>), IList<LabResourceCostProperties> resourceCosts = default(IList<LabResourceCostProperties>), string currencyCode = default(string), System.DateTime? startDateTime = default(System.DateTime?), System.DateTime? endDateTime = default(System.DateTime?), System.DateTime? createdDate = default(System.DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public LabCost(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), TargetCostProperties targetCost = default(TargetCostProperties), LabCostSummaryProperties labCostSummary = default(LabCostSummaryProperties), IList<LabCostDetailsProperties> labCostDetails = default(IList<LabCostDetailsProperties>), IList<LabResourceCostProperties> resourceCosts = default(IList<LabResourceCostProperties>), string currencyCode = default(string), System.DateTime? startDateTime = default(System.DateTime?), System.DateTime? endDateTime = default(System.DateTime?), System.DateTime? createdDate = default(System.DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
-            Status = status;
-            Target = target;
-            CostThresholds = costThresholds;
-            CycleStartDateTime = cycleStartDateTime;
-            CycleEndDateTime = cycleEndDateTime;
-            CycleType = cycleType;
-            EstimatedLabCost = estimatedLabCost;
+            TargetCost = targetCost;
+            LabCostSummary = labCostSummary;
             LabCostDetails = labCostDetails;
             ResourceCosts = resourceCosts;
             CurrencyCode = currencyCode;
@@ -84,7 +68,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             CreatedDate = createdDate;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -94,48 +77,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets target cost status. Possible values include:
-        /// 'Enabled', 'Disabled'
+        /// Gets or sets the target cost properties
         /// </summary>
-        [JsonProperty(PropertyName = "properties.targetCost.status")]
-        public string Status { get; set; }
+        [JsonProperty(PropertyName = "properties.targetCost")]
+        public TargetCostProperties TargetCost { get; set; }
 
         /// <summary>
-        /// Gets or sets lab target cost
+        /// Gets the lab cost summary component of the cost data.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.targetCost.target")]
-        public int? Target { get; set; }
-
-        /// <summary>
-        /// Gets or sets cost thresholds.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.targetCost.costThresholds")]
-        public IList<CostThresholdProperties> CostThresholds { get; set; }
-
-        /// <summary>
-        /// Gets or sets reporting cycle start date.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.targetCost.cycleStartDateTime")]
-        public System.DateTime? CycleStartDateTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets reporting cycle end date.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.targetCost.cycleEndDateTime")]
-        public System.DateTime? CycleEndDateTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets reporting cycle type. Possible values include:
-        /// 'CalendarMonth', 'Custom'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.targetCost.cycleType")]
-        public string CycleType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the cost component of the cost item.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.labCostSummary.estimatedLabCost")]
-        public double? EstimatedLabCost { get; set; }
+        [JsonProperty(PropertyName = "properties.labCostSummary")]
+        public LabCostSummaryProperties LabCostSummary { get; private set; }
 
         /// <summary>
         /// Gets the lab cost details component of the cost data.
@@ -184,12 +135,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; private set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
     }
 }

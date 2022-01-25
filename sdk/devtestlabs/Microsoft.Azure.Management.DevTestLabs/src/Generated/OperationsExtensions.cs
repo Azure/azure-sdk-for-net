@@ -22,40 +22,40 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Get operation
+            /// Get operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='location'>
-            /// The name of Azure region.
+            /// <param name='locationName'>
+            /// The name of the location.
             /// </param>
             /// <param name='name'>
-            /// Name of the operation id
+            /// The name of the operation.
             /// </param>
-            public static OperationResult Get(this IOperations operations, string location, string name)
+            public static OperationResult Get(this IOperations operations, string locationName, string name)
             {
-                return operations.GetAsync(location, name).GetAwaiter().GetResult();
+                return operations.GetAsync(locationName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get operation
+            /// Get operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='location'>
-            /// The name of Azure region.
+            /// <param name='locationName'>
+            /// The name of the location.
             /// </param>
             /// <param name='name'>
-            /// Name of the operation id
+            /// The name of the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationResult> GetAsync(this IOperations operations, string location, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationResult> GetAsync(this IOperations operations, string locationName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(location, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(locationName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
