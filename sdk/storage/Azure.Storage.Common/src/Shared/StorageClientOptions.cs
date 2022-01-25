@@ -69,7 +69,7 @@ namespace Azure.Storage
         /// <param name="options"> The <see cref="ISupportsTenantIdChallenges"/> to apply to the credential. </param>
         /// <param name="audienceScope">The scope to request for the TokenCredential.</param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options, string audienceScope = StorageScope)
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options, string audienceScope = null)
         {
             // Default to StorageScope is audienceScope is provided, but is null or empty.
             if (string.IsNullOrEmpty(audienceScope))
