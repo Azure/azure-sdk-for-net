@@ -11,16 +11,20 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TextAnalyticsAudience"/> values are the same. </summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextAnalyticsAudience"/> object.
+        /// </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextAnalyticsAudience(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
+            _value = value;
         }
 
-        private const string AzureResourceManagerChinaValue = "https://cognitiveservices.azure.cn/.default";
-        private const string AzureResourceManagerGovernmentValue = "https://cognitiveservices.azure.us/.default";
-        private const string AzureResourceManagerPublicCloudValue = "https://cognitiveservices.azure.com/.default";
+        private const string AzureResourceManagerChinaValue = "https://cognitiveservices.azure.cn";
+        private const string AzureResourceManagerGovernmentValue = "https://cognitiveservices.azure.us";
+        private const string AzureResourceManagerPublicCloudValue = "https://cognitiveservices.azure.com";
 
         /// <summary> Azure China. </summary>
         public static TextAnalyticsAudience AzureResourceManagerChina { get; } = new TextAnalyticsAudience(AzureResourceManagerChinaValue);

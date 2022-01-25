@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics
         internal ServiceVersion Version { get; }
 
         /// <summary>
-        /// Gets or sets the Audience to use for authentication with AAD.
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory(AAD).
         /// The authentication scope will be set from this audience.
         /// </summary>
         public TextAnalyticsAudience? Audience { get; set; }
@@ -78,6 +78,9 @@ namespace Azure.AI.TextAnalytics
         {
             Version = version;
             this.ConfigureLogging();
+
+            //Default Audience to Azure Public Cloud
+            this.Audience = TextAnalyticsAudience.AzureResourceManagerPublicCloud;
         }
 
         internal static string GetVersionString(ServiceVersion version)

@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsClient"/>
-        /// class for the specified service instance in Azure Public Cloud.
+        /// class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
@@ -41,7 +41,6 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
-            _options.Audience = TextAnalyticsAudience.AzureResourceManagerPublicCloud;
         }
 
         /// <summary>
@@ -61,24 +60,17 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             string defaultScope = options.Audience + "/.default";
-
-            //if no Audience is provided, default to Azure Public Cloud
-            if (options.Audience == null)
-            {
-                scope = TextAnalyticsAudience.AzureResourceManagerPublicCloud + "/.default";
-            }
-
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKeyCredential"/>
-        /// class for the specified service instance in Azure Public Cloud.
+        /// class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
@@ -88,7 +80,6 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
-            _options.Audience = TextAnalyticsAudience.AzureResourceManagerPublicCloud;
         }
 
         /// <summary>
@@ -107,12 +98,6 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
-
-            //if no Audience is provided, default to Azure Public Cloud
-            if (options.Audience == null)
-            {
-                options.Audience = TextAnalyticsAudience.AzureResourceManagerPublicCloud;
-            }
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
