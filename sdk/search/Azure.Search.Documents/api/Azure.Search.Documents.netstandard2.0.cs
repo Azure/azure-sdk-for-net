@@ -325,6 +325,16 @@ namespace Azure.Search.Documents.Indexes
 }
 namespace Azure.Search.Documents.Indexes.Models
 {
+    public partial class AmlSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
+    {
+        public AmlSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
+        public int? DegreeOfParallelism { get { throw null; } set { } }
+        public string Key { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+    }
     public partial class AnalyzedTokenInfo
     {
         internal AnalyzedTokenInfo() { }
