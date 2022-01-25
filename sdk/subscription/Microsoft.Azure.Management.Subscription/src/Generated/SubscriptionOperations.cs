@@ -105,7 +105,6 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
-            _queryParameters.Add("IgnoreResourceCheck=true");
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
