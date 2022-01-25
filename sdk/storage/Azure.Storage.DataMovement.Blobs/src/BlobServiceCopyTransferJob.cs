@@ -21,19 +21,19 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The source Uri
         /// </summary>
-        public Uri sourceUri => _sourceUri;
+        public Uri SourceUri => _sourceUri;
 
         internal BlobBaseClient _destinationBlobClient;
 
         /// <summary>
         /// The destination blob client for the copy job
         /// </summary>
-        public BlobBaseClient destinationBlobClient => _destinationBlobClient;
+        public BlobBaseClient DestinationBlobClient => _destinationBlobClient;
 
         /// <summary>
         /// Type of Copy to occur
         /// </summary>
-        public readonly BlobServiceCopyMethod _copyMethod;
+        public readonly BlobServiceCopyMethod CopyMethod;
 
         internal BlobCopyFromUriOptions _copyFromUriOptions;
 
@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement
         {
             _sourceUri = sourceUri;
             _destinationBlobClient = destinationClient;
-            _copyMethod = copyMethod;
+            CopyMethod = copyMethod;
             _copyFromUriOptions = copyFromUriOptions;
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement
         {
             // TODO: add other Copymethod Options
             // for now only do CopyMethod.ServiceSideAsyncCopy as a stub
-            return destinationBlobClient.StartCopyFromUriAsync(sourceUri);
+            return DestinationBlobClient.StartCopyFromUriAsync(SourceUri);
         }
     }
 }

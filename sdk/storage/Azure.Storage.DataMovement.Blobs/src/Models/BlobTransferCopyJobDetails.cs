@@ -12,15 +12,36 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// </summary>
     public class BlobTransferCopyJobDetails : StorageTransferJobDetails
     {
+        internal BlobTransferCopyJobDetails() : base() { }
+
+        internal BlobTransferCopyJobDetails(
+            string jobId,
+            StorageJobTransferStatus status,
+            DateTimeOffset? jobStartTime,
+            Uri sourceUri,
+            BlobBaseClient destinationBlobClient,
+            BlobServiceCopyMethod copyMethod,
+            BlobCopyFromUriOptions copyFromUriOptions) :
+            base(
+                jobId,
+                status,
+                jobStartTime)
+        {
+            SourceUri = sourceUri;
+            DestinationBlobClient = destinationBlobClient;
+            CopyMethod = copyMethod;
+            CopyFromUriOptions = copyFromUriOptions;
+        }
+
         /// <summary>
         /// The source Uri
         /// </summary>
-        public Uri sourceUri { get; internal set; }
+        public Uri SourceUri { get; internal set; }
 
         /// <summary>
         /// The destination blob client for the copy job
         /// </summary>
-        public BlobBaseClient destinationBlobClient { get; internal set; }
+        public BlobBaseClient DestinationBlobClient { get; internal set; }
 
         /// <summary>
         /// Type of Copy to occur

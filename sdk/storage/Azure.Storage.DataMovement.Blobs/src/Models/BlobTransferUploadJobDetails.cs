@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
@@ -11,10 +12,29 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// </summary>
     public class BlobTransferUploadJobDetails : StorageTransferJobDetails
     {
+        internal BlobTransferUploadJobDetails() : base() { }
+
+        internal BlobTransferUploadJobDetails(
+            string jobId,
+            StorageJobTransferStatus status,
+            DateTimeOffset? jobStartTime,
+            string sourceLocalPath,
+            BlobBaseClient destinationBlobClient,
+            BlobUploadOptions options) :
+            base(
+                jobId,
+                status,
+                jobStartTime)
+        {
+            SourceLocalPath = sourceLocalPath;
+            DestinationBlobClient = destinationBlobClient;
+            UploadOptions = options;
+        }
+
         /// <summary>
         /// Gets the path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
-        public string LocalPath { get; internal set; }
+        public string SourceLocalPath { get; internal set; }
 
         /// <summary>
         /// The destination blob client. This client contains the information and methods required to perform

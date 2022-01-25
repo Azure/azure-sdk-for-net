@@ -14,6 +14,29 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// Constructor internal.
         /// </summary>
         internal BlobTransferCopyDirectoryJobDetails() : base(){ }
+
+        /// <summary>
+        /// Constructor internal.
+        /// </summary>
+        internal BlobTransferCopyDirectoryJobDetails(
+            string jobId,
+            StorageJobTransferStatus status,
+            DateTimeOffset? jobStartTime,
+            Uri sourceDirectoryUri,
+            BlobVirtualDirectoryClient destinationDirectoryClient,
+            BlobServiceCopyMethod copyMethod,
+            BlobDirectoryCopyFromUriOptions copyFromUriOptions) :
+            base(
+                jobId,
+                status,
+                jobStartTime)
+        {
+            SourceDirectoryUri = sourceDirectoryUri;
+            DestinationDirectoryClient = destinationDirectoryClient;
+            CopyMethod = copyMethod;
+            CopyFromUriOptions = copyFromUriOptions;
+        }
+
         /// <summary>
         /// Source Directory Uri jobs.
         /// </summary>

@@ -20,12 +20,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
-        internal string _localPath;
+        internal string _sourceLocalPath;
 
         /// <summary>
         /// Gets the path to the local file where the contents to be upload to the blob is stored.
         /// </summary>
-        public string LocalPath => _localPath;
+        public string SourceLocalPath => _sourceLocalPath;
 
         // Might have to change BlobBaseClient to other client, when we do page blob and append blob
         internal BlobClient _destinationBlobClient;
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobUploadOptions uploadOptions)
             : base(jobId)
         {
-            _localPath = sourceLocalPath;
+            _sourceLocalPath = sourceLocalPath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationBlobClient = destinationClient;
             _uploadOptions = uploadOptions;
@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return DestinationBlobClient.UploadAsync(_localPath, _uploadOptions);
+            return DestinationBlobClient.UploadAsync(_sourceLocalPath, _uploadOptions);
         }
     }
 }

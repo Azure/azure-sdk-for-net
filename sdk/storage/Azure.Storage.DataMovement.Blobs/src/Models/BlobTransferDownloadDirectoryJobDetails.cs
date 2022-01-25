@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Models
@@ -9,7 +10,24 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// </summary>
     public class BlobTransferDownloadDirectoryJobDetails : StorageTransferJobDetails
     {
-        internal BlobTransferDownloadDirectoryJobDetails() { }
+        internal BlobTransferDownloadDirectoryJobDetails() : base() { }
+
+        internal BlobTransferDownloadDirectoryJobDetails(
+            string jobId,
+            StorageJobTransferStatus status,
+            DateTimeOffset? jobStartTime,
+            BlobVirtualDirectoryClient sourceBlobClient,
+            string destinationLocalPath,
+            BlobDirectoryDownloadOptions options) :
+            base(
+                jobId,
+                status,
+                jobStartTime)
+        {
+            SourceBlobClient = sourceBlobClient;
+            DestinationLocalPath = destinationLocalPath;
+            Options = options;
+        }
 
         /// <summary>
         /// The source blob directory client. This client contains the information and methods required to perform

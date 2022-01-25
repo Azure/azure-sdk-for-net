@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The source blob client. This client contains the information and methods required to perform
         /// the download from the source blob.
         /// </summary>
-        public BlobBaseClient sourceBlobClient => _sourceBlobClient;
+        public BlobBaseClient SourceBlobClient => _sourceBlobClient;
 
         /// <summary>
         /// The local path which will store the contents of the blob to be downloaded.

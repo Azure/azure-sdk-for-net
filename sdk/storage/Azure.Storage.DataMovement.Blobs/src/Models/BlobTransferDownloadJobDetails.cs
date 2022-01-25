@@ -14,6 +14,25 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     /// </summary>
     public class BlobTransferDownloadJobDetails : StorageTransferJobDetails
     {
+        internal BlobTransferDownloadJobDetails() : base() { }
+
+        internal BlobTransferDownloadJobDetails(
+            string jobId,
+            StorageJobTransferStatus status,
+            DateTimeOffset? jobStartTime,
+            BlobBaseClient sourceBlobClient,
+            string destinationLocalPath,
+            BlobDownloadToOptions options) :
+            base(
+                jobId,
+                status,
+                jobStartTime)
+        {
+            SourceBlobClient = sourceBlobClient;
+            DestinationLocalPath = destinationLocalPath;
+            Options = options;
+        }
+
         /// <summary>
         /// The source blob client. This client contains the information and methods required to perform
         /// the download from the source blob.
