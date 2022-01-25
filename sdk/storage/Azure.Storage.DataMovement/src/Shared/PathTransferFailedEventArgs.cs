@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the <see cref="TransferJobInternal"/> of an action that failed to
         /// complete.  The value might be null.
         /// </summary>
-        public TransferJobInternal Job { get; }
+        public StorageTransferJobDetails JobDetails { get; }
 
         /// <summary>
         /// Gets the <see cref="Exception"/> caused by an action that failed to
@@ -49,14 +49,14 @@ namespace Azure.Storage.DataMovement
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         public PathTransferFailedEventArgs(
-            TransferJobInternal job,
+            StorageTransferJobDetails job,
             TransferJobRequestFailedException exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken = default)
             : base(isRunningSynchronously, cancellationToken)
         {
             // Do not validate - either might be null
-            Job = job;
+            JobDetails = job;
             Exception = exception;
         }
     }

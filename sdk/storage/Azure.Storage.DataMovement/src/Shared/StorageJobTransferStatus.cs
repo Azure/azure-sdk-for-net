@@ -25,14 +25,21 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// The Job has completed with no failures.
         /// </summary>
-        CompletedSuccessful,
+        Completed,
 
         /// <summary>
-        /// The Job has completed with failures.
+        /// The Job has completed with errors.
         /// </summary>
-        Failed,
+        CompletedWithErrors,
 
-        // TODO: should we create a status to show that it has completed with some failures?
-        // e.g. was able to copy some files in a directory but not all..
+        /// <summary>
+        /// Completed with failures.
+        /// </summary>
+        CompletedWithFailures,
+
+        /// <summary>
+        /// Completed with errors and skipped files.
+        /// </summary>
+        CompletedWithErrorsAndSkipped
     };
 }

@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement
         public virtual StorageJobTransferStatus GetTransferStatus()
         {
             // TODO: remove stub
-            return StorageJobTransferStatus.CompletedSuccessful;
+            return StorageJobTransferStatus.Completed;
         }
     }
 }

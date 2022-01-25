@@ -59,7 +59,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlobClient destinationBlob2 = container.GetBlobClient(Randomize("sample-blob"));
 
                 // Upload file data
-                BlobTransferManager transferManager = new BlobTransferManager();
+                BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Create simple transfer single blob upload job
                 string jobId = transferManager.ScheduleUpload(originalPath, destinationBlob);
@@ -134,7 +134,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await sourceBlob2.UploadAsync(originalPath);
 
                 // Create Blob Transfer Manager
-                BlobTransferManager transferManager = new BlobTransferManager();
+                BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Simple Download Single Blob Job
                 transferManager.ScheduleDownload(sourceBlob, downloadPath);
@@ -415,12 +415,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadDirectoryJobId5 = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory5, downloadPath);
 
             //List all jobs
-            IList<string> list = blobTransferManager.ListJobs();
+            IList<StorageTransferJobDetails> list = blobTransferManager.ListJobs();
 
             // Get Job information with using Job Id
             StorageTransferJobDetails job = blobTransferManager.GetJob(downloadDirectoryJobId3);
             // Get Job information using job id from list
-            StorageTransferJobDetails job2 = blobTransferManager.GetJob(list[1]);
+            StorageTransferJobDetails job2 = blobTransferManager.GetJob(list[1].JobId);
 
             // Pause transfers
             blobTransferManager.PauseTransfers();
@@ -462,7 +462,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlobClient destinationBlob2 = container.GetBlobClient(Randomize("sample-blob"));
 
                 // Upload file data
-                BlobTransferManager transferManager = new BlobTransferManager();
+                BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Create simple transfer single blob upload job
                 string jobId = transferManager.ScheduleUpload(originalPath, destinationBlob);
@@ -537,7 +537,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await sourceBlob2.UploadAsync(originalPath);
 
                 // Create Blob Transfer Manager
-                BlobTransferManager transferManager = new BlobTransferManager();
+                BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Simple Download Single Blob Job
                 transferManager.ScheduleDownload(sourceBlob, downloadPath);
@@ -619,7 +619,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 };
 
                 // Create Blob Transfer Manager
-                BlobTransferManager transferManager = new BlobTransferManager();
+                BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast

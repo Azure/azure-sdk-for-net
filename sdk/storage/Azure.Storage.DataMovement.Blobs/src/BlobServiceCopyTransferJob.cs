@@ -16,17 +16,27 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class BlobServiceCopyTransferJob : TransferJobInternal
     {
-        internal BlobBaseClient _destinationBlobClient;
-
-        public BlobBaseClient destinationBlobClient => _destinationBlobClient;
-
         private Uri _sourceUri;
 
+        /// <summary>
+        /// The source Uri
+        /// </summary>
         public Uri sourceUri => _sourceUri;
 
+        internal BlobBaseClient _destinationBlobClient;
+
+        /// <summary>
+        /// The destination blob client for the copy job
+        /// </summary>
+        public BlobBaseClient destinationBlobClient => _destinationBlobClient;
+
+        /// <summary>
+        /// Type of Copy to occur
+        /// </summary>
         public readonly BlobServiceCopyMethod _copyMethod;
 
         internal BlobCopyFromUriOptions _copyFromUriOptions;
+
         /// <summary>
         /// Gets the <see cref="BlobCopyFromUriOptions"/>.
         /// </summary>

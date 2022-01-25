@@ -80,10 +80,10 @@ namespace Azure.Storage.DataMovement
         /// List all jobs and information
         /// </summary>
         /// <returns></returns>
-        public virtual IList<string> ListJobs()
+        public virtual IList<StorageTransferJobDetails> ListJobs()
             //options to grab what kind of information
         {
-            return new List<string>() { "foo", "bar" };
+            return new List<StorageTransferJobDetails>();
         }
 
         /// <summary>

@@ -20,10 +20,16 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         private Uri _sourceDirectoryUri;
 
+        /// <summary>
+        /// Source Directory Uri jobs.
+        /// </summary>
         public Uri SourceDirectoryUri => _sourceDirectoryUri;
 
         internal BlobVirtualDirectoryClient _destinationDirectoryClient;
 
+        /// <summary>
+        /// Destination directory for the finished copies
+        /// </summary>
         public BlobVirtualDirectoryClient DestinationDirectoryClient => _destinationDirectoryClient;
 
         /// <summary>
@@ -35,6 +41,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The <see cref="BlobDirectoryCopyFromUriOptions"/>.
         /// </summary>
         internal BlobDirectoryCopyFromUriOptions _copyFromUriOptions;
+
         /// <summary>
         /// Gets the <see cref="BlobDirectoryCopyFromUriOptions"/>.
         /// </summary>

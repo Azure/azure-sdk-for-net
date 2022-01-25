@@ -12,8 +12,22 @@ namespace Azure.Storage.DataMovement.Models
     public class StorageTransferJobDetails
     {
         /// <summary>
+        /// Internal Constructor
+        /// </summary>
+        protected internal StorageTransferJobDetails() { }
+        /// <summary>
         /// Job Id. Guid.
         /// </summary>
         public string JobId { get; internal set; }
+
+        /// <summary>
+        /// Status of the job
+        /// </summary>
+        public StorageJobTransferStatus Status { get; internal set; }
+
+        /// <summary>
+        /// Job start time
+        /// </summary>
+        public DateTimeOffset? JobStartTime { get; internal set; }
     }
 }

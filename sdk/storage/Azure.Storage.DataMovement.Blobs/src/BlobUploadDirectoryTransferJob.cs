@@ -25,6 +25,9 @@ namespace Azure.Storage.DataMovement.Blobs
 
         internal BlobVirtualDirectoryClient _destinationBlobClient;
 
+        /// <summary>
+        /// The destination blob client.
+        /// </summary>
         public BlobVirtualDirectoryClient DestinationBlobClient => _destinationBlobClient;
 
         internal BlobDirectoryUploadOptions _uploadOptions;

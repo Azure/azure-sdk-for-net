@@ -87,4 +87,8 @@
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementSharedSources)\PathScanner.cs" LinkBase="SharedDataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)\PathScannerFactory.cs" LinkBase="SharedDataMovement" />
+  </ItemGroup>
 </Project>

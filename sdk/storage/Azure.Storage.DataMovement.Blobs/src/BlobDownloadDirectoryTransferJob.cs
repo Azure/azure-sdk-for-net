@@ -24,6 +24,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private BlobVirtualDirectoryClient _sourceBlobClient;
 
+        /// <summary>
+        /// The source blob where it's contents will be downloaded when the job is performed.
+        /// </summary>
         public BlobVirtualDirectoryClient SourceBlobClient => _sourceBlobClient;
 
         /// <summary>

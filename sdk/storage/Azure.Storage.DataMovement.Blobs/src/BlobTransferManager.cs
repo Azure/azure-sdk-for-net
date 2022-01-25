@@ -244,7 +244,61 @@ namespace Azure.Storage.DataMovement.Blobs
         public override StorageTransferJobDetails GetJob(string jobId)
         {
             //TODO: stub
-            return new StorageTransferJobDetails();
+            return default;
+        }
+
+        /// <summary>
+        /// Lists all the single download jobs and the details
+        /// </summary>
+        /// <returns></returns>
+        public static IList<BlobTransferDownloadJobDetails> ListSingleDownloadJobs()
+        {
+            return new List<BlobTransferDownloadJobDetails>();
+        }
+
+        /// <summary>
+        /// Lists all the single upload jobs and the details of the job
+        /// </summary>
+        /// <returns></returns>
+        public static IList<BlobTransferUploadJobDetails> ListSingleUploadJobs()
+        {
+            return new List<BlobTransferUploadJobDetails>();
+        }
+
+        /// <summary>
+        /// Lists all the single upload jobs and the details of the job
+        /// </summary>
+        /// <returns></returns>
+        public static IList<BlobTransferDownloadDirectoryJobDetails> ListDownloadDirectoryJobs()
+        {
+            return new List<BlobTransferDownloadDirectoryJobDetails>();
+        }
+
+        /// <summary>
+        /// Lists all the single upload jobs and the details of the job
+        /// </summary>
+        /// <returns></returns>
+        public static IList<BlobTransferUploadDirectoryJobDetails> ListUploadDirectoryJobs()
+        {
+            return new List<BlobTransferUploadDirectoryJobDetails>();
+        }
+
+        /// <summary>
+        /// Lists all the single upload jobs and the details of the job
+        /// </summary>
+        /// <returns></returns>
+        public static IList<BlobTransferCopyJobDetails> ListSingleCopyJobs()
+        {
+            return new List<BlobTransferCopyJobDetails>();
+        }
+
+        /// <summary>
+        /// Lists all the single upload jobs and the details of the job
+        /// </summary>
+        /// <returns></returns>
+        public static IList<BlobTransferCopyDirectoryJobDetails> ListCopyDirectoryJobs()
+        {
+            return new List<BlobTransferCopyDirectoryJobDetails>();
         }
     }
 }

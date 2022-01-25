@@ -35,6 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The <see cref="BlobDownloadOptions"/>.
         /// </summary>
         internal BlobDownloadToOptions _options;
+
         /// <summary>
         /// Gets the <see cref="BlobDownloadOptions"/>.
         /// </summary>
