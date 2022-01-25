@@ -42,7 +42,7 @@ This tutorial has following sections:
 
 For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. The started project will be under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. The package will contain several folders and files (see following). Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
 
-```
+```text
 sdk\<service name>\<package name>\README.md
 sdk\<service name>\<package name>\api
 sdk\<service name>\<package name>\src
@@ -58,13 +58,13 @@ We will use dotnet project template [Azure.ServiceTemplate.Template](https://git
 
 You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
-```
+```powershell
 eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -inputfiles <inputfilelink> -securityScope <securityScope> -securityHeaderName <securityHeaderName>
 ```
 
 e.g.
 
-```
+```powershell
 pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service sample -namespace Azure.Template.Sample -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 ```
 
@@ -86,7 +86,7 @@ Create a SDK library project, configuration file, or solution based on the speci
   
 Navigate to the sdk repo root directory, and run the following commands:
 
-```
+```cmd
 dotnet new --install eng/templates/Azure.ServiceTemplate.Template
 ```
 
@@ -94,13 +94,13 @@ dotnet new --install eng/templates/Azure.ServiceTemplate.Template
   
 Create project folder `Azure.<group>.<service>`. e.g. Azure.IoT.DeviceUpdate under `sdk/<service>` folder, navigate to the project folder, and run 'dotnet new' as following:
   
-```
+```cmd
 sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryName [Client-Library-Title] --groupName [namespace-group-name] --swagger [input-swagger-file-path] --securityScopes [security-scopes] --force
 ```
 
 e.g.
 
-```
+```cmd
 dotnet new dataplane --libraryName DeviceUpdate --groupName IoT --swagger https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2021-06-01-preview/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
 ```
 
@@ -108,7 +108,7 @@ dotnet new dataplane --libraryName DeviceUpdate --groupName IoT --swagger https:
 
 Run 'dotnet sln' as following to update the projects in the solution file:
 
-```
+```cmd
 dotnet sln remove src\Azure.<group>.<service>.csproj
 dotnet sln add src\Azure.<group>.<service>.csproj
 dotnet sln remove tests\Azure.<group>.<service>.Tests.csproj
@@ -123,7 +123,7 @@ In this section, we'll create a generated API layer built on Azure Core.
 
 From a PowerShell command prompt, navigate to the directory holding `Azure.<group>.<service>.csproj`. Run the following commands:
 
-```
+```cmd
 sdk\<your-service-name>\Azure.<group>.<service>\src> dotnet build /t:GenerateCode
 ```
 
@@ -135,7 +135,7 @@ If you make public API changes or additions, the `eng\scripts\Export-API.ps1` sc
 
 e.g. Running the script for a project in `sdk\deviceupdate` would look like this:
 
-```
+```powershell
 eng\scripts\Export-API.ps1 deviceupdate
 ```
 
