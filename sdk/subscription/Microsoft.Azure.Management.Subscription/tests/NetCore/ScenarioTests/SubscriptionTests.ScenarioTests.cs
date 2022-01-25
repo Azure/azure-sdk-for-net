@@ -39,7 +39,7 @@ namespace ResourceGroups.Tests
 
                 var result = client.Subscription.Rename(subscriptionId, new Microsoft.Azure.Management.Subscription.Models.SubscriptionName()
                 {
-                    SubscriptionNameProperty = "renamed-subscription-" + Guid.NewGuid().ToString().Substring(0, 5)
+                    SubscriptionNameProperty = "renamed-sub-" + Guid.NewGuid().ToString().Substring(0, 5)
                 });
 
                 Assert.Equal(HttpMethod.Post, handler.Method);
@@ -48,8 +48,8 @@ namespace ResourceGroups.Tests
             }
         }
 
-        //[Fact]
-        private void Cancel()
+        [Fact]
+        public void Cancel()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -65,11 +65,11 @@ namespace ResourceGroups.Tests
             }
         }
         
-        [Fact]
+        /*[Fact]
         public void Enable()
         {
-            Cancel();
-            Thread.Sleep(3 * 60 * 1000);
+            //Cancel();
+            //Thread.Sleep(3 * 60 * 1000);
 
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -83,7 +83,7 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
                 Assert.Equal(subscriptionId, result.SubscriptionId);
             }
-        }
+        }*/
 
         [Fact]
         public void Operations()
