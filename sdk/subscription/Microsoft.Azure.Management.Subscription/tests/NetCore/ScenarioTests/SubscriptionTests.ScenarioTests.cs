@@ -20,24 +20,12 @@ namespace ResourceGroups.Tests
     public class LiveSubscriptionTests : TestBase
     {
         private const string subscriptionId = "d17ad3ae-320e-42ff-b5a1-705389c6063a";
-        private readonly int TEN_SECONDS = 10 * 1000;
 
         public SubscriptionClient GetSubscriptionClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
             var client = this.GetSubscriptionClientWithHandler(context, handler);
             return client;
-        }
-
-        [Fact]
-        public void AliasCreateGetDelete()
-        {
-            PutAlias();
-            Thread.Sleep(TEN_SECONDS);
-            GetAlias();
-            Thread.Sleep(TEN_SECONDS);
-            DeleteAlias();
-            Thread.Sleep(TEN_SECONDS);
         }
 
         [Fact]
@@ -110,7 +98,8 @@ namespace ResourceGroups.Tests
             }
         }
 
-        private void PutAlias()
+        [Fact]
+        public void PutAlias()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -139,7 +128,8 @@ namespace ResourceGroups.Tests
             }
         }
 
-        private void GetAlias()
+        [Fact]
+        public void GetAlias()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -155,7 +145,8 @@ namespace ResourceGroups.Tests
             }
         }
 
-        private void DeleteAlias()
+        [Fact]
+        public void DeleteAlias()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
