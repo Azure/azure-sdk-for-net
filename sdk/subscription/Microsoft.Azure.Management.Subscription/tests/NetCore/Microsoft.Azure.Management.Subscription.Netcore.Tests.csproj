@@ -27,4 +27,9 @@
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" />
     <PackageReference Update="xunit" Version="2.4.2-pre.12" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
