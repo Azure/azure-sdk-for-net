@@ -1,0 +1,89 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/d17ad3ae-320e-42ff-b5a1-705389c6063a/providers/Microsoft.Subscription/cancel?api-version=2021-10-01&IgnoreResourceCheck=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDE3YWQzYWUtMzIwZS00MmZmLWI1YTEtNzA1Mzg5YzYwNjNhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL2NhbmNlbD9hcGktdmVyc2lvbj0yMDIxLTEwLTAxJklnbm9yZVJlc291cmNlQ2hlY2s9dHJ1ZQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b67184d7-c46e-434e-beaa-c9acc96fc9be"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Subscription.SubscriptionClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "MS-CV": [
+          "m5UJfeJwN02vBnatlK+Lhw.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+        ],
+        "request-id": [
+          "79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+        ],
+        "x-gsm": [
+          "1.0.0.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-request-id": [
+          "79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20220125T075335Z:79626958-fd5a-4a44-8aa1-0e0f4d61d9b9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Tue, 25 Jan 2022 07:53:35 GMT"
+        ],
+        "Content-Length": [
+          "57"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"subscriptionId\": \"d17ad3ae-320e-42ff-b5a1-705389c6063a\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d17ad3ae-320e-42ff-b5a1-705389c6063a"
+  }
+}

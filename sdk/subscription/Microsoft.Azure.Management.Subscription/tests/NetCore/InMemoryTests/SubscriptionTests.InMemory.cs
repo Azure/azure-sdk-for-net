@@ -93,7 +93,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void AddUpdatePolicyForTenant()
         {
-            var response = new HttpResponseMessage(HttpStatusCode.Created)
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
                     'id': 'providers/Microsoft.Subscription/policies/default',

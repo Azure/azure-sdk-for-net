@@ -20,12 +20,24 @@ namespace ResourceGroups.Tests
     public class LiveSubscriptionTests : TestBase
     {
         private const string subscriptionId = "d17ad3ae-320e-42ff-b5a1-705389c6063a";
+        private readonly int TEN_SECONDS = 10 * 1000;
 
         public SubscriptionClient GetSubscriptionClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
             var client = this.GetSubscriptionClientWithHandler(context, handler);
             return client;
+        }
+
+        [Fact]
+        public void AliasCreateGetDelete()
+        {
+            PutAlias();
+            Thread.Sleep(TEN_SECONDS);
+            GetAlias();
+            Thread.Sleep(TEN_SECONDS);
+            DeleteAlias();
+            Thread.Sleep(TEN_SECONDS);
         }
 
         [Fact]
@@ -65,12 +77,9 @@ namespace ResourceGroups.Tests
             }
         }
         
-        /*[Fact]
+        [Fact]
         public void Enable()
         {
-            //Cancel();
-            //Thread.Sleep(3 * 60 * 1000);
-
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -83,7 +92,7 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
                 Assert.Equal(subscriptionId, result.SubscriptionId);
             }
-        }*/
+        }
 
         [Fact]
         public void Operations()
@@ -101,8 +110,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
-        public void PutAlias()
+        private void PutAlias()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -131,8 +139,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
-        public void GetAlias()
+        private void GetAlias()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -148,8 +155,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
-        public void DeleteAlias()
+        private void DeleteAlias()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
