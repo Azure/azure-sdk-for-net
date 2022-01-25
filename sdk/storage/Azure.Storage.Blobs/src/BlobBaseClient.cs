@@ -310,7 +310,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(options, options?.Audience?.ToString()), options, null)
+            : this(blobUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
         }
