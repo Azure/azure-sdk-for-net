@@ -171,22 +171,6 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetSubscriptionClient(context, handler);
-
-                /*var result = client.Subscription.AcceptOwnership(subscriptionId, new AcceptOwnershipRequest()
-                {
-                    Properties = new AcceptOwnershipRequestProperties(
-                        displayName: "AcceptedSubOwnership",
-                        managementGroupId: "",
-                        tags: new Dictionary<string, string>() {
-                            { "tag1", "Messi" },
-                            { "tag2", "Ronaldo" },
-                            { "tag3", "Lebron" }
-                        })
-                });
-
-                Assert.Equal(HttpMethod.Post, handler.Method);
-                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));*/
-
                 Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.AcceptOwnership(subscriptionId, new AcceptOwnershipRequest()));
             }
         }
@@ -270,11 +254,6 @@ namespace ResourceGroups.Tests
                 var client = GetSubscriptionClient(context, handler);
 
                 var billingAccountId = "561a5998-da58-5f3d-bd54-d13025c679f5:bb50dbaa-b975-4445-8740-35be408bac21_2019-05-31";
-                /*var result = client.BillingAccount.GetPolicy(billingAccountId);
-
-                Assert.Equal(HttpMethod.Get, handler.Method);
-                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));*/
-
                 Assert.Throws<ErrorResponseBodyException>(() => _ = client.BillingAccount.GetPolicy(billingAccountId));
             }
         }
