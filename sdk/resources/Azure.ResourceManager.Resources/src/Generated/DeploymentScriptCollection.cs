@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
         public virtual DeploymentScriptCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
             if (deploymentScript == null)
             {
                 throw new ArgumentNullException(nameof(deploymentScript));
@@ -91,13 +89,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
         public async virtual Task<DeploymentScriptCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
             if (deploymentScript == null)
             {
                 throw new ArgumentNullException(nameof(deploymentScript));
@@ -123,13 +119,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployment script with a given name. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<DeploymentScript> Get(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Get");
             scope.Start();
@@ -150,13 +144,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a deployment script with a given name. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public async virtual Task<Response<DeploymentScript>> GetAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Get");
             scope.Start();
@@ -177,13 +169,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<DeploymentScript> GetIfExists(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetIfExists");
             scope.Start();
@@ -204,13 +194,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public async virtual Task<Response<DeploymentScript>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetIfExists");
             scope.Start();
@@ -231,13 +219,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<bool> Exists(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Exists");
             scope.Start();
@@ -256,13 +242,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Exists");
             scope.Start();

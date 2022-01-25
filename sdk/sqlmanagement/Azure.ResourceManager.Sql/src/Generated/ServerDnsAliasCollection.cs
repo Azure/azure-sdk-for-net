@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual ServerDnsAliasCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -90,13 +88,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public async virtual Task<ServerDnsAliasCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -121,13 +117,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server DNS alias. </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual Response<ServerDnsAlias> Get(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server DNS alias. </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public async virtual Task<Response<ServerDnsAlias>> GetAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual Response<ServerDnsAlias> GetIfExists(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public async virtual Task<Response<ServerDnsAlias>> GetIfExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual Response<bool> Exists(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Exists");
             scope.Start();

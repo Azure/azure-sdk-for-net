@@ -276,10 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<DatabaseAccount>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.AddTag");
             scope.Start();
@@ -305,10 +302,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<DatabaseAccount> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.AddTag");
             scope.Start();
@@ -391,10 +385,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<DatabaseAccount>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.RemoveTag");
             scope.Start();
@@ -419,10 +410,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<DatabaseAccount> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("DatabaseAccount.RemoveTag");
             scope.Start();
@@ -997,14 +985,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BaseMetric> GetMetricsDatabasesAsync(string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1032,14 +1018,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BaseMetric> GetMetricsDatabases(string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1067,14 +1051,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <returns> An async collection of <see cref="BaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BaseUsage> GetUsagesDatabasesAsync(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             async Task<Page<BaseUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1098,14 +1080,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <returns> A collection of <see cref="BaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BaseUsage> GetUsagesDatabases(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             Page<BaseUsage> FirstPageFunc(int? pageSizeHint)
             {
@@ -1128,14 +1108,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Retrieves metric definitions for the given database. </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsDatabasesAsync(string databaseRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1158,14 +1136,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Retrieves metric definitions for the given database. </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> is null. </exception>
         /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricDefinition> GetMetricDefinitionsDatabases(string databaseRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
@@ -1190,18 +1166,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BaseMetric> GetMetricsCollectionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1230,18 +1201,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BaseMetric> GetMetricsCollections(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1270,18 +1236,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <returns> An async collection of <see cref="BaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BaseUsage> GetUsagesCollectionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             async Task<Page<BaseUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1306,18 +1267,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <returns> A collection of <see cref="BaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BaseUsage> GetUsagesCollections(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             Page<BaseUsage> FirstPageFunc(int? pageSizeHint)
             {
@@ -1341,18 +1297,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsCollectionsAsync(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1376,18 +1327,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricDefinition> GetMetricDefinitionsCollections(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
@@ -1413,22 +1359,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BaseMetric> GetMetricsCollectionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1458,22 +1396,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BaseMetric> GetMetricsCollectionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1501,14 +1431,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BaseMetric> GetMetricsDatabaseAccountRegionsAsync(string region, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1536,14 +1464,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="BaseMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BaseMetric> GetMetricsDatabaseAccountRegions(string region, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1572,18 +1498,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PercentileMetric> GetMetricsPercentileSourceTargetsAsync(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
+            Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1612,18 +1533,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PercentileMetric> GetMetricsPercentileSourceTargets(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
+            Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1651,14 +1567,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetRegion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PercentileMetric> GetMetricsPercentileTargetsAsync(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1686,14 +1600,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetRegion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PercentileMetric> GetMetricsPercentileTargets(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1783,22 +1695,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1828,22 +1732,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1872,18 +1768,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1912,18 +1803,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitions(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -1952,18 +1838,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <returns> An async collection of <see cref="PartitionUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionUsage> GetUsagesCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             async Task<Page<PartitionUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1988,18 +1869,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/> or <paramref name="collectionRid"/> is null. </exception>
         /// <returns> A collection of <see cref="PartitionUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionUsage> GetUsagesCollectionPartitions(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             Page<PartitionUsage> FirstPageFunc(int? pageSizeHint)
             {
@@ -2025,22 +1901,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="partitionKeyRangeId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdsAsync(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -2070,22 +1938,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="partitionKeyRangeId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIds(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -2116,26 +1976,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="partitionKeyRangeId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegionsAsync(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
@@ -2166,26 +2015,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, or <paramref name="partitionKeyRangeId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/>, or <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="PartitionMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegions(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));

@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetVmExtensionUpdateOperation> UpdateAsync(bool waitForCompletion, VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetVmExtensionUpdateOperation> UpdateAsync(bool waitForCompletion, VirtualMachineScaleSetVmExtensionUpdateOptions extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public virtual VirtualMachineScaleSetVmExtensionUpdateOperation Update(bool waitForCompletion, VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVmExtensionUpdateOperation Update(bool waitForCompletion, VirtualMachineScaleSetVmExtensionUpdateOptions extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {

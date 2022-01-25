@@ -241,10 +241,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<EventHubCluster>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCluster.AddTag");
             scope.Start();
@@ -270,10 +267,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<EventHubCluster> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCluster.AddTag");
             scope.Start();
@@ -356,10 +350,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<EventHubCluster>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCluster.RemoveTag");
             scope.Start();
@@ -384,10 +375,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<EventHubCluster> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
             using var scope = _clientDiagnostics.CreateScope("EventHubCluster.RemoveTag");
             scope.Start();

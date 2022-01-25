@@ -57,13 +57,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a database recommended action. </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual Response<RecommendedAction> Get(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            if (recommendedActionName == null)
-            {
-                throw new ArgumentNullException(nameof(recommendedActionName));
-            }
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
             using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.Get");
             scope.Start();
@@ -87,13 +85,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a database recommended action. </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public async virtual Task<Response<RecommendedAction>> GetAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            if (recommendedActionName == null)
-            {
-                throw new ArgumentNullException(nameof(recommendedActionName));
-            }
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
             using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.Get");
             scope.Start();
@@ -114,13 +110,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual Response<RecommendedAction> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            if (recommendedActionName == null)
-            {
-                throw new ArgumentNullException(nameof(recommendedActionName));
-            }
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
             using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
             scope.Start();
@@ -141,13 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public async virtual Task<Response<RecommendedAction>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            if (recommendedActionName == null)
-            {
-                throw new ArgumentNullException(nameof(recommendedActionName));
-            }
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
             using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
             scope.Start();
@@ -168,13 +160,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual Response<bool> Exists(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            if (recommendedActionName == null)
-            {
-                throw new ArgumentNullException(nameof(recommendedActionName));
-            }
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
             using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.Exists");
             scope.Start();
@@ -193,13 +183,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            if (recommendedActionName == null)
-            {
-                throw new ArgumentNullException(nameof(recommendedActionName));
-            }
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
             using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.Exists");
             scope.Start();

@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("roleProfile");
                 writer.WriteObjectValue(RoleProfile);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile");
-                writer.WriteObjectValue(OsProfile);
+                writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> allowModelOverride = default;
             Optional<CloudServiceUpgradeMode> upgradeMode = default;
             Optional<CloudServiceRoleProfile> roleProfile = default;
-            Optional<CloudServiceOsProfile> osProfile = default;
+            Optional<CloudServiceOSProfile> osProfile = default;
             Optional<CloudServiceNetworkProfile> networkProfile = default;
             Optional<CloudServiceExtensionProfile> extensionProfile = default;
             Optional<string> provisioningState = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osProfile = CloudServiceOsProfile.DeserializeCloudServiceOsProfile(property.Value);
+                    osProfile = CloudServiceOSProfile.DeserializeCloudServiceOSProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"))

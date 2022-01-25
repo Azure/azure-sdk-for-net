@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(null, "value"));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
         }
 
         [TestCase]
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(null));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(" "));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.RemoveTagAsync(" "));
         }
 
         [TestCase]

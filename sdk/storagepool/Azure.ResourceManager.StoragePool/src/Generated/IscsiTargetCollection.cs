@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="iscsiTargetCreatePayload"> Request payload for iSCSI Target create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> or <paramref name="iscsiTargetCreatePayload"/> is null. </exception>
         public virtual IscsiTargetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
             if (iscsiTargetCreatePayload == null)
             {
                 throw new ArgumentNullException(nameof(iscsiTargetCreatePayload));
@@ -96,13 +94,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="iscsiTargetCreatePayload"> Request payload for iSCSI Target create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> or <paramref name="iscsiTargetCreatePayload"/> is null. </exception>
         public async virtual Task<IscsiTargetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
             if (iscsiTargetCreatePayload == null)
             {
                 throw new ArgumentNullException(nameof(iscsiTargetCreatePayload));
@@ -131,13 +127,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Get an iSCSI Target. </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual Response<IscsiTarget> Get(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Get");
             scope.Start();
@@ -161,13 +155,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Get an iSCSI Target. </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public async virtual Task<Response<IscsiTarget>> GetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Get");
             scope.Start();
@@ -188,13 +180,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual Response<IscsiTarget> GetIfExists(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
             scope.Start();
@@ -215,13 +205,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public async virtual Task<Response<IscsiTarget>> GetIfExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
             scope.Start();
@@ -242,13 +230,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual Response<bool> Exists(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
             scope.Start();
@@ -267,13 +253,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
             scope.Start();

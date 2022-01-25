@@ -58,13 +58,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
         public virtual VpnSiteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
             if (vpnSiteParameters == null)
             {
                 throw new ArgumentNullException(nameof(vpnSiteParameters));
@@ -92,13 +90,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
         public async virtual Task<VpnSiteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
             if (vpnSiteParameters == null)
             {
                 throw new ArgumentNullException(nameof(vpnSiteParameters));
@@ -124,13 +120,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a VPN site. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<VpnSite> Get(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.Get");
             scope.Start();
@@ -151,13 +145,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a VPN site. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<VpnSite>> GetAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.Get");
             scope.Start();
@@ -178,13 +170,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<VpnSite> GetIfExists(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.GetIfExists");
             scope.Start();
@@ -205,13 +195,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<VpnSite>> GetIfExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.GetIfExists");
             scope.Start();
@@ -232,13 +220,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public virtual Response<bool> Exists(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.Exists");
             scope.Start();
@@ -257,13 +243,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            if (vpnSiteName == null)
-            {
-                throw new ArgumentNullException(nameof(vpnSiteName));
-            }
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
 
             using var scope = _clientDiagnostics.CreateScope("VpnSiteCollection.Exists");
             scope.Start();
