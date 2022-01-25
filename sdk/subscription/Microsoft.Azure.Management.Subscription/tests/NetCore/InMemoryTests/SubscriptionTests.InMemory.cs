@@ -27,35 +27,35 @@ namespace ResourceGroups.Tests
             return client;
         }
         
-        [Fact]
-        public void AcceptSubscriptionOwnership()
-        {
-            var location = @"/providers/Microsoft.Subscription/subscriptionOperations/ODdmYTU0MDktODc5YS00ZTEzLTg2MWItNTQ4ZjYxNzBlOTQw?api-version=2021-10-01";
+        //[Fact]
+        //public void AcceptSubscriptionOwnership()
+        //{
+        //    var location = @"/providers/Microsoft.Subscription/subscriptionOperations/ODdmYTU0MDktODc5YS00ZTEzLTg2MWItNTQ4ZjYxNzBlOTQw?api-version=2021-10-01";
 
-            var response = new HttpResponseMessage(HttpStatusCode.Accepted);
-            response.Headers.Add("Location", location);
-            response.Headers.Add("RetryAfter", "8");
-            response.Headers.Add("x-ms-request-id", "1");
+        //    var response = new HttpResponseMessage(HttpStatusCode.Accepted);
+        //    response.Headers.Add("Location", location);
+        //    response.Headers.Add("RetryAfter", "8");
+        //    response.Headers.Add("x-ms-request-id", "1");
 
-            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.Accepted };
-            var client = GetSubscriptionClient(handler);
+        //    var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.Accepted };
+        //    var client = GetSubscriptionClient(handler);
 
-            var requestBody = new AcceptOwnershipRequest(
-                new AcceptOwnershipRequestProperties()
-                {
-                    DisplayName = "Test Subscription",
-                    Tags = new Dictionary<string, string>()
-                    {
-                         { "tag1", "Messi" }, { "tag2", "Ronaldo" }, { "tag3", "Lebron"}
-                    }
-                });
+        //    var requestBody = new AcceptOwnershipRequest(
+        //        new AcceptOwnershipRequestProperties()
+        //        {
+        //            DisplayName = "Test Subscription",
+        //            Tags = new Dictionary<string, string>()
+        //            {
+        //                 { "tag1", "Messi" }, { "tag2", "Ronaldo" }, { "tag3", "Lebron"}
+        //            }
+        //        });
 
-            var result = client.Subscription.AcceptOwnership(subscriptionId, requestBody);
-            Assert.Equal(HttpMethod.Post, handler.Method);
-            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-            //Assert.Equal(location, result.Location);
-            Assert.Equal(8, result.RetryAfter);
-        }
+        //    var result = client.Subscription.AcceptOwnership(subscriptionId, requestBody);
+        //    Assert.Equal(HttpMethod.Post, handler.Method);
+        //    Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+        //    //Assert.Equal(location, result.Location);
+        //    Assert.Equal(8, result.RetryAfter);
+        //}
         
         [Fact]
         public void GetAcceptSubscriptionOwnershipStatus()
