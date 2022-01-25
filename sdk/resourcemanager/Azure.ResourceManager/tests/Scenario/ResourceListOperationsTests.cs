@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ListAtContext()
         {
-            var rgOp1 = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            var rgOp1 = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgOp1.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg.Id);
 

@@ -18,7 +18,18 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
         public virtual GenericResource GetGenericResource(ResourceIdentifier id)
         {
-            return new GenericResource(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new GenericResource(this, id);
+        }
+        #endregion
+
+        #region ResourceGroup
+        /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGroup" /> object. </returns>
+        public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
+        {
+            ResourceGroup.ValidateResourceId(id);
+            return new ResourceGroup(this, id);
         }
         #endregion
     }

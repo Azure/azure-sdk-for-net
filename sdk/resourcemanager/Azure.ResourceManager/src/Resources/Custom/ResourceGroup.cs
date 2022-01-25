@@ -18,6 +18,20 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a ResourceGroup along with the instance operations that can be performed on it. </summary>
     public partial class ResourceGroup : ArmResource
     {
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroup"/> class. </summary>
+        /// <param name="armClient"> The client options to build client context. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal ResourceGroup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
+            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_ListByResourceGroup
