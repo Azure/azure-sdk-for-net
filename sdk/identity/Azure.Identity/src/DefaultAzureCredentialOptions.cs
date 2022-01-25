@@ -58,10 +58,13 @@ namespace Azure.Identity
         public string InteractiveBrowserCredentialClientId { get; set; }
 
         /// <summary>
-        /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
+        /// Specifies the client id of a user assigned ManagedIdentity. If this value is configured, then <see cref="ManagedIdentityResourceId"/> should not be configured.
         /// </summary>
         public string ManagedIdentityClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
 
+        /// <summary>
+        /// Specifies the resource id of a user assigned ManagedIdentity. If this value is configured, then <see cref="ManagedIdentityClientId"/> should not be configured.
+        /// </summary>
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
