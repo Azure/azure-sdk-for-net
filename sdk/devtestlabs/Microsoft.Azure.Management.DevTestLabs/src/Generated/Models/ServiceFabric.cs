@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A Service Fabric.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ServiceFabric : Resource
+    public partial class ServiceFabric : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the ServiceFabric class.
@@ -34,29 +34,182 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the ServiceFabric class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="serviceFabricLocation">The geo-location where the
+        /// resource lives</param>
+        /// <param name="location1">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="externalServiceFabricId">The backing service fabric
         /// resource's id</param>
         /// <param name="environmentId">The resource id of the environment
         /// under which the service fabric resource is present</param>
-        /// <param name="applicableSchedule">The applicable schedule for the
-        /// virtual machine.</param>
+        /// <param name="serviceFabricId">Fully qualified resource ID for the
+        /// resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="serviceFabricName">The name of the resource</param>
+        /// <param name="serviceFabricType">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="id1">Fully qualified resource ID for the resource. Ex
+        /// -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name1">The name of the resource</param>
+        /// <param name="type1">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="serviceFabricTags">Resource tags.</param>
+        /// <param name="status">The status of the schedule (i.e. Enabled,
+        /// Disabled). Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="taskType">The task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).</param>
+        /// <param name="weekdays">The days of the week for which the schedule
+        /// is set (e.g. Sunday, Monday, Tuesday, etc.).</param>
+        /// <param name="time">The time of the day the schedule will
+        /// occur.</param>
+        /// <param name="time1">The time of day the schedule will
+        /// occur.</param>
+        /// <param name="minute">Minutes of the hour the schedule will
+        /// run.</param>
+        /// <param name="timeZoneId">The time zone ID (e.g. Pacific Standard
+        /// time).</param>
+        /// <param name="status1">If notifications are enabled for this
+        /// schedule (i.e. Enabled, Disabled). Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="timeInMinutes">Time in minutes before event at which
+        /// notification will be sent.</param>
+        /// <param name="webhookUrl">The webhook URL to which the notification
+        /// will be sent.</param>
+        /// <param name="emailRecipient">The email recipient to send
+        /// notifications to (can be a list of semi-colon separated email
+        /// addresses).</param>
+        /// <param name="notificationLocale">The locale to use when sending a
+        /// notification (fallback for unsupported languages is EN).</param>
+        /// <param name="createdDate">The creation date of the
+        /// schedule.</param>
+        /// <param name="targetResourceId">The resource ID to which the
+        /// schedule belongs</param>
         /// <param name="provisioningState">The provisioning status of the
         /// resource.</param>
         /// <param name="uniqueIdentifier">The unique immutable identifier of a
         /// resource (Guid).</param>
-        public ServiceFabric(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string externalServiceFabricId = default(string), string environmentId = default(string), ApplicableSchedule applicableSchedule = default(ApplicableSchedule), string provisioningState = default(string), string uniqueIdentifier = default(string))
-            : base(id, name, type, location, tags)
+        /// <param name="scheduleSystemData">The system metadata relating to
+        /// this resource</param>
+        /// <param name="id2">Fully qualified resource ID for the resource. Ex
+        /// -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name2">The name of the resource</param>
+        /// <param name="type2">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="tags1">Resource tags.</param>
+        /// <param name="status2">The status of the schedule (i.e. Enabled,
+        /// Disabled). Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="taskType1">The task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).</param>
+        /// <param name="weekdays1">The days of the week for which the schedule
+        /// is set (e.g. Sunday, Monday, Tuesday, etc.).</param>
+        /// <param name="time2">The time of the day the schedule will
+        /// occur.</param>
+        /// <param name="time3">The time of day the schedule will
+        /// occur.</param>
+        /// <param name="minute1">Minutes of the hour the schedule will
+        /// run.</param>
+        /// <param name="timeZoneId1">The time zone ID (e.g. Pacific Standard
+        /// time).</param>
+        /// <param name="status3">If notifications are enabled for this
+        /// schedule (i.e. Enabled, Disabled). Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="timeInMinutes1">Time in minutes before event at which
+        /// notification will be sent.</param>
+        /// <param name="webhookUrl1">The webhook URL to which the notification
+        /// will be sent.</param>
+        /// <param name="emailRecipient1">The email recipient to send
+        /// notifications to (can be a list of semi-colon separated email
+        /// addresses).</param>
+        /// <param name="notificationLocale1">The locale to use when sending a
+        /// notification (fallback for unsupported languages is EN).</param>
+        /// <param name="createdDate1">The creation date of the
+        /// schedule.</param>
+        /// <param name="targetResourceId1">The resource ID to which the
+        /// schedule belongs</param>
+        /// <param name="provisioningState1">The provisioning status of the
+        /// resource.</param>
+        /// <param name="uniqueIdentifier1">The unique immutable identifier of
+        /// a resource (Guid).</param>
+        /// <param name="systemData1">The system metadata relating to this
+        /// resource</param>
+        /// <param name="systemData2">The system metadata relating to this
+        /// resource</param>
+        /// <param name="provisioningState2">The provisioning status of the
+        /// resource.</param>
+        /// <param name="uniqueIdentifier2">The unique immutable identifier of
+        /// a resource (Guid).</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
+        public ServiceFabric(string location, string serviceFabricLocation, string location1, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string externalServiceFabricId = default(string), string environmentId = default(string), string serviceFabricId = default(string), string serviceFabricName = default(string), string serviceFabricType = default(string), string id1 = default(string), string name1 = default(string), string type1 = default(string), IDictionary<string, string> serviceFabricTags = default(IDictionary<string, string>), string status = default(string), string taskType = default(string), IList<string> weekdays = default(IList<string>), string time = default(string), string time1 = default(string), int? minute = default(int?), string timeZoneId = default(string), string status1 = default(string), int? timeInMinutes = default(int?), string webhookUrl = default(string), string emailRecipient = default(string), string notificationLocale = default(string), System.DateTime? createdDate = default(System.DateTime?), string targetResourceId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string), SystemData scheduleSystemData = default(SystemData), string id2 = default(string), string name2 = default(string), string type2 = default(string), IDictionary<string, string> tags1 = default(IDictionary<string, string>), string status2 = default(string), string taskType1 = default(string), IList<string> weekdays1 = default(IList<string>), string time2 = default(string), string time3 = default(string), int? minute1 = default(int?), string timeZoneId1 = default(string), string status3 = default(string), int? timeInMinutes1 = default(int?), string webhookUrl1 = default(string), string emailRecipient1 = default(string), string notificationLocale1 = default(string), System.DateTime? createdDate1 = default(System.DateTime?), string targetResourceId1 = default(string), string provisioningState1 = default(string), string uniqueIdentifier1 = default(string), SystemData systemData1 = default(SystemData), SystemData systemData2 = default(SystemData), string provisioningState2 = default(string), string uniqueIdentifier2 = default(string), SystemData systemData = default(SystemData))
+            : base(location, id, name, type, tags)
         {
             ExternalServiceFabricId = externalServiceFabricId;
             EnvironmentId = environmentId;
-            ApplicableSchedule = applicableSchedule;
+            ServiceFabricId = serviceFabricId;
+            ServiceFabricName = serviceFabricName;
+            ServiceFabricType = serviceFabricType;
+            Id1 = id1;
+            Name1 = name1;
+            Type1 = type1;
+            ServiceFabricTags = serviceFabricTags;
+            ServiceFabricLocation = serviceFabricLocation;
+            Status = status;
+            TaskType = taskType;
+            Weekdays = weekdays;
+            Time = time;
+            Time1 = time1;
+            Minute = minute;
+            TimeZoneId = timeZoneId;
+            Status1 = status1;
+            TimeInMinutes = timeInMinutes;
+            WebhookUrl = webhookUrl;
+            EmailRecipient = emailRecipient;
+            NotificationLocale = notificationLocale;
+            CreatedDate = createdDate;
+            TargetResourceId = targetResourceId;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            ScheduleSystemData = scheduleSystemData;
+            Id2 = id2;
+            Name2 = name2;
+            Type2 = type2;
+            Tags1 = tags1;
+            Location1 = location1;
+            Status2 = status2;
+            TaskType1 = taskType1;
+            Weekdays1 = weekdays1;
+            Time2 = time2;
+            Time3 = time3;
+            Minute1 = minute1;
+            TimeZoneId1 = timeZoneId1;
+            Status3 = status3;
+            TimeInMinutes1 = timeInMinutes1;
+            WebhookUrl1 = webhookUrl1;
+            EmailRecipient1 = emailRecipient1;
+            NotificationLocale1 = notificationLocale1;
+            CreatedDate1 = createdDate1;
+            TargetResourceId1 = targetResourceId1;
+            ProvisioningState1 = provisioningState1;
+            UniqueIdentifier1 = uniqueIdentifier1;
+            SystemData1 = systemData1;
+            SystemData2 = systemData2;
+            ProvisioningState2 = provisioningState2;
+            UniqueIdentifier2 = uniqueIdentifier2;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -79,22 +232,353 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string EnvironmentId { get; set; }
 
         /// <summary>
-        /// Gets the applicable schedule for the virtual machine.
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
-        [JsonProperty(PropertyName = "properties.applicableSchedule")]
-        public ApplicableSchedule ApplicableSchedule { get; private set; }
+        [JsonProperty(PropertyName = "properties.applicableSchedule.id")]
+        public string ServiceFabricId { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.name")]
+        public string ServiceFabricName { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.type")]
+        public string ServiceFabricType { get; private set; }
+
+        /// <summary>
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.id")]
+        public string Id1 { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.name")]
+        public string Name1 { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.type")]
+        public string Type1 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.tags")]
+        public IDictionary<string, string> ServiceFabricTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.location")]
+        public string ServiceFabricLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status of the schedule (i.e. Enabled, Disabled).
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.taskType")]
+        public string TaskType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the days of the week for which the schedule is set
+        /// (e.g. Sunday, Monday, Tuesday, etc.).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.weeklyRecurrence.weekdays")]
+        public IList<string> Weekdays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of the day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.weeklyRecurrence.time")]
+        public string Time { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.dailyRecurrence.time")]
+        public string Time1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets minutes of the hour the schedule will run.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.hourlyRecurrence.minute")]
+        public int? Minute { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time zone ID (e.g. Pacific Standard time).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.timeZoneId")]
+        public string TimeZoneId { get; set; }
+
+        /// <summary>
+        /// Gets or sets if notifications are enabled for this schedule (i.e.
+        /// Enabled, Disabled). Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.status")]
+        public string Status1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets time in minutes before event at which notification
+        /// will be sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.timeInMinutes")]
+        public int? TimeInMinutes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the webhook URL to which the notification will be
+        /// sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.webhookUrl")]
+        public string WebhookUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email recipient to send notifications to (can be a
+        /// list of semi-colon separated email addresses).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.emailRecipient")]
+        public string EmailRecipient { get; set; }
+
+        /// <summary>
+        /// Gets or sets the locale to use when sending a notification
+        /// (fallback for unsupported languages is EN).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.notificationLocale")]
+        public string NotificationLocale { get; set; }
+
+        /// <summary>
+        /// Gets the creation date of the schedule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.createdDate")]
+        public System.DateTime? CreatedDate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID to which the schedule belongs
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.targetResourceId")]
+        public string TargetResourceId { get; set; }
 
         /// <summary>
         /// Gets the provisioning status of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the unique immutable identifier of a resource (Guid).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; private set; }
 
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsShutdown.systemData")]
+        public SystemData ScheduleSystemData { get; private set; }
+
+        /// <summary>
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.id")]
+        public string Id2 { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.name")]
+        public string Name2 { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.type")]
+        public string Type2 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.tags")]
+        public IDictionary<string, string> Tags1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.location")]
+        public string Location1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status of the schedule (i.e. Enabled, Disabled).
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.status")]
+        public string Status2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.taskType")]
+        public string TaskType1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the days of the week for which the schedule is set
+        /// (e.g. Sunday, Monday, Tuesday, etc.).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.weeklyRecurrence.weekdays")]
+        public IList<string> Weekdays1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of the day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.weeklyRecurrence.time")]
+        public string Time2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.dailyRecurrence.time")]
+        public string Time3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets minutes of the hour the schedule will run.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.hourlyRecurrence.minute")]
+        public int? Minute1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time zone ID (e.g. Pacific Standard time).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.timeZoneId")]
+        public string TimeZoneId1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets if notifications are enabled for this schedule (i.e.
+        /// Enabled, Disabled). Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.status")]
+        public string Status3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets time in minutes before event at which notification
+        /// will be sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.timeInMinutes")]
+        public int? TimeInMinutes1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the webhook URL to which the notification will be
+        /// sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.webhookUrl")]
+        public string WebhookUrl1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email recipient to send notifications to (can be a
+        /// list of semi-colon separated email addresses).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.emailRecipient")]
+        public string EmailRecipient1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the locale to use when sending a notification
+        /// (fallback for unsupported languages is EN).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.notificationLocale")]
+        public string NotificationLocale1 { get; set; }
+
+        /// <summary>
+        /// Gets the creation date of the schedule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.createdDate")]
+        public System.DateTime? CreatedDate1 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID to which the schedule belongs
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.targetResourceId")]
+        public string TargetResourceId1 { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning status of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.provisioningState")]
+        public string ProvisioningState1 { get; private set; }
+
+        /// <summary>
+        /// Gets the unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.properties.uniqueIdentifier")]
+        public string UniqueIdentifier1 { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.properties.labVmsStartup.systemData")]
+        public SystemData SystemData1 { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule.systemData")]
+        public SystemData SystemData2 { get; private set; }
+
+        /// <summary>
+        /// Gets the provisioning status of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState2 { get; private set; }
+
+        /// <summary>
+        /// Gets the unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier2 { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (ServiceFabricLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceFabricLocation");
+            }
+            if (Location1 == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location1");
+            }
+        }
     }
 }

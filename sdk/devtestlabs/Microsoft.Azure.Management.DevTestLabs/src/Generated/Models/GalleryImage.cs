@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,18 +32,22 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the GalleryImage class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="author">The author of the gallery image.</param>
         /// <param name="createdDate">The creation date of the gallery
         /// image.</param>
         /// <param name="description">The description of the gallery
         /// image.</param>
-        /// <param name="imageReference">The image reference of the gallery
-        /// image.</param>
+        /// <param name="offer">The offer of the gallery image.</param>
+        /// <param name="publisher">The publisher of the gallery image.</param>
+        /// <param name="sku">The SKU of the gallery image.</param>
+        /// <param name="osType">The OS type of the gallery image.</param>
+        /// <param name="version">The version of the gallery image.</param>
         /// <param name="icon">The icon of the gallery image.</param>
         /// <param name="enabled">Indicates whether this gallery image is
         /// enabled.</param>
@@ -53,17 +55,24 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// image</param>
         /// <param name="isPlanAuthorized">Indicates if the plan has been
         /// authorized for programmatic deployment.</param>
-        public GalleryImage(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string author = default(string), System.DateTime? createdDate = default(System.DateTime?), string description = default(string), GalleryImageReference imageReference = default(GalleryImageReference), string icon = default(string), bool? enabled = default(bool?), string planId = default(string), bool? isPlanAuthorized = default(bool?))
-            : base(id, name, type, location, tags)
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
+        public GalleryImage(string id = default(string), string name = default(string), string type = default(string), string author = default(string), System.DateTime? createdDate = default(System.DateTime?), string description = default(string), string offer = default(string), string publisher = default(string), string sku = default(string), string osType = default(string), string version = default(string), string icon = default(string), bool? enabled = default(bool?), string planId = default(string), bool? isPlanAuthorized = default(bool?), SystemData systemData = default(SystemData))
+            : base(id, name, type)
         {
             Author = author;
             CreatedDate = createdDate;
             Description = description;
-            ImageReference = imageReference;
+            Offer = offer;
+            Publisher = publisher;
+            Sku = sku;
+            OsType = osType;
+            Version = version;
             Icon = icon;
             Enabled = enabled;
             PlanId = planId;
             IsPlanAuthorized = isPlanAuthorized;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -91,10 +100,34 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the image reference of the gallery image.
+        /// Gets or sets the offer of the gallery image.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.imageReference")]
-        public GalleryImageReference ImageReference { get; set; }
+        [JsonProperty(PropertyName = "properties.imageReference.offer")]
+        public string Offer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the publisher of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.imageReference.publisher")]
+        public string Publisher { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SKU of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.imageReference.sku")]
+        public string Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OS type of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.imageReference.osType")]
+        public string OsType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.imageReference.version")]
+        public string Version { get; set; }
 
         /// <summary>
         /// Gets or sets the icon of the gallery image.
@@ -120,6 +153,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isPlanAuthorized")]
         public bool? IsPlanAuthorized { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

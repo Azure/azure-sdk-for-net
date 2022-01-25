@@ -10,12 +10,15 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// An Operation Result
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class OperationResult
     {
         /// <summary>
@@ -31,26 +34,36 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         /// <param name="status">The operation status.</param>
         /// <param name="statusCode">The status code for the operation.
-        /// Possible values include: 'Continue', 'SwitchingProtocols', 'OK',
-        /// 'Created', 'Accepted', 'NonAuthoritativeInformation', 'NoContent',
-        /// 'ResetContent', 'PartialContent', 'MultipleChoices',
-        /// 'MovedPermanently', 'Redirect', 'SeeOther', 'NotModified',
-        /// 'UseProxy', 'Unused', 'TemporaryRedirect', 'BadRequest',
-        /// 'Unauthorized', 'PaymentRequired', 'Forbidden', 'NotFound',
-        /// 'MethodNotAllowed', 'NotAcceptable', 'ProxyAuthenticationRequired',
-        /// 'RequestTimeout', 'Conflict', 'Gone', 'LengthRequired',
-        /// 'PreconditionFailed', 'RequestEntityTooLarge', 'RequestUriTooLong',
+        /// Possible values include: 'Continue', 'SwitchingProtocols',
+        /// 'Processing', 'EarlyHints', 'OK', 'Created', 'Accepted',
+        /// 'NonAuthoritativeInformation', 'NoContent', 'ResetContent',
+        /// 'PartialContent', 'MultiStatus', 'AlreadyReported', 'IMUsed',
+        /// 'MultipleChoices', 'Ambiguous', 'MovedPermanently', 'Moved',
+        /// 'Found', 'Redirect', 'SeeOther', 'RedirectMethod', 'NotModified',
+        /// 'UseProxy', 'Unused', 'TemporaryRedirect', 'RedirectKeepVerb',
+        /// 'PermanentRedirect', 'BadRequest', 'Unauthorized',
+        /// 'PaymentRequired', 'Forbidden', 'NotFound', 'MethodNotAllowed',
+        /// 'NotAcceptable', 'ProxyAuthenticationRequired', 'RequestTimeout',
+        /// 'Conflict', 'Gone', 'LengthRequired', 'PreconditionFailed',
+        /// 'RequestEntityTooLarge', 'RequestUriTooLong',
         /// 'UnsupportedMediaType', 'RequestedRangeNotSatisfiable',
-        /// 'ExpectationFailed', 'UpgradeRequired', 'InternalServerError',
-        /// 'NotImplemented', 'BadGateway', 'ServiceUnavailable',
-        /// 'GatewayTimeout', 'HttpVersionNotSupported'</param>
-        /// <param name="error">Error details for the operation in case of a
-        /// failure.</param>
-        public OperationResult(string status = default(string), string statusCode = default(string), OperationError error = default(OperationError))
+        /// 'ExpectationFailed', 'MisdirectedRequest', 'UnprocessableEntity',
+        /// 'Locked', 'FailedDependency', 'UpgradeRequired',
+        /// 'PreconditionRequired', 'TooManyRequests',
+        /// 'RequestHeaderFieldsTooLarge', 'UnavailableForLegalReasons',
+        /// 'InternalServerError', 'NotImplemented', 'BadGateway',
+        /// 'ServiceUnavailable', 'GatewayTimeout', 'HttpVersionNotSupported',
+        /// 'VariantAlsoNegotiates', 'InsufficientStorage', 'LoopDetected',
+        /// 'NotExtended', 'NetworkAuthenticationRequired'</param>
+        /// <param name="code">The error code of the operation error.</param>
+        /// <param name="message">The error message of the operation
+        /// error.</param>
+        public OperationResult(string status = default(string), string statusCode = default(string), string code = default(string), string message = default(string))
         {
             Status = status;
             StatusCode = statusCode;
-            Error = error;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -67,28 +80,42 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Gets or sets the status code for the operation. Possible values
-        /// include: 'Continue', 'SwitchingProtocols', 'OK', 'Created',
-        /// 'Accepted', 'NonAuthoritativeInformation', 'NoContent',
-        /// 'ResetContent', 'PartialContent', 'MultipleChoices',
-        /// 'MovedPermanently', 'Redirect', 'SeeOther', 'NotModified',
-        /// 'UseProxy', 'Unused', 'TemporaryRedirect', 'BadRequest',
-        /// 'Unauthorized', 'PaymentRequired', 'Forbidden', 'NotFound',
-        /// 'MethodNotAllowed', 'NotAcceptable', 'ProxyAuthenticationRequired',
-        /// 'RequestTimeout', 'Conflict', 'Gone', 'LengthRequired',
-        /// 'PreconditionFailed', 'RequestEntityTooLarge', 'RequestUriTooLong',
+        /// include: 'Continue', 'SwitchingProtocols', 'Processing',
+        /// 'EarlyHints', 'OK', 'Created', 'Accepted',
+        /// 'NonAuthoritativeInformation', 'NoContent', 'ResetContent',
+        /// 'PartialContent', 'MultiStatus', 'AlreadyReported', 'IMUsed',
+        /// 'MultipleChoices', 'Ambiguous', 'MovedPermanently', 'Moved',
+        /// 'Found', 'Redirect', 'SeeOther', 'RedirectMethod', 'NotModified',
+        /// 'UseProxy', 'Unused', 'TemporaryRedirect', 'RedirectKeepVerb',
+        /// 'PermanentRedirect', 'BadRequest', 'Unauthorized',
+        /// 'PaymentRequired', 'Forbidden', 'NotFound', 'MethodNotAllowed',
+        /// 'NotAcceptable', 'ProxyAuthenticationRequired', 'RequestTimeout',
+        /// 'Conflict', 'Gone', 'LengthRequired', 'PreconditionFailed',
+        /// 'RequestEntityTooLarge', 'RequestUriTooLong',
         /// 'UnsupportedMediaType', 'RequestedRangeNotSatisfiable',
-        /// 'ExpectationFailed', 'UpgradeRequired', 'InternalServerError',
-        /// 'NotImplemented', 'BadGateway', 'ServiceUnavailable',
-        /// 'GatewayTimeout', 'HttpVersionNotSupported'
+        /// 'ExpectationFailed', 'MisdirectedRequest', 'UnprocessableEntity',
+        /// 'Locked', 'FailedDependency', 'UpgradeRequired',
+        /// 'PreconditionRequired', 'TooManyRequests',
+        /// 'RequestHeaderFieldsTooLarge', 'UnavailableForLegalReasons',
+        /// 'InternalServerError', 'NotImplemented', 'BadGateway',
+        /// 'ServiceUnavailable', 'GatewayTimeout', 'HttpVersionNotSupported',
+        /// 'VariantAlsoNegotiates', 'InsufficientStorage', 'LoopDetected',
+        /// 'NotExtended', 'NetworkAuthenticationRequired'
         /// </summary>
         [JsonProperty(PropertyName = "statusCode")]
         public string StatusCode { get; set; }
 
         /// <summary>
-        /// Gets or sets error details for the operation in case of a failure.
+        /// Gets or sets the error code of the operation error.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public OperationError Error { get; set; }
+        [JsonProperty(PropertyName = "error.code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error message of the operation error.
+        /// </summary>
+        [JsonProperty(PropertyName = "error.message")]
+        public string Message { get; set; }
 
     }
 }

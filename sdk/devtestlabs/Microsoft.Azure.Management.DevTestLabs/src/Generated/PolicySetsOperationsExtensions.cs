@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -22,13 +23,59 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public static partial class PolicySetsOperationsExtensions
     {
             /// <summary>
+            /// List policy sets in a given lab.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<PolicySet> List(this IPolicySetsOperations operations, string resourceGroupName, string labName, ODataQuery<PolicySet> odataQuery = default(ODataQuery<PolicySet>))
+            {
+                return operations.ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List policy sets in a given lab.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicySet>> ListAsync(this IPolicySetsOperations operations, string resourceGroupName, string labName, ODataQuery<PolicySet> odataQuery = default(ODataQuery<PolicySet>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, labName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Evaluates lab policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -51,7 +98,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -68,6 +115,40 @@ namespace Microsoft.Azure.Management.DevTestLabs
             public static async Task<EvaluatePoliciesResponse> EvaluatePoliciesAsync(this IPolicySetsOperations operations, string resourceGroupName, string labName, string name, EvaluatePoliciesRequest evaluatePoliciesRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.EvaluatePoliciesWithHttpMessagesAsync(resourceGroupName, labName, name, evaluatePoliciesRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List policy sets in a given lab.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicySet> ListNext(this IPolicySetsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List policy sets in a given lab.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicySet>> ListNextAsync(this IPolicySetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

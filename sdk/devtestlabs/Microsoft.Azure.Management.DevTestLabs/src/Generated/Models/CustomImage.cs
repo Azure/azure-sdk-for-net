@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A custom image.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CustomImage : Resource
+    public partial class CustomImage : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the CustomImage class.
@@ -34,15 +34,29 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the CustomImage class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
-        /// <param name="vm">The virtual machine from which the image is to be
-        /// created.</param>
-        /// <param name="vhd">The VHD from which the image is to be
-        /// created.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="osType">The OS type of the custom image (i.e. Windows,
+        /// Linux). Possible values include: 'Windows', 'Linux', 'None'</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="sourceVmId">The source vm identifier.</param>
+        /// <param name="windowsOsState">The state of the Windows OS (i.e.
+        /// NonSysprepped, SysprepRequested, SysprepApplied). Possible values
+        /// include: 'NonSysprepped', 'SysprepRequested',
+        /// 'SysprepApplied'</param>
+        /// <param name="linuxOsState">The state of the Linux OS (i.e.
+        /// NonDeprovisioned, DeprovisionRequested, DeprovisionApplied).
+        /// Possible values include: 'NonDeprovisioned',
+        /// 'DeprovisionRequested', 'DeprovisionApplied'</param>
+        /// <param name="imageName">The image name.</param>
+        /// <param name="sysPrep">Indicates whether sysprep has been run on the
+        /// VHD.</param>
         /// <param name="description">The description of the custom
         /// image.</param>
         /// <param name="author">The author of the custom image.</param>
@@ -54,8 +68,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// custom image.</param>
         /// <param name="dataDiskStorageInfo">Storage information about the
         /// data disks present in the custom image</param>
-        /// <param name="customImagePlan">Storage information about the plan
-        /// related to this custom image</param>
+        /// <param name="customImageId">The id of the plan, equivalent to name
+        /// of the plan</param>
+        /// <param name="publisher">The publisher for the plan from the
+        /// marketplace image the custom image is derived from</param>
+        /// <param name="offer">The offer for the plan from the marketplace
+        /// image the custom image is derived from</param>
         /// <param name="isPlanAuthorized">Whether or not the custom images
         /// underlying offer/plan has been enabled for programmatic
         /// deployment</param>
@@ -63,21 +81,30 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// resource.</param>
         /// <param name="uniqueIdentifier">The unique immutable identifier of a
         /// resource (Guid).</param>
-        public CustomImage(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CustomImagePropertiesFromVm vm = default(CustomImagePropertiesFromVm), CustomImagePropertiesCustom vhd = default(CustomImagePropertiesCustom), string description = default(string), string author = default(string), System.DateTime? creationDate = default(System.DateTime?), string managedImageId = default(string), string managedSnapshotId = default(string), IList<DataDiskStorageTypeInfo> dataDiskStorageInfo = default(IList<DataDiskStorageTypeInfo>), CustomImagePropertiesFromPlan customImagePlan = default(CustomImagePropertiesFromPlan), bool? isPlanAuthorized = default(bool?), string provisioningState = default(string), string uniqueIdentifier = default(string))
-            : base(id, name, type, location, tags)
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
+        public CustomImage(string location, string osType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string sourceVmId = default(string), string windowsOsState = default(string), string linuxOsState = default(string), string imageName = default(string), bool? sysPrep = default(bool?), string description = default(string), string author = default(string), System.DateTime? creationDate = default(System.DateTime?), string managedImageId = default(string), string managedSnapshotId = default(string), IList<DataDiskStorageTypeInfo> dataDiskStorageInfo = default(IList<DataDiskStorageTypeInfo>), string customImageId = default(string), string publisher = default(string), string offer = default(string), bool? isPlanAuthorized = default(bool?), string provisioningState = default(string), string uniqueIdentifier = default(string), SystemData systemData = default(SystemData))
+            : base(location, id, name, type, tags)
         {
-            Vm = vm;
-            Vhd = vhd;
+            SourceVmId = sourceVmId;
+            WindowsOsState = windowsOsState;
+            LinuxOsState = linuxOsState;
+            ImageName = imageName;
+            SysPrep = sysPrep;
+            OsType = osType;
             Description = description;
             Author = author;
             CreationDate = creationDate;
             ManagedImageId = managedImageId;
             ManagedSnapshotId = managedSnapshotId;
             DataDiskStorageInfo = dataDiskStorageInfo;
-            CustomImagePlan = customImagePlan;
+            CustomImageId = customImageId;
+            Publisher = publisher;
+            Offer = offer;
             IsPlanAuthorized = isPlanAuthorized;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -87,17 +114,45 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the virtual machine from which the image is to be
-        /// created.
+        /// Gets or sets the source vm identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vm")]
-        public CustomImagePropertiesFromVm Vm { get; set; }
+        [JsonProperty(PropertyName = "properties.vm.sourceVmId")]
+        public string SourceVmId { get; set; }
 
         /// <summary>
-        /// Gets or sets the VHD from which the image is to be created.
+        /// Gets or sets the state of the Windows OS (i.e. NonSysprepped,
+        /// SysprepRequested, SysprepApplied). Possible values include:
+        /// 'NonSysprepped', 'SysprepRequested', 'SysprepApplied'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vhd")]
-        public CustomImagePropertiesCustom Vhd { get; set; }
+        [JsonProperty(PropertyName = "properties.vm.windowsOsInfo.windowsOsState")]
+        public string WindowsOsState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the state of the Linux OS (i.e. NonDeprovisioned,
+        /// DeprovisionRequested, DeprovisionApplied). Possible values include:
+        /// 'NonDeprovisioned', 'DeprovisionRequested', 'DeprovisionApplied'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vm.linuxOsInfo.linuxOsState")]
+        public string LinuxOsState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vhd.imageName")]
+        public string ImageName { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether sysprep has been run on the VHD.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vhd.sysPrep")]
+        public bool? SysPrep { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OS type of the custom image (i.e. Windows, Linux).
+        /// Possible values include: 'Windows', 'Linux', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vhd.osType")]
+        public string OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the custom image.
@@ -137,11 +192,24 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public IList<DataDiskStorageTypeInfo> DataDiskStorageInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets storage information about the plan related to this
-        /// custom image
+        /// Gets or sets the id of the plan, equivalent to name of the plan
         /// </summary>
-        [JsonProperty(PropertyName = "properties.customImagePlan")]
-        public CustomImagePropertiesFromPlan CustomImagePlan { get; set; }
+        [JsonProperty(PropertyName = "properties.customImagePlan.id")]
+        public string CustomImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the publisher for the plan from the marketplace image
+        /// the custom image is derived from
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customImagePlan.publisher")]
+        public string Publisher { get; set; }
+
+        /// <summary>
+        /// Gets or sets the offer for the plan from the marketplace image the
+        /// custom image is derived from
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customImagePlan.offer")]
+        public string Offer { get; set; }
 
         /// <summary>
         /// Gets or sets whether or not the custom images underlying offer/plan
@@ -163,16 +231,23 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string UniqueIdentifier { get; private set; }
 
         /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (Vhd != null)
+            base.Validate();
+            if (OsType == null)
             {
-                Vhd.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "OsType");
             }
         }
     }

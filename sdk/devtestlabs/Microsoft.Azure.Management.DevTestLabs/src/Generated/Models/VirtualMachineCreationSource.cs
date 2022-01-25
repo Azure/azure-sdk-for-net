@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     {
         public const string FromCustomImage = "FromCustomImage";
         public const string FromGalleryImage = "FromGalleryImage";
+        public const string FromSharedGalleryImage = "FromSharedGalleryImage";
     }
 }

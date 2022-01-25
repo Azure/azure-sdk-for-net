@@ -10,18 +10,14 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A virtual network.
+    /// Patch
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkFragment : UpdateResource
+    public partial class VirtualNetworkFragment : Tags
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkFragment class.
@@ -34,22 +30,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkFragment class.
         /// </summary>
-        /// <param name="tags">The tags of the resource.</param>
-        /// <param name="allowedSubnets">The allowed subnets of the virtual
-        /// network.</param>
-        /// <param name="description">The description of the virtual
-        /// network.</param>
-        /// <param name="externalProviderResourceId">The Microsoft.Network
-        /// resource identifier of the virtual network.</param>
-        /// <param name="subnetOverrides">The subnet overrides of the virtual
-        /// network.</param>
-        public VirtualNetworkFragment(IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubnetFragment> allowedSubnets = default(IList<SubnetFragment>), string description = default(string), string externalProviderResourceId = default(string), IList<SubnetOverrideFragment> subnetOverrides = default(IList<SubnetOverrideFragment>))
-            : base(tags)
+        /// <param name="tagsProperty">Resource tags</param>
+        public VirtualNetworkFragment(IDictionary<string, string> tagsProperty = default(IDictionary<string, string>))
+            : base(tagsProperty)
         {
-            AllowedSubnets = allowedSubnets;
-            Description = description;
-            ExternalProviderResourceId = externalProviderResourceId;
-            SubnetOverrides = subnetOverrides;
             CustomInit();
         }
 
@@ -57,31 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the allowed subnets of the virtual network.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.allowedSubnets")]
-        public IList<SubnetFragment> AllowedSubnets { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description of the virtual network.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Microsoft.Network resource identifier of the
-        /// virtual network.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.externalProviderResourceId")]
-        public string ExternalProviderResourceId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the subnet overrides of the virtual network.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.subnetOverrides")]
-        public IList<SubnetOverrideFragment> SubnetOverrides { get; set; }
 
     }
 }

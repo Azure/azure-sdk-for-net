@@ -10,18 +10,14 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A Policy.
+    /// Patch
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class PolicyFragment : UpdateResource
+    public partial class PolicyFragment : Tags
     {
         /// <summary>
         /// Initializes a new instance of the PolicyFragment class.
@@ -34,32 +30,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the PolicyFragment class.
         /// </summary>
-        /// <param name="tags">The tags of the resource.</param>
-        /// <param name="description">The description of the policy.</param>
-        /// <param name="status">The status of the policy. Possible values
-        /// include: 'Enabled', 'Disabled'</param>
-        /// <param name="factName">The fact name of the policy (e.g.
-        /// LabVmCount, LabVmSize, MaxVmsAllowedPerLab, etc. Possible values
-        /// include: 'UserOwnedLabVmCount', 'UserOwnedLabPremiumVmCount',
-        /// 'LabVmCount', 'LabPremiumVmCount', 'LabVmSize', 'GalleryImage',
-        /// 'UserOwnedLabVmCountInSubnet', 'LabTargetCost',
-        /// 'EnvironmentTemplate', 'ScheduleEditPermission'</param>
-        /// <param name="factData">The fact data of the policy.</param>
-        /// <param name="threshold">The threshold of the policy (i.e. a number
-        /// for MaxValuePolicy, and a JSON array of values for
-        /// AllowedValuesPolicy).</param>
-        /// <param name="evaluatorType">The evaluator type of the policy (i.e.
-        /// AllowedValuesPolicy, MaxValuePolicy). Possible values include:
-        /// 'AllowedValuesPolicy', 'MaxValuePolicy'</param>
-        public PolicyFragment(IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string))
-            : base(tags)
+        /// <param name="tagsProperty">Resource tags</param>
+        public PolicyFragment(IDictionary<string, string> tagsProperty = default(IDictionary<string, string>))
+            : base(tagsProperty)
         {
-            Description = description;
-            Status = status;
-            FactName = factName;
-            FactData = factData;
-            Threshold = threshold;
-            EvaluatorType = evaluatorType;
             CustomInit();
         }
 
@@ -67,52 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the description of the policy.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the status of the policy. Possible values include:
-        /// 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
-
-        /// <summary>
-        /// Gets or sets the fact name of the policy (e.g. LabVmCount,
-        /// LabVmSize, MaxVmsAllowedPerLab, etc. Possible values include:
-        /// 'UserOwnedLabVmCount', 'UserOwnedLabPremiumVmCount', 'LabVmCount',
-        /// 'LabPremiumVmCount', 'LabVmSize', 'GalleryImage',
-        /// 'UserOwnedLabVmCountInSubnet', 'LabTargetCost',
-        /// 'EnvironmentTemplate', 'ScheduleEditPermission'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.factName")]
-        public string FactName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the fact data of the policy.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.factData")]
-        public string FactData { get; set; }
-
-        /// <summary>
-        /// Gets or sets the threshold of the policy (i.e. a number for
-        /// MaxValuePolicy, and a JSON array of values for
-        /// AllowedValuesPolicy).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.threshold")]
-        public string Threshold { get; set; }
-
-        /// <summary>
-        /// Gets or sets the evaluator type of the policy (i.e.
-        /// AllowedValuesPolicy, MaxValuePolicy). Possible values include:
-        /// 'AllowedValuesPolicy', 'MaxValuePolicy'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.evaluatorType")]
-        public string EvaluatorType { get; set; }
 
     }
 }

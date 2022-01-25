@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
     using Newtonsoft.Json;
 
     /// <summary>
-    /// The DevTest Labs Client.
+    /// Microsoft DevTest Labs Client
     /// </summary>
     public partial interface IDevTestLabsClient : System.IDisposable
     {
@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Management.DevTestLabs
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client API version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
         /// <summary>
-        /// The subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -145,9 +145,24 @@ namespace Microsoft.Azure.Management.DevTestLabs
         ISchedulesOperations Schedules { get; }
 
         /// <summary>
+        /// Gets the ILabSecretsOperations.
+        /// </summary>
+        ILabSecretsOperations LabSecrets { get; }
+
+        /// <summary>
         /// Gets the IServiceRunnersOperations.
         /// </summary>
         IServiceRunnersOperations ServiceRunners { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        ISharedGalleriesOperations SharedGalleries { get; }
+
+        /// <summary>
+        /// Gets the ISharedImagesOperations.
+        /// </summary>
+        ISharedImagesOperations SharedImages { get; }
 
         /// <summary>
         /// Gets the IUsersOperations.
@@ -193,6 +208,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// Gets the IVirtualNetworksOperations.
         /// </summary>
         IVirtualNetworksOperations VirtualNetworks { get; }
+
+        /// <summary>
+        /// Gets the IBastionHostsOperations.
+        /// </summary>
+        IBastionHostsOperations BastionHosts { get; }
 
     }
 }

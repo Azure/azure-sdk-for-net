@@ -34,11 +34,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the ArmTemplate class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="displayName">The display name of the ARM
         /// template.</param>
         /// <param name="description">The description of the ARM
@@ -53,8 +54,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// ARM template.</param>
         /// <param name="enabled">Whether or not ARM template is enabled for
         /// use by lab user.</param>
-        public ArmTemplate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string displayName = default(string), string description = default(string), string publisher = default(string), string icon = default(string), object contents = default(object), System.DateTime? createdDate = default(System.DateTime?), IList<ParametersValueFileInfo> parametersValueFilesInfo = default(IList<ParametersValueFileInfo>), bool? enabled = default(bool?))
-            : base(id, name, type, location, tags)
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
+        public ArmTemplate(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string description = default(string), string publisher = default(string), string icon = default(string), object contents = default(object), System.DateTime? createdDate = default(System.DateTime?), IList<ParametersValueFileInfo> parametersValueFilesInfo = default(IList<ParametersValueFileInfo>), bool? enabled = default(bool?), SystemData systemData = default(SystemData))
+            : base(id, name, type)
         {
             DisplayName = displayName;
             Description = description;
@@ -64,6 +67,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             CreatedDate = createdDate;
             ParametersValueFilesInfo = parametersValueFilesInfo;
             Enabled = enabled;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -120,6 +124,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

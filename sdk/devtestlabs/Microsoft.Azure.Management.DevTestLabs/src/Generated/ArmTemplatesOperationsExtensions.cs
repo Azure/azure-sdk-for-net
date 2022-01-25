@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -90,14 +90,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the artifact source.
             /// </param>
             /// <param name='name'>
-            /// The name of the azure Resource Manager template.
+            /// The name of the azure resource manager template.
             /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=displayName)'
-            /// </param>
-            public static ArmTemplate Get(this IArmTemplatesOperations operations, string resourceGroupName, string labName, string artifactSourceName, string name, string expand = default(string))
+            public static ArmTemplate Get(this IArmTemplatesOperations operations, string resourceGroupName, string labName, string artifactSourceName, string name)
             {
-                return operations.GetAsync(resourceGroupName, labName, artifactSourceName, name, expand).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, labName, artifactSourceName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,7 +104,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
             /// The name of the lab.
@@ -116,17 +113,14 @@ namespace Microsoft.Azure.Management.DevTestLabs
             /// The name of the artifact source.
             /// </param>
             /// <param name='name'>
-            /// The name of the azure Resource Manager template.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=displayName)'
+            /// The name of the azure resource manager template.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ArmTemplate> GetAsync(this IArmTemplatesOperations operations, string resourceGroupName, string labName, string artifactSourceName, string name, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ArmTemplate> GetAsync(this IArmTemplatesOperations operations, string resourceGroupName, string labName, string artifactSourceName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, labName, artifactSourceName, name, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, labName, artifactSourceName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

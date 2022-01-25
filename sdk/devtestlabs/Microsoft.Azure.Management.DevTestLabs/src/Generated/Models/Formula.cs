@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// parameters
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Formula : Resource
+    public partial class Formula : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the Formula class.
@@ -35,34 +35,369 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Formula class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="formulaLocation">The geo-location where the resource
+        /// lives</param>
+        /// <param name="location1">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="description">The description of the formula.</param>
         /// <param name="author">The author of the formula.</param>
         /// <param name="osType">The OS type of the formula.</param>
         /// <param name="creationDate">The creation date of the
         /// formula.</param>
-        /// <param name="formulaContent">The content of the formula.</param>
-        /// <param name="vm">Information about a VM from which a formula is to
-        /// be created.</param>
+        /// <param name="instanceCount">The number of virtual machine instances
+        /// to create.</param>
+        /// <param name="notes">The notes of the virtual machine.</param>
+        /// <param name="ownerObjectId">The object identifier of the owner of
+        /// the virtual machine.</param>
+        /// <param name="ownerUserPrincipalName">The user principal name of the
+        /// virtual machine owner.</param>
+        /// <param name="createdByUserId">The object identifier of the creator
+        /// of the virtual machine.</param>
+        /// <param name="createdByUser">The email address of creator of the
+        /// virtual machine.</param>
+        /// <param name="createdDate">The creation date of the virtual
+        /// machine.</param>
+        /// <param name="computeId">The resource identifier (Microsoft.Compute)
+        /// of the virtual machine.</param>
+        /// <param name="customImageId">The custom image identifier of the
+        /// virtual machine.</param>
+        /// <param name="galleryImageVersionId">The shared gallery image
+        /// version resource identifier of the virtual machine.</param>
+        /// <param name="sharedImageId">The shared image resource identifier of
+        /// the virtual machine.</param>
+        /// <param name="sharedImageVersion">The shared image version for the
+        /// specified shared image Id. Will use latest if not
+        /// specified.</param>
+        /// <param name="osType1">The OS type of the virtual machine.</param>
+        /// <param name="size">The size of the virtual machine.</param>
+        /// <param name="userName">The user name of the virtual
+        /// machine.</param>
+        /// <param name="password">The password of the virtual machine
+        /// administrator.</param>
+        /// <param name="sshKey">The SSH key of the virtual machine
+        /// administrator.</param>
+        /// <param name="isAuthenticationWithSshKey">Indicates whether this
+        /// virtual machine uses an SSH key for authentication.</param>
+        /// <param name="fqdn">The fully-qualified domain name of the virtual
+        /// machine.</param>
+        /// <param name="labSubnetName">The lab subnet name of the virtual
+        /// machine.</param>
+        /// <param name="labVirtualNetworkId">The lab virtual network
+        /// identifier of the virtual machine.</param>
+        /// <param name="disallowPublicIpAddress">Indicates whether the virtual
+        /// machine is to be created without a public IP address.</param>
+        /// <param name="artifacts">The artifacts to be installed on the
+        /// virtual machine.</param>
+        /// <param name="deploymentStatus">The deployment status of the
+        /// artifact.</param>
+        /// <param name="artifactsApplied">The total count of the artifacts
+        /// that were successfully applied.</param>
+        /// <param name="totalArtifacts">The total count of the artifacts that
+        /// were tentatively applied.</param>
+        /// <param name="offer">The offer of the gallery image.</param>
+        /// <param name="publisher">The publisher of the gallery image.</param>
+        /// <param name="sku">The SKU of the gallery image.</param>
+        /// <param name="osType2">The OS type of the gallery image.</param>
+        /// <param name="version">The version of the gallery image.</param>
+        /// <param name="planId">The id of the plan associated with the virtual
+        /// machine image</param>
+        /// <param name="osDiskSizeGb">Specifies the size of an empty data disk
+        /// in gigabytes. This element can be used to overwrite the size of the
+        /// disk in a virtual machine image.</param>
+        /// <param name="statuses">Gets the statuses of the virtual
+        /// machine.</param>
+        /// <param name="osType3">Gets the OS type of the virtual
+        /// machine.</param>
+        /// <param name="vmSize">Gets the size of the virtual machine.</param>
+        /// <param name="networkInterfaceId">Gets the network interface ID of
+        /// the virtual machine.</param>
+        /// <param name="osDiskId">Gets OS disk blob uri for the virtual
+        /// machine.</param>
+        /// <param name="dataDiskIds">Gets data disks blob uri for the virtual
+        /// machine.</param>
+        /// <param name="dataDisks">Gets all data disks attached to the virtual
+        /// machine.</param>
+        /// <param name="virtualNetworkId">The resource ID of the virtual
+        /// network.</param>
+        /// <param name="subnetId">The resource ID of the sub net.</param>
+        /// <param name="publicIpAddressId">The resource ID of the public IP
+        /// address.</param>
+        /// <param name="publicIpAddress">The public IP address.</param>
+        /// <param name="privateIpAddress">The private IP address.</param>
+        /// <param name="dnsName">The DNS name.</param>
+        /// <param name="rdpAuthority">The RdpAuthority property is a server
+        /// DNS host name or IP address followed by the service port number for
+        /// RDP (Remote Desktop Protocol).</param>
+        /// <param name="sshAuthority">The SshAuthority property is a server
+        /// DNS host name or IP address followed by the service port number for
+        /// SSH.</param>
+        /// <param name="inboundNatRules">The incoming NAT rules</param>
+        /// <param name="formulaId">Fully qualified resource ID for the
+        /// resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="formulaName">The name of the resource</param>
+        /// <param name="formulaType">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="id1">Fully qualified resource ID for the resource. Ex
+        /// -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name1">The name of the resource</param>
+        /// <param name="type1">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="formulaTags">Resource tags.</param>
+        /// <param name="status">The status of the schedule (i.e. Enabled,
+        /// Disabled). Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="taskType">The task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).</param>
+        /// <param name="weekdays">The days of the week for which the schedule
+        /// is set (e.g. Sunday, Monday, Tuesday, etc.).</param>
+        /// <param name="time">The time of the day the schedule will
+        /// occur.</param>
+        /// <param name="time1">The time of day the schedule will
+        /// occur.</param>
+        /// <param name="minute">Minutes of the hour the schedule will
+        /// run.</param>
+        /// <param name="timeZoneId">The time zone ID (e.g. Pacific Standard
+        /// time).</param>
+        /// <param name="status1">If notifications are enabled for this
+        /// schedule (i.e. Enabled, Disabled). Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="timeInMinutes">Time in minutes before event at which
+        /// notification will be sent.</param>
+        /// <param name="webhookUrl">The webhook URL to which the notification
+        /// will be sent.</param>
+        /// <param name="emailRecipient">The email recipient to send
+        /// notifications to (can be a list of semi-colon separated email
+        /// addresses).</param>
+        /// <param name="notificationLocale">The locale to use when sending a
+        /// notification (fallback for unsupported languages is EN).</param>
+        /// <param name="createdDate1">The creation date of the
+        /// schedule.</param>
+        /// <param name="targetResourceId">The resource ID to which the
+        /// schedule belongs</param>
         /// <param name="provisioningState">The provisioning status of the
         /// resource.</param>
         /// <param name="uniqueIdentifier">The unique immutable identifier of a
         /// resource (Guid).</param>
-        public Formula(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string author = default(string), string osType = default(string), System.DateTime? creationDate = default(System.DateTime?), LabVirtualMachineCreationParameter formulaContent = default(LabVirtualMachineCreationParameter), FormulaPropertiesFromVm vm = default(FormulaPropertiesFromVm), string provisioningState = default(string), string uniqueIdentifier = default(string))
-            : base(id, name, type, location, tags)
+        /// <param name="scheduleSystemData">The system metadata relating to
+        /// this resource</param>
+        /// <param name="id2">Fully qualified resource ID for the resource. Ex
+        /// -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name2">The name of the resource</param>
+        /// <param name="type2">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="tags1">Resource tags.</param>
+        /// <param name="status2">The status of the schedule (i.e. Enabled,
+        /// Disabled). Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="taskType1">The task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).</param>
+        /// <param name="weekdays1">The days of the week for which the schedule
+        /// is set (e.g. Sunday, Monday, Tuesday, etc.).</param>
+        /// <param name="time2">The time of the day the schedule will
+        /// occur.</param>
+        /// <param name="time3">The time of day the schedule will
+        /// occur.</param>
+        /// <param name="minute1">Minutes of the hour the schedule will
+        /// run.</param>
+        /// <param name="timeZoneId1">The time zone ID (e.g. Pacific Standard
+        /// time).</param>
+        /// <param name="status3">If notifications are enabled for this
+        /// schedule (i.e. Enabled, Disabled). Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="timeInMinutes1">Time in minutes before event at which
+        /// notification will be sent.</param>
+        /// <param name="webhookUrl1">The webhook URL to which the notification
+        /// will be sent.</param>
+        /// <param name="emailRecipient1">The email recipient to send
+        /// notifications to (can be a list of semi-colon separated email
+        /// addresses).</param>
+        /// <param name="notificationLocale1">The locale to use when sending a
+        /// notification (fallback for unsupported languages is EN).</param>
+        /// <param name="createdDate2">The creation date of the
+        /// schedule.</param>
+        /// <param name="targetResourceId1">The resource ID to which the
+        /// schedule belongs</param>
+        /// <param name="provisioningState1">The provisioning status of the
+        /// resource.</param>
+        /// <param name="uniqueIdentifier1">The unique immutable identifier of
+        /// a resource (Guid).</param>
+        /// <param name="systemData1">The system metadata relating to this
+        /// resource</param>
+        /// <param name="systemData2">The system metadata relating to this
+        /// resource</param>
+        /// <param name="expirationDate">The expiration date for VM.</param>
+        /// <param name="allowClaim">Indicates whether another user can take
+        /// ownership of the virtual machine</param>
+        /// <param name="storageType">Storage type to use for virtual machine
+        /// (i.e. Standard, Premium, StandardSSD). Possible values include:
+        /// 'Standard', 'Premium', 'StandardSSD'</param>
+        /// <param name="virtualMachineCreationSource">Tells source of creation
+        /// of lab virtual machine. Output property only. Possible values
+        /// include: 'FromCustomImage', 'FromGalleryImage',
+        /// 'FromSharedGalleryImage'</param>
+        /// <param name="environmentId">The resource ID of the environment that
+        /// contains this virtual machine, if any.</param>
+        /// <param name="dataDiskParameters">New or existing data disks to
+        /// attach to the virtual machine after creation</param>
+        /// <param name="scheduleParameters">Virtual Machine schedules to be
+        /// created</param>
+        /// <param name="lastKnownPowerState">Last known compute power state
+        /// captured in DTL</param>
+        /// <param name="canApplyArtifacts">Flag to determine if apply
+        /// artifacts can be triggered at the time of fetching the
+        /// document.</param>
+        /// <param name="provisioningState2">The provisioning status of the
+        /// resource.</param>
+        /// <param name="uniqueIdentifier2">The unique immutable identifier of
+        /// a resource (Guid).</param>
+        /// <param name="name3">The name of the virtual machine or
+        /// environment</param>
+        /// <param name="location2">The location of the new virtual machine or
+        /// environment</param>
+        /// <param name="tags2">The tags of the resource.</param>
+        /// <param name="labVmId">The identifier of the VM from which a formula
+        /// is to be created.</param>
+        /// <param name="provisioningState3">The provisioning status of the
+        /// resource.</param>
+        /// <param name="uniqueIdentifier3">The unique immutable identifier of
+        /// a resource (Guid).</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource</param>
+        public Formula(string location, string formulaLocation, string location1, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string author = default(string), string osType = default(string), System.DateTime? creationDate = default(System.DateTime?), int? instanceCount = default(int?), string notes = default(string), string ownerObjectId = default(string), string ownerUserPrincipalName = default(string), string createdByUserId = default(string), string createdByUser = default(string), System.DateTime? createdDate = default(System.DateTime?), string computeId = default(string), string customImageId = default(string), string galleryImageVersionId = default(string), string sharedImageId = default(string), string sharedImageVersion = default(string), string osType1 = default(string), string size = default(string), string userName = default(string), string password = default(string), string sshKey = default(string), bool? isAuthenticationWithSshKey = default(bool?), string fqdn = default(string), string labSubnetName = default(string), string labVirtualNetworkId = default(string), bool? disallowPublicIpAddress = default(bool?), IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>), string deploymentStatus = default(string), int? artifactsApplied = default(int?), int? totalArtifacts = default(int?), string offer = default(string), string publisher = default(string), string sku = default(string), string osType2 = default(string), string version = default(string), string planId = default(string), int? osDiskSizeGb = default(int?), IList<ComputeVmInstanceViewStatus> statuses = default(IList<ComputeVmInstanceViewStatus>), string osType3 = default(string), string vmSize = default(string), string networkInterfaceId = default(string), string osDiskId = default(string), IList<string> dataDiskIds = default(IList<string>), IList<ComputeDataDisk> dataDisks = default(IList<ComputeDataDisk>), string virtualNetworkId = default(string), string subnetId = default(string), string publicIpAddressId = default(string), string publicIpAddress = default(string), string privateIpAddress = default(string), string dnsName = default(string), string rdpAuthority = default(string), string sshAuthority = default(string), IList<InboundNatRule> inboundNatRules = default(IList<InboundNatRule>), string formulaId = default(string), string formulaName = default(string), string formulaType = default(string), string id1 = default(string), string name1 = default(string), string type1 = default(string), IDictionary<string, string> formulaTags = default(IDictionary<string, string>), string status = default(string), string taskType = default(string), IList<string> weekdays = default(IList<string>), string time = default(string), string time1 = default(string), int? minute = default(int?), string timeZoneId = default(string), string status1 = default(string), int? timeInMinutes = default(int?), string webhookUrl = default(string), string emailRecipient = default(string), string notificationLocale = default(string), System.DateTime? createdDate1 = default(System.DateTime?), string targetResourceId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string), SystemData scheduleSystemData = default(SystemData), string id2 = default(string), string name2 = default(string), string type2 = default(string), IDictionary<string, string> tags1 = default(IDictionary<string, string>), string status2 = default(string), string taskType1 = default(string), IList<string> weekdays1 = default(IList<string>), string time2 = default(string), string time3 = default(string), int? minute1 = default(int?), string timeZoneId1 = default(string), string status3 = default(string), int? timeInMinutes1 = default(int?), string webhookUrl1 = default(string), string emailRecipient1 = default(string), string notificationLocale1 = default(string), System.DateTime? createdDate2 = default(System.DateTime?), string targetResourceId1 = default(string), string provisioningState1 = default(string), string uniqueIdentifier1 = default(string), SystemData systemData1 = default(SystemData), SystemData systemData2 = default(SystemData), System.DateTime? expirationDate = default(System.DateTime?), bool? allowClaim = default(bool?), string storageType = default(string), string virtualMachineCreationSource = default(string), string environmentId = default(string), IList<DataDiskProperties> dataDiskParameters = default(IList<DataDiskProperties>), IList<ScheduleCreationParameter> scheduleParameters = default(IList<ScheduleCreationParameter>), string lastKnownPowerState = default(string), bool? canApplyArtifacts = default(bool?), string provisioningState2 = default(string), string uniqueIdentifier2 = default(string), string name3 = default(string), string location2 = default(string), IDictionary<string, string> tags2 = default(IDictionary<string, string>), string labVmId = default(string), string provisioningState3 = default(string), string uniqueIdentifier3 = default(string), SystemData systemData = default(SystemData))
+            : base(location, id, name, type, tags)
         {
             Description = description;
             Author = author;
             OsType = osType;
             CreationDate = creationDate;
-            FormulaContent = formulaContent;
-            Vm = vm;
+            InstanceCount = instanceCount;
+            Notes = notes;
+            OwnerObjectId = ownerObjectId;
+            OwnerUserPrincipalName = ownerUserPrincipalName;
+            CreatedByUserId = createdByUserId;
+            CreatedByUser = createdByUser;
+            CreatedDate = createdDate;
+            ComputeId = computeId;
+            CustomImageId = customImageId;
+            GalleryImageVersionId = galleryImageVersionId;
+            SharedImageId = sharedImageId;
+            SharedImageVersion = sharedImageVersion;
+            OsType1 = osType1;
+            Size = size;
+            UserName = userName;
+            Password = password;
+            SshKey = sshKey;
+            IsAuthenticationWithSshKey = isAuthenticationWithSshKey;
+            Fqdn = fqdn;
+            LabSubnetName = labSubnetName;
+            LabVirtualNetworkId = labVirtualNetworkId;
+            DisallowPublicIpAddress = disallowPublicIpAddress;
+            Artifacts = artifacts;
+            DeploymentStatus = deploymentStatus;
+            ArtifactsApplied = artifactsApplied;
+            TotalArtifacts = totalArtifacts;
+            Offer = offer;
+            Publisher = publisher;
+            Sku = sku;
+            OsType2 = osType2;
+            Version = version;
+            PlanId = planId;
+            OsDiskSizeGb = osDiskSizeGb;
+            Statuses = statuses;
+            OsType3 = osType3;
+            VmSize = vmSize;
+            NetworkInterfaceId = networkInterfaceId;
+            OsDiskId = osDiskId;
+            DataDiskIds = dataDiskIds;
+            DataDisks = dataDisks;
+            VirtualNetworkId = virtualNetworkId;
+            SubnetId = subnetId;
+            PublicIpAddressId = publicIpAddressId;
+            PublicIpAddress = publicIpAddress;
+            PrivateIpAddress = privateIpAddress;
+            DnsName = dnsName;
+            RdpAuthority = rdpAuthority;
+            SshAuthority = sshAuthority;
+            InboundNatRules = inboundNatRules;
+            FormulaId = formulaId;
+            FormulaName = formulaName;
+            FormulaType = formulaType;
+            Id1 = id1;
+            Name1 = name1;
+            Type1 = type1;
+            FormulaTags = formulaTags;
+            FormulaLocation = formulaLocation;
+            Status = status;
+            TaskType = taskType;
+            Weekdays = weekdays;
+            Time = time;
+            Time1 = time1;
+            Minute = minute;
+            TimeZoneId = timeZoneId;
+            Status1 = status1;
+            TimeInMinutes = timeInMinutes;
+            WebhookUrl = webhookUrl;
+            EmailRecipient = emailRecipient;
+            NotificationLocale = notificationLocale;
+            CreatedDate1 = createdDate1;
+            TargetResourceId = targetResourceId;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            ScheduleSystemData = scheduleSystemData;
+            Id2 = id2;
+            Name2 = name2;
+            Type2 = type2;
+            Tags1 = tags1;
+            Location1 = location1;
+            Status2 = status2;
+            TaskType1 = taskType1;
+            Weekdays1 = weekdays1;
+            Time2 = time2;
+            Time3 = time3;
+            Minute1 = minute1;
+            TimeZoneId1 = timeZoneId1;
+            Status3 = status3;
+            TimeInMinutes1 = timeInMinutes1;
+            WebhookUrl1 = webhookUrl1;
+            EmailRecipient1 = emailRecipient1;
+            NotificationLocale1 = notificationLocale1;
+            CreatedDate2 = createdDate2;
+            TargetResourceId1 = targetResourceId1;
+            ProvisioningState1 = provisioningState1;
+            UniqueIdentifier1 = uniqueIdentifier1;
+            SystemData1 = systemData1;
+            SystemData2 = systemData2;
+            ExpirationDate = expirationDate;
+            AllowClaim = allowClaim;
+            StorageType = storageType;
+            VirtualMachineCreationSource = virtualMachineCreationSource;
+            EnvironmentId = environmentId;
+            DataDiskParameters = dataDiskParameters;
+            ScheduleParameters = scheduleParameters;
+            LastKnownPowerState = lastKnownPowerState;
+            CanApplyArtifacts = canApplyArtifacts;
+            ProvisioningState2 = provisioningState2;
+            UniqueIdentifier2 = uniqueIdentifier2;
+            Name3 = name3;
+            Location2 = location2;
+            Tags2 = tags2;
+            LabVmId = labVmId;
+            ProvisioningState3 = provisioningState3;
+            UniqueIdentifier3 = uniqueIdentifier3;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -78,10 +413,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the author of the formula.
+        /// Gets the author of the formula.
         /// </summary>
         [JsonProperty(PropertyName = "properties.author")]
-        public string Author { get; set; }
+        public string Author { get; private set; }
 
         /// <summary>
         /// Gets or sets the OS type of the formula.
@@ -96,29 +431,762 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
-        /// Gets or sets the content of the formula.
+        /// Gets or sets the number of virtual machine instances to create.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.formulaContent")]
-        public LabVirtualMachineCreationParameter FormulaContent { get; set; }
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.bulkCreationParameters.instanceCount")]
+        public int? InstanceCount { get; set; }
 
         /// <summary>
-        /// Gets or sets information about a VM from which a formula is to be
-        /// created.
+        /// Gets or sets the notes of the virtual machine.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vm")]
-        public FormulaPropertiesFromVm Vm { get; set; }
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.notes")]
+        public string Notes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object identifier of the owner of the virtual
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.ownerObjectId")]
+        public string OwnerObjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user principal name of the virtual machine owner.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.ownerUserPrincipalName")]
+        public string OwnerUserPrincipalName { get; set; }
+
+        /// <summary>
+        /// Gets the object identifier of the creator of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.createdByUserId")]
+        public string CreatedByUserId { get; private set; }
+
+        /// <summary>
+        /// Gets the email address of creator of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.createdByUser")]
+        public string CreatedByUser { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the creation date of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.createdDate")]
+        public System.DateTime? CreatedDate { get; set; }
+
+        /// <summary>
+        /// Gets the resource identifier (Microsoft.Compute) of the virtual
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeId")]
+        public string ComputeId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the custom image identifier of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.customImageId")]
+        public string CustomImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shared gallery image version resource identifier
+        /// of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.galleryImageVersionId")]
+        public string GalleryImageVersionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shared image resource identifier of the virtual
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.sharedImageId")]
+        public string SharedImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shared image version for the specified shared
+        /// image Id. Will use latest if not specified.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.sharedImageVersion")]
+        public string SharedImageVersion { get; set; }
+
+        /// <summary>
+        /// Gets the OS type of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.osType")]
+        public string OsType1 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the size of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user name of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.userName")]
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password of the virtual machine administrator.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.password")]
+        public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SSH key of the virtual machine administrator.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.sshKey")]
+        public string SshKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether this virtual machine uses an SSH key
+        /// for authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.isAuthenticationWithSshKey")]
+        public bool? IsAuthenticationWithSshKey { get; set; }
+
+        /// <summary>
+        /// Gets the fully-qualified domain name of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.fqdn")]
+        public string Fqdn { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the lab subnet name of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.labSubnetName")]
+        public string LabSubnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the lab virtual network identifier of the virtual
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.labVirtualNetworkId")]
+        public string LabVirtualNetworkId { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the virtual machine is to be created
+        /// without a public IP address.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.disallowPublicIpAddress")]
+        public bool? DisallowPublicIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the artifacts to be installed on the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.artifacts")]
+        public IList<ArtifactInstallProperties> Artifacts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the deployment status of the artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.artifactDeploymentStatus.deploymentStatus")]
+        public string DeploymentStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total count of the artifacts that were
+        /// successfully applied.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.artifactDeploymentStatus.artifactsApplied")]
+        public int? ArtifactsApplied { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total count of the artifacts that were tentatively
+        /// applied.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.artifactDeploymentStatus.totalArtifacts")]
+        public int? TotalArtifacts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the offer of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.galleryImageReference.offer")]
+        public string Offer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the publisher of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.galleryImageReference.publisher")]
+        public string Publisher { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SKU of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.galleryImageReference.sku")]
+        public string Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OS type of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.galleryImageReference.osType")]
+        public string OsType2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of the gallery image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.galleryImageReference.version")]
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the plan associated with the virtual machine
+        /// image
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.planId")]
+        public string PlanId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the size of an empty data disk in gigabytes.
+        /// This element can be used to overwrite the size of the disk in a
+        /// virtual machine image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.osDiskSizeGb")]
+        public int? OsDiskSizeGb { get; set; }
+
+        /// <summary>
+        /// Gets the statuses of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeVm.statuses")]
+        public IList<ComputeVmInstanceViewStatus> Statuses { get; set; }
+
+        /// <summary>
+        /// Gets the OS type of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeVm.osType")]
+        public string OsType3 { get; set; }
+
+        /// <summary>
+        /// Gets the size of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeVm.vmSize")]
+        public string VmSize { get; set; }
+
+        /// <summary>
+        /// Gets the network interface ID of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeVm.networkInterfaceId")]
+        public string NetworkInterfaceId { get; set; }
+
+        /// <summary>
+        /// Gets OS disk blob uri for the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeVm.osDiskId")]
+        public string OsDiskId { get; set; }
+
+        /// <summary>
+        /// Gets data disks blob uri for the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeVm.dataDiskIds")]
+        public IList<string> DataDiskIds { get; set; }
+
+        /// <summary>
+        /// Gets all data disks attached to the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.computeVm.dataDisks")]
+        public IList<ComputeDataDisk> DataDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.virtualNetworkId")]
+        public string VirtualNetworkId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the sub net.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.subnetId")]
+        public string SubnetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the public IP address.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.publicIpAddressId")]
+        public string PublicIpAddressId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the public IP address.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.publicIpAddress")]
+        public string PublicIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the private IP address.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.privateIpAddress")]
+        public string PrivateIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DNS name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.dnsName")]
+        public string DnsName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the RdpAuthority property is a server DNS host name or
+        /// IP address followed by the service port number for RDP (Remote
+        /// Desktop Protocol).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.rdpAuthority")]
+        public string RdpAuthority { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SshAuthority property is a server DNS host name or
+        /// IP address followed by the service port number for SSH.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.sshAuthority")]
+        public string SshAuthority { get; set; }
+
+        /// <summary>
+        /// Gets or sets the incoming NAT rules
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.networkInterface.sharedPublicIpAddressConfiguration.inboundNatRules")]
+        public IList<InboundNatRule> InboundNatRules { get; set; }
+
+        /// <summary>
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.id")]
+        public string FormulaId { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.name")]
+        public string FormulaName { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.type")]
+        public string FormulaType { get; private set; }
+
+        /// <summary>
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.id")]
+        public string Id1 { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.name")]
+        public string Name1 { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.type")]
+        public string Type1 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.tags")]
+        public IDictionary<string, string> FormulaTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.location")]
+        public string FormulaLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status of the schedule (i.e. Enabled, Disabled).
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.taskType")]
+        public string TaskType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the days of the week for which the schedule is set
+        /// (e.g. Sunday, Monday, Tuesday, etc.).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.weeklyRecurrence.weekdays")]
+        public IList<string> Weekdays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of the day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.weeklyRecurrence.time")]
+        public string Time { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.dailyRecurrence.time")]
+        public string Time1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets minutes of the hour the schedule will run.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.hourlyRecurrence.minute")]
+        public int? Minute { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time zone ID (e.g. Pacific Standard time).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.timeZoneId")]
+        public string TimeZoneId { get; set; }
+
+        /// <summary>
+        /// Gets or sets if notifications are enabled for this schedule (i.e.
+        /// Enabled, Disabled). Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.status")]
+        public string Status1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets time in minutes before event at which notification
+        /// will be sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.timeInMinutes")]
+        public int? TimeInMinutes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the webhook URL to which the notification will be
+        /// sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.webhookUrl")]
+        public string WebhookUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email recipient to send notifications to (can be a
+        /// list of semi-colon separated email addresses).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.emailRecipient")]
+        public string EmailRecipient { get; set; }
+
+        /// <summary>
+        /// Gets or sets the locale to use when sending a notification
+        /// (fallback for unsupported languages is EN).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.notificationSettings.notificationLocale")]
+        public string NotificationLocale { get; set; }
+
+        /// <summary>
+        /// Gets the creation date of the schedule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.createdDate")]
+        public System.DateTime? CreatedDate1 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID to which the schedule belongs
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.targetResourceId")]
+        public string TargetResourceId { get; set; }
 
         /// <summary>
         /// Gets the provisioning status of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the unique immutable identifier of a resource (Guid).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; private set; }
 
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsShutdown.systemData")]
+        public SystemData ScheduleSystemData { get; private set; }
+
+        /// <summary>
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.id")]
+        public string Id2 { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.name")]
+        public string Name2 { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.type")]
+        public string Type2 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.tags")]
+        public IDictionary<string, string> Tags1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.location")]
+        public string Location1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status of the schedule (i.e. Enabled, Disabled).
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.status")]
+        public string Status2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task type of the schedule (e.g.
+        /// LabVmsShutdownTask, LabVmAutoStart).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.taskType")]
+        public string TaskType1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the days of the week for which the schedule is set
+        /// (e.g. Sunday, Monday, Tuesday, etc.).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.weeklyRecurrence.weekdays")]
+        public IList<string> Weekdays1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of the day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.weeklyRecurrence.time")]
+        public string Time2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time of day the schedule will occur.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.dailyRecurrence.time")]
+        public string Time3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets minutes of the hour the schedule will run.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.hourlyRecurrence.minute")]
+        public int? Minute1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time zone ID (e.g. Pacific Standard time).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.timeZoneId")]
+        public string TimeZoneId1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets if notifications are enabled for this schedule (i.e.
+        /// Enabled, Disabled). Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.status")]
+        public string Status3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets time in minutes before event at which notification
+        /// will be sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.timeInMinutes")]
+        public int? TimeInMinutes1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the webhook URL to which the notification will be
+        /// sent.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.webhookUrl")]
+        public string WebhookUrl1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email recipient to send notifications to (can be a
+        /// list of semi-colon separated email addresses).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.emailRecipient")]
+        public string EmailRecipient1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the locale to use when sending a notification
+        /// (fallback for unsupported languages is EN).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.notificationSettings.notificationLocale")]
+        public string NotificationLocale1 { get; set; }
+
+        /// <summary>
+        /// Gets the creation date of the schedule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.createdDate")]
+        public System.DateTime? CreatedDate2 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID to which the schedule belongs
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.targetResourceId")]
+        public string TargetResourceId1 { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning status of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.provisioningState")]
+        public string ProvisioningState1 { get; private set; }
+
+        /// <summary>
+        /// Gets the unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.properties.uniqueIdentifier")]
+        public string UniqueIdentifier1 { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.properties.labVmsStartup.systemData")]
+        public SystemData SystemData1 { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.applicableSchedule.systemData")]
+        public SystemData SystemData2 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the expiration date for VM.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.expirationDate")]
+        public System.DateTime? ExpirationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether another user can take ownership of
+        /// the virtual machine
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.allowClaim")]
+        public bool? AllowClaim { get; set; }
+
+        /// <summary>
+        /// Gets or sets storage type to use for virtual machine (i.e.
+        /// Standard, Premium, StandardSSD). Possible values include:
+        /// 'Standard', 'Premium', 'StandardSSD'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.storageType")]
+        public string StorageType { get; set; }
+
+        /// <summary>
+        /// Gets tells source of creation of lab virtual machine. Output
+        /// property only. Possible values include: 'FromCustomImage',
+        /// 'FromGalleryImage', 'FromSharedGalleryImage'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.virtualMachineCreationSource")]
+        public string VirtualMachineCreationSource { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the environment that contains this
+        /// virtual machine, if any.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.environmentId")]
+        public string EnvironmentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets new or existing data disks to attach to the virtual
+        /// machine after creation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.dataDiskParameters")]
+        public IList<DataDiskProperties> DataDiskParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets virtual Machine schedules to be created
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.scheduleParameters")]
+        public IList<ScheduleCreationParameter> ScheduleParameters { get; set; }
+
+        /// <summary>
+        /// Gets last known compute power state captured in DTL
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.lastKnownPowerState")]
+        public string LastKnownPowerState { get; private set; }
+
+        /// <summary>
+        /// Gets flag to determine if apply artifacts can be triggered at the
+        /// time of fetching the document.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.canApplyArtifacts")]
+        public bool? CanApplyArtifacts { get; private set; }
+
+        /// <summary>
+        /// Gets the provisioning status of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.provisioningState")]
+        public string ProvisioningState2 { get; private set; }
+
+        /// <summary>
+        /// Gets the unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.properties.uniqueIdentifier")]
+        public string UniqueIdentifier2 { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the name of the virtual machine or environment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.name")]
+        public string Name3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the new virtual machine or environment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.location")]
+        public string Location2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.formulaContent.tags")]
+        public IDictionary<string, string> Tags2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identifier of the VM from which a formula is to be
+        /// created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vm.labVmId")]
+        public string LabVmId { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning status of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState3 { get; private set; }
+
+        /// <summary>
+        /// Gets the unique immutable identifier of a resource (Guid).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
+        public string UniqueIdentifier3 { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (FormulaLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FormulaLocation");
+            }
+            if (Location1 == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location1");
+            }
+        }
     }
 }

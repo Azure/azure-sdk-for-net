@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// Request body for adding a new or existing data disk to a virtual
     /// machine.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DataDiskProperties
     {
         /// <summary>
@@ -30,16 +33,22 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the DataDiskProperties class.
         /// </summary>
-        /// <param name="attachNewDataDiskOptions">Specifies options to attach
-        /// a new disk to the virtual machine.</param>
+        /// <param name="diskSizeGiB">Size of the disk to be attached in
+        /// Gibibytes.</param>
+        /// <param name="diskName">The name of the disk to be attached.</param>
+        /// <param name="diskType">The storage type for the disk (i.e.
+        /// Standard, Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'</param>
         /// <param name="existingLabDiskId">Specifies the existing lab disk id
         /// to attach to virtual machine.</param>
         /// <param name="hostCaching">Caching option for a data disk (i.e.
         /// None, ReadOnly, ReadWrite). Possible values include: 'None',
         /// 'ReadOnly', 'ReadWrite'</param>
-        public DataDiskProperties(AttachNewDataDiskOptions attachNewDataDiskOptions = default(AttachNewDataDiskOptions), string existingLabDiskId = default(string), string hostCaching = default(string))
+        public DataDiskProperties(int? diskSizeGiB = default(int?), string diskName = default(string), string diskType = default(string), string existingLabDiskId = default(string), string hostCaching = default(string))
         {
-            AttachNewDataDiskOptions = attachNewDataDiskOptions;
+            DiskSizeGiB = diskSizeGiB;
+            DiskName = diskName;
+            DiskType = diskType;
             ExistingLabDiskId = existingLabDiskId;
             HostCaching = hostCaching;
             CustomInit();
@@ -51,11 +60,24 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies options to attach a new disk to the virtual
-        /// machine.
+        /// Gets or sets size of the disk to be attached in Gibibytes.
         /// </summary>
-        [JsonProperty(PropertyName = "attachNewDataDiskOptions")]
-        public AttachNewDataDiskOptions AttachNewDataDiskOptions { get; set; }
+        [JsonProperty(PropertyName = "attachNewDataDiskOptions.diskSizeGiB")]
+        public int? DiskSizeGiB { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the disk to be attached.
+        /// </summary>
+        [JsonProperty(PropertyName = "attachNewDataDiskOptions.diskName")]
+        public string DiskName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage type for the disk (i.e. Standard,
+        /// Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'
+        /// </summary>
+        [JsonProperty(PropertyName = "attachNewDataDiskOptions.diskType")]
+        public string DiskType { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the existing lab disk id to attach to

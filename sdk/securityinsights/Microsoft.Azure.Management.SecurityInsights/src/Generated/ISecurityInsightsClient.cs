@@ -116,11 +116,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IDomainWhoisOperations DomainWhois { get; }
 
         /// <summary>
-        /// Gets the IEntityQueriesOperations.
-        /// </summary>
-        IEntityQueriesOperations EntityQueries { get; }
-
-        /// <summary>
         /// Gets the IEntitiesOperations.
         /// </summary>
         IEntitiesOperations Entities { get; }
@@ -139,6 +134,16 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets the IEntityRelationsOperations.
         /// </summary>
         IEntityRelationsOperations EntityRelations { get; }
+
+        /// <summary>
+        /// Gets the IEntityQueriesOperations.
+        /// </summary>
+        IEntityQueriesOperations EntityQueries { get; }
+
+        /// <summary>
+        /// Gets the IEntityQueryTemplatesOperations.
+        /// </summary>
+        IEntityQueryTemplatesOperations EntityQueryTemplates { get; }
 
         /// <summary>
         /// Gets the IIncidentsOperations.
@@ -161,6 +166,11 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IMetadataOperations Metadata { get; }
 
         /// <summary>
+        /// Gets the IOfficeConsentsOperations.
+        /// </summary>
+        IOfficeConsentsOperations OfficeConsents { get; }
+
+        /// <summary>
         /// Gets the ISentinelOnboardingStatesOperations.
         /// </summary>
         ISentinelOnboardingStatesOperations SentinelOnboardingStates { get; }
@@ -179,6 +189,21 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets the ISourceControlsOperations.
         /// </summary>
         ISourceControlsOperations SourceControls { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorOperations ThreatIntelligenceIndicator { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorsOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorsOperations ThreatIntelligenceIndicators { get; }
+
+        /// <summary>
+        /// Gets the IThreatIntelligenceIndicatorMetricsOperations.
+        /// </summary>
+        IThreatIntelligenceIndicatorMetricsOperations ThreatIntelligenceIndicatorMetrics { get; }
 
         /// <summary>
         /// Gets the IWatchlistsOperations.
@@ -201,34 +226,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         IDataConnectorsCheckRequirementsOperations DataConnectorsCheckRequirements { get; }
 
         /// <summary>
-        /// Gets the IThreatIntelligenceIndicatorOperations.
-        /// </summary>
-        IThreatIntelligenceIndicatorOperations ThreatIntelligenceIndicator { get; }
-
-        /// <summary>
-        /// Gets the IThreatIntelligenceIndicatorsOperations.
-        /// </summary>
-        IThreatIntelligenceIndicatorsOperations ThreatIntelligenceIndicators { get; }
-
-        /// <summary>
-        /// Gets the IThreatIntelligenceIndicatorMetricsOperations.
-        /// </summary>
-        IThreatIntelligenceIndicatorMetricsOperations ThreatIntelligenceIndicatorMetrics { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IOfficeConsentsOperations.
-        /// </summary>
-        IOfficeConsentsOperations OfficeConsents { get; }
-
-        /// <summary>
-        /// Gets the IEntityQueryTemplatesOperations.
-        /// </summary>
-        IEntityQueryTemplatesOperations EntityQueryTemplates { get; }
 
     }
 }

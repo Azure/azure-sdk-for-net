@@ -10,12 +10,17 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Property overrides on a subnet of a virtual network.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class SubnetOverride
     {
         /// <summary>
@@ -39,17 +44,17 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// IP addresses can be assigned to virtual machines on this subnet
         /// (i.e. Allow, Deny). Possible values include: 'Default', 'Deny',
         /// 'Allow'</param>
-        /// <param name="sharedPublicIpAddressConfiguration">Properties that
-        /// virtual machines on this subnet will share.</param>
+        /// <param name="allowedPorts">Backend ports that virtual machines on
+        /// this subnet are allowed to expose</param>
         /// <param name="virtualNetworkPoolName">The virtual network pool
         /// associated with this subnet.</param>
-        public SubnetOverride(string resourceId = default(string), string labSubnetName = default(string), string useInVmCreationPermission = default(string), string usePublicIpAddressPermission = default(string), SubnetSharedPublicIpAddressConfiguration sharedPublicIpAddressConfiguration = default(SubnetSharedPublicIpAddressConfiguration), string virtualNetworkPoolName = default(string))
+        public SubnetOverride(string resourceId = default(string), string labSubnetName = default(string), string useInVmCreationPermission = default(string), string usePublicIpAddressPermission = default(string), IList<Port> allowedPorts = default(IList<Port>), string virtualNetworkPoolName = default(string))
         {
             ResourceId = resourceId;
             LabSubnetName = labSubnetName;
             UseInVmCreationPermission = useInVmCreationPermission;
             UsePublicIpAddressPermission = usePublicIpAddressPermission;
-            SharedPublicIpAddressConfiguration = sharedPublicIpAddressConfiguration;
+            AllowedPorts = allowedPorts;
             VirtualNetworkPoolName = virtualNetworkPoolName;
             CustomInit();
         }
@@ -88,11 +93,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string UsePublicIpAddressPermission { get; set; }
 
         /// <summary>
-        /// Gets or sets properties that virtual machines on this subnet will
-        /// share.
+        /// Gets or sets backend ports that virtual machines on this subnet are
+        /// allowed to expose
         /// </summary>
-        [JsonProperty(PropertyName = "sharedPublicIpAddressConfiguration")]
-        public SubnetSharedPublicIpAddressConfiguration SharedPublicIpAddressConfiguration { get; set; }
+        [JsonProperty(PropertyName = "sharedPublicIpAddressConfiguration.allowedPorts")]
+        public IList<Port> AllowedPorts { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual network pool associated with this subnet.

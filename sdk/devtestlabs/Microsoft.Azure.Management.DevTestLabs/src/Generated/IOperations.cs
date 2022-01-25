@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.DevTestLabs
     public partial interface IOperations
     {
         /// <summary>
-        /// Get operation.
+        /// Get operation
         /// </summary>
-        /// <param name='locationName'>
-        /// The name of the location.
+        /// <param name='location'>
+        /// The name of Azure region.
         /// </param>
         /// <param name='name'>
-        /// The name of the operation.
+        /// Name of the operation id
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -47,6 +47,6 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationResult>> GetWithHttpMessagesAsync(string locationName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationResult>> GetWithHttpMessagesAsync(string location, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

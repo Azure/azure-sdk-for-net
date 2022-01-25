@@ -19,41 +19,45 @@ namespace Microsoft.Azure.Management.DevTestLabs
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DevTestLab", "ArmTemplates", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "ArtifactSources", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Artifacts", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Costs", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "CustomImages", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Disks", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Environments", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Formulas", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "GalleryImages", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "GlobalSchedules", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Labs", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "NotificationChannels", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Operations", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Policies", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "PolicySets", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "ProviderOperations", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Schedules", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Secrets", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "ServiceFabricSchedules", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "ServiceFabrics", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "ServiceRunners", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "Users", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "VirtualMachineSchedules", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "VirtualMachines", "2018-09-15"),
-                new Tuple<string, string, string>("DevTestLab", "VirtualNetworks", "2018-09-15"),
+                new Tuple<string, string, string>("DevTestLab", "ArmTemplates", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "ArtifactSources", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Artifacts", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "BastionHosts", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Costs", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "CustomImages", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Disks", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Environments", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Formulas", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "GalleryImages", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "GlobalSchedules", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "LabSecrets", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Labs", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "NotificationChannels", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Operations", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Policies", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "PolicySets", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "ProviderOperations", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Schedules", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Secrets", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "ServiceFabricSchedules", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "ServiceFabrics", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "ServiceRunners", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "SharedGalleries", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "SharedImages", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "Users", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "VirtualMachineSchedules", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "VirtualMachines", "2021-09-01"),
+                new Tuple<string, string, string>("DevTestLab", "VirtualNetworks", "2021-09-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/devtestlabs/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\repos\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "d4365e634050481a5d6966cd6dd2e4a361d519dd";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Kencdk/azure-rest-api-specs/blob/dev-devtestlabs-Microsoft.DevTestLab-2021-09-01/specification/devtestlabs/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\Azure\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Kencdk";
+      public static readonly String GithubBranchName = "dev-devtestlabs-Microsoft.DevTestLab-2021-09-01";
+      public static readonly String GithubCommidId = "a75b23bfa66ed6639e952c38eb0466aa912d5415";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

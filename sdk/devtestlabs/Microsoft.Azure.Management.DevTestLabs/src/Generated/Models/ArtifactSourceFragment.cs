@@ -10,18 +10,14 @@
 
 namespace Microsoft.Azure.Management.DevTestLabs.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Properties of an artifact source.
+    /// Patch
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class ArtifactSourceFragment : UpdateResource
+    public partial class ArtifactSourceFragment : Tags
     {
         /// <summary>
         /// Initializes a new instance of the ArtifactSourceFragment class.
@@ -34,33 +30,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the ArtifactSourceFragment class.
         /// </summary>
-        /// <param name="tags">The tags of the resource.</param>
-        /// <param name="displayName">The artifact source's display
-        /// name.</param>
-        /// <param name="uri">The artifact source's URI.</param>
-        /// <param name="sourceType">The artifact source's type. Possible
-        /// values include: 'VsoGit', 'GitHub'</param>
-        /// <param name="folderPath">The folder containing artifacts.</param>
-        /// <param name="armTemplateFolderPath">The folder containing Azure
-        /// Resource Manager templates.</param>
-        /// <param name="branchRef">The artifact source's branch
-        /// reference.</param>
-        /// <param name="securityToken">The security token to authenticate to
-        /// the artifact source.</param>
-        /// <param name="status">Indicates if the artifact source is enabled
-        /// (values: Enabled, Disabled). Possible values include: 'Enabled',
-        /// 'Disabled'</param>
-        public ArtifactSourceFragment(IDictionary<string, string> tags = default(IDictionary<string, string>), string displayName = default(string), string uri = default(string), string sourceType = default(string), string folderPath = default(string), string armTemplateFolderPath = default(string), string branchRef = default(string), string securityToken = default(string), string status = default(string))
-            : base(tags)
+        /// <param name="tagsProperty">Resource tags</param>
+        public ArtifactSourceFragment(IDictionary<string, string> tagsProperty = default(IDictionary<string, string>))
+            : base(tagsProperty)
         {
-            DisplayName = displayName;
-            Uri = uri;
-            SourceType = sourceType;
-            FolderPath = folderPath;
-            ArmTemplateFolderPath = armTemplateFolderPath;
-            BranchRef = branchRef;
-            SecurityToken = securityToken;
-            Status = status;
             CustomInit();
         }
 
@@ -68,58 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the artifact source's display name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.displayName")]
-        public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the artifact source's URI.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.uri")]
-        public string Uri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the artifact source's type. Possible values include:
-        /// 'VsoGit', 'GitHub'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.sourceType")]
-        public string SourceType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the folder containing artifacts.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.folderPath")]
-        public string FolderPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the folder containing Azure Resource Manager
-        /// templates.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.armTemplateFolderPath")]
-        public string ArmTemplateFolderPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the artifact source's branch reference.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.branchRef")]
-        public string BranchRef { get; set; }
-
-        /// <summary>
-        /// Gets or sets the security token to authenticate to the artifact
-        /// source.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.securityToken")]
-        public string SecurityToken { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates if the artifact source is enabled (values:
-        /// Enabled, Disabled). Possible values include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
 
     }
 }
