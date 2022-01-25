@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             targetUpdateResponse = await targetCollection.CreateOrUpdateAsync(true, iscsiTargetName, iscsiTargetCreate);
             iscsiTarget = targetUpdateResponse.Value;
 
-            Assert.AreEqual(string.Empty, iscsiTarget.Data.ManagedBy);
+            Assert.AreEqual(null, iscsiTarget.Data.ManagedBy);
             Assert.AreEqual(ProvisioningStates.Succeeded, iscsiTarget.Data.ProvisioningState);
 
             // delete iSCSI target
