@@ -201,9 +201,9 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The permissions associated with the shared access signature. 
-        /// The user is restricted to operations allowed by the permissions. 
-        /// This field must be omitted if it has been specified in an 
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
+        /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
         /// <param name="expiresOn">
@@ -222,9 +222,9 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Container Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The permissions associated with the shared access signature. 
+        /// The permissions associated with the shared access signature.
         /// The user is restricted to operations allowed by the permissions.
-        /// This field must be omitted if it has been specified in an 
+        /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
         /// <param name="expiresOn">
