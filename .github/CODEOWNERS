@@ -274,6 +274,9 @@
 # ServiceLabel: %Device Provisioning Service %Service Attention
 /sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/            @nberdy
 
+# ServiceLabel: %Device Update for IoT Hub %Service Attention
+/sdk/deviceupdate/                              @dpokluda @sedols
+
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
 /sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai
