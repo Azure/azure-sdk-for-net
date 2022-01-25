@@ -95,13 +95,13 @@ dotnet new --install sdk/template-dpg/Azure.ServiceTemplate.Template
   create project folder `Azure.<group>.<service>`. e.g. Azure.IoT.DeviceUpdate under `sdk/<service>` folder, navigate to the project folder, and run 'dotnet new' as following:
   
 ```
-sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryName [Client-Library-Title] --swagger [input-swagger-file-path] --securityScopes [security-scopes] --force
+sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryName [Client-Library-Title] --groupName [namespace-group-name] --swagger [input-swagger-file-path] --securityScopes [security-scopes] --force
 ```
 
 e.g.
 
 ```
-dotnet new dataplane --libraryName DeviceUpdate --swagger https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2021-06-01-preview/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
+dotnet new dataplane --libraryName DeviceUpdate --groupName IoT --swagger https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2021-06-01-preview/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
 ```
 
 - update the solution file if needed
