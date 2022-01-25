@@ -16,10 +16,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Initializes a new instance of the <see cref="SignalRConnectionAttribute"/> class.
         /// </summary>
-        /// <param name="conneciton">Gets or sets the app setting name that contains the Azure SignalR connection.</param>
-        public SignalRConnectionAttribute(string conneciton)
+        /// <param name="connection">Gets or sets the app setting name that contains the Azure SignalR connection.</param>
+        public SignalRConnectionAttribute(string connection)
         {
-            Connection = conneciton ?? throw new ArgumentNullException(nameof(conneciton));
+            Connection = connection ?? throw new ArgumentNullException(nameof(connection));
         }
 
         /// <summary>

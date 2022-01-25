@@ -116,7 +116,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     }
     public abstract partial class ServerlessHub<T> where T : class
     {
-        protected ServerlessHub(Microsoft.Azure.SignalR.Management.ServiceHubContext<T> serviceHubContext = null) { }
+        protected ServerlessHub() { }
+        protected ServerlessHub(Microsoft.Azure.SignalR.Management.ServiceHubContext<T> serviceHubContext) { }
         public Microsoft.Azure.SignalR.Management.ClientManager ClientManager { get { throw null; } }
         public Microsoft.AspNetCore.SignalR.IHubClients<T> Clients { get { throw null; } }
         public Microsoft.Azure.SignalR.Management.GroupManager Groups { get { throw null; } }
@@ -139,6 +140,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public string ConnectionStringSetting { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string HubName { get { throw null; } set { } }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
+    public partial class SignalRConnectionAttribute : System.Attribute, Microsoft.Azure.WebJobs.IConnectionProvider
+    {
+        public SignalRConnectionAttribute(string connection) { }
+        public string Connection { get { throw null; } set { } }
     }
     public partial class SignalRConnectionDetail
     {
