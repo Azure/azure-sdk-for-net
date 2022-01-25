@@ -16,6 +16,7 @@ using System.Threading;
 
 namespace ResourceGroups.Tests
 {
+    [TestCaseOrderer("Orderer.Helper.PriorityOrderer", "ResourceGroups.Tests")]
     public class LiveSubscriptionTests : TestBase
     {
         private const string subscriptionId = "d17ad3ae-320e-42ff-b5a1-705389c6063a";
@@ -24,7 +25,6 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetSubscriptionClientWithHandler(context, handler);
-            //client.BaseUri = new Uri("https://centraluseuap.management.azure.com/");
             return client;
         }
 
@@ -37,23 +37,19 @@ namespace ResourceGroups.Tests
             {
                 var client = GetSubscriptionClient(context, handler);
 
-                /*var result = client.Subscription.Rename(subscriptionId, new Microsoft.Azure.Management.Subscription.Models.SubscriptionName()
+                var result = client.Subscription.Rename(subscriptionId, new Microsoft.Azure.Management.Subscription.Models.SubscriptionName()
                 {
-                    SubscriptionNameProperty = "test-224"
+                    SubscriptionNameProperty = "renamed-subscription-" + Guid.NewGuid().ToString().Substring(0, 5)
                 });
 
                 Assert.Equal(HttpMethod.Post, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-                Assert.Equal(subscriptionId, result.SubscriptionId);*/
-                Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Rename(subscriptionId, new Microsoft.Azure.Management.Subscription.Models.SubscriptionName()
-                {
-                    SubscriptionNameProperty = "test-224"
-                }));
+                Assert.Equal(subscriptionId, result.SubscriptionId);
             }
         }
 
-        [Fact]
-        public void Cancel()
+        //[Fact]
+        private void Cancel()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -66,25 +62,26 @@ namespace ResourceGroups.Tests
                 Assert.Equal(HttpMethod.Post, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
                 Assert.Equal(subscriptionId, result.SubscriptionId);
-                //Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Cancel(subscriptionId));
             }
         }
+        
         [Fact]
         public void Enable()
         {
+            Cancel();
+            Thread.Sleep(3 * 60 * 1000);
+
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetSubscriptionClient(context, handler);
 
-                /*var result = client.Subscription.Enable(subscriptionId);
+                var result = client.Subscription.Enable(subscriptionId);
 
                 Assert.Equal(HttpMethod.Post, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-                Assert.Equal(subscriptionId, result.SubscriptionId);*/
-
-                Assert.Throws<ErrorResponseBodyException>(() => _ = client.Subscription.Enable(subscriptionId));
+                Assert.Equal(subscriptionId, result.SubscriptionId);
             }
         }
 
@@ -131,12 +128,6 @@ namespace ResourceGroups.Tests
 
                 Assert.Equal(HttpMethod.Put, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-                /*Assert.Equal(subscriptionId, result.SubscriptionId);
-                Assert.Equal("Pending", result.AcceptOwnershipState);
-                Assert.Equal("abc@test.com", result.BillingOwner);
-                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
-                Assert.Equal("Test Subscription", result.DisplayName);*/
             }
         }
 
@@ -154,12 +145,6 @@ namespace ResourceGroups.Tests
 
                 Assert.Equal(HttpMethod.Get, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-                /*Assert.Equal(subscriptionId, result.SubscriptionId);
-                Assert.Equal("Pending", result.AcceptOwnershipState);
-                Assert.Equal("abc@test.com", result.BillingOwner);
-                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
-                Assert.Equal("Test Subscription", result.DisplayName);*/
             }
         }
 
@@ -178,12 +163,6 @@ namespace ResourceGroups.Tests
 
                 Assert.Equal(HttpMethod.Delete, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-                /*Assert.Equal(subscriptionId, result.SubscriptionId);
-                Assert.Equal("Pending", result.AcceptOwnershipState);
-                Assert.Equal("abc@test.com", result.BillingOwner);
-                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
-                Assert.Equal("Test Subscription", result.DisplayName);*/
             }
         }
 
@@ -223,11 +202,6 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetSubscriptionClient(context, handler);
-
-                /*var result = client.Subscription.AcceptOwnershipStatus(subscriptionId);
-
-                Assert.Equal(HttpMethod.Get, handler.Method);
-                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));*/
                 Assert.Throws<ErrorResponseBodyException>(() => client.Subscription.AcceptOwnershipStatus(subscriptionId));
             }
         }
@@ -254,12 +228,6 @@ namespace ResourceGroups.Tests
 
                 Assert.Equal(HttpMethod.Put, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-                /*Assert.Equal(subscriptionId, result.SubscriptionId);
-                Assert.Equal("Pending", result.AcceptOwnershipState);
-                Assert.Equal("abc@test.com", result.BillingOwner);
-                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
-                Assert.Equal("Test Subscription", result.DisplayName);*/
             }
         }
 
@@ -276,12 +244,6 @@ namespace ResourceGroups.Tests
 
                 Assert.Equal(HttpMethod.Get, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-                /*Assert.Equal(subscriptionId, result.SubscriptionId);
-                Assert.Equal("Pending", result.AcceptOwnershipState);
-                Assert.Equal("abc@test.com", result.BillingOwner);
-                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
-                Assert.Equal("Test Subscription", result.DisplayName);*/
             }
         }
 
@@ -298,12 +260,6 @@ namespace ResourceGroups.Tests
 
                 Assert.Equal(HttpMethod.Get, handler.Method);
                 Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-                /*Assert.Equal(subscriptionId, result.SubscriptionId);
-                Assert.Equal("Pending", result.AcceptOwnershipState);
-                Assert.Equal("abc@test.com", result.BillingOwner);
-                Assert.Equal("6c541ca7-1cab-4ea0-adde-6305e1d534e2", result.SubscriptionTenantId);
-                Assert.Equal("Test Subscription", result.DisplayName);*/
             }
         }
 
@@ -354,9 +310,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                //const string subscriptionId = "11e23d44-5f84-4f2f-908f-e3bd3195243d";
                 var client = GetSubscriptionClient(context, handler);
-                //var rmclient = GetResourceManagementClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var subscriptionDetails = client.Subscriptions.Get(subscriptionId);
