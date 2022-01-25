@@ -15,7 +15,7 @@
       },
       "RequestBody": [
         "{\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022\r\n",
+        "  \"location\": \"westcentralus\"\r\n",
         "}"
       ],
       "StatusCode": 201,
@@ -34,11 +34,11 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224\u0022,\r\n",
-        "  \u0022name\u0022: \u0022azsmnet9224\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224\",\r\n",
+        "  \"name\": \"azsmnet9224\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\"\r\n",
         "  }\r\n",
         "}"
       ]
@@ -58,15 +58,15 @@
       },
       "RequestBody": [
         "{\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022azsmnet15\u0022\r\n",
+        "  \"properties\": {\r\n",
+        "    \"publicIPAllocationMethod\": \"Dynamic\",\r\n",
+        "    \"dnsSettings\": {\r\n",
+        "      \"domainNameLabel\": \"azsmnet15\"\r\n",
         "    }\r\n",
         "  },\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  }\r\n",
         "}"
       ],
@@ -92,23 +92,23 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet2376\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00222f9ad4f4-2330-4068-9fd6-b027faa1fd98\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"name\": \"azsmnet2376\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\",\r\n",
+        "  \"etag\": \"W/\\\"2f9ad4f4-2330-4068-9fd6-b027faa1fd98\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002223404050-8af6-457b-9ea5-767a6ba18813\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022azsmnet15\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022azsmnet15.westcentralus.cloudapp.azure.com\u0022\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Updating\",\r\n",
+        "    \"resourceGuid\": \"23404050-8af6-457b-9ea5-767a6ba18813\",\r\n",
+        "    \"publicIPAddressVersion\": \"IPv4\",\r\n",
+        "    \"publicIPAllocationMethod\": \"Dynamic\",\r\n",
+        "    \"idleTimeoutInMinutes\": 4,\r\n",
+        "    \"dnsSettings\": {\r\n",
+        "      \"domainNameLabel\": \"azsmnet15\",\r\n",
+        "      \"fqdn\": \"azsmnet15.westcentralus.cloudapp.azure.com\"\r\n",
         "    }\r\n",
         "  }\r\n",
         "}"
@@ -145,7 +145,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     },
@@ -164,7 +164,7 @@
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sun, 22 Jan 2017 06:05:56 GMT",
-        "ETag": "W/\u002259b87146-06eb-49f4-ad03-8e3648edb541\u0022",
+        "ETag": "W/\"59b87146-06eb-49f4-ad03-8e3648edb541\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -181,23 +181,23 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet2376\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002259b87146-06eb-49f4-ad03-8e3648edb541\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"name\": \"azsmnet2376\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\",\r\n",
+        "  \"etag\": \"W/\\\"59b87146-06eb-49f4-ad03-8e3648edb541\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002223404050-8af6-457b-9ea5-767a6ba18813\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022azsmnet15\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022azsmnet15.westcentralus.cloudapp.azure.com\u0022\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"23404050-8af6-457b-9ea5-767a6ba18813\",\r\n",
+        "    \"publicIPAddressVersion\": \"IPv4\",\r\n",
+        "    \"publicIPAllocationMethod\": \"Dynamic\",\r\n",
+        "    \"idleTimeoutInMinutes\": 4,\r\n",
+        "    \"dnsSettings\": {\r\n",
+        "      \"domainNameLabel\": \"azsmnet15\",\r\n",
+        "      \"fqdn\": \"azsmnet15.westcentralus.cloudapp.azure.com\"\r\n",
         "    }\r\n",
         "  }\r\n",
         "}"
@@ -220,7 +220,7 @@
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sun, 22 Jan 2017 06:05:56 GMT",
-        "ETag": "W/\u002259b87146-06eb-49f4-ad03-8e3648edb541\u0022",
+        "ETag": "W/\"59b87146-06eb-49f4-ad03-8e3648edb541\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -237,23 +237,23 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet2376\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002259b87146-06eb-49f4-ad03-8e3648edb541\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"name\": \"azsmnet2376\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\",\r\n",
+        "  \"etag\": \"W/\\\"59b87146-06eb-49f4-ad03-8e3648edb541\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002223404050-8af6-457b-9ea5-767a6ba18813\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022azsmnet15\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022azsmnet15.westcentralus.cloudapp.azure.com\u0022\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"23404050-8af6-457b-9ea5-767a6ba18813\",\r\n",
+        "    \"publicIPAddressVersion\": \"IPv4\",\r\n",
+        "    \"publicIPAllocationMethod\": \"Dynamic\",\r\n",
+        "    \"idleTimeoutInMinutes\": 4,\r\n",
+        "    \"dnsSettings\": {\r\n",
+        "      \"domainNameLabel\": \"azsmnet15\",\r\n",
+        "      \"fqdn\": \"azsmnet15.westcentralus.cloudapp.azure.com\"\r\n",
         "    }\r\n",
         "  }\r\n",
         "}"
@@ -274,28 +274,28 @@
       },
       "RequestBody": [
         "{\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
+        "  \"properties\": {\r\n",
+        "    \"addressSpace\": {\r\n",
+        "      \"addressPrefixes\": [\r\n",
+        "        \"10.0.0.0/16\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
+        "    \"dhcpOptions\": {\r\n",
+        "      \"dnsServers\": [\r\n",
+        "        \"10.1.1.1\",\r\n",
+        "        \"10.1.2.4\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
+        "    \"subnets\": [\r\n",
         "      {\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022\r\n",
+        "        \"properties\": {\r\n",
+        "          \"addressPrefix\": \"10.0.0.0/24\"\r\n",
         "        },\r\n",
-        "        \u0022name\u0022: \u0022GatewaySubnet\u0022\r\n",
+        "        \"name\": \"GatewaySubnet\"\r\n",
         "      }\r\n",
         "    ]\r\n",
         "  },\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022\r\n",
+        "  \"location\": \"westcentralus\"\r\n",
         "}"
       ],
       "StatusCode": 201,
@@ -320,37 +320,37 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet4707\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00221e3e1c4d-5b1c-40f9-9ce6-477f6f6b53f0\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00221e4d06e4-0384-4281-9b13-bf62a63f3d12\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
+        "  \"name\": \"azsmnet4707\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707\",\r\n",
+        "  \"etag\": \"W/\\\"1e3e1c4d-5b1c-40f9-9ce6-477f6f6b53f0\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Updating\",\r\n",
+        "    \"resourceGuid\": \"1e4d06e4-0384-4281-9b13-bf62a63f3d12\",\r\n",
+        "    \"addressSpace\": {\r\n",
+        "      \"addressPrefixes\": [\r\n",
+        "        \"10.0.0.0/16\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
+        "    \"dhcpOptions\": {\r\n",
+        "      \"dnsServers\": [\r\n",
+        "        \"10.1.1.1\",\r\n",
+        "        \"10.1.2.4\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
+        "    \"subnets\": [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022GatewaySubnet\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00221e3e1c4d-5b1c-40f9-9ce6-477f6f6b53f0\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022\r\n",
+        "        \"name\": \"GatewaySubnet\",\r\n",
+        "        \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\",\r\n",
+        "        \"etag\": \"W/\\\"1e3e1c4d-5b1c-40f9-9ce6-477f6f6b53f0\\\"\",\r\n",
+        "        \"properties\": {\r\n",
+        "          \"provisioningState\": \"Updating\",\r\n",
+        "          \"addressPrefix\": \"10.0.0.0/24\"\r\n",
         "        }\r\n",
         "      }\r\n",
         "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: []\r\n",
+        "    \"virtualNetworkPeerings\": []\r\n",
         "  }\r\n",
         "}"
       ]
@@ -386,7 +386,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     },
@@ -405,7 +405,7 @@
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sun, 22 Jan 2017 06:06:26 GMT",
-        "ETag": "W/\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\u0022",
+        "ETag": "W/\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -422,37 +422,37 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet4707\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00221e4d06e4-0384-4281-9b13-bf62a63f3d12\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
+        "  \"name\": \"azsmnet4707\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707\",\r\n",
+        "  \"etag\": \"W/\\\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"1e4d06e4-0384-4281-9b13-bf62a63f3d12\",\r\n",
+        "    \"addressSpace\": {\r\n",
+        "      \"addressPrefixes\": [\r\n",
+        "        \"10.0.0.0/16\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
+        "    \"dhcpOptions\": {\r\n",
+        "      \"dnsServers\": [\r\n",
+        "        \"10.1.1.1\",\r\n",
+        "        \"10.1.2.4\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
+        "    \"subnets\": [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022GatewaySubnet\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022\r\n",
+        "        \"name\": \"GatewaySubnet\",\r\n",
+        "        \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\",\r\n",
+        "        \"etag\": \"W/\\\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\"\",\r\n",
+        "        \"properties\": {\r\n",
+        "          \"provisioningState\": \"Succeeded\",\r\n",
+        "          \"addressPrefix\": \"10.0.0.0/24\"\r\n",
         "        }\r\n",
         "      }\r\n",
         "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: []\r\n",
+        "    \"virtualNetworkPeerings\": []\r\n",
         "  }\r\n",
         "}"
       ]
@@ -474,7 +474,7 @@
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sun, 22 Jan 2017 06:06:26 GMT",
-        "ETag": "W/\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\u0022",
+        "ETag": "W/\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -491,37 +491,37 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet4707\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00221e4d06e4-0384-4281-9b13-bf62a63f3d12\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
+        "  \"name\": \"azsmnet4707\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707\",\r\n",
+        "  \"etag\": \"W/\\\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"1e4d06e4-0384-4281-9b13-bf62a63f3d12\",\r\n",
+        "    \"addressSpace\": {\r\n",
+        "      \"addressPrefixes\": [\r\n",
+        "        \"10.0.0.0/16\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
+        "    \"dhcpOptions\": {\r\n",
+        "      \"dnsServers\": [\r\n",
+        "        \"10.1.1.1\",\r\n",
+        "        \"10.1.2.4\"\r\n",
         "      ]\r\n",
         "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
+        "    \"subnets\": [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022GatewaySubnet\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022\r\n",
+        "        \"name\": \"GatewaySubnet\",\r\n",
+        "        \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\",\r\n",
+        "        \"etag\": \"W/\\\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\"\",\r\n",
+        "        \"properties\": {\r\n",
+        "          \"provisioningState\": \"Succeeded\",\r\n",
+        "          \"addressPrefix\": \"10.0.0.0/24\"\r\n",
         "        }\r\n",
         "      }\r\n",
         "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: []\r\n",
+        "    \"virtualNetworkPeerings\": []\r\n",
         "  }\r\n",
         "}"
       ]
@@ -543,7 +543,7 @@
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sun, 22 Jan 2017 06:06:26 GMT",
-        "ETag": "W/\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\u0022",
+        "ETag": "W/\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -560,12 +560,12 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022GatewaySubnet\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002253cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022\r\n",
+        "  \"name\": \"GatewaySubnet\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\",\r\n",
+        "  \"etag\": \"W/\\\"53cb9639-7fb8-4ea6-a4a9-f4218a6ef729\\\"\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"addressPrefix\": \"10.0.0.0/24\"\r\n",
         "  }\r\n",
         "}"
       ]
@@ -585,32 +585,32 @@
       },
       "RequestBody": [
         "{\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
+        "  \"properties\": {\r\n",
+        "    \"ipConfigurations\": [\r\n",
         "      {\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022\r\n",
+        "        \"properties\": {\r\n",
+        "          \"privateIPAllocationMethod\": \"Dynamic\",\r\n",
+        "          \"subnet\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\"\r\n",
         "          },\r\n",
-        "          \u0022publicIPAddress\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\u0022\r\n",
+        "          \"publicIPAddress\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\"\r\n",
         "          }\r\n",
         "        },\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1522\u0022\r\n",
+        "        \"name\": \"azsmnet1522\"\r\n",
         "      }\r\n",
         "    ],\r\n",
-        "    \u0022gatewayType\u0022: \u0022Vpn\u0022,\r\n",
-        "    \u0022vpnType\u0022: \u0022RouteBased\u0022,\r\n",
-        "    \u0022enableBgp\u0022: false,\r\n",
-        "    \u0022sku\u0022: {\r\n",
-        "      \u0022name\u0022: \u0022Basic\u0022,\r\n",
-        "      \u0022tier\u0022: \u0022Basic\u0022\r\n",
+        "    \"gatewayType\": \"Vpn\",\r\n",
+        "    \"vpnType\": \"RouteBased\",\r\n",
+        "    \"enableBgp\": false,\r\n",
+        "    \"sku\": {\r\n",
+        "      \"name\": \"Basic\",\r\n",
+        "      \"tier\": \"Basic\"\r\n",
         "    }\r\n",
         "  },\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  }\r\n",
         "}"
       ],
@@ -636,46 +636,46 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet9020\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022fab27a99-8101-4174-9a85-fc3ce8c030bf\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"name\": \"azsmnet9020\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\",\r\n",
+        "  \"etag\": \"W/\\\"fab27a99-8101-4174-9a85-fc3ce8c030bf\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworkGateways\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022c2c75625-1774-4f6f-a0eb-c5c42806f9d5\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Updating\",\r\n",
+        "    \"resourceGuid\": \"c2c75625-1774-4f6f-a0eb-c5c42806f9d5\",\r\n",
+        "    \"ipConfigurations\": [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1522\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020/ipConfigurations/azsmnet1522\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022fab27a99-8101-4174-9a85-fc3ce8c030bf\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022publicIPAddress\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\u0022\r\n",
+        "        \"name\": \"azsmnet1522\",\r\n",
+        "        \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020/ipConfigurations/azsmnet1522\",\r\n",
+        "        \"etag\": \"W/\\\"fab27a99-8101-4174-9a85-fc3ce8c030bf\\\"\",\r\n",
+        "        \"properties\": {\r\n",
+        "          \"provisioningState\": \"Updating\",\r\n",
+        "          \"privateIPAllocationMethod\": \"Dynamic\",\r\n",
+        "          \"publicIPAddress\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\"\r\n",
         "          },\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022\r\n",
+        "          \"subnet\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\"\r\n",
         "          }\r\n",
         "        }\r\n",
         "      }\r\n",
         "    ],\r\n",
-        "    \u0022sku\u0022: {\r\n",
-        "      \u0022name\u0022: \u0022Basic\u0022,\r\n",
-        "      \u0022tier\u0022: \u0022Basic\u0022,\r\n",
-        "      \u0022capacity\u0022: 2\r\n",
+        "    \"sku\": {\r\n",
+        "      \"name\": \"Basic\",\r\n",
+        "      \"tier\": \"Basic\",\r\n",
+        "      \"capacity\": 2\r\n",
         "    },\r\n",
-        "    \u0022gatewayType\u0022: \u0022Vpn\u0022,\r\n",
-        "    \u0022vpnType\u0022: \u0022RouteBased\u0022,\r\n",
-        "    \u0022enableBgp\u0022: false,\r\n",
-        "    \u0022activeActive\u0022: false,\r\n",
-        "    \u0022vpnClientConfiguration\u0022: {\r\n",
-        "      \u0022vpnClientRootCertificates\u0022: [],\r\n",
-        "      \u0022vpnClientRevokedCertificates\u0022: []\r\n",
+        "    \"gatewayType\": \"Vpn\",\r\n",
+        "    \"vpnType\": \"RouteBased\",\r\n",
+        "    \"enableBgp\": false,\r\n",
+        "    \"activeActive\": false,\r\n",
+        "    \"vpnClientConfiguration\": {\r\n",
+        "      \"vpnClientRootCertificates\": [],\r\n",
+        "      \"vpnClientRevokedCertificates\": []\r\n",
         "    }\r\n",
         "  }\r\n",
         "}"
@@ -713,7 +713,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -749,7 +749,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -785,7 +785,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -821,7 +821,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -857,7 +857,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -893,7 +893,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -929,7 +929,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -965,7 +965,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1001,7 +1001,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1037,7 +1037,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1073,7 +1073,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1109,7 +1109,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1145,7 +1145,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1181,7 +1181,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1217,7 +1217,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1253,7 +1253,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1289,7 +1289,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1325,7 +1325,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1361,7 +1361,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1397,7 +1397,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1433,7 +1433,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1469,7 +1469,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1505,7 +1505,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1541,7 +1541,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1577,7 +1577,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1613,7 +1613,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1649,7 +1649,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1685,7 +1685,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1721,7 +1721,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1757,7 +1757,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1793,7 +1793,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1829,7 +1829,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1865,7 +1865,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1901,7 +1901,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1937,7 +1937,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -1973,7 +1973,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2009,7 +2009,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2045,7 +2045,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2081,7 +2081,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2117,7 +2117,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2153,7 +2153,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2189,7 +2189,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2225,7 +2225,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2261,7 +2261,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2297,7 +2297,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2333,7 +2333,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2369,7 +2369,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2405,7 +2405,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2441,7 +2441,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2477,7 +2477,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2513,7 +2513,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2549,7 +2549,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2585,7 +2585,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2621,7 +2621,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2657,7 +2657,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2693,7 +2693,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2729,7 +2729,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -2764,7 +2764,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     },
@@ -2799,47 +2799,47 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet9020\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"name\": \"azsmnet9020\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\",\r\n",
+        "  \"etag\": \"W/\\\"d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworkGateways\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022c2c75625-1774-4f6f-a0eb-c5c42806f9d5\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"c2c75625-1774-4f6f-a0eb-c5c42806f9d5\",\r\n",
+        "    \"ipConfigurations\": [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1522\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020/ipConfigurations/azsmnet1522\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022publicIPAddress\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\u0022\r\n",
+        "        \"name\": \"azsmnet1522\",\r\n",
+        "        \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020/ipConfigurations/azsmnet1522\",\r\n",
+        "        \"etag\": \"W/\\\"d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\"\",\r\n",
+        "        \"properties\": {\r\n",
+        "          \"provisioningState\": \"Succeeded\",\r\n",
+        "          \"privateIPAllocationMethod\": \"Dynamic\",\r\n",
+        "          \"publicIPAddress\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\"\r\n",
         "          },\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022\r\n",
+        "          \"subnet\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\"\r\n",
         "          }\r\n",
         "        }\r\n",
         "      }\r\n",
         "    ],\r\n",
-        "    \u0022sku\u0022: {\r\n",
-        "      \u0022name\u0022: \u0022Basic\u0022,\r\n",
-        "      \u0022tier\u0022: \u0022Basic\u0022,\r\n",
-        "      \u0022capacity\u0022: 2\r\n",
+        "    \"sku\": {\r\n",
+        "      \"name\": \"Basic\",\r\n",
+        "      \"tier\": \"Basic\",\r\n",
+        "      \"capacity\": 2\r\n",
         "    },\r\n",
-        "    \u0022gatewayType\u0022: \u0022Vpn\u0022,\r\n",
-        "    \u0022vpnType\u0022: \u0022RouteBased\u0022,\r\n",
-        "    \u0022enableBgp\u0022: false,\r\n",
-        "    \u0022activeActive\u0022: false,\r\n",
-        "    \u0022bgpSettings\u0022: {\r\n",
-        "      \u0022asn\u0022: 65515,\r\n",
-        "      \u0022bgpPeeringAddress\u0022: \u002210.0.0.254\u0022,\r\n",
-        "      \u0022peerWeight\u0022: 0\r\n",
+        "    \"gatewayType\": \"Vpn\",\r\n",
+        "    \"vpnType\": \"RouteBased\",\r\n",
+        "    \"enableBgp\": false,\r\n",
+        "    \"activeActive\": false,\r\n",
+        "    \"bgpSettings\": {\r\n",
+        "      \"asn\": 65515,\r\n",
+        "      \"bgpPeeringAddress\": \"10.0.0.254\",\r\n",
+        "      \"peerWeight\": 0\r\n",
         "    }\r\n",
         "  }\r\n",
         "}"
@@ -2878,47 +2878,47 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet9020\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
+        "  \"name\": \"azsmnet9020\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\",\r\n",
+        "  \"etag\": \"W/\\\"d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/virtualNetworkGateways\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"tags\": {\r\n",
+        "    \"key\": \"value\"\r\n",
         "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022c2c75625-1774-4f6f-a0eb-c5c42806f9d5\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"resourceGuid\": \"c2c75625-1774-4f6f-a0eb-c5c42806f9d5\",\r\n",
+        "    \"ipConfigurations\": [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1522\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020/ipConfigurations/azsmnet1522\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022publicIPAddress\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\u0022\r\n",
+        "        \"name\": \"azsmnet1522\",\r\n",
+        "        \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020/ipConfigurations/azsmnet1522\",\r\n",
+        "        \"etag\": \"W/\\\"d5fdd108-58bc-42d5-a18c-b8899d0f20fa\\\"\",\r\n",
+        "        \"properties\": {\r\n",
+        "          \"provisioningState\": \"Succeeded\",\r\n",
+        "          \"privateIPAllocationMethod\": \"Dynamic\",\r\n",
+        "          \"publicIPAddress\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/publicIPAddresses/azsmnet2376\"\r\n",
         "          },\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\u0022\r\n",
+        "          \"subnet\": {\r\n",
+        "            \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworks/azsmnet4707/subnets/GatewaySubnet\"\r\n",
         "          }\r\n",
         "        }\r\n",
         "      }\r\n",
         "    ],\r\n",
-        "    \u0022sku\u0022: {\r\n",
-        "      \u0022name\u0022: \u0022Basic\u0022,\r\n",
-        "      \u0022tier\u0022: \u0022Basic\u0022,\r\n",
-        "      \u0022capacity\u0022: 2\r\n",
+        "    \"sku\": {\r\n",
+        "      \"name\": \"Basic\",\r\n",
+        "      \"tier\": \"Basic\",\r\n",
+        "      \"capacity\": 2\r\n",
         "    },\r\n",
-        "    \u0022gatewayType\u0022: \u0022Vpn\u0022,\r\n",
-        "    \u0022vpnType\u0022: \u0022RouteBased\u0022,\r\n",
-        "    \u0022enableBgp\u0022: false,\r\n",
-        "    \u0022activeActive\u0022: false,\r\n",
-        "    \u0022bgpSettings\u0022: {\r\n",
-        "      \u0022asn\u0022: 65515,\r\n",
-        "      \u0022bgpPeeringAddress\u0022: \u002210.0.0.254\u0022,\r\n",
-        "      \u0022peerWeight\u0022: 0\r\n",
+        "    \"gatewayType\": \"Vpn\",\r\n",
+        "    \"vpnType\": \"RouteBased\",\r\n",
+        "    \"enableBgp\": false,\r\n",
+        "    \"activeActive\": false,\r\n",
+        "    \"bgpSettings\": {\r\n",
+        "      \"asn\": 65515,\r\n",
+        "      \"bgpPeeringAddress\": \"10.0.0.254\",\r\n",
+        "      \"peerWeight\": 0\r\n",
         "    }\r\n",
         "  }\r\n",
         "}"
@@ -2939,7 +2939,7 @@
       },
       "RequestBody": [
         "{\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022\r\n",
+        "  \"location\": \"westcentralus\"\r\n",
         "}"
       ],
       "StatusCode": 201,
@@ -2963,13 +2963,13 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet4108\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/networkWatchers/azsmnet4108\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022c9a83b76-8e6c-46af-ae60-bbdc8dad9d5d\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkWatchers\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"name\": \"azsmnet4108\",\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/networkWatchers/azsmnet4108\",\r\n",
+        "  \"etag\": \"W/\\\"c9a83b76-8e6c-46af-ae60-bbdc8dad9d5d\\\"\",\r\n",
+        "  \"type\": \"Microsoft.Network/networkWatchers\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"provisioningState\": \"Succeeded\"\r\n",
         "  }\r\n",
         "}"
       ]
@@ -2989,11 +2989,11 @@
       },
       "RequestBody": [
         "{\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
+        "  \"sku\": {\r\n",
+        "    \"name\": \"Standard_LRS\"\r\n",
         "  },\r\n",
-        "  \u0022kind\u0022: \u0022Storage\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022\r\n",
+        "  \"kind\": \"Storage\",\r\n",
+        "  \"location\": \"westcentralus\"\r\n",
         "}"
       ],
       "StatusCode": 202,
@@ -3002,7 +3002,7 @@
         "Content-Length": "0",
         "Date": "Sun, 22 Jan 2017 06:35:40 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Storage/operations/9ede0eb9-9c24-438b-88f5-b529536dc494?monitor=true\u0026api-version=2016-05-01",
+        "Location": "https://management.azure.com/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Storage/operations/9ede0eb9-9c24-438b-88f5-b529536dc494?monitor=true&api-version=2016-05-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": [
@@ -3018,7 +3018,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Storage/operations/9ede0eb9-9c24-438b-88f5-b529536dc494?monitor=true\u0026api-version=2016-05-01",
+      "RequestUri": "/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/providers/Microsoft.Storage/operations/9ede0eb9-9c24-438b-88f5-b529536dc494?monitor=true&api-version=2016-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -3048,28 +3048,28 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Storage/storageAccounts/azsmnet62\u0022,\r\n",
-        "  \u0022kind\u0022: \u0022Storage\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022name\u0022: \u0022azsmnet62\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022creationTime\u0022: \u00222017-01-22T06:35:41.1723537Z\u0022,\r\n",
-        "    \u0022primaryEndpoints\u0022: {\r\n",
-        "      \u0022blob\u0022: \u0022https://azsmnet62.blob.core.windows.net/\u0022,\r\n",
-        "      \u0022file\u0022: \u0022https://azsmnet62.file.core.windows.net/\u0022,\r\n",
-        "      \u0022queue\u0022: \u0022https://azsmnet62.queue.core.windows.net/\u0022,\r\n",
-        "      \u0022table\u0022: \u0022https://azsmnet62.table.core.windows.net/\u0022\r\n",
+        "  \"id\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Storage/storageAccounts/azsmnet62\",\r\n",
+        "  \"kind\": \"Storage\",\r\n",
+        "  \"location\": \"westcentralus\",\r\n",
+        "  \"name\": \"azsmnet62\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"creationTime\": \"2017-01-22T06:35:41.1723537Z\",\r\n",
+        "    \"primaryEndpoints\": {\r\n",
+        "      \"blob\": \"https://azsmnet62.blob.core.windows.net/\",\r\n",
+        "      \"file\": \"https://azsmnet62.file.core.windows.net/\",\r\n",
+        "      \"queue\": \"https://azsmnet62.queue.core.windows.net/\",\r\n",
+        "      \"table\": \"https://azsmnet62.table.core.windows.net/\"\r\n",
         "    },\r\n",
-        "    \u0022primaryLocation\u0022: \u0022westcentralus\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022statusOfPrimary\u0022: \u0022available\u0022\r\n",
+        "    \"primaryLocation\": \"westcentralus\",\r\n",
+        "    \"provisioningState\": \"Succeeded\",\r\n",
+        "    \"statusOfPrimary\": \"available\"\r\n",
         "  },\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
+        "  \"sku\": {\r\n",
+        "    \"name\": \"Standard_LRS\",\r\n",
+        "    \"tier\": \"Standard\"\r\n",
         "  },\r\n",
-        "  \u0022tags\u0022: {},\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Storage/storageAccounts\u0022\r\n",
+        "  \"tags\": {},\r\n",
+        "  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n",
         "}"
       ]
     },
@@ -3088,10 +3088,10 @@
       },
       "RequestBody": [
         "{\r\n",
-        "  \u0022targetResourceId\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022storageId\u0022: \u0022/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Storage/storageAccounts/azsmnet62\u0022,\r\n",
-        "    \u0022storagePath\u0022: \u0022https://nwtestdbdzq4xsvskrei6.blob.core.windows.net/vhds\u0022\r\n",
+        "  \"targetResourceId\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9020\",\r\n",
+        "  \"properties\": {\r\n",
+        "    \"storageId\": \"/subscriptions/651569e2-6573-4e19-8088-a089cb8b97a9/resourceGroups/azsmnet9224/providers/Microsoft.Storage/storageAccounts/azsmnet62\",\r\n",
+        "    \"storagePath\": \"https://nwtestdbdzq4xsvskrei6.blob.core.windows.net/vhds\"\r\n",
         "  }\r\n",
         "}"
       ],
@@ -3150,7 +3150,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "  \"status\": \"InProgress\"\r\n",
         "}"
       ]
     },
@@ -3185,7 +3185,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     }

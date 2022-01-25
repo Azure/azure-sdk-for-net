@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
@@ -29,9 +28,9 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Calculate the hash of the given template. </summary>
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DeploymentsRestOperations restOperations = GetDeploymentsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    DeploymentsRestOperations restOperations = GetDeploymentsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CalculateTemplateHash(template, cancellationToken);
                     return response;
                 }

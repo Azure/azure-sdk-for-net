@@ -3816,7 +3816,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 ShareFileRenameOptions options = new ShareFileRenameOptions
                 {
-                    SourceRequestConditions = new ShareFileRequestConditions
+                    SourceConditions = new ShareFileRequestConditions
                     {
                         LeaseId = leaseId
                     }
@@ -3862,7 +3862,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             if (includeLeaseId)
             {
-                options.DestinationRequestConditions = new ShareFileRequestConditions
+                options.DestinationConditions = new ShareFileRequestConditions
                 {
                     LeaseId = leaseId
                 };

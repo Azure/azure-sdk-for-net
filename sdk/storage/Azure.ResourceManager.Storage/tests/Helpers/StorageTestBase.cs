@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
             string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
             ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {
                 accountName = Recording.GenerateAssetName(prefix);
                 StorageAccountCheckNameAvailabilityParameters parameter = new StorageAccountCheckNameAvailabilityParameters(accountName);
-                CheckNameAvailabilityResult result = await DefaultSubscription.CheckNameAvailabilityStorageAccountAsync(parameter);
+                CheckNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
                 if (result.NameAvailable == true)
                 {
                     return accountName;

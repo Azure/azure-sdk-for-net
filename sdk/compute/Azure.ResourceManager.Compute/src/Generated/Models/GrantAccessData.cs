@@ -23,5 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AccessLevel Access { get; }
         /// <summary> Time duration in seconds until the SAS access expires. </summary>
         public int DurationInSeconds { get; }
+        /// <summary> Set this flag to true to get additional SAS for VM guest state. </summary>
+        public bool? GetSecureVmGuestStateSAS { get; set; }
     }
 }
