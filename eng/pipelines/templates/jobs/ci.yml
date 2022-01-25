@@ -68,6 +68,12 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
+        displayName: Scanning for credentials
+        inputs:
+          toolMajorVersion: V2
+          toolVersion: latest
+          scanFolder: $(Build.SourcesDirectory)\credscan.tsv
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:SDKType=${{ parameters.SDKType }}
