@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.1.0 (2022-01-12)
+## 1.1.0 (2022-01-25)
 
 ### Features Added
 Added the following methods to `MonitorQueryModelFactory`:
