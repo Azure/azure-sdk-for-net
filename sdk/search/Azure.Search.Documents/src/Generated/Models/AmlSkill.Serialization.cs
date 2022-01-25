@@ -17,24 +17,24 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(ScoringUri))
             {
-                if (Uri != null)
+                if (ScoringUri != null)
                 {
                     writer.WritePropertyName("uri");
-                    writer.WriteStringValue(Uri);
+                    writer.WriteStringValue(ScoringUri.AbsoluteUri);
                 }
                 else
                 {
                     writer.WriteNull("uri");
                 }
             }
-            if (Optional.IsDefined(Key))
+            if (Optional.IsDefined(AuthenticationKey))
             {
-                if (Key != null)
+                if (AuthenticationKey != null)
                 {
                     writer.WritePropertyName("key");
-                    writer.WriteStringValue(Key);
+                    writer.WriteStringValue(AuthenticationKey);
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static AmlSkill DeserializeAmlSkill(JsonElement element)
         {
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<string> key = default;
             Optional<string> resourceId = default;
             Optional<TimeSpan?> timeout = default;
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         uri = null;
                         continue;
                     }
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("key"))

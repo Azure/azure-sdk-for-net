@@ -13,23 +13,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The AML skill allows you to extend AI enrichment with a custom Azure Machine Learning (AML) model. Once an AML model is trained and deployed, an AML skill integrates it into AI enrichment. </summary>
     public partial class AmlSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of AmlSkill. </summary>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public AmlSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
-        {
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (outputs == null)
-            {
-                throw new ArgumentNullException(nameof(outputs));
-            }
-
-            ODataType = "#Microsoft.Skills.Custom.AmlSkill";
-        }
 
         /// <summary> Initializes a new instance of AmlSkill. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
@@ -38,27 +21,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="uri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
-        /// <param name="key"> (Required for key authentication) The key for the AML service. </param>
+        /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
+        /// <param name="authenticationKey"> (Required for key authentication) The key for the AML service. </param>
         /// <param name="resourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
         /// <param name="region"> (Optional for token authentication). The region the AML service is deployed in. </param>
         /// <param name="degreeOfParallelism"> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </param>
-        internal AmlSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, string key, string resourceId, TimeSpan? timeout, string region, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
+        internal AmlSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
         {
-            Uri = uri;
-            Key = key;
+            ScoringUri = scoringUri;
+            AuthenticationKey = authenticationKey;
             ResourceId = resourceId;
             Timeout = timeout;
             Region = region;
             DegreeOfParallelism = degreeOfParallelism;
             ODataType = oDataType ?? "#Microsoft.Skills.Custom.AmlSkill";
         }
-
-        /// <summary> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </summary>
-        public string Uri { get; set; }
-        /// <summary> (Required for key authentication) The key for the AML service. </summary>
-        public string Key { get; set; }
         /// <summary> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </summary>
         public string ResourceId { get; set; }
         /// <summary> (Optional) When specified, indicates the timeout for the http client making the API call. </summary>
