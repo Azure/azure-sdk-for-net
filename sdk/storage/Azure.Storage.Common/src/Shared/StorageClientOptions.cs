@@ -67,20 +67,12 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="credential">Credential to use.</param>
         /// <param name="options"> The <see cref="ISupportsTenantIdChallenges"/> to apply to the credential. </param>
-        /// <param name="audienceScope">The scope to request for the TokenCredential.</param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options, string audienceScope = null)
-        {
-            // Default to StorageScope is audienceScope is provided, but is null or empty.
-            if (string.IsNullOrEmpty(audienceScope))
-            {
-                audienceScope = StorageScope;
-            }
-            return new StorageBearerTokenChallengeAuthorizationPolicy(
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options) =>
+            new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
-                audienceScope,
+                StorageScope,
                 options is ISupportsTenantIdChallenges { EnableTenantDiscovery: true });
-        }
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.
