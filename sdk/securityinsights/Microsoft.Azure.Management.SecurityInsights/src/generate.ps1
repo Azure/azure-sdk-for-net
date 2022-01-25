@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "securityinsights/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "securityinsights/resource-manager" -AutoRestVersion "V2" -SpecsRepoFork iKlotz -SpecsRepoBranch error-type-change
