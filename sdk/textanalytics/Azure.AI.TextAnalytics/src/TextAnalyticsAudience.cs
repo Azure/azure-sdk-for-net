@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> Cloud audiences available for ACR. </summary>
+    /// <summary> Cloud audiences available for TextAnalytics. </summary>
     public readonly partial struct TextAnalyticsAudience : IEquatable<TextAnalyticsAudience>
     {
         private readonly string _value;

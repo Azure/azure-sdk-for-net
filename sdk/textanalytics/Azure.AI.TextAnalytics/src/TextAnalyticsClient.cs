@@ -60,7 +60,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            string scope = options.Audience + "/.default";
+            string defaultScope = options.Audience + "/.default";
 
             //if no Audience is provided, default to Azure Public Cloud
             if (options.Audience == null)
