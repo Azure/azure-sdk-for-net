@@ -66,9 +66,12 @@ namespace Azure.ResourceManager.Management
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class. </summary>
-        /// <param name="armClient"> The client options to build client context. </param>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ManagementGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
