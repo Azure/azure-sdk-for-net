@@ -13,22 +13,19 @@ namespace Azure.ResourceManager.Perf
     public class MgmtTelemetryPolicyBenchmark
     {
         [Params("", "test")]
-        public string UserAgentOverride;
+        public string SDKAgentOverride;
 
         [Params(new string[] { }, new string[] { "foo" }, new string[] {"foo", "bar"})]
         public string[] CustomHeaders;
 
-        private MgmtTelemetryPolicy policy;
-        private HttpMessage message;
-
-        [IterationSetup]
-        public void GlobalSetup()
+        [Benchmark]
+        public void UserAgentOverrideBenchmark()
         {
             var requestMock = new MockRequest();
-            message = new HttpMessage(requestMock, new ResponseClassifier());
-            if (!string.IsNullOrEmpty(UserAgentOverride))
+            var message = new HttpMessage(requestMock, new ResponseClassifier());
+            if (!string.IsNullOrEmpty(SDKAgentOverride))
             {
-                message.SetProperty("SDKUserAgent", UserAgentOverride);
+                message.SetProperty("SDKUserAgent", SDKAgentOverride);
             }
             if (CustomHeaders.Length > 0)
             {
@@ -37,12 +34,7 @@ namespace Azure.ResourceManager.Perf
                     requestMock.Headers.Add(HttpHeader.Names.UserAgent, header);
                 }
             }
-            policy = new MgmtTelemetryPolicy(message, ClientOptions.Default);
-        }
-
-        [Benchmark]
-        public void UserAgentOverrideBenchmark()
-        {
+            var policy = new MgmtTelemetryPolicy(message, ClientOptions.Default);
             policy.OnSendingRequest(message);
         }
     }
