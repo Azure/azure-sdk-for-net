@@ -25,7 +25,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publishedDate"> The timestamp for when the gallery image version is published. </param>
         /// <param name="endOfLifeDate"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
-        internal GalleryImageVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate, StorageAccountType? storageAccountType) : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType)
+        /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
+        internal GalleryImageVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate, StorageAccountType? storageAccountType, ReplicationMode? replicationMode) : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode)
         {
         }
     }

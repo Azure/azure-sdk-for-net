@@ -2,13 +2,9 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
-### Features Added
-
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Remove unnecessary dependency on Apache Avro.
 
 ## 1.0.0 (2021-11-09)
 

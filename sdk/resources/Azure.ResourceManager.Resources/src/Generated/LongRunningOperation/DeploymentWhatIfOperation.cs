@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
+    /// <summary> Returns changes that will be made by the deployment if executed at the scope of the tenant group. </summary>
     public partial class DeploymentWhatIfOperation : Operation<WhatIfOperationResult>, IOperationSource<WhatIfOperationResult>
     {
         private readonly OperationInternals<WhatIfOperationResult> _operation;

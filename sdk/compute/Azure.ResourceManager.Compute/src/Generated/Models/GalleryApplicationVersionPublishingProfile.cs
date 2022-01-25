@@ -33,10 +33,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publishedDate"> The timestamp for when the gallery image version is published. </param>
         /// <param name="endOfLifeDate"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
+        /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
         /// <param name="source"> The source image from which the Image Version is going to be created. </param>
         /// <param name="manageActions"></param>
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
-        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate, StorageAccountType? storageAccountType, UserArtifactSource source, UserArtifactManage manageActions, bool? enableHealthCheck) : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType)
+        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate, StorageAccountType? storageAccountType, ReplicationMode? replicationMode, UserArtifactSource source, UserArtifactManage manageActions, bool? enableHealthCheck) : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode)
         {
             Source = source;
             ManageActions = manageActions;

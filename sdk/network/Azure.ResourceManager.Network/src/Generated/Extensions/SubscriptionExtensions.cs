@@ -62,249 +62,249 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        private static ApplicationGatewaysRestOperations GetApplicationGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ApplicationGatewaysRestOperations GetApplicationGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ApplicationGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ApplicationGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ApplicationSecurityGroupsRestOperations GetApplicationSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ApplicationSecurityGroupsRestOperations GetApplicationSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ApplicationSecurityGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ApplicationSecurityGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AvailableDelegationsRestOperations GetAvailableDelegationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AvailableDelegationsRestOperations GetAvailableDelegationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AvailableDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AvailableDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AvailableServiceAliasesRestOperations GetAvailableServiceAliasesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AvailableServiceAliasesRestOperations GetAvailableServiceAliasesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AzureFirewallsRestOperations GetAzureFirewallsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AzureFirewallsRestOperations GetAzureFirewallsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AzureFirewallsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AzureFirewallsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AzureFirewallFqdnTagsRestOperations GetAzureFirewallFqdnTagsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AzureFirewallFqdnTagsRestOperations GetAzureFirewallFqdnTagsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AzureFirewallFqdnTagsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AzureFirewallFqdnTagsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static BastionHostsRestOperations GetBastionHostsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static BastionHostsRestOperations GetBastionHostsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new BastionHostsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new BastionHostsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NetworkManagementRestOperations GetNetworkManagementRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NetworkManagementRestOperations GetNetworkManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NetworkManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NetworkManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static CustomIPPrefixesRestOperations GetCustomIPPrefixesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static CustomIPPrefixesRestOperations GetCustomIPPrefixesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new CustomIPPrefixesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new CustomIPPrefixesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DdosProtectionPlansRestOperations GetDdosProtectionPlansRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DdosProtectionPlansRestOperations GetDdosProtectionPlansRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DdosProtectionPlansRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DdosProtectionPlansRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static DscpConfigurationRestOperations GetDscpConfigurationRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static DscpConfigurationRestOperations GetDscpConfigurationRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new DscpConfigurationRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new DscpConfigurationRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AvailableEndpointServicesRestOperations GetAvailableEndpointServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AvailableEndpointServicesRestOperations GetAvailableEndpointServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AvailableEndpointServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AvailableEndpointServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ExpressRouteCircuitsRestOperations GetExpressRouteCircuitsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ExpressRouteCircuitsRestOperations GetExpressRouteCircuitsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ExpressRouteCircuitsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ExpressRouteCircuitsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ExpressRouteServiceProvidersRestOperations GetExpressRouteServiceProvidersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ExpressRouteServiceProvidersRestOperations GetExpressRouteServiceProvidersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ExpressRouteServiceProvidersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ExpressRouteServiceProvidersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ExpressRouteCrossConnectionsRestOperations GetExpressRouteCrossConnectionsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ExpressRouteCrossConnectionsRestOperations GetExpressRouteCrossConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ExpressRouteCrossConnectionsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ExpressRouteCrossConnectionsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ExpressRoutePortsRestOperations GetExpressRoutePortsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ExpressRoutePortsRestOperations GetExpressRoutePortsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ExpressRoutePortsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ExpressRoutePortsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static FirewallPoliciesRestOperations GetFirewallPoliciesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static FirewallPoliciesRestOperations GetFirewallPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new FirewallPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new FirewallPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static IpAllocationsRestOperations GetIpAllocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static IpAllocationsRestOperations GetIpAllocationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new IpAllocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new IpAllocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static IpGroupsRestOperations GetIpGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static IpGroupsRestOperations GetIpGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new IpGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new IpGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static LoadBalancersRestOperations GetLoadBalancersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static LoadBalancersRestOperations GetLoadBalancersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new LoadBalancersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new LoadBalancersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NatGatewaysRestOperations GetNatGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NatGatewaysRestOperations GetNatGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NatGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NatGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NetworkInterfacesRestOperations GetNetworkInterfacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NetworkInterfacesRestOperations GetNetworkInterfacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NetworkInterfacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NetworkInterfacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NetworkProfilesRestOperations GetNetworkProfilesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NetworkProfilesRestOperations GetNetworkProfilesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NetworkProfilesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NetworkProfilesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NetworkSecurityGroupsRestOperations GetNetworkSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NetworkSecurityGroupsRestOperations GetNetworkSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NetworkSecurityGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NetworkSecurityGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NetworkVirtualAppliancesRestOperations GetNetworkVirtualAppliancesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NetworkVirtualAppliancesRestOperations GetNetworkVirtualAppliancesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NetworkVirtualAppliancesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NetworkVirtualAppliancesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static NetworkWatchersRestOperations GetNetworkWatchersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static NetworkWatchersRestOperations GetNetworkWatchersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new NetworkWatchersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new NetworkWatchersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static PrivateEndpointsRestOperations GetPrivateEndpointsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static PrivateEndpointsRestOperations GetPrivateEndpointsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new PrivateEndpointsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new PrivateEndpointsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static AvailablePrivateEndpointTypesRestOperations GetAvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static AvailablePrivateEndpointTypesRestOperations GetAvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static PrivateLinkServicesRestOperations GetPrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static PrivateLinkServicesRestOperations GetPrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static PublicIPAddressesRestOperations GetPublicIPAddressesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static PublicIPAddressesRestOperations GetPublicIPAddressesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new PublicIPAddressesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new PublicIPAddressesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static PublicIPPrefixesRestOperations GetPublicIPPrefixesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static PublicIPPrefixesRestOperations GetPublicIPPrefixesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new PublicIPPrefixesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new PublicIPPrefixesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static RouteFiltersRestOperations GetRouteFiltersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static RouteFiltersRestOperations GetRouteFiltersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new RouteFiltersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new RouteFiltersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static RouteTablesRestOperations GetRouteTablesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static RouteTablesRestOperations GetRouteTablesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new RouteTablesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new RouteTablesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static SecurityPartnerProvidersRestOperations GetSecurityPartnerProvidersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static SecurityPartnerProvidersRestOperations GetSecurityPartnerProvidersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new SecurityPartnerProvidersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new SecurityPartnerProvidersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static BgpServiceCommunitiesRestOperations GetBgpServiceCommunitiesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static BgpServiceCommunitiesRestOperations GetBgpServiceCommunitiesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new BgpServiceCommunitiesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new BgpServiceCommunitiesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ServiceEndpointPoliciesRestOperations GetServiceEndpointPoliciesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ServiceEndpointPoliciesRestOperations GetServiceEndpointPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ServiceTagsRestOperations GetServiceTagsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ServiceTagsRestOperations GetServiceTagsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ServiceTagsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ServiceTagsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static UsagesRestOperations GetUsagesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static UsagesRestOperations GetUsagesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new UsagesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new UsagesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualNetworksRestOperations GetVirtualNetworksRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualNetworksRestOperations GetVirtualNetworksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualNetworksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualNetworksRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualNetworkTapsRestOperations GetVirtualNetworkTapsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualNetworkTapsRestOperations GetVirtualNetworkTapsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualNetworkTapsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualNetworkTapsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualRoutersRestOperations GetVirtualRoutersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualRoutersRestOperations GetVirtualRoutersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualRoutersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualRoutersRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualWansRestOperations GetVirtualWansRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualWansRestOperations GetVirtualWansRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualWansRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualWansRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VpnSitesRestOperations GetVpnSitesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VpnSitesRestOperations GetVpnSitesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VpnSitesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VpnSitesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VpnServerConfigurationsRestOperations GetVpnServerConfigurationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VpnServerConfigurationsRestOperations GetVpnServerConfigurationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VpnServerConfigurationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VpnServerConfigurationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VirtualHubsRestOperations GetVirtualHubsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VirtualHubsRestOperations GetVirtualHubsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VirtualHubsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VirtualHubsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static VpnGatewaysRestOperations GetVpnGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static VpnGatewaysRestOperations GetVpnGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new VpnGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new VpnGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static P2SVpnGatewaysRestOperations GetP2SVpnGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static P2SVpnGatewaysRestOperations GetP2SVpnGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new P2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new P2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static ExpressRouteGatewaysRestOperations GetExpressRouteGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static ExpressRouteGatewaysRestOperations GetExpressRouteGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new ExpressRouteGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new ExpressRouteGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
-        private static WebApplicationFirewallPoliciesRestOperations GetWebApplicationFirewallPoliciesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static WebApplicationFirewallPoliciesRestOperations GetWebApplicationFirewallPoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
-            return new WebApplicationFirewallPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return new WebApplicationFirewallPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
         /// <summary> Lists the ApplicationGateways for this <see cref="Subscription" />. </summary>
@@ -316,7 +316,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ApplicationGateway.ResourceType, out string apiVersion);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ApplicationGateway>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGateways");
@@ -361,7 +362,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ApplicationGateway.ResourceType, out string apiVersion);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ApplicationGateway> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGateways");
@@ -434,7 +436,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServerVariablesApplicationGateways");
@@ -464,7 +466,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<string> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServerVariablesApplicationGateways");
@@ -494,7 +496,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableRequestHeadersApplicationGateways");
@@ -524,7 +526,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<string> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableRequestHeadersApplicationGateways");
@@ -554,7 +556,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableResponseHeadersApplicationGateways");
@@ -584,7 +586,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<string> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableResponseHeadersApplicationGateways");
@@ -614,7 +616,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ApplicationGatewayFirewallRuleSet>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync");
@@ -644,7 +646,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ApplicationGatewaysRestOperations restOperations = GetApplicationGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ApplicationGatewayFirewallRuleSet> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync");
@@ -674,7 +676,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationSecurityGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ApplicationSecurityGroup.ResourceType, out string apiVersion);
+                ApplicationSecurityGroupsRestOperations restOperations = GetApplicationSecurityGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ApplicationSecurityGroup>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationSecurityGroups");
@@ -719,7 +722,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetApplicationSecurityGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ApplicationSecurityGroup.ResourceType, out string apiVersion);
+                ApplicationSecurityGroupsRestOperations restOperations = GetApplicationSecurityGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ApplicationSecurityGroup> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplicationSecurityGroups");
@@ -787,19 +791,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableDelegationsRestOperations restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableDelegations");
@@ -839,19 +841,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableDelegations(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableDelegationsRestOperations restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableDelegations");
@@ -891,19 +891,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableServiceAliasesRestOperations restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AvailableServiceAlias>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServiceAliases");
@@ -943,19 +941,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableServiceAliasesRestOperations restOperations = GetAvailableServiceAliasesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AvailableServiceAlias> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableServiceAliases");
@@ -1000,7 +996,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAzureFirewallsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AzureFirewall.ResourceType, out string apiVersion);
+                AzureFirewallsRestOperations restOperations = GetAzureFirewallsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<AzureFirewall>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAzureFirewalls");
@@ -1045,7 +1042,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAzureFirewallsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(AzureFirewall.ResourceType, out string apiVersion);
+                AzureFirewallsRestOperations restOperations = GetAzureFirewallsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<AzureFirewall> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAzureFirewalls");
@@ -1118,7 +1116,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAzureFirewallFqdnTagsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AzureFirewallFqdnTagsRestOperations restOperations = GetAzureFirewallFqdnTagsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AzureFirewallFqdnTag>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAzureFirewallFqdnTags");
@@ -1163,7 +1161,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAzureFirewallFqdnTagsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AzureFirewallFqdnTagsRestOperations restOperations = GetAzureFirewallFqdnTagsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AzureFirewallFqdnTag> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAzureFirewallFqdnTags");
@@ -1208,7 +1206,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetBastionHostsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(BastionHost.ResourceType, out string apiVersion);
+                BastionHostsRestOperations restOperations = GetBastionHostsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<BastionHost>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBastionHosts");
@@ -1253,7 +1252,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetBastionHostsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(BastionHost.ResourceType, out string apiVersion);
+                BastionHostsRestOperations restOperations = GetBastionHostsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<BastionHost> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBastionHosts");
@@ -1322,13 +1322,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
         public static async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(this Subscription subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (domainNameLabel == null)
             {
                 throw new ArgumentNullException(nameof(domainNameLabel));
@@ -1341,7 +1339,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNetworkManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    NetworkManagementRestOperations restOperations = GetNetworkManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckDnsNameAvailabilityAsync(subscription.Id.SubscriptionId, location, domainNameLabel, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -1359,13 +1357,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
         public static Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(this Subscription subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (domainNameLabel == null)
             {
                 throw new ArgumentNullException(nameof(domainNameLabel));
@@ -1378,7 +1374,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetNetworkManagementRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    NetworkManagementRestOperations restOperations = GetNetworkManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckDnsNameAvailability(subscription.Id.SubscriptionId, location, domainNameLabel, cancellationToken);
                     return response;
                 }
@@ -1395,15 +1391,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomIpPrefix> GetCustomIPPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CustomIpPrefix> GetCustomIpPrefixesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(CustomIpPrefix.ResourceType, out string apiVersion);
+                CustomIPPrefixesRestOperations restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<CustomIpPrefix>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -1418,7 +1415,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<CustomIpPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -1440,15 +1437,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomIpPrefix> GetCustomIPPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<CustomIpPrefix> GetCustomIpPrefixes(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(CustomIpPrefix.ResourceType, out string apiVersion);
+                CustomIPPrefixesRestOperations restOperations = GetCustomIPPrefixesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<CustomIpPrefix> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -1463,7 +1461,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<CustomIpPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIPPrefixes");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCustomIpPrefixes");
                     scope.Start();
                     try
                     {
@@ -1518,7 +1516,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDdosProtectionPlansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DdosProtectionPlan.ResourceType, out string apiVersion);
+                DdosProtectionPlansRestOperations restOperations = GetDdosProtectionPlansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DdosProtectionPlan>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDdosProtectionPlans");
@@ -1563,7 +1562,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDdosProtectionPlansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DdosProtectionPlan.ResourceType, out string apiVersion);
+                DdosProtectionPlansRestOperations restOperations = GetDdosProtectionPlansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DdosProtectionPlan> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDdosProtectionPlans");
@@ -1636,7 +1636,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDscpConfigurationRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DscpConfiguration.ResourceType, out string apiVersion);
+                DscpConfigurationRestOperations restOperations = GetDscpConfigurationRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<DscpConfiguration>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDscpConfigurations");
@@ -1681,7 +1682,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDscpConfigurationRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(DscpConfiguration.ResourceType, out string apiVersion);
+                DscpConfigurationRestOperations restOperations = GetDscpConfigurationRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<DscpConfiguration> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDscpConfigurations");
@@ -1749,19 +1751,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableEndpointServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableEndpointServicesRestOperations restOperations = GetAvailableEndpointServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<EndpointServiceResult>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableEndpointServices");
@@ -1801,19 +1801,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<EndpointServiceResult> GetAvailableEndpointServices(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailableEndpointServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailableEndpointServicesRestOperations restOperations = GetAvailableEndpointServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<EndpointServiceResult> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailableEndpointServices");
@@ -1858,7 +1856,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteCircuitsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRouteCircuit.ResourceType, out string apiVersion);
+                ExpressRouteCircuitsRestOperations restOperations = GetExpressRouteCircuitsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ExpressRouteCircuit>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteCircuits");
@@ -1903,7 +1902,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteCircuitsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRouteCircuit.ResourceType, out string apiVersion);
+                ExpressRouteCircuitsRestOperations restOperations = GetExpressRouteCircuitsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ExpressRouteCircuit> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteCircuits");
@@ -1976,7 +1976,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteServiceProvidersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ExpressRouteServiceProvidersRestOperations restOperations = GetExpressRouteServiceProvidersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<ExpressRouteServiceProvider>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteServiceProviders");
@@ -2021,7 +2021,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteServiceProvidersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                ExpressRouteServiceProvidersRestOperations restOperations = GetExpressRouteServiceProvidersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<ExpressRouteServiceProvider> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteServiceProviders");
@@ -2066,7 +2066,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteCrossConnectionsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRouteCrossConnection.ResourceType, out string apiVersion);
+                ExpressRouteCrossConnectionsRestOperations restOperations = GetExpressRouteCrossConnectionsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ExpressRouteCrossConnection>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteCrossConnections");
@@ -2111,7 +2112,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteCrossConnectionsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRouteCrossConnection.ResourceType, out string apiVersion);
+                ExpressRouteCrossConnectionsRestOperations restOperations = GetExpressRouteCrossConnectionsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ExpressRouteCrossConnection> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteCrossConnections");
@@ -2184,7 +2186,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRoutePortsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRoutePort.ResourceType, out string apiVersion);
+                ExpressRoutePortsRestOperations restOperations = GetExpressRoutePortsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ExpressRoutePort>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRoutePorts");
@@ -2229,7 +2232,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRoutePortsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRoutePort.ResourceType, out string apiVersion);
+                ExpressRoutePortsRestOperations restOperations = GetExpressRoutePortsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ExpressRoutePort> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRoutePorts");
@@ -2302,7 +2306,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetFirewallPoliciesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(FirewallPolicy.ResourceType, out string apiVersion);
+                FirewallPoliciesRestOperations restOperations = GetFirewallPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<FirewallPolicy>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetFirewallPolicies");
@@ -2347,7 +2352,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetFirewallPoliciesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(FirewallPolicy.ResourceType, out string apiVersion);
+                FirewallPoliciesRestOperations restOperations = GetFirewallPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<FirewallPolicy> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetFirewallPolicies");
@@ -2420,7 +2426,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetIpAllocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(IpAllocation.ResourceType, out string apiVersion);
+                IpAllocationsRestOperations restOperations = GetIpAllocationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<IpAllocation>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpAllocations");
@@ -2465,7 +2472,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetIpAllocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(IpAllocation.ResourceType, out string apiVersion);
+                IpAllocationsRestOperations restOperations = GetIpAllocationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<IpAllocation> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpAllocations");
@@ -2538,7 +2546,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetIpGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(IpGroup.ResourceType, out string apiVersion);
+                IpGroupsRestOperations restOperations = GetIpGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<IpGroup>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpGroups");
@@ -2583,7 +2592,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetIpGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(IpGroup.ResourceType, out string apiVersion);
+                IpGroupsRestOperations restOperations = GetIpGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<IpGroup> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetIpGroups");
@@ -2656,7 +2666,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLoadBalancersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(LoadBalancer.ResourceType, out string apiVersion);
+                LoadBalancersRestOperations restOperations = GetLoadBalancersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<LoadBalancer>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLoadBalancers");
@@ -2701,7 +2712,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetLoadBalancersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(LoadBalancer.ResourceType, out string apiVersion);
+                LoadBalancersRestOperations restOperations = GetLoadBalancersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<LoadBalancer> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetLoadBalancers");
@@ -2767,17 +2779,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Swaps VIPs between two load balancers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<LoadBalancerSwapPublicIpAddressesOperation> SwapPublicIpAddressesLoadBalancerAsync(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public static async Task<SwapPublicIpAddressesLoadBalancerOperation> SwapPublicIpAddressesLoadBalancerAsync(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -2790,9 +2800,9 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetLoadBalancersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    LoadBalancersRestOperations restOperations = GetLoadBalancersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.SwapPublicIpAddressesAsync(subscription.Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new LoadBalancerSwapPublicIpAddressesOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new SwapPublicIpAddressesLoadBalancerOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -2808,17 +2818,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Swaps VIPs between two load balancers. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static LoadBalancerSwapPublicIpAddressesOperation SwapPublicIpAddressesLoadBalancer(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public static SwapPublicIpAddressesLoadBalancerOperation SwapPublicIpAddressesLoadBalancer(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -2831,11 +2839,11 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetLoadBalancersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    LoadBalancersRestOperations restOperations = GetLoadBalancersRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.SwapPublicIpAddresses(subscription.Id.SubscriptionId, location, parameters, cancellationToken);
-                    var operation = new LoadBalancerSwapPublicIpAddressesOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new SwapPublicIpAddressesLoadBalancerOperation(clientDiagnostics, pipeline, restOperations.CreateSwapPublicIpAddressesRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
-                        operation.WaitForCompletion(cancellationToken);
+                        operation.WaitForCompletionResponse(cancellationToken);
                     return operation;
                 }
                 catch (Exception e)
@@ -2856,7 +2864,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNatGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NatGateway.ResourceType, out string apiVersion);
+                NatGatewaysRestOperations restOperations = GetNatGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<NatGateway>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNatGateways");
@@ -2901,7 +2910,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNatGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NatGateway.ResourceType, out string apiVersion);
+                NatGatewaysRestOperations restOperations = GetNatGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<NatGateway> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNatGateways");
@@ -2974,7 +2984,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkInterfacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkInterface.ResourceType, out string apiVersion);
+                NetworkInterfacesRestOperations restOperations = GetNetworkInterfacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<NetworkInterface>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkInterfaces");
@@ -3019,7 +3030,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkInterfacesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkInterface.ResourceType, out string apiVersion);
+                NetworkInterfacesRestOperations restOperations = GetNetworkInterfacesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<NetworkInterface> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkInterfaces");
@@ -3092,7 +3104,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkProfilesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkProfile.ResourceType, out string apiVersion);
+                NetworkProfilesRestOperations restOperations = GetNetworkProfilesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<NetworkProfile>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkProfiles");
@@ -3137,7 +3150,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkProfilesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkProfile.ResourceType, out string apiVersion);
+                NetworkProfilesRestOperations restOperations = GetNetworkProfilesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<NetworkProfile> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkProfiles");
@@ -3210,7 +3224,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkSecurityGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkSecurityGroup.ResourceType, out string apiVersion);
+                NetworkSecurityGroupsRestOperations restOperations = GetNetworkSecurityGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<NetworkSecurityGroup>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkSecurityGroups");
@@ -3255,7 +3270,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkSecurityGroupsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkSecurityGroup.ResourceType, out string apiVersion);
+                NetworkSecurityGroupsRestOperations restOperations = GetNetworkSecurityGroupsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<NetworkSecurityGroup> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkSecurityGroups");
@@ -3328,7 +3344,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkVirtualAppliancesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkVirtualAppliance.ResourceType, out string apiVersion);
+                NetworkVirtualAppliancesRestOperations restOperations = GetNetworkVirtualAppliancesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<NetworkVirtualAppliance>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkVirtualAppliances");
@@ -3373,7 +3390,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkVirtualAppliancesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkVirtualAppliance.ResourceType, out string apiVersion);
+                NetworkVirtualAppliancesRestOperations restOperations = GetNetworkVirtualAppliancesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<NetworkVirtualAppliance> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkVirtualAppliances");
@@ -3446,7 +3464,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkWatchersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkWatcher.ResourceType, out string apiVersion);
+                NetworkWatchersRestOperations restOperations = GetNetworkWatchersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<NetworkWatcher>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkWatchers");
@@ -3476,7 +3495,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetNetworkWatchersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(NetworkWatcher.ResourceType, out string apiVersion);
+                NetworkWatchersRestOperations restOperations = GetNetworkWatchersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<NetworkWatcher> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetNetworkWatchers");
@@ -3534,7 +3554,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateEndpointsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PrivateEndpoint.ResourceType, out string apiVersion);
+                PrivateEndpointsRestOperations restOperations = GetPrivateEndpointsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<PrivateEndpoint>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateEndpoints");
@@ -3579,7 +3600,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateEndpointsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PrivateEndpoint.ResourceType, out string apiVersion);
+                PrivateEndpointsRestOperations restOperations = GetPrivateEndpointsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<PrivateEndpoint> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateEndpoints");
@@ -3647,19 +3669,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailablePrivateEndpointTypesRestOperations restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AvailablePrivateEndpointType>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailablePrivateEndpointTypes");
@@ -3699,19 +3719,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                AvailablePrivateEndpointTypesRestOperations restOperations = GetAvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AvailablePrivateEndpointType> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailablePrivateEndpointTypes");
@@ -3756,7 +3774,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PrivateLinkService.ResourceType, out string apiVersion);
+                PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<PrivateLinkService>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkServices");
@@ -3801,7 +3820,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PrivateLinkService.ResourceType, out string apiVersion);
+                PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<PrivateLinkService> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPrivateLinkServices");
@@ -3867,17 +3887,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public static async Task<CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -3890,9 +3908,9 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.CheckPrivateLinkServiceVisibilityAsync(subscription.Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -3908,17 +3926,15 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation CheckPrivateLinkServiceVisibilityPrivateLinkService(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public static CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation CheckPrivateLinkServiceVisibilityPrivateLinkService(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -3931,9 +3947,9 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.CheckPrivateLinkServiceVisibility(subscription.Id.SubscriptionId, location, parameters, cancellationToken);
-                    var operation = new PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
+                    var operation = new CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation(clientDiagnostics, pipeline, restOperations.CreateCheckPrivateLinkServiceVisibilityRequest(subscription.Id.SubscriptionId, location, parameters).Request, response);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -3951,19 +3967,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
@@ -4003,19 +4017,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                PrivateLinkServicesRestOperations restOperations = GetPrivateLinkServicesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAutoApprovedPrivateLinkServicesPrivateLinkServices");
@@ -4060,7 +4072,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPublicIPAddressesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PublicIPAddress.ResourceType, out string apiVersion);
+                PublicIPAddressesRestOperations restOperations = GetPublicIPAddressesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<PublicIPAddress>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPAddresses");
@@ -4105,7 +4118,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPublicIPAddressesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PublicIPAddress.ResourceType, out string apiVersion);
+                PublicIPAddressesRestOperations restOperations = GetPublicIPAddressesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<PublicIPAddress> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPAddresses");
@@ -4178,7 +4192,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPublicIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PublicIPPrefix.ResourceType, out string apiVersion);
+                PublicIPPrefixesRestOperations restOperations = GetPublicIPPrefixesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<PublicIPPrefix>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPPrefixes");
@@ -4223,7 +4238,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetPublicIPPrefixesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(PublicIPPrefix.ResourceType, out string apiVersion);
+                PublicIPPrefixesRestOperations restOperations = GetPublicIPPrefixesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<PublicIPPrefix> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublicIPPrefixes");
@@ -4296,7 +4312,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRouteFiltersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(RouteFilter.ResourceType, out string apiVersion);
+                RouteFiltersRestOperations restOperations = GetRouteFiltersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<RouteFilter>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRouteFilters");
@@ -4341,7 +4358,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRouteFiltersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(RouteFilter.ResourceType, out string apiVersion);
+                RouteFiltersRestOperations restOperations = GetRouteFiltersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<RouteFilter> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRouteFilters");
@@ -4414,7 +4432,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRouteTablesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(RouteTable.ResourceType, out string apiVersion);
+                RouteTablesRestOperations restOperations = GetRouteTablesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<RouteTable>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRouteTables");
@@ -4459,7 +4478,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetRouteTablesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(RouteTable.ResourceType, out string apiVersion);
+                RouteTablesRestOperations restOperations = GetRouteTablesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<RouteTable> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRouteTables");
@@ -4532,7 +4552,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetSecurityPartnerProvidersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(SecurityPartnerProvider.ResourceType, out string apiVersion);
+                SecurityPartnerProvidersRestOperations restOperations = GetSecurityPartnerProvidersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<SecurityPartnerProvider>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSecurityPartnerProviders");
@@ -4577,7 +4598,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetSecurityPartnerProvidersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(SecurityPartnerProvider.ResourceType, out string apiVersion);
+                SecurityPartnerProvidersRestOperations restOperations = GetSecurityPartnerProvidersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<SecurityPartnerProvider> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSecurityPartnerProviders");
@@ -4650,7 +4672,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetBgpServiceCommunitiesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                BgpServiceCommunitiesRestOperations restOperations = GetBgpServiceCommunitiesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<BgpServiceCommunity>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBgpServiceCommunities");
@@ -4695,7 +4717,7 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetBgpServiceCommunitiesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                BgpServiceCommunitiesRestOperations restOperations = GetBgpServiceCommunitiesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<BgpServiceCommunity> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBgpServiceCommunities");
@@ -4735,15 +4757,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetServiceEndpointPoliciesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ServiceEndpointPolicy.ResourceType, out string apiVersion);
+                ServiceEndpointPoliciesRestOperations restOperations = GetServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ServiceEndpointPolicy>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -4758,7 +4781,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<ServiceEndpointPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -4780,15 +4803,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceEndpointPolicy> GetServiceEndpointPolicies(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ServiceEndpointPolicy> GetServiceEndpointPoliciesByServiceEndpointPolicy(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetServiceEndpointPoliciesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ServiceEndpointPolicy.ResourceType, out string apiVersion);
+                ServiceEndpointPoliciesRestOperations restOperations = GetServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ServiceEndpointPolicy> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -4803,7 +4827,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<ServiceEndpointPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPolicies");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceEndpointPoliciesByServiceEndpointPolicy");
                     scope.Start();
                     try
                     {
@@ -4853,13 +4877,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public static async Task<Response<ServiceTagsListResult>> GetServiceTagAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
@@ -4868,7 +4890,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetServiceTagsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ServiceTagsRestOperations restOperations = GetServiceTagsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
                     return response;
                 }
@@ -4885,13 +4907,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public static Response<ServiceTagsListResult> GetServiceTag(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -4900,7 +4920,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var restOperations = GetServiceTagsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                    ServiceTagsRestOperations restOperations = GetServiceTagsRestOperations(clientDiagnostics, pipeline, options, baseUri);
                     var response = restOperations.List(subscription.Id.SubscriptionId, location, cancellationToken);
                     return response;
                 }
@@ -4917,19 +4937,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Usage> GetUsagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetUsagesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                UsagesRestOperations restOperations = GetUsagesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsages");
@@ -4969,19 +4987,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<Usage> GetUsages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetUsagesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                UsagesRestOperations restOperations = GetUsagesRestOperations(clientDiagnostics, pipeline, options, baseUri);
                 Page<Usage> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsages");
@@ -5026,7 +5042,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualNetwork.ResourceType, out string apiVersion);
+                VirtualNetworksRestOperations restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualNetwork>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualNetworks");
@@ -5071,7 +5088,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualNetwork.ResourceType, out string apiVersion);
+                VirtualNetworksRestOperations restOperations = GetVirtualNetworksRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualNetwork> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualNetworks");
@@ -5144,7 +5162,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualNetworkTapsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualNetworkTap.ResourceType, out string apiVersion);
+                VirtualNetworkTapsRestOperations restOperations = GetVirtualNetworkTapsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualNetworkTap>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualNetworkTaps");
@@ -5189,7 +5208,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualNetworkTapsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualNetworkTap.ResourceType, out string apiVersion);
+                VirtualNetworkTapsRestOperations restOperations = GetVirtualNetworkTapsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualNetworkTap> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualNetworkTaps");
@@ -5262,7 +5282,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualRoutersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualRouter.ResourceType, out string apiVersion);
+                VirtualRoutersRestOperations restOperations = GetVirtualRoutersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualRouter>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualRouters");
@@ -5307,7 +5328,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualRoutersRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualRouter.ResourceType, out string apiVersion);
+                VirtualRoutersRestOperations restOperations = GetVirtualRoutersRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualRouter> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualRouters");
@@ -5375,15 +5397,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualWAN> GetVirtualWansAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualWAN> GetVirtualWANsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualWansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualWAN.ResourceType, out string apiVersion);
+                VirtualWansRestOperations restOperations = GetVirtualWansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualWAN>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -5398,7 +5421,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<VirtualWAN>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -5420,15 +5443,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualWAN> GetVirtualWans(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualWAN> GetVirtualWANs(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualWansRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualWAN.ResourceType, out string apiVersion);
+                VirtualWansRestOperations restOperations = GetVirtualWansRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualWAN> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -5443,7 +5467,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<VirtualWAN> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWans");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualWANs");
                     scope.Start();
                     try
                     {
@@ -5498,7 +5522,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVpnSitesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VpnSite.ResourceType, out string apiVersion);
+                VpnSitesRestOperations restOperations = GetVpnSitesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VpnSite>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVpnSites");
@@ -5543,7 +5568,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVpnSitesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VpnSite.ResourceType, out string apiVersion);
+                VpnSitesRestOperations restOperations = GetVpnSitesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VpnSite> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVpnSites");
@@ -5616,7 +5642,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVpnServerConfigurationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VpnServerConfiguration.ResourceType, out string apiVersion);
+                VpnServerConfigurationsRestOperations restOperations = GetVpnServerConfigurationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VpnServerConfiguration>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVpnServerConfigurations");
@@ -5661,7 +5688,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVpnServerConfigurationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VpnServerConfiguration.ResourceType, out string apiVersion);
+                VpnServerConfigurationsRestOperations restOperations = GetVpnServerConfigurationsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VpnServerConfiguration> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVpnServerConfigurations");
@@ -5734,7 +5762,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualHubsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualHub.ResourceType, out string apiVersion);
+                VirtualHubsRestOperations restOperations = GetVirtualHubsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VirtualHub>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualHubs");
@@ -5779,7 +5808,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualHubsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VirtualHub.ResourceType, out string apiVersion);
+                VirtualHubsRestOperations restOperations = GetVirtualHubsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VirtualHub> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualHubs");
@@ -5852,7 +5882,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVpnGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VpnGateway.ResourceType, out string apiVersion);
+                VpnGatewaysRestOperations restOperations = GetVpnGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<VpnGateway>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVpnGateways");
@@ -5897,7 +5928,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVpnGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(VpnGateway.ResourceType, out string apiVersion);
+                VpnGatewaysRestOperations restOperations = GetVpnGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<VpnGateway> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVpnGateways");
@@ -5965,15 +5997,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<P2SVpnGateway> GetP2sVpnGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<P2SVpnGateway> GetP2SVpnGatewaysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(P2SVpnGateway.ResourceType, out string apiVersion);
+                P2SVpnGatewaysRestOperations restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<P2SVpnGateway>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
@@ -5988,7 +6021,7 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<P2SVpnGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
@@ -6010,15 +6043,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<P2SVpnGateway> GetP2sVpnGateways(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<P2SVpnGateway> GetP2SVpnGateways(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(P2SVpnGateway.ResourceType, out string apiVersion);
+                P2SVpnGatewaysRestOperations restOperations = GetP2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<P2SVpnGateway> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
@@ -6033,7 +6067,7 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<P2SVpnGateway> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2sVpnGateways");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetP2SVpnGateways");
                     scope.Start();
                     try
                     {
@@ -6088,7 +6122,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRouteGateway.ResourceType, out string apiVersion);
+                ExpressRouteGatewaysRestOperations restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<ExpressRouteGateway>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteGateways");
@@ -6118,7 +6153,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(ExpressRouteGateway.ResourceType, out string apiVersion);
+                ExpressRouteGatewaysRestOperations restOperations = GetExpressRouteGatewaysRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<ExpressRouteGateway> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetExpressRouteGateways");
@@ -6176,7 +6212,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebApplicationFirewallPoliciesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(WebApplicationFirewallPolicy.ResourceType, out string apiVersion);
+                WebApplicationFirewallPoliciesRestOperations restOperations = GetWebApplicationFirewallPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 async Task<Page<WebApplicationFirewallPolicy>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebApplicationFirewallPolicies");
@@ -6221,7 +6258,8 @@ namespace Azure.ResourceManager.Network
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWebApplicationFirewallPoliciesRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
+                options.TryGetApiVersion(WebApplicationFirewallPolicy.ResourceType, out string apiVersion);
+                WebApplicationFirewallPoliciesRestOperations restOperations = GetWebApplicationFirewallPoliciesRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
                 Page<WebApplicationFirewallPolicy> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWebApplicationFirewallPolicies");

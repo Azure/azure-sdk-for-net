@@ -865,6 +865,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Execute switch provider.
+            /// </summary>
+            /// <remarks>
+            /// Operation to initiate a switch provider of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
+            /// </param>
+            public static ReplicationProtectedItem SwitchProvider(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput)
+            {
+                return operations.SwitchProviderAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute switch provider.
+            /// </summary>
+            /// <remarks>
+            /// Operation to initiate a switch provider of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> SwitchProviderAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SwitchProviderWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Execute test failover.
             /// </summary>
             /// <remarks>
@@ -1941,6 +1999,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<ReplicationProtectedItem> BeginResolveHealthErrorsAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ResolveHealthInput resolveHealthInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginResolveHealthErrorsWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, resolveHealthInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Execute switch provider.
+            /// </summary>
+            /// <remarks>
+            /// Operation to initiate a switch provider of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
+            /// </param>
+            public static ReplicationProtectedItem BeginSwitchProvider(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput)
+            {
+                return operations.BeginSwitchProviderAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute switch provider.
+            /// </summary>
+            /// <remarks>
+            /// Operation to initiate a switch provider of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> BeginSwitchProviderAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginSwitchProviderWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -183,7 +183,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = newApiDescription,
                             Path = newApiPath,
                             ServiceUrl = newApiServiceUrl,
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http },
                             SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
                             {
                                 Header = subscriptionKeyParametersHeader,
@@ -327,7 +327,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = newApiDescription,
                             Path = newApiPath,
                             ServiceUrl = newApiServiceUrl,
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http },
                             SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
                             {
                                 Header = subscriptionKeyParametersHeader,
@@ -490,7 +490,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = newApiDescription,
                             Path = newApiPath,
                             ServiceUrl = newApiServiceUrl,
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http },
                             SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
                             {
                                 Header = subscriptionKeyParametersHeader,

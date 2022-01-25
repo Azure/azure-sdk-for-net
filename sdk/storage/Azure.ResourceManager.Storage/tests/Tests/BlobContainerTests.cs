@@ -423,7 +423,6 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task BlobServiceCors()
         {
-            BlobServiceData properties1 = _blobService.Data;
             BlobServiceData properties2 = new BlobServiceData();
             properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();
             properties2.DeleteRetentionPolicy.Enabled = true;
