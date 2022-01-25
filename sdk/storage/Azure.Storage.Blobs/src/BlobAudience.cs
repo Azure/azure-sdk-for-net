@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Storage
+namespace Azure.Storage.Blobs
 {
     /// <summary>
     /// Audience for retrieving and AAD token.
