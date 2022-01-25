@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private bool _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync, bool useLegacyTransport = true) : base(isAsync, useLegacyTransport: useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = true) : base(isAsync, mode, useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
