@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
             var message = new HttpMessage(requestMock, new ResponseClassifier());
             if (!string.IsNullOrEmpty(userAgentOverride))
             {
-                message.SetProperty("UserAgentOverride", userAgentOverride);
+                message.SetProperty("SDKUserAgent", userAgentOverride);
             }
             if (customHeaders.Length > 0)
             {
