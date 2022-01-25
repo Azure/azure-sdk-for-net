@@ -32,11 +32,14 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 The docker image id in format of '$containerRegistry/$imageName:$tag'
 e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
 
-.PARAMETER PackageSourceOverride
-Optional parameter to supply a different package source (useful for daily dev
-docs generation from pacakges which are not published to the default feed). This
-variable is meant to be used in the domain-specific business logic in
-&$ValidateDocsMsPackagesFn
+.PARAMETER TenantId
+The aad tenant id/object id.
+
+.PARAMETER ClientId
+The add client id/application id.
+
+.PARAMETER ClientSecret
+The client secret of add app.
 #>
 
 param(
@@ -56,7 +59,16 @@ param(
   [string]$DocValidationImageId,
 
   [Parameter(Mandatory = $false)]
-  [string]$PackageSourceOverride
+  [string]$PackageSourceOverride,
+
+  [Parameter(Mandatory = $false)]
+  [string]$TenantId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ClientId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ClientSecret
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -102,7 +114,17 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   if ($codeOwnerArray) {
     Write-Host "Code Owners are $($codeOwnerArray -join ",")"
     $author = $codeOwnerArray[0]
-    $msauthor = $author # This is a placeholder for now. Will change to the right ms alias.
+    try {
+      $msauthor = "$PSScriptRoot/Get-AADIdentityFromGithubUser.ps1" `
+        -TenantId $TenantId `
+        -ClientId $ClientId `
+        -ClientSecret $ClientSecret `
+        -GithubUser $author
+    }
+    catch {
+      Write-Host "No msalias fetching from github username: $author. Use github username for default value."
+      $msauthor = $author # Default to github username
+    }
   }
   Write-Host "The author of package: $author"
   Write-Host "The ms author of package: $msauthor"

@@ -1,14 +1,14 @@
 <#
 .DESCRIPTION
 Get the corresponding ms alias from github identity
-.PARAMETER AadToken
-The aad access token.
-.PARAMETER GithubName
+.PARAMETER TenantId
+The aad tenant id/object id.
+.PARAMETER ClientId
+The add client id/application id.
+.PARAMETER ClientSecret
+The client secret of add app.
+.PARAMETER GithubUser
 Github identity. E.g sima-zhu
-.PARAMETER ContentType
-Content type of http requests.
-.PARAMETER AdditionalHeaders
-Additional parameters for http request headers in key-value pair format, e.g. @{ key1 = val1; key2 = val2; key3 = val3}
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
