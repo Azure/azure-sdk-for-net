@@ -27,13 +27,12 @@ namespace ResourceGroups.Tests
             return client;
         }
         
-        /*[Fact]
+        [Fact]
         public void AcceptSubscriptionOwnership()
         {
             var location = @"/providers/Microsoft.Subscription/subscriptionOperations/ODdmYTU0MDktODc5YS00ZTEzLTg2MWItNTQ4ZjYxNzBlOTQw?api-version=2021-10-01";
 
             var response = new HttpResponseMessage(HttpStatusCode.Accepted);
-            //response.Headers.Location = new Uri(location);
             response.Headers.Add("Location", location);
             response.Headers.Add("RetryAfter", "8");
             response.Headers.Add("x-ms-request-id", "1");
@@ -56,7 +55,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
             //Assert.Equal(location, result.Location);
             Assert.Equal(8, result.RetryAfter);
-        }*/
+        }
         
         [Fact]
         public void GetAcceptSubscriptionOwnershipStatus()
