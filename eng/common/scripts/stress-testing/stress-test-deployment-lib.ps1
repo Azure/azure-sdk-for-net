@@ -150,11 +150,24 @@ function DeployStressPackage(
     }
     $imageTag += "/$($pkg.Namespace)/$($pkg.ReleaseName):${deployId}"
 
-    $dockerFilePath = "$($pkg.Directory)/Dockerfile"
+    $dockerFilePath = if ($pkg.Dockerfile) {
+        Join-Path $pkg.Directory $pkg.Dockerfile
+    } else {
+        "$($pkg.Directory)/Dockerfile"
+    }
+    $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath)
+
     if ($pushImages -and (Test-Path $dockerFilePath)) {
         Write-Host "Building and pushing stress test docker image '$imageTag'"
         $dockerFile = Get-ChildItem $dockerFilePath
-        Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
+        $dockerBuildFolder = if ($pkg.DockerBuildDir) {
+            Join-Path $pkg.Directory $pkg.DockerBuildDir
+        } else {
+            $dockerFile.DirectoryName
+        }
+        $dockerBuildFolder = [System.IO.Path]::GetFullPath($dockerBuildFolder).Trim()
+
+        Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
         if ($LASTEXITCODE) { return }
         Run docker push $imageTag
         if ($LASTEXITCODE) {
