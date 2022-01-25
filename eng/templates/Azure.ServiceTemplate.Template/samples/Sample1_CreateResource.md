@@ -6,9 +6,10 @@ This sample shows how to detect all the anomalies in the entire time series.
 
 To get started, make sure you have satisfied all the prerequisites and got all the resources required by [README][README].
 
-// **write the sample code snippets as following example.**
+**write the sample code snippets as following example**
 
 ## Detect anomalies of the entire series
+
 Call the client's `DetectEntireSeriesAsync` method with the `DetectRequest` object and await the response as an `EntireDetectResponse` object. Iterate through the response's `IsAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
 
 ```C# Snippet:DetectEntireSeriesAnomaly

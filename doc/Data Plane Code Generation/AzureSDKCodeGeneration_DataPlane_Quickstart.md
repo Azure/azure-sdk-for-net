@@ -164,7 +164,7 @@ You will update all the `Sample<sample_number>_<scenario>.md` and README.md file
 
 ### Snippets
 
-Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/eng/templates/Azure.ServiceTemplate.Template/tests/Samples/TemplateClientSamples.cs#L32) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/eng/templates/Azure.ServiceTemplate.Template/README.md#create-resource). Please refer to [Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
+Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/eng/templates/Azure.ServiceTemplate.Template/tests/Samples/Sample1_CreateResource.cs#L32) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/eng/templates/Azure.ServiceTemplate.Template/README.md#create-resource). Please refer to [Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
 
 ### README
 
