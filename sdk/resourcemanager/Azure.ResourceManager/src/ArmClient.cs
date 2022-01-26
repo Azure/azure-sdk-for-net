@@ -25,7 +25,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        internal const string DefaultUri = "https://management.azure.com";
+        private static readonly Uri DefaultUri = new Uri("https://management.azure.com");
         private Tenant _tenant;
 
         /// <summary>
@@ -41,8 +41,7 @@ namespace Azure.ResourceManager
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, ArmClientOptions options = default)
-            : this(credential, null, options)
+        public ArmClient(TokenCredential credential, ArmClientOptions options = default) : this(credential, null, DefaultUri, options)
         {
         }
 
@@ -53,11 +52,7 @@ namespace Azure.ResourceManager
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(
-            TokenCredential credential,
-            string defaultSubscriptionId,
-            ArmClientOptions options = default)
-            : this(credential, defaultSubscriptionId, new Uri(DefaultUri), options)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options = default) : this(credential, defaultSubscriptionId, DefaultUri, options)
         {
         }
 
@@ -69,16 +64,13 @@ namespace Azure.ResourceManager
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(
-            TokenCredential credential,
-            string defaultSubscriptionId,
-            Uri baseUri,
-            ArmClientOptions options = default)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId, Uri baseUri, ArmClientOptions options = default)
         {
-            if (credential is null)
-                throw new ArgumentNullException(nameof(credential));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(defaultSubscriptionId, nameof(defaultSubscriptionId));
+            Argument.AssertNotNull(baseUri, nameof(baseUri));
 
-            BaseUri = baseUri ?? new Uri(DefaultUri);
+            BaseUri = baseUri;
             options ??= new ArmClientOptions();
 
             if (options.Diagnostics.IsTelemetryEnabled)
@@ -159,7 +151,7 @@ namespace Azure.ResourceManager
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription collection. </returns>
-        public virtual SubscriptionCollection GetSubscriptions()  => _tenant.GetSubscriptions();
+        public virtual SubscriptionCollection GetSubscriptions() => _tenant.GetSubscriptions();
 
         /// <summary>
         /// Gets the tenants.

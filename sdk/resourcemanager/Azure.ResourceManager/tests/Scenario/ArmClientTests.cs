@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Tests
 
         private static string GetDefaultResourceGroupVersion(ResourceGroupCollection rgCollection)
         {
-            var restClient = rgCollection.GetType().GetField("_resourceGroupsRestClient", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rgCollection) as ResourceGroupsRestOperations;
+            var restClient = rgCollection.GetType().GetField("_resourceGroupRestClient", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rgCollection) as ResourceGroupsRestOperations;
             return restClient.GetType().GetField("apiVersion", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(restClient) as string;
         }
 
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestArmClientParamCheck()
         {
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, TestEnvironment.SubscriptionId, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(default(TokenCredential)); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, default(string)); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, TestEnvironment.SubscriptionId, default(Uri)); });
         }
 
         [RecordedTest]

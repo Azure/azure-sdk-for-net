@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    [CodeGenSuppress("Tenant", typeof(ArmResource), typeof(ResourceIdentifier))]
-    [CodeGenSuppress("Tenant", typeof(ArmClientOptions), typeof(TokenCredential), typeof(Uri), typeof(HttpPipeline), typeof(ResourceIdentifier))]
     [CodeGenSuppress("Get", typeof(CancellationToken))]
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetAvailableLocations", typeof(CancellationToken))]
@@ -28,8 +26,17 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of the <see cref = "Tenant"/> class. </summary>
         /// <param name="armClient"> The client parameters to use in these operations. </param>
-        internal Tenant(ArmClient armClient) : this(armClient, new ResourceIdentifier(ResourceIdentifier.Root))
+        internal Tenant(ArmClient armClient) : this(armClient, ResourceIdentifier.Root)
         {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref = "Tenant"/> class. </summary>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal Tenant(ArmClient armClient, TenantData data) : this(armClient, ResourceIdentifier.Root)
+        {
+            HasData = true;
+            _data = data;
         }
 
         /// <summary>
