@@ -794,10 +794,10 @@ namespace Azure.ResourceManager.Cdn.Models
         public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
     }
-    public partial class CidrIpAddress
+    public partial class CidrIPAddress
     {
-        public CidrIpAddress() { }
-        public string BaseIpAddress { get { throw null; } set { } }
+        public CidrIPAddress() { }
+        public string BaseIPAddress { get { throw null; } set { } }
         public int? PrefixLength { get { throw null; } set { } }
     }
     public partial class CookiesMatchConditionParameters
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class EdgeNode : Azure.ResourceManager.Cdn.Models.ProxyResource
     {
         public EdgeNode() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.IpAddressGroup> IpAddressGroups { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.IPAddressGroup> IPAddressGroups { get { throw null; } }
     }
     public partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
     {
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public enum HealthProbeRequestType
     {
         NotSet = 0,
-        GET = 1,
+        Get = 1,
         Head = 2,
     }
     public partial class HttpErrorRangeParameters
@@ -1353,12 +1353,12 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.IdentityType left, Azure.ResourceManager.Cdn.Models.IdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IpAddressGroup
+    public partial class IPAddressGroup
     {
-        public IpAddressGroup() { }
+        public IPAddressGroup() { }
         public string DeliveryRegion { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CidrIpAddress> Ipv4Addresses { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CidrIpAddress> Ipv6Addresses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CidrIPAddress> IPv4Addresses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CidrIPAddress> IPv6Addresses { get { throw null; } }
     }
     public partial class IsDeviceMatchConditionParameters
     {
@@ -1621,8 +1621,8 @@ namespace Azure.ResourceManager.Cdn.Models
     public enum MinimumTlsVersion
     {
         None = 0,
-        TLS10 = 1,
-        TLS12 = 2,
+        Tls10 = 1,
+        Tls12 = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OptimizationType : System.IEquatable<Azure.ResourceManager.Cdn.Models.OptimizationType>
@@ -2303,11 +2303,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly int _dummyPrimitive;
         public RequestMethodMatchConditionParametersMatchValuesItem(string value) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem Delete { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem GET { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem Get { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem Head { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem Options { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem Post { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem PUT { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem Put { get { throw null; } }
         public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem Trace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionParametersMatchValuesItem other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2864,7 +2864,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public UrlSigningAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.UrlSigningAlgorithm SHA256 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.UrlSigningAlgorithm Sha256 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.UrlSigningAlgorithm other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2906,8 +2906,8 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class ValidateProbeInput
     {
-        public ValidateProbeInput(string probeURL) { }
-        public string ProbeURL { get { throw null; } }
+        public ValidateProbeInput(string probeUrl) { }
+        public string ProbeUrl { get { throw null; } }
     }
     public partial class ValidateProbeOutput
     {
