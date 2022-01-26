@@ -1,13 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Globalization;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -24,6 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [TelemetryType.Dependency] = "RemoteDependencyData",
             [TelemetryType.Message] = "MessageData",
             [TelemetryType.Event] = "EventData",
+            [TelemetryType.Metric] = "MetricData"
         };
 
         internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
@@ -53,6 +56,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 telemetryItem.Data = telemetryData;
                 telemetryItems.Add(telemetryItem);
+            }
+
+            return telemetryItems;
+        }
+
+        internal static List<TelemetryItem> Convert(Batch<Metric> batch, string roleName, string roleInstance, string instrumentationKey)
+        {
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            TelemetryItem telemetryItem;
+
+            foreach (var metric in batch)
+            {
+                foreach (ref readonly var metricPoint in metric.GetMetricPoints())
+                {
+                    telemetryItem = new TelemetryItem(Telemetry_Base_Type_Mapping[TelemetryType.Metric], TelemetryItem.FormatUtcTimestamp(DateTime.UtcNow));
+                    telemetryItem.InstrumentationKey = instrumentationKey;
+                    telemetryItem.SetResource(roleName, roleInstance);
+
+                    MonitorBase telemetryData = new MonitorBase();
+                    telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Metric];
+
+                    IList<MetricDataPoint> metrics = new List<MetricDataPoint>();
+                    MetricDataPoint metricDataPoint = new MetricDataPoint(metric.Meter.Name, metricPoint.GetSumDouble());
+                    metrics.Add(metricDataPoint);
+                    MetricsData metricsData = new MetricsData(2, metrics);
+                    foreach (var tag in metricPoint.Tags)
+                    {
+                        metricsData.Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString()));
+                    }
+
+                    telemetryData.BaseData = metricsData;
+                    telemetryItem.Data = telemetryData;
+                    telemetryItems.Add(telemetryItem);
+                }
             }
 
             return telemetryItems;

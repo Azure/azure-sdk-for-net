@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using Azure.Core;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {

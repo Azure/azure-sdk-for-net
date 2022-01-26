@@ -13,6 +13,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using System.Text;
 using System.Linq;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
