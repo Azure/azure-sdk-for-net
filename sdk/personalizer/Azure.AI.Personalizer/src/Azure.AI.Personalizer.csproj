@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.AI.Personalizer client library</AssemblyTitle>
     <Version>2.0.0-beta.2</Version>
@@ -33,6 +33,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.RL" VersionOverride="1.0.18120003-INTERNAL" />
+    <PackageReference Include="System.Text.Json" VersionOverride="6.0.1" />
   </ItemGroup>
 
 </Project>

@@ -35,14 +35,14 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> The calculated ranking for the current request. </summary>
-        public IReadOnlyList<PersonalizerRankedAction> Ranking { get; }
+        public IReadOnlyList<PersonalizerRankedAction> Ranking { get; set; }
         /// <summary> The eventId for the round trip from request to response. </summary>
-        public string EventId { get; }
+        public string EventId { get; set; }
         /// <summary>
         /// The action chosen by the Personalizer service.
         /// This is the action your application should display, and for which to report the reward.
         /// This might not be the first found in &apos;ranking&apos;.
         /// </summary>
-        public string RewardActionId { get; }
+        public string RewardActionId { get; set; }
     }
 }

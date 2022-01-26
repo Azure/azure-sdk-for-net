@@ -25,8 +25,8 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Id of the action. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> Probability of the action. </summary>
-        public float? Probability { get; }
+        public float? Probability { get; set; }
     }
 }

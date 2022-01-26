@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PersonalizerErrorCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersonalizerErrorCode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersonalizerErrorCode(string value)
         {

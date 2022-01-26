@@ -4,7 +4,11 @@
 
     <!-- We don't care about XML doc comments on test methods -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS8032</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.RL" VersionOverride="1.0.18120003-INTERNAL" />
+  </ItemGroup>
 
 
   <!-- Reference the Client Library -->

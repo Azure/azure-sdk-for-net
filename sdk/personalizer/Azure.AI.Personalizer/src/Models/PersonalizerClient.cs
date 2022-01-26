@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,6 +21,8 @@ namespace Azure.AI.Personalizer
         private readonly bool _isLocalInference;
         private string stringEndpoint;
         private string apiKey;
+
+        private readonly RankProcessor _rankProcessor;
 
         internal RankRestClient RankRestClient { get; set; }
         internal EventsRestClient EventsRestClient { get; set; }
@@ -79,7 +79,10 @@ namespace Azure.AI.Personalizer
             {
                 //Intialize liveModel and call Rank processor
                 //ToDo:TASK 13057958: Working on changes to support token authentication in RLClient
-                //Configuration config = GetConfigurationForLiveModel("Token", "token");
+                Configuration configuration = GetConfigurationForLiveModel("Token", "token");
+                LiveModel liveModel = new LiveModel(configuration);
+                liveModel.Init();
+                _rankProcessor = new RankProcessor(liveModel);
             }
         }
 
@@ -127,7 +130,10 @@ namespace Azure.AI.Personalizer
             if (isLocalInference)
             {
                 //Intialize liveModel and Rankprocessor
-                Configuration config = GetConfigurationForLiveModel("apiKey", apiKey);
+                Configuration configuration = GetConfigurationForLiveModel("apiKey", apiKey);
+                LiveModel liveModel = new LiveModel(configuration);
+                liveModel.Init();
+                _rankProcessor = new RankProcessor(liveModel);
             }
         }
 
@@ -162,8 +168,7 @@ namespace Azure.AI.Personalizer
             {
                 if (_isLocalInference)
                 {
-                    //return RankProcessor result here
-                    return null;
+                    return _rankProcessor.Rank(options);
                 }
                 else
                 {
@@ -213,8 +218,7 @@ namespace Azure.AI.Personalizer
             {
                 if (_isLocalInference)
                 {
-                    //return RankProcessor result here
-                    return null;
+                    return _rankProcessor.Rank(options);
                 }
                 else
                 {

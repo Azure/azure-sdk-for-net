@@ -17,6 +17,18 @@ namespace Azure.AI.Personalizer.Tests
         public async Task SingleSlotRankTests()
         {
             PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
+            await SingleSlotRankTests(client);
+        }
+
+        [Test]
+        public async Task SingleSlotRankLocalInferenceTests()
+        {
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true, isLocalInference: true);
+            await SingleSlotRankTests(client);
+        }
+
+        private async Task SingleSlotRankTests(PersonalizerClient client)
+        {
             await RankNullParameters(client);
             await RankServerFeatures(client);
             await RankNullParameters(client);
