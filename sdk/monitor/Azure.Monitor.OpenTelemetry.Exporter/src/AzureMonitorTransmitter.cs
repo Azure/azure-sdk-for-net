@@ -11,6 +11,7 @@ using Azure.Core.Pipeline;
 
 using Azure.Monitor.OpenTelemetry.Exporter.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -20,12 +21,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient applicationInsightsRestClient;
+        internal IPersistentStorage storage;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
         {
+            storage = new FileStorage(options.StorageDirectory);
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
             options.Retry.MaxRetries = 0;
-            options.AddPolicy(new IngestionResponsePolicy(), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new IngestionResponsePolicy(this), HttpPipelinePosition.PerCall);
 
             applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
@@ -39,25 +42,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             int itemsAccepted = 0;
 
-            try
+            if (async)
             {
-                if (async)
-                {
-                    itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
-                }
+                itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, storage, cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            else
             {
-                if (ex?.InnerException?.InnerException?.Source == "System.Net.Http")
-                {
-                    // TODO: Network issue. Send Telemetry Items To Storage
-                }
-
-                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, storage, cancellationToken).Result;
             }
 
             return itemsAccepted;
