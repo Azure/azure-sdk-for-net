@@ -191,15 +191,16 @@ Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.
 
 ### Customize
 
-In `Azure.<group>.<service>` project, we have autorest.md file which is use to add configuration to generate code based on your swagger. [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) is an example.
+You may need to customize the client library a little bit to provide customers better experience when they use the library. 
 
-You can customize your client libray in two ways:
+There are two customization approaches:
 
-- Add convenience APIs.
+- C# customization: Add convenience APIs.
 
 **Learn more**: The [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
 
-- Customizations can be done as a transform in `autorest.md`. e.g.
+- Customizations can be done as a transform in `autorest.md`.
+In `Azure.<group>.<service>` project, we have autorest.md file which is use to add configuration to generate code based on your swagger. [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) is an example.
 
 ```yaml
 directive:
@@ -216,3 +217,5 @@ directive:
         $.format = "url";
       }
 ```
+
+**Note**: When to customize the client library, we prefer to using C# customization because it is easier to write, far easier to read, and much better documented than autorest.md REAMDE transforms. If c# customization does not work, you can write an autorest.md README transform.
