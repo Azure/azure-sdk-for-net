@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets or sets the Audience to use for authentication with Azure Active Directory(AAD).
-        /// The authentication scope will be set from this audience.
+        /// The authentication scope will be set from this Audience.
         /// </summary>
         public TextAnalyticsAudience? Audience { get; set; }
 
