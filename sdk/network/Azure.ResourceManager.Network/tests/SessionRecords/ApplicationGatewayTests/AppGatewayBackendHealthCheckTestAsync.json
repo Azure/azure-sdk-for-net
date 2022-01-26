@@ -11303,7 +11303,7 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4",
+        "Content-Length": "0",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 19 Jan 2022 04:13:42 GMT",
         "Expires": "-1",
