@@ -129,7 +129,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateGetUpdateRequest(provider, name, version, ifNoneMatch, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateGetUpdateRequest(provider, name, version, ifNoneMatch, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -274,7 +274,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateGetFileRequest(provider, name, version, fileId, ifNoneMatch, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -337,7 +337,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateGetFileRequest(provider, name, version, fileId, ifNoneMatch, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -411,7 +411,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -485,7 +485,7 @@ namespace Azure.IoT.DeviceUpdate
             try
             {
                 using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -568,7 +568,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetUpdatesRequest(search, filter, context)
                         : CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -649,7 +649,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetUpdatesRequest(search, filter, context)
                         : CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -696,7 +696,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetProvidersRequest(context)
                         : CreateGetProvidersNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -743,7 +743,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetProvidersRequest(context)
                         : CreateGetProvidersNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -794,7 +794,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetNamesRequest(provider, context)
                         : CreateGetNamesNextPageRequest(nextLink, provider, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -845,7 +845,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetNamesRequest(provider, context)
                         : CreateGetNamesNextPageRequest(nextLink, provider, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -899,7 +899,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetVersionsRequest(provider, name, filter, context)
                         : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -953,7 +953,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetVersionsRequest(provider, name, filter, context)
                         : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1008,7 +1008,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFilesRequest(provider, name, version, context)
                         : CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1063,7 +1063,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFilesRequest(provider, name, version, context)
                         : CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1140,7 +1140,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetOperationsRequest(filter, top, context)
                         : CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1217,7 +1217,7 @@ namespace Azure.IoT.DeviceUpdate
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetOperationsRequest(filter, top, context)
                         : CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

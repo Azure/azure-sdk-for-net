@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.StoragePool
     /// <summary> A class representing collection of DiskPool and their operations over its parent. </summary>
     public partial class DiskPoolCollection : ArmCollection, IEnumerable<DiskPool>, IAsyncEnumerable<DiskPool>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DiskPoolsRestOperations _diskPoolsRestClient;
+        private readonly ClientDiagnostics _diskPoolClientDiagnostics;
+        private readonly DiskPoolsRestOperations _diskPoolRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DiskPoolCollection"/> class for mocking. </summary>
         protected DiskPoolCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DiskPoolCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DiskPool.ResourceType, out string apiVersion);
-            _diskPoolsRestClient = new DiskPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPool.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(DiskPool.ResourceType, out string diskPoolApiVersion);
+            _diskPoolRestClient = new DiskPoolsRestOperations(_diskPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(diskPoolCreatePayload));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _diskPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken);
-                var operation = new DiskPoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _diskPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
+                var response = _diskPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken);
+                var operation = new DiskPoolCreateOrUpdateOperation(ArmClient, _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(diskPoolCreatePayload));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _diskPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskPoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _diskPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
+                var response = await _diskPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskPoolCreateOrUpdateOperation(ArmClient, _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Get");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = _diskPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken);
+                var response = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
+                    throw _diskPoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Get");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = await _diskPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken).ConfigureAwait(false);
+                var response = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
+                    throw await _diskPoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _diskPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken);
+                var response = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<DiskPool>(null, response.GetRawResponse());
-                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _diskPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<DiskPool>(null, response.GetRawResponse());
-                return Response.FromValue(new DiskPool(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Exists");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.Exists");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.StoragePool
         {
             Page<DiskPool> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _diskPoolsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _diskPoolRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.StoragePool
             }
             Page<DiskPool> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _diskPoolsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _diskPoolRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.StoragePool
         {
             async Task<Page<DiskPool>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _diskPoolsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _diskPoolRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,12 +341,12 @@ namespace Azure.ResourceManager.StoragePool
             }
             async Task<Page<DiskPool>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
+                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _diskPoolsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _diskPoolRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiskPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetAllAsGenericResources");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskPoolCollection.GetAllAsGenericResources");
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -417,8 +417,5 @@ namespace Azure.ResourceManager.StoragePool
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DiskPool, DiskPoolData> Construct() { }
     }
 }

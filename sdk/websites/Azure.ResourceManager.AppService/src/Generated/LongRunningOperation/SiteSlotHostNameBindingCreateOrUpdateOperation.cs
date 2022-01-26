@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteSlotHostNameBindingCreateOrUpdateOperation(ArmResource operationsBase, Response<HostNameBindingData> response)
+        internal SiteSlotHostNameBindingCreateOrUpdateOperation(ArmClient armClient, Response<HostNameBindingData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteSlotHostNameBinding>(Response.FromValue(new SiteSlotHostNameBinding(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteSlotHostNameBinding>(Response.FromValue(new SiteSlotHostNameBinding(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

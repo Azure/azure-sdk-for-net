@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of AzureWebCategory and their operations over its parent. </summary>
     public partial class AzureWebCategoryCollection : ArmCollection, IEnumerable<AzureWebCategory>, IAsyncEnumerable<AzureWebCategory>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebCategoriesRestOperations _webCategoriesRestClient;
+        private readonly ClientDiagnostics _azureWebCategoryWebCategoriesClientDiagnostics;
+        private readonly WebCategoriesRestOperations _azureWebCategoryWebCategoriesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AzureWebCategoryCollection"/> class for mocking. </summary>
         protected AzureWebCategoryCollection()
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AzureWebCategoryCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(AzureWebCategory.ResourceType, out string apiVersion);
-            _webCategoriesRestClient = new WebCategoriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _azureWebCategoryWebCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureWebCategory.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(AzureWebCategory.ResourceType, out string azureWebCategoryWebCategoriesApiVersion);
+            _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(_azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureWebCategoryWebCategoriesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Get");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.Get");
             scope.Start();
             try
             {
-                var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
+                var response = _azureWebCategoryWebCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                    throw _azureWebCategoryWebCategoriesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -89,14 +88,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Get");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _azureWebCategoryWebCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                    throw await _azureWebCategoryWebCategoriesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AzureWebCategory(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,14 +114,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken);
+                var response = _azureWebCategoryWebCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _azureWebCategoryWebCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategory(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
             scope.Start();
             try
             {
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.Exists");
             scope.Start();
             try
             {
@@ -212,12 +211,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<AzureWebCategory> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
+                using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webCategoriesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _azureWebCategoryWebCategoriesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -227,12 +226,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<AzureWebCategory> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
+                using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webCategoriesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _azureWebCategoryWebCategoriesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -250,12 +249,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<AzureWebCategory>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
+                using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webCategoriesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _azureWebCategoryWebCategoriesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -265,12 +264,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<AzureWebCategory>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
+                using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webCategoriesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _azureWebCategoryWebCategoriesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAllAsGenericResources");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAllAsGenericResources");
+            using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -341,8 +340,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, AzureWebCategory, AzureWebCategoryData> Construct() { }
     }
 }

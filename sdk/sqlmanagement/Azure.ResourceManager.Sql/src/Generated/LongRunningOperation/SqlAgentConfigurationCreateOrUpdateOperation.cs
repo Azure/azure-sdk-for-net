@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal SqlAgentConfigurationCreateOrUpdateOperation(ArmResource operationsBase, Response<SqlAgentConfigurationData> response)
+        internal SqlAgentConfigurationCreateOrUpdateOperation(ArmClient armClient, Response<SqlAgentConfigurationData> response)
         {
-            _operation = new OperationOrResponseInternals<SqlAgentConfiguration>(Response.FromValue(new SqlAgentConfiguration(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SqlAgentConfiguration>(Response.FromValue(new SqlAgentConfiguration(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

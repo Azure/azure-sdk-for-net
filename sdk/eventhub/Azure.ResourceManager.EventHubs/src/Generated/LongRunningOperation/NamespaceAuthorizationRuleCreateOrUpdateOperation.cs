@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
         }
 
-        internal NamespaceAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<AuthorizationRuleData> response)
+        internal NamespaceAuthorizationRuleCreateOrUpdateOperation(ArmClient armClient, Response<AuthorizationRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<NamespaceAuthorizationRule>(Response.FromValue(new NamespaceAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NamespaceAuthorizationRule>(Response.FromValue(new NamespaceAuthorizationRule(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

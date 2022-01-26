@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal ObjectReplicationPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<ObjectReplicationPolicyData> response)
+        internal ObjectReplicationPolicyCreateOrUpdateOperation(ArmClient armClient, Response<ObjectReplicationPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<ObjectReplicationPolicy>(Response.FromValue(new ObjectReplicationPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ObjectReplicationPolicy>(Response.FromValue(new ObjectReplicationPolicy(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

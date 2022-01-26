@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VpnGatewayNatRule> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VpnGatewayNatRuleCreateOrUpdateOperation for mocking. </summary>
         protected VpnGatewayNatRuleCreateOrUpdateOperation()
         {
         }
 
-        internal VpnGatewayNatRuleCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VpnGatewayNatRuleCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VpnGatewayNatRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnGatewayNatRuleCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
-            return new VpnGatewayNatRule(_operationBase, data);
+            return new VpnGatewayNatRule(_armClient, data);
         }
 
         async ValueTask<VpnGatewayNatRule> IOperationSource<VpnGatewayNatRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
-            return new VpnGatewayNatRule(_operationBase, data);
+            return new VpnGatewayNatRule(_armClient, data);
         }
     }
 }

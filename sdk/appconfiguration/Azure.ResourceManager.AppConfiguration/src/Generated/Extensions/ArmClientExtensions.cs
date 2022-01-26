@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public static ConfigurationStore GetConfigurationStore(this ArmClient armClient, ResourceIdentifier id)
         {
             ConfigurationStore.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ConfigurationStore(clientOptions, credential, uri, pipeline, id));
+            return new ConfigurationStore(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
             PrivateEndpointConnection.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            return new PrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public static PrivateLinkResource GetPrivateLinkResource(this ArmClient armClient, ResourceIdentifier id)
         {
             PrivateLinkResource.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkResource(clientOptions, credential, uri, pipeline, id));
+            return new PrivateLinkResource(armClient, id);
         }
         #endregion
     }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault
         public static VaultKey GetVaultKey(this ArmClient armClient, ResourceIdentifier id)
         {
             VaultKey.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VaultKey(clientOptions, credential, uri, pipeline, id));
+            return new VaultKey(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault
         public static VaultKeyVersion GetVaultKeyVersion(this ArmClient armClient, ResourceIdentifier id)
         {
             VaultKeyVersion.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VaultKeyVersion(clientOptions, credential, uri, pipeline, id));
+            return new VaultKeyVersion(armClient, id);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault
         public static Vault GetVault(this ArmClient armClient, ResourceIdentifier id)
         {
             Vault.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Vault(clientOptions, credential, uri, pipeline, id));
+            return new Vault(armClient, id);
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault
         public static DeletedVault GetDeletedVault(this ArmClient armClient, ResourceIdentifier id)
         {
             DeletedVault.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeletedVault(clientOptions, credential, uri, pipeline, id));
+            return new DeletedVault(armClient, id);
         }
         #endregion
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
             PrivateEndpointConnection.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            return new PrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault
         public static ManagedHsm GetManagedHsm(this ArmClient armClient, ResourceIdentifier id)
         {
             ManagedHsm.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ManagedHsm(clientOptions, credential, uri, pipeline, id));
+            return new ManagedHsm(armClient, id);
         }
         #endregion
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KeyVault
         public static DeletedManagedHsm GetDeletedManagedHsm(this ArmClient armClient, ResourceIdentifier id)
         {
             DeletedManagedHsm.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeletedManagedHsm(clientOptions, credential, uri, pipeline, id));
+            return new DeletedManagedHsm(armClient, id);
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault
         public static MhsmPrivateEndpointConnection GetMhsmPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
             MhsmPrivateEndpointConnection.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MhsmPrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            return new MhsmPrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.KeyVault
         public static Secret GetSecret(this ArmClient armClient, ResourceIdentifier id)
         {
             Secret.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Secret(clientOptions, credential, uri, pipeline, id));
+            return new Secret(armClient, id);
         }
         #endregion
     }

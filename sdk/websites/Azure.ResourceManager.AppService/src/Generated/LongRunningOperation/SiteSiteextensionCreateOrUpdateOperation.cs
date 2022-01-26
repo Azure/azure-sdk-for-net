@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly OperationInternals<SiteSiteextension> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of SiteSiteextensionCreateOrUpdateOperation for mocking. </summary>
         protected SiteSiteextensionCreateOrUpdateOperation()
         {
         }
 
-        internal SiteSiteextensionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SiteSiteextensionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SiteSiteextension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SiteSiteextensionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSiteextension(_operationBase, data);
+            return new SiteSiteextension(_armClient, data);
         }
 
         async ValueTask<SiteSiteextension> IOperationSource<SiteSiteextension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSiteextension(_operationBase, data);
+            return new SiteSiteextension(_armClient, data);
         }
     }
 }

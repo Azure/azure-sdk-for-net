@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ApplicationSecurityGroup> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ApplicationSecurityGroupCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationSecurityGroupCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationSecurityGroupCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationSecurityGroupCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ApplicationSecurityGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationSecurityGroupCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement);
-            return new ApplicationSecurityGroup(_operationBase, data);
+            return new ApplicationSecurityGroup(_armClient, data);
         }
 
         async ValueTask<ApplicationSecurityGroup> IOperationSource<ApplicationSecurityGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement);
-            return new ApplicationSecurityGroup(_operationBase, data);
+            return new ApplicationSecurityGroup(_armClient, data);
         }
     }
 }
