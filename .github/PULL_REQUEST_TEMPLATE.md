@@ -7,7 +7,7 @@ Please see our [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob
 ### Reviewers
 
 - If you disagree with the overall approach of the PR, comment on the general PR rather than individual lines of code.
-- Leaving [suggested changes](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request) is welcomed, but please never committ them for a PR you did not create.
+- Leaving [suggested changes](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request) is welcomed, but please never commit them for a PR you did not create.
 - When you are seeking to understand something rather than request corrections, it is suggested to use language such as "I'm curious ..." as a prefix to comments.
 - Avoid marking a PR as Request Changes unless you have serious concerns that should block the PR from merging.
 
