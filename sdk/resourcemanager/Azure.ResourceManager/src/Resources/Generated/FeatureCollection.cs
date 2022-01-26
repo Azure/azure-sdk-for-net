@@ -30,6 +30,18 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
+        /// <summary> Initializes a new instance of the <see cref="FeatureCollection"/> class. </summary>
+        /// <param name="parent"> The resource representing the parent resource. </param>
+        internal FeatureCollection(ArmResource parent) : base(parent)
+        {
+            _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
+            _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != Provider.ResourceType)

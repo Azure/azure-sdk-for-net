@@ -32,6 +32,18 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupCollection"/> class. </summary>
+        /// <param name="parent"> The resource representing the parent resource. </param>
+        internal ResourceGroupCollection(ArmResource parent) : base(parent)
+        {
+            _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceGroup.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceGroup.ResourceType, out string resourceGroupApiVersion);
+            _resourceGroupRestClient = new ResourceGroupsRestOperations(_resourceGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != Subscription.ResourceType)

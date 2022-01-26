@@ -31,6 +31,18 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
+        /// <summary> Initializes a new instance of the <see cref="ProviderCollection"/> class. </summary>
+        /// <param name="parent"> The resource representing the parent resource. </param>
+        internal ProviderCollection(ArmResource parent) : base(parent)
+        {
+            _providerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Provider.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Provider.ResourceType, out string providerApiVersion);
+            _providerRestClient = new ProvidersRestOperations(_providerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != Subscription.ResourceType)
