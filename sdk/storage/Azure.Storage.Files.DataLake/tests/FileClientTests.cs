@@ -254,8 +254,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CacheControl = CacheControl
             };
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+            {
+                HttpHeaders = headers
+            };
+
             // Act
-            await file.CreateAsync(httpHeaders: headers);
+            await file.CreateAsync(options);
 
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();
@@ -276,8 +281,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> metadata = BuildMetadata();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+            {
+                Metadata = metadata
+            };
+
             // Act
-            await file.CreateAsync(metadata: metadata);
+            await file.CreateAsync(options);
 
             // Assert
             Response<PathProperties> getPropertiesResponse = await file.GetPropertiesAsync();
@@ -295,10 +305,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             string permissions = "0777";
             string umask = "0057";
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
             // Act
-            await file.CreateAsync(
-                permissions: permissions,
-                umask: umask);
+            await file.CreateAsync(options);
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
@@ -325,9 +339,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+                {
+                    Conditions = conditions
+                };
+
                 // Act
-                Response<PathInfo> response = await file.CreateAsync(
-                    conditions: conditions);
+                Response<PathInfo> response = await file.CreateAsync(options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -351,9 +369,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+                {
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    file.CreateAsync(conditions: conditions),
+                    file.CreateAsync(options),
                     e => { });
             }
         }

@@ -249,9 +249,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 ContentDisposition = ContentDisposition,
                 CacheControl = CacheControl
             };
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                HttpHeaders = headers
+            };
 
             // Act
-            await directory.CreateAsync(httpHeaders: headers);
+            await directory.CreateAsync(options: options);
 
             // Assert
             Response<PathProperties> response = await directory.GetPropertiesAsync();
@@ -271,8 +275,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> metadata = BuildMetadata();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Metadata = metadata
+            };
+
             // Act
-            await directory.CreateAsync(metadata: metadata);
+            await directory.CreateAsync(options);
 
             // Assert
             Response<PathProperties> getPropertiesResponse = await directory.GetPropertiesAsync();
@@ -289,10 +298,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             string permissions = "0777";
             string umask = "0057";
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
             // Act
-            await directory.CreateAsync(
-                permissions: permissions,
-                umask: umask);
+            await directory.CreateAsync(options);
 
             // Assert
             Response<PathAccessControl> response = await directory.GetAccessControlAsync();
@@ -318,9 +331,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathCreateOptions options = new DataLakePathCreateOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
-                Response<PathInfo> response = await directory.CreateAsync(
-                    conditions: conditions);
+                Response<PathInfo> response = await directory.CreateAsync(options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -343,9 +360,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathCreateOptions options = new DataLakePathCreateOptions()
+                {
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    directory.CreateAsync(conditions: conditions),
+                    directory.CreateAsync(options),
                     e => { });
             }
         }
@@ -3853,8 +3875,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CacheControl = CacheControl
             };
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+            {
+                HttpHeaders = headers
+            };
+
             // Act
-            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName(), httpHeaders: headers);
+            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName(), options);
 
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();
@@ -3874,8 +3901,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             IDictionary<string, string> metadata = BuildMetadata();
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+            {
+                Metadata = metadata
+            };
+
             // Act
-            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName(), metadata: metadata);
+            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName(), options);
 
             // Assert
             Response<PathProperties> getPropertiesResponse = await file.GetPropertiesAsync();
@@ -3892,11 +3924,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string permissions = "0777";
             string umask = "0057";
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
             // Act
             DataLakeFileClient file = await directory.CreateFileAsync(
                 GetNewFileName(),
-                permissions: permissions,
-                umask: umask);
+                options);
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
@@ -3992,10 +4029,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CacheControl = CacheControl
             };
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions()
+            {
+                HttpHeaders = headers
+            };
+
             // Act
             DataLakeDirectoryClient subDirectory = await directory.CreateSubDirectoryAsync(
                 GetNewDirectoryName(),
-                httpHeaders: headers);
+                options);
 
             // Assert
             Response<PathProperties> response = await subDirectory.GetPropertiesAsync();
@@ -4015,10 +4057,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             IDictionary<string, string> metadata = BuildMetadata();
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions()
+            {
+                Metadata = metadata,
+            };
+
             // Act
             DataLakeDirectoryClient subDirectory = await directory.CreateSubDirectoryAsync(
                 GetNewDirectoryName(),
-                metadata: metadata);
+                options);
 
             // Assert
             Response<PathProperties> getPropertiesResponse = await subDirectory.GetPropertiesAsync();
@@ -4035,11 +4082,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string permissions = "0777";
             string umask = "0057";
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
             // Act
             DataLakeDirectoryClient subDirectory = await directory.CreateSubDirectoryAsync(
                 GetNewDirectoryName(),
-                permissions: permissions,
-                umask: umask);
+                options);
 
             // Assert
             Response<PathAccessControl> response = await subDirectory.GetAccessControlAsync();
@@ -4066,9 +4118,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathCreateOptions options = new DataLakePathCreateOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
-                Response<PathInfo> response = await subDirectory.CreateAsync(
-                    conditions: conditions);
+                Response<PathInfo> response = await subDirectory.CreateAsync(options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -4092,9 +4148,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathCreateOptions options = new DataLakePathCreateOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    subDirectory.CreateAsync(conditions: conditions),
+                    subDirectory.CreateAsync(options),
                     e => { });
             }
         }

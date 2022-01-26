@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -689,9 +690,85 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a file or directory.
+        /// The <see cref="Create(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/>
+        /// operation creates a file or directory.
         /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
-        /// an existing path, consider using the <see cref="CreateIfNotExists"/> API.
+        /// an existing path, consider using the <see cref="CreateIfNotExists(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/> API.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> Create(
+            PathResourceType resourceType,
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+            => CreateInternal(
+                resourceType: resourceType,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateAsync(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/>
+        /// operation creates a file or directory.
+        /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing path, consider using the <see cref="CreateIfNotExistsAsync(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/>
+        /// API.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> CreateAsync(
+            PathResourceType resourceType,
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await CreateInternal(
+                resourceType: resourceType,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Create(PathResourceType, PathHttpHeaders, Metadata, string, string, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation creates a file or directory.
+        /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing path, consider using the <see cref="CreateIfNotExists(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -736,14 +813,17 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> Create(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PathResourceType resourceType,
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            DataLakeRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             return CreateInternal(
                 resourceType,
@@ -758,9 +838,11 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="Create"/> operation creates a file or directory.
+        /// The <see cref="CreateAsync(PathResourceType, PathHttpHeaders, Metadata, string, string, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation creates a file or directory.
         /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
-        /// an existing path, consider using the <see cref="CreateIfNotExists"/> API.
+        /// an existing path, consider using the <see cref="CreateIfNotExistsAsync(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/>
+        /// API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -805,14 +887,17 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PathInfo>> CreateAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PathResourceType resourceType,
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            DataLakeRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             return await CreateInternal(
                 resourceType,
@@ -827,7 +912,8 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="Create"/> operation creates a file or directory.
+        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, DataLakeRequestConditions, bool, CancellationToken)"/>
+        /// operation creates a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -885,18 +971,74 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                HttpHeaders = httpHeaders,
+                Metadata = metadata,
+                Permissions = permissions,
+                Umask = umask,
+                Conditions = conditions,
+            };
+
+            return await CreateInternal(
+                resourceType: resourceType,
+                options: options,
+                async: async,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="CreateInternal(PathResourceType, DataLakePathCreateOptions, bool, CancellationToken)"/>
+        /// operation creates a file or directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal virtual async Task<Response<PathInfo>> CreateInternal(
+            PathResourceType resourceType,
+            DataLakePathCreateOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(httpHeaders)}: {httpHeaders}\n" +
-                    $"{nameof(metadata)}: {metadata}\n" +
-                    $"{nameof(permissions)}: {permissions}\n" +
-                    $"{nameof(umask)}: {umask}\n");
+                    $"{nameof(options.HttpHeaders)}: {options?.HttpHeaders}\n" +
+                    $"{nameof(options.Metadata)}: {options?.Metadata}\n" +
+                    $"{nameof(options.Permissions)}: {options?.Permissions}\n" +
+                    $"{nameof(options.Umask)}: {options?.Umask}\n");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
+
+                string encryptionContext = null;
+                if (options?.GetType() == typeof(DataLakeFileCreateOptions))
+                {
+                    encryptionContext = ((DataLakeFileCreateOptions)options).EncryptionContext;
+                }
 
                 try
                 {
@@ -907,19 +1049,20 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = await PathRestClient.CreateAsync(
                             resource: resourceType,
-                            cacheControl: httpHeaders?.CacheControl,
-                            contentEncoding: httpHeaders?.ContentEncoding,
-                            contentLanguage: httpHeaders?.ContentLanguage,
-                            contentDisposition: httpHeaders?.ContentDisposition,
-                            contentType: httpHeaders?.ContentType,
-                            leaseId: conditions?.LeaseId,
-                            properties: BuildMetadataString(metadata),
-                            permissions: permissions,
-                            umask: umask,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cacheControl: options?.HttpHeaders?.CacheControl,
+                            contentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            contentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            contentDisposition: options?.HttpHeaders?.ContentDisposition,
+                            contentType: options?.HttpHeaders?.ContentType,
+                            leaseId: options?.Conditions?.LeaseId,
+                            properties: BuildMetadataString(options?.Metadata),
+                            permissions: options?.Permissions,
+                            umask: options?.Umask,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            encryptionContext: encryptionContext,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -927,19 +1070,20 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = PathRestClient.Create(
                             resource: resourceType,
-                            cacheControl: httpHeaders?.CacheControl,
-                            contentEncoding: httpHeaders?.ContentEncoding,
-                            contentLanguage: httpHeaders?.ContentLanguage,
-                            contentDisposition: httpHeaders?.ContentDisposition,
-                            contentType: httpHeaders?.ContentType,
-                            leaseId: conditions?.LeaseId,
-                            properties: BuildMetadataString(metadata),
-                            permissions: permissions,
-                            umask: umask,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cacheControl: options?.HttpHeaders?.CacheControl,
+                            contentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            contentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            contentDisposition: options?.HttpHeaders?.ContentDisposition,
+                            contentType: options?.HttpHeaders?.ContentType,
+                            leaseId: options?.Conditions?.LeaseId,
+                            properties: BuildMetadataString(options?.Metadata),
+                            permissions: options?.Permissions,
+                            umask: options?.Umask,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            encryptionContext: encryptionContext,
                             cancellationToken: cancellationToken);
                     }
 
@@ -963,6 +1107,76 @@ namespace Azure.Storage.Files.DataLake
         #endregion Create
 
         #region Create If Not Exists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/>
+        /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> CreateIfNotExists(
+            PathResourceType resourceType,
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+            => CreateIfNotExistsInternal(
+                resourceType: resourceType,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/>
+        /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
+            PathResourceType resourceType,
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await CreateIfNotExistsInternal(
+                resourceType: resourceType,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
         /// <summary>
         /// The <see cref="CreateIfNotExists(PathResourceType, PathHttpHeaders, Metadata, string, string, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
@@ -1006,13 +1220,16 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> CreateIfNotExists(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PathResourceType resourceType,
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            CancellationToken cancellationToken = default)
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            CancellationToken cancellationToken)
             => CreateIfNotExistsInternal(
                     resourceType,
                     httpHeaders,
@@ -1066,13 +1283,16 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PathResourceType resourceType,
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            CancellationToken cancellationToken = default)
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            CancellationToken cancellationToken)
             => await CreateIfNotExistsInternal(
                 resourceType,
                 httpHeaders,
@@ -1138,19 +1358,66 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                HttpHeaders = httpHeaders,
+                Metadata = metadata,
+                Permissions = permissions,
+                Umask = umask,
+            };
+            return await CreateIfNotExistsInternal(
+                resourceType: resourceType,
+                options: options,
+                async: async,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, bool, CancellationToken)"/>
+        /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<PathInfo>> CreateIfNotExistsInternal(
+            PathResourceType resourceType,
+            DataLakePathCreateOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             Response<PathInfo> response;
             try
             {
+                options ??= new DataLakePathCreateOptions();
                 DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                options.Conditions = conditions;
                 response = await CreateInternal(
-                    resourceType,
-                    httpHeaders,
-                    metadata,
-                    permissions,
-                    umask,
-                    conditions,
-                    async,
-                    cancellationToken).ConfigureAwait(false);
+                    resourceType: resourceType,
+                    options: options,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == Constants.DataLake.PathAlreadyExists)
@@ -1178,7 +1445,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the file system if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExists"/>
+        /// <see cref="CreateIfNotExists(PathResourceType, DataLakePathCreateOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
         /// <remarks>
@@ -1225,7 +1492,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the file system if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExistsAsync"/>
+        /// <see cref="CreateIfNotExistsInternal(PathResourceType, DataLakePathCreateOptions, bool, CancellationToken)"/>
         /// instead.
         /// </remarks>
         /// <remarks>

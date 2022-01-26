@@ -1038,8 +1038,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CacheControl = CacheControl
             };
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+            {
+                HttpHeaders = headers,
+            };
+
             // Act
-            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName(), httpHeaders: headers);
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName(), options);
 
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();
@@ -1058,8 +1063,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             IDictionary<string, string> metadata = BuildMetadata();
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions()
+            {
+                Metadata = metadata
+            };
+
             // Act
-            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName(), metadata: metadata);
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName(), options);
 
             // Assert
             Response<PathProperties> getPropertiesResponse = await file.GetPropertiesAsync();
@@ -1075,11 +1085,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string permissions = "0777";
             string umask = "0057";
 
+            DataLakeFileCreateOptions options = new DataLakeFileCreateOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
             // Act
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(
                 GetNewFileName(),
-                permissions: permissions,
-                umask: umask);
+                options);
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
@@ -1166,8 +1181,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CacheControl = CacheControl
             };
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions()
+            {
+                HttpHeaders = headers,
+            };
+
             // Act
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName(), httpHeaders: headers);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName(), options);
 
             // Assert
             Response<PathProperties> response = await directory.GetPropertiesAsync();
@@ -1186,8 +1206,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             IDictionary<string, string> metadata = BuildMetadata();
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Metadata = metadata
+            };
+
             // Act
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName(), metadata: metadata);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName(), options);
 
             // Assert
             Response<PathProperties> getPropertiesResponse = await directory.GetPropertiesAsync();
@@ -1203,11 +1228,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             string permissions = "0777";
             string umask = "0057";
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
             // Act
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(
                 GetNewDirectoryName(),
-                permissions: permissions,
-                umask: umask);
+                options: options);
 
             // Assert
             Response<PathAccessControl> response = await directory.GetAccessControlAsync();
