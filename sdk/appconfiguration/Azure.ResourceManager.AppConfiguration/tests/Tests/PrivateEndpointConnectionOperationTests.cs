@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string VnetName = Recording.GenerateAssetName("vnetname");
                 string SubnetName = Recording.GenerateAssetName("subnetname");
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
-                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).Value;
+                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
                 ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsTrue(Connection.Data.Name.Equals(connection.Data.Name));
         }
 
-        [Ignore("Not Avliable on this resource")]
+        [Ignore("Not available on this resource")]
         [Test]
         public async Task GetAvailableLocationsTest()
         {

@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        internal VirtualMachineScaleSetExtensionData(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, IList<string> provisionAfterExtensions) : base(id)
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        internal VirtualMachineScaleSetExtensionData(string id, string name, string type, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures) : base(id)
         {
             Name = name;
             Type = type;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Compute
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
             ProvisionAfterExtensions = provisionAfterExtensions;
+            SuppressFailures = suppressFailures;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -74,5 +76,7 @@ namespace Azure.ResourceManager.Compute
         public string ProvisioningState { get; }
         /// <summary> Collection of extension names after which this extension needs to be provisioned. </summary>
         public IList<string> ProvisionAfterExtensions { get; }
+        /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
+        public bool? SuppressFailures { get; set; }
     }
 }

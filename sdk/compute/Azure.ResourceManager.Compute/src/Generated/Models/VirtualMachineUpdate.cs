@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OsProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
         public NetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
@@ -72,5 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
         public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
+        /// <summary> Specifies information about the capacity reservation that is used to allocate virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </summary>
+        public CapacityReservationProfile CapacityReservation { get; set; }
+        /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
+        public ApplicationProfile ApplicationProfile { get; set; }
     }
 }

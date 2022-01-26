@@ -40,10 +40,10 @@
             "properties": {
               "resource": {
                 "id": "storedProcedureName6560",
-                "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+                "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
                 "_rid": "rbczAOyNJUoBAAAAAAAAgA==",
                 "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/sprocs/rbczAOyNJUoBAAAAAAAAgA==/",
-                "_etag": "\u0022c303546c-0000-0100-0000-612dfb290000\u0022",
+                "_etag": "\"c303546c-0000-0100-0000-612dfb290000\"",
                 "_ts": 1630403369
               }
             }
@@ -89,10 +89,10 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName6560",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "_rid": "rbczAOyNJUoBAAAAAAAAgA==",
             "_self": "dbs/rbczAA==/colls/rbczAOyNJUo=/sprocs/rbczAOyNJUoBAAAAAAAAgA==/",
-            "_etag": "\u0022c303546c-0000-0100-0000-612dfb290000\u0022",
+            "_etag": "\"c303546c-0000-0100-0000-612dfb290000\"",
             "_ts": 1630403369
           }
         }

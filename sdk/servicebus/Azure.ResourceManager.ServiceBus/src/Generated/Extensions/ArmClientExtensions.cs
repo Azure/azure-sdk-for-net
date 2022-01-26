@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region NamespaceDisasterRecoveryConfigAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceDisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceDisasterRecoveryAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> object. </returns>
-        public static NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryAuthorizationRule" /> object. </returns>
+        public static NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            NamespaceDisasterRecoveryConfigAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            NamespaceDisasterRecoveryAuthorizationRule.ValidateResourceId(id);
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

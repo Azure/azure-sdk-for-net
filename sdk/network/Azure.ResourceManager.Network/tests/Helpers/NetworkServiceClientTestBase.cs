@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         protected async Task<ResourceGroup> CreateResourceGroup(string name)
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
+            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(true, name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
         protected async Task<ResourceGroup> CreateResourceGroup(string name,string location)
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
+            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(true, name, new ResourceGroupData(location))).Value;
         }
 
         public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
             var adminUsername = Recording.GenerateAssetName("admin");
-            var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             var genericResouces = subscription.GetGenericResources();
             var data = new GenericResourceData(location)
             {
@@ -159,18 +159,17 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     }
                 }
             };
-            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
-            await operation.WaitForCompletionAsync();
+            var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, vmId, data));
+            operation.WaitForCompletion();
             return operation.Value;
         }
-
         public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup, VirtualNetwork vnet)
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
             var genericResouces = subscription.GetGenericResources();
             var adminUsername = Recording.GenerateAssetName("admin");
-            var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             GenericResourceData data = new(location)
             {
                 Properties = new Dictionary<string, object>
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     }
                 }
             };
-            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
+            var operation = await ArmClient.GetGenericResources().CreateOrUpdateAsync(false, vmId, data);
             await operation.WaitForCompletionAsync();
             return operation.Value;
         }
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
-            var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var genericResouces = subscription.GetGenericResources();
             GenericResourceData data = new GenericResourceData(location)
@@ -318,16 +317,15 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     }
                 }
             };
-            var operation = InstrumentOperation(await genericResouces.CreateOrUpdateAsync(vmId, data, waitForCompletion: false));
-            await operation.WaitForCompletionAsync();
+            var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, vmId, data));
+            operation.WaitForCompletion();
             return operation.Value;
         }
 
         protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroup resourceGroup)
         {
-            var extensionId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent";
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await subscription.GetGenericResources().CreateOrUpdateAsync(extensionId, new GenericResourceData(location)
+            var extensionId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent");
+            return (await ArmClient.GetGenericResources().CreateOrUpdateAsync(true, extensionId, new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -629,7 +627,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
 
             // Test NIC apis
-            await networkInterfaceCollection.CreateOrUpdateAsync(true, name, nicParameters);
+            var operation = InstrumentOperation(await networkInterfaceCollection.CreateOrUpdateAsync(true, name, nicParameters));
+            await operation.WaitForCompletionAsync();
             Response<NetworkInterface> getNicResponse = await networkInterfaceCollection.GetAsync(name);
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 

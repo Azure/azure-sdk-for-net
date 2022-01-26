@@ -45,7 +45,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -84,5 +84,5 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-await resourceGroup.DeleteAsync();
+await resourceGroup.DeleteAsync(true);
 ```

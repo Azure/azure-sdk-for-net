@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var location = AzureLocation.WestUS;
             // Create ResourceGroup
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgOperation.Value;
 
             // Create AvailabilitySet
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             {
                 AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
                 NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
-                OsProfile = new OSProfile
+                OSProfile = new OSProfile
                 {
                     ComputerName = "testVM",
                     AdminUsername = "username",
                     AdminPassword = "(YourPassword)",
-                    LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVMAgent = true }
+                    LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
                 },
                 StorageProfile = new StorageProfile()
                 {

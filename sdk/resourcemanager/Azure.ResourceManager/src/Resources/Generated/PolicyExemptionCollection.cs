@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Resources
         internal PolicyExemptionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policyExemptionsRestClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            ClientOptions.TryGetApiVersion(PolicyExemption.ResourceType, out string apiVersion);
+            _policyExemptionsRestClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
 
         // Collection level operations.
@@ -45,17 +46,15 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: PolicyExemptions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy exemption with the given scope and name. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or above level, the exemption exempts to all applicable resources in the resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual PolicyExemptionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyExemptionsRestClient.CreateOrUpdate(Id, policyExemptionName, parameters, cancellationToken);
-                var operation = new PolicyExemptionCreateOrUpdateOperation(Parent, response);
+                var operation = new PolicyExemptionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -82,17 +81,15 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{scope}
         /// OperationId: PolicyExemptions_CreateOrUpdate
         /// <summary> This operation creates or updates a policy exemption with the given scope and name. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or above level, the exemption exempts to all applicable resources in the resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<PolicyExemptionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
@@ -103,7 +100,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyExemptionsRestClient.CreateOrUpdateAsync(Id, policyExemptionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyExemptionCreateOrUpdateOperation(Parent, response);
+                var operation = new PolicyExemptionCreateOrUpdateOperation(this, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,13 +118,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a single policy exemption, given its name and the scope it was created at. </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public virtual Response<PolicyExemption> Get(string policyExemptionName, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.Get");
             scope.Start();
@@ -136,7 +131,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policyExemptionsRestClient.Get(Id, policyExemptionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyExemption(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,13 +146,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a single policy exemption, given its name and the scope it was created at. </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public async virtual Task<Response<PolicyExemption>> GetAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.Get");
             scope.Start();
@@ -166,7 +159,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policyExemptionsRestClient.GetAsync(Id, policyExemptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PolicyExemption(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyExemption(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,13 +171,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public virtual Response<PolicyExemption> GetIfExists(string policyExemptionName, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.GetIfExists");
             scope.Start();
@@ -205,13 +196,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public async virtual Task<Response<PolicyExemption>> GetIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.GetIfExists");
             scope.Start();
@@ -232,13 +221,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyExemptionName, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.Exists");
             scope.Start();
@@ -257,13 +244,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
-            if (policyExemptionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyExemptionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
             using var scope = _clientDiagnostics.CreateScope("PolicyExemptionCollection.Exists");
             scope.Start();
@@ -306,7 +291,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -321,7 +306,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -340,7 +325,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -355,7 +340,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -374,7 +359,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.ListForManagementGroup(Id.Name, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -389,7 +374,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.ListForManagementGroupNextPage(nextLink, Id.Name, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -408,7 +393,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -423,7 +408,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = _policyExemptionsRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -462,7 +447,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -477,7 +462,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -496,7 +481,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -511,7 +496,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -530,7 +515,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListForManagementGroupAsync(Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -545,7 +530,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListForManagementGroupNextPageAsync(nextLink, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -564,7 +549,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -579,7 +564,7 @@ namespace Azure.ResourceManager.Resources
                     try
                     {
                         var response = await _policyExemptionsRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyExemption(this, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {

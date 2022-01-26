@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Azure Schema Registry SDK</Description>
     <AssemblyTitle>Azure Schema Registry SDK</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.1.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;$(PackageCommonTags)</PackageTags>
@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Apache.Avro" VersionOverride="1.10.0" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
-            Optional<ResourceIdentityType> type = default;
+            Optional<ApplicationResourceIdentityType> type = default;
             Optional<IDictionary<string, UserAssignedResourceIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToResourceIdentityType();
+                    type = property.Value.GetString().ToApplicationResourceIdentityType();
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))

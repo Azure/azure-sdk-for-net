@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static PatchSettings DeserializePatchSettings(JsonElement element)
         {
-            Optional<WindowsVMGuestPatchMode> patchMode = default;
+            Optional<WindowsVmGuestPatchMode> patchMode = default;
             Optional<bool> enableHotpatching = default;
             Optional<WindowsPatchAssessmentMode> assessmentMode = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    patchMode = new WindowsVMGuestPatchMode(property.Value.GetString());
+                    patchMode = new WindowsVmGuestPatchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enableHotpatching"))

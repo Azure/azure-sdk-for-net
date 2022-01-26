@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.InteropServices;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,7 +18,12 @@ namespace Azure.ResourceManager.Core
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            var header = message.TryGetProperty("UserAgentOverride", out var userAgent) ? userAgent as string : _defaultHeader;
+            var header = message.TryGetProperty("SDKUserAgent", out var userAgent) ? userAgent as string : _defaultHeader;
+            if (message.Request.Headers.TryGetValues(HttpHeader.Names.UserAgent, out var customHeaders))
+            {
+                // append custom "user-agent" headers
+                header = $"{header} {string.Join(" ", customHeaders)}";
+            }
             message.Request.Headers.SetValue(HttpHeader.Names.UserAgent, header);
         }
     }

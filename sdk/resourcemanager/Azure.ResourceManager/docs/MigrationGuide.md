@@ -70,7 +70,7 @@ AzureLocation location = AzureLocation.WestUS2;
 string rgName = "QuickStartRG";
 
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = rgCreateLro.Value;
 ```
 The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionCollection` to manage the resources in a particular subscription. In this example, a `resourceGroupCollection` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupCollection. With that `ResourceGroup` you will be able to get the resource collections to manage all the resources that will be inside it, as it is shown in the next part of this guide.
@@ -287,9 +287,9 @@ VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, input
 #### New
 ```C# Snippet:Create_VirtualMachine
 VirtualMachineData vmData = new VirtualMachineData(location);
-vmData.OsProfile.AdminUsername = "admin-username";
-vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
-vmData.OsProfile.ComputerName = "computer-name";
+vmData.OSProfile.AdminUsername = "admin-username";
+vmData.OSProfile.AdminPassword = "admin-p4$$w0rd";
+vmData.OSProfile.ComputerName = "computer-name";
 vmData.AvailabilitySet = new WritableSubResource();
 vmData.AvailabilitySet.Id = aset.Id;
 NetworkInterfaceReference nicReference = new NetworkInterfaceReference();

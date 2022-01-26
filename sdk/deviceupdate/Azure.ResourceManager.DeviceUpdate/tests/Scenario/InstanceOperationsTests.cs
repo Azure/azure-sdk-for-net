@@ -42,12 +42,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateInstance instance = await account.GetDeviceUpdateInstances().GetAsync("Instance");
             TagUpdateOptions updateOptions = new TagUpdateOptions();
             updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await instance.UpdateAsync(updateOptions);
-            DeviceUpdateInstance updatedInstance = lro.Value;
+            DeviceUpdateInstance updatedInstance = await instance.UpdateAsync(updateOptions);
             ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
             updateOptions.Tags.Clear();
-            lro = await instance.UpdateAsync(updateOptions);
-            updatedInstance = lro.Value;
+            updatedInstance = await instance.UpdateAsync(updateOptions);
             ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
         }
     }
