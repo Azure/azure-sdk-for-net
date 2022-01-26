@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
-        public static async Task<DnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync(this Subscription subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        public static async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(this Subscription subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).CheckDnsNameAvailabilityAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
         }
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
-        public static DnsNameAvailabilityResult CheckDnsNameAvailability(this Subscription subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        public static Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(this Subscription subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).CheckDnsNameAvailability(location, domainNameLabel, cancellationToken);
         }
@@ -1481,7 +1481,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<ServiceTagsListResult> GetServiceTagAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceTagsListResult>> GetServiceTagAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).GetServiceTagAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static ServiceTagsListResult GetServiceTag(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Response<ServiceTagsListResult> GetServiceTag(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetServiceTag(location, cancellationToken);
         }
