@@ -3,6 +3,9 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
+# csharpgen: 
+#   attach: true
 azure-arm: true
 arm-core: true
 clear-output-folder: true
@@ -281,6 +284,58 @@ directive:
         }
       }
     reason: add a fake tenant get operation so that we can generate a tenant where all the Get[TenantResources] operations can be autogen in it. The get operation will be removed with codegen suppress attributes.
+
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $["ProviderInfo"] = {
+        "properties": {
+          "namespace": {
+            "type": "string",
+            "description": "The namespace of the resource provider."
+          },
+          "resourceTypes": {
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ProviderResourceType"
+            },
+            "description": "The collection of provider resource types."
+          }
+        },
+        "description": "Resource provider information."
+      }
+    reason: This is the real response for a tenant provider.
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $["ProviderInfoListResult"] = {
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ProviderInfo"
+            },
+            "description": "An array of resource providers."
+          },
+          "nextLink": {
+            "readOnly": true,
+            "type": "string",
+            "description": "The URL to use for getting the next set of results."
+          }
+        },
+        "description": "List of resource providers."
+      }
+  - from: resources.json
+    where: $.definitions.ProviderInfoListResult.properties.value.items["$ref"]
+    transform: return "#/definitions/ProviderInfo"
+  - from: resources.json
+    where: $.paths["/providers"].get.responses["200"].schema["$ref"]
+    transform: return "#/definitions/ProviderInfoListResult"
+  - from: resources.json
+    where: $.paths["/providers/{resourceProviderNamespace}"].get.responses["200"].schema["$ref"]
+    transform: return "#/definitions/ProviderInfo"
+
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
