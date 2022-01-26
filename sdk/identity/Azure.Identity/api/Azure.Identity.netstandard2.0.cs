@@ -78,6 +78,17 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ClientAssertionCredential : Azure.Core.TokenCredential
+    {
+        public ClientAssertionCredential(string tenantId, string clientId, System.Func<string> assertionCallback, Azure.Identity.ClientAssertionCredentialOptions options = null) { }
+        public ClientAssertionCredential(string tenantId, string clientId, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<string>> assertionCallback, Azure.Identity.ClientAssertionCredentialOptions options = null) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class ClientAssertionCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public ClientAssertionCredentialOptions() { }
+    }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
         protected ClientCertificateCredential() { }
