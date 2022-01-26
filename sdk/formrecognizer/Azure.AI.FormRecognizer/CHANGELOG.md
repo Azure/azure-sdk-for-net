@@ -3,8 +3,13 @@
 ## 4.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added the `DocumentField.AsCurrency` method and the `DocumentFieldType.Currency` enum value to support analyzed currency fields.
+- Added the `Tags` property to the `BuildModelOptions` class. This property can be used to specify custom key-value attributes associated with the model to be built.
+- Added the `Tags` property to the `DocumentModelInfo` and to the `ModelOperationInfo` classes.
 
 ### Breaking Changes
+- Added the `tags` parameter to the `GetCopyAuthorization` methods.
+- Added the `tags` parameter to the `StartCreateComposedModel` methods.
 
 ### Bugs Fixed
 
