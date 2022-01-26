@@ -953,7 +953,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/08355683-c35b-4664-8fe8-afe6a7e695a1*58092C7F24818F67CBD7408A6006FE5DD75DEF9A275A3779B32AAE4A2AFB7574?api-version=2020-03-01-preview",
         "Cache-Control": "no-cache",
-        "Content-Length": "4",
+        "Content-Length": "0",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 15 Nov 2021 06:18:27 GMT",
         "ETag": "\u0022310096cb-0000-0800-0000-6191fbb30000\u0022",

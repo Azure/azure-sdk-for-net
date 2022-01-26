@@ -362,7 +362,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/westus2/DiskOperations/8dd4ec6d-124d-4d53-8f24-616b9d4e18cc?p=4bf15084-9f45-4a17-82a6-013632a884fb\u0026api-version=2021-08-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "4",
+        "Content-Length": "0",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 18 Jan 2022 03:40:18 GMT",
         "Expires": "-1",
