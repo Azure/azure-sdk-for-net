@@ -22,13 +22,7 @@ namespace Azure.ResourceManager.Core
             if (message.Request.Headers.TryGetValues(HttpHeader.Names.UserAgent, out var customHeaders))
             {
                 // append custom "user-agent" headers
-                var strBuilder = new StringBuilder(header);
-                foreach (var customHeader in customHeaders)
-                {
-                    strBuilder.Append(' ');
-                    strBuilder.Append(customHeader);
-                }
-                header = strBuilder.ToString();
+                header = $"{header} {string.Join(" ", customHeaders)}";
             }
             message.Request.Headers.SetValue(HttpHeader.Names.UserAgent, header);
         }
