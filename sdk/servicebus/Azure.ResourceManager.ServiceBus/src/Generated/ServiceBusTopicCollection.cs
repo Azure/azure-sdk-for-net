@@ -51,6 +51,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_CreateOrUpdate
         /// <summary> Creates a topic in the specified namespace. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="topicName"> The topic name. </param>
@@ -83,6 +86,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_CreateOrUpdate
         /// <summary> Creates a topic in the specified namespace. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="topicName"> The topic name. </param>
@@ -115,6 +121,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_Get
         /// <summary> Returns a description for the specified topic. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,6 +149,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_Get
         /// <summary> Returns a description for the specified topic. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,6 +273,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_ListByNamespace
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -301,6 +316,9 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_ListByNamespace
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>

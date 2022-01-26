@@ -51,6 +51,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: MigrationConfigs_CreateAndStartMigration
         /// <summary> Creates Migration configuration and starts migration of entities from Standard to Premium namespace. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
@@ -81,6 +84,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: MigrationConfigs_CreateAndStartMigration
         /// <summary> Creates Migration configuration and starts migration of entities from Standard to Premium namespace. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
@@ -111,6 +117,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: MigrationConfigs_Get
         /// <summary> Retrieves Migration Config. </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +141,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: MigrationConfigs_Get
         /// <summary> Retrieves Migration Config. </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -233,6 +245,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: MigrationConfigs_List
         /// <summary> Gets all migrationConfigurations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MigrationConfigProperties" /> that may take multiple service requests to iterate over. </returns>
@@ -271,6 +286,9 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: MigrationConfigs_List
         /// <summary> Gets all migrationConfigurations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MigrationConfigProperties" /> that may take multiple service requests to iterate over. </returns>
