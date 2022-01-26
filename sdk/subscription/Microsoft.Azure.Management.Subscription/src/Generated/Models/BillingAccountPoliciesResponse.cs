@@ -16,32 +16,35 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// Subscription Information with the alias.
+    /// Billing account policies information.
     /// </summary>
-    public partial class PutAliasResponse : IResource
+    public partial class BillingAccountPoliciesResponse : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the PutAliasResponse class.
+        /// Initializes a new instance of the BillingAccountPoliciesResponse
+        /// class.
         /// </summary>
-        public PutAliasResponse()
+        public BillingAccountPoliciesResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PutAliasResponse class.
+        /// Initializes a new instance of the BillingAccountPoliciesResponse
+        /// class.
         /// </summary>
-        /// <param name="id">Fully qualified ID for the alias resource.</param>
-        /// <param name="name">Alias ID.</param>
-        /// <param name="type">Resource type,
-        /// Microsoft.Subscription/aliases.</param>
-        /// <param name="properties">Put Alias response properties.</param>
-        public PutAliasResponse(string id = default(string), string name = default(string), string type = default(string), PutAliasResponseProperties properties = default(PutAliasResponseProperties))
+        /// <param name="id">Fully qualified ID for the policy.</param>
+        /// <param name="name">Policy name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="properties">Billing account policies response
+        /// properties.</param>
+        public BillingAccountPoliciesResponse(string id = default(string), string name = default(string), string type = default(string), BillingAccountPoliciesResponseProperties properties = default(BillingAccountPoliciesResponseProperties), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -51,28 +54,33 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets fully qualified ID for the alias resource.
+        /// Gets fully qualified ID for the policy.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets alias ID.
+        /// Gets policy name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource type, Microsoft.Subscription/aliases.
+        /// Gets resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets put Alias response properties.
+        /// Gets or sets billing account policies response properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public PutAliasResponseProperties Properties { get; set; }
+        public BillingAccountPoliciesResponseProperties Properties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

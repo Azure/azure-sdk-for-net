@@ -18,23 +18,25 @@ namespace Microsoft.Azure.Management.Subscription.Models
     /// <summary>
     /// The list of aliases.
     /// </summary>
-    public partial class PutAliasListResult
+    public partial class SubscriptionAliasListResult
     {
         /// <summary>
-        /// Initializes a new instance of the PutAliasListResult class.
+        /// Initializes a new instance of the SubscriptionAliasListResult
+        /// class.
         /// </summary>
-        public PutAliasListResult()
+        public SubscriptionAliasListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PutAliasListResult class.
+        /// Initializes a new instance of the SubscriptionAliasListResult
+        /// class.
         /// </summary>
         /// <param name="value">The list of alias.</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
-        public PutAliasListResult(IList<PutAliasResponse> value = default(IList<PutAliasResponse>), string nextLink = default(string))
+        public SubscriptionAliasListResult(IList<SubscriptionAliasResponse> value = default(IList<SubscriptionAliasResponse>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -50,7 +52,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// Gets the list of alias.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<PutAliasResponse> Value { get; private set; }
+        public IList<SubscriptionAliasResponse> Value { get; private set; }
 
         /// <summary>
         /// Gets the link (url) to the next page of results.
