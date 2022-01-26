@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
@@ -25,37 +24,9 @@ namespace Azure.ResourceManager.Core
         private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
-        /// initialize.
-        /// </summary>
-        /// <param name="clientOptions"></param>
-        /// <param name="credential"></param>
-        /// <param name="uri"></param>
-        /// <param name="pipeline"></param>
-        /// <param name="id"></param>
-#pragma warning disable CA1801 // Review unused parameters
-        protected ArmResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id)
-#pragma warning restore CA1801 // Review unused parameters
-        {
-            Id = id;
-            ClientOptions = clientOptions;
-            BaseUri = uri;
-            Pipeline = pipeline;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class for mocking.
         /// </summary>
         protected ArmResource()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmResource"/> class.
-        /// </summary>
-        /// <param name="parentOperations"> The resource representing the parent resource. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ArmResource(ArmResource parentOperations, ResourceIdentifier id)
-            : this(parentOperations.ArmClient, id)
         {
         }
 
@@ -70,9 +41,6 @@ namespace Azure.ResourceManager.Core
 
             ArmClient = armClient;
             Id = id;
-            ClientOptions = armClient.ClientOptions;
-            BaseUri = armClient.BaseUri;
-            Pipeline = armClient.Pipeline;
         }
 
         private Tenant Tenant => _tenant ??= new Tenant(ArmClient);
@@ -90,17 +58,12 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the pipeline for this resource client.
         /// </summary>
-        protected internal HttpPipeline Pipeline { get; }
+        protected internal HttpPipeline Pipeline => ArmClient.Pipeline;
 
         /// <summary>
         /// Gets the base uri for this resource client.
         /// </summary>
-        protected internal Uri BaseUri { get; }
-
-        /// <summary>
-        /// Gets client options
-        /// </summary>
-        protected internal ArmClientOptions ClientOptions { get; }
+        protected internal Uri BaseUri => ArmClient.BaseUri;
 
         /// <summary>
         /// Gets the resource identifier.

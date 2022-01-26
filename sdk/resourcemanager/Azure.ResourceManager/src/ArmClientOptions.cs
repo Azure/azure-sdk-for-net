@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager
@@ -46,36 +44,6 @@ namespace Azure.ResourceManager
         public bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
         {
             return ResourceApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
-        }
-
-        internal ArmClientOptions Clone()
-        {
-            ArmClientOptions copy = new ArmClientOptions();
-
-            copy.Transport = Transport;
-
-            //copy overrrides
-            CopyApiVersions(copy, ResourceApiVersionOverrides);
-
-            foreach (var keyValuePair in ResourceApiVersionOverrides)
-            {
-                copy.ResourceApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
-            }
-
-            return copy;
-        }
-
-        private static void CopyApiVersions(ArmClientOptions copy, IDictionary<ResourceType, string> source)
-        {
-            foreach (var resourceType in source)
-            {
-                if (!copy.ResourceApiVersions.TryGetValue(resourceType.Key.Namespace, out var versionOverrides))
-                {
-                    versionOverrides = new Dictionary<string, string>();
-                    copy.ResourceApiVersions.TryAdd(resourceType.Key.Namespace, versionOverrides);
-                }
-                versionOverrides[resourceType.Key.Type] = resourceType.Value;
-            }
         }
     }
 }

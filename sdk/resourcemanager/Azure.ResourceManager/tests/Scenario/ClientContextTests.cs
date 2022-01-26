@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Tests
         {
             var fakeVersion = "1500-10-10";
             var x = new ArmClientOptions();
-            var y = x.Clone();
+            var y = new ArmClientOptions();
             Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
 
             var clientX = GetArmClient(x);

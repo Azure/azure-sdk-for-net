@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager
 {
@@ -82,8 +80,6 @@ namespace Azure.ResourceManager
                 Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Scope));
             }
 
-            ClientOptions = options.Clone();
-
             DiagnosticOptions = options.Diagnostics;
 
             CopyApiVersionOverrides(options);
@@ -136,11 +132,6 @@ namespace Azure.ResourceManager
         /// Gets the base URI of the service.
         /// </summary>
         protected internal virtual Uri BaseUri { get; private set; }
-
-        /// <summary>
-        /// Gets the client options
-        /// </summary>
-        protected internal virtual ArmClientOptions ClientOptions { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
@@ -234,19 +225,6 @@ namespace Azure.ResourceManager
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Provides a way to reuse the protected client context.
-        /// </summary>
-        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
-        /// <param name="func"> The method to pass the internal properties to. </param>
-        /// <returns> Whatever the delegate returns. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
-        {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
         /// <summary> Gets a collection of GenericResources. </summary>
