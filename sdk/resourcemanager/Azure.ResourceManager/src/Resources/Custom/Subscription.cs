@@ -17,23 +17,6 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class Subscription : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subscription(ArmClient options, ResourceIdentifier id) : base(options, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
-        }
-
         /// RequestPath: /subscriptions/{subscriptionId}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Resources_List
@@ -47,12 +30,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = await _resourcesRestClient.ListAsync(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subscriptionResourcesRestClient.ListAsync(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -62,12 +45,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = await _resourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subscriptionResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -91,12 +74,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = _resourcesRestClient.List(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subscriptionResourcesRestClient.List(Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -106,12 +89,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {
-                    var response = _resourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subscriptionResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, expand, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

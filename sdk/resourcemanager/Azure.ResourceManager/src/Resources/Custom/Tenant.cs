@@ -27,35 +27,9 @@ namespace Azure.ResourceManager.Resources
     public partial class Tenant : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref = "Tenant"/> class. </summary>
-        /// <param name="options"> The resource object to copy the client parameters from. </param>
-        /// <param name="tenantData"> The data model representing the generic azure resource. </param>
-        internal Tenant(ArmResource options, TenantData tenantData) : base(options, ResourceIdentifier.Root)
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        internal Tenant(ArmClient armClient) : this(armClient, new ResourceIdentifier(ResourceIdentifier.Root))
         {
-            HasData = true;
-            _data = tenantData;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);
-            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Subscription"/> class.
-        /// </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        internal Tenant(ArmClient client)
-            : base(client, ResourceIdentifier.Root)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);
-            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
         }
 
         /// <summary>
@@ -65,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A client to perform operations on the management group. </returns>
         internal ManagementGroup GetManagementGroup(ResourceIdentifier id)
         {
-            return new ManagementGroup(this, id);
+            return new ManagementGroup(ArmClient, id);
         }
 
         /// <summary> Gets an object representing a ManagementGroupCollection along with the instance operations that can be performed on it. </summary>

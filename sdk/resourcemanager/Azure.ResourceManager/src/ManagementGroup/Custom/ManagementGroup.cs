@@ -25,17 +25,5 @@ namespace Azure.ResourceManager.Management
     [CodeGenSuppress("CheckNameAvailability", typeof(CheckNameAvailabilityOptions), typeof(CancellationToken))]
     public partial class ManagementGroup : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class. </summary>
-        /// <param name="armClient"> The client options to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managementGroupsRestClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
-        }
     }
 }

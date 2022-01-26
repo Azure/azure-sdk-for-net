@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(this, new ResourceIdentifier(this.Id + "/providers/Microsoft.Resources/tags/default"));
+        protected internal TagResource TagResource => _tagResource ??= new TagResource(ArmClient, new ResourceIdentifier(this.Id + "/providers/Microsoft.Resources/tags/default"));
 
         /// <summary>
         /// Lists all available geo-locations.
