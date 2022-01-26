@@ -138,6 +138,9 @@
 # PRLabel: %Cognitive - Metrics Advisor
 /sdk/metricsadvisor/                            @kinelski
 
+# PRLabel: %Cognitive - Anomaly Detector
+/sdk/anomalydetector/                           @conhua @mengaims @juaduan @moreOver0
+
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
