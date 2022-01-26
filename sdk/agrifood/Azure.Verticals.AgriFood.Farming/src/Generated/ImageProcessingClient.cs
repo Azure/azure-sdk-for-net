@@ -85,7 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateGetRasterizeJobRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -130,7 +130,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateGetRasterizeJobRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

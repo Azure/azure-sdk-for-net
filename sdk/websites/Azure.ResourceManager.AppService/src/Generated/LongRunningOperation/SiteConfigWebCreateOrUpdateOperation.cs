@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteConfigWebCreateOrUpdateOperation(ArmResource operationsBase, Response<SiteConfigData> response)
+        internal SiteConfigWebCreateOrUpdateOperation(ArmClient armClient, Response<SiteConfigData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteConfigWeb>(Response.FromValue(new SiteConfigWeb(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteConfigWeb>(Response.FromValue(new SiteConfigWeb(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

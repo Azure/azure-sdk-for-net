@@ -6,14 +6,9 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
@@ -42,114 +37,37 @@ namespace Azure.ResourceManager.KeyVault
         }
         #endregion
 
-        private static VaultsRestOperations GetVaultsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
+        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return new VaultsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
-        }
-
-        private static ManagedHsmsRestOperations GetManagedHsmsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
-        {
-            return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+            return subscription.GetCachedClient((armClient) =>
+            {
+                return new SubscriptionExtensionClient(armClient, subscription.Id);
+            }
+            );
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Vaults_ListBySubscription
-        /// <summary> Lists the Vaults for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Vault> GetVaultsAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(Vault.ResourceType, out string apiVersion);
-                VaultsRestOperations restOperations = GetVaultsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                async Task<Page<Vault>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<Vault>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetVaultsAsync(top, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Vaults_ListBySubscription
-        /// <summary> Lists the Vaults for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<Vault> GetVaults(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(Vault.ResourceType, out string apiVersion);
-                VaultsRestOperations restOperations = GetVaultsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                Page<Vault> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<Vault> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetVaults(top, cancellationToken);
         }
 
         /// <summary> Filters the list of Vaults for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -161,9 +79,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetVaultsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Vault.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetVaultsAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of Vaults for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -175,105 +91,29 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetVaultsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Vault.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetVaultsAsGenericResources(filter, expand, top, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Vaults_ListDeleted
-        /// <summary> Lists the DeletedVaults for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedVault> GetDeletedVaultsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                VaultsRestOperations restOperations = GetVaultsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<DeletedVault>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListDeletedAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<DeletedVault>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListDeletedNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetDeletedVaultsAsync(cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Vaults_ListDeleted
-        /// <summary> Lists the DeletedVaults for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedVault> GetDeletedVaults(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                VaultsRestOperations restOperations = GetVaultsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<DeletedVault> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListDeleted(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<DeletedVault> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedVaults");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListDeletedNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetDeletedVaults(cancellationToken);
         }
 
         /// <summary> Filters the list of DeletedVaults for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -285,9 +125,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetDeletedVaultsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DeletedVault.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDeletedVaultsAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of DeletedVaults for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -299,179 +137,55 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetDeletedVaultsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DeletedVault.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDeletedVaultsAsGenericResources(filter, expand, top, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Vaults_CheckNameAvailability
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        public static async Task<CheckNameAvailabilityResult> CheckKeyVaultNameAvailabilityAsync(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckKeyVaultNameAvailability");
-                scope.Start();
-                try
-                {
-                    VaultsRestOperations restOperations = GetVaultsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, vaultName, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
+            return await GetExtensionClient(subscription).CheckKeyVaultNameAvailabilityAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Vaults_CheckNameAvailability
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        public static CheckNameAvailabilityResult CheckKeyVaultNameAvailability(this Subscription subscription, VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckKeyVaultNameAvailability");
-                scope.Start();
-                try
-                {
-                    VaultsRestOperations restOperations = GetVaultsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, vaultName, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
+            return GetExtensionClient(subscription).CheckKeyVaultNameAvailability(vaultName, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ManagedHsms_ListBySubscription
-        /// <summary> Lists the ManagedHsms for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedHsm> GetManagedHsmsAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(ManagedHsm.ResourceType, out string apiVersion);
-                ManagedHsmsRestOperations restOperations = GetManagedHsmsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                async Task<Page<ManagedHsm>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<ManagedHsm>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetManagedHsmsAsync(top, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ManagedHsms_ListBySubscription
-        /// <summary> Lists the ManagedHsms for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedHsm> GetManagedHsms(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(ManagedHsm.ResourceType, out string apiVersion);
-                ManagedHsmsRestOperations restOperations = GetManagedHsmsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                Page<ManagedHsm> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<ManagedHsm> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetManagedHsms(top, cancellationToken);
         }
 
         /// <summary> Filters the list of ManagedHsms for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -483,9 +197,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetManagedHsmsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ManagedHsm.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetManagedHsmsAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of ManagedHsms for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -497,105 +209,29 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetManagedHsmsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ManagedHsm.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetManagedHsmsAsGenericResources(filter, expand, top, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ManagedHsms_ListDeleted
-        /// <summary> Lists the DeletedManagedHsms for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedManagedHsm> GetDeletedManagedHsmsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ManagedHsmsRestOperations restOperations = GetManagedHsmsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<DeletedManagedHsm>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListDeletedAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<DeletedManagedHsm>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListDeletedNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetDeletedManagedHsmsAsync(cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ManagedHsms_ListDeleted
-        /// <summary> Lists the DeletedManagedHsms for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedManagedHsm> GetDeletedManagedHsms(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                ManagedHsmsRestOperations restOperations = GetManagedHsmsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<DeletedManagedHsm> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListDeleted(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<DeletedManagedHsm> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeletedManagedHsms");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListDeletedNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeletedManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetDeletedManagedHsms(cancellationToken);
         }
 
         /// <summary> Filters the list of DeletedManagedHsms for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -607,9 +243,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetDeletedManagedHsmsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DeletedManagedHsm.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDeletedManagedHsmsAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of DeletedManagedHsms for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -621,9 +255,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetDeletedManagedHsmsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DeletedManagedHsm.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDeletedManagedHsmsAsGenericResources(filter, expand, top, cancellationToken);
         }
     }
 }

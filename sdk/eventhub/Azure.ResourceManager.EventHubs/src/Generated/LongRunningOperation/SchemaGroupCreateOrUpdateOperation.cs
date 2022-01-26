@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
         }
 
-        internal SchemaGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<SchemaGroupData> response)
+        internal SchemaGroupCreateOrUpdateOperation(ArmClient armClient, Response<SchemaGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<SchemaGroup>(Response.FromValue(new SchemaGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SchemaGroup>(Response.FromValue(new SchemaGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

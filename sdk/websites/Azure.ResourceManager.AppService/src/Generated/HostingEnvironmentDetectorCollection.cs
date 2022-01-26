@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -23,8 +22,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
     public partial class HostingEnvironmentDetectorCollection : ArmCollection, IEnumerable<HostingEnvironmentDetector>, IAsyncEnumerable<HostingEnvironmentDetector>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DiagnosticsRestOperations _diagnosticsRestClient;
+        private readonly ClientDiagnostics _hostingEnvironmentDetectorDiagnosticsClientDiagnostics;
+        private readonly DiagnosticsRestOperations _hostingEnvironmentDetectorDiagnosticsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorCollection"/> class for mocking. </summary>
         protected HostingEnvironmentDetectorCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HostingEnvironmentDetectorCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(HostingEnvironmentDetector.ResourceType, out string apiVersion);
-            _diagnosticsRestClient = new DiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _hostingEnvironmentDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentDetector.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(HostingEnvironmentDetector.ResourceType, out string hostingEnvironmentDetectorDiagnosticsApiVersion);
+            _hostingEnvironmentDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,14 +65,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
+            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
             try
             {
-                var response = _diagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
+                var response = _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentDetector(this, response.Value), response.GetRawResponse());
+                    throw _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentDetector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -97,14 +96,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
+            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _diagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+                var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentDetector(this, response.Value), response.GetRawResponse());
+                    throw await _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new HostingEnvironmentDetector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,14 +124,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
+            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _diagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
+                var response = _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<HostingEnvironmentDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentDetector(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentDetector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,14 +152,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
+            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _diagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<HostingEnvironmentDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentDetector(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentDetector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
+            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
+            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -231,12 +230,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<HostingEnvironmentDetector> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
+                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _diagnosticsRestClient.ListHostingEnvironmentDetectorResponses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,12 +245,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<HostingEnvironmentDetector> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
+                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _diagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,12 +271,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<HostingEnvironmentDetector>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
+                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _diagnosticsRestClient.ListHostingEnvironmentDetectorResponsesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponsesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,12 +286,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<HostingEnvironmentDetector>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
+                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _diagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -317,8 +316,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, HostingEnvironmentDetector, AppServiceDetectorData> Construct() { }
     }
 }

@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal CapacityReservationGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<CapacityReservationGroupData> response)
+        internal CapacityReservationGroupCreateOrUpdateOperation(ArmClient armClient, Response<CapacityReservationGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<CapacityReservationGroup>(Response.FromValue(new CapacityReservationGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<CapacityReservationGroup>(Response.FromValue(new CapacityReservationGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

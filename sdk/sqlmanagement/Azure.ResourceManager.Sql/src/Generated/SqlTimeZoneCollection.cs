@@ -18,15 +18,14 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of SqlTimeZone and their operations over its parent. </summary>
     public partial class SqlTimeZoneCollection : ArmCollection, IEnumerable<SqlTimeZone>, IAsyncEnumerable<SqlTimeZone>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TimeZonesRestOperations _timeZonesRestClient;
+        private readonly ClientDiagnostics _sqlTimeZoneTimeZonesClientDiagnostics;
+        private readonly TimeZonesRestOperations _sqlTimeZoneTimeZonesRestClient;
         private readonly string _locationName;
 
         /// <summary> Initializes a new instance of the <see cref="SqlTimeZoneCollection"/> class for mocking. </summary>
@@ -40,9 +39,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal SqlTimeZoneCollection(ArmResource parent, string locationName) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SqlTimeZone.ResourceType, out string apiVersion);
-            _timeZonesRestClient = new TimeZonesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _sqlTimeZoneTimeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlTimeZone.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SqlTimeZone.ResourceType, out string sqlTimeZoneTimeZonesApiVersion);
+            _sqlTimeZoneTimeZonesRestClient = new TimeZonesRestOperations(_sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTimeZoneTimeZonesApiVersion);
             _locationName = locationName;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -69,14 +68,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = _timeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken);
+                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
+                    throw _sqlTimeZoneTimeZonesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlTimeZone(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -97,14 +96,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = await _timeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
+                    throw await _sqlTimeZoneTimeZonesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SqlTimeZone(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,14 +121,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _timeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken);
+                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SqlTimeZone>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlTimeZone(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +146,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _timeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, _locationName, timeZoneId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SqlTimeZone>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlTimeZone(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlTimeZone(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
             try
             {
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(timeZoneId, nameof(timeZoneId));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.Exists");
             scope.Start();
             try
             {
@@ -219,12 +218,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SqlTimeZone> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
+                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _timeZonesRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlTimeZoneTimeZonesRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,12 +233,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SqlTimeZone> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
+                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _timeZonesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlTimeZoneTimeZonesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -260,12 +259,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SqlTimeZone>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
+                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _timeZonesRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlTimeZoneTimeZonesRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,12 +274,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SqlTimeZone>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
+                using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _timeZonesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlTimeZoneTimeZonesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlTimeZone(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAllAsGenericResources");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAllAsGenericResources");
+            using var scope = _sqlTimeZoneTimeZonesClientDiagnostics.CreateScope("SqlTimeZoneCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -351,8 +350,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlTimeZone, SqlTimeZoneData> Construct() { }
     }
 }

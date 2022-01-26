@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal ImmutabilityPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<ImmutabilityPolicyData> response)
+        internal ImmutabilityPolicyCreateOrUpdateOperation(ArmClient armClient, Response<ImmutabilityPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<ImmutabilityPolicy>(Response.FromValue(new ImmutabilityPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ImmutabilityPolicy>(Response.FromValue(new ImmutabilityPolicy(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

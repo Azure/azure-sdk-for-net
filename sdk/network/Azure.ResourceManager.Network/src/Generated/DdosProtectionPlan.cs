@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DdosProtectionPlansRestOperations _ddosProtectionPlansRestClient;
+
+        private readonly ClientDiagnostics _ddosProtectionPlanClientDiagnostics;
+        private readonly DdosProtectionPlansRestOperations _ddosProtectionPlanRestClient;
         private readonly DdosProtectionPlanData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlan"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DdosProtectionPlan"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DdosProtectionPlan(ArmResource options, DdosProtectionPlanData data) : base(options, data.Id)
+        internal DdosProtectionPlan(ArmClient armClient, DdosProtectionPlanData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _ddosProtectionPlansRestClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlan"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DdosProtectionPlan(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DdosProtectionPlan(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _ddosProtectionPlansRestClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlan"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DdosProtectionPlan(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _ddosProtectionPlansRestClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _ddosProtectionPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string ddosProtectionPlanApiVersion);
+            _ddosProtectionPlanRestClient = new DdosProtectionPlansRestOperations(_ddosProtectionPlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ddosProtectionPlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,14 +88,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DdosProtectionPlan>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.Get");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.Get");
             scope.Start();
             try
             {
-                var response = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _ddosProtectionPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                    throw await _ddosProtectionPlanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,14 +108,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DdosProtectionPlan> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.Get");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.Get");
             scope.Start();
             try
             {
-                var response = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _ddosProtectionPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                    throw _ddosProtectionPlanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,7 +129,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.GetAvailableLocations");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -168,7 +147,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.GetAvailableLocations");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -186,12 +165,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<DdosProtectionPlanDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.Delete");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.Delete");
             scope.Start();
             try
             {
-                var response = await _ddosProtectionPlansRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DdosProtectionPlanDeleteOperation(_clientDiagnostics, Pipeline, _ddosProtectionPlansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _ddosProtectionPlanRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DdosProtectionPlanDeleteOperation(_ddosProtectionPlanClientDiagnostics, Pipeline, _ddosProtectionPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,12 +187,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual DdosProtectionPlanDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.Delete");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.Delete");
             scope.Start();
             try
             {
-                var response = _ddosProtectionPlansRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DdosProtectionPlanDeleteOperation(_clientDiagnostics, Pipeline, _ddosProtectionPlansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _ddosProtectionPlanRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DdosProtectionPlanDeleteOperation(_ddosProtectionPlanClientDiagnostics, Pipeline, _ddosProtectionPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -234,15 +213,15 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.AddTag");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _ddosProtectionPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,15 +239,15 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.AddTag");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _ddosProtectionPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,7 +267,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.SetTags");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.SetTags");
             scope.Start();
             try
             {
@@ -296,8 +275,8 @@ namespace Azure.ResourceManager.Network
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _ddosProtectionPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -317,7 +296,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.SetTags");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.SetTags");
             scope.Start();
             try
             {
@@ -325,8 +304,8 @@ namespace Azure.ResourceManager.Network
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _ddosProtectionPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,15 +322,15 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.RemoveTag");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _ddosProtectionPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _ddosProtectionPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -368,15 +347,15 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.RemoveTag");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _ddosProtectionPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _ddosProtectionPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -396,12 +375,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.Update");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.Update");
             scope.Start();
             try
             {
-                var response = await _ddosProtectionPlansRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                var response = await _ddosProtectionPlanRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -421,12 +400,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlan.Update");
+            using var scope = _ddosProtectionPlanClientDiagnostics.CreateScope("DdosProtectionPlan.Update");
             scope.Start();
             try
             {
-                var response = _ddosProtectionPlansRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+                var response = _ddosProtectionPlanRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new DdosProtectionPlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -23,8 +22,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of ProcessInfo and their operations over its parent. </summary>
     public partial class SiteSlotProcessCollection : ArmCollection, IEnumerable<SiteSlotProcess>, IAsyncEnumerable<SiteSlotProcess>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteSlotProcessWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotProcessWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotProcessCollection"/> class for mocking. </summary>
         protected SiteSlotProcessCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotProcessCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteSlotProcess.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteSlotProcessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotProcess.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteSlotProcess.ResourceType, out string siteSlotProcessWebAppsApiVersion);
+            _siteSlotProcessWebAppsRestClient = new WebAppsRestOperations(_siteSlotProcessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotProcessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.Get");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken);
+                var response = _siteSlotProcessWebAppsRestClient.GetProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotProcess(this, response.Value), response.GetRawResponse());
+                    throw _siteSlotProcessWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.Get");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotProcessWebAppsRestClient.GetProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotProcess(this, response.Value), response.GetRawResponse());
+                    throw await _siteSlotProcessWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.GetIfExists");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken);
+                var response = _siteSlotProcessWebAppsRestClient.GetProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotProcess>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotProcess(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.GetIfExists");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotProcessWebAppsRestClient.GetProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotProcess>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotProcess(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.Exists");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.Exists");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Exists");
             scope.Start();
             try
             {
@@ -213,12 +212,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteSlotProcess> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
+                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListProcessesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteSlotProcessWebAppsRestClient.ListProcessesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,12 +227,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteSlotProcess> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
+                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListProcessesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteSlotProcessWebAppsRestClient.ListProcessesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,12 +253,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteSlotProcess>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
+                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListProcessesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSlotProcessWebAppsRestClient.ListProcessesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,12 +268,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteSlotProcess>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
+                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListProcessesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSlotProcessWebAppsRestClient.ListProcessesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,8 +298,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotProcess, ProcessInfoData> Construct() { }
     }
 }

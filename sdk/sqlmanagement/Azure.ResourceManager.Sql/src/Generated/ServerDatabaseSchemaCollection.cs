@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of DatabaseSchema and their operations over its parent. </summary>
     public partial class ServerDatabaseSchemaCollection : ArmCollection, IEnumerable<ServerDatabaseSchema>, IAsyncEnumerable<ServerDatabaseSchema>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DatabaseSchemasRestOperations _databaseSchemasRestClient;
+        private readonly ClientDiagnostics _serverDatabaseSchemaDatabaseSchemasClientDiagnostics;
+        private readonly DatabaseSchemasRestOperations _serverDatabaseSchemaDatabaseSchemasRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerDatabaseSchemaCollection"/> class for mocking. </summary>
         protected ServerDatabaseSchemaCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDatabaseSchemaCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServerDatabaseSchema.ResourceType, out string apiVersion);
-            _databaseSchemasRestClient = new DatabaseSchemasRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serverDatabaseSchemaDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchema.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServerDatabaseSchema.ResourceType, out string serverDatabaseSchemaDatabaseSchemasApiVersion);
+            _serverDatabaseSchemaDatabaseSchemasRestClient = new DatabaseSchemasRestOperations(_serverDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaDatabaseSchemasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Get");
+            using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Get");
             scope.Start();
             try
             {
-                var response = _databaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken);
+                var response = _serverDatabaseSchemaDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                    throw _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Get");
+            using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _databaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                    throw await _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServerDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
+            using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _databaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
+                var response = _serverDatabaseSchemaDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
+            using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _databaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchema(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
+            using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
+            using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.Exists");
             scope.Start();
             try
             {
@@ -214,12 +213,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServerDatabaseSchema> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
+                using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _databaseSchemasRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,12 +228,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerDatabaseSchema> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
+                using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _databaseSchemasRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,12 +255,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServerDatabaseSchema>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
+                using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _databaseSchemasRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,12 +270,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerDatabaseSchema>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
+                using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _databaseSchemasRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,8 +300,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerDatabaseSchema, DatabaseSchemaData> Construct() { }
     }
 }

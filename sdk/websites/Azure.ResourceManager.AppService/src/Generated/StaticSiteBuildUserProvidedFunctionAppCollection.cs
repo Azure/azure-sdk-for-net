@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of StaticSiteUserProvidedFunctionAppARMResource and their operations over its parent. </summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteBuildUserProvidedFunctionApp>, IAsyncEnumerable<StaticSiteBuildUserProvidedFunctionApp>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly StaticSitesRestOperations _staticSitesRestClient;
+        private readonly ClientDiagnostics _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics;
+        private readonly StaticSitesRestOperations _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildUserProvidedFunctionAppCollection"/> class for mocking. </summary>
         protected StaticSiteBuildUserProvidedFunctionAppCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal StaticSiteBuildUserProvidedFunctionAppCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(StaticSiteBuildUserProvidedFunctionApp.ResourceType, out string apiVersion);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildUserProvidedFunctionApp.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(StaticSiteBuildUserProvidedFunctionApp.ResourceType, out string staticSiteBuildUserProvidedFunctionAppStaticSitesApiVersion);
+            _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteBuildUserProvidedFunctionAppStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(staticSiteUserProvidedFunctionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, cancellationToken);
-                var operation = new StaticSiteBuildUserProvidedFunctionAppCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
+                var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, cancellationToken);
+                var operation = new StaticSiteBuildUserProvidedFunctionAppCreateOrUpdateOperation(ArmClient, _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(staticSiteUserProvidedFunctionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteBuildUserProvidedFunctionAppCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _staticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
+                var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, cancellationToken).ConfigureAwait(false);
+                var operation = new StaticSiteBuildUserProvidedFunctionAppCreateOrUpdateOperation(ArmClient, _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken);
+                var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                    throw _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                    throw await _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken);
+                var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<StaticSiteBuildUserProvidedFunctionApp>(null, response.GetRawResponse());
-                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<StaticSiteBuildUserProvidedFunctionApp>(null, response.GetRawResponse());
-                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildUserProvidedFunctionApp(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
+            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<StaticSiteBuildUserProvidedFunctionApp> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
+                using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<StaticSiteBuildUserProvidedFunctionApp> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
+                using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuildNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuildNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<StaticSiteBuildUserProvidedFunctionApp>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
+                using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,12 +341,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<StaticSiteBuildUserProvidedFunctionApp>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
+                using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _staticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuildNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppsForStaticSiteBuildNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteBuildUserProvidedFunctionApp(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -371,8 +371,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, StaticSiteBuildUserProvidedFunctionApp, StaticSiteUserProvidedFunctionAppARMResourceData> Construct() { }
     }
 }

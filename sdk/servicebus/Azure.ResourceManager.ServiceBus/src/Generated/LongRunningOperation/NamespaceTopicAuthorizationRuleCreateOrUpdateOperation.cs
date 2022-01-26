@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         {
         }
 
-        internal NamespaceTopicAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<ServiceBusAuthorizationRuleData> response)
+        internal NamespaceTopicAuthorizationRuleCreateOrUpdateOperation(ArmClient armClient, Response<ServiceBusAuthorizationRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<NamespaceTopicAuthorizationRule>(Response.FromValue(new NamespaceTopicAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NamespaceTopicAuthorizationRule>(Response.FromValue(new NamespaceTopicAuthorizationRule(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

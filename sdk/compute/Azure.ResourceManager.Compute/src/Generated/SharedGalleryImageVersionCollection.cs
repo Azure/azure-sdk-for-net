@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing collection of SharedGalleryImageVersion and their operations over its parent. </summary>
     public partial class SharedGalleryImageVersionCollection : ArmCollection, IEnumerable<SharedGalleryImageVersion>, IAsyncEnumerable<SharedGalleryImageVersion>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SharedGalleryImageVersionsRestOperations _sharedGalleryImageVersionsRestClient;
+        private readonly ClientDiagnostics _sharedGalleryImageVersionClientDiagnostics;
+        private readonly SharedGalleryImageVersionsRestOperations _sharedGalleryImageVersionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageVersionCollection"/> class for mocking. </summary>
         protected SharedGalleryImageVersionCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SharedGalleryImageVersionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SharedGalleryImageVersion.ResourceType, out string apiVersion);
-            _sharedGalleryImageVersionsRestClient = new SharedGalleryImageVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _sharedGalleryImageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryImageVersion.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SharedGalleryImageVersion.ResourceType, out string sharedGalleryImageVersionApiVersion);
+            _sharedGalleryImageVersionRestClient = new SharedGalleryImageVersionsRestOperations(_sharedGalleryImageVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryImageVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Get");
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _sharedGalleryImageVersionsRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken);
+                var response = _sharedGalleryImageVersionRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _sharedGalleryImageVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
-                return Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageVersion(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Get");
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sharedGalleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
+                var response = await _sharedGalleryImageVersionRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _sharedGalleryImageVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
-                return Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageVersion(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sharedGalleryImageVersionsRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken);
+                var response = _sharedGalleryImageVersionRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse());
                 response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
-                return Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageVersion(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sharedGalleryImageVersionsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sharedGalleryImageVersionRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse());
                 response.Value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName);
-                return Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageVersion(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Exists");
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Exists");
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -209,15 +209,15 @@ namespace Azure.ResourceManager.Compute
         {
             Page<SharedGalleryImageVersion> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
+                using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sharedGalleryImageVersionsRestClient.List(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
+                    var response = _sharedGalleryImageVersionRestClient.List(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
                         value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
-                        return new SharedGalleryImageVersion(this, value);
+                        return new SharedGalleryImageVersion(ArmClient, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
                 }
@@ -229,15 +229,15 @@ namespace Azure.ResourceManager.Compute
             }
             Page<SharedGalleryImageVersion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
+                using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sharedGalleryImageVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
+                    var response = _sharedGalleryImageVersionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
                         value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
-                        return new SharedGalleryImageVersion(this, value);
+                        return new SharedGalleryImageVersion(ArmClient, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
                 }
@@ -258,15 +258,15 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<SharedGalleryImageVersion>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
+                using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sharedGalleryImageVersionsRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sharedGalleryImageVersionRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
                         value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
-                        return new SharedGalleryImageVersion(this, value);
+                        return new SharedGalleryImageVersion(ArmClient, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
                 }
@@ -278,15 +278,15 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<SharedGalleryImageVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
+                using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sharedGalleryImageVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sharedGalleryImageVersionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
                         value.Id = SharedGalleryImageVersion.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, value.Name);
-                        return new SharedGalleryImageVersion(this, value);
+                        return new SharedGalleryImageVersion(ArmClient, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
                 }
@@ -313,8 +313,5 @@ namespace Azure.ResourceManager.Compute
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SharedGalleryImageVersion, SharedGalleryImageVersionData> Construct() { }
     }
 }

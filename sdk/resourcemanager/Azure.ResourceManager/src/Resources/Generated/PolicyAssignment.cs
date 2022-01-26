@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Resources
             var resourceId = $"{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PolicyAssignmentsRestOperations _policyAssignmentsRestClient;
+
+        private readonly ClientDiagnostics _policyAssignmentClientDiagnostics;
+        private readonly PolicyAssignmentsRestOperations _policyAssignmentRestClient;
         private readonly PolicyAssignmentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PolicyAssignment"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "PolicyAssignment"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PolicyAssignment(ArmResource options, PolicyAssignmentData data) : base(options, data.Id)
+        internal PolicyAssignment(ArmClient armClient, PolicyAssignmentData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="PolicyAssignment"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PolicyAssignment(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal PolicyAssignment(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignment"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PolicyAssignment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _policyAssignmentsRestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string policyAssignmentApiVersion);
+            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(_policyAssignmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +91,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PolicyAssignment>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignment.Get");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Get");
             scope.Start();
             try
             {
-                var response = await _policyAssignmentsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policyAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
+                    throw await _policyAssignmentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new PolicyAssignment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +114,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyAssignment> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignment.Get");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Get");
             scope.Start();
             try
             {
-                var response = _policyAssignmentsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                var response = _policyAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
+                    throw _policyAssignmentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +135,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignment.GetAvailableLocations");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -174,7 +153,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignment.GetAvailableLocations");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -195,11 +174,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<PolicyAssignmentDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignment.Delete");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Delete");
             scope.Start();
             try
             {
-                var response = await _policyAssignmentsRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policyAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new PolicyAssignmentDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -220,11 +199,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual PolicyAssignmentDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignment.Delete");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Delete");
             scope.Start();
             try
             {
-                var response = _policyAssignmentsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
+                var response = _policyAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
                 var operation = new PolicyAssignmentDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);

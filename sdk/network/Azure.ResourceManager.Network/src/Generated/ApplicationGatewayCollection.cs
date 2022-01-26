@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of ApplicationGateway and their operations over its parent. </summary>
     public partial class ApplicationGatewayCollection : ArmCollection, IEnumerable<ApplicationGateway>, IAsyncEnumerable<ApplicationGateway>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ApplicationGatewaysRestOperations _applicationGatewaysRestClient;
+        private readonly ClientDiagnostics _applicationGatewayClientDiagnostics;
+        private readonly ApplicationGatewaysRestOperations _applicationGatewayRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayCollection"/> class for mocking. </summary>
         protected ApplicationGatewayCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ApplicationGatewayCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ApplicationGateway.ResourceType, out string apiVersion);
-            _applicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ApplicationGateway.ResourceType, out string applicationGatewayApiVersion);
+            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(_applicationGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters, cancellationToken);
-                var operation = new ApplicationGatewayCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters).Request, response);
+                var response = _applicationGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters, cancellationToken);
+                var operation = new ApplicationGatewayCreateOrUpdateOperation(ArmClient, _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _applicationGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _applicationGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters).Request, response);
+                var response = await _applicationGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ApplicationGatewayCreateOrUpdateOperation(ArmClient, _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken);
+                var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
+                    throw _applicationGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = await _applicationGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
+                    throw await _applicationGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _applicationGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken);
+                var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ApplicationGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _applicationGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ApplicationGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<ApplicationGateway> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
+                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _applicationGatewaysRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _applicationGatewayRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<ApplicationGateway> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
+                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _applicationGatewaysRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _applicationGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ApplicationGateway>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
+                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _applicationGatewaysRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _applicationGatewayRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +323,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ApplicationGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
+                using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _applicationGatewaysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _applicationGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAllAsGenericResources");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAllAsGenericResources");
+            using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -399,8 +399,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ApplicationGateway, ApplicationGatewayData> Construct() { }
     }
 }

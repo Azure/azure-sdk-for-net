@@ -149,7 +149,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateGetAccountPropertiesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateGetAccountPropertiesRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -370,7 +370,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -531,7 +531,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateGetAccessKeysRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -577,7 +577,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateGetAccessKeysRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -632,7 +632,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateRegenerateAccessKeyRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -687,7 +687,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateRegenerateAccessKeyRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -757,7 +757,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetCollectionsRequest(skipToken, context)
                         : CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -825,7 +825,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetCollectionsRequest(skipToken, context)
                         : CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -967,7 +967,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourceSetRulesRequest(skipToken, context)
                         : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1109,7 +1109,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourceSetRulesRequest(skipToken, context)
                         : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

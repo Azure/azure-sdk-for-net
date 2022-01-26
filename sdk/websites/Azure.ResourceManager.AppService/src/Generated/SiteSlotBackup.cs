@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+
+        private readonly ClientDiagnostics _siteSlotBackupWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotBackupWebAppsRestClient;
         private readonly BackupItemData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotBackup"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotBackup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotBackup(ArmResource options, BackupItemData data) : base(options, data.Id)
+        internal SiteSlotBackup(ArmClient armClient, BackupItemData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotBackup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotBackup(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteSlotBackup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotBackup"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotBackup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteSlotBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotBackupWebAppsApiVersion);
+            _siteSlotBackupWebAppsRestClient = new WebAppsRestOperations(_siteSlotBackupWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotBackup>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.Get");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetBackupStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotBackupWebAppsRestClient.GetBackupStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                    throw await _siteSlotBackupWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +114,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotBackup> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.Get");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetBackupStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteSlotBackupWebAppsRestClient.GetBackupStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                    throw _siteSlotBackupWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.GetAvailableLocations");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -174,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.GetAvailableLocations");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -195,11 +174,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SiteSlotBackupDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.Delete");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.Delete");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteBackupSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotBackupWebAppsRestClient.DeleteBackupSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SiteSlotBackupDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -220,11 +199,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SiteSlotBackupDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.Delete");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.Delete");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteBackupSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteSlotBackupWebAppsRestClient.DeleteBackupSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new SiteSlotBackupDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -251,12 +230,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.GetBackupStatusSecretsSlot");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.GetBackupStatusSecretsSlot");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListBackupStatusSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                var response = await _siteSlotBackupWebAppsRestClient.ListBackupStatusSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,12 +258,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.GetBackupStatusSecretsSlot");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.GetBackupStatusSecretsSlot");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListBackupStatusSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken);
-                return Response.FromValue(new SiteSlotBackup(this, response.Value), response.GetRawResponse());
+                var response = _siteSlotBackupWebAppsRestClient.ListBackupStatusSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken);
+                return Response.FromValue(new SiteSlotBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,12 +287,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.RestoreSlot");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.RestoreSlot");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.RestoreSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotBackupRestoreSlotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request).Request, response);
+                var response = await _siteSlotBackupWebAppsRestClient.RestoreSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteSlotBackupRestoreSlotOperation(_siteSlotBackupWebAppsClientDiagnostics, Pipeline, _siteSlotBackupWebAppsRestClient.CreateRestoreSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,12 +319,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotBackup.RestoreSlot");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackup.RestoreSlot");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.RestoreSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken);
-                var operation = new SiteSlotBackupRestoreSlotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request).Request, response);
+                var response = _siteSlotBackupWebAppsRestClient.RestoreSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken);
+                var operation = new SiteSlotBackupRestoreSlotOperation(_siteSlotBackupWebAppsClientDiagnostics, Pipeline, _siteSlotBackupWebAppsRestClient.CreateRestoreSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

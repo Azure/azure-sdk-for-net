@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of VnetInfoResource and their operations over its parent. </summary>
     public partial class SiteVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteVirtualNetworkConnection>, IAsyncEnumerable<SiteVirtualNetworkConnection>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteVirtualNetworkConnectionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteVirtualNetworkConnectionWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionCollection"/> class for mocking. </summary>
         protected SiteVirtualNetworkConnectionCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteVirtualNetworkConnectionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteVirtualNetworkConnection.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteVirtualNetworkConnection.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteVirtualNetworkConnection.ResourceType, out string siteVirtualNetworkConnectionWebAppsApiVersion);
+            _siteVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(_siteVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteVirtualNetworkConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken);
-                var operation = new SiteVirtualNetworkConnectionCreateOrUpdateOperation(this, response);
+                var response = _siteVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken);
+                var operation = new SiteVirtualNetworkConnectionCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteVirtualNetworkConnectionCreateOrUpdateOperation(this, response);
+                var response = await _siteVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteVirtualNetworkConnectionCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken);
+                var response = _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                    throw _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                    throw await _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
+                var response = _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteVirtualNetworkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteVirtualNetworkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteVirtualNetworkConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
+                using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListVnetConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new SiteVirtualNetworkConnection(this, value)), null, response.GetRawResponse());
+                    var response = _siteVirtualNetworkConnectionWebAppsRestClient.ListVnetConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Select(value => new SiteVirtualNetworkConnection(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteVirtualNetworkConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
+                using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListVnetConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new SiteVirtualNetworkConnection(this, value)), null, response.GetRawResponse());
+                    var response = await _siteVirtualNetworkConnectionWebAppsRestClient.ListVnetConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Select(value => new SiteVirtualNetworkConnection(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,8 +339,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteVirtualNetworkConnection, VnetInfoResourceData> Construct() { }
     }
 }

@@ -21,5 +21,14 @@ namespace Azure.ResourceManager.CosmosDB
             return new DatabaseAccountCollection(resourceGroup);
         }
         #endregion
+
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((armClient) =>
+            {
+                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+            }
+            );
+        }
     }
 }

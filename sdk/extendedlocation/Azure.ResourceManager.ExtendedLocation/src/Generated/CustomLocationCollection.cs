@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class representing collection of CustomLocation and their operations over its parent. </summary>
     public partial class CustomLocationCollection : ArmCollection, IEnumerable<CustomLocation>, IAsyncEnumerable<CustomLocation>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CustomLocationsRestOperations _customLocationsRestClient;
+        private readonly ClientDiagnostics _customLocationClientDiagnostics;
+        private readonly CustomLocationsRestOperations _customLocationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CustomLocationCollection"/> class for mocking. </summary>
         protected CustomLocationCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CustomLocationCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(CustomLocation.ResourceType, out string apiVersion);
-            _customLocationsRestClient = new CustomLocationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _customLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(CustomLocation.ResourceType, out string customLocationApiVersion);
+            _customLocationRestClient = new CustomLocationsRestOperations(_customLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ExtendedLocation
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.CreateOrUpdate");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _customLocationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
-                var operation = new CustomLocationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _customLocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                var response = _customLocationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
+                var operation = new CustomLocationCreateOrUpdateOperation(ArmClient, _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.ExtendedLocation
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.CreateOrUpdate");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _customLocationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomLocationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _customLocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                var response = await _customLocationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomLocationCreateOrUpdateOperation(ArmClient, _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.Get");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = _customLocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
+                var response = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
+                    throw _customLocationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CustomLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.Get");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _customLocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
+                    throw await _customLocationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new CustomLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,14 +188,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetIfExists");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _customLocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                var response = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<CustomLocation>(null, response.GetRawResponse());
-                return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetIfExists");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _customLocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<CustomLocation>(null, response.GetRawResponse());
-                return Response.FromValue(new CustomLocation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.Exists");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.Exists");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.Exists");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             Page<CustomLocation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
+                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _customLocationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _customLocationRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
             Page<CustomLocation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
+                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _customLocationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _customLocationRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             async Task<Page<CustomLocation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
+                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _customLocationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _customLocationRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,12 +341,12 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
             async Task<Page<CustomLocation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
+                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _customLocationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _customLocationRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetAllAsGenericResources");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomLocationCollection.GetAllAsGenericResources");
+            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -417,8 +417,5 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, CustomLocation, CustomLocationData> Construct() { }
     }
 }
