@@ -14,7 +14,9 @@ input-file:
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
-save-inputs: true
+modelerfour:
+  naming:
+    preserve-uppercase-max-length: 2
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
@@ -205,4 +207,22 @@ directive:
           "name": "transformCategory",
           "modelAsString": true
       }
+  - from: swagger-document
+    where: $.definitions.EdgeNodeProperties.properties.ipAddressGroups
+    transform: $['x-ms-client-name'] = 'iPAddressGroups'
+  - from: swagger-document
+    where: $.definitions.IpAddressGroup
+    transform: $['x-ms-client-name'] = 'IPAddressGroup'
+  - from: swagger-document
+    where: $.definitions.IpAddressGroup.properties.ipv4Addresses
+    transform: $['x-ms-client-name'] = 'iPv4Addresses'
+  - from: swagger-document
+    where: $.definitions.IpAddressGroup.properties.ipv6Addresses
+    transform: $['x-ms-client-name'] = 'iPv6Addresses'
+  - from: swagger-document
+    where: $.definitions.cidrIpAddress
+    transform: $['x-ms-client-name'] = 'cidrIPAddress'
+  - from: swagger-document
+    where: $.definitions.cidrIpAddress.properties.baseIpAddress
+    transform: $['x-ms-client-name'] = 'baseIPAddress'
 ```
