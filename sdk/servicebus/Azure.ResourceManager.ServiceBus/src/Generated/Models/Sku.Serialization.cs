@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusSku : IUtf8JsonSerializable
+    public partial class Sku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusSku DeserializeServiceBusSku(JsonElement element)
+        internal static Sku DeserializeSku(JsonElement element)
         {
             SkuName name = default;
             Optional<SkuTier> tier = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
+            return new Sku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
         }
     }
 }

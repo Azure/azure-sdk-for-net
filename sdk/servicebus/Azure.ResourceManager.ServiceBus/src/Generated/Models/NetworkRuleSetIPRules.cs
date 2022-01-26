@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Description of NetWorkRuleSet - IpRules resource. </summary>
-    public partial class NetworkRuleSetIpRules
+    public partial class NetworkRuleSetIPRules
     {
-        /// <summary> Initializes a new instance of NetworkRuleSetIpRules. </summary>
-        public NetworkRuleSetIpRules()
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRules. </summary>
+        public NetworkRuleSetIPRules()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSetIpRules. </summary>
-        /// <param name="ipMask"> IP Mask. </param>
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRules. </summary>
+        /// <param name="iPMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
-        internal NetworkRuleSetIpRules(string ipMask, NetworkRuleIPAction? action)
+        internal NetworkRuleSetIPRules(string iPMask, NetworkRuleIPAction? action)
         {
-            IpMask = ipMask;
+            IPMask = iPMask;
             Action = action;
         }
 
         /// <summary> IP Mask. </summary>
-        public string IpMask { get; set; }
+        public string IPMask { get; set; }
         /// <summary> The IP Filter Action. </summary>
         public NetworkRuleIPAction? Action { get; set; }
     }
