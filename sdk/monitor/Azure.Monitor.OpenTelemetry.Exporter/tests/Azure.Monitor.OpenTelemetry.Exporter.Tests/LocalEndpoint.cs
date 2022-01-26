@@ -10,13 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class LocalServer : IDisposable
+    internal class LocalEndpoint : IDisposable
     {
         private readonly IWebHost host;
 
         public Func<HttpContext, Task> ServerLogic;
 
-        public LocalServer(string url)
+        public LocalEndpoint(string url)
         {
             this.host = new WebHostBuilder()
                 .UseKestrel()

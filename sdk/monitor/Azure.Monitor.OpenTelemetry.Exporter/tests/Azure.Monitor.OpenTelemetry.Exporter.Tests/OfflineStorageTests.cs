@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            using var testServer = new LocalServer(testEndpoint);
+            using var testServer = new LocalEndpoint(testEndpoint);
             testServer.ServerLogic = async (httpContext) =>
             {
                 httpContext.Response.StatusCode = 200;
@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            using var testServer = new LocalServer(testEndpoint);
+            using var testServer = new LocalEndpoint(testEndpoint);
             testServer.ServerLogic = async (httpContext) =>
             {
                 httpContext.Response.StatusCode = 500;
@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            using var testServer = new LocalServer(testEndpoint);
+            using var testServer = new LocalEndpoint(testEndpoint);
             testServer.ServerLogic = async (httpContext) =>
             {
                 httpContext.Response.StatusCode = 429;
@@ -151,7 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItems.Add(telemetryItem2);
             telemetryItems.Add(telemetryItem3);
 
-            using var testServer = new LocalServer(testEndpoint);
+            using var testServer = new LocalEndpoint(testEndpoint);
             testServer.ServerLogic = async (httpContext) =>
             {
                 httpContext.Response.StatusCode = 206;
