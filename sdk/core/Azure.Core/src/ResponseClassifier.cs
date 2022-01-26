@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Core
 {
@@ -11,6 +12,9 @@ namespace Azure.Core
     /// </summary>
     public class ResponseClassifier
     {
+        private int[]? _customErrors;
+        private int[]? _customNonErrors;
+
         internal static ResponseClassifier Shared { get; } = new();
 
         /// <summary>
@@ -56,8 +60,51 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {
+            if (CustomError(message.Response.Status, out bool isError))
+            {
+                return isError;
+            }
+
             var statusKind = message.Response.Status / 100;
             return statusKind == 4 || statusKind == 5;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="statusCode"></param>
+        /// <param name="isError"></param>
+        /// <returns></returns>
+        protected bool CustomError(int statusCode, out bool isError)
+        {
+            if (_customErrors?.Contains(statusCode) ?? false)
+            {
+                isError = true;
+                return true;
+            }
+
+            if (_customNonErrors?.Contains(statusCode) ?? false)
+            {
+                isError = false;
+                return true;
+            }
+
+            isError = false;
+            return false;
+        }
+
+        internal void CustomizeErrors(int[]? customErrors, int[]? customNonErrors)
+        {
+            if (customErrors != null)
+            {
+                _customErrors = new int[customErrors.Length];
+                Array.Copy(customErrors, _customErrors, customErrors.Length);
+            }
+
+            if (customNonErrors != null)
+            {
+                _customNonErrors = new int[customNonErrors.Length];
+                Array.Copy(customNonErrors, _customNonErrors, customNonErrors.Length);
+            }
         }
     }
 }

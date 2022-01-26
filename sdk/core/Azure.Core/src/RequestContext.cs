@@ -15,12 +15,15 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private int[]? _customErrorCodes;
-        private int[]? _customNonErrorCodes;
+        private int[]? _customErrors;
+        private int[]? _customNonErrors;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
-        internal bool HasCustomClassifier => _customErrorCodes != null || _customNonErrorCodes != null;
+        /// <summary>
+        /// Indicates whether ConfigureResponse has been called.
+        /// </summary>
+        public bool HasCustomClassifier => _customErrors != null || _customNonErrors != null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -65,7 +68,7 @@ namespace Azure
         /// <param name="isError">Whether the passed-in status codes will be considered to be error codes for the duration of this request.</param>
         public void ConfigureResponse(int[] statusCodes, bool isError)
         {
-            CopyOrMerge(statusCodes, ref isError ? ref _customErrorCodes : ref _customNonErrorCodes);
+            CopyOrMerge(statusCodes, ref isError ? ref _customErrors : ref _customNonErrors);
         }
 
         private static void CopyOrMerge(int[] source, ref int[]? target)
@@ -83,53 +86,9 @@ namespace Azure
             }
         }
 
-        internal ResponseClassifier GetResponseClassifier(ResponseClassifier inner)
+        internal void CustomizeClassifier(ResponseClassifier classifier)
         {
-            return new PerCallResponseClassifier(inner, _customErrorCodes, _customNonErrorCodes);
-        }
-
-        private class PerCallResponseClassifier : ResponseClassifier
-        {
-            private readonly ResponseClassifier _inner;
-            private readonly int[]? _customErrorCodes;
-            private readonly int[]? _customNonErrorCodes;
-
-            public PerCallResponseClassifier(ResponseClassifier inner, int[]? errorCodes, int[]? nonErrorCodes)
-            {
-                _inner = inner;
-                _customErrorCodes = errorCodes;
-                _customNonErrorCodes = nonErrorCodes;
-            }
-
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                return _inner.IsRetriableResponse(message);
-            }
-
-            public override bool IsRetriableException(Exception exception)
-            {
-                return _inner.IsRetriableException(exception);
-            }
-
-            public override bool IsRetriable(HttpMessage message, Exception exception)
-            {
-                return _inner.IsRetriable(message, exception);
-            }
-
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                if (_customErrorCodes?.Contains(message.Response.Status) ?? true)
-                {
-                    return true;
-                }
-
-                if (_customNonErrorCodes?.Contains(message.Response.Status) ?? true)
-                {
-                    return false;
-                }
-
-                return _inner.IsErrorResponse(message);
-            }
+            classifier.CustomizeErrors(_customErrors, _customNonErrors);
         }
     }
 }

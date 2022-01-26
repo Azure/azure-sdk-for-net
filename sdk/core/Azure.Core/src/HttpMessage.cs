@@ -95,7 +95,7 @@ namespace Azure.Core
 
             if (context.HasCustomClassifier)
             {
-                ResponseClassifier = context.GetResponseClassifier(ResponseClassifier);
+                context.CustomizeClassifier(ResponseClassifier);
             }
         }
 
