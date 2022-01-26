@@ -12,6 +12,12 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/896d05e37dbb00712726620b8d679cc3c3be09fb/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
+output-folder: ./Generated
+namespace: Azure.Communication.PhoneNumbers
+enable-xml: true
+clear-output-folder: true
+csharp: true
+v3: true
 ```
 
 ### Move all the models to the main namespace
