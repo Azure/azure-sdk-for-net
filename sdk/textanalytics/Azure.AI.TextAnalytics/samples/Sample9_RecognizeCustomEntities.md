@@ -50,7 +50,7 @@ var actions = new TextAnalyticsActions()
 {
     RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
     {
-        new RecognizeCustomEntitiesAction(projectName, deploymentName);
+        new RecognizeCustomEntitiesAction(projectName, deploymentName)
     }
 };
 
@@ -95,7 +95,6 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
                 Console.WriteLine($"  Offset: {entity.Offset}");
                 Console.WriteLine($"  Length: {entity.Length}");
                 Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                Console.WriteLine($"  SubCategory: {entity.SubCategory}");
             }
             Console.WriteLine("");
         }
