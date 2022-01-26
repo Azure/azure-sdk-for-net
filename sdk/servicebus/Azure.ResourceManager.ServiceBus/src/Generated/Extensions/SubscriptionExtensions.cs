@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.ServiceBus
             return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_List
         /// <summary> Lists the ServiceBusNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,6 +76,9 @@ namespace Azure.ResourceManager.ServiceBus
             );
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_List
         /// <summary> Lists the ServiceBusNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,6 +153,9 @@ namespace Azure.ResourceManager.ServiceBus
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_CheckNameAvailability
         /// <summary> Check the give namespace name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
@@ -179,6 +188,9 @@ namespace Azure.ResourceManager.ServiceBus
             ).ConfigureAwait(false);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Namespaces_CheckNameAvailability
         /// <summary> Check the give namespace name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
