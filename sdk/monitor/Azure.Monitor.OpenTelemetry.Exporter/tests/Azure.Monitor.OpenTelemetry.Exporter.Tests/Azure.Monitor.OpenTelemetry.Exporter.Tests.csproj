@@ -15,5 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <PackageReference Include="OpenTelemetry.Contrib.Extensions.PersistentStorage" VersionOverride="0.0.0-alpha.0.113" />
   </ItemGroup>
 </Project>

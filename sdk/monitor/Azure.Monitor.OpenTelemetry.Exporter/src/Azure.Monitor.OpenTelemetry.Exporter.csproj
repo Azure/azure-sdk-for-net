@@ -11,6 +11,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Contrib.Extensions.PersistentStorage" VersionOverride="0.0.0-alpha.0.113" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
