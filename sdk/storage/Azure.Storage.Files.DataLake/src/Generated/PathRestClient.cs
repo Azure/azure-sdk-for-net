@@ -140,7 +140,7 @@ namespace Azure.Storage.Files.DataLake
             }
             if (encryptionContext != null)
             {
-                request.Headers.Add("x-ms-encryption-context ", encryptionContext);
+                request.Headers.Add("x-ms-encryption-context", encryptionContext);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
