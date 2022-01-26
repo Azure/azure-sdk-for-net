@@ -601,6 +601,7 @@ namespace Compute.Tests
                 finally
                 {
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                 }
             }
         }
