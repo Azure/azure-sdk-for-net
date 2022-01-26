@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
-        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new SipRoutingClientRecordedTestSanitizer();
 
         public bool IncludeSipRoutingLiveTests
@@ -26,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
         protected SipRoutingClient CreateClient(bool isInstrumented = true)
         {
             var client = new SipRoutingClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestStaticConnectionString,
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -42,7 +42,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure
         protected SipRoutingClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
         {
             var client = new SipRoutingClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.ConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestStaticConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
                     token,
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 

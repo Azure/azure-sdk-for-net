@@ -161,7 +161,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests.Samples
 
         private SipRoutingClient GetClient()
         {
-            var connectionString = TestEnvironment.ConnectionString;
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             var clientOptions = InstrumentClientOptions(new SipRoutingClientOptions());
 
             #region Snippet:CreateSipRoutingClient
