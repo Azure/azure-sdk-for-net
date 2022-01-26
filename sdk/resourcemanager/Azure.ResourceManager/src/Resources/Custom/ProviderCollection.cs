@@ -18,8 +18,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Provider and their operations over its parent. </summary>
     [CodeGenSuppress("ProviderCollection", typeof(ArmResource))]
-    [CodeGenSuppress("GetAllAsGenericResources", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAllAsGenericResourcesAsync", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     public partial class ProviderCollection : ArmCollection, IEnumerable<Provider>, IAsyncEnumerable<Provider>
     {
         /// <summary>

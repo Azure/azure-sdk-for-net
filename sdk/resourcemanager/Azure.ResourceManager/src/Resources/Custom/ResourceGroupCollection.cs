@@ -16,8 +16,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ResourceGroup and their operations over its parent. </summary>
     [CodeGenSuppress("ResourceGroupCollection", typeof(ArmResource))]
-    [CodeGenSuppress("GetAllAsGenericResources", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAllAsGenericResourcesAsync", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     public partial class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroup>, IAsyncEnumerable<ResourceGroup>
 
     {
