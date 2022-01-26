@@ -141,6 +141,8 @@
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/                           @conhua @mengaims @juaduan @moreOver0
 
+# ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
+/sdk/anomalydetector/Azure.AI.AnomalyDetector     @conhua @mengaims @juaduan @moreOver0
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
