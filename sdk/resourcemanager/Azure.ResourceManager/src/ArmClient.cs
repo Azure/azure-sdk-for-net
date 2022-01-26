@@ -23,8 +23,14 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        private static readonly Uri DefaultUri = new Uri("https://management.azure.com");
+        private static readonly Uri _defaultUri = new Uri("https://management.azure.com");
         private Tenant _tenant;
+        private Subscription _defaultSubscription;
+
+        private Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal ConcurrentDictionary<string, string> NamespaceVersionCache { get; } = new ConcurrentDictionary<string, string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClient"/> class for mocking.
@@ -39,7 +45,7 @@ namespace Azure.ResourceManager
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, ArmClientOptions options = default) : this(credential, null, DefaultUri, options)
+        public ArmClient(TokenCredential credential, ArmClientOptions options = default) : this(credential, null, _defaultUri, options)
         {
         }
 
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options = default) : this(credential, defaultSubscriptionId, DefaultUri, options)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options = default) : this(credential, defaultSubscriptionId, _defaultUri, options)
         {
         }
 
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager
 
             _tenant = new Tenant(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
-                new Subscription(this, ResourceIdentifier.Root.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
+                new Subscription(this, Subscription.CreateResourceIdentifier(defaultSubscriptionId));
         }
 
         private void CopyApiVersionOverrides(ArmClientOptions options)
@@ -94,10 +100,10 @@ namespace Azure.ResourceManager
             foreach (var keyValuePair in options.ResourceApiVersionOverrides)
             {
                 ApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
-                if (!ResourceApiVersions.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
+                if (!ResourceApiVersionCache.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
                 {
                     apiVersionCache = new Dictionary<string, string>();
-                    ResourceApiVersions.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
+                    ResourceApiVersionCache.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
                 }
                 apiVersionCache.Add(keyValuePair.Key.Type, keyValuePair.Value);
             }
@@ -113,20 +119,10 @@ namespace Azure.ResourceManager
             return ApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
         }
 
-        private Subscription _defaultSubscription;
-
-        internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
-
-        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersions { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
-
-        internal ConcurrentDictionary<string, string> NamespaceVersions { get; } = new ConcurrentDictionary<string, string>();
-
         /// <summary>
         /// Gets the diagnostic options used for this client.
         /// </summary>
         protected internal virtual DiagnosticsOptions DiagnosticOptions { get; }
-
-        internal virtual TokenCredential Credential { get; private set; }
 
         /// <summary>
         /// Gets the base URI of the service.

@@ -1,13 +1,11 @@
 ﻿using System;
-using Azure.Core;
-using Azure.Identity;
-using NUnit.Framework;
-using Azure.Core.Pipeline;
 using System.Threading;
-using Azure.Core.TestFramework;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
@@ -66,7 +64,6 @@ namespace Azure.ResourceManager.Tests
             var fakeVersion = "1500-10-10";
             var x = new ArmClientOptions();
             var y = new ArmClientOptions();
-            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
 
             var clientX = GetArmClient(x);
             var clientY = GetArmClient(y);
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.Tests
             x.SetApiVersion(ResourceGroup.ResourceType, fakeVersion);
             clientX = GetArmClient(x);
             subX = await clientX.GetDefaultSubscriptionAsync();
-            Assert.IsFalse(ReferenceEquals(x.ResourceApiVersions, y.ResourceApiVersions));
             versionX = await subX.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
             versionY = await subY.GetProviders().TryGetApiVersionAsync(ResourceGroup.ResourceType);
             Assert.AreNotEqual(versionX, versionY);
