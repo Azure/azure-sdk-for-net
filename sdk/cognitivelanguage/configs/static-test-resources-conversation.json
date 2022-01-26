@@ -1,0 +1,347 @@
+{
+    "api-version": "2021-11-01-preview",
+    "metadata": {
+        "name": "cognitiveLanguageSdkConversation",
+        "description": "Cognitive Language SDKs - Conversation Project",
+        "type": "Conversation",
+        "multilingual": false,
+        "language": "en-us"
+    },
+    "assets": {
+        "intents": [
+            {
+                "name": "Order"
+            }
+        ],
+        "entities": [
+            {
+                "name": "OrderQuantity",
+                "compositionSetting": "ReturnLongestOverlap",
+                "list": null,
+                "prebuiltEntities": null
+            },
+            {
+                "name": "OrderItem",
+                "compositionSetting": "ReturnLongestOverlap",
+                "list": null,
+                "prebuiltEntities": null
+            },
+            {
+                "name": "OrderItemDetail",
+                "compositionSetting": "ReturnLongestOverlap",
+                "list": null,
+                "prebuiltEntities": null
+            }
+        ],
+        "examples": [
+            {
+                "text": "Could I get 1 plate of Kirkland rolls?",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 12,
+                        "length": 7
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 23,
+                        "length": 14
+                    }
+                ]
+            },
+            {
+                "text": "We'll take 4 plates of California maki",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 11,
+                        "length": 8
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 23,
+                        "length": 15
+                    }
+                ]
+            },
+            {
+                "text": "We'll have two plates of salmon nigiri",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 11,
+                        "length": 10
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 25,
+                        "length": 13
+                    }
+                ]
+            },
+            {
+                "text": "One plate of seared salmon nigiri",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 0,
+                        "length": 9
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 13,
+                        "length": 20
+                    }
+                ]
+            },
+            {
+                "text": "We're fine with water",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 16,
+                        "length": 5
+                    }
+                ]
+            },
+            {
+                "text": "Could I have a side of steamed rice",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItemDetail",
+                        "offset": 13,
+                        "length": 9
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 23,
+                        "length": 12
+                    }
+                ]
+            },
+            {
+                "text": "The sushi flight please",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 4,
+                        "length": 12
+                    }
+                ]
+            },
+            {
+                "text": "We'll get two oyako don without onion",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 10,
+                        "length": 3
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 14,
+                        "length": 9
+                    },
+                    {
+                        "entityName": "OrderItemDetail",
+                        "offset": 24,
+                        "length": 13
+                    }
+                ]
+            },
+            {
+                "text": "I'll get the four piece sashimi with no rice",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 13,
+                        "length": 18
+                    },
+                    {
+                        "entityName": "OrderItemDetail",
+                        "offset": 32,
+                        "length": 12
+                    }
+                ]
+            },
+            {
+                "text": "Can I get the curry katsu with extra sauce",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 14,
+                        "length": 11
+                    },
+                    {
+                        "entityName": "OrderItemDetail",
+                        "offset": 26,
+                        "length": 16
+                    }
+                ]
+            },
+            {
+                "text": "We'll order a chirashi bowl, beef yakisoba, and a side salad",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 14,
+                        "length": 13
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 29,
+                        "length": 13
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 50,
+                        "length": 10
+                    }
+                ]
+            },
+            {
+                "text": "I'll have two avocado maki",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 10,
+                        "length": 3
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 14,
+                        "length": 12
+                    }
+                ]
+            },
+            {
+                "text": "Can we get 3 more natto maki",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 11,
+                        "length": 1
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 18,
+                        "length": 10
+                    }
+                ]
+            },
+            {
+                "text": "I will order the special",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 17,
+                        "length": 7
+                    }
+                ]
+            },
+            {
+                "text": "I would like some pork yaki udon",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 18,
+                        "length": 14
+                    }
+                ]
+            },
+            {
+                "text": "I will start with the soft shell crab, then the shioyaki mackerel",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 22,
+                        "length": 15
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 48,
+                        "length": 17
+                    }
+                ]
+            },
+            {
+                "text": "Could I get some more miso soup",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 22,
+                        "length": 9
+                    }
+                ]
+            },
+            {
+                "text": "Could I please get 3 salmon nigiri, and a California roll",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderQuantity",
+                        "offset": 19,
+                        "length": 1
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 21,
+                        "length": 13
+                    },
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 42,
+                        "length": 15
+                    }
+                ]
+            },
+            {
+                "text": "I will have the katsu don please",
+                "language": "en-us",
+                "intent": "Order",
+                "entities": [
+                    {
+                        "entityName": "OrderItem",
+                        "offset": 16,
+                        "length": 9
+                    }
+                ]
+            }
+        ]
+    }
+}

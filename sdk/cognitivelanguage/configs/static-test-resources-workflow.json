@@ -1,0 +1,35 @@
+{
+    "api-version": "2021-11-01-preview",
+    "metadata": {
+        "name": "cognitiveLanguageSdkWorkflow",
+        "description": "Cognitive Language SDKs - Workflow Project",
+        "type": "Workflow",
+        "multilingual": false,
+        "language": "en-us"
+    },
+    "assets": {
+        "intents": [
+            {
+                "name": "SushiOrder",
+                "orchestration": {
+                    "type": "Clu",
+                    "cluOrchestration": {
+                        "projectName": "cognitiveLanguageSdkConversation",
+                        "deploymentName": "production"
+                    }
+                }
+            },
+            {
+                "name": "SushiMaking",
+                "orchestration": {
+                    "type": "Qna",
+                    "qnaOrchestration": {
+                        "projectName": "cognitiveLanguageSdkQnA"
+                    }
+                }
+            }
+        ],
+        "entities": [],
+        "examples": []
+    }
+}
