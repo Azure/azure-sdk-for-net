@@ -3,13 +3,10 @@ namespace Azure.ResourceManager
     public partial class ArmClient
     {
         protected ArmClient() { }
-        public ArmClient(Azure.Core.TokenCredential credential) { }
-        public ArmClient(Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options) { }
-        public ArmClient(string defaultSubscriptionId, Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
-        public ArmClient(string defaultSubscriptionId, System.Uri baseUri, Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
-        public ArmClient(System.Uri baseUri, Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
+        public ArmClient(Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
+        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options = null) { }
+        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, System.Uri baseUri, Azure.ResourceManager.ArmClientOptions options = null) { }
         protected internal virtual System.Uri BaseUri { get { throw null; } }
-        protected internal virtual Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } }
         protected internal virtual Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
         protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.DataPolicyManifest GetDataPolicyManifest(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -41,8 +38,6 @@ namespace Azure.ResourceManager
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ProviderData> GetTenantProvidersAsync(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.TenantCollection GetTenants() { throw null; }
         public bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public virtual T UseClientContext<T>(System.Func<System.Uri, Azure.Core.TokenCredential, Azure.ResourceManager.ArmClientOptions, Azure.Core.Pipeline.HttpPipeline, T> func) { throw null; }
     }
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {
@@ -118,11 +113,8 @@ namespace Azure.ResourceManager.Core
     {
         protected ArmResource() { }
         protected internal ArmResource(Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { }
-        protected ArmResource(Azure.ResourceManager.ArmClientOptions clientOptions, Azure.Core.TokenCredential credential, System.Uri uri, Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.ResourceIdentifier id) { }
-        protected ArmResource(Azure.ResourceManager.Core.ArmResource parentOperations, Azure.Core.ResourceIdentifier id) { }
         protected internal virtual Azure.ResourceManager.ArmClient ArmClient { get { throw null; } }
         protected internal System.Uri BaseUri { get { throw null; } }
-        protected internal Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } }
         protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
         protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -1112,7 +1104,6 @@ namespace Azure.ResourceManager.Resources
         protected TagResource() { }
         public virtual Azure.ResourceManager.Resources.TagResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.Models.TagResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.Resources.TagResourceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.TagResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.Resources.TagResourceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope) { throw null; }
