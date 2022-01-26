@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Tests
         [SyncOnly]
         public void ConstructWithInvalidSubscription()
         {
-            var client = new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential);
+            var client = new ArmClient(TestEnvironment.Credential, Guid.NewGuid().ToString());
             var ex = Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
             Assert.AreEqual(404, ex.Status);
         }
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestArmClientParamCheck()
         {
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(null, null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(baseUri: null, null, null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(defaultSubscriptionId: null, null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, TestEnvironment.SubscriptionId, null); });
         }
 
         [RecordedTest]

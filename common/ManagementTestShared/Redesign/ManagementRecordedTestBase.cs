@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.TestFramework
             if (Mode != RecordedTestMode.Playback)
             {
                 return new ArmClient(
+                        TestEnvironment.Credential,
                         TestEnvironment.SubscriptionId,
                         GetUri(TestEnvironment.ResourceManagerUrl),
-                        TestEnvironment.Credential,
                         new ArmClientOptions());
             }
             return null;

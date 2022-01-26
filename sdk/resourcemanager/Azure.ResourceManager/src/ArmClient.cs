@@ -39,9 +39,10 @@ namespace Azure.ResourceManager
         /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential)
-            : this(null, new Uri(DefaultUri), credential, null)
+        public ArmClient(TokenCredential credential, ArmClientOptions options = default)
+            : this(credential, null, options)
         {
         }
 
@@ -49,54 +50,29 @@ namespace Azure.ResourceManager
         /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, ArmClientOptions options)
-            : this(null, new Uri(DefaultUri), credential, options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClient"/> class.
-        /// </summary>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public ArmClient(
+            TokenCredential credential,
             string defaultSubscriptionId,
-            TokenCredential credential,
             ArmClientOptions options = default)
-            : this(defaultSubscriptionId, new Uri(DefaultUri), credential, options)
+            : this(credential, defaultSubscriptionId, new Uri(DefaultUri), options)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
-        /// <param name="baseUri"> The base URI of the Azure management endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(
-            Uri baseUri,
-            TokenCredential credential,
-            ArmClientOptions options = default)
-            : this(null, baseUri, credential, options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClient"/> class.
-        /// </summary>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public ArmClient(
+            TokenCredential credential,
             string defaultSubscriptionId,
             Uri baseUri,
-            TokenCredential credential,
             ArmClientOptions options = default)
         {
             if (credential is null)
