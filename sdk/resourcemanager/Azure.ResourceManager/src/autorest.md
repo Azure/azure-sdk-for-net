@@ -3,9 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
-use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
-# csharpgen: 
-#   attach: true
 azure-arm: true
 arm-core: true
 clear-output-folder: true
@@ -365,6 +362,9 @@ directive:
 #     where: $.definitions['Provider']
 #     transform: >
 #       $["x-ms-mgmt-propertyReferenceType"] = true # not supported with ResourceData yet, use custom code first
+  - from: locks.json
+    where: $.definitions.ManagementLockObject
+    transform: $["x-ms-client-name"] = "ManagementLock"
 ```
 
 ### Tag: package-management
