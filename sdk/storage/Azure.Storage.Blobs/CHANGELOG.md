@@ -4,10 +4,9 @@
 - Added support for service version 2021-04-10.
 - Added support for BlobContainerClient.FilterBlobsByTag().
 - Added support for BlobContainerClient.OpenWriteAsync().
+- Added ability to specify Disk Compute AAD Audience in BlobClientOptions.
 - Fixed bug where BlobSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
 - Fixed a bug where BlobClient.Upload() and UploadAsync() would result in a NullReferenceException when trying to overwrite a blob with client-side encryption enabled
-
-### Other Changes
 
 ## 12.11.0-beta.2 (2021-11-30)
 - Added support for service version 2021-02-12
