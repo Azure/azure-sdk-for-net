@@ -219,7 +219,8 @@
       }
     }
   ],
-  "Variables": {
-    "RandomSeed": "1091669573"
-  }
+    "Variables": {
+        "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://e2e_test.communication.azure.com/;accesskey=Kg==",
+        "RandomSeed": "1091669573"
+    }
 }
