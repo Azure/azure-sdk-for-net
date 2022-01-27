@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 else
                 {
-                    //log metrictype not supported
+                    // log not supported
                 }
             }
 
