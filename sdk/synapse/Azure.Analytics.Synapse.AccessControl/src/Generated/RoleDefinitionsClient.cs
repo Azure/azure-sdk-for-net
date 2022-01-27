@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -280,7 +280,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -319,7 +319,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -358,7 +358,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

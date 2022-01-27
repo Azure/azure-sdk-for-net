@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteSlotConfigLogsCreateOrUpdateOperation(ArmResource operationsBase, Response<SiteLogsConfigData> response)
+        internal SiteSlotConfigLogsCreateOrUpdateOperation(ArmClient armClient, Response<SiteLogsConfigData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteSlotConfigLogs>(Response.FromValue(new SiteSlotConfigLogs(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteSlotConfigLogs>(Response.FromValue(new SiteSlotConfigLogs(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

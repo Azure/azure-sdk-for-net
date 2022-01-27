@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Feature and their operations over its parent. </summary>
     public partial class FeatureCollection : ArmCollection, IEnumerable<Feature>, IAsyncEnumerable<Feature>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FeaturesRestOperations _featuresRestClient;
+        private readonly ClientDiagnostics _featureClientDiagnostics;
+        private readonly FeaturesRestOperations _featureRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FeatureCollection"/> class for mocking. </summary>
         protected FeatureCollection()
@@ -51,14 +50,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Get");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Get");
             scope.Start();
             try
             {
-                var response = _featuresRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken);
+                var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
+                    throw _featureClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -79,14 +78,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Get");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Get");
             scope.Start();
             try
             {
-                var response = await _featuresRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
+                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
+                    throw await _featureClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,14 +103,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _featuresRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken);
+                var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<Feature>(null, response.GetRawResponse());
-                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,14 +128,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _featuresRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<Feature>(null, response.GetRawResponse());
-                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Exists");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Exists");
             scope.Start();
             try
             {
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _clientDiagnostics.CreateScope("FeatureCollection.Exists");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.Exists");
             scope.Start();
             try
             {
@@ -201,12 +200,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _featuresRestClient.List(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _featureRestClient.List(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -216,12 +215,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _featuresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _featureRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,12 +241,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _featuresRestClient.ListAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _featureRestClient.ListAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,12 +256,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureCollection.GetAll");
+                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _featuresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _featureRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,8 +286,5 @@ namespace Azure.ResourceManager.Resources
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Feature, FeatureData> Construct() { }
     }
 }

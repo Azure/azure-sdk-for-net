@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationInternals<DeploymentScript> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of DeploymentScriptCreateOrUpdateOperation for mocking. </summary>
         protected DeploymentScriptCreateOrUpdateOperation()
         {
         }
 
-        internal DeploymentScriptCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeploymentScriptCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DeploymentScript>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentScriptCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Resources.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
-            return new DeploymentScript(_operationBase, data);
+            return new DeploymentScript(_armClient, data);
         }
 
         async ValueTask<DeploymentScript> IOperationSource<DeploymentScript>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeploymentScriptData.DeserializeDeploymentScriptData(document.RootElement);
-            return new DeploymentScript(_operationBase, data);
+            return new DeploymentScript(_armClient, data);
         }
     }
 }
