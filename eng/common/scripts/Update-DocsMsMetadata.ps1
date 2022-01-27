@@ -119,9 +119,6 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   if (!$msauthor) {
     $msauthor = $author
   }
-  elseif (!$msauthor) {
-    $msauthor = $author
-  }
   Write-Host "The author of package: $author"
   Write-Host "The ms author of package: $msauthor"
   $header = @"
