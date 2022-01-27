@@ -153,7 +153,8 @@ namespace Azure.Core.TestFramework
                 methodName;
 
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
-            bool strict = !methodInfo.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+            var forwardAttribute = methodInfo.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+            bool strict = forwardAttribute is null;
 
             Exception lastException = null;
             bool skipChecks = false;
@@ -180,6 +181,10 @@ namespace Azure.Core.TestFramework
             {
                 // Remove subscribers before enumerating events.
                 diagnosticListener.Dispose();
+                bool? skipOverride = forwardAttribute is null
+                    ? default(bool?)
+                    : (bool?)forwardAttribute.GetType().GetProperty("SkipChecks").GetValue(forwardAttribute);
+                skipChecks |= skipOverride.HasValue && skipOverride.Value;
                 if (!skipChecks)
                 {
                     if (strict)

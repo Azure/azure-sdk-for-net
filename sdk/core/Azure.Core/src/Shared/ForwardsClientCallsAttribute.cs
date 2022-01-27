@@ -11,5 +11,12 @@ namespace Azure.Core
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     internal class ForwardsClientCallsAttribute : Attribute
     {
+        public ForwardsClientCallsAttribute() { }
+        public ForwardsClientCallsAttribute(bool skipChecks)
+        {
+            SkipChecks = skipChecks;
+        }
+
+        public bool? SkipChecks { get; }
     }
 }
