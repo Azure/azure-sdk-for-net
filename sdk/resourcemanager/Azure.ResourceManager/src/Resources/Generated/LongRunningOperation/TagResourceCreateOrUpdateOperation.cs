@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal TagResourceCreateOrUpdateOperation(ArmResource operationsBase, Response<TagResourceData> response)
+        internal TagResourceCreateOrUpdateOperation(ArmClient armClient, Response<TagResourceData> response)
         {
-            _operation = new OperationOrResponseInternals<TagResource>(Response.FromValue(new TagResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<TagResource>(Response.FromValue(new TagResource(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

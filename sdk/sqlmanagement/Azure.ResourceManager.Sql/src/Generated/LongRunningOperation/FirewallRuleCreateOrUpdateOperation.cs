@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal FirewallRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<FirewallRuleData> response)
+        internal FirewallRuleCreateOrUpdateOperation(ArmClient armClient, Response<FirewallRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<FirewallRule>(Response.FromValue(new FirewallRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<FirewallRule>(Response.FromValue(new FirewallRule(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

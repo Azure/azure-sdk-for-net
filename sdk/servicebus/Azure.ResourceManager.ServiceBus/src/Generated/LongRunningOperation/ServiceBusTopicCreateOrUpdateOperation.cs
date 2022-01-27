@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         {
         }
 
-        internal ServiceBusTopicCreateOrUpdateOperation(ArmResource operationsBase, Response<ServiceBusTopicData> response)
+        internal ServiceBusTopicCreateOrUpdateOperation(ArmClient armClient, Response<ServiceBusTopicData> response)
         {
-            _operation = new OperationOrResponseInternals<ServiceBusTopic>(Response.FromValue(new ServiceBusTopic(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ServiceBusTopic>(Response.FromValue(new ServiceBusTopic(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

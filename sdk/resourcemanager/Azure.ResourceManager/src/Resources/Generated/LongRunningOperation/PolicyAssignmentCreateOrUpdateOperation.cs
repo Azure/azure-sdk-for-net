@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal PolicyAssignmentCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicyAssignmentData> response)
+        internal PolicyAssignmentCreateOrUpdateOperation(ArmClient armClient, Response<PolicyAssignmentData> response)
         {
-            _operation = new OperationOrResponseInternals<PolicyAssignment>(Response.FromValue(new PolicyAssignment(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<PolicyAssignment>(Response.FromValue(new PolicyAssignment(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

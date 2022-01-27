@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal DatabaseSecurityAlertPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<DatabaseSecurityAlertPolicyData> response)
+        internal DatabaseSecurityAlertPolicyCreateOrUpdateOperation(ArmClient armClient, Response<DatabaseSecurityAlertPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<DatabaseSecurityAlertPolicy>(Response.FromValue(new DatabaseSecurityAlertPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DatabaseSecurityAlertPolicy>(Response.FromValue(new DatabaseSecurityAlertPolicy(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

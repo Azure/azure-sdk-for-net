@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of DataPolicyManifest and their operations over its parent. </summary>
     public partial class DataPolicyManifestCollection : ArmCollection, IEnumerable<DataPolicyManifest>, IAsyncEnumerable<DataPolicyManifest>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DataPolicyManifestsRestOperations _dataPolicyManifestsRestClient;
+        private readonly ClientDiagnostics _dataPolicyManifestClientDiagnostics;
+        private readonly DataPolicyManifestsRestOperations _dataPolicyManifestRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DataPolicyManifestCollection"/> class for mocking. </summary>
         protected DataPolicyManifestCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DataPolicyManifestCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DataPolicyManifest.ResourceType, out string apiVersion);
-            _dataPolicyManifestsRestClient = new DataPolicyManifestsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DataPolicyManifest.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(DataPolicyManifest.ResourceType, out string dataPolicyManifestApiVersion);
+            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(_dataPolicyManifestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataPolicyManifestsRestClient.GetByPolicyMode(policyMode, cancellationToken);
+                var response = _dataPolicyManifestRestClient.GetByPolicyMode(policyMode, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
+                    throw _dataPolicyManifestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataPolicyManifestsRestClient.GetByPolicyModeAsync(policyMode, cancellationToken).ConfigureAwait(false);
+                var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(policyMode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
+                    throw await _dataPolicyManifestClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DataPolicyManifest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataPolicyManifestsRestClient.GetByPolicyMode(policyMode, cancellationToken: cancellationToken);
+                var response = _dataPolicyManifestRestClient.GetByPolicyMode(policyMode, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataPolicyManifestsRestClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<DataPolicyManifest>(null, response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifest(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
             scope.Start();
             try
             {
@@ -214,12 +213,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<DataPolicyManifest> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
+                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataPolicyManifestsRestClient.List(filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataPolicyManifestRestClient.List(filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,12 +228,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<DataPolicyManifest> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
+                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataPolicyManifestsRestClient.ListNextPage(nextLink, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataPolicyManifestRestClient.ListNextPage(nextLink, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,12 +255,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<DataPolicyManifest>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
+                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataPolicyManifestsRestClient.ListAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataPolicyManifestRestClient.ListAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,12 +270,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DataPolicyManifest>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
+                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataPolicyManifestsRestClient.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataPolicyManifestRestClient.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifest(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,8 +300,5 @@ namespace Azure.ResourceManager.Resources
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DataPolicyManifest, DataPolicyManifestData> Construct() { }
     }
 }

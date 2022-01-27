@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of VirtualWAN and their operations over its parent. </summary>
     public partial class VirtualWANCollection : ArmCollection, IEnumerable<VirtualWAN>, IAsyncEnumerable<VirtualWAN>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualWansRestOperations _virtualWansRestClient;
+        private readonly ClientDiagnostics _virtualWANVirtualWansClientDiagnostics;
+        private readonly VirtualWansRestOperations _virtualWANVirtualWansRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualWANCollection"/> class for mocking. </summary>
         protected VirtualWANCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualWANCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(VirtualWAN.ResourceType, out string apiVersion);
-            _virtualWansRestClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _virtualWANVirtualWansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWAN.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VirtualWAN.ResourceType, out string virtualWANVirtualWansApiVersion);
+            _virtualWANVirtualWansRestClient = new VirtualWansRestOperations(_virtualWANVirtualWansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWANVirtualWansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(wANParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.CreateOrUpdate");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualWansRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken);
-                var operation = new VirtualWANCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualWansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
+                var response = _virtualWANVirtualWansRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken);
+                var operation = new VirtualWANCreateOrUpdateOperation(ArmClient, _virtualWANVirtualWansClientDiagnostics, Pipeline, _virtualWANVirtualWansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(wANParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.CreateOrUpdate");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualWansRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualWANCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualWansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
+                var response = await _virtualWANVirtualWansRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualWANCreateOrUpdateOperation(ArmClient, _virtualWANVirtualWansClientDiagnostics, Pipeline, _virtualWANVirtualWansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.Get");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken);
+                var response = _virtualWANVirtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                    throw _virtualWANVirtualWansClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualWAN(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.Get");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualWANVirtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                    throw await _virtualWANVirtualWansClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWAN(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetIfExists");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken: cancellationToken);
+                var response = _virtualWANVirtualWansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<VirtualWAN>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualWAN(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetIfExists");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualWANVirtualWansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWANName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<VirtualWAN>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualWAN(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.Exists");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.Exists");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.Exists");
             scope.Start();
             try
             {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<VirtualWAN> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
+                using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualWansRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualWANVirtualWansRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualWAN> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
+                using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualWansRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualWANVirtualWansRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<VirtualWAN>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
+                using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualWansRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualWANVirtualWansRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +323,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualWAN>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
+                using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualWansRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualWANVirtualWansRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetAllAsGenericResources");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANCollection.GetAllAsGenericResources");
+            using var scope = _virtualWANVirtualWansClientDiagnostics.CreateScope("VirtualWANCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -399,8 +399,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualWAN, VirtualWANData> Construct() { }
     }
 }

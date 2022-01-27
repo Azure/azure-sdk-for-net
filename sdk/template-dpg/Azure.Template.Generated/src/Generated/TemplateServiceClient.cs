@@ -77,7 +77,7 @@ namespace Azure.Template.Generated
             try
             {
                 using HttpMessage message = CreateCreateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.Template.Generated
             try
             {
                 using HttpMessage message = CreateCreateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace Azure.Template.Generated
             try
             {
                 using HttpMessage message = CreateDeleteRequest(resourceId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -161,7 +161,7 @@ namespace Azure.Template.Generated
             try
             {
                 using HttpMessage message = CreateDeleteRequest(resourceId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -194,7 +194,7 @@ namespace Azure.Template.Generated
             try
             {
                 using HttpMessage message = CreateGetResourceRequest(resourceId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.Template.Generated
             try
             {
                 using HttpMessage message = CreateGetResourceRequest(resourceId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.Template.Generated
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourcesRequest(context)
                         : CreateGetResourcesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -299,7 +299,7 @@ namespace Azure.Template.Generated
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourcesRequest(context)
                         : CreateGetResourcesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

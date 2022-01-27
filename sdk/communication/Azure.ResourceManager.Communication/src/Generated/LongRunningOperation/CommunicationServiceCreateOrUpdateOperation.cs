@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Communication;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Communication.Models
     {
         private readonly OperationInternals<CommunicationService> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of CommunicationServiceCreateOrUpdateOperation for mocking. </summary>
         protected CommunicationServiceCreateOrUpdateOperation()
         {
         }
 
-        internal CommunicationServiceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CommunicationServiceCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<CommunicationService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "CommunicationServiceCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Communication.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement);
-            return new CommunicationService(_operationBase, data);
+            return new CommunicationService(_armClient, data);
         }
 
         async ValueTask<CommunicationService> IOperationSource<CommunicationService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement);
-            return new CommunicationService(_operationBase, data);
+            return new CommunicationService(_armClient, data);
         }
     }
 }
