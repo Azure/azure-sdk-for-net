@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
             .AddMeter("MyCompany.MyProduct.MyLibrary")
-            .AzureMonitorMetricExporter(o => {
+            .AddAzureMonitorMetricExporter(o => {
                 o.ConnectionString = "InstrumentationKey=ebff0d7e-7643-4a6d-9597-a17fdea8e8bf;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/";
             })
             .Build();

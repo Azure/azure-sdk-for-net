@@ -119,6 +119,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return dependency;
         }
 
+        internal static MetricsData GetMetricData(Metric metric, ref MetricPoint metricPoint)
+        {
+            double value = 0;
+            switch (metric.MetricType)
+            {
+                case MetricType.DoubleSum:
+                    value = metricPoint.GetSumDouble();
+                    break;
+                case MetricType.DoubleGauge:
+                    value = metricPoint.GetGaugeLastValueDouble();
+                    break;
+                default:
+                    break;
+            }
+
+            IList<MetricDataPoint> metrics = new List<MetricDataPoint>();
+            MetricDataPoint metricDataPoint = new MetricDataPoint(metric.Name, value);
+            metrics.Add(metricDataPoint);
+            MetricsData metricsData = new MetricsData(2, metrics);
+            foreach (var tag in metricPoint.Tags)
+            {
+                metricsData.Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString()));
+            }
+
+            return metricsData;
+        }
+
         internal static MessageData GetMessageData(LogRecord logRecord)
         {
             return new MessageData(version: 2, message: logRecord.State.ToString())

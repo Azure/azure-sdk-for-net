@@ -68,27 +68,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var metric in batch)
             {
-                foreach (ref readonly var metricPoint in metric.GetMetricPoints())
+                if (metric.MetricType == MetricType.DoubleSum || metric.MetricType == MetricType.DoubleGauge)
                 {
-                    telemetryItem = new TelemetryItem(Telemetry_Base_Type_Mapping[TelemetryType.Metric], TelemetryItem.FormatUtcTimestamp(DateTime.UtcNow));
-                    telemetryItem.InstrumentationKey = instrumentationKey;
-                    telemetryItem.SetResource(roleName, roleInstance);
-
-                    MonitorBase telemetryData = new MonitorBase();
-                    telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Metric];
-
-                    IList<MetricDataPoint> metrics = new List<MetricDataPoint>();
-                    MetricDataPoint metricDataPoint = new MetricDataPoint(metric.Meter.Name, metricPoint.GetSumDouble());
-                    metrics.Add(metricDataPoint);
-                    MetricsData metricsData = new MetricsData(2, metrics);
-                    foreach (var tag in metricPoint.Tags)
+                    foreach (ref var metricPoint in metric.GetMetricPoints())
                     {
-                        metricsData.Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString()));
-                    }
+                        telemetryItem = new TelemetryItem("Metric", TelemetryItem.FormatUtcTimestamp(metricPoint.EndTime.UtcDateTime));
+                        telemetryItem.InstrumentationKey = instrumentationKey;
+                        telemetryItem.SetResource(roleName, roleInstance);
 
-                    telemetryData.BaseData = metricsData;
-                    telemetryItem.Data = telemetryData;
-                    telemetryItems.Add(telemetryItem);
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Metric],
+                            BaseData = TelemetryPartB.GetMetricData(metric, ref metricPoint)
+                        };
+                        telemetryItems.Add(telemetryItem);
+                    }
+                }
+                else
+                {
+                    //log metrictype not supported
                 }
             }
 

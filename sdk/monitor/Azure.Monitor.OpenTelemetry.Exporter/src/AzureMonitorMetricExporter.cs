@@ -11,7 +11,8 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class AzureMonitorMetricExporter : BaseExporter<Metric>
+    [AggregationTemporality(AggregationTemporality.Delta)]
+    internal class AzureMonitorMetricExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter Transmitter;
         private readonly AzureMonitorExporterOptions options;
