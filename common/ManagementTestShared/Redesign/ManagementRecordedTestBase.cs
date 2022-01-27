@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
+                TestEnvironment.Credential,
                 subscriptionId ?? TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
-                TestEnvironment.Credential,
                 options);
         }
 
