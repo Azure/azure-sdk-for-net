@@ -121,25 +121,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static MetricsData GetMetricData(Metric metric, ref MetricPoint metricPoint)
         {
-            IList<MetricDataPoint> metrics = new List<MetricDataPoint>();
+            IList<MetricDataPoint> metricDataPoints = new List<MetricDataPoint>();
             MetricDataPoint metricDataPoint = null;
             switch (metric.MetricType)
             {
                 case MetricType.DoubleSum:
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetSumDouble());
+                    metricDataPoint.DataPointType = DataPointType.Aggregation;
                     break;
                 case MetricType.DoubleGauge:
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetGaugeLastValueDouble());
-                    break;
-                default:
+                    metricDataPoint.DataPointType = DataPointType.Measurement;
                     break;
             }
 
-            metrics.Add(metricDataPoint);
-            MetricsData metricsData = new MetricsData(2, metrics);
+            metricDataPoints.Add(metricDataPoint);
+            MetricsData metricsData = new MetricsData(2, metricDataPoints);
             foreach (var tag in metricPoint.Tags)
             {
-                metricsData.Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString()));
+                metricsData.Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value?.ToString()));
             }
 
             return metricsData;
