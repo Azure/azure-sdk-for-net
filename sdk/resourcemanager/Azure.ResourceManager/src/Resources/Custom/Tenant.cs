@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
+    [CodeGenSuppress("Tenant", typeof(ArmClient), typeof(TenantData))]
     [CodeGenSuppress("Get", typeof(CancellationToken))]
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetAvailableLocations", typeof(CancellationToken))]
