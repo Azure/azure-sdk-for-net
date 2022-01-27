@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
         /// <param name="identity"> The managed identity associated with the policy assignment. </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
         /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType type, string location, PolicyAssignmentIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, object metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, type)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, PolicyAssignmentIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, object metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, type, systemData)
         {
             Location = location;
             Identity = identity;

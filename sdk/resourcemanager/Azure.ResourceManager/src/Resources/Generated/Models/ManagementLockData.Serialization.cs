@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             LockLevel level = default;
             Optional<string> notes = default;
             Optional<IList<ManagementLockOwner>> owners = default;
@@ -63,6 +65,11 @@ namespace Azure.ResourceManager.Resources
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ManagementLockData(id, name, type, level, notes.Value, Optional.ToList(owners));
+            return new ManagementLockData(id, name, type, systemData, level, notes.Value, Optional.ToList(owners));
         }
     }
 }

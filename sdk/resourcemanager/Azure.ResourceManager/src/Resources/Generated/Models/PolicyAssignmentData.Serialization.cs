@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> displayName = default;
             Optional<string> policyDefinitionId = default;
             Optional<string> scope = default;
@@ -135,6 +137,11 @@ namespace Azure.ResourceManager.Resources
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -235,7 +242,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicyAssignmentData(id, name, type, location.Value, identity.Value, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
+            return new PolicyAssignmentData(id, name, type, systemData, location.Value, identity.Value, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages));
         }
     }
 }

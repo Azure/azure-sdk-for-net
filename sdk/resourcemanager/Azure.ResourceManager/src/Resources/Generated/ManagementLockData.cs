@@ -27,10 +27,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can&apos;t modify or delete it. </param>
         /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
         /// <param name="owners"> The owners of the lock. </param>
-        internal ManagementLockData(ResourceIdentifier id, string name, ResourceType type, LockLevel level, string notes, IList<ManagementLockOwner> owners) : base(id, name, type)
+        internal ManagementLockData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, LockLevel level, string notes, IList<ManagementLockOwner> owners) : base(id, name, type, systemData)
         {
             Level = level;
             Notes = notes;

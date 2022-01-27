@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"))
@@ -201,8 +202,13 @@ namespace Azure.ResourceManager.Resources
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new GenericResourceData(id, name, type, tags, location, extendedLocation.Value, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
+            return new GenericResourceData(id, name, type, systemData, tags, location, extendedLocation.Value, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
         }
     }
 }
