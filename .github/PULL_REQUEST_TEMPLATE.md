@@ -1,6 +1,6 @@
-# Contributing to the SDK
+# Contributing to the Azure SDK
 
-Please see our [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) if you are not familiar with contributing to this repo or have questions.
+Please see our [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) if you are not familiar with contributing to this repository or have questions.
 
 ## Pull Request etiquette and best practices
 
