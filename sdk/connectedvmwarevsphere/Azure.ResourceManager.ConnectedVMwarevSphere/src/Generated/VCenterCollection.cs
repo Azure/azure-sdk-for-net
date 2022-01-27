@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing collection of VCenter and their operations over its parent. </summary>
     public partial class VCenterCollection : ArmCollection, IEnumerable<VCenter>, IAsyncEnumerable<VCenter>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VCentersRestOperations _vCentersRestClient;
+        private readonly ClientDiagnostics _vCenterClientDiagnostics;
+        private readonly VCentersRestOperations _vCenterRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VCenterCollection"/> class for mocking. </summary>
         protected VCenterCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VCenterCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(VCenter.ResourceType, out string apiVersion);
-            _vCentersRestClient = new VCentersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _vCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VCenter.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VCenter.ResourceType, out string vCenterApiVersion);
+            _vCenterRestClient = new VCentersRestOperations(_vCenterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vCenterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,20 +61,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual VCenterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string vcenterName, VCenterData body = null, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.CreateOrUpdate");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken);
-                var operation = new VCenterCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _vCentersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response);
+                var response = _vCenterRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken);
+                var operation = new VCenterCreateOrUpdateOperation(ArmClient, _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -94,20 +92,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public async virtual Task<VCenterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string vcenterName, VCenterData body = null, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.CreateOrUpdate");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new VCenterCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _vCentersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response);
+                var response = await _vCenterRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken).ConfigureAwait(false);
+                var operation = new VCenterCreateOrUpdateOperation(ArmClient, _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,22 +121,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements vCenter GET method. </summary>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual Response<VCenter> Get(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.Get");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.Get");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken);
+                var response = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                    throw _vCenterClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,22 +149,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements vCenter GET method. </summary>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public async virtual Task<Response<VCenter>> GetAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.Get");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken).ConfigureAwait(false);
+                var response = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                    throw await _vCenterClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,22 +174,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual Response<VCenter> GetIfExists(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetIfExists");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken: cancellationToken);
+                var response = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<VCenter>(null, response.GetRawResponse());
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,22 +199,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public async virtual Task<Response<VCenter>> GetIfExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetIfExists");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<VCenter>(null, response.GetRawResponse());
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,15 +224,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual Response<bool> Exists(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.Exists");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.Exists");
             scope.Start();
             try
             {
@@ -261,15 +247,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.Exists");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.Exists");
             scope.Start();
             try
             {
@@ -293,12 +277,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             Page<VCenter> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetAll");
+                using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vCentersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _vCenterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,12 +292,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
             Page<VCenter> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetAll");
+                using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vCentersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _vCenterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,12 +318,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             async Task<Page<VCenter>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetAll");
+                using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vCentersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vCenterRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,12 +333,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
             async Task<Page<VCenter>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetAll");
+                using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vCentersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vCenterRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VCenter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -373,7 +357,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetAllAsGenericResources");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -396,7 +380,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenterCollection.GetAllAsGenericResources");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -425,8 +409,5 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VCenter, VCenterData> Construct() { }
     }
 }

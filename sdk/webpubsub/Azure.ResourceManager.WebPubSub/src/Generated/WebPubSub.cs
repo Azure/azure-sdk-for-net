@@ -28,8 +28,10 @@ namespace Azure.ResourceManager.WebPubSub
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
+
+        private readonly ClientDiagnostics _webPubSubClientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
+        private readonly ClientDiagnostics _webPubSubPrivateLinkResourcesClientDiagnostics;
         private readonly WebPubSubPrivateLinkResourcesRestOperations _webPubSubPrivateLinkResourcesRestClient;
         private readonly WebPubSubData _data;
 
@@ -39,47 +41,24 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Initializes a new instance of the <see cref = "WebPubSub"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebPubSub(ArmResource options, WebPubSubData data) : base(options, data.Id)
+        internal WebPubSub(ArmClient armClient, WebPubSubData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebPubSub"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebPubSub(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal WebPubSub(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="WebPubSub"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebPubSub(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string webPubSubApiVersion);
+            _webPubSubRestClient = new WebPubSubRestOperations(_webPubSubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
+            _webPubSubPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -113,14 +92,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<WebPubSub>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Get");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Get");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                    throw await _webPubSubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new WebPubSub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,14 +112,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebPubSub> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Get");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Get");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                    throw _webPubSubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +133,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetAvailableLocations");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -172,7 +151,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetAvailableLocations");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -190,12 +169,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebPubSubDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Delete");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Delete");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubDeleteOperation(_clientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new WebPubSubDeleteOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -212,12 +191,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebPubSubDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Delete");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Delete");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WebPubSubDeleteOperation(_clientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new WebPubSubDeleteOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -236,12 +215,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<WebPubSub>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.AddTag");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.AddTag");
             scope.Start();
             try
             {
@@ -249,7 +225,7 @@ namespace Azure.ResourceManager.WebPubSub
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WebPubSub(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -265,12 +241,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<WebPubSub> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.AddTag");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.AddTag");
             scope.Start();
             try
             {
@@ -278,7 +251,7 @@ namespace Azure.ResourceManager.WebPubSub
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new WebPubSub(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +271,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.SetTags");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.SetTags");
             scope.Start();
             try
             {
@@ -307,7 +280,7 @@ namespace Azure.ResourceManager.WebPubSub
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WebPubSub(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -327,7 +300,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.SetTags");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.SetTags");
             scope.Start();
             try
             {
@@ -336,7 +309,7 @@ namespace Azure.ResourceManager.WebPubSub
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new WebPubSub(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,12 +324,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<WebPubSub>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.RemoveTag");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.RemoveTag");
             scope.Start();
             try
             {
@@ -364,7 +334,7 @@ namespace Azure.ResourceManager.WebPubSub
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WebPubSub(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -379,12 +349,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<WebPubSub> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.RemoveTag");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.RemoveTag");
             scope.Start();
             try
             {
@@ -392,7 +359,7 @@ namespace Azure.ResourceManager.WebPubSub
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new WebPubSub(this, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -413,12 +380,12 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Update");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Update");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubUpdateOperation(this, _clientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new WebPubSubUpdateOperation(ArmClient, _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -442,12 +409,12 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Update");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Update");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new WebPubSubUpdateOperation(this, _clientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new WebPubSubUpdateOperation(ArmClient, _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -463,7 +430,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<WebPubSubKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetKeys");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetKeys");
             scope.Start();
             try
             {
@@ -481,7 +448,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebPubSubKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetKeys");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetKeys");
             scope.Start();
             try
             {
@@ -507,12 +474,12 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.RegenerateKey");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.RegenerateKey");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubRegenerateKeyOperation(_clientDiagnostics, Pipeline, _webPubSubRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new WebPubSubRegenerateKeyOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -536,12 +503,12 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.RegenerateKey");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.RegenerateKey");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new WebPubSubRegenerateKeyOperation(_clientDiagnostics, Pipeline, _webPubSubRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new WebPubSubRegenerateKeyOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -558,12 +525,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebPubSubRestartOperation> RestartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Restart");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Restart");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubRestartOperation(_clientDiagnostics, Pipeline, _webPubSubRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new WebPubSubRestartOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -580,12 +547,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebPubSubRestartOperation Restart(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSub.Restart");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Restart");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WebPubSubRestartOperation(_clientDiagnostics, Pipeline, _webPubSubRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new WebPubSubRestartOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -604,7 +571,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             async Task<Page<Sku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetSkus");
                 scope.Start();
                 try
                 {
@@ -627,7 +594,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Page<Sku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetSkus");
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetSkus");
                 scope.Start();
                 try
                 {
@@ -650,7 +617,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             async Task<Page<PrivateLink>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
+                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();
                 try
                 {
@@ -665,7 +632,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
             async Task<Page<PrivateLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
+                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();
                 try
                 {
@@ -688,7 +655,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Page<PrivateLink> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
+                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();
                 try
                 {
@@ -703,7 +670,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
             Page<PrivateLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
+                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSub.GetWebPubSubPrivateLinkResources");
                 scope.Start();
                 try
                 {

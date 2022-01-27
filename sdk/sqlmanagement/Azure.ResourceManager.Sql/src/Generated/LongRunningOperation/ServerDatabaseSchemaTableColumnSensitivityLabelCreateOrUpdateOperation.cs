@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal ServerDatabaseSchemaTableColumnSensitivityLabelCreateOrUpdateOperation(ArmResource operationsBase, Response<SensitivityLabelData> response)
+        internal ServerDatabaseSchemaTableColumnSensitivityLabelCreateOrUpdateOperation(ArmClient armClient, Response<SensitivityLabelData> response)
         {
-            _operation = new OperationOrResponseInternals<ServerDatabaseSchemaTableColumnSensitivityLabel>(Response.FromValue(new ServerDatabaseSchemaTableColumnSensitivityLabel(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ServerDatabaseSchemaTableColumnSensitivityLabel>(Response.FromValue(new ServerDatabaseSchemaTableColumnSensitivityLabel(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

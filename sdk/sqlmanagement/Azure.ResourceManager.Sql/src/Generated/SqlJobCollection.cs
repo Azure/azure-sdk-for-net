@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of SqlJob and their operations over its parent. </summary>
     public partial class SqlJobCollection : ArmCollection, IEnumerable<SqlJob>, IAsyncEnumerable<SqlJob>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly JobsRestOperations _jobsRestClient;
+        private readonly ClientDiagnostics _sqlJobJobsClientDiagnostics;
+        private readonly JobsRestOperations _sqlJobJobsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SqlJobCollection"/> class for mocking. </summary>
         protected SqlJobCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlJobCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SqlJob.ResourceType, out string apiVersion);
-            _jobsRestClient = new JobsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _sqlJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlJob.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SqlJob.ResourceType, out string sqlJobJobsApiVersion);
+            _sqlJobJobsRestClient = new JobsRestOperations(_sqlJobJobsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlJobJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,24 +59,22 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="parameters"> The requested job state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual SqlJobCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.CreateOrUpdate");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, parameters, cancellationToken);
-                var operation = new SqlJobCreateOrUpdateOperation(this, response);
+                var response = _sqlJobJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, parameters, cancellationToken);
+                var operation = new SqlJobCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -96,24 +94,22 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="parameters"> The requested job state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<SqlJobCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.CreateOrUpdate");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _jobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlJobCreateOrUpdateOperation(this, response);
+                var response = await _sqlJobJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlJobCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,22 +127,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job. </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<SqlJob> Get(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.Get");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _jobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken);
+                var response = _sqlJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
+                    throw _sqlJobJobsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,22 +155,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job. </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public async virtual Task<Response<SqlJob>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.Get");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _jobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
+                    throw await _sqlJobJobsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SqlJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,22 +180,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<SqlJob> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetIfExists");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _jobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
+                var response = _sqlJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SqlJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,22 +205,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public async virtual Task<Response<SqlJob>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetIfExists");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _jobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SqlJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlJob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,15 +230,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.Exists");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.Exists");
             scope.Start();
             try
             {
@@ -267,15 +253,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.Exists");
+            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.Exists");
             scope.Start();
             try
             {
@@ -299,12 +283,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SqlJob> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetAll");
+                using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _jobsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlJobJobsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,12 +298,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SqlJob> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetAll");
+                using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _jobsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlJobJobsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -340,12 +324,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SqlJob>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetAll");
+                using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _jobsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlJobJobsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -355,12 +339,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SqlJob>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlJobCollection.GetAll");
+                using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _jobsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlJobJobsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -385,8 +369,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlJob, SqlJobData> Construct() { }
     }
 }

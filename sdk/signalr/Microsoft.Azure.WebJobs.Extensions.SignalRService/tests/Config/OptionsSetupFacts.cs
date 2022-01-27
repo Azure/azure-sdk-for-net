@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
@@ -64,6 +66,23 @@ namespace SignalRServiceExtension.Tests.Config
             Assert.Equal(2, options.ServiceEndpoints.Length);
             Assert.Contains(options.ServiceEndpoints, e => endpointName == e.Name && serviceUris[0] == e.Endpoint);
             Assert.Contains(options.ServiceEndpoints, e => string.Empty == e.Name && serviceUris[1] == e.Endpoint);
+        }
+
+        [Theory]
+        [InlineData("Azure:SignalR:HubProtocol:NewtonsoftJson:CamelCase", "true", typeof(NewtonsoftJsonObjectSerializer))]
+        [InlineData("Azure:SignalR:HubProtocol", "NewtonsoftJson", typeof(NewtonsoftJsonObjectSerializer))]
+        [InlineData("Azure:SignalR:HubProtocol", "newtonsoftjson", typeof(NewtonsoftJsonObjectSerializer))]
+        [InlineData("Azure:SignalR:HubProtocol", "SystemTextJson", typeof(JsonObjectSerializer))]
+        [InlineData("Azure:SignalR:HubProtocol", "systemtextjson", typeof(JsonObjectSerializer))]
+        [InlineData("Otherkey", "OtherValue", null)]
+        public void TestHubProtocolConfiguration(string configKey, string configValue, Type objectSerializerType)
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration[configKey] = configValue;
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, "key");
+            setup.Configure(options);
+            Assert.Equal(objectSerializerType, options.ObjectSerializer?.GetType());
         }
     }
 }

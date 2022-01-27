@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of BackendAddressPool and their operations over its parent. </summary>
     public partial class BackendAddressPoolCollection : ArmCollection, IEnumerable<BackendAddressPool>, IAsyncEnumerable<BackendAddressPool>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LoadBalancerBackendAddressPoolsRestOperations _loadBalancerBackendAddressPoolsRestClient;
+        private readonly ClientDiagnostics _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics;
+        private readonly LoadBalancerBackendAddressPoolsRestOperations _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BackendAddressPoolCollection"/> class for mocking. </summary>
         protected BackendAddressPoolCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal BackendAddressPoolCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(BackendAddressPool.ResourceType, out string apiVersion);
-            _loadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BackendAddressPool.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(BackendAddressPool.ResourceType, out string backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
+            _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPoolsRestOperations(_backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,24 +56,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual BackendAddressPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.CreateOrUpdate");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _loadBalancerBackendAddressPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken);
-                var operation = new BackendAddressPoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _loadBalancerBackendAddressPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
+                var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken);
+                var operation = new BackendAddressPoolCreateOrUpdateOperation(ArmClient, _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -90,24 +88,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<BackendAddressPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.CreateOrUpdate");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _loadBalancerBackendAddressPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new BackendAddressPoolCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _loadBalancerBackendAddressPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
+                var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new BackendAddressPoolCreateOrUpdateOperation(ArmClient, _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,22 +118,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets load balancer backend address pool. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual Response<BackendAddressPool> Get(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Get");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = _loadBalancerBackendAddressPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken);
+                var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackendAddressPool(this, response.Value), response.GetRawResponse());
+                    throw _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new BackendAddressPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,22 +143,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets load balancer backend address pool. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public async virtual Task<Response<BackendAddressPool>> GetAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Get");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = await _loadBalancerBackendAddressPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken).ConfigureAwait(false);
+                var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new BackendAddressPool(this, response.Value), response.GetRawResponse());
+                    throw await _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new BackendAddressPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,22 +168,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual Response<BackendAddressPool> GetIfExists(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetIfExists");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _loadBalancerBackendAddressPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken: cancellationToken);
+                var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<BackendAddressPool>(null, response.GetRawResponse());
-                return Response.FromValue(new BackendAddressPool(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackendAddressPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,22 +193,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public async virtual Task<Response<BackendAddressPool>> GetIfExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetIfExists");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _loadBalancerBackendAddressPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<BackendAddressPool>(null, response.GetRawResponse());
-                return Response.FromValue(new BackendAddressPool(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackendAddressPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,15 +218,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Exists");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -255,15 +241,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.Exists");
+            using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -284,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<BackendAddressPool> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
+                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerBackendAddressPoolsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,12 +283,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<BackendAddressPool> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
+                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerBackendAddressPoolsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,12 +306,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<BackendAddressPool>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
+                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerBackendAddressPoolsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,12 +321,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<BackendAddressPool>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
+                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerBackendAddressPoolsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPool(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -367,8 +351,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, BackendAddressPool, BackendAddressPoolData> Construct() { }
     }
 }

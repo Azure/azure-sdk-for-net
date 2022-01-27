@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of VnetGateway and their operations over its parent. </summary>
     public partial class SiteSlotVirtualNetworkConnectionGatewayCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionGatewayCollection"/> class for mocking. </summary>
         protected SiteSlotVirtualNetworkConnectionGatewayCollection()
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotVirtualNetworkConnectionGatewayCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteSlotVirtualNetworkConnectionGateway.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotVirtualNetworkConnectionGateway.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteSlotVirtualNetworkConnectionGateway.ResourceType, out string siteSlotVirtualNetworkConnectionGatewayWebAppsApiVersion);
+            _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient = new WebAppsRestOperations(_siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotVirtualNetworkConnectionGatewayWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,24 +56,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public virtual SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, connectionEnvelope, cancellationToken);
-                var operation = new SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation(this, response);
+                var response = _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.CreateOrUpdateVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, connectionEnvelope, cancellationToken);
+                var operation = new SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,24 +91,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="connectionEnvelope"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
         public async virtual Task<SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation(this, response);
+                var response = await _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.CreateOrUpdateVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteSlotVirtualNetworkConnectionGatewayCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,22 +124,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<SiteSlotVirtualNetworkConnectionGateway> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Get");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken);
+                var response = _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
+                    throw _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,22 +152,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotVirtualNetworkConnectionGateway>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Get");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
+                    throw await _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,22 +177,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<SiteSlotVirtualNetworkConnectionGateway> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExists");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken);
+                var response = _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotVirtualNetworkConnectionGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,22 +202,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotVirtualNetworkConnectionGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExists");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotVirtualNetworkConnectionGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -239,15 +227,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Exists");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -264,15 +250,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Exists");
+            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -285,8 +269,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotVirtualNetworkConnectionGateway, VnetGatewayData> Construct() { }
     }
 }

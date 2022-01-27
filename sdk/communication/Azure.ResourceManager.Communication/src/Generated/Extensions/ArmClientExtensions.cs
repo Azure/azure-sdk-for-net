@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication
         public static CommunicationService GetCommunicationService(this ArmClient armClient, ResourceIdentifier id)
         {
             CommunicationService.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CommunicationService(clientOptions, credential, uri, pipeline, id));
+            return new CommunicationService(armClient, id);
         }
         #endregion
     }

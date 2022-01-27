@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Resources
         internal RestApiCollection(ArmResource operation, string nameSpace)
             : base(operation)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, DiagnosticOptions);
             _nameSpace = nameSpace;
-            _providerCollection = new ProviderCollection(this, Id);
+            _providerCollection = new ProviderCollection(ArmClient.GetSubscription(Id));
         }
 
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
                 _providerCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
                 _clientDiagnostics,
                 Pipeline,
-                ClientOptions,
+                DiagnosticOptions.ApplicationId,
                 BaseUri);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources
                 await _providerCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
                 _clientDiagnostics,
                 Pipeline,
-                ClientOptions,
+                DiagnosticOptions.ApplicationId,
                 BaseUri);
         }
 

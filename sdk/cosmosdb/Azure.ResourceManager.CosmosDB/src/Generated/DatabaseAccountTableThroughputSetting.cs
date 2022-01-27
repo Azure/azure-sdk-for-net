@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.CosmosDB
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TableResourcesRestOperations _tableResourcesRestClient;
+
+        private readonly ClientDiagnostics _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics;
+        private readonly TableResourcesRestOperations _databaseAccountTableThroughputSettingTableResourcesRestClient;
         private readonly ThroughputSettingsData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccountTableThroughputSetting"/> class for mocking. </summary>
@@ -38,46 +39,22 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DatabaseAccountTableThroughputSetting"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatabaseAccountTableThroughputSetting(ArmResource options, ThroughputSettingsData data) : base(options, data.Id)
+        internal DatabaseAccountTableThroughputSetting(ArmClient armClient, ThroughputSettingsData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _tableResourcesRestClient = new TableResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccountTableThroughputSetting"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseAccountTableThroughputSetting(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DatabaseAccountTableThroughputSetting(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _tableResourcesRestClient = new TableResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DatabaseAccountTableThroughputSetting"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseAccountTableThroughputSetting(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _tableResourcesRestClient = new TableResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string databaseAccountTableThroughputSettingTableResourcesApiVersion);
+            _databaseAccountTableThroughputSettingTableResourcesRestClient = new TableResourcesRestOperations(_databaseAccountTableThroughputSettingTableResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountTableThroughputSettingTableResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,21 +84,18 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
         /// <summary> Gets the RUs per second of the Table under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccountTableThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.Get");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.Get");
             scope.Start();
             try
             {
-                var response = await _tableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, response.Value), response.GetRawResponse());
+                    throw await _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,14 +108,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccountTableThroughputSetting> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.Get");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.Get");
             scope.Start();
             try
             {
-                var response = _tableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, response.Value), response.GetRawResponse());
+                    throw _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.GetAvailableLocations");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -173,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.GetAvailableLocations");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -198,12 +172,12 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.CreateOrUpdate");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _tableResourcesRestClient.UpdateTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountTableThroughputSettingCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateUpdateTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var response = await _databaseAccountTableThroughputSettingTableResourcesRestClient.UpdateTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountTableThroughputSettingCreateOrUpdateOperation(ArmClient, _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics, Pipeline, _databaseAccountTableThroughputSettingTableResourcesRestClient.CreateUpdateTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,12 +201,12 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(updateThroughputParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.CreateOrUpdate");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _tableResourcesRestClient.UpdateTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
-                var operation = new DatabaseAccountTableThroughputSettingCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateUpdateTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var response = _databaseAccountTableThroughputSettingTableResourcesRestClient.UpdateTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
+                var operation = new DatabaseAccountTableThroughputSettingCreateOrUpdateOperation(ArmClient, _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics, Pipeline, _databaseAccountTableThroughputSettingTableResourcesRestClient.CreateUpdateTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -251,20 +225,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<DatabaseAccountTableThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.AddTag");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _tableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,20 +251,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<DatabaseAccountTableThroughputSetting> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.AddTag");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _tableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -313,7 +281,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.SetTags");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.SetTags");
             scope.Start();
             try
             {
@@ -321,8 +289,8 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _tableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -342,7 +310,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.SetTags");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.SetTags");
             scope.Start();
             try
             {
@@ -350,8 +318,8 @@ namespace Azure.ResourceManager.CosmosDB
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _tableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -366,20 +334,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<DatabaseAccountTableThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.RemoveTag");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _tableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -394,20 +359,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<DatabaseAccountTableThroughputSetting> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.RemoveTag");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _tableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                return Response.FromValue(new DatabaseAccountTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _databaseAccountTableThroughputSettingTableResourcesRestClient.GetTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new DatabaseAccountTableThroughputSetting(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -421,12 +383,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<DatabaseAccountTableThroughputSettingMigrateTableToAutoscaleOperation> MigrateTableToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToAutoscale");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToAutoscale");
             scope.Start();
             try
             {
-                var response = await _tableResourcesRestClient.MigrateTableToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToAutoscaleOperation(_clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var response = await _databaseAccountTableThroughputSettingTableResourcesRestClient.MigrateTableToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToAutoscaleOperation(_databaseAccountTableThroughputSettingTableResourcesClientDiagnostics, Pipeline, _databaseAccountTableThroughputSettingTableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -443,12 +405,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual DatabaseAccountTableThroughputSettingMigrateTableToAutoscaleOperation MigrateTableToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToAutoscale");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToAutoscale");
             scope.Start();
             try
             {
-                var response = _tableResourcesRestClient.MigrateTableToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToAutoscaleOperation(_clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var response = _databaseAccountTableThroughputSettingTableResourcesRestClient.MigrateTableToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToAutoscaleOperation(_databaseAccountTableThroughputSettingTableResourcesClientDiagnostics, Pipeline, _databaseAccountTableThroughputSettingTableResourcesRestClient.CreateMigrateTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -465,12 +427,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<DatabaseAccountTableThroughputSettingMigrateTableToManualThroughputOperation> MigrateTableToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToManualThroughput");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToManualThroughput");
             scope.Start();
             try
             {
-                var response = await _tableResourcesRestClient.MigrateTableToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToManualThroughputOperation(_clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var response = await _databaseAccountTableThroughputSettingTableResourcesRestClient.MigrateTableToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToManualThroughputOperation(_databaseAccountTableThroughputSettingTableResourcesClientDiagnostics, Pipeline, _databaseAccountTableThroughputSettingTableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -487,12 +449,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual DatabaseAccountTableThroughputSettingMigrateTableToManualThroughputOperation MigrateTableToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToManualThroughput");
+            using var scope = _databaseAccountTableThroughputSettingTableResourcesClientDiagnostics.CreateScope("DatabaseAccountTableThroughputSetting.MigrateTableToManualThroughput");
             scope.Start();
             try
             {
-                var response = _tableResourcesRestClient.MigrateTableToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToManualThroughputOperation(_clientDiagnostics, Pipeline, _tableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var response = _databaseAccountTableThroughputSettingTableResourcesRestClient.MigrateTableToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var operation = new DatabaseAccountTableThroughputSettingMigrateTableToManualThroughputOperation(_databaseAccountTableThroughputSettingTableResourcesClientDiagnostics, Pipeline, _databaseAccountTableThroughputSettingTableResourcesRestClient.CreateMigrateTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

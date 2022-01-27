@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualNetworksRestOperations _virtualNetworksRestClient;
+
+        private readonly ClientDiagnostics _virtualNetworkClientDiagnostics;
+        private readonly VirtualNetworksRestOperations _virtualNetworkRestClient;
         private readonly VirtualNetworkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualNetwork"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetwork"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualNetwork(ArmResource options, VirtualNetworkData data) : base(options, new ResourceIdentifier(data.Id))
+        internal VirtualNetwork(ArmClient armClient, VirtualNetworkData data) : this(armClient, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _virtualNetworksRestClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualNetwork"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualNetwork(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal VirtualNetwork(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _virtualNetworksRestClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="VirtualNetwork"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualNetwork(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _virtualNetworksRestClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _virtualNetworkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string virtualNetworkApiVersion);
+            _virtualNetworkRestClient = new VirtualNetworksRestOperations(_virtualNetworkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -110,14 +89,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualNetwork>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Get");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Get");
             scope.Start();
             try
             {
-                var response = await _virtualNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                    throw await _virtualNetworkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,14 +110,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualNetwork> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Get");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Get");
             scope.Start();
             try
             {
-                var response = _virtualNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _virtualNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                    throw _virtualNetworkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +131,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetAvailableLocations");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -170,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetAvailableLocations");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -188,12 +167,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VirtualNetworkDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Delete");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Delete");
             scope.Start();
             try
             {
-                var response = await _virtualNetworksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkDeleteOperation(_clientDiagnostics, Pipeline, _virtualNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _virtualNetworkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualNetworkDeleteOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,12 +189,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VirtualNetworkDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Delete");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Delete");
             scope.Start();
             try
             {
-                var response = _virtualNetworksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkDeleteOperation(_clientDiagnostics, Pipeline, _virtualNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _virtualNetworkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new VirtualNetworkDeleteOperation(_virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -238,12 +217,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Update");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Update");
             scope.Start();
             try
             {
-                var response = await _virtualNetworksRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                var response = await _virtualNetworkRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,12 +242,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Update");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.Update");
             scope.Start();
             try
             {
-                var response = _virtualNetworksRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
+                var response = _virtualNetworkRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new VirtualNetwork(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,11 +267,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
             scope.Start();
             try
             {
-                var response = await _virtualNetworksRestClient.CheckIPAddressAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipAddress, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualNetworkRestClient.CheckIPAddressAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipAddress, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -313,11 +292,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
+            using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.CheckIPAddressAvailability");
             scope.Start();
             try
             {
-                var response = _virtualNetworksRestClient.CheckIPAddressAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipAddress, cancellationToken);
+                var response = _virtualNetworkRestClient.CheckIPAddressAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipAddress, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -334,11 +313,11 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<VirtualNetworkUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualNetworksRestClient.ListUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualNetworkRestClient.ListUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -349,11 +328,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualNetworkUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualNetworksRestClient.ListUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualNetworkRestClient.ListUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -372,11 +351,11 @@ namespace Azure.ResourceManager.Network
         {
             Page<VirtualNetworkUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {
-                    var response = _virtualNetworksRestClient.ListUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _virtualNetworkRestClient.ListUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -387,11 +366,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualNetworkUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
+                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetwork.GetUsage");
                 scope.Start();
                 try
                 {
-                    var response = _virtualNetworksRestClient.ListUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _virtualNetworkRestClient.ListUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

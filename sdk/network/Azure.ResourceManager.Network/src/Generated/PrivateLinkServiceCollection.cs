@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of PrivateLinkService and their operations over its parent. </summary>
     public partial class PrivateLinkServiceCollection : ArmCollection, IEnumerable<PrivateLinkService>, IAsyncEnumerable<PrivateLinkService>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateLinkServicesRestOperations _privateLinkServicesRestClient;
+        private readonly ClientDiagnostics _privateLinkServiceClientDiagnostics;
+        private readonly PrivateLinkServicesRestOperations _privateLinkServiceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkServiceCollection"/> class for mocking. </summary>
         protected PrivateLinkServiceCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateLinkServiceCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(PrivateLinkService.ResourceType, out string apiVersion);
-            _privateLinkServicesRestClient = new PrivateLinkServicesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _privateLinkServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateLinkService.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(PrivateLinkService.ResourceType, out string privateLinkServiceApiVersion);
+            _privateLinkServiceRestClient = new PrivateLinkServicesRestOperations(_privateLinkServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,24 +58,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private link service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual PrivateLinkServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.CreateOrUpdate");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _privateLinkServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters, cancellationToken);
-                var operation = new PrivateLinkServiceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _privateLinkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response);
+                var response = _privateLinkServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters, cancellationToken);
+                var operation = new PrivateLinkServiceCreateOrUpdateOperation(ArmClient, _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -92,24 +90,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private link service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<PrivateLinkServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.CreateOrUpdate");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _privateLinkServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateLinkServiceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _privateLinkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response);
+                var response = await _privateLinkServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateLinkServiceCreateOrUpdateOperation(ArmClient, _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,22 +121,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<PrivateLinkService> Get(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.Get");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken);
+                var response = _privateLinkServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
+                    throw _privateLinkServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkService(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,22 +147,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkService>> GetAsync(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.Get");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
+                    throw await _privateLinkServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new PrivateLinkService(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,22 +173,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<PrivateLinkService> GetIfExists(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetIfExists");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _privateLinkServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken: cancellationToken);
+                var response = _privateLinkServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<PrivateLinkService>(null, response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkService(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,22 +199,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public async virtual Task<Response<PrivateLinkService>> GetIfExistsAsync(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetIfExists");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _privateLinkServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<PrivateLinkService>(null, response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkService(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -237,15 +225,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.Exists");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -263,15 +249,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.Exists");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -292,12 +276,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<PrivateLinkService> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
+                using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateLinkServicesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _privateLinkServiceRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -307,12 +291,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<PrivateLinkService> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
+                using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateLinkServicesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _privateLinkServiceRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -330,12 +314,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<PrivateLinkService>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
+                using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateLinkServicesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateLinkServiceRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,12 +329,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<PrivateLinkService>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
+                using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateLinkServicesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateLinkServiceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -369,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAllAsGenericResources");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -392,7 +376,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAllAsGenericResources");
+            using var scope = _privateLinkServiceClientDiagnostics.CreateScope("PrivateLinkServiceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,8 +405,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLinkService, PrivateLinkServiceData> Construct() { }
     }
 }

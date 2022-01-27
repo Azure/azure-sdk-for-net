@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of RecoverableManagedDatabase and their operations over its parent. </summary>
     public partial class RecoverableManagedDatabaseCollection : ArmCollection, IEnumerable<RecoverableManagedDatabase>, IAsyncEnumerable<RecoverableManagedDatabase>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RecoverableManagedDatabasesRestOperations _recoverableManagedDatabasesRestClient;
+        private readonly ClientDiagnostics _recoverableManagedDatabaseClientDiagnostics;
+        private readonly RecoverableManagedDatabasesRestOperations _recoverableManagedDatabaseRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RecoverableManagedDatabaseCollection"/> class for mocking. </summary>
         protected RecoverableManagedDatabaseCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RecoverableManagedDatabaseCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(RecoverableManagedDatabase.ResourceType, out string apiVersion);
-            _recoverableManagedDatabasesRestClient = new RecoverableManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _recoverableManagedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecoverableManagedDatabase.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(RecoverableManagedDatabase.ResourceType, out string recoverableManagedDatabaseApiVersion);
+            _recoverableManagedDatabaseRestClient = new RecoverableManagedDatabasesRestOperations(_recoverableManagedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recoverableManagedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,22 +56,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a recoverable managed database. </summary>
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual Response<RecoverableManagedDatabase> Get(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            if (recoverableDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(recoverableDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Get");
+            using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _recoverableManagedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken);
+                var response = _recoverableManagedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoverableManagedDatabase(this, response.Value), response.GetRawResponse());
+                    throw _recoverableManagedDatabaseClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RecoverableManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,22 +84,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a recoverable managed database. </summary>
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public async virtual Task<Response<RecoverableManagedDatabase>> GetAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            if (recoverableDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(recoverableDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Get");
+            using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recoverableManagedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken).ConfigureAwait(false);
+                var response = await _recoverableManagedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RecoverableManagedDatabase(this, response.Value), response.GetRawResponse());
+                    throw await _recoverableManagedDatabaseClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RecoverableManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,22 +109,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual Response<RecoverableManagedDatabase> GetIfExists(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            if (recoverableDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(recoverableDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExists");
+            using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _recoverableManagedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken: cancellationToken);
+                var response = _recoverableManagedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<RecoverableManagedDatabase>(null, response.GetRawResponse());
-                return Response.FromValue(new RecoverableManagedDatabase(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoverableManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,22 +134,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public async virtual Task<Response<RecoverableManagedDatabase>> GetIfExistsAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            if (recoverableDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(recoverableDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExists");
+            using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _recoverableManagedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _recoverableManagedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recoverableDatabaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<RecoverableManagedDatabase>(null, response.GetRawResponse());
-                return Response.FromValue(new RecoverableManagedDatabase(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoverableManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,15 +159,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            if (recoverableDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(recoverableDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
+            using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
             scope.Start();
             try
             {
@@ -193,15 +182,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="recoverableDatabaseName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            if (recoverableDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(recoverableDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
 
-            using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
+            using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
             scope.Start();
             try
             {
@@ -225,12 +212,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<RecoverableManagedDatabase> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
+                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recoverableManagedDatabasesRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recoverableManagedDatabaseRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,12 +227,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<RecoverableManagedDatabase> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
+                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recoverableManagedDatabasesRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recoverableManagedDatabaseRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -266,12 +253,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<RecoverableManagedDatabase>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
+                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recoverableManagedDatabasesRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recoverableManagedDatabaseRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -281,12 +268,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<RecoverableManagedDatabase>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
+                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recoverableManagedDatabasesRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recoverableManagedDatabaseRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,8 +298,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, RecoverableManagedDatabase, RecoverableManagedDatabaseData> Construct() { }
     }
 }

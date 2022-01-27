@@ -28,13 +28,20 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DatabasesRestOperations _databasesRestClient;
-        private readonly DatabaseColumnsRestOperations _databaseColumnsRestClient;
-        private readonly RestorePointsRestOperations _restorePointsRestClient;
-        private readonly SensitivityLabelsRestOperations _sensitivityLabelsRestClient;
+
+        private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
+        private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics;
+        private readonly DatabaseColumnsRestOperations _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient;
+        private readonly ClientDiagnostics _restorePointClientDiagnostics;
+        private readonly RestorePointsRestOperations _restorePointRestClient;
+        private readonly ClientDiagnostics _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics;
+        private readonly SensitivityLabelsRestOperations _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient;
+        private readonly ClientDiagnostics _databaseExtensionsClientDiagnostics;
         private readonly DatabaseExtensionsRestOperations _databaseExtensionsRestClient;
+        private readonly ClientDiagnostics _databaseOperationsClientDiagnostics;
         private readonly DatabaseRestOperations _databaseOperationsRestClient;
+        private readonly ClientDiagnostics _databaseUsagesClientDiagnostics;
         private readonly DatabaseUsagesRestOperations _databaseUsagesRestClient;
         private readonly SqlDatabaseData _data;
 
@@ -44,62 +51,37 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SqlDatabase"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlDatabase(ArmResource options, SqlDatabaseData data) : base(options, data.Id)
+        internal SqlDatabase(ArmClient armClient, SqlDatabaseData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseColumnsRestClient = new DatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseOperationsRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseUsagesRestClient = new DatabaseUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabase"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlDatabase(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SqlDatabase(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseColumnsRestClient = new DatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseOperationsRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseUsagesRestClient = new DatabaseUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SqlDatabase"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlDatabase(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseColumnsRestClient = new DatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseOperationsRestClient = new DatabaseRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _databaseUsagesRestClient = new DatabaseUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string sqlDatabaseDatabasesApiVersion);
+            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
+            _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumn.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServerDatabaseSchemaTableColumn.ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
+            _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(_serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
+            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorePoint.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(RestorePoint.ResourceType, out string restorePointApiVersion);
+            _restorePointRestClient = new RestorePointsRestOperations(_restorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
+            _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
+            _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
+            _databaseExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_databaseExtensionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _databaseOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _databaseOperationsRestClient = new DatabaseRestOperations(_databaseOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _databaseUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _databaseUsagesRestClient = new DatabaseUsagesRestOperations(_databaseUsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -136,14 +118,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SqlDatabase>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Get");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Get");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(this, response.Value), response.GetRawResponse());
+                    throw await _sqlDatabaseDatabasesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SqlDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +141,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlDatabase> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Get");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Get");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabase(this, response.Value), response.GetRawResponse());
+                    throw _sqlDatabaseDatabasesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,7 +162,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -198,7 +180,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -219,12 +201,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SqlDatabaseDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Delete");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseDeleteOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseDeleteOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -244,12 +226,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SqlDatabaseDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Delete");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabaseDeleteOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlDatabaseDeleteOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -268,20 +250,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<SqlDatabase>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.AddTag");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _databasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -297,20 +276,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<SqlDatabase> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.AddTag");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _databasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -330,7 +306,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.SetTags");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.SetTags");
             scope.Start();
             try
             {
@@ -338,8 +314,8 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _databasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -359,7 +335,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.SetTags");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.SetTags");
             scope.Start();
             try
             {
@@ -367,8 +343,8 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _databasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -383,20 +359,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<SqlDatabase>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _databasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -411,20 +384,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<SqlDatabase> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _databasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -448,12 +418,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Update");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Update");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseUpdateOperation(this, _clientDiagnostics, Pipeline, _databasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseUpdateOperation(ArmClient, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -480,12 +450,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Update");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Update");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseUpdateOperation(this, _clientDiagnostics, Pipeline, _databasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new SqlDatabaseUpdateOperation(ArmClient, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -514,11 +484,11 @@ namespace Azure.ResourceManager.Sql
 
             async Task<Page<SqlMetric>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetMetrics");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetMetrics");
                 scope.Start();
                 try
                 {
-                    var response = await _databasesRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlDatabaseDatabasesRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -547,11 +517,11 @@ namespace Azure.ResourceManager.Sql
 
             Page<SqlMetric> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetMetrics");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetMetrics");
                 scope.Start();
                 try
                 {
-                    var response = _databasesRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _sqlDatabaseDatabasesRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -573,11 +543,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetMetricDefinitions");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _databasesRestClient.ListMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlDatabaseDatabasesRestClient.ListMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -599,11 +569,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetMetricDefinitions");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _databasesRestClient.ListMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sqlDatabaseDatabasesRestClient.ListMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -624,12 +594,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SqlDatabaseFailoverOperation> FailoverAsync(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Failover");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseFailoverOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseFailoverOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -650,12 +620,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SqlDatabaseFailoverOperation Failover(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Failover");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken);
-                var operation = new SqlDatabaseFailoverOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken);
+                var operation = new SqlDatabaseFailoverOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -675,12 +645,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SqlDatabasePauseOperation> PauseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Pause");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.PauseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabasePauseOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.PauseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabasePauseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -700,12 +670,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SqlDatabasePauseOperation Pause(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Pause");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Pause(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabasePauseOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.Pause(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlDatabasePauseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -725,12 +695,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SqlDatabaseResumeOperation> ResumeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Resume");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseResumeOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseResumeOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -750,12 +720,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SqlDatabaseResumeOperation Resume(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Resume");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabaseResumeOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlDatabaseResumeOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -775,12 +745,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SqlDatabaseUpgradeDataWarehouseOperation> UpgradeDataWarehouseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.UpgradeDataWarehouseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseUpgradeDataWarehouseOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.UpgradeDataWarehouseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseUpgradeDataWarehouseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -800,12 +770,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SqlDatabaseUpgradeDataWarehouseOperation UpgradeDataWarehouse(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.UpgradeDataWarehouse(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabaseUpgradeDataWarehouseOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.UpgradeDataWarehouse(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlDatabaseUpgradeDataWarehouseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -831,11 +801,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Rename");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Rename");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlDatabaseDatabasesRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -859,11 +829,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Rename");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Rename");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _sqlDatabaseDatabasesRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -888,12 +858,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Import");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Import");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.ImportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseImportOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.ImportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseImportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -920,12 +890,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Import");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Import");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Import(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseImportOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.Import(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new SqlDatabaseImportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -952,12 +922,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Export");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Export");
             scope.Start();
             try
             {
-                var response = await _databasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseExportOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _sqlDatabaseDatabasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseExportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -984,12 +954,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.Export");
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Export");
             scope.Start();
             try
             {
-                var response = _databasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseExportOperation(_clientDiagnostics, Pipeline, _databasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _sqlDatabaseDatabasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new SqlDatabaseExportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1016,11 +986,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<DatabaseColumnData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
+                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = await _databaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1031,11 +1001,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseColumnData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
+                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = await _databaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1062,11 +1032,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<DatabaseColumnData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
+                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = _databaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1077,11 +1047,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseColumnData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
+                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = _databaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1108,12 +1078,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.CreateRestorePoint");
+            using var scope = _restorePointClientDiagnostics.CreateScope("SqlDatabase.CreateRestorePoint");
             scope.Start();
             try
             {
-                var response = await _restorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseCreateRestorePointOperation(_clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _restorePointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlDatabaseCreateRestorePointOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1140,12 +1110,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.CreateRestorePoint");
+            using var scope = _restorePointClientDiagnostics.CreateScope("SqlDatabase.CreateRestorePoint");
             scope.Start();
             try
             {
-                var response = _restorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseCreateRestorePointOperation(_clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _restorePointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new SqlDatabaseCreateRestorePointOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1170,11 +1140,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _sensitivityLabelsRestClient.ListCurrentByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1185,11 +1155,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _sensitivityLabelsRestClient.ListCurrentByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1214,11 +1184,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _sensitivityLabelsRestClient.ListCurrentByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1229,11 +1199,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _sensitivityLabelsRestClient.ListCurrentByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1259,11 +1229,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpdateSensitivityLabel");
+            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.UpdateSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _sensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1287,11 +1257,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpdateSensitivityLabel");
+            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.UpdateSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _sensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1314,11 +1284,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _sensitivityLabelsRestClient.ListRecommendedByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1329,11 +1299,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _sensitivityLabelsRestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1358,11 +1328,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _sensitivityLabelsRestClient.ListRecommendedByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1373,11 +1343,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
+                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _sensitivityLabelsRestClient.ListRecommendedByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1403,11 +1373,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpdateRecommendedSensitivityLabel");
+            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.UpdateRecommendedSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _sensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1431,11 +1401,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.UpdateRecommendedSensitivityLabel");
+            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.UpdateRecommendedSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _sensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1453,24 +1423,22 @@ namespace Azure.ResourceManager.Sql
         /// <param name="extensionName"> The String to use. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<SqlDatabaseCreateOrUpdateDatabaseExtensionOperation> CreateOrUpdateDatabaseExtensionAsync(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.CreateOrUpdateDatabaseExtension");
+            using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabase.CreateOrUpdateDatabaseExtension");
             scope.Start();
             try
             {
                 var response = await _databaseExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseCreateOrUpdateDatabaseExtensionOperation(_clientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response);
+                var operation = new SqlDatabaseCreateOrUpdateDatabaseExtensionOperation(_databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1490,24 +1458,22 @@ namespace Azure.ResourceManager.Sql
         /// <param name="extensionName"> The String to use. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual SqlDatabaseCreateOrUpdateDatabaseExtensionOperation CreateOrUpdateDatabaseExtension(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.CreateOrUpdateDatabaseExtension");
+            using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabase.CreateOrUpdateDatabaseExtension");
             scope.Start();
             try
             {
                 var response = _databaseExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters, cancellationToken);
-                var operation = new SqlDatabaseCreateOrUpdateDatabaseExtensionOperation(_clientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response);
+                var operation = new SqlDatabaseCreateOrUpdateDatabaseExtensionOperation(_databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1529,7 +1495,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ImportExportExtensionsOperationResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
+                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1544,7 +1510,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ImportExportExtensionsOperationResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
+                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1570,7 +1536,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ImportExportExtensionsOperationResult> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
+                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1585,7 +1551,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ImportExportExtensionsOperationResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
+                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseExtensions");
                 scope.Start();
                 try
                 {
@@ -1609,7 +1575,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> CancelDatabaseOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.CancelDatabaseOperation");
+            using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabase.CancelDatabaseOperation");
             scope.Start();
             try
             {
@@ -1631,7 +1597,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CancelDatabaseOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlDatabase.CancelDatabaseOperation");
+            using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabase.CancelDatabaseOperation");
             scope.Start();
             try
             {
@@ -1655,7 +1621,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<DatabaseOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
+                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1670,7 +1636,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
+                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1696,7 +1662,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<DatabaseOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
+                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1711,7 +1677,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
+                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseOperations");
                 scope.Start();
                 try
                 {
@@ -1737,7 +1703,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<DatabaseUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
+                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
                 scope.Start();
                 try
                 {
@@ -1752,7 +1718,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
+                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
                 scope.Start();
                 try
                 {
@@ -1778,7 +1744,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<DatabaseUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
+                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
                 scope.Start();
                 try
                 {
@@ -1793,7 +1759,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
+                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseUsages");
                 scope.Start();
                 try
                 {
@@ -1815,7 +1781,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
         public virtual DataMaskingPolicy GetDataMaskingPolicy()
         {
-            return new DataMaskingPolicy(this, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
+            return new DataMaskingPolicy(ArmClient, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
         }
         #endregion
 
@@ -1875,7 +1841,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
         public virtual DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
         {
-            return new DatabaseAutomaticTuning(this, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            return new DatabaseAutomaticTuning(ArmClient, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
         #endregion
 
@@ -1935,7 +1901,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
         public virtual MaintenanceWindowOptions GetMaintenanceWindowOptions()
         {
-            return new MaintenanceWindowOptions(this, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
+            return new MaintenanceWindowOptions(ArmClient, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
         }
         #endregion
 
@@ -1945,7 +1911,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
         public virtual MaintenanceWindows GetMaintenanceWindows()
         {
-            return new MaintenanceWindows(this, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
+            return new MaintenanceWindows(ArmClient, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
         }
         #endregion
 

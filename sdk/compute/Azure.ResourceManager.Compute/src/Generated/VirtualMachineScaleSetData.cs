@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="virtualMachineProfile"> The virtual machine profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="overprovision"> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </param>
-        /// <param name="doNotRunExtensionsOnOverprovisionedVMs"> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </param>
+        /// <param name="doNotRunExtensionsOnOverprovisionedVms"> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Virtual Machine Scale Set. </param>
         /// <param name="singlePlacementGroup"> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </param>
         /// <param name="zoneBalance"> Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage. zoneBalance property can only be set if the zones property of the scale set contains more than one zone. If there are no zones or only one zone specified, then zoneBalance property should not be set. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="scaleInPolicy"> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </param>
         /// <param name="orchestrationMode"> Specifies the orchestration mode for the virtual machine scale set. </param>
         /// <param name="spotRestorePolicy"> Specifies the Spot Restore properties for the virtual machine scale set. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, Models.Plan plan, ResourceIdentity identity, IList<string> zones, Models.ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy) : base(id, name, type, tags, location)
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, Models.Plan plan, ResourceIdentity identity, IList<string> zones, Models.ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Plan = plan;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
             VirtualMachineProfile = virtualMachineProfile;
             ProvisioningState = provisioningState;
             Overprovision = overprovision;
-            DoNotRunExtensionsOnOverprovisionedVMs = doNotRunExtensionsOnOverprovisionedVMs;
+            DoNotRunExtensionsOnOverprovisionedVms = doNotRunExtensionsOnOverprovisionedVms;
             UniqueId = uniqueId;
             SinglePlacementGroup = singlePlacementGroup;
             ZoneBalance = zoneBalance;
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
         /// <summary> The virtual machine profile. </summary>
-        public VirtualMachineScaleSetVMProfile VirtualMachineProfile { get; set; }
+        public VirtualMachineScaleSetVmProfile VirtualMachineProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
         public bool? Overprovision { get; set; }
         /// <summary> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </summary>
-        public bool? DoNotRunExtensionsOnOverprovisionedVMs { get; set; }
+        public bool? DoNotRunExtensionsOnOverprovisionedVms { get; set; }
         /// <summary> Specifies the ID which uniquely identifies a Virtual Machine Scale Set. </summary>
         public string UniqueId { get; }
         /// <summary> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </summary>

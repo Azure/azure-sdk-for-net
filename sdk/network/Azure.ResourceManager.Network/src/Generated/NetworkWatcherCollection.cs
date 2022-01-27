@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of NetworkWatcher and their operations over its parent. </summary>
     public partial class NetworkWatcherCollection : ArmCollection, IEnumerable<NetworkWatcher>, IAsyncEnumerable<NetworkWatcher>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkWatchersRestOperations _networkWatchersRestClient;
+        private readonly ClientDiagnostics _networkWatcherClientDiagnostics;
+        private readonly NetworkWatchersRestOperations _networkWatcherRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkWatcherCollection"/> class for mocking. </summary>
         protected NetworkWatcherCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkWatcherCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(NetworkWatcher.ResourceType, out string apiVersion);
-            _networkWatchersRestClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _networkWatcherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkWatcher.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(NetworkWatcher.ResourceType, out string networkWatcherApiVersion);
+            _networkWatcherRestClient = new NetworkWatchersRestOperations(_networkWatcherClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkWatcherApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,24 +58,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="parameters"> Parameters that define the network watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual NetworkWatcherCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.CreateOrUpdate");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkWatchersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken);
-                var operation = new NetworkWatcherCreateOrUpdateOperation(this, response);
+                var response = _networkWatcherRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken);
+                var operation = new NetworkWatcherCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -92,24 +90,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="parameters"> Parameters that define the network watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<NetworkWatcherCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.CreateOrUpdate");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkWatchersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherCreateOrUpdateOperation(this, response);
+                var response = await _networkWatcherRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkWatcherCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,22 +120,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified network watcher by resource group. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual Response<NetworkWatcher> Get(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.Get");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkWatchersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken);
+                var response = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
+                    throw _networkWatcherClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkWatcher(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,22 +145,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified network watcher by resource group. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public async virtual Task<Response<NetworkWatcher>> GetAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.Get");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkWatchersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
+                    throw await _networkWatcherClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkWatcher(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,22 +170,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual Response<NetworkWatcher> GetIfExists(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkWatchersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken: cancellationToken);
+                var response = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<NetworkWatcher>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkWatcher(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,22 +195,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public async virtual Task<Response<NetworkWatcher>> GetIfExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkWatchersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<NetworkWatcher>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkWatcher(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,15 +220,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.Exists");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Exists");
             scope.Start();
             try
             {
@@ -257,15 +243,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.Exists");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Exists");
             scope.Start();
             try
             {
@@ -286,12 +270,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<NetworkWatcher> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetAll");
+                using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _networkWatchersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(this, value)), null, response.GetRawResponse());
+                    var response = _networkWatcherRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,12 +293,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<NetworkWatcher>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetAll");
+                using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _networkWatchersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(this, value)), null, response.GetRawResponse());
+                    var response = await _networkWatcherRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkWatcher(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -333,7 +317,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetAllAsGenericResources");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -356,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherCollection.GetAllAsGenericResources");
+            using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -385,8 +369,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkWatcher, NetworkWatcherData> Construct() { }
     }
 }

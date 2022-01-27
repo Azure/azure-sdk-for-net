@@ -63,7 +63,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetConstitutionRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -101,7 +101,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetConstitutionRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -143,7 +143,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetConsortiumMembersRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetConsortiumMembersRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -223,7 +223,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -261,7 +261,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -307,7 +307,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -353,7 +353,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -400,7 +400,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -501,7 +501,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetReceiptRequest(transactionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -555,7 +555,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetReceiptRequest(transactionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -597,7 +597,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -639,7 +639,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetTransactionStatusRequest(transactionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -679,7 +679,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -719,7 +719,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -755,7 +755,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateDeleteUserRequest(userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -791,7 +791,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateDeleteUserRequest(userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -833,7 +833,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetUserRequest(userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -875,7 +875,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetUserRequest(userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -925,7 +925,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -975,7 +975,7 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1026,7 +1026,7 @@ namespace Azure.Security.ConfidentialLedger
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, context)
                         : CreateGetLedgerEntriesNextPageRequest(nextLink, subLedgerId, fromTransactionId, toTransactionId, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "entries", "@nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "entries", "@nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1075,7 +1075,7 @@ namespace Azure.Security.ConfidentialLedger
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, context)
                         : CreateGetLedgerEntriesNextPageRequest(nextLink, subLedgerId, fromTransactionId, toTransactionId, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "entries", "@nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "entries", "@nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

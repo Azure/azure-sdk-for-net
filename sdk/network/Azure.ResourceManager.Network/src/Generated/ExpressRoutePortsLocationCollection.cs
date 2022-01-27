@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of ExpressRoutePortsLocation and their operations over its parent. </summary>
     public partial class ExpressRoutePortsLocationCollection : ArmCollection, IEnumerable<ExpressRoutePortsLocation>, IAsyncEnumerable<ExpressRoutePortsLocation>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ExpressRoutePortsLocationsRestOperations _expressRoutePortsLocationsRestClient;
+        private readonly ClientDiagnostics _expressRoutePortsLocationClientDiagnostics;
+        private readonly ExpressRoutePortsLocationsRestOperations _expressRoutePortsLocationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortsLocationCollection"/> class for mocking. </summary>
         protected ExpressRoutePortsLocationCollection()
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRoutePortsLocationCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ExpressRoutePortsLocation.ResourceType, out string apiVersion);
-            _expressRoutePortsLocationsRestClient = new ExpressRoutePortsLocationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _expressRoutePortsLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortsLocation.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ExpressRoutePortsLocation.ResourceType, out string expressRoutePortsLocationApiVersion);
+            _expressRoutePortsLocationRestClient = new ExpressRoutePortsLocationsRestOperations(_expressRoutePortsLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRoutePortsLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,22 +55,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<ExpressRoutePortsLocation> Get(string locationName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Get");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = _expressRoutePortsLocationsRestClient.Get(Id.SubscriptionId, locationName, cancellationToken);
+                var response = _expressRoutePortsLocationRestClient.Get(Id.SubscriptionId, locationName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                    throw _expressRoutePortsLocationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -83,22 +80,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public async virtual Task<Response<ExpressRoutePortsLocation>> GetAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Get");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _expressRoutePortsLocationsRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRoutePortsLocationRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                    throw await _expressRoutePortsLocationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRoutePortsLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,22 +105,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<ExpressRoutePortsLocation> GetIfExists(string locationName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _expressRoutePortsLocationsRestClient.Get(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
+                var response = _expressRoutePortsLocationRestClient.Get(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,22 +130,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public async virtual Task<Response<ExpressRoutePortsLocation>> GetIfExistsAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _expressRoutePortsLocationsRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _expressRoutePortsLocationRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ExpressRoutePortsLocation>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePortsLocation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,15 +155,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<bool> Exists(string locationName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
             scope.Start();
             try
             {
@@ -189,15 +178,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
             scope.Start();
             try
             {
@@ -218,12 +205,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<ExpressRoutePortsLocation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
+                using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRoutePortsLocationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _expressRoutePortsLocationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -233,12 +220,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<ExpressRoutePortsLocation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
+                using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRoutePortsLocationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _expressRoutePortsLocationRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,12 +243,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ExpressRoutePortsLocation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
+                using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _expressRoutePortsLocationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRoutePortsLocationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,12 +258,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ExpressRoutePortsLocation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
+                using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _expressRoutePortsLocationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRoutePortsLocationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortsLocation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -295,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAllAsGenericResources");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -318,7 +305,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAllAsGenericResources");
+            using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -347,8 +334,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRoutePortsLocation, ExpressRoutePortsLocationData> Construct() { }
     }
 }

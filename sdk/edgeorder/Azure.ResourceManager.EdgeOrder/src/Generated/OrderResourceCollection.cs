@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -22,8 +21,8 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class representing collection of OrderResource and their operations over its parent. </summary>
     public partial class OrderResourceCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly EdgeOrderManagementRestOperations _restClient;
+        private readonly ClientDiagnostics _orderResourceClientDiagnostics;
+        private readonly EdgeOrderManagementRestOperations _orderResourceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="OrderResourceCollection"/> class for mocking. </summary>
         protected OrderResourceCollection()
@@ -34,9 +33,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal OrderResourceCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(OrderResource.ResourceType, out string apiVersion);
-            _restClient = new EdgeOrderManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _orderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", OrderResource.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(OrderResource.ResourceType, out string orderResourceApiVersion);
+            _orderResourceRestClient = new EdgeOrderManagementRestOperations(_orderResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,26 +56,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public virtual Response<OrderResource> Get(string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.Get");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _restClient.GetOrderByName(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken);
+                var response = _orderResourceRestClient.GetOrderByName(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OrderResource(this, response.Value), response.GetRawResponse());
+                    throw _orderResourceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new OrderResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -92,26 +86,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public async virtual Task<Response<OrderResource>> GetAsync(string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.Get");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetOrderByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken).ConfigureAwait(false);
+                var response = await _orderResourceRestClient.GetOrderByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OrderResource(this, response.Value), response.GetRawResponse());
+                    throw await _orderResourceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new OrderResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,26 +113,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public virtual Response<OrderResource> GetIfExists(string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.GetIfExists");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _restClient.GetOrderByName(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken: cancellationToken);
+                var response = _orderResourceRestClient.GetOrderByName(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<OrderResource>(null, response.GetRawResponse());
-                return Response.FromValue(new OrderResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrderResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,26 +140,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public async virtual Task<Response<OrderResource>> GetIfExistsAsync(string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.GetIfExists");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _restClient.GetOrderByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _orderResourceRestClient.GetOrderByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, location, orderName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<OrderResource>(null, response.GetRawResponse());
-                return Response.FromValue(new OrderResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrderResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,19 +167,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public virtual Response<bool> Exists(string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.Exists");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -218,19 +192,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.Exists");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -252,7 +221,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.GetAllAsGenericResources");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -275,7 +244,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OrderResourceCollection.GetAllAsGenericResources");
+            using var scope = _orderResourceClientDiagnostics.CreateScope("OrderResourceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -289,8 +258,5 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw;
             }
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, OrderResource, OrderResourceData> Construct() { }
     }
 }

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class representing collection of ManagedHsm and their operations over its parent. </summary>
     public partial class ManagedHsmCollection : ArmCollection, IEnumerable<ManagedHsm>, IAsyncEnumerable<ManagedHsm>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedHsmsRestOperations _managedHsmsRestClient;
+        private readonly ClientDiagnostics _managedHsmClientDiagnostics;
+        private readonly ManagedHsmsRestOperations _managedHsmRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedHsmCollection"/> class for mocking. </summary>
         protected ManagedHsmCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedHsmCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ManagedHsm.ResourceType, out string apiVersion);
-            _managedHsmsRestClient = new ManagedHsmsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedHsmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsm.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedHsm.ResourceType, out string managedHsmApiVersion);
+            _managedHsmRestClient = new ManagedHsmsRestOperations(_managedHsmClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedHsmApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,24 +61,22 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
         public virtual ManagedHsmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.CreateOrUpdate");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedHsmsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, parameters, cancellationToken);
-                var operation = new ManagedHsmCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response);
+                var response = _managedHsmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, parameters, cancellationToken);
+                var operation = new ManagedHsmCreateOrUpdateOperation(ArmClient, _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,24 +96,22 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ManagedHsmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.CreateOrUpdate");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedHsmsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedHsmCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedHsmsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response);
+                var response = await _managedHsmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedHsmCreateOrUpdateOperation(ArmClient, _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,22 +129,20 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets the specified managed HSM Pool. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<ManagedHsm> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.Get");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedHsmsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _managedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedHsm(this, response.Value), response.GetRawResponse());
+                    throw _managedHsmClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedHsm(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,22 +157,20 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets the specified managed HSM Pool. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<ManagedHsm>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.Get");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedHsmsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedHsm(this, response.Value), response.GetRawResponse());
+                    throw await _managedHsmClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedHsm(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,22 +182,20 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<ManagedHsm> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetIfExists");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedHsmsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _managedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ManagedHsm>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedHsm(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedHsm(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,22 +207,20 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<ManagedHsm>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetIfExists");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedHsmsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ManagedHsm>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedHsm(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedHsm(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,15 +232,13 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.Exists");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.Exists");
             scope.Start();
             try
             {
@@ -269,15 +255,13 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.Exists");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.Exists");
             scope.Start();
             try
             {
@@ -302,12 +286,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             Page<ManagedHsm> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
+                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedHsmsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedHsmRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -317,12 +301,12 @@ namespace Azure.ResourceManager.KeyVault
             }
             Page<ManagedHsm> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
+                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedHsmsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedHsmRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,12 +328,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             async Task<Page<ManagedHsm>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
+                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedHsmsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedHsmRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,12 +343,12 @@ namespace Azure.ResourceManager.KeyVault
             }
             async Task<Page<ManagedHsm>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
+                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedHsmsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedHsmRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -383,7 +367,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetAllAsGenericResources");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -406,7 +390,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmCollection.GetAllAsGenericResources");
+            using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -435,8 +419,5 @@ namespace Azure.ResourceManager.KeyVault
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedHsm, ManagedHsmData> Construct() { }
     }
 }

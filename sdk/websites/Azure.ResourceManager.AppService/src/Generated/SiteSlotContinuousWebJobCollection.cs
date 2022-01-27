@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -23,8 +22,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of ContinuousWebJob and their operations over its parent. </summary>
     public partial class SiteSlotContinuousWebJobCollection : ArmCollection, IEnumerable<SiteSlotContinuousWebJob>, IAsyncEnumerable<SiteSlotContinuousWebJob>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteSlotContinuousWebJobWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotContinuousWebJobWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotContinuousWebJobCollection"/> class for mocking. </summary>
         protected SiteSlotContinuousWebJobCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotContinuousWebJobCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteSlotContinuousWebJob.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteSlotContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotContinuousWebJob.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteSlotContinuousWebJob.ResourceType, out string siteSlotContinuousWebJobWebAppsApiVersion);
+            _siteSlotContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(_siteSlotContinuousWebJobWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotContinuousWebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,22 +56,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<SiteSlotContinuousWebJob> Get(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Get");
+            using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken);
+                var response = _siteSlotContinuousWebJobWebAppsRestClient.GetContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
+                    throw _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,22 +84,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotContinuousWebJob>> GetAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Get");
+            using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotContinuousWebJobWebAppsRestClient.GetContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
+                    throw await _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,22 +109,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<SiteSlotContinuousWebJob> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetIfExists");
+            using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken);
+                var response = _siteSlotContinuousWebJobWebAppsRestClient.GetContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotContinuousWebJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,22 +134,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public async virtual Task<Response<SiteSlotContinuousWebJob>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetIfExists");
+            using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotContinuousWebJobWebAppsRestClient.GetContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotContinuousWebJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotContinuousWebJob(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,15 +159,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Exists");
+            using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Exists");
             scope.Start();
             try
             {
@@ -193,15 +182,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Exists");
+            using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.Exists");
             scope.Start();
             try
             {
@@ -225,12 +212,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteSlotContinuousWebJob> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
+                using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListContinuousWebJobsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,12 +227,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteSlotContinuousWebJob> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
+                using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListContinuousWebJobsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -266,12 +253,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteSlotContinuousWebJob>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
+                using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListContinuousWebJobsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -281,12 +268,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteSlotContinuousWebJob>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
+                using var scope = _siteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteSlotContinuousWebJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListContinuousWebJobsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,8 +298,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotContinuousWebJob, ContinuousWebJobData> Construct() { }
     }
 }

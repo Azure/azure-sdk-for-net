@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AppServicePlansRestOperations _appServicePlansRestClient;
+
+        private readonly ClientDiagnostics _appServicePlanClientDiagnostics;
+        private readonly AppServicePlansRestOperations _appServicePlanRestClient;
         private readonly AppServicePlanData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AppServicePlan"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "AppServicePlan"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppServicePlan(ArmResource options, AppServicePlanData data) : base(options, data.Id)
+        internal AppServicePlan(ArmClient armClient, AppServicePlanData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServicePlan"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AppServicePlan(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal AppServicePlan(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="AppServicePlan"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AppServicePlan(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
+            _appServicePlanRestClient = new AppServicePlansRestOperations(_appServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AppServicePlan>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Get");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Get");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                    throw await _appServicePlanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +114,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServicePlan> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Get");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Get");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServicePlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                    throw _appServicePlanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetAvailableLocations");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -174,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetAvailableLocations");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -195,11 +174,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<AppServicePlanDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Delete");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Delete");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServicePlanDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -220,11 +199,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AppServicePlanDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Delete");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Delete");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServicePlanRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new AppServicePlanDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -251,12 +230,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appServicePlan));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Update");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Update");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                var response = await _appServicePlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,12 +258,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appServicePlan));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.Update");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.Update");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken);
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                var response = _appServicePlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appServicePlan, cancellationToken);
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,11 +282,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<Capability>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListCapabilitiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListCapabilitiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,11 +308,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<Capability> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetCapabilities");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListCapabilities(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListCapabilities(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,11 +334,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<HybridConnectionData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -370,11 +349,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<HybridConnectionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListHybridConnectionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListHybridConnectionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -396,11 +375,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<HybridConnectionData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -411,11 +390,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<HybridConnectionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetHybridConnections");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListHybridConnectionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListHybridConnectionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -435,11 +414,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> RestartWebAppsAsync(bool? softRestart = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.RestartWebApps");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.RestartWebApps");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.RestartWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.RestartWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -457,11 +436,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RestartWebApps(bool? softRestart = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.RestartWebApps");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.RestartWebApps");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.RestartWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, cancellationToken);
+                var response = _appServicePlanRestClient.RestartWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -484,11 +463,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -499,11 +478,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<WebSiteData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -528,11 +507,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -543,11 +522,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<WebSiteData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetWebApps");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -566,11 +545,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<object>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.GetServerFarmSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.GetServerFarmSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -587,11 +566,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<object> GetServerFarmSkus(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.GetServerFarmSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _appServicePlanRestClient.GetServerFarmSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -612,11 +591,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<CsmUsageQuota>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetUsages");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -627,11 +606,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<CsmUsageQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetUsages");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -654,11 +633,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<CsmUsageQuota> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetUsages");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -669,11 +648,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<CsmUsageQuota> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlan.GetUsages");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -691,19 +670,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Reboot a worker machine in an App Service plan. </summary>
         /// <param name="workerName"> Name of worker machine, which typically starts with RD. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
         public async virtual Task<Response> RebootWorkerAsync(string workerName, CancellationToken cancellationToken = default)
         {
-            if (workerName == null)
-            {
-                throw new ArgumentNullException(nameof(workerName));
-            }
+            Argument.AssertNotNullOrEmpty(workerName, nameof(workerName));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.RebootWorker");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.RebootWorker");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.RebootWorkerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerName, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.RebootWorkerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -719,19 +696,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Reboot a worker machine in an App Service plan. </summary>
         /// <param name="workerName"> Name of worker machine, which typically starts with RD. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
         public virtual Response RebootWorker(string workerName, CancellationToken cancellationToken = default)
         {
-            if (workerName == null)
-            {
-                throw new ArgumentNullException(nameof(workerName));
-            }
+            Argument.AssertNotNullOrEmpty(workerName, nameof(workerName));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlan.RebootWorker");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.RebootWorker");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.RebootWorker(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerName, cancellationToken);
+                var response = _appServicePlanRestClient.RebootWorker(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -757,7 +732,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HybridConnectionLimits" /> object. </returns>
         public virtual HybridConnectionLimits GetHybridConnectionLimits()
         {
-            return new HybridConnectionLimits(this, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
+            return new HybridConnectionLimits(ArmClient, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
         #endregion
 

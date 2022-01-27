@@ -6,14 +6,9 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Resources;
 
@@ -22,170 +17,59 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static DeviceUpdateRestOperations GetDeviceUpdateRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
+        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return new DeviceUpdateRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+            return subscription.GetCachedClient((armClient) =>
+            {
+                return new SubscriptionExtensionClient(armClient, subscription.Id);
+            }
+            );
         }
 
-        private static DeviceUpdateAccountsRestOperations GetDeviceUpdateAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
-        {
-            return new DeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
-        }
-
-        /// <summary> Checks ADU resource name availability. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CheckNameAvailability
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public static async Task<Response<CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDeviceUpdateNameAvailability");
-                scope.Start();
-                try
-                {
-                    DeviceUpdateRestOperations restOperations = GetDeviceUpdateRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = await restOperations.CheckNameAvailabilityAsync(subscription.Id.SubscriptionId, request, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
+            return await GetExtensionClient(subscription).CheckDeviceUpdateNameAvailabilityAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Checks ADU resource name availability. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: CheckNameAvailability
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public static Response<CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDeviceUpdateNameAvailability");
-                scope.Start();
-                try
-                {
-                    DeviceUpdateRestOperations restOperations = GetDeviceUpdateRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = restOperations.CheckNameAvailability(subscription.Id.SubscriptionId, request, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
+            return GetExtensionClient(subscription).CheckDeviceUpdateNameAvailability(request, cancellationToken);
         }
 
-        /// <summary> Lists the DeviceUpdateAccounts for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Accounts_ListBySubscription
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceUpdateAccount> GetDeviceUpdateAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(DeviceUpdateAccount.ResourceType, out string apiVersion);
-                DeviceUpdateAccountsRestOperations restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                async Task<Page<DeviceUpdateAccount>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListBySubscriptionAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<DeviceUpdateAccount>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetDeviceUpdateAccountsAsync(cancellationToken);
         }
 
-        /// <summary> Lists the DeviceUpdateAccounts for this <see cref="Subscription" />. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Accounts_ListBySubscription
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceUpdateAccount> GetDeviceUpdateAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(DeviceUpdateAccount.ResourceType, out string apiVersion);
-                DeviceUpdateAccountsRestOperations restOperations = GetDeviceUpdateAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                Page<DeviceUpdateAccount> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListBySubscription(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<DeviceUpdateAccount> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeviceUpdateAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListBySubscriptionNextPage(nextLink, subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetDeviceUpdateAccounts(cancellationToken);
         }
 
         /// <summary> Filters the list of DeviceUpdateAccounts for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -197,9 +81,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetDeviceUpdateAccountsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DeviceUpdateAccount.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDeviceUpdateAccountsAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of DeviceUpdateAccounts for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -211,9 +93,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetDeviceUpdateAccountsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DeviceUpdateAccount.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDeviceUpdateAccountsAsGenericResources(filter, expand, top, cancellationToken);
         }
     }
 }

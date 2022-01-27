@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         private readonly OperationInternals<OrderItemResource> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of OrderItemResourceCreateOrUpdateOperation for mocking. </summary>
         protected OrderItemResourceCreateOrUpdateOperation()
         {
         }
 
-        internal OrderItemResourceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal OrderItemResourceCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<OrderItemResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OrderItemResourceCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement);
-            return new OrderItemResource(_operationBase, data);
+            return new OrderItemResource(_armClient, data);
         }
 
         async ValueTask<OrderItemResource> IOperationSource<OrderItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement);
-            return new OrderItemResource(_operationBase, data);
+            return new OrderItemResource(_armClient, data);
         }
     }
 }

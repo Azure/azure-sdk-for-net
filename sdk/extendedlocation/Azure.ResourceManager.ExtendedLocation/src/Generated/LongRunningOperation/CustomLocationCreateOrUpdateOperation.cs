@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ExtendedLocation;
 
 namespace Azure.ResourceManager.ExtendedLocation.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     {
         private readonly OperationInternals<CustomLocation> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of CustomLocationCreateOrUpdateOperation for mocking. </summary>
         protected CustomLocationCreateOrUpdateOperation()
         {
         }
 
-        internal CustomLocationCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CustomLocationCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<CustomLocation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "CustomLocationCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
-            return new CustomLocation(_operationBase, data);
+            return new CustomLocation(_armClient, data);
         }
 
         async ValueTask<CustomLocation> IOperationSource<CustomLocation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
-            return new CustomLocation(_operationBase, data);
+            return new CustomLocation(_armClient, data);
         }
     }
 }

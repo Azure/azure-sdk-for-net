@@ -29,9 +29,13 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+
+        private readonly ClientDiagnostics _webSiteWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _webSiteWebAppsRestClient;
+        private readonly ClientDiagnostics _recommendationsClientDiagnostics;
         private readonly RecommendationsRestOperations _recommendationsRestClient;
+        private readonly ClientDiagnostics _siteRecommendationRecommendationsClientDiagnostics;
+        private readonly RecommendationsRestOperations _siteRecommendationRecommendationsRestClient;
         private readonly WebSiteData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebSite"/> class for mocking. </summary>
@@ -40,47 +44,27 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "WebSite"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSite(ArmResource options, WebSiteData data) : base(options, data.Id)
+        internal WebSite(ArmClient armClient, WebSiteData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSite"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebSite(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal WebSite(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="WebSite"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebSite(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _webSiteWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string webSiteWebAppsApiVersion);
+            _webSiteWebAppsRestClient = new WebAppsRestOperations(_webSiteWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteWebAppsApiVersion);
+            _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _recommendationsRestClient = new RecommendationsRestOperations(_recommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendation.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteRecommendation.ResourceType, out string siteRecommendationRecommendationsApiVersion);
+            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_siteRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -117,14 +101,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<WebSite>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Get");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WebSite(this, response.Value), response.GetRawResponse());
+                    throw await _webSiteWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,14 +124,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebSite> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Get");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSite(this, response.Value), response.GetRawResponse());
+                    throw _webSiteWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAvailableLocations");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -179,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAvailableLocations");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -202,11 +186,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebSiteDeleteOperation> DeleteAsync(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Delete");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Delete");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
                 var operation = new WebSiteDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -229,11 +213,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebSiteDeleteOperation Delete(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Delete");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Delete");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
+                var response = _webSiteWebAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
                 var operation = new WebSiteDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -260,12 +244,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Update");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Update");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteEnvelope, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WebSite(this, response.Value), response.GetRawResponse());
+                var response = await _webSiteWebAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteEnvelope, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,12 +272,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Update");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Update");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteEnvelope, cancellationToken);
-                return Response.FromValue(new WebSite(this, response.Value), response.GetRawResponse());
+                var response = _webSiteWebAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteEnvelope, cancellationToken);
+                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -314,7 +298,7 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<AppServiceRecommendation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
+                using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
                 try
                 {
@@ -329,7 +313,7 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<AppServiceRecommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
+                using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
                 try
                 {
@@ -357,7 +341,7 @@ namespace Azure.ResourceManager.AppService
         {
             Page<AppServiceRecommendation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
+                using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
                 try
                 {
@@ -372,7 +356,7 @@ namespace Azure.ResourceManager.AppService
             }
             Page<AppServiceRecommendation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
+                using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.GetHistoryForWebAppRecommendations");
                 scope.Start();
                 try
                 {
@@ -400,11 +384,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<AppServiceRecommendation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
+                using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
                 try
                 {
-                    var response = await _recommendationsRestClient.ListRecommendedRulesForWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _siteRecommendationRecommendationsRestClient.ListRecommendedRulesForWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -415,11 +399,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<AppServiceRecommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
+                using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
                 try
                 {
-                    var response = await _recommendationsRestClient.ListRecommendedRulesForWebAppNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _siteRecommendationRecommendationsRestClient.ListRecommendedRulesForWebAppNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -443,11 +427,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<AppServiceRecommendation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
+                using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
                 try
                 {
-                    var response = _recommendationsRestClient.ListRecommendedRulesForWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
+                    var response = _siteRecommendationRecommendationsRestClient.ListRecommendedRulesForWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -458,11 +442,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<AppServiceRecommendation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
+                using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("WebSite.GetRecommendedRulesForWebAppRecommendations");
                 scope.Start();
                 try
                 {
-                    var response = _recommendationsRestClient.ListRecommendedRulesForWebAppNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
+                    var response = _siteRecommendationRecommendationsRestClient.ListRecommendedRulesForWebAppNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -481,7 +465,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> DisableAllForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DisableAllForWebAppRecommendation");
+            using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.DisableAllForWebAppRecommendation");
             scope.Start();
             try
             {
@@ -502,7 +486,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DisableAllForWebAppRecommendation(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DisableAllForWebAppRecommendation");
+            using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.DisableAllForWebAppRecommendation");
             scope.Start();
             try
             {
@@ -523,7 +507,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> ResetAllFiltersForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.ResetAllFiltersForWebAppRecommendation");
+            using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.ResetAllFiltersForWebAppRecommendation");
             scope.Start();
             try
             {
@@ -544,7 +528,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ResetAllFiltersForWebAppRecommendation(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.ResetAllFiltersForWebAppRecommendation");
+            using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.ResetAllFiltersForWebAppRecommendation");
             scope.Start();
             try
             {
@@ -566,11 +550,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameAsync(string hostName = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.AnalyzeCustomHostname");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.AnalyzeCustomHostname");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.AnalyzeCustomHostnameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.AnalyzeCustomHostnameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -588,11 +572,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CustomHostnameAnalysisResult> AnalyzeCustomHostname(string hostName = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.AnalyzeCustomHostname");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.AnalyzeCustomHostname");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.AnalyzeCustomHostname(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken);
+                var response = _webSiteWebAppsRestClient.AnalyzeCustomHostname(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -616,11 +600,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(slotSwapEntity));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.ApplySlotConfigToProduction");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.ApplySlotConfigToProduction");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ApplySlotConfigToProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ApplySlotConfigToProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -644,11 +628,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(slotSwapEntity));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.ApplySlotConfigToProduction");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.ApplySlotConfigToProduction");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ApplySlotConfigToProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ApplySlotConfigToProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -672,11 +656,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Backup");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Backup");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -700,11 +684,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Backup");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Backup");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                var response = _webSiteWebAppsRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -724,11 +708,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteConfigData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetConfigurations");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -739,11 +723,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteConfigData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetConfigurations");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListConfigurationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListConfigurationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -765,11 +749,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteConfigData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetConfigurations");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -780,11 +764,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteConfigData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetConfigurations");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListConfigurationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListConfigurationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -810,11 +794,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateApplicationSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateApplicationSettings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateApplicationSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateApplicationSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -838,11 +822,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appSettings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateApplicationSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateApplicationSettings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateApplicationSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateApplicationSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettings, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -859,11 +843,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<StringDictionary>> GetApplicationSettingsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetApplicationSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetApplicationSettings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListApplicationSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListApplicationSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -880,11 +864,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StringDictionary> GetApplicationSettings(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetApplicationSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetApplicationSettings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListApplicationSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListApplicationSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -908,11 +892,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteAuthSettings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateAuthSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateAuthSettings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateAuthSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettings, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateAuthSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettings, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -936,11 +920,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteAuthSettings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateAuthSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateAuthSettings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateAuthSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettings, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateAuthSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettings, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -957,11 +941,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteAuthSettings>> GetAuthSettingsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAuthSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetAuthSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetAuthSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -978,11 +962,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteAuthSettings> GetAuthSettings(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAuthSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetAuthSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetAuthSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1006,11 +990,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteAuthSettingsV2));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateAuthSettingsV2");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateAuthSettingsV2");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettingsV2, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettingsV2, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1034,11 +1018,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(siteAuthSettingsV2));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateAuthSettingsV2");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateAuthSettingsV2");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettingsV2, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteAuthSettingsV2, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1055,11 +1039,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAuthSettingsV2");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettingsV2");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1076,11 +1060,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteAuthSettingsV2> GetAuthSettingsV2(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAuthSettingsV2");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettingsV2");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1104,11 +1088,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(azureStorageAccounts));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateAzureStorageAccounts");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateAzureStorageAccounts");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateAzureStorageAccountsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureStorageAccounts, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateAzureStorageAccountsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureStorageAccounts, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1132,11 +1116,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(azureStorageAccounts));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateAzureStorageAccounts");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateAzureStorageAccounts");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateAzureStorageAccounts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureStorageAccounts, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateAzureStorageAccounts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureStorageAccounts, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1153,11 +1137,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AzureStoragePropertyDictionaryResource>> GetAzureStorageAccountsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAzureStorageAccounts");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAzureStorageAccounts");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListAzureStorageAccountsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListAzureStorageAccountsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1174,11 +1158,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AzureStoragePropertyDictionaryResource> GetAzureStorageAccounts(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetAzureStorageAccounts");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAzureStorageAccounts");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListAzureStorageAccounts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListAzureStorageAccounts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1202,11 +1186,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateBackupConfiguration");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateBackupConfiguration");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateBackupConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateBackupConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1230,11 +1214,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateBackupConfiguration");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateBackupConfiguration");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateBackupConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateBackupConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1251,11 +1235,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> DeleteBackupConfigurationAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DeleteBackupConfiguration");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DeleteBackupConfiguration");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteBackupConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.DeleteBackupConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1272,11 +1256,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteBackupConfiguration(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DeleteBackupConfiguration");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DeleteBackupConfiguration");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteBackupConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.DeleteBackupConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1293,11 +1277,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<BackupRequest>> GetBackupConfigurationAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetBackupConfiguration");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetBackupConfiguration");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetBackupConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetBackupConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1314,11 +1298,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BackupRequest> GetBackupConfiguration(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetBackupConfiguration");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetBackupConfiguration");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetBackupConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetBackupConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1342,11 +1326,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStrings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateConnectionStrings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateConnectionStrings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStrings, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStrings, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1370,11 +1354,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionStrings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateConnectionStrings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateConnectionStrings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStrings, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStrings, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1391,11 +1375,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ConnectionStringDictionary>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetConnectionStrings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConnectionStrings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1412,11 +1396,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConnectionStringDictionary> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetConnectionStrings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConnectionStrings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListConnectionStrings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1440,11 +1424,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(metadata));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateMetadata");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateMetadata");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateMetadataAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadata, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateMetadataAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadata, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1468,11 +1452,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(metadata));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateMetadata");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateMetadata");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateMetadata(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadata, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateMetadata(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadata, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1489,11 +1473,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<StringDictionary>> GetMetadataAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetMetadata");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMetadata");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListMetadataAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListMetadataAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1510,11 +1494,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StringDictionary> GetMetadata(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetMetadata");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMetadata");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListMetadata(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListMetadata(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1532,12 +1516,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebSiteGetPublishingCredentialsOperation> GetPublishingCredentialsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListPublishingCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteGetPublishingCredentialsOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _webSiteWebAppsRestClient.ListPublishingCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteGetPublishingCredentialsOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1557,12 +1541,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebSiteGetPublishingCredentialsOperation GetPublishingCredentials(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListPublishingCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WebSiteGetPublishingCredentialsOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _webSiteWebAppsRestClient.ListPublishingCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new WebSiteGetPublishingCredentialsOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1588,11 +1572,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(pushSettings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateSitePushSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateSitePushSettings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateSitePushSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pushSettings, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.UpdateSitePushSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pushSettings, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1616,11 +1600,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(pushSettings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.UpdateSitePushSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.UpdateSitePushSettings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateSitePushSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pushSettings, cancellationToken);
+                var response = _webSiteWebAppsRestClient.UpdateSitePushSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pushSettings, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1637,11 +1621,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PushSettings>> GetSitePushSettingsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSitePushSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePushSettings");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListSitePushSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListSitePushSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1658,11 +1642,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PushSettings> GetSitePushSettings(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSitePushSettings");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePushSettings");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListSitePushSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListSitePushSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1679,11 +1663,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Stream>> GetWebSiteContainerLogsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetWebSiteContainerLogs");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetWebSiteContainerLogs");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetWebSiteContainerLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetWebSiteContainerLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1700,11 +1684,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Stream> GetWebSiteContainerLogs(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetWebSiteContainerLogs");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetWebSiteContainerLogs");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetWebSiteContainerLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetWebSiteContainerLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1721,11 +1705,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Stream>> GetContainerLogsZipAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetContainerLogsZip");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetContainerLogsZip");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetContainerLogsZipAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetContainerLogsZipAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1742,11 +1726,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Stream> GetContainerLogsZip(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetContainerLogsZip");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetContainerLogsZip");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetContainerLogsZip(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetContainerLogsZip(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1770,11 +1754,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DiscoverBackup");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DiscoverBackup");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DiscoverBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.DiscoverBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1798,11 +1782,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DiscoverBackup");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DiscoverBackup");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DiscoverBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                var response = _webSiteWebAppsRestClient.DiscoverBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1819,11 +1803,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<string>> GetFunctionsAdminTokenAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetFunctionsAdminToken");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetFunctionsAdminToken");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetFunctionsAdminTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetFunctionsAdminTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1840,11 +1824,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<string> GetFunctionsAdminToken(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetFunctionsAdminToken");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetFunctionsAdminToken");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetFunctionsAdminToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetFunctionsAdminToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1861,11 +1845,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<HostKeys>> GetHostKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetHostKeys");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHostKeys");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListHostKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListHostKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1882,11 +1866,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HostKeys> GetHostKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetHostKeys");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHostKeys");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListHostKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListHostKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1903,11 +1887,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> GetSyncStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSyncStatus");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncStatus");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListSyncStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListSyncStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1924,11 +1908,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response GetSyncStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSyncStatus");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncStatus");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListSyncStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListSyncStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1945,11 +1929,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> SyncFunctionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SyncFunctions");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctions");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.SyncFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.SyncFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1966,11 +1950,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SyncFunctions(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SyncFunctions");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctions");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.SyncFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.SyncFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1988,27 +1972,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
         public async virtual Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.CreateOrUpdateHostSecret");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.CreateOrUpdateHostSecret");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateHostSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, key, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.CreateOrUpdateHostSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, key, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2026,27 +2005,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="key"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/>, or <paramref name="key"/> is null. </exception>
         public virtual Response<KeyInfo> CreateOrUpdateHostSecret(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.CreateOrUpdateHostSecret");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.CreateOrUpdateHostSecret");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateHostSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, key, cancellationToken);
+                var response = _webSiteWebAppsRestClient.CreateOrUpdateHostSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, key, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2063,23 +2037,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public async virtual Task<Response> DeleteHostSecretAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DeleteHostSecret");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DeleteHostSecret");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteHostSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.DeleteHostSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2096,23 +2065,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public virtual Response DeleteHostSecret(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.DeleteHostSecret");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DeleteHostSecret");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteHostSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, cancellationToken);
+                var response = _webSiteWebAppsRestClient.DeleteHostSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyType, keyName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2129,11 +2093,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<HybridConnectionData>> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetHybridConnections");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHybridConnections");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2150,11 +2114,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridConnectionData> GetHybridConnections(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetHybridConnections");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHybridConnections");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2171,11 +2135,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<RelayServiceConnectionEntityData>> GetRelayServiceConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetRelayServiceConnections");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetRelayServiceConnections");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListRelayServiceConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListRelayServiceConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2192,11 +2156,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RelayServiceConnectionEntityData> GetRelayServiceConnections(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetRelayServiceConnections");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetRelayServiceConnections");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListRelayServiceConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListRelayServiceConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2213,11 +2177,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteCloneability>> IsCloneableAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.IsCloneable");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.IsCloneable");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.IsCloneableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.IsCloneableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2234,11 +2198,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteCloneability> IsCloneable(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.IsCloneable");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.IsCloneable");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.IsCloneable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.IsCloneable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2258,11 +2222,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<BackupItemData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSiteBackups");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSiteBackups");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSiteBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSiteBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2273,11 +2237,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<BackupItemData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSiteBackups");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSiteBackups");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSiteBackupsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSiteBackupsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2299,11 +2263,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<BackupItemData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSiteBackups");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSiteBackups");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSiteBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSiteBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2314,11 +2278,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<BackupItemData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSiteBackups");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSiteBackups");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSiteBackupsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSiteBackupsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2337,11 +2301,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<FunctionSecrets>> GetSyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSyncFunctionTriggers");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncFunctionTriggers");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListSyncFunctionTriggersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListSyncFunctionTriggersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2358,11 +2322,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FunctionSecrets> GetSyncFunctionTriggers(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSyncFunctionTriggers");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncFunctionTriggers");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListSyncFunctionTriggers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListSyncFunctionTriggers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2392,12 +2356,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(migrationOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.MigrateStorage");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.MigrateStorage");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.MigrateStorageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteMigrateStorageOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
+                var response = await _webSiteWebAppsRestClient.MigrateStorageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteMigrateStorageOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2429,12 +2393,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(migrationOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.MigrateStorage");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.MigrateStorage");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.MigrateStorage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken);
-                var operation = new WebSiteMigrateStorageOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
+                var response = _webSiteWebAppsRestClient.MigrateStorage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken);
+                var operation = new WebSiteMigrateStorageOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2461,12 +2425,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(migrationRequestEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.MigrateMySql");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.MigrateMySql");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.MigrateMySqlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteMigrateMySqlOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
+                var response = await _webSiteWebAppsRestClient.MigrateMySqlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteMigrateMySqlOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2493,12 +2457,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(migrationRequestEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.MigrateMySql");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.MigrateMySql");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.MigrateMySql(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken);
-                var operation = new WebSiteMigrateMySqlOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
+                var response = _webSiteWebAppsRestClient.MigrateMySql(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken);
+                var operation = new WebSiteMigrateMySqlOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2517,11 +2481,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<MigrateMySqlStatusData>> GetMigrateMySqlStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetMigrateMySqlStatus");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMigrateMySqlStatus");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetMigrateMySqlStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetMigrateMySqlStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2538,11 +2502,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MigrateMySqlStatusData> GetMigrateMySqlStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetMigrateMySqlStatus");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMigrateMySqlStatus");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetMigrateMySqlStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetMigrateMySqlStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2558,19 +2522,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public async virtual Task<Response<NetworkFeaturesData>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkFeatures");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkFeatures");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListNetworkFeaturesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListNetworkFeaturesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2586,19 +2548,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeaturesData> GetNetworkFeatures(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkFeatures");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkFeatures");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListNetworkFeatures(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListNetworkFeatures(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2614,19 +2574,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public async virtual Task<Response<object>> GetNetworkTraceOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperation");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperation");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2642,19 +2600,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<object> GetNetworkTraceOperation(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperation");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperation");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2674,11 +2630,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<string>> StartWebSiteNetworkTraceAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTrace");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StartWebSiteNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.StartWebSiteNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2698,11 +2654,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<string> StartWebSiteNetworkTrace(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTrace");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.StartWebSiteNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
+                var response = _webSiteWebAppsRestClient.StartWebSiteNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2723,12 +2679,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebSiteStartWebSiteNetworkTraceOperationOperation> StartWebSiteNetworkTraceOperationAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StartWebSiteNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteStartWebSiteNetworkTraceOperationOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var response = await _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteStartWebSiteNetworkTraceOperationOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2751,12 +2707,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebSiteStartWebSiteNetworkTraceOperationOperation StartWebSiteNetworkTraceOperation(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.StartWebSiteNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new WebSiteStartWebSiteNetworkTraceOperationOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var response = _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
+                var operation = new WebSiteStartWebSiteNetworkTraceOperationOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -2775,11 +2731,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StopWebSiteNetworkTraceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StopWebSiteNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopWebSiteNetworkTrace");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StopWebSiteNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.StopWebSiteNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2796,11 +2752,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StopWebSiteNetworkTrace(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StopWebSiteNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopWebSiteNetworkTrace");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.StopWebSiteNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.StopWebSiteNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2816,22 +2772,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTracesAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             async Task<Page<NetworkTrace>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraces");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTraces");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.GetNetworkTracesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.GetNetworkTracesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2849,22 +2803,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTraces(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Page<NetworkTrace> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraces");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTraces");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.GetNetworkTraces(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.GetNetworkTraces(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2882,19 +2834,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public async virtual Task<Response<object>> GetNetworkTraceOperationV2Async(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperationV2");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperationV2");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetNetworkTraceOperationV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetNetworkTraceOperationV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2910,19 +2860,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<object> GetNetworkTraceOperationV2(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperationV2");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTraceOperationV2");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetNetworkTraceOperationV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetNetworkTraceOperationV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2938,22 +2886,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTrace> GetNetworkTracesV2Async(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             async Task<Page<NetworkTrace>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTracesV2");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTracesV2");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.GetNetworkTracesV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.GetNetworkTracesV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2971,22 +2917,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkTrace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTrace> GetNetworkTracesV2(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Page<NetworkTrace> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetNetworkTracesV2");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetNetworkTracesV2");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.GetNetworkTracesV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.GetNetworkTracesV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3005,11 +2949,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> GenerateNewSitePublishingPasswordAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GenerateNewSitePublishingPassword");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GenerateNewSitePublishingPassword");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GenerateNewSitePublishingPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GenerateNewSitePublishingPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3026,11 +2970,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response GenerateNewSitePublishingPassword(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GenerateNewSitePublishingPassword");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GenerateNewSitePublishingPassword");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GenerateNewSitePublishingPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GenerateNewSitePublishingPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3051,11 +2995,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<PerfMonResponse>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListPerfMonCountersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListPerfMonCountersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3066,11 +3010,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<PerfMonResponse>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListPerfMonCountersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListPerfMonCountersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3093,11 +3037,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<PerfMonResponse> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListPerfMonCounters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListPerfMonCounters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3108,11 +3052,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<PerfMonResponse> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPerfMonCounters");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListPerfMonCountersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListPerfMonCountersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3131,11 +3075,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSitePhpErrorLogFlag");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePhpErrorLogFlag");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetSitePhpErrorLogFlagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.GetSitePhpErrorLogFlagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3152,11 +3096,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SitePhpErrorLogFlag> GetSitePhpErrorLogFlag(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetSitePhpErrorLogFlag");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePhpErrorLogFlag");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetSitePhpErrorLogFlag(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.GetSitePhpErrorLogFlag(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3173,11 +3117,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PremierAddOnData>> GetPremierAddOnsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetPremierAddOns");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPremierAddOns");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListPremierAddOnsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListPremierAddOnsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3194,11 +3138,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PremierAddOnData> GetPremierAddOns(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetPremierAddOns");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPremierAddOns");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListPremierAddOns(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListPremierAddOns(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3218,11 +3162,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetPrivateLinkResources");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPrivateLinkResources");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3244,11 +3188,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetPrivateLinkResources");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPrivateLinkResources");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3274,11 +3218,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publishingProfileOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetPublishingProfileXmlWithSecrets");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPublishingProfileXmlWithSecrets");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListPublishingProfileXmlWithSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publishingProfileOptions, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ListPublishingProfileXmlWithSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publishingProfileOptions, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3302,11 +3246,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publishingProfileOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.GetPublishingProfileXmlWithSecrets");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPublishingProfileXmlWithSecrets");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListPublishingProfileXmlWithSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publishingProfileOptions, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ListPublishingProfileXmlWithSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publishingProfileOptions, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3323,11 +3267,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> ResetProductionSlotConfigAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.ResetProductionSlotConfig");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.ResetProductionSlotConfig");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ResetProductionSlotConfigAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.ResetProductionSlotConfigAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3344,11 +3288,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ResetProductionSlotConfig(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.ResetProductionSlotConfig");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.ResetProductionSlotConfig");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ResetProductionSlotConfig(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.ResetProductionSlotConfig(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3367,11 +3311,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> RestartAsync(bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Restart");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Restart");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, synchronous, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, synchronous, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3390,11 +3334,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Restart(bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Restart");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Restart");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, synchronous, cancellationToken);
+                var response = _webSiteWebAppsRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softRestart, synchronous, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3419,12 +3363,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.RestoreFromBackupBlob");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.RestoreFromBackupBlob");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.RestoreFromBackupBlobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteRestoreFromBackupBlobOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var response = await _webSiteWebAppsRestClient.RestoreFromBackupBlobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteRestoreFromBackupBlobOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3451,12 +3395,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.RestoreFromBackupBlob");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.RestoreFromBackupBlob");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.RestoreFromBackupBlob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new WebSiteRestoreFromBackupBlobOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
+                var response = _webSiteWebAppsRestClient.RestoreFromBackupBlob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                var operation = new WebSiteRestoreFromBackupBlobOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -3483,12 +3427,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(restoreRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.RestoreFromDeletedApp");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.RestoreFromDeletedApp");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.RestoreFromDeletedAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteRestoreFromDeletedAppOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var response = await _webSiteWebAppsRestClient.RestoreFromDeletedAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteRestoreFromDeletedAppOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3515,12 +3459,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(restoreRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.RestoreFromDeletedApp");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.RestoreFromDeletedApp");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.RestoreFromDeletedApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
-                var operation = new WebSiteRestoreFromDeletedAppOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var response = _webSiteWebAppsRestClient.RestoreFromDeletedApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
+                var operation = new WebSiteRestoreFromDeletedAppOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -3547,12 +3491,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(restoreRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.RestoreSnapshot");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.RestoreSnapshot");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.RestoreSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteRestoreSnapshotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var response = await _webSiteWebAppsRestClient.RestoreSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteRestoreSnapshotOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3579,12 +3523,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(restoreRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.RestoreSnapshot");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.RestoreSnapshot");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.RestoreSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
-                var operation = new WebSiteRestoreSnapshotOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
+                var response = _webSiteWebAppsRestClient.RestoreSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
+                var operation = new WebSiteRestoreSnapshotOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -3613,11 +3557,11 @@ namespace Azure.ResourceManager.AppService
 
             async Task<Page<SlotDifference>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSlotDifferencesFromProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSlotDifferencesFromProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3628,11 +3572,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SlotDifference>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSlotDifferencesFromProductionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSlotDifferencesFromProductionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3661,11 +3605,11 @@ namespace Azure.ResourceManager.AppService
 
             Page<SlotDifference> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSlotDifferencesFromProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSlotDifferencesFromProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3676,11 +3620,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SlotDifference> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSlotDifferencesFromProduction");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSlotDifferencesFromProductionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSlotDifferencesFromProductionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3707,12 +3651,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(slotSwapEntity));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SwapSlotWithProduction");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SwapSlotWithProduction");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.SwapSlotWithProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteSwapSlotWithProductionOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
+                var response = await _webSiteWebAppsRestClient.SwapSlotWithProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteSwapSlotWithProductionOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3739,12 +3683,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(slotSwapEntity));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SwapSlotWithProduction");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SwapSlotWithProduction");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.SwapSlotWithProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken);
-                var operation = new WebSiteSwapSlotWithProductionOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
+                var response = _webSiteWebAppsRestClient.SwapSlotWithProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken);
+                var operation = new WebSiteSwapSlotWithProductionOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -3766,11 +3710,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<Snapshot>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshots");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSnapshotsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSnapshotsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3781,11 +3725,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<Snapshot>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshots");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSnapshotsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSnapshotsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3807,11 +3751,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<Snapshot> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshots");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSnapshots(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSnapshots(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3822,11 +3766,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<Snapshot> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshots");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSnapshotsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSnapshotsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3848,11 +3792,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<Snapshot>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSnapshotsFromDRSecondaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSnapshotsFromDRSecondaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3863,11 +3807,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<Snapshot>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSnapshotsFromDRSecondaryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListSnapshotsFromDRSecondaryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3889,11 +3833,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<Snapshot> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSnapshotsFromDRSecondary(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSnapshotsFromDRSecondary(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3904,11 +3848,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<Snapshot> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSnapshotsFromDRSecondary");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSnapshotsFromDRSecondaryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListSnapshotsFromDRSecondaryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -3927,11 +3871,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StartAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Start");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Start");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3948,11 +3892,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Start(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Start");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Start");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3973,12 +3917,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<WebSiteStartNetworkTraceOperation> StartNetworkTraceAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StartNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteStartNetworkTraceOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var response = await _webSiteWebAppsRestClient.StartNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
+                var operation = new WebSiteStartNetworkTraceOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4001,12 +3945,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual WebSiteStartNetworkTraceOperation StartNetworkTrace(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.StartNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
-                var operation = new WebSiteStartNetworkTraceOperation(_clientDiagnostics, Pipeline, _webAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
+                var response = _webSiteWebAppsRestClient.StartNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
+                var operation = new WebSiteStartNetworkTraceOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -4025,11 +3969,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Stop");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Stop");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -4046,11 +3990,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Stop(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.Stop");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Stop");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -4067,11 +4011,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StopNetworkTraceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StopNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopNetworkTrace");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StopNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.StopNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -4088,11 +4032,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StopNetworkTrace(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.StopNetworkTrace");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopNetworkTrace");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.StopNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.StopNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -4109,11 +4053,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> SyncRepositoryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SyncRepository");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncRepository");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.SyncRepositoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.SyncRepositoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -4130,11 +4074,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SyncRepository(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SyncRepository");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncRepository");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.SyncRepository(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.SyncRepository(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -4151,11 +4095,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> SyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SyncFunctionTriggers");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctionTriggers");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.SyncFunctionTriggersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteWebAppsRestClient.SyncFunctionTriggersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -4172,11 +4116,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SyncFunctionTriggers(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebSite.SyncFunctionTriggers");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctionTriggers");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.SyncFunctionTriggers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webSiteWebAppsRestClient.SyncFunctionTriggers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -4197,11 +4141,11 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<CsmUsageQuota>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetUsages");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -4212,11 +4156,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<CsmUsageQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetUsages");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _webSiteWebAppsRestClient.ListUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -4239,11 +4183,11 @@ namespace Azure.ResourceManager.AppService
         {
             Page<CsmUsageQuota> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetUsages");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -4254,11 +4198,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<CsmUsageQuota> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebSite.GetUsages");
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetUsages");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _webSiteWebAppsRestClient.ListUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -4336,7 +4280,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteResourceHealthMetadata" /> object. </returns>
         public virtual SiteResourceHealthMetadata GetSiteResourceHealthMetadata()
         {
-            return new SiteResourceHealthMetadata(this, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
+            return new SiteResourceHealthMetadata(ArmClient, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
         }
         #endregion
 
@@ -4366,7 +4310,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="BasicPublishingCredentialsPolicyFtp" /> object. </returns>
         public virtual BasicPublishingCredentialsPolicyFtp GetBasicPublishingCredentialsPolicyFtp()
         {
-            return new BasicPublishingCredentialsPolicyFtp(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
+            return new BasicPublishingCredentialsPolicyFtp(ArmClient, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
         #endregion
 
@@ -4376,7 +4320,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteBasicPublishingCredentialsPolicyScm" /> object. </returns>
         public virtual SiteBasicPublishingCredentialsPolicyScm GetSiteBasicPublishingCredentialsPolicyScm()
         {
-            return new SiteBasicPublishingCredentialsPolicyScm(this, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new SiteBasicPublishingCredentialsPolicyScm(ArmClient, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
         #endregion
 
@@ -4406,7 +4350,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigLogs" /> object. </returns>
         public virtual SiteConfigLogs GetSiteConfigLogs()
         {
-            return new SiteConfigLogs(this, new ResourceIdentifier(Id.ToString() + "/config/logs"));
+            return new SiteConfigLogs(ArmClient, new ResourceIdentifier(Id.ToString() + "/config/logs"));
         }
         #endregion
 
@@ -4416,7 +4360,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
         public virtual SlotConfigNamesResource GetSlotConfigNamesResource()
         {
-            return new SlotConfigNamesResource(this, new ResourceIdentifier(Id.ToString() + "/config/slotConfigNames"));
+            return new SlotConfigNamesResource(ArmClient, new ResourceIdentifier(Id.ToString() + "/config/slotConfigNames"));
         }
         #endregion
 
@@ -4426,7 +4370,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigWeb" /> object. </returns>
         public virtual SiteConfigWeb GetSiteConfigWeb()
         {
-            return new SiteConfigWeb(this, new ResourceIdentifier(Id.ToString() + "/config/web"));
+            return new SiteConfigWeb(ArmClient, new ResourceIdentifier(Id.ToString() + "/config/web"));
         }
         #endregion
 
@@ -4466,7 +4410,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteExtension" /> object. </returns>
         public virtual SiteExtension GetSiteExtension()
         {
-            return new SiteExtension(this, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
+            return new SiteExtension(ArmClient, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
         #endregion
 
@@ -4526,7 +4470,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteNetworkConfig" /> object. </returns>
         public virtual SiteNetworkConfig GetSiteNetworkConfig()
         {
-            return new SiteNetworkConfig(this, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
+            return new SiteNetworkConfig(ArmClient, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
         }
         #endregion
 
@@ -4546,7 +4490,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePrivateAccess" /> object. </returns>
         public virtual SitePrivateAccess GetSitePrivateAccess()
         {
-            return new SitePrivateAccess(this, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
+            return new SitePrivateAccess(ArmClient, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
         }
         #endregion
 
@@ -4576,7 +4520,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSourceControl" /> object. </returns>
         public virtual SiteSourceControl GetSiteSourceControl()
         {
-            return new SiteSourceControl(this, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
+            return new SiteSourceControl(ArmClient, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
         }
         #endregion
 

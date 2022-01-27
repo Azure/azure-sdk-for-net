@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing collection of Profile and their operations over its parent. </summary>
     public partial class ProfileCollection : ArmCollection, IEnumerable<Profile>, IAsyncEnumerable<Profile>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ProfilesRestOperations _profilesRestClient;
+        private readonly ClientDiagnostics _profileClientDiagnostics;
+        private readonly ProfilesRestOperations _profileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ProfileCollection"/> class for mocking. </summary>
         protected ProfileCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ProfileCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Profile.ResourceType, out string apiVersion);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", Profile.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Profile.ResourceType, out string profileApiVersion);
+            _profileRestClient = new ProfilesRestOperations(_profileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, profileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,24 +58,22 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="profile"> Profile properties needed to create a new profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
         public virtual ProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string profileName, ProfileData profile, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             if (profile == null)
             {
                 throw new ArgumentNullException(nameof(profile));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CreateOrUpdate");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken);
-                var operation = new ProfileCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
+                var response = _profileRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken);
+                var operation = new ProfileCreateOrUpdateOperation(ArmClient, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -92,24 +90,22 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="profile"> Profile properties needed to create a new profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
         public async virtual Task<ProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string profileName, ProfileData profile, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             if (profile == null)
             {
                 throw new ArgumentNullException(nameof(profile));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CreateOrUpdate");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
+                var response = await _profileRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile, cancellationToken).ConfigureAwait(false);
+                var operation = new ProfileCreateOrUpdateOperation(ArmClient, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, profile).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,22 +120,20 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<Profile> Get(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Get");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken);
+                var response = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                    throw _profileClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Profile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,22 +145,20 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public async virtual Task<Response<Profile>> GetAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Get");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken).ConfigureAwait(false);
+                var response = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                    throw await _profileClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Profile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,22 +170,20 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<Profile> GetIfExists(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
+                var response = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<Profile>(null, response.GetRawResponse());
-                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Profile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,22 +195,20 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public async virtual Task<Response<Profile>> GetIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<Profile>(null, response.GetRawResponse());
-                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Profile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,15 +220,13 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public virtual Response<bool> Exists(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Exists");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -257,15 +243,13 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Exists");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -286,12 +270,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<Profile> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _profilesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _profileRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,12 +285,12 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<Profile> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _profilesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _profileRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,12 +308,12 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<Profile>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _profilesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _profileRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,12 +323,12 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<Profile>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _profilesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _profileRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Profile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -363,7 +347,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAllAsGenericResources");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -386,7 +370,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAllAsGenericResources");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -415,8 +399,5 @@ namespace Azure.ResourceManager.Cdn
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Profile, ProfileData> Construct() { }
     }
 }

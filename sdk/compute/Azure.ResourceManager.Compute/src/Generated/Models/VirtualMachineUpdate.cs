@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OsProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
         public NetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>

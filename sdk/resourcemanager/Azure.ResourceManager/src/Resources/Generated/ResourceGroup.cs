@@ -28,9 +28,11 @@ namespace Azure.ResourceManager.Resources
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ResourceGroupsRestOperations _resourceGroupsRestClient;
-        private readonly ResourcesRestOperations _resourcesRestClient;
+
+        private readonly ClientDiagnostics _resourceGroupClientDiagnostics;
+        private readonly ResourceGroupsRestOperations _resourceGroupRestClient;
+        private readonly ClientDiagnostics _resourceGroupResourcesClientDiagnostics;
+        private readonly ResourcesRestOperations _resourceGroupResourcesRestClient;
         private readonly ResourceGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroup"/> class for mocking. </summary>
@@ -39,47 +41,25 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ResourceGroup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroup(ArmResource options, ResourceGroupData data) : base(options, data.Id)
+        internal ResourceGroup(ArmClient armClient, ResourceGroupData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ResourceGroup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroup"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string resourceGroupApiVersion);
+            _resourceGroupRestClient = new ResourceGroupsRestOperations(_resourceGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
+            _resourceGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string resourceGroupResourcesApiVersion);
+            _resourceGroupResourcesRestClient = new ResourcesRestOperations(_resourceGroupResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -116,14 +96,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Get");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Get");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
+                    throw await _resourceGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,14 +119,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceGroup> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Get");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Get");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
+                    throw _resourceGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,7 +140,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetAvailableLocations");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -178,7 +158,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.GetAvailableLocations");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -200,12 +180,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ResourceGroupDeleteOperation> DeleteAsync(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Delete");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Delete");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response);
+                var response = await _resourceGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupDeleteOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,12 +206,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ResourceGroupDeleteOperation Delete(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Delete");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Delete");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes, cancellationToken);
-                var operation = new ResourceGroupDeleteOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response);
+                var response = _resourceGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes, cancellationToken);
+                var operation = new ResourceGroupDeleteOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -250,20 +230,17 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.AddTag");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,20 +256,17 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<ResourceGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.AddTag");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _resourceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                return Response.FromValue(new ResourceGroup(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -312,7 +286,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.SetTags");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.SetTags");
             scope.Start();
             try
             {
@@ -320,8 +294,8 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -341,7 +315,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.SetTags");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.SetTags");
             scope.Start();
             try
             {
@@ -349,8 +323,8 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _resourceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                return Response.FromValue(new ResourceGroup(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -365,20 +339,17 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -393,20 +364,17 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _resourceGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _resourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                return Response.FromValue(new ResourceGroup(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -429,12 +397,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Update");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Update");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
+                var response = await _resourceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -457,12 +425,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.Update");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Update");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
+                var response = _resourceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                return Response.FromValue(new ResourceGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -486,12 +454,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.ExportTemplateAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var response = await _resourceGroupRestClient.ExportTemplateAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupExportTemplateOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -518,12 +486,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ExportTemplate");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.ExportTemplate(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupExportTemplateOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var response = _resourceGroupRestClient.ExportTemplate(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                var operation = new ResourceGroupExportTemplateOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -550,12 +518,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.MoveResources");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.MoveResources");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.MoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var response = await _resourceGroupRestClient.MoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -582,12 +550,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.MoveResources");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.MoveResources");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.MoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var response = _resourceGroupRestClient.MoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                var operation = new ResourceGroupMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -614,12 +582,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.ValidateMoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var response = await _resourceGroupRestClient.ValidateMoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupValidateMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -646,12 +614,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.ValidateMoveResources");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.ValidateMoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupValidateMoveResourcesOperation(_clientDiagnostics, Pipeline, _resourceGroupsRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var response = _resourceGroupRestClient.ValidateMoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
+                var operation = new ResourceGroupValidateMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

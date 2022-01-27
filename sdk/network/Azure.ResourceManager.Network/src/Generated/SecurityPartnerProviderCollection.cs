@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of SecurityPartnerProvider and their operations over its parent. </summary>
     public partial class SecurityPartnerProviderCollection : ArmCollection, IEnumerable<SecurityPartnerProvider>, IAsyncEnumerable<SecurityPartnerProvider>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SecurityPartnerProvidersRestOperations _securityPartnerProvidersRestClient;
+        private readonly ClientDiagnostics _securityPartnerProviderClientDiagnostics;
+        private readonly SecurityPartnerProvidersRestOperations _securityPartnerProviderRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SecurityPartnerProviderCollection"/> class for mocking. </summary>
         protected SecurityPartnerProviderCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SecurityPartnerProviderCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SecurityPartnerProvider.ResourceType, out string apiVersion);
-            _securityPartnerProvidersRestClient = new SecurityPartnerProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _securityPartnerProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityPartnerProvider.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SecurityPartnerProvider.ResourceType, out string securityPartnerProviderApiVersion);
+            _securityPartnerProviderRestClient = new SecurityPartnerProvidersRestOperations(_securityPartnerProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, securityPartnerProviderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,24 +58,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual SecurityPartnerProviderCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string securityPartnerProviderName, SecurityPartnerProviderData parameters, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CreateOrUpdate");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityPartnerProvidersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters, cancellationToken);
-                var operation = new SecurityPartnerProviderCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _securityPartnerProvidersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters).Request, response);
+                var response = _securityPartnerProviderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters, cancellationToken);
+                var operation = new SecurityPartnerProviderCreateOrUpdateOperation(ArmClient, _securityPartnerProviderClientDiagnostics, Pipeline, _securityPartnerProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -92,24 +90,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<SecurityPartnerProviderCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityPartnerProviderName, SecurityPartnerProviderData parameters, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CreateOrUpdate");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityPartnerProvidersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityPartnerProviderCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _securityPartnerProvidersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters).Request, response);
+                var response = await _securityPartnerProviderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityPartnerProviderCreateOrUpdateOperation(ArmClient, _securityPartnerProviderClientDiagnostics, Pipeline, _securityPartnerProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,22 +120,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Security Partner Provider. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual Response<SecurityPartnerProvider> Get(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Get");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityPartnerProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken);
+                var response = _securityPartnerProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                    throw _securityPartnerProviderClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProvider(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,22 +145,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified Security Partner Provider. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public async virtual Task<Response<SecurityPartnerProvider>> GetAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Get");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityPartnerProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
+                var response = await _securityPartnerProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                    throw await _securityPartnerProviderClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SecurityPartnerProvider(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,22 +170,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual Response<SecurityPartnerProvider> GetIfExists(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExists");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityPartnerProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken);
+                var response = _securityPartnerProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse());
-                return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProvider(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,22 +195,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public async virtual Task<Response<SecurityPartnerProvider>> GetIfExistsAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExists");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityPartnerProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityPartnerProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SecurityPartnerProvider>(null, response.GetRawResponse());
-                return Response.FromValue(new SecurityPartnerProvider(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProvider(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,15 +220,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
             scope.Start();
             try
             {
@@ -257,15 +243,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            if (securityPartnerProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPartnerProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.Exists");
             scope.Start();
             try
             {
@@ -286,12 +270,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<SecurityPartnerProvider> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
+                using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _securityPartnerProvidersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _securityPartnerProviderRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,12 +285,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<SecurityPartnerProvider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
+                using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _securityPartnerProvidersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _securityPartnerProviderRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,12 +308,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<SecurityPartnerProvider>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
+                using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _securityPartnerProvidersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _securityPartnerProviderRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,12 +323,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<SecurityPartnerProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
+                using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _securityPartnerProvidersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _securityPartnerProviderRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityPartnerProvider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -363,7 +347,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAllAsGenericResources");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -386,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAllAsGenericResources");
+            using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProviderCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -415,8 +399,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SecurityPartnerProvider, SecurityPartnerProviderData> Construct() { }
     }
 }
