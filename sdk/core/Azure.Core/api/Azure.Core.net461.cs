@@ -196,6 +196,7 @@ namespace Azure
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public void ConfigureResponse(int[] statusCodes, bool isError) { }
+        public Azure.Core.ResponseClassifier GetResponseClassifier(System.Func<Azure.RequestContext, Azure.Core.ResponseClassifier> factory, Azure.Core.ResponseClassifier instance) { throw null; }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
@@ -432,7 +433,6 @@ namespace Azure.Core
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        public void AddNonErrorStatusCodes(int[] nonErrorCodes) { }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -588,10 +588,12 @@ namespace Azure.Core
     public partial class ResponseClassifier
     {
         public ResponseClassifier() { }
+        public ResponseClassifier(Azure.RequestContext context) { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }
         public virtual bool IsRetriableResponse(Azure.Core.HttpMessage message) { throw null; }
+        protected bool TryClassify(int statusCode, out bool isError) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseHeaders : System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader>, System.Collections.IEnumerable

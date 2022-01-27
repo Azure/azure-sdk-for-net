@@ -15,7 +15,7 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private int[]? _customErrors;
+        internal int[]? CustomErrors;
         internal int[]? CustomNonErrors;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
@@ -23,7 +23,7 @@ namespace Azure
         /// <summary>
         /// Indicates whether ConfigureResponse has been called.
         /// </summary>
-        internal bool HasCustomClassifier => _customErrors != null || CustomNonErrors != null;
+        internal bool HasCustomClassifier => CustomErrors != null || CustomNonErrors != null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -68,7 +68,22 @@ namespace Azure
         /// <param name="isError">Whether the passed-in status codes will be considered to be error codes for the duration of this request.</param>
         public void ConfigureResponse(int[] statusCodes, bool isError)
         {
-            CopyOrMerge(statusCodes, ref isError ? ref _customErrors : ref CustomNonErrors);
+            CopyOrMerge(statusCodes, ref isError ? ref CustomErrors : ref CustomNonErrors);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="factory"></param>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        public ResponseClassifier GetResponseClassifier(Func<RequestContext, ResponseClassifier> factory, ResponseClassifier instance)
+        {
+            if (HasCustomClassifier)
+            {
+                return factory(this);
+            }
+
+            return instance;
         }
 
         private static void CopyOrMerge(int[] source, ref int[]? target)

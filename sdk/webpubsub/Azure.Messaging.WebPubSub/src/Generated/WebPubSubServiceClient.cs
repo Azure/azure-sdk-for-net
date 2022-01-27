@@ -1562,7 +1562,6 @@ namespace Azure.Messaging.WebPubSub
         internal HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context);
-            message.AddNonErrorStatusCodes(new[] { 202 });
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1588,6 +1587,9 @@ namespace Azure.Messaging.WebPubSub
         internal HttpMessage CreateSendToAllRequest(RequestContent content, IEnumerable<string> excluded, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context);
+            message.ResponseClassifier = context.GetResponseClassifier(
+                context => new ResponseClassifier202(context),
+                ResponseClassifier202.Instance);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1607,7 +1609,6 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
@@ -2093,8 +2094,17 @@ namespace Azure.Messaging.WebPubSub
             {
             }
 
+            public ResponseClassifier202(RequestContext context) : base(context)
+            {
+            }
+
             public override bool IsErrorResponse(HttpMessage message)
             {
+                if (TryClassify(message.Response.Status, out bool isError))
+                {
+                    return isError;
+                }
+
                 return message.Response.Status switch
                 {
                     202 => false,
