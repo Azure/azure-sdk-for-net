@@ -181,6 +181,63 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
         }
+
+        [Test]
+        [NonParallelizable]
+        public void StartActivitySourceActivityAndAddEvent()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+
+            scope.Start();
+
+            DateTimeOffset ts = DateTimeOffset.UtcNow.AddMinutes(-1);
+            var attrbutes = new Dictionary<string, object>();
+            attrbutes.Add("Attribute1", "Value1");
+            attrbutes.Add("Attribute2", 2);
+
+            scope.AddEvent("test1", default(DateTimeOffset), null);
+            scope.AddEvent("test2", ts, attrbutes);
+            scope.Dispose();
+
+            var activity = activityListener.Activities.Single();
+
+            Assert.AreEqual(2, activity.Events.Count());
+            ActivityEvent event1 = activity.Events.First();
+            ActivityEvent event2 = activity.Events.Last();
+
+            Assert.AreEqual("test1", event1.Name);
+            Assert.AreEqual("test2", event2.Name);
+            Assert.AreNotEqual(default, event1.Timestamp);
+            Assert.AreEqual(ts, event2.Timestamp);
+
+            Assert.IsEmpty(event1.Tags);
+            CollectionAssert.AreEquivalent(attrbutes, event2.Tags);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void AddEventBeforeStartIsIgnored()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+
+            scope.AddEvent("test", default(DateTimeOffset), null);
+            scope.Start();
+            scope.Dispose();
+
+            Assert.IsEmpty(activityListener.Activities.Single().Events);
+        }
     }
 #endif
 }

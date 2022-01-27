@@ -64,6 +64,11 @@ namespace Azure.Core.Pipeline
             return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
         }
 
+        public void AddEvent(string name, DateTimeOffset timestamp, IEnumerable<KeyValuePair<string, object>>? attributes)
+        {
+            _activityAdapter?.AddEvent(name, timestamp, attributes);
+        }
+
         public void AddAttribute(string name, string value)
         {
             _activityAdapter?.AddTag(name, value);
@@ -195,6 +200,30 @@ namespace Azure.Core.Pipeline
                         AddTag("kind", "consumer");
                         break;
                 }
+            }
+
+            public void AddEvent(string name, DateTimeOffset timestamp, IEnumerable<KeyValuePair<string, object>>? attributes)
+            {
+                if (_currentActivity == null)
+                {
+                    // events could only be added to started activity
+                    return;
+                }
+
+                ICollection<KeyValuePair<string, object>>? eventTagsCollection = null;
+                if (attributes != null)
+                {
+                    eventTagsCollection = ActivityExtensions.CreateTagsCollection();
+                    if (eventTagsCollection != null)
+                    {
+                        foreach (var attribute in attributes)
+                        {
+                            eventTagsCollection.Add(new KeyValuePair<string, object>(attribute.Key, attribute.Value!));
+                        }
+                    }
+                }
+
+                _currentActivity.AddActivityEvent(name, timestamp, eventTagsCollection);
             }
 
             public void AddTag(string name, string value)
@@ -360,12 +389,14 @@ namespace Azure.Core.Pipeline
         private static readonly Type? ActivityKindType = Type.GetType("System.Diagnostics.ActivityKind, System.Diagnostics.DiagnosticSource");
         private static readonly Type? ActivityTagsCollectionType = Type.GetType("System.Diagnostics.ActivityTagsCollection, System.Diagnostics.DiagnosticSource");
         private static readonly Type? ActivityLinkType = Type.GetType("System.Diagnostics.ActivityLink, System.Diagnostics.DiagnosticSource");
+        private static readonly Type? ActivityEventType = Type.GetType("System.Diagnostics.ActivityEvent, System.Diagnostics.DiagnosticSource");
         private static readonly Type? ActivityContextType = Type.GetType("System.Diagnostics.ActivityContext, System.Diagnostics.DiagnosticSource");
 
         private static Action<Activity, int>? SetIdFormatMethod;
         private static Func<Activity, string?>? GetTraceStateStringMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
+        private static Action<Activity, string, DateTimeOffset, object?>? ActivityAddEventMethod;
         private static Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
         private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
@@ -489,6 +520,49 @@ namespace Azure.Core.Pipeline
             }
 
             return CreateTagsCollectionMethod();
+        }
+
+        public static void AddActivityEvent(this Activity activity, string name, DateTimeOffset timestamp, object? tagsCollection)
+        {
+            if (ActivityEventType == null)
+            {
+                return;
+            }
+
+            if (ActivityAddEventMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("AddEvent", BindingFlags.Instance | BindingFlags.Public, null, new Type[]
+                {
+                    ActivityEventType
+                }, null);
+
+
+                var ctor = ActivityEventType?.GetConstructor(new[] { typeof(String), typeof(DateTimeOffset), ActivityTagsCollectionType! });
+
+                if (method == null ||
+                    ctor == null ||
+                    ActivityTagsCollectionType == null)
+                {
+                    ActivityAddEventMethod = (_, _, _, _) => { };
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+                    var timestampParameter = Expression.Parameter(typeof(DateTimeOffset));
+                    var tagsParameter = Expression.Parameter(typeof(object));
+
+                    ActivityAddEventMethod = Expression.Lambda<Action<Activity, string, DateTimeOffset, object?>>(
+                            //Expression.TryCatch(
+                            Expression.Call(ActivityParameter, method,
+                                Expression.Convert(
+                                    Expression.New(ctor, nameParameter, timestampParameter, Expression.Convert(tagsParameter, ActivityTagsCollectionType)),
+                                    ActivityEventType!)),
+                        /*Expression.Catch(typeof(Exception), Expression.Default(typeof(object)))),*/
+                             ActivityParameter, nameParameter, timestampParameter, tagsParameter).Compile();
+                }
+            }
+
+            ActivityAddEventMethod(activity, name, timestamp, tagsCollection);
         }
 
         public static object? CreateActivityLink(string traceparent, string? tracestate, ICollection<KeyValuePair<string,object>>? tags)

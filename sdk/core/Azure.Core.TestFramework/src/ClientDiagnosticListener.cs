@@ -60,11 +60,14 @@ namespace Azure.Core.Tests
                 if (value.Key.EndsWith(startSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - startSuffix.Length);
-                    PropertyInfo propertyInfo = value.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links");
-                    var links = propertyInfo?.GetValue(value.Value) as IEnumerable<Activity> ?? Array.Empty<Activity>();
+                    PropertyInfo linksPropertyInfo = value.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links");
+                    var links = linksPropertyInfo?.GetValue(value.Value) as IEnumerable<Activity> ?? Array.Empty<Activity>();
 
                     var scope = new ProducedDiagnosticScope()
                     {
+#if NET6_0_OR_GREATER
+                        Events = Activity.Current.Events,
+#endif
                         Name = name,
                         Activity = Activity.Current,
                         Links = links.Select(a => new ProducedLink(a.ParentId, a.TraceStateString)).ToList(),
@@ -236,7 +239,9 @@ namespace Azure.Core.Tests
             public Exception Exception { get; set; }
             public List<ProducedLink> Links { get; set; } = new List<ProducedLink>();
             public List<Activity> LinkedActivities { get; set; } = new List<Activity>();
-
+#if NET5_0_OR_GREATER
+            public IEnumerable<ActivityEvent> Events { get; set; } = new List<ActivityEvent>();
+#endif
             public override string ToString()
             {
                 return Name;
