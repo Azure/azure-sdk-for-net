@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "sql/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "sql/resource-manager" -AutoRestVersion "2.0.4413" -SpecsRepoFork christianvalencia7 -SpecsRepoName "azure-rest-api-specs" -SpecsRepoBranch master -SdkRepoRootPath "D:\azure-sdk-for-net\sdk"
