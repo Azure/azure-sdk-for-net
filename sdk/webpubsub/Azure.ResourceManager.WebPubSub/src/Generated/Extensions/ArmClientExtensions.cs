@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WebPubSub
         public static WebPubSub GetWebPubSub(this ArmClient armClient, ResourceIdentifier id)
         {
             WebPubSub.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebPubSub(clientOptions, credential, uri, pipeline, id));
+            return new WebPubSub(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.WebPubSub
         public static WebPubSubHub GetWebPubSubHub(this ArmClient armClient, ResourceIdentifier id)
         {
             WebPubSubHub.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new WebPubSubHub(clientOptions, credential, uri, pipeline, id));
+            return new WebPubSubHub(armClient, id);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WebPubSub
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
             PrivateEndpointConnection.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            return new PrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WebPubSub
         public static SharedPrivateLink GetSharedPrivateLink(this ArmClient armClient, ResourceIdentifier id)
         {
             SharedPrivateLink.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SharedPrivateLink(clientOptions, credential, uri, pipeline, id));
+            return new SharedPrivateLink(armClient, id);
         }
         #endregion
     }

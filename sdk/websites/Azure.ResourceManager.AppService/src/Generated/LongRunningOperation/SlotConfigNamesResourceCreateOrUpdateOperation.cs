@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SlotConfigNamesResourceCreateOrUpdateOperation(ArmResource operationsBase, Response<SlotConfigNamesResourceData> response)
+        internal SlotConfigNamesResourceCreateOrUpdateOperation(ArmClient armClient, Response<SlotConfigNamesResourceData> response)
         {
-            _operation = new OperationOrResponseInternals<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

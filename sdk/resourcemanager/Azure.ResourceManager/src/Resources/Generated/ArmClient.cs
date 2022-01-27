@@ -20,7 +20,7 @@ namespace Azure.ResourceManager
         public virtual PolicyAssignment GetPolicyAssignment(ResourceIdentifier id)
         {
             PolicyAssignment.ValidateResourceId(id);
-            return new PolicyAssignment(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new PolicyAssignment(this, id);
         }
         #endregion
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager
         public virtual Provider GetProvider(ResourceIdentifier id)
         {
             Provider.ValidateResourceId(id);
-            return new Provider(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new Provider(this, id);
         }
         #endregion
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager
         public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
             ResourceGroup.ValidateResourceId(id);
-            return new ResourceGroup(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new ResourceGroup(this, id);
         }
         #endregion
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager
         public virtual TagResource GetTagResource(ResourceIdentifier id)
         {
             TagResource.ValidateResourceId(id);
-            return new TagResource(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new TagResource(this, id);
         }
         #endregion
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager
         public virtual SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(ResourceIdentifier id)
         {
             SubscriptionPolicyDefinition.ValidateResourceId(id);
-            return new SubscriptionPolicyDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new SubscriptionPolicyDefinition(this, id);
         }
         #endregion
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager
         public virtual TenantPolicyDefinition GetTenantPolicyDefinition(ResourceIdentifier id)
         {
             TenantPolicyDefinition.ValidateResourceId(id);
-            return new TenantPolicyDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new TenantPolicyDefinition(this, id);
         }
         #endregion
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager
         public virtual ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(ResourceIdentifier id)
         {
             ManagementGroupPolicyDefinition.ValidateResourceId(id);
-            return new ManagementGroupPolicyDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new ManagementGroupPolicyDefinition(this, id);
         }
         #endregion
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager
         public virtual SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(ResourceIdentifier id)
         {
             SubscriptionPolicySetDefinition.ValidateResourceId(id);
-            return new SubscriptionPolicySetDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new SubscriptionPolicySetDefinition(this, id);
         }
         #endregion
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager
         public virtual TenantPolicySetDefinition GetTenantPolicySetDefinition(ResourceIdentifier id)
         {
             TenantPolicySetDefinition.ValidateResourceId(id);
-            return new TenantPolicySetDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new TenantPolicySetDefinition(this, id);
         }
         #endregion
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager
         public virtual ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(ResourceIdentifier id)
         {
             ManagementGroupPolicySetDefinition.ValidateResourceId(id);
-            return new ManagementGroupPolicySetDefinition(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new ManagementGroupPolicySetDefinition(this, id);
         }
         #endregion
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager
         public virtual PolicyExemption GetPolicyExemption(ResourceIdentifier id)
         {
             PolicyExemption.ValidateResourceId(id);
-            return new PolicyExemption(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new PolicyExemption(this, id);
         }
         #endregion
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager
         public virtual DataPolicyManifest GetDataPolicyManifest(ResourceIdentifier id)
         {
             DataPolicyManifest.ValidateResourceId(id);
-            return new DataPolicyManifest(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new DataPolicyManifest(this, id);
         }
         #endregion
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager
         public virtual ManagementLockObject GetManagementLockObject(ResourceIdentifier id)
         {
             ManagementLockObject.ValidateResourceId(id);
-            return new ManagementLockObject(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new ManagementLockObject(this, id);
         }
         #endregion
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager
         public virtual ResourceLink GetResourceLink(ResourceIdentifier id)
         {
             ResourceLink.ValidateResourceId(id);
-            return new ResourceLink(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new ResourceLink(this, id);
         }
         #endregion
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager
         public virtual Subscription GetSubscription(ResourceIdentifier id)
         {
             Subscription.ValidateResourceId(id);
-            return new Subscription(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new Subscription(this, id);
         }
         #endregion
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager
         public virtual Feature GetFeature(ResourceIdentifier id)
         {
             Feature.ValidateResourceId(id);
-            return new Feature(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new Feature(this, id);
         }
         #endregion
     }

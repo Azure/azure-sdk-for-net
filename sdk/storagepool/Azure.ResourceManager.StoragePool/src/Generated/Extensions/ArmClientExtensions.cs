@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool
         public static DiskPool GetDiskPool(this ArmClient armClient, ResourceIdentifier id)
         {
             DiskPool.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiskPool(clientOptions, credential, uri, pipeline, id));
+            return new DiskPool(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StoragePool
         public static IscsiTarget GetIscsiTarget(this ArmClient armClient, ResourceIdentifier id)
         {
             IscsiTarget.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new IscsiTarget(clientOptions, credential, uri, pipeline, id));
+            return new IscsiTarget(armClient, id);
         }
         #endregion
     }

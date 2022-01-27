@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SitePremierAddonCreateOrUpdateOperation(ArmResource operationsBase, Response<PremierAddOnData> response)
+        internal SitePremierAddonCreateOrUpdateOperation(ArmClient armClient, Response<PremierAddOnData> response)
         {
-            _operation = new OperationOrResponseInternals<SitePremierAddon>(Response.FromValue(new SitePremierAddon(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SitePremierAddon>(Response.FromValue(new SitePremierAddon(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

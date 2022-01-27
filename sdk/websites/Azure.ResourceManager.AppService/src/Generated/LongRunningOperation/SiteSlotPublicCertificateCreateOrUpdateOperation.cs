@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteSlotPublicCertificateCreateOrUpdateOperation(ArmResource operationsBase, Response<PublicCertificateData> response)
+        internal SiteSlotPublicCertificateCreateOrUpdateOperation(ArmClient armClient, Response<PublicCertificateData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteSlotPublicCertificate>(Response.FromValue(new SiteSlotPublicCertificate(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteSlotPublicCertificate>(Response.FromValue(new SiteSlotPublicCertificate(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

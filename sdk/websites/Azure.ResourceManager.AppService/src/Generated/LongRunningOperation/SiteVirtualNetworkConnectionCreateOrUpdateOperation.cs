@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteVirtualNetworkConnectionCreateOrUpdateOperation(ArmResource operationsBase, Response<VnetInfoResourceData> response)
+        internal SiteVirtualNetworkConnectionCreateOrUpdateOperation(ArmClient armClient, Response<VnetInfoResourceData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteVirtualNetworkConnection>(Response.FromValue(new SiteVirtualNetworkConnection(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteVirtualNetworkConnection>(Response.FromValue(new SiteVirtualNetworkConnection(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class representing collection of Secret and their operations over its parent. </summary>
     public partial class SecretCollection : ArmCollection, IEnumerable<Secret>, IAsyncEnumerable<Secret>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SecretsRestOperations _secretsRestClient;
+        private readonly ClientDiagnostics _secretClientDiagnostics;
+        private readonly SecretsRestOperations _secretRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SecretCollection"/> class for mocking. </summary>
         protected SecretCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SecretCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Secret.ResourceType, out string apiVersion);
-            _secretsRestClient = new SecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _secretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", Secret.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Secret.ResourceType, out string secretApiVersion);
+            _secretRestClient = new SecretsRestOperations(_secretClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, secretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.CreateOrUpdate");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _secretsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, parameters, cancellationToken);
-                var operation = new SecretCreateOrUpdateOperation(this, response);
+                var response = _secretRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, parameters, cancellationToken);
+                var operation = new SecretCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.CreateOrUpdate");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _secretsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SecretCreateOrUpdateOperation(this, response);
+                var response = await _secretRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SecretCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.Get");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.Get");
             scope.Start();
             try
             {
-                var response = _secretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
+                var response = _secretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
+                    throw _secretClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Secret(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.Get");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.Get");
             scope.Start();
             try
             {
-                var response = await _secretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
+                var response = await _secretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
+                    throw await _secretClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Secret(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetIfExists");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _secretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                var response = _secretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<Secret>(null, response.GetRawResponse());
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Secret(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetIfExists");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _secretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _secretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<Secret>(null, response.GetRawResponse());
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Secret(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.Exists");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
-            using var scope = _clientDiagnostics.CreateScope("SecretCollection.Exists");
+            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.Exists");
             scope.Start();
             try
             {
@@ -284,12 +284,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             Page<Secret> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
+                using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _secretsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Secret(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _secretRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Secret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,12 +299,12 @@ namespace Azure.ResourceManager.KeyVault
             }
             Page<Secret> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
+                using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _secretsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Secret(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _secretRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Secret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             async Task<Page<Secret>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
+                using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _secretsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Secret(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _secretRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Secret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,12 +341,12 @@ namespace Azure.ResourceManager.KeyVault
             }
             async Task<Page<Secret>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
+                using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _secretsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Secret(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _secretRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Secret(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -371,8 +371,5 @@ namespace Azure.ResourceManager.KeyVault
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Secret, SecretData> Construct() { }
     }
 }

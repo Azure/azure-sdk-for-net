@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteSlotDomainOwnershipIdentifierCreateOrUpdateOperation(ArmResource operationsBase, Response<IdentifierData> response)
+        internal SiteSlotDomainOwnershipIdentifierCreateOrUpdateOperation(ArmClient armClient, Response<IdentifierData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteSlotDomainOwnershipIdentifier>(Response.FromValue(new SiteSlotDomainOwnershipIdentifier(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteSlotDomainOwnershipIdentifier>(Response.FromValue(new SiteSlotDomainOwnershipIdentifier(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
