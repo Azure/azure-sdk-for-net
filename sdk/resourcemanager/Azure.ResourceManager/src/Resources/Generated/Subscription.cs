@@ -28,12 +28,17 @@ namespace Azure.ResourceManager.Resources
             var resourceId = $"/subscriptions/{subscriptionId}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SubscriptionsRestOperations _subscriptionsRestClient;
-        private readonly ResourcesRestOperations _resourcesRestClient;
-        private readonly TagsRestOperations _tagsRestClient;
-        private readonly ResourceLinksRestOperations _resourceLinksRestClient;
-        private readonly FeaturesRestOperations _featuresRestClient;
+
+        private readonly ClientDiagnostics _subscriptionClientDiagnostics;
+        private readonly SubscriptionsRestOperations _subscriptionRestClient;
+        private readonly ClientDiagnostics _subscriptionResourcesClientDiagnostics;
+        private readonly ResourcesRestOperations _subscriptionResourcesRestClient;
+        private readonly ClientDiagnostics _subscriptionTagsClientDiagnostics;
+        private readonly TagsRestOperations _subscriptionTagsRestClient;
+        private readonly ClientDiagnostics _resourceLinkClientDiagnostics;
+        private readonly ResourceLinksRestOperations _resourceLinkRestClient;
+        private readonly ClientDiagnostics _featureClientDiagnostics;
+        private readonly FeaturesRestOperations _featureRestClient;
         private readonly SubscriptionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class for mocking. </summary>
@@ -42,56 +47,34 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Subscription"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Subscription(ArmResource options, SubscriptionData data) : base(options, data.Id)
+        internal Subscription(ArmClient armClient, SubscriptionData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subscription(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Subscription(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subscription(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _subscriptionsRestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _tagsRestClient = new TagsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _resourceLinksRestClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _featuresRestClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionApiVersion);
+            _subscriptionRestClient = new SubscriptionsRestOperations(_subscriptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
+            _subscriptionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionResourcesApiVersion);
+            _subscriptionResourcesRestClient = new ResourcesRestOperations(_subscriptionResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionResourcesApiVersion);
+            _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
+            _subscriptionTagsRestClient = new TagsRestOperations(_subscriptionTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionTagsApiVersion);
+            _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
+            _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
+            _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
+            _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -128,14 +111,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subscription.Get");
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionsRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+                    throw await _subscriptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +134,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subscription.Get");
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionsRestClient.Get(Id.SubscriptionId, cancellationToken);
+                var response = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+                    throw _subscriptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +155,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -190,7 +173,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -217,11 +200,11 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
             Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
             scope.Start();
             try
             {
-                var response = await _tagsRestClient.DeleteValueAsync(Id.SubscriptionId, tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionTagsRestClient.DeleteValueAsync(Id.SubscriptionId, tagName, tagValue, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -245,11 +228,11 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
             Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.DeletePredefinedTagValue");
             scope.Start();
             try
             {
-                var response = _tagsRestClient.DeleteValue(Id.SubscriptionId, tagName, tagValue, cancellationToken);
+                var response = _subscriptionTagsRestClient.DeleteValue(Id.SubscriptionId, tagName, tagValue, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -273,11 +256,11 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
             Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
             scope.Start();
             try
             {
-                var response = await _tagsRestClient.CreateOrUpdateValueAsync(Id.SubscriptionId, tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionTagsRestClient.CreateOrUpdateValueAsync(Id.SubscriptionId, tagName, tagValue, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -301,11 +284,11 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
             Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTagValue");
             scope.Start();
             try
             {
-                var response = _tagsRestClient.CreateOrUpdateValue(Id.SubscriptionId, tagName, tagValue, cancellationToken);
+                var response = _subscriptionTagsRestClient.CreateOrUpdateValue(Id.SubscriptionId, tagName, tagValue, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -327,11 +310,11 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
             scope.Start();
             try
             {
-                var response = await _tagsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, tagName, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionTagsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, tagName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -353,11 +336,11 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.CreateOrUpdatePredefinedTag");
             scope.Start();
             try
             {
-                var response = _tagsRestClient.CreateOrUpdate(Id.SubscriptionId, tagName, cancellationToken);
+                var response = _subscriptionTagsRestClient.CreateOrUpdate(Id.SubscriptionId, tagName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -379,11 +362,11 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
             scope.Start();
             try
             {
-                var response = await _tagsRestClient.DeleteAsync(Id.SubscriptionId, tagName, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionTagsRestClient.DeleteAsync(Id.SubscriptionId, tagName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -405,11 +388,11 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
-            using var scope = _clientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
+            using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.DeletePredefinedTag");
             scope.Start();
             try
             {
-                var response = _tagsRestClient.Delete(Id.SubscriptionId, tagName, cancellationToken);
+                var response = _subscriptionTagsRestClient.Delete(Id.SubscriptionId, tagName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -429,11 +412,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<PredefinedTag>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();
                 try
                 {
-                    var response = await _tagsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _subscriptionTagsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -444,11 +427,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<PredefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();
                 try
                 {
-                    var response = await _tagsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _subscriptionTagsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -470,11 +453,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<PredefinedTag> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();
                 try
                 {
-                    var response = _tagsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = _subscriptionTagsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -485,11 +468,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<PredefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
+                using var scope = _subscriptionTagsClientDiagnostics.CreateScope("Subscription.GetAllPredefinedTags");
                 scope.Start();
                 try
                 {
-                    var response = _tagsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = _subscriptionTagsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -512,11 +495,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ResourceLinkData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
+                using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
-                    var response = await _resourceLinksRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceLinkRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -527,11 +510,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ResourceLinkData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
+                using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
-                    var response = await _resourceLinksRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceLinkRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -554,11 +537,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ResourceLinkData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
+                using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
-                    var response = _resourceLinksRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    var response = _resourceLinkRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -569,11 +552,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ResourceLinkData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetResourceLinks");
+                using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
-                    var response = _resourceLinksRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    var response = _resourceLinkRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -596,11 +579,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<LocationExpanded>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetLocations");
+                using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetLocations");
                 scope.Start();
                 try
                 {
-                    var response = await _subscriptionsRestClient.ListLocationsAsync(Id.SubscriptionId, includeExtendedLocations, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _subscriptionRestClient.ListLocationsAsync(Id.SubscriptionId, includeExtendedLocations, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -623,11 +606,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<LocationExpanded> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetLocations");
+                using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetLocations");
                 scope.Start();
                 try
                 {
-                    var response = _subscriptionsRestClient.ListLocations(Id.SubscriptionId, includeExtendedLocations, cancellationToken: cancellationToken);
+                    var response = _subscriptionRestClient.ListLocations(Id.SubscriptionId, includeExtendedLocations, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -649,11 +632,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<FeatureData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = await _featuresRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _featureRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -664,11 +647,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<FeatureData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = await _featuresRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _featureRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -690,11 +673,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<FeatureData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = _featuresRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = _featureRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -705,11 +688,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<FeatureData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = _featuresRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = _featureRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

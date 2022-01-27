@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ReplicationLink and their operations over its parent. </summary>
     public partial class ReplicationLinkCollection : ArmCollection, IEnumerable<ReplicationLink>, IAsyncEnumerable<ReplicationLink>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ReplicationLinksRestOperations _replicationLinksRestClient;
+        private readonly ClientDiagnostics _replicationLinkClientDiagnostics;
+        private readonly ReplicationLinksRestOperations _replicationLinkRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ReplicationLinkCollection"/> class for mocking. </summary>
         protected ReplicationLinkCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ReplicationLinkCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ReplicationLink.ResourceType, out string apiVersion);
-            _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
+            _replicationLinkRestClient = new ReplicationLinksRestOperations(_replicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
+            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _replicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken);
+                var response = _replicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                    throw _replicationLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
+            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _replicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken).ConfigureAwait(false);
+                var response = await _replicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                    throw await _replicationLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ReplicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
+            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _replicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
+                var response = _replicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
+            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _replicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _replicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
+            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
-            using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
+            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -213,12 +212,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ReplicationLink> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _replicationLinksRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _replicationLinkRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,12 +227,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ReplicationLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _replicationLinksRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _replicationLinkRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,12 +253,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ReplicationLink>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _replicationLinksRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _replicationLinkRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,12 +268,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ReplicationLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _replicationLinksRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _replicationLinkRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,8 +298,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ReplicationLink, ReplicationLinkData> Construct() { }
     }
 }

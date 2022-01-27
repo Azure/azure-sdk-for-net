@@ -18,7 +18,7 @@ namespace Azure.ResourceManager
         /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
         public virtual GenericResource GetGenericResource(ResourceIdentifier id)
         {
-            return new GenericResource(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new GenericResource(this, id);
         }
         #endregion
     }

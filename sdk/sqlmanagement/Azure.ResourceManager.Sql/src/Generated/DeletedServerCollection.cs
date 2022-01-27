@@ -18,15 +18,14 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of DeletedServer and their operations over its parent. </summary>
     public partial class DeletedServerCollection : ArmCollection, IEnumerable<DeletedServer>, IAsyncEnumerable<DeletedServer>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeletedServersRestOperations _deletedServersRestClient;
+        private readonly ClientDiagnostics _deletedServerClientDiagnostics;
+        private readonly DeletedServersRestOperations _deletedServerRestClient;
         private readonly string _locationName;
 
         /// <summary> Initializes a new instance of the <see cref="DeletedServerCollection"/> class for mocking. </summary>
@@ -40,9 +39,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal DeletedServerCollection(ArmResource parent, string locationName) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DeletedServer.ResourceType, out string apiVersion);
-            _deletedServersRestClient = new DeletedServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServer.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(DeletedServer.ResourceType, out string deletedServerApiVersion);
+            _deletedServerRestClient = new DeletedServersRestOperations(_deletedServerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
             _locationName = locationName;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -69,14 +68,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Get");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Get");
             scope.Start();
             try
             {
-                var response = _deletedServersRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken);
+                var response = _deletedServerRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
+                    throw _deletedServerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -97,14 +96,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Get");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deletedServersRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
+                    throw await _deletedServerClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,14 +121,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deletedServersRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken);
+                var response = _deletedServerRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +146,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deletedServersRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedServer(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();
             try
             {
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.Exists");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();
             try
             {
@@ -219,12 +218,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<DeletedServer> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deletedServersRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _deletedServerRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,12 +233,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DeletedServer> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deletedServersRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _deletedServerRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -260,12 +259,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<DeletedServer>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _deletedServersRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _deletedServerRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,12 +274,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DeletedServer>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _deletedServersRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _deletedServerRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetAllAsGenericResources");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeletedServerCollection.GetAllAsGenericResources");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -351,8 +350,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeletedServer, DeletedServerData> Construct() { }
     }
 }

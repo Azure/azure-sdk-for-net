@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.CrossRegionRestore
             RecoveryPointsCrr = new RecoveryPointsCrrOperations(this);
             BackupProtectedItemsCrr = new BackupProtectedItemsCrrOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-12-20";
+            ApiVersion = "2021-11-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

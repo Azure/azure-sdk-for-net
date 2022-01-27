@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly OperationInternals<SiteFunction> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of SiteFunctionCreateOrUpdateOperation for mocking. </summary>
         protected SiteFunctionCreateOrUpdateOperation()
         {
         }
 
-        internal SiteFunctionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SiteFunctionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SiteFunction>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SiteFunctionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FunctionEnvelopeData.DeserializeFunctionEnvelopeData(document.RootElement);
-            return new SiteFunction(_operationBase, data);
+            return new SiteFunction(_armClient, data);
         }
 
         async ValueTask<SiteFunction> IOperationSource<SiteFunction>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FunctionEnvelopeData.DeserializeFunctionEnvelopeData(document.RootElement);
-            return new SiteFunction(_operationBase, data);
+            return new SiteFunction(_armClient, data);
         }
     }
 }

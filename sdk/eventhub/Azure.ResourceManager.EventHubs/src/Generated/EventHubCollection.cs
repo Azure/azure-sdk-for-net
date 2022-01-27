@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class representing collection of EventHub and their operations over its parent. </summary>
     public partial class EventHubCollection : ArmCollection, IEnumerable<EventHub>, IAsyncEnumerable<EventHub>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly EventHubsRestOperations _eventHubsRestClient;
+        private readonly ClientDiagnostics _eventHubClientDiagnostics;
+        private readonly EventHubsRestOperations _eventHubRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EventHubCollection"/> class for mocking. </summary>
         protected EventHubCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal EventHubCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(EventHub.ResourceType, out string apiVersion);
-            _eventHubsRestClient = new EventHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _eventHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHub.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(EventHub.ResourceType, out string eventHubApiVersion);
+            _eventHubRestClient = new EventHubsRestOperations(_eventHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.CreateOrUpdate");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _eventHubsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, parameters, cancellationToken);
-                var operation = new EventHubCreateOrUpdateOperation(this, response);
+                var response = _eventHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, parameters, cancellationToken);
+                var operation = new EventHubCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.CreateOrUpdate");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _eventHubsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubCreateOrUpdateOperation(this, response);
+                var response = await _eventHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Get");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Get");
             scope.Start();
             try
             {
-                var response = _eventHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken);
+                var response = _eventHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHub(this, response.Value), response.GetRawResponse());
+                    throw _eventHubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new EventHub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Get");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Get");
             scope.Start();
             try
             {
-                var response = await _eventHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken).ConfigureAwait(false);
+                var response = await _eventHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new EventHub(this, response.Value), response.GetRawResponse());
+                    throw await _eventHubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new EventHub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _eventHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken);
+                var response = _eventHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<EventHub>(null, response.GetRawResponse());
-                return Response.FromValue(new EventHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _eventHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _eventHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<EventHub>(null, response.GetRawResponse());
-                return Response.FromValue(new EventHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Exists");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubCollection.Exists");
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Exists");
             scope.Start();
             try
             {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.EventHubs
         {
             Page<EventHub> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetAll");
+                using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _eventHubsRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _eventHubRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.EventHubs
             }
             Page<EventHub> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetAll");
+                using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _eventHubsRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _eventHubRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -310,12 +310,12 @@ namespace Azure.ResourceManager.EventHubs
         {
             async Task<Page<EventHub>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetAll");
+                using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _eventHubsRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _eventHubRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -325,12 +325,12 @@ namespace Azure.ResourceManager.EventHubs
             }
             async Task<Page<EventHub>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubCollection.GetAll");
+                using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _eventHubsRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _eventHubRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -355,8 +355,5 @@ namespace Azure.ResourceManager.EventHubs
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, EventHub, EventHubData> Construct() { }
     }
 }

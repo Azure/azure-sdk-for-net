@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -247,7 +247,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -304,7 +304,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -366,7 +366,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -428,7 +428,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -480,7 +480,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -532,7 +532,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -576,7 +576,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -620,7 +620,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 using HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
