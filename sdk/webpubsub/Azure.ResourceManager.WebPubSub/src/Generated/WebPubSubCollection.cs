@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A class representing collection of WebPubSub and their operations over its parent. </summary>
     public partial class WebPubSubCollection : ArmCollection, IEnumerable<WebPubSub>, IAsyncEnumerable<WebPubSub>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _webPubSubClientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="WebPubSubCollection"/> class for mocking. </summary>
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WebPubSubCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(WebPubSub.ResourceType, out string apiVersion);
-            _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSub.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(WebPubSub.ResourceType, out string webPubSubApiVersion);
+            _webPubSubRestClient = new WebPubSubRestOperations(_webPubSubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
-                var operation = new WebPubSubCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                var operation = new WebPubSubCreateOrUpdateOperation(ArmClient, _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                var operation = new WebPubSubCreateOrUpdateOperation(ArmClient, _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Get");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                    throw _webPubSubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Get");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                    throw await _webPubSubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new WebPubSub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<WebPubSub>(null, response.GetRawResponse());
-                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<WebPubSub>(null, response.GetRawResponse());
-                return Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Exists");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Exists");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Page<WebPubSub> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _webPubSubRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.WebPubSub
             }
             Page<WebPubSub> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _webPubSubRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.WebPubSub
         {
             async Task<Page<WebPubSub>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _webPubSubRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +323,12 @@ namespace Azure.ResourceManager.WebPubSub
             }
             async Task<Page<WebPubSub>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _webPubSubRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAllAsGenericResources");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAllAsGenericResources");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -399,8 +399,5 @@ namespace Azure.ResourceManager.WebPubSub
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, WebPubSub, WebPubSubData> Construct() { }
     }
 }

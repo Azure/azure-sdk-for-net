@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal DatabaseBlobAuditingPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<DatabaseBlobAuditingPolicyData> response)
+        internal DatabaseBlobAuditingPolicyCreateOrUpdateOperation(ArmClient armClient, Response<DatabaseBlobAuditingPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<DatabaseBlobAuditingPolicy>(Response.FromValue(new DatabaseBlobAuditingPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DatabaseBlobAuditingPolicy>(Response.FromValue(new DatabaseBlobAuditingPolicy(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

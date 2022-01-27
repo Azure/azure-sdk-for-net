@@ -6,14 +6,8 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
@@ -22,15 +16,18 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static EdgeOrderManagementRestOperations GetEdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
+        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return new EdgeOrderManagementRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+            return subscription.GetCachedClient((armClient) =>
+            {
+                return new SubscriptionExtensionClient(armClient, subscription.Id);
+            }
+            );
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListAddressesAtSubscriptionLevel
-        /// <summary> Lists the AddressResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
@@ -38,50 +35,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AddressResource> GetAddressResourcesAsync(this Subscription subscription, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(AddressResource.ResourceType, out string apiVersion);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                async Task<Page<AddressResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAddressResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListAddressesAtSubscriptionLevelAsync(subscription.Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AddressResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<AddressResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAddressResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListAddressesAtSubscriptionLevelNextPageAsync(nextLink, subscription.Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new AddressResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetAddressResourcesAsync(filter, skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListAddressesAtSubscriptionLevel
-        /// <summary> Lists the AddressResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
@@ -89,44 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AddressResource> GetAddressResources(this Subscription subscription, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(AddressResource.ResourceType, out string apiVersion);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                Page<AddressResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAddressResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListAddressesAtSubscriptionLevel(subscription.Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AddressResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<AddressResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAddressResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListAddressesAtSubscriptionLevelNextPage(nextLink, subscription.Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new AddressResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetAddressResources(filter, skipToken, cancellationToken);
         }
 
         /// <summary> Filters the list of AddressResources for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -138,9 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetAddressResourcesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AddressResource.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetAddressResourcesAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of AddressResources for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -152,15 +72,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetAddressResourcesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(AddressResource.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetAddressResourcesAsGenericResources(filter, expand, top, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListProductFamilies
-        /// <summary> Lists the ProductFamilies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
@@ -170,54 +87,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<ProductFamily>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListProductFamiliesAsync(subscription.Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<ProductFamily>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListProductFamiliesNextPageAsync(nextLink, subscription.Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetProductFamiliesAsync(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListProductFamilies
-        /// <summary> Lists the ProductFamilies for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
@@ -227,54 +102,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamily> GetProductFamilies(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<ProductFamily> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListProductFamilies(subscription.Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<ProductFamily> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListProductFamiliesNextPage(nextLink, subscription.Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetProductFamilies(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListConfigurations
-        /// <summary> Lists the ProductConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
@@ -283,54 +116,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<ProductConfiguration>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurations");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListConfigurationsAsync(subscription.Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<ProductConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurations");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListConfigurationsNextPageAsync(nextLink, subscription.Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetConfigurationsAsync(configurationsRequest, skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListConfigurations
-        /// <summary> Lists the ProductConfigurations for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
@@ -339,244 +130,55 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductConfiguration> GetConfigurations(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<ProductConfiguration> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurations");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListConfigurations(subscription.Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<ProductConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetConfigurations");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListConfigurationsNextPage(nextLink, subscription.Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetConfigurations(configurationsRequest, skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListProductFamiliesMetadata
-        /// <summary> Lists the ProductFamiliesMetadataDetails for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadataAsync(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<ProductFamiliesMetadataDetails>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamiliesMetadata");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListProductFamiliesMetadataAsync(subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<ProductFamiliesMetadataDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamiliesMetadata");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListProductFamiliesMetadataNextPageAsync(nextLink, subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListProductFamiliesMetadata
-        /// <summary> Lists the ProductFamiliesMetadataDetails for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadata(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<ProductFamiliesMetadataDetails> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamiliesMetadata");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListProductFamiliesMetadata(subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<ProductFamiliesMetadataDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProductFamiliesMetadata");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListProductFamiliesMetadataNextPage(nextLink, subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetProductFamiliesMetadata(skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListOrderAtSubscriptionLevel
-        /// <summary> Lists the OrderResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OrderResource> GetOrderResourcesAsync(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<OrderResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOrderAtSubscriptionLevelAsync(subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<OrderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOrderAtSubscriptionLevelNextPageAsync(nextLink, subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetOrderResourcesAsync(skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListOrderAtSubscriptionLevel
-        /// <summary> Lists the OrderResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<OrderResource> GetOrderResources(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<OrderResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOrderAtSubscriptionLevel(subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<OrderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOrderAtSubscriptionLevelNextPage(nextLink, subscription.Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetOrderResources(skipToken, cancellationToken);
         }
 
         /// <summary> Filters the list of OrderResources for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -588,9 +190,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetOrderResourcesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(OrderResource.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetOrderResourcesAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of OrderResources for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -602,15 +202,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetOrderResourcesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(OrderResource.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetOrderResourcesAsGenericResources(filter, expand, top, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListOrderItemsAtSubscriptionLevel
-        /// <summary> Lists the OrderItemResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
@@ -619,50 +216,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OrderItemResource> GetOrderItemResourcesAsync(this Subscription subscription, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(OrderItemResource.ResourceType, out string apiVersion);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                async Task<Page<OrderItemResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderItemResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOrderItemsAtSubscriptionLevelAsync(subscription.Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<OrderItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderItemResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOrderItemsAtSubscriptionLevelNextPageAsync(nextLink, subscription.Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetOrderItemResourcesAsync(filter, expand, skipToken, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ListOrderItemsAtSubscriptionLevel
-        /// <summary> Lists the OrderItemResources for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
@@ -671,44 +230,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<OrderItemResource> GetOrderItemResources(this Subscription subscription, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(OrderItemResource.ResourceType, out string apiVersion);
-                EdgeOrderManagementRestOperations restOperations = GetEdgeOrderManagementRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                Page<OrderItemResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderItemResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOrderItemsAtSubscriptionLevel(subscription.Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<OrderItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOrderItemResources");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOrderItemsAtSubscriptionLevelNextPage(nextLink, subscription.Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(subscription).GetOrderItemResources(filter, expand, skipToken, cancellationToken);
         }
 
         /// <summary> Filters the list of OrderItemResources for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -720,9 +242,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetOrderItemResourcesAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(OrderItemResource.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetOrderItemResourcesAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of OrderItemResources for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -734,9 +254,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetOrderItemResourcesAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(OrderItemResource.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetOrderItemResourcesAsGenericResources(filter, expand, top, cancellationToken);
         }
     }
 }

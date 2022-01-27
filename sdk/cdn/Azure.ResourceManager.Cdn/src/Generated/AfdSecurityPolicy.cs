@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Cdn
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AfdSecurityPoliciesRestOperations _afdSecurityPoliciesRestClient;
+
+        private readonly ClientDiagnostics _afdSecurityPolicyClientDiagnostics;
+        private readonly AfdSecurityPoliciesRestOperations _afdSecurityPolicyRestClient;
         private readonly AfdSecurityPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AfdSecurityPolicy"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref = "AfdSecurityPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AfdSecurityPolicy(ArmResource options, AfdSecurityPolicyData data) : base(options, data.Id)
+        internal AfdSecurityPolicy(ArmClient armClient, AfdSecurityPolicyData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AfdSecurityPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AfdSecurityPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal AfdSecurityPolicy(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="AfdSecurityPolicy"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AfdSecurityPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _afdSecurityPoliciesRestClient = new AfdSecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _afdSecurityPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string afdSecurityPolicyApiVersion);
+            _afdSecurityPolicyRestClient = new AfdSecurityPoliciesRestOperations(_afdSecurityPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdSecurityPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,14 +88,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AfdSecurityPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.Get");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Get");
             scope.Start();
             try
             {
-                var response = await _afdSecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _afdSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
+                    throw await _afdSecurityPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AfdSecurityPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,14 +108,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AfdSecurityPolicy> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.Get");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Get");
             scope.Start();
             try
             {
-                var response = _afdSecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _afdSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdSecurityPolicy(this, response.Value), response.GetRawResponse());
+                    throw _afdSecurityPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdSecurityPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,7 +129,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.GetAvailableLocations");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -168,7 +147,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.GetAvailableLocations");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -186,12 +165,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<AfdSecurityPolicyDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.Delete");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Delete");
             scope.Start();
             try
             {
-                var response = await _afdSecurityPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecurityPolicyDeleteOperation(_clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _afdSecurityPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdSecurityPolicyDeleteOperation(_afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,12 +187,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AfdSecurityPolicyDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.Delete");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Delete");
             scope.Start();
             try
             {
-                var response = _afdSecurityPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdSecurityPolicyDeleteOperation(_clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _afdSecurityPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AfdSecurityPolicyDeleteOperation(_afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -237,12 +216,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.Update");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Update");
             scope.Start();
             try
             {
-                var response = await _afdSecurityPoliciesRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecurityPolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
+                var response = await _afdSecurityPolicyRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdSecurityPolicyUpdateOperation(ArmClient, _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -266,12 +245,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdSecurityPolicy.Update");
+            using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Update");
             scope.Start();
             try
             {
-                var response = _afdSecurityPoliciesRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken);
-                var operation = new AfdSecurityPolicyUpdateOperation(this, _clientDiagnostics, Pipeline, _afdSecurityPoliciesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
+                var response = _afdSecurityPolicyRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken);
+                var operation = new AfdSecurityPolicyUpdateOperation(ArmClient, _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

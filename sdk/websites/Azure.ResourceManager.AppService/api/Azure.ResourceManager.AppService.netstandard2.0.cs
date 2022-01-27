@@ -501,7 +501,6 @@ namespace Azure.ResourceManager.AppService
         protected AseV3NetworkingConfiguration() { }
         public virtual Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.AseV3NetworkingConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData aseNetworkingConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.AseV3NetworkingConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData aseNetworkingConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -543,7 +542,6 @@ namespace Azure.ResourceManager.AppService
         protected BasicPublishingCredentialsPolicyFtp() { }
         public virtual Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.BasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.BasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -815,7 +813,6 @@ namespace Azure.ResourceManager.AppService
         protected HostingEnvironmentMultiRolePool() { }
         public virtual Azure.ResourceManager.AppService.WorkerPoolResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.HostingEnvironmentMultiRolePoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.WorkerPoolResourceData multiRolePoolEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.HostingEnvironmentMultiRolePoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.WorkerPoolResourceData multiRolePoolEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -959,7 +956,6 @@ namespace Azure.ResourceManager.AppService
         protected HybridConnectionLimits() { }
         public virtual Azure.ResourceManager.AppService.HybridConnectionLimitsData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.HybridConnectionLimits> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.HybridConnectionLimits>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1031,7 +1027,6 @@ namespace Azure.ResourceManager.AppService
         protected MigrateMySqlStatus() { }
         public virtual Azure.ResourceManager.AppService.MigrateMySqlStatusData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.MigrateMySqlStatus> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.MigrateMySqlStatus>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1349,7 +1344,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteBasicPublishingCredentialsPolicyScm() { }
         public virtual Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -1489,7 +1483,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteConfigLogs() { }
         public virtual Azure.ResourceManager.AppService.SiteLogsConfigData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteConfigLogsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SiteLogsConfigData siteLogsConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteConfigLogsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SiteLogsConfigData siteLogsConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -1528,7 +1521,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteConfigWeb() { }
         public virtual Azure.ResourceManager.AppService.SiteConfigData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteConfigWebCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SiteConfigData siteConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteConfigWebCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SiteConfigData siteConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -1761,7 +1753,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteExtension() { }
         public virtual Azure.ResourceManager.AppService.MSDeployStatusData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -1957,7 +1948,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteInstanceExtension() { }
         public virtual Azure.ResourceManager.AppService.MSDeployStatusData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteInstanceExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteInstanceExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId) { throw null; }
@@ -2043,7 +2033,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteNetworkConfig() { }
         public virtual Azure.ResourceManager.AppService.SwiftVirtualNetworkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteNetworkConfigCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SwiftVirtualNetworkData connectionEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteNetworkConfigCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SwiftVirtualNetworkData connectionEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -2090,7 +2079,6 @@ namespace Azure.ResourceManager.AppService
         protected SitePrivateAccess() { }
         public virtual Azure.ResourceManager.AppService.PrivateAccessData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SitePrivateAccessCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.PrivateAccessData access, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SitePrivateAccessCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.PrivateAccessData access, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -2252,7 +2240,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteResourceHealthMetadata() { }
         public virtual Azure.ResourceManager.AppService.ResourceHealthMetadataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteResourceHealthMetadata> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteResourceHealthMetadata>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2507,7 +2494,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotBasicPublishingCredentialsPolicyFtp() { }
         public virtual Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -2522,7 +2508,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotBasicPublishingCredentialsPolicyScm() { }
         public virtual Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -2608,7 +2593,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotConfigLogs() { }
         public virtual Azure.ResourceManager.AppService.SiteLogsConfigData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotConfigLogsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SiteLogsConfigData siteLogsConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotConfigLogsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SiteLogsConfigData siteLogsConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -2647,7 +2631,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotConfigWeb() { }
         public virtual Azure.ResourceManager.AppService.SiteConfigData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotConfigWebCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SiteConfigData siteConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotConfigWebCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SiteConfigData siteConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -2880,7 +2863,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotExtension() { }
         public virtual Azure.ResourceManager.AppService.MSDeployStatusData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -3052,7 +3034,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotInstanceExtension() { }
         public virtual Azure.ResourceManager.AppService.MSDeployStatusData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotInstanceExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotInstanceExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.Models.MsDeploy msDeploy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId) { throw null; }
@@ -3130,7 +3111,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotNetworkConfig() { }
         public virtual Azure.ResourceManager.AppService.SwiftVirtualNetworkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotNetworkConfigCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SwiftVirtualNetworkData connectionEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotNetworkConfigCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SwiftVirtualNetworkData connectionEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -3177,7 +3157,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotPrivateAccess() { }
         public virtual Azure.ResourceManager.AppService.PrivateAccessData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotPrivateAccessCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.PrivateAccessData access, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotPrivateAccessCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.PrivateAccessData access, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -3315,7 +3294,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotResourceHealthMetadata() { }
         public virtual Azure.ResourceManager.AppService.ResourceHealthMetadataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotResourceHealthMetadata> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotResourceHealthMetadata>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3359,7 +3337,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSlotSourcecontrol() { }
         public virtual Azure.ResourceManager.AppService.SiteSourceControlData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSlotSourcecontrolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SiteSourceControlData siteSourceControl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSlotSourcecontrolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SiteSourceControlData siteSourceControl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -3524,7 +3501,6 @@ namespace Azure.ResourceManager.AppService
         protected SiteSourceControl() { }
         public virtual Azure.ResourceManager.AppService.SiteSourceControlData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SiteSourceControlCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SiteSourceControlData siteSourceControl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SiteSourceControlCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SiteSourceControlData siteSourceControl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -3700,7 +3676,6 @@ namespace Azure.ResourceManager.AppService
         protected SlotConfigNamesResource() { }
         public virtual Azure.ResourceManager.AppService.SlotConfigNamesResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.SlotConfigNamesResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.SlotConfigNamesResourceData slotConfigNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.SlotConfigNamesResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.SlotConfigNamesResourceData slotConfigNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -4205,7 +4180,6 @@ namespace Azure.ResourceManager.AppService
         protected User() { }
         public virtual Azure.ResourceManager.AppService.UserData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.AppService.Models.UserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.AppService.UserData userDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.AppService.Models.UserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.AppService.UserData userDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier() { throw null; }

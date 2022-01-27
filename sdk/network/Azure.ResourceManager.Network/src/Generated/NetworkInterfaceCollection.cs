@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of NetworkInterface and their operations over its parent. </summary>
     public partial class NetworkInterfaceCollection : ArmCollection, IEnumerable<NetworkInterface>, IAsyncEnumerable<NetworkInterface>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkInterfacesRestOperations _networkInterfacesRestClient;
+        private readonly ClientDiagnostics _networkInterfaceClientDiagnostics;
+        private readonly NetworkInterfacesRestOperations _networkInterfaceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceCollection"/> class for mocking. </summary>
         protected NetworkInterfaceCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkInterfaceCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(NetworkInterface.ResourceType, out string apiVersion);
-            _networkInterfacesRestClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterface.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(NetworkInterface.ResourceType, out string networkInterfaceApiVersion);
+            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(_networkInterfaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.CreateOrUpdate");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkInterfacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken);
-                var operation = new NetworkInterfaceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                var response = _networkInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken);
+                var operation = new NetworkInterfaceCreateOrUpdateOperation(ArmClient, _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.CreateOrUpdate");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkInterfacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkInterfaceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                var response = await _networkInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkInterfaceCreateOrUpdateOperation(ArmClient, _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.Get");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken);
+                var response = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                    throw _networkInterfaceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.Get");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                    throw await _networkInterfaceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkInterface(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetIfExists");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken);
+                var response = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<NetworkInterface>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetIfExists");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<NetworkInterface>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterface(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.Exists");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.Exists");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.Exists");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.Exists");
             scope.Start();
             try
             {
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<NetworkInterface> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
+                using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfacesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkInterfaceRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkInterface> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
+                using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkInterfaceRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<NetworkInterface>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
+                using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfacesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkInterfaceRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkInterface>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
+                using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkInterfaceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAllAsGenericResources");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAllAsGenericResources");
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -405,8 +405,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkInterface, NetworkInterfaceData> Construct() { }
     }
 }

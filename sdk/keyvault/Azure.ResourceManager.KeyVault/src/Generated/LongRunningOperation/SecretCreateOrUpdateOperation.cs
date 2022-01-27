@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
         }
 
-        internal SecretCreateOrUpdateOperation(ArmResource operationsBase, Response<SecretData> response)
+        internal SecretCreateOrUpdateOperation(ArmClient armClient, Response<SecretData> response)
         {
-            _operation = new OperationOrResponseInternals<Secret>(Response.FromValue(new Secret(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<Secret>(Response.FromValue(new Secret(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

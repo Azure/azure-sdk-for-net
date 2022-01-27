@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
         }
 
-        internal HybridIdentityMetadataCreateOrUpdateOperation(ArmResource operationsBase, Response<HybridIdentityMetadataData> response)
+        internal HybridIdentityMetadataCreateOrUpdateOperation(ArmClient armClient, Response<HybridIdentityMetadataData> response)
         {
-            _operation = new OperationOrResponseInternals<HybridIdentityMetadata>(Response.FromValue(new HybridIdentityMetadata(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<HybridIdentityMetadata>(Response.FromValue(new HybridIdentityMetadata(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

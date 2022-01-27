@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationInternals<ApplicationDefinition> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ApplicationDefinitionCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationDefinitionCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationDefinitionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationDefinitionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ApplicationDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationDefinitionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Resources.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApplicationDefinitionData.DeserializeApplicationDefinitionData(document.RootElement);
-            return new ApplicationDefinition(_operationBase, data);
+            return new ApplicationDefinition(_armClient, data);
         }
 
         async ValueTask<ApplicationDefinition> IOperationSource<ApplicationDefinition>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApplicationDefinitionData.DeserializeApplicationDefinitionData(document.RootElement);
-            return new ApplicationDefinition(_operationBase, data);
+            return new ApplicationDefinition(_armClient, data);
         }
     }
 }

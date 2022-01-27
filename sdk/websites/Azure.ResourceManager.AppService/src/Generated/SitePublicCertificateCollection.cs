@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of PublicCertificate and their operations over its parent. </summary>
     public partial class SitePublicCertificateCollection : ArmCollection, IEnumerable<SitePublicCertificate>, IAsyncEnumerable<SitePublicCertificate>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _sitePublicCertificateWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _sitePublicCertificateWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SitePublicCertificateCollection"/> class for mocking. </summary>
         protected SitePublicCertificateCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SitePublicCertificateCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SitePublicCertificate.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _sitePublicCertificateWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SitePublicCertificate.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SitePublicCertificate.ResourceType, out string sitePublicCertificateWebAppsApiVersion);
+            _sitePublicCertificateWebAppsRestClient = new WebAppsRestOperations(_sitePublicCertificateWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePublicCertificateWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publicCertificate));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.CreateOrUpdate");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdatePublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, publicCertificate, cancellationToken);
-                var operation = new SitePublicCertificateCreateOrUpdateOperation(this, response);
+                var response = _sitePublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, publicCertificate, cancellationToken);
+                var operation = new SitePublicCertificateCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(publicCertificate));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.CreateOrUpdate");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdatePublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, publicCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new SitePublicCertificateCreateOrUpdateOperation(this, response);
+                var response = await _sitePublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, publicCertificate, cancellationToken).ConfigureAwait(false);
+                var operation = new SitePublicCertificateCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken);
+                var response = _sitePublicCertificateWebAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SitePublicCertificate(this, response.Value), response.GetRawResponse());
+                    throw _sitePublicCertificateWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken).ConfigureAwait(false);
+                var response = await _sitePublicCertificateWebAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SitePublicCertificate(this, response.Value), response.GetRawResponse());
+                    throw await _sitePublicCertificateWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken);
+                var response = _sitePublicCertificateWebAppsRestClient.GetPublicCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SitePublicCertificate>(null, response.GetRawResponse());
-                return Response.FromValue(new SitePublicCertificate(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sitePublicCertificateWebAppsRestClient.GetPublicCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SitePublicCertificate>(null, response.GetRawResponse());
-                return Response.FromValue(new SitePublicCertificate(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePublicCertificate(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
-            using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
+            using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.Exists");
             scope.Start();
             try
             {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SitePublicCertificate> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListPublicCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sitePublicCertificateWebAppsRestClient.ListPublicCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SitePublicCertificate> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListPublicCertificatesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SitePublicCertificate>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListPublicCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,12 +339,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SitePublicCertificate>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
+                using var scope = _sitePublicCertificateWebAppsClientDiagnostics.CreateScope("SitePublicCertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListPublicCertificatesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sitePublicCertificateWebAppsRestClient.ListPublicCertificatesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SitePublicCertificate(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -369,8 +369,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SitePublicCertificate, PublicCertificateData> Construct() { }
     }
 }

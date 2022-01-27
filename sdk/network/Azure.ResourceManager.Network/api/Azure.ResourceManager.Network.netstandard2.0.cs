@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Network
         protected ApplicationGatewayAvailableSslOptions() { }
         public virtual Azure.ResourceManager.Network.ApplicationGatewayAvailableSslOptionsData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayAvailableSslOptions> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Network.ApplicationGatewaySslPredefinedPolicyCollection GetApplicationGatewaySslPredefinedPolicies() { throw null; }

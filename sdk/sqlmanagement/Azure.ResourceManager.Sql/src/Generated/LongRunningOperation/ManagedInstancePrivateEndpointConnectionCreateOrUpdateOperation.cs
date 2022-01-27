@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ManagedInstancePrivateEndpointConnection> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation for mocking. </summary>
         protected ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation()
         {
         }
 
-        internal ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ManagedInstancePrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstancePrivateEndpointConnectionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);
-            return new ManagedInstancePrivateEndpointConnection(_operationBase, data);
+            return new ManagedInstancePrivateEndpointConnection(_armClient, data);
         }
 
         async ValueTask<ManagedInstancePrivateEndpointConnection> IOperationSource<ManagedInstancePrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);
-            return new ManagedInstancePrivateEndpointConnection(_operationBase, data);
+            return new ManagedInstancePrivateEndpointConnection(_armClient, data);
         }
     }
 }

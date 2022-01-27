@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn
         public static Profile GetProfile(this ArmClient armClient, ResourceIdentifier id)
         {
             Profile.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Profile(clientOptions, credential, uri, pipeline, id));
+            return new Profile(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         public static CdnEndpoint GetCdnEndpoint(this ArmClient armClient, ResourceIdentifier id)
         {
             CdnEndpoint.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnEndpoint(clientOptions, credential, uri, pipeline, id));
+            return new CdnEndpoint(armClient, id);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn
         public static CdnOrigin GetCdnOrigin(this ArmClient armClient, ResourceIdentifier id)
         {
             CdnOrigin.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnOrigin(clientOptions, credential, uri, pipeline, id));
+            return new CdnOrigin(armClient, id);
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         public static CdnOriginGroup GetCdnOriginGroup(this ArmClient armClient, ResourceIdentifier id)
         {
             CdnOriginGroup.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnOriginGroup(clientOptions, credential, uri, pipeline, id));
+            return new CdnOriginGroup(armClient, id);
         }
         #endregion
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn
         public static CdnCustomDomain GetCdnCustomDomain(this ArmClient armClient, ResourceIdentifier id)
         {
             CdnCustomDomain.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnCustomDomain(clientOptions, credential, uri, pipeline, id));
+            return new CdnCustomDomain(armClient, id);
         }
         #endregion
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdCustomDomain GetAfdCustomDomain(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdCustomDomain.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdCustomDomain(clientOptions, credential, uri, pipeline, id));
+            return new AfdCustomDomain(armClient, id);
         }
         #endregion
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdEndpoint GetAfdEndpoint(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdEndpoint.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdEndpoint(clientOptions, credential, uri, pipeline, id));
+            return new AfdEndpoint(armClient, id);
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdOriginGroup GetAfdOriginGroup(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdOriginGroup.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdOriginGroup(clientOptions, credential, uri, pipeline, id));
+            return new AfdOriginGroup(armClient, id);
         }
         #endregion
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdOrigin GetAfdOrigin(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdOrigin.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdOrigin(clientOptions, credential, uri, pipeline, id));
+            return new AfdOrigin(armClient, id);
         }
         #endregion
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdRoute GetAfdRoute(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdRoute.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdRoute(clientOptions, credential, uri, pipeline, id));
+            return new AfdRoute(armClient, id);
         }
         #endregion
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdRuleSet GetAfdRuleSet(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdRuleSet.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdRuleSet(clientOptions, credential, uri, pipeline, id));
+            return new AfdRuleSet(armClient, id);
         }
         #endregion
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdRule GetAfdRule(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdRule(clientOptions, credential, uri, pipeline, id));
+            return new AfdRule(armClient, id);
         }
         #endregion
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdSecurityPolicy GetAfdSecurityPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdSecurityPolicy.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdSecurityPolicy(clientOptions, credential, uri, pipeline, id));
+            return new AfdSecurityPolicy(armClient, id);
         }
         #endregion
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn
         public static AfdSecret GetAfdSecret(this ArmClient armClient, ResourceIdentifier id)
         {
             AfdSecret.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AfdSecret(clientOptions, credential, uri, pipeline, id));
+            return new AfdSecret(armClient, id);
         }
         #endregion
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn
         public static CdnWebApplicationFirewallPolicy GetCdnWebApplicationFirewallPolicy(this ArmClient armClient, ResourceIdentifier id)
         {
             CdnWebApplicationFirewallPolicy.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CdnWebApplicationFirewallPolicy(clientOptions, credential, uri, pipeline, id));
+            return new CdnWebApplicationFirewallPolicy(armClient, id);
         }
         #endregion
     }

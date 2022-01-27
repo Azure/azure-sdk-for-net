@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of RelayServiceConnectionEntity and their operations over its parent. </summary>
     public partial class SiteHybridConnectionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteHybridConnectionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteHybridConnectionWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteHybridConnectionCollection"/> class for mocking. </summary>
         protected SiteHybridConnectionCollection()
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteHybridConnectionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteHybridConnection.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteHybridConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteHybridConnection.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteHybridConnection.ResourceType, out string siteHybridConnectionWebAppsApiVersion);
+            _siteHybridConnectionWebAppsRestClient = new WebAppsRestOperations(_siteHybridConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteHybridConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.CreateOrUpdate");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken);
-                var operation = new SiteHybridConnectionCreateOrUpdateOperation(this, response);
+                var response = _siteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken);
+                var operation = new SiteHybridConnectionCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.CreateOrUpdate");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteHybridConnectionCreateOrUpdateOperation(this, response);
+                var response = await _siteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteHybridConnectionCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.Get");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
+                var response = _siteHybridConnectionWebAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
+                    throw _siteHybridConnectionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.Get");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteHybridConnectionWebAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
+                    throw await _siteHybridConnectionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteHybridConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.GetIfExists");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
+                var response = _siteHybridConnectionWebAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,14 +208,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.GetIfExists");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteHybridConnectionWebAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteHybridConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.Exists");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHybridConnectionCollection.Exists");
+            using var scope = _siteHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -269,8 +269,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteHybridConnection, RelayServiceConnectionEntityData> Construct() { }
     }
 }

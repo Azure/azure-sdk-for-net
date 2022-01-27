@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
         }
 
-        internal DisasterRecoveryCreateOrUpdateOperation(ArmResource operationsBase, Response<DisasterRecoveryData> response)
+        internal DisasterRecoveryCreateOrUpdateOperation(ArmClient armClient, Response<DisasterRecoveryData> response)
         {
-            _operation = new OperationOrResponseInternals<DisasterRecovery>(Response.FromValue(new DisasterRecovery(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DisasterRecovery>(Response.FromValue(new DisasterRecovery(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

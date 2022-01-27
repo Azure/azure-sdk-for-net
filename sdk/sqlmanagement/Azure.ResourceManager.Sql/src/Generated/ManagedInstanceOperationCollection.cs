@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedInstanceOperation and their operations over its parent. </summary>
     public partial class ManagedInstanceOperationCollection : ArmCollection, IEnumerable<ManagedInstanceOperation>, IAsyncEnumerable<ManagedInstanceOperation>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedInstanceRestOperations _managedInstanceOperationsRestClient;
+        private readonly ClientDiagnostics _managedInstanceOperationClientDiagnostics;
+        private readonly ManagedInstanceRestOperations _managedInstanceOperationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationCollection"/> class for mocking. </summary>
         protected ManagedInstanceOperationCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceOperationCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ManagedInstanceOperation.ResourceType, out string apiVersion);
-            _managedInstanceOperationsRestClient = new ManagedInstanceRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedInstanceOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceOperation.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedInstanceOperation.ResourceType, out string managedInstanceOperationApiVersion);
+            _managedInstanceOperationRestClient = new ManagedInstanceRestOperations(_managedInstanceOperationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceOperationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,14 +58,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceOperation> Get(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Get");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
+                var response = _managedInstanceOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                    throw _managedInstanceOperationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -83,14 +82,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceOperation>> GetAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Get");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                    throw await _managedInstanceOperationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,14 +103,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceOperation> GetIfExists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedInstanceOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
+                var response = _managedInstanceOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,14 +124,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceOperation>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceOperation>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceOperation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceOperation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
             scope.Start();
             try
             {
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
+            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.Exists");
             scope.Start();
             try
             {
@@ -189,12 +188,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ManagedInstanceOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceOperationsRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceOperationRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,12 +203,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstanceOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceOperationsRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceOperationRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,12 +229,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ManagedInstanceOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceOperationsRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceOperationRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,12 +244,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstanceOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
+                using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceOperationsRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceOperationRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceOperation(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,8 +274,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceOperation, ManagedInstanceOperationData> Construct() { }
     }
 }

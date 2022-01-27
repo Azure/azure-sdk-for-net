@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class representing collection of ServiceBusTopic and their operations over its parent. </summary>
     public partial class ServiceBusTopicCollection : ArmCollection, IEnumerable<ServiceBusTopic>, IAsyncEnumerable<ServiceBusTopic>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TopicsRestOperations _topicsRestClient;
+        private readonly ClientDiagnostics _serviceBusTopicTopicsClientDiagnostics;
+        private readonly TopicsRestOperations _serviceBusTopicTopicsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicCollection"/> class for mocking. </summary>
         protected ServiceBusTopicCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusTopicCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServiceBusTopic.ResourceType, out string apiVersion);
-            _topicsRestClient = new TopicsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serviceBusTopicTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusTopic.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServiceBusTopic.ResourceType, out string serviceBusTopicTopicsApiVersion);
+            _serviceBusTopicTopicsRestClient = new TopicsRestOperations(_serviceBusTopicTopicsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusTopicTopicsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _topicsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken);
-                var operation = new ServiceBusTopicCreateOrUpdateOperation(this, response);
+                var response = _serviceBusTopicTopicsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken);
+                var operation = new ServiceBusTopicCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _topicsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusTopicCreateOrUpdateOperation(this, response);
+                var response = await _serviceBusTopicTopicsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceBusTopicCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = _topicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken);
+                var response = _serviceBusTopicTopicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                    throw _serviceBusTopicTopicsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = await _topicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusTopicTopicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                    throw await _serviceBusTopicTopicsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _topicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
+                var response = _serviceBusTopicTopicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _topicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusTopicTopicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Page<ServiceBusTopic> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _topicsRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceBusTopicTopicsRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.ServiceBus
             }
             Page<ServiceBusTopic> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _topicsRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceBusTopicTopicsRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.ServiceBus
         {
             async Task<Page<ServiceBusTopic>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _topicsRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusTopicTopicsRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,12 +343,12 @@ namespace Azure.ResourceManager.ServiceBus
             }
             async Task<Page<ServiceBusTopic>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _topicsRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusTopicTopicsRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -373,8 +373,5 @@ namespace Azure.ResourceManager.ServiceBus
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceBusTopic, ServiceBusTopicData> Construct() { }
     }
 }

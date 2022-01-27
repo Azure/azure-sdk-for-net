@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of LoadBalancingRule and their operations over its parent. </summary>
     public partial class LoadBalancingRuleCollection : ArmCollection, IEnumerable<LoadBalancingRule>, IAsyncEnumerable<LoadBalancingRule>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LoadBalancerLoadBalancingRulesRestOperations _loadBalancerLoadBalancingRulesRestClient;
+        private readonly ClientDiagnostics _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics;
+        private readonly LoadBalancerLoadBalancingRulesRestOperations _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancingRuleCollection"/> class for mocking. </summary>
         protected LoadBalancingRuleCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LoadBalancingRuleCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(LoadBalancingRule.ResourceType, out string apiVersion);
-            _loadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancingRule.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(LoadBalancingRule.ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,14 +59,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _loadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken);
+                var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                    throw _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,14 +84,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _loadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                    throw await _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancingRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,14 +109,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _loadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken);
+                var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse());
-                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +134,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _loadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<LoadBalancingRule>(null, response.GetRawResponse());
-                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -204,12 +203,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<LoadBalancingRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
+                using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerLoadBalancingRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -219,12 +218,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<LoadBalancingRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
+                using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerLoadBalancingRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,12 +241,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<LoadBalancingRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
+                using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerLoadBalancingRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,12 +256,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<LoadBalancingRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
+                using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerLoadBalancingRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LoadBalancingRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,8 +286,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, LoadBalancingRule, LoadBalancingRuleData> Construct() { }
     }
 }

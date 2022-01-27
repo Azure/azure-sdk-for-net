@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of ServerAzureADAdministrator and their operations over its parent. </summary>
     public partial class ServerAzureADAdministratorCollection : ArmCollection, IEnumerable<ServerAzureADAdministrator>, IAsyncEnumerable<ServerAzureADAdministrator>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServerAzureADAdministratorsRestOperations _serverAzureADAdministratorsRestClient;
+        private readonly ClientDiagnostics _serverAzureADAdministratorClientDiagnostics;
+        private readonly ServerAzureADAdministratorsRestOperations _serverAzureADAdministratorRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerAzureADAdministratorCollection"/> class for mocking. </summary>
         protected ServerAzureADAdministratorCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerAzureADAdministratorCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServerAzureADAdministrator.ResourceType, out string apiVersion);
-            _serverAzureADAdministratorsRestClient = new ServerAzureADAdministratorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serverAzureADAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerAzureADAdministrator.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServerAzureADAdministrator.ResourceType, out string serverAzureADAdministratorApiVersion);
+            _serverAzureADAdministratorRestClient = new ServerAzureADAdministratorsRestOperations(_serverAzureADAdministratorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAzureADAdministratorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CreateOrUpdate");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverAzureADAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken);
-                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
+                var response = _serverAzureADAdministratorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken);
+                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(ArmClient, _serverAzureADAdministratorClientDiagnostics, Pipeline, _serverAzureADAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CreateOrUpdate");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverAzureADAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
+                var response = await _serverAzureADAdministratorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServerAzureADAdministratorCreateOrUpdateOperation(ArmClient, _serverAzureADAdministratorClientDiagnostics, Pipeline, _serverAzureADAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerAzureADAdministrator> Get(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Get");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverAzureADAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken);
+                var response = _serverAzureADAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
+                    throw _serverAzureADAdministratorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerAzureADAdministrator>> GetAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Get");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serverAzureADAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverAzureADAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
+                    throw await _serverAzureADAdministratorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServerAzureADAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerAzureADAdministrator> GetIfExists(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serverAzureADAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
+                var response = _serverAzureADAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServerAzureADAdministrator>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerAzureADAdministrator>> GetIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serverAzureADAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverAzureADAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServerAzureADAdministrator>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADAdministrator(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Exists");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Exists");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Exists");
+            using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.Exists");
             scope.Start();
             try
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServerAzureADAdministrator> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
+                using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverAzureADAdministratorsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverAzureADAdministratorRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerAzureADAdministrator> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
+                using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverAzureADAdministratorsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverAzureADAdministratorRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -296,12 +296,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServerAzureADAdministrator>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
+                using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverAzureADAdministratorsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverAzureADAdministratorRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerAzureADAdministrator>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
+                using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverAzureADAdministratorsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverAzureADAdministratorRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerAzureADAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,8 +341,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerAzureADAdministrator, ServerAzureADAdministratorData> Construct() { }
     }
 }

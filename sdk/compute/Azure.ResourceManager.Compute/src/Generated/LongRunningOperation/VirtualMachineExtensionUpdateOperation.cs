@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<VirtualMachineExtension> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionUpdateOperation for mocking. </summary>
         protected VirtualMachineExtensionUpdateOperation()
         {
         }
 
-        internal VirtualMachineExtensionUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineExtensionUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualMachineExtension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineExtensionUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement);
-            return new VirtualMachineExtension(_operationBase, data);
+            return new VirtualMachineExtension(_armClient, data);
         }
 
         async ValueTask<VirtualMachineExtension> IOperationSource<VirtualMachineExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement);
-            return new VirtualMachineExtension(_operationBase, data);
+            return new VirtualMachineExtension(_armClient, data);
         }
     }
 }
