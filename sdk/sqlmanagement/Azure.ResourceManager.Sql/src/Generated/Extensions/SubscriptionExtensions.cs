@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static async Task<LocationCapabilities> GetByLocationCapabilityAsync(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).GetByLocationCapabilityAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static LocationCapabilities GetByLocationCapability(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static Response<LocationCapabilities> GetByLocationCapability(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetByLocationCapability(locationName, include, cancellationToken);
         }
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityServerAsync(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).CheckNameAvailabilityServerAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityServer(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityServer(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).CheckNameAvailabilityServer(parameters, cancellationToken);
         }
