@@ -23,7 +23,7 @@ namespace Azure
         /// <summary>
         /// Indicates whether ConfigureResponse has been called.
         /// </summary>
-        public bool HasCustomClassifier => _customErrors != null || _customNonErrors != null;
+        internal bool HasCustomClassifier => _customErrors != null || _customNonErrors != null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -71,6 +71,44 @@ namespace Azure
             CopyOrMerge(statusCodes, ref isError ? ref _customErrors : ref _customNonErrors);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="factory"></param>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        public ResponseClassifier GetResponseClassifier(Func<RequestContext, ResponseClassifier> factory, ResponseClassifier instance)
+        {
+            if (HasCustomClassifier)
+            {
+                return factory(this);
+            }
+
+            return instance;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="statusCode"></param>
+        /// <param name="isError"></param>
+        /// <returns></returns>
+        public bool TryClassify(int statusCode, out bool isError)
+        {
+            if (_customErrors?.Contains(statusCode) ?? false)
+            {
+                isError = true;
+                return true;
+            }
+
+            if (_customNonErrors?.Contains(statusCode) ?? false)
+            {
+                isError = false;
+                return true;
+            }
+
+            isError = false;
+            return false;
+        }
+
         private static void CopyOrMerge(int[] source, ref int[]? target)
         {
             if (target == null)
@@ -84,11 +122,6 @@ namespace Azure
                 Array.Resize(ref target, source.Length + target.Length);
                 Array.Copy(source, 0, target, origLength, source.Length);
             }
-        }
-
-        internal void CustomizeClassifier(ResponseClassifier classifier)
-        {
-            classifier.CustomizeErrors(_customErrors, _customNonErrors);
         }
     }
 }

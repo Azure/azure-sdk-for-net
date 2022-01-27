@@ -92,11 +92,6 @@ namespace Azure.Core
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
             }
-
-            if (context.HasCustomClassifier)
-            {
-                context.CustomizeClassifier(ResponseClassifier);
-            }
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }

@@ -194,10 +194,11 @@ namespace Azure
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public bool HasCustomClassifier { get { throw null; } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public void ConfigureResponse(int[] statusCodes, bool isError) { }
+        public Azure.Core.ResponseClassifier GetResponseClassifier(System.Func<Azure.RequestContext, Azure.Core.ResponseClassifier> factory, Azure.Core.ResponseClassifier instance) { throw null; }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
+        public bool TryClassify(int statusCode, out bool isError) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
@@ -588,7 +589,7 @@ namespace Azure.Core
     public partial class ResponseClassifier
     {
         public ResponseClassifier() { }
-        protected bool CustomError(int statusCode, out bool isError) { throw null; }
+        public ResponseClassifier(Azure.RequestContext context) { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }

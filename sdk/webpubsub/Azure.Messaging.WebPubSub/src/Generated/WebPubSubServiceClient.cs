@@ -1527,7 +1527,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier200() : ResponseClassifier200.Instance;
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
@@ -1555,7 +1555,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier204() : ResponseClassifier204.Instance;
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1581,7 +1581,7 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier202() : ResponseClassifier202.Instance;
+            message.ResponseClassifier = context.GetResponseClassifier(context => new ResponseClassifier202(context), ResponseClassifier202.Instance);
             return message;
         }
 
@@ -1607,7 +1607,7 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier202() : ResponseClassifier202.Instance;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
@@ -1625,7 +1625,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier200404() : ResponseClassifier200404.Instance;
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
@@ -1647,7 +1647,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier204() : ResponseClassifier204.Instance;
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1668,7 +1668,7 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier202() : ResponseClassifier202.Instance;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
@@ -1689,7 +1689,7 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier202() : ResponseClassifier202.Instance;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
@@ -1707,7 +1707,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier200404() : ResponseClassifier200404.Instance;
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
@@ -1737,7 +1737,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier204() : ResponseClassifier204.Instance;
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1765,7 +1765,7 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = context.HasCustomClassifier ? new ResponseClassifier202() : ResponseClassifier202.Instance;
+            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
@@ -2064,11 +2064,6 @@ namespace Azure.Messaging.WebPubSub
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (CustomError(message.Response.Status, out bool isError))
-                {
-                    return isError;
-                }
-
                 return message.Response.Status switch
                 {
                     200 => false,
@@ -2091,11 +2086,23 @@ namespace Azure.Messaging.WebPubSub
         }
         private sealed class ResponseClassifier202 : ResponseClassifier
         {
+            private RequestContext _context;
+
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
+
+            public ResponseClassifier202() : base()
+            {
+            }
+
+            public ResponseClassifier202(RequestContext context) : base(context)
+            {
+                _context = context;
+            }
+
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (CustomError(message.Response.Status, out bool isError))
+                if (_context?.TryClassify(message.Response.Status, out bool isError) ?? false)
                 {
                     return isError;
                 }
@@ -2113,11 +2120,6 @@ namespace Azure.Messaging.WebPubSub
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (CustomError(message.Response.Status, out bool isError))
-                {
-                    return isError;
-                }
-
                 return message.Response.Status switch
                 {
                     200 => false,
