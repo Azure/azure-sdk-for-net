@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -62,6 +63,7 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<DiskEncryptionSetType> encryptionType = default;
             Optional<KeyForDiskEncryptionSet> activeKey = default;
             Optional<IReadOnlyList<KeyForDiskEncryptionSet>> previousKeys = default;
@@ -109,6 +111,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskEncryptionSetData(id, name, type, tags, location, identity.Value, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value);
+            return new DiskEncryptionSetData(id, name, type, systemData, tags, location, identity.Value, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value);
         }
     }
 }

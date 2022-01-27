@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Resources
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -96,16 +96,6 @@ namespace Azure.ResourceManager.Resources
                     kind = new ScriptType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -121,8 +111,13 @@ namespace Azure.ResourceManager.Resources
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new DeploymentScriptData(id, name, type, identity.Value, location, Optional.ToDictionary(tags), kind, systemData);
+            return new DeploymentScriptData(id, name, type, systemData, identity.Value, location, Optional.ToDictionary(tags), kind);
         }
     }
 }

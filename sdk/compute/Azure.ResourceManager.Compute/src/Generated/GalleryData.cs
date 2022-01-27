@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
         /// <param name="softDeletePolicy"> Contains information about the soft deletion policy of the gallery. </param>
-        internal GalleryData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy) : base(id, name, type, tags, location)
+        internal GalleryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy) : base(id, name, type, systemData, tags, location)
         {
             Description = description;
             Identifier = identifier;
