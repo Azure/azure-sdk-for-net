@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Tests
         [SyncOnly]
         public void ConstructWithInvalidSubscription()
         {
-            var client = new ArmClient(TestEnvironment.Credential, Guid.NewGuid().ToString());
+            var client = GetArmClient(subscriptionId: Recording.Random.NewGuid().ToString());
             var ex = Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
             Assert.AreEqual(404, ex.Status);
         }
