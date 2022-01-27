@@ -298,8 +298,7 @@ namespace Azure.Core.TestFramework
                 new[] { typeof(IInstrumented) },
                 operation,
                 managementInterceptor,
-                new GetOriginalInterceptor(operation),
-                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+                new GetOriginalInterceptor(operation));
         }
 
         /// <summary>

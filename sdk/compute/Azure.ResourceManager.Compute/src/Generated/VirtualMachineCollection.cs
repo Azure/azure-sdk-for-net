@@ -33,6 +33,16 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
+        internal VirtualMachineCollection(ArmClient armClient, ResourceIdentifier parentId) : base(armClient, parentId)
+        {
+            _virtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachine.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VirtualMachine.ResourceType, out string virtualMachineApiVersion);
+            _virtualMachineRestClient = new VirtualMachinesRestOperations(_virtualMachineClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineApiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
+        }
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualMachineCollection(ArmResource parent) : base(parent)

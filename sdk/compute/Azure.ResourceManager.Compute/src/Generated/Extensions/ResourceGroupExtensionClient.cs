@@ -31,5 +31,14 @@ namespace Azure.ResourceManager.Compute
             ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
+
+        #region VirtualMachine
+        /// <summary> Gets an object representing a VirtualMachineCollection along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="VirtualMachineCollection" /> object. </returns>
+        public virtual VirtualMachineCollection GetVirtualMachines(ResourceIdentifier parentId)
+        {
+            return new VirtualMachineCollection(ArmClient, parentId);
+        }
+        #endregion
     }
 }

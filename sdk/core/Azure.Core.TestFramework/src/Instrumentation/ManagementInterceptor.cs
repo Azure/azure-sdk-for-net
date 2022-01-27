@@ -21,7 +21,34 @@ namespace Azure.Core.TestFramework
 
         public void Intercept(IInvocation invocation)
         {
+            bool modifiedAskToWait = false;
+
+            if (IsLro(invocation.Method.ReturnType))
+            {
+                bool current = (bool)invocation.Arguments[0];
+                if (current)
+                {
+                    modifiedAskToWait = true;
+                    invocation.Arguments[0] = false;
+                }
+            }
+
             invocation.Proceed();
+
+            if (modifiedAskToWait)
+            {
+                object lro = GetLroFromResult(invocation.ReturnValue);
+                object targetLro = lro.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(lro);
+                if (targetLro.GetType().BaseType == typeof(Operation))
+                {
+                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(targetLro, invocation.Arguments.Last());
+                }
+                else
+                {
+                    _ = OperationInterceptor.InvokeWaitForCompletion(targetLro, targetLro.GetType(), invocation.Arguments.Last());
+                }
+                return;
+            }
 
             var result = invocation.ReturnValue;
             if (result == null)
@@ -38,7 +65,7 @@ namespace Azure.Core.TestFramework
                     return;
 
                 var taskResultType = type.GetGenericArguments()[0];
-                if (taskResultType.Name.StartsWith("Response"))
+                if (taskResultType.Name.StartsWith("Response") || InheritsFromArmResource(taskResultType))
                 {
                     try
                     {
@@ -79,6 +106,25 @@ namespace Azure.Core.TestFramework
                 var ctor = genericType.GetConstructor(new Type[] { typeof(ClientTestBase), result.GetType() });
                 invocation.ReturnValue = ctor.Invoke(new object[] { _testBase, result });
             }
+        }
+
+        private static object GetLroFromResult(object returnValue)
+        {
+            object lro = null;
+            Type returnType = returnValue.GetType();
+            return returnType.Name.StartsWith("Task")
+                ? lro = returnType.GetProperty("Result").GetValue(returnValue)
+                : lro = returnValue;
+        }
+
+        private static bool IsLro(Type returnType)
+        {
+            if (returnType.Name.StartsWith("Task"))
+            {
+                returnType = returnType.GetGenericArguments()[0];
+            }
+
+            return returnType.IsSubclassOf(typeof(Operation));
         }
 
         internal static bool InheritsFromArmResource(Type elementType)

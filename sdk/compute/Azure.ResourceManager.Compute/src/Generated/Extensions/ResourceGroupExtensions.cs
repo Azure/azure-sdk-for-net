@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineCollection" /> object. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroup resourceGroup)
         {
-            return new VirtualMachineCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVirtualMachines(resourceGroup.Id);
         }
         #endregion
 
