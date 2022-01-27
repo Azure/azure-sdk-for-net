@@ -73,40 +73,63 @@ namespace Azure
 
         /// <summary>
         /// </summary>
-        /// <param name="factory"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public ResponseClassifier GetResponseClassifier(Func<RequestContext, ResponseClassifier> factory, ResponseClassifier instance)
+        public ResponseClassifier GetResponseClassifier(ResponseClassifier instance)
         {
-            if (HasCustomClassifier)
+            if (!HasCustomClassifier)
             {
-                return factory(this);
+                return instance;
             }
 
-            return instance;
+            return new CustomResponseClassifier(_customErrors, _customNonErrors, instance);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="statusCode"></param>
-        /// <param name="isError"></param>
-        /// <returns></returns>
-        public bool TryClassify(int statusCode, out bool isError)
+        private class CustomResponseClassifier : ResponseClassifier
         {
-            if (_customErrors?.Contains(statusCode) ?? false)
+            private readonly int[]? _errors;
+            private readonly int[]? _nonErrors;
+            private readonly ResponseClassifier _inner;
+
+            public CustomResponseClassifier(int[]? errors, int[]? nonErrors, ResponseClassifier inner)
             {
-                isError = true;
-                return true;
+                _errors = errors;
+                _nonErrors = nonErrors;
+                _inner = inner;
             }
 
-            if (_customNonErrors?.Contains(statusCode) ?? false)
+            public override bool IsErrorResponse(HttpMessage message)
             {
+                if (TryClassify(message.Response.Status, out bool isError))
+                {
+                    return isError;
+                }
+
+                return _inner.IsErrorResponse(message);
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="statusCode"></param>
+            /// <param name="isError"></param>
+            /// <returns></returns>
+            internal bool TryClassify(int statusCode, out bool isError)
+            {
+                if (_errors?.Contains(statusCode) ?? false)
+                {
+                    isError = true;
+                    return true;
+                }
+
+                if (_nonErrors?.Contains(statusCode) ?? false)
+                {
+                    isError = false;
+                    return true;
+                }
+
                 isError = false;
-                return true;
+                return false;
             }
-
-            isError = false;
-            return false;
         }
 
         private static void CopyOrMerge(int[] source, ref int[]? target)

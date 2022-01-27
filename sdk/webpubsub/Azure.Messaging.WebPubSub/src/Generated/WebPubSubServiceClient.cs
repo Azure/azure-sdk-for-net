@@ -1581,7 +1581,7 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = context.GetResponseClassifier(context => new ResponseClassifier202(context), ResponseClassifier202.Instance);
+            message.ResponseClassifier = context.GetResponseClassifier(ResponseClassifier202.Instance);
             return message;
         }
 
@@ -2086,8 +2086,6 @@ namespace Azure.Messaging.WebPubSub
         }
         private sealed class ResponseClassifier202 : ResponseClassifier
         {
-            private RequestContext _context;
-
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
 
@@ -2095,18 +2093,8 @@ namespace Azure.Messaging.WebPubSub
             {
             }
 
-            public ResponseClassifier202(RequestContext context) : base(context)
-            {
-                _context = context;
-            }
-
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (_context?.TryClassify(message.Response.Status, out bool isError) ?? false)
-                {
-                    return isError;
-                }
-
                 return message.Response.Status switch
                 {
                     202 => false,

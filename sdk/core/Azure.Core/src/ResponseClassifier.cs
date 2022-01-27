@@ -12,22 +12,6 @@ namespace Azure.Core
     /// </summary>
     public class ResponseClassifier
     {
-        private readonly RequestContext? _context;
-
-        /// <summary>
-        /// </summary>
-        public ResponseClassifier()
-        {
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="context"></param>
-        public ResponseClassifier(RequestContext context)
-        {
-            _context = context;
-        }
-
         internal static ResponseClassifier Shared { get; } = new();
 
         /// <summary>
@@ -73,11 +57,6 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {
-            if (_context?.TryClassify(message.Response.Status, out bool isError) ?? false)
-            {
-                return isError;
-            }
-
             var statusKind = message.Response.Status / 100;
             return statusKind == 4 || statusKind == 5;
         }
