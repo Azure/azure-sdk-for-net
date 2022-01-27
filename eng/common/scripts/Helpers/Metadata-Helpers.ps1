@@ -15,7 +15,8 @@ function Generate-AadToken ($TenantId, $ClientId, $ClientSecret)
     Write-Host "Generating aad token..."
     $resp = Invoke-RestMethod $LoginAPIBaseURI -Method 'POST' -Headers $headers -Body $body
     return $resp.access_token
-} 
+}
+
 function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser) 
 {
     $OpensourceAPIBaseURI = "https://repos.opensource.microsoft.com/api/people/links/github/$GithubUser"
