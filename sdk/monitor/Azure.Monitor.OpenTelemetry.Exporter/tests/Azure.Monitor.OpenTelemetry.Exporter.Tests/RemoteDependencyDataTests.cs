@@ -10,10 +10,24 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class RemoteDependencyDataTests : ActivityListenerInitializer
+    public class RemoteDependencyDataTests
     {
         private const string ActivitySourceName = "RemoteDependencyDataTests";
         private const string ActivityName = "RemoteDependencyDataActivity";
+
+        static RemoteDependencyDataTests()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
 
         [Theory]
         [InlineData("mssql")]

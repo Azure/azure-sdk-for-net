@@ -11,10 +11,24 @@ using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class TelemetryItemTests : ActivityListenerInitializer
+    public class TelemetryItemTests
     {
         private const string ActivitySourceName = "TelemetryItemTests";
         private const string ActivityName = "TestActivity";
+
+        static TelemetryItemTests()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
 
         [Fact]
         public void GeneratePartAEnvelope_DefaultActivity_DefaultResource()

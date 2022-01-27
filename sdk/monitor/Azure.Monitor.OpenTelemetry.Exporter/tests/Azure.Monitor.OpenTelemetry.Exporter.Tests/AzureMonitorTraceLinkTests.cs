@@ -12,13 +12,27 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
-    public class AzureMonitorTraceLinkTests : ActivityListenerInitializer
+    public class AzureMonitorTraceLinkTests
     {
         private const string ActivitySourceName = "AzureMonitorTraceLinkTests";
         private const string ActivityName = "AzureMonitorTraceLinkTestsActivity";
         private const string msLinks = "_MS.links";
         private const int MaxLinksAllowed = 100;
         private const int MaxLength = 8192;
+
+        static AzureMonitorTraceLinkTests()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
 
         [Theory]
         [InlineData("RequestData")]

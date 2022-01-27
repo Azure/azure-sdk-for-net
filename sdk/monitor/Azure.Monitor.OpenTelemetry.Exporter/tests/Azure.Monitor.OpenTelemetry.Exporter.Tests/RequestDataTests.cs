@@ -10,10 +10,24 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class RequestDataTests : ActivityListenerInitializer
+    public class RequestDataTests
     {
         private const string ActivitySourceName = "RequestDataTests";
         private const string ActivityName = "RequestDataActivity";
+
+        static RequestDataTests()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
 
         [Fact]
         public void ValidateHttpRequestData()

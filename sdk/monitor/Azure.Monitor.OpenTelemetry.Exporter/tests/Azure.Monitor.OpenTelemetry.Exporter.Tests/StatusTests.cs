@@ -9,10 +9,24 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
-    public class StatusTests : ActivityListenerInitializer
+    public class StatusTests
     {
         private const string ActivitySourceName = "StatusTests";
         private const string ActivityName = "StatusActivity";
+
+        static StatusTests()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
 
         [Theory]
         [InlineData("Ok", null)]
