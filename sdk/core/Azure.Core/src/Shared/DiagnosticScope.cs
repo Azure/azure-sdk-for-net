@@ -552,12 +552,10 @@ namespace Azure.Core.Pipeline
                     var tagsParameter = Expression.Parameter(typeof(object));
 
                     ActivityAddEventMethod = Expression.Lambda<Action<Activity, string, DateTimeOffset, object?>>(
-                            //Expression.TryCatch(
                             Expression.Call(ActivityParameter, method,
                                 Expression.Convert(
                                     Expression.New(ctor, nameParameter, timestampParameter, Expression.Convert(tagsParameter, ActivityTagsCollectionType)),
                                     ActivityEventType!)),
-                        /*Expression.Catch(typeof(Exception), Expression.Default(typeof(object)))),*/
                              ActivityParameter, nameParameter, timestampParameter, tagsParameter).Compile();
                 }
             }
