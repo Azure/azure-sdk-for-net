@@ -9,7 +9,7 @@
         "x-ms-client-request-id": [
           "84aafe67-002a-4a4d-9f55-175d5a118d7b"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -28,6 +28,9 @@
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:54:57 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -75,7 +78,7 @@
         "x-ms-client-request-id": [
           "b1931f8b-7cab-4974-92e2-583e0db65160"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -95,8 +98,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:54:56 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
           "https://management.azure.com/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/eastus2/capsOperations/93a39921-f9be-429b-bfdb-36126f2e38f1?api-version=2021-10-01"
@@ -154,7 +164,7 @@
         "x-ms-client-request-id": [
           "c217e4e8-a19e-41fe-af78-af62ce843354"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -174,8 +184,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:27 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
           "https://management.azure.com/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/eastus2/capsOperations/f7af2000-46ee-4bdd-bdb2-3dd4762c9a24?api-version=2021-10-01"
@@ -241,8 +258,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:27 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperationStatus3Min;1198,Microsoft.Compute/GetOperationStatus30Min;4198"
@@ -305,8 +329,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:27 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetGallery3Min;346,Microsoft.Compute/GetGallery30Min;2496"
@@ -361,7 +392,7 @@
         "x-ms-client-request-id": [
           "28a8e53b-3a9a-4f0a-b333-77ee487364d5"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -375,8 +406,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:27 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetGallery3Min;345,Microsoft.Compute/GetGallery30Min;2495"
@@ -439,8 +477,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:27 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetGallery3Min;344,Microsoft.Compute/GetGallery30Min;2494"
@@ -495,7 +540,7 @@
         "x-ms-client-request-id": [
           "89b450ef-a954-49d8-b2c2-7e023d0d5b63"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -509,8 +554,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:27 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetGallery3Min;343,Microsoft.Compute/GetGallery30Min;2493"
@@ -565,7 +617,7 @@
         "x-ms-client-request-id": [
           "c8d0ead0-e062-490a-8923-c144dd338fe1"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -584,6 +636,9 @@
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -631,7 +686,7 @@
         "x-ms-client-request-id": [
           "fa06ba3a-df83-4a36-b0e3-50e6ab5e844e"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -651,8 +706,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:55:37 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
           "https://management.azure.com/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/eastus2/capsOperations/06d4fa51-ae16-4a54-b3d6-19cde3e87809?api-version=2021-10-01"
@@ -718,8 +780,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:07 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperationStatus3Min;1196,Microsoft.Compute/GetOperationStatus30Min;4196"
@@ -782,8 +851,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:07 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetGallery3Min;336,Microsoft.Compute/GetGallery30Min;2486"
@@ -838,7 +914,7 @@
         "x-ms-client-request-id": [
           "aafb44c1-7d35-4296-81f0-6d7ce65e006c"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -852,8 +928,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:07 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/ListGalleryInResourceGroup3Min;99,Microsoft.Compute/ListGalleryInResourceGroup30Min;999"
@@ -908,7 +991,7 @@
         "x-ms-client-request-id": [
           "6c4844b5-b02e-4efc-a967-acad64115be3"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -921,6 +1004,9 @@
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:57:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -951,9 +1037,6 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "12"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -968,7 +1051,7 @@
         "x-ms-client-request-id": [
           "af3b8ebf-bb36-48db-887f-73491dd231af"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -981,6 +1064,9 @@
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1047,7 +1133,7 @@
         "x-ms-client-request-id": [
           "9c469c8d-39bc-4728-88ab-6c90c62c2ff0"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -1060,6 +1146,9 @@
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1103,9 +1192,6 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "0"
         ]
       },
       "ResponseBody": "",
@@ -1128,8 +1214,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:39 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperationStatus3Min;1194,Microsoft.Compute/GetOperationStatus30Min;4194"
@@ -1192,8 +1285,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:39 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperationStatus3Min;1193,Microsoft.Compute/GetOperationStatus30Min;4193"
@@ -1228,9 +1328,6 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "0"
         ]
       },
       "ResponseBody": "",
@@ -1245,7 +1342,7 @@
         "x-ms-client-request-id": [
           "539b1cab-4366-4144-86bd-e59ed41fd3a4"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
@@ -1258,6 +1355,9 @@
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:56:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1301,9 +1401,6 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "0"
         ]
       },
       "ResponseBody": "",
@@ -1326,8 +1423,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:57:09 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperationStatus3Min;1191,Microsoft.Compute/GetOperationStatus30Min;4191"
@@ -1390,8 +1494,15 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 24 Dec 2021 12:57:09 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperationStatus3Min;1190,Microsoft.Compute/GetOperationStatus30Min;4190"
@@ -1426,9 +1537,6 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "0"
         ]
       },
       "ResponseBody": "",
