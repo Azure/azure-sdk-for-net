@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Calling
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallingServer.Tests", "Azure.Communication.CallingServer\tests\Azure.Communication.CallingServer.Tests.csproj", "{B7C0269B-1809-4713-A7BD-390098AB7135}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{78638C36-A6ED-47CE-BC99-76BD8725DE92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,10 @@ Global
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7C0269B-1809-4713-A7BD-390098AB7135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78638C36-A6ED-47CE-BC99-76BD8725DE92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

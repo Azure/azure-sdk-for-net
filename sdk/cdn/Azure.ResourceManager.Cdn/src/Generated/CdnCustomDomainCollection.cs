@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             if (customDomainName == null)
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.ExistsAsync");
             scope.Start();
             try
             {

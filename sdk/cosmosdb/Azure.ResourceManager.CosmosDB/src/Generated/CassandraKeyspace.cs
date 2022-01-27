@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A Class representing a CassandraKeyspace along with the instance operations that can be performed on it. </summary>
     public partial class CassandraKeyspace : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="CassandraKeyspace"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CassandraResourcesRestOperations _cassandraResourcesRestClient;
         private readonly CassandraKeyspaceData _data;

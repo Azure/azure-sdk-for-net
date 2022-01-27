@@ -32,6 +32,18 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the client
+
+In order to interact with the Azure Blobs Storage service, you'll need to create an instance of the BlobServiceClient class.  The [Azure Identity library][identity] makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+
+```C# Snippet:SampleSnippetsBlob_Auth
+// Create a BlobServiceClient that will authenticate through Active Directory
+Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
+BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
+```
+
+Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
+
 ## Key concepts
 
 Blob storage is designed for:
@@ -140,18 +152,6 @@ string downloadPath = "hello.jpg";
 // Download the public blob at https://aka.ms/bloburl
 await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
 ```
-
-### Authenticating with Azure.Identity
-
-The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
-
-```C# Snippet:SampleSnippetsBlob_Auth
-// Create a BlobServiceClient that will authenticate through Active Directory
-Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
-BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
-```
-
-Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
 
 ## Troubleshooting
 

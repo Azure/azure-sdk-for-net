@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string syncAgentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string syncAgentName, CancellationToken cancellationToken = default)
         {
             if (syncAgentName == null)
             {
                 throw new ArgumentNullException(nameof(syncAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
             if (syncAgentName == null)
             {
                 throw new ArgumentNullException(nameof(syncAgentName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SyncAgentCollection.ExistsAsync");
             scope.Start();
             try
             {

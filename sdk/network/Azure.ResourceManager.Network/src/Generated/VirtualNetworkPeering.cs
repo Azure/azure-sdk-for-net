@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a VirtualNetworkPeering along with the instance operations that can be performed on it. </summary>
     public partial class VirtualNetworkPeering : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkPeering"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/virtualNetworkPeerings/{virtualNetworkPeeringName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualNetworkPeeringsRestOperations _virtualNetworkPeeringsRestClient;
         private readonly VirtualNetworkPeeringData _data;

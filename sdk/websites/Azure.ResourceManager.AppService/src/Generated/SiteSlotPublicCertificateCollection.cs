@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string publicCertificateName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (publicCertificateName == null)
             {
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.Exists");
             scope.Start();
             try
             {
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             if (publicCertificateName == null)
             {
                 throw new ArgumentNullException(nameof(publicCertificateName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotPublicCertificateCollection.ExistsAsync");
             scope.Start();
             try
             {

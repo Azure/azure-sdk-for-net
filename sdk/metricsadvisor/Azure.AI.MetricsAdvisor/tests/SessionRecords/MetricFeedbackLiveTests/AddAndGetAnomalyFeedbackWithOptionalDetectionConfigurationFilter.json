@@ -17,7 +17,7 @@
         "x-ms-client-request-id": "b61c7bcddc21f1c9f73ac0dbc3433c5b",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022startTime\u0022:\u00222020-09-26T00:00:00Z\u0022,\u0022endTime\u0022:\u00222020-09-29T00:00:00Z\u0022,\u0022value\u0022:{\u0022anomalyValue\u0022:\u0022AutoDetect\u0022},\u0022anomalyDetectionConfigurationId\u0022:\u0022efaee305-f049-43ec-9f9b-76026d55c14a\u0022,\u0022feedbackType\u0022:\u0022Anomaly\u0022,\u0022metricId\u0022:\u0022390d1139-98fb-45af-b831-8d5ad61b150a\u0022,\u0022dimensionFilter\u0022:{\u0022dimension\u0022:{\u0022region\u0022:\u0022Cairo\u0022,\u0022category\u0022:\u0022Shoes Handbags \u0026 Sunglasses\u0022}}}",
+      "RequestBody": "{\u0022startTime\u0022:\u00222020-09-26T00:00:00.0000000Z\u0022,\u0022endTime\u0022:\u00222020-09-29T00:00:00.0000000Z\u0022,\u0022value\u0022:{\u0022anomalyValue\u0022:\u0022AutoDetect\u0022},\u0022anomalyDetectionConfigurationId\u0022:\u0022efaee305-f049-43ec-9f9b-76026d55c14a\u0022,\u0022feedbackType\u0022:\u0022Anomaly\u0022,\u0022metricId\u0022:\u0022390d1139-98fb-45af-b831-8d5ad61b150a\u0022,\u0022dimensionFilter\u0022:{\u0022dimension\u0022:{\u0022region\u0022:\u0022Cairo\u0022,\u0022category\u0022:\u0022Shoes Handbags \u0026 Sunglasses\u0022}}}",
       "StatusCode": 201,
       "ResponseHeaders": {
         "apim-request-id": "9fb748e6-357a-4afd-a892-1744d7dd49db",
@@ -70,8 +70,8 @@
           }
         },
         "feedbackType": "Anomaly",
-        "startTime": "2020-09-26T00:00:00Z",
-        "endTime": "2020-09-29T00:00:00Z",
+        "startTime": "2020-09-26T00:00:00.0000000Z",
+        "endTime": "2020-09-29T00:00:00.0000000Z",
         "value": {
           "anomalyValue": "AutoDetect"
         },

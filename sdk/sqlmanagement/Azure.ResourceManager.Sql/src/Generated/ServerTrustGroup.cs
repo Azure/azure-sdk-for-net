@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ServerTrustGroup along with the instance operations that can be performed on it. </summary>
     public partial class ServerTrustGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ServerTrustGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ServerTrustGroupsRestOperations _serverTrustGroupsRestClient;
         private readonly ServerTrustGroupData _data;

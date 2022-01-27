@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A Class representing a MhsmPrivateEndpointConnection along with the instance operations that can be performed on it. </summary>
     public partial class MhsmPrivateEndpointConnection : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="MhsmPrivateEndpointConnection"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateEndpointConnections/{privateEndpointConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MhsmPrivateEndpointConnectionsRestOperations _mHSMPrivateEndpointConnectionsRestClient;
         private readonly MhsmPrivateEndpointConnectionData _data;

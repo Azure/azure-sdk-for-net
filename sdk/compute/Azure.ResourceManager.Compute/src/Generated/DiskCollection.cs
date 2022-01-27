@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string diskName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string diskName, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
                 throw new ArgumentNullException(nameof(diskName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DiskCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diskName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string diskName, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
                 throw new ArgumentNullException(nameof(diskName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskCollection.ExistsAsync");
             scope.Start();
             try
             {

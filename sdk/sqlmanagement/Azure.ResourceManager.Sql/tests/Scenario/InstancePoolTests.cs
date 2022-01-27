@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(8,instancePool.Data.VCores);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(instancePoolName));
+            Assert.IsTrue(collection.Exists(instancePoolName));
 
             // 3.Get
             var getInstancePool =await collection.GetAsync(instancePoolName);

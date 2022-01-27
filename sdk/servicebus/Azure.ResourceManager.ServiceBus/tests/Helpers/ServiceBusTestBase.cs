@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected ServiceBusTestBase(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        protected ServiceBusTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
-        protected ServiceBusTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, useLegacyTransport: true)
+        protected ServiceBusTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             {
                 Assert.AreEqual(DefaultLocation, sBNamespace.Data.Location);
                 Assert.AreEqual(SkuTier.Standard, sBNamespace.Data.Sku.Tier);
+            }
+        }
+
+        public void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
             }
         }
     }

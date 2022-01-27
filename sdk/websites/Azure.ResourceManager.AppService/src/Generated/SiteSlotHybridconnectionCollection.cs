@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string entityName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string entityName, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             if (entityName == null)
             {
                 throw new ArgumentNullException(nameof(entityName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SiteSlotHybridconnectionCollection.ExistsAsync");
             scope.Start();
             try
             {

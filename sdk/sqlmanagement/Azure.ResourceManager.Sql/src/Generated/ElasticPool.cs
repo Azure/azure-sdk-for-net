@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ElasticPool along with the instance operations that can be performed on it. </summary>
     public partial class ElasticPool : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ElasticPool"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ElasticPoolsRestOperations _elasticPoolsRestClient;
         private readonly DatabasesRestOperations _databasesRestClient;

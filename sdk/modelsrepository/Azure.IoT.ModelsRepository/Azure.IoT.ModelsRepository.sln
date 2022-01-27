@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsRepositoryClientSamples", "samples\ModelsRepositoryClientSamples\ModelsRepositoryClientSamples.csproj", "{51E4AB9E-46F3-450C-B52A-C4C6378E8BA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{D9CAD23D-60CF-4CA7-8683-3507A81DE2FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{51E4AB9E-46F3-450C-B52A-C4C6378E8BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51E4AB9E-46F3-450C-B52A-C4C6378E8BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51E4AB9E-46F3-450C-B52A-C4C6378E8BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9CAD23D-60CF-4CA7-8683-3507A81DE2FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9CAD23D-60CF-4CA7-8683-3507A81DE2FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9CAD23D-60CF-4CA7-8683-3507A81DE2FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9CAD23D-60CF-4CA7-8683-3507A81DE2FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

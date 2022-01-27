@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a BlobInventoryPolicy along with the instance operations that can be performed on it. </summary>
     public partial class BlobInventoryPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="BlobInventoryPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string blobInventoryPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly BlobInventoryPoliciesRestOperations _blobInventoryPoliciesRestClient;
         private readonly BlobInventoryPolicyData _data;

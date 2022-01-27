@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string routeTableName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string routeTableName, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("HubRouteTableCollection.ExistsAsync");
             scope.Start();
             try
             {

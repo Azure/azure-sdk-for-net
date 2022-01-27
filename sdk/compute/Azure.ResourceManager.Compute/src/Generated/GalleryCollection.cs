@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.ExistsAsync");
             scope.Start();
             try
             {

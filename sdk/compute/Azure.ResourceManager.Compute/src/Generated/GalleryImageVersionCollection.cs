@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (galleryImageVersionName == null)
             {
                 throw new ArgumentNullException(nameof(galleryImageVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (galleryImageVersionName == null)
             {
                 throw new ArgumentNullException(nameof(galleryImageVersionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionCollection.ExistsAsync");
             scope.Start();
             try
             {

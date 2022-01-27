@@ -17,6 +17,8 @@ options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 
 ### Bugs Fixed
 
+- Fixed a bug where requests were failing with `NotImplementedException` on Unity with .NET Framework scripting.
+
 ### Other Changes
 
 ## 1.21.0 (2021-11-03)

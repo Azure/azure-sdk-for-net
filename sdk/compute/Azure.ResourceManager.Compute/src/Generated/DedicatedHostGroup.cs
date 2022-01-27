@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a DedicatedHostGroup along with the instance operations that can be performed on it. </summary>
     public partial class DedicatedHostGroup : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DedicatedHostGroup"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostGroupName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DedicatedHostGroupsRestOperations _dedicatedHostGroupsRestClient;
         private readonly DedicatedHostGroupData _data;

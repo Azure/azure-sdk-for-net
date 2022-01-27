@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string queueName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string queueName, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
                 throw new ArgumentNullException(nameof(queueName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("StorageQueueCollection.ExistsAsync");
             scope.Start();
             try
             {

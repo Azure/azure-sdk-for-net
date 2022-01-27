@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             DeepCreatedOriginGroup deepCreatedOriginGroup = ResourceDataHelper.CreateDeepCreatedOriginGroup();
             deepCreatedOriginGroup.Origins.Add(new WritableSubResource
             {
-                Id = $"{profile.Id}/endpoints/{endpointName}/origins/{deepCreatedOrigin.Name}"
+                Id = new ResourceIdentifier($"{profile.Id}/endpoints/{endpointName}/origins/{deepCreatedOrigin.Name}")
             });
             input.Origins.Add(deepCreatedOrigin);
             input.OriginGroups.Add(deepCreatedOriginGroup);
             input.DefaultOriginGroup = new EndpointPropertiesUpdateParametersDefaultOriginGroup
             {
-                Id = $"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}"
+                Id = new ResourceIdentifier($"{profile.Id}/endpoints/{endpointName}/originGroups/{deepCreatedOriginGroup.Name}")
             };
             var lro = await profile.GetCdnEndpoints().CreateOrUpdateAsync(endpointName, input);
             return lro.Value;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnOriginGroupData input = ResourceDataHelper.CreateOriginGroupData();
             input.Origins.Add(new WritableSubResource
             {
-                Id = $"{endpoint.Id}/origins/{originName}"
+                Id = new ResourceIdentifier($"{endpoint.Id}/origins/{originName}")
             });
             var lro = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(originGroupName, input);
             return lro.Value;

@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ResourceHealthMetadata_ListByResourceGroup
-        /// <summary> Lists the ResourceHealthMetadataDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the ResourceHealthMetadataData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataData> GetResourceHealthMetadatasAsync(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
         {
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ResourceHealthMetadata_ListByResourceGroup
-        /// <summary> Lists the ResourceHealthMetadataDatas for this <see cref="ResourceGroup" />. </summary>
+        /// <summary> Lists the ResourceHealthMetadataData for this <see cref="ResourceGroup" />. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataData> GetResourceHealthMetadatas(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
         {
             return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                 var restOperations = GetResourceHealthMetadataRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
                 Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetResourceHealthMetadatas");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAllResourceHealthMetadata");
                     scope.Start();
                     try
                     {

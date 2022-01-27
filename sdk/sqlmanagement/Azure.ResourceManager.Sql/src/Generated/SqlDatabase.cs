@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a SqlDatabase along with the instance operations that can be performed on it. </summary>
     public partial class SqlDatabase : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="SqlDatabase"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabasesRestOperations _databasesRestClient;
         private readonly DatabaseColumnsRestOperations _databaseColumnsRestClient;
@@ -1768,11 +1774,11 @@ namespace Azure.ResourceManager.Sql
 
         #region DataMaskingPolicy
 
-        /// <summary> Gets a collection of DataMaskingPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DataMaskingPolicies and their operations over a SqlDatabase. </returns>
-        public DataMaskingPolicyCollection GetDataMaskingPolicies()
+        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
+        public DataMaskingPolicy GetDataMaskingPolicy()
         {
-            return new DataMaskingPolicyCollection(this);
+            return new DataMaskingPolicy(this, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
         }
         #endregion
 

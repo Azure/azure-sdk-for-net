@@ -10,184 +10,96 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StageName.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum StageName
+    public static class StageName
     {
         /// <summary>
         /// An order has been created.
         /// </summary>
-        [EnumMember(Value = "DeviceOrdered")]
-        DeviceOrdered,
+        public const string DeviceOrdered = "DeviceOrdered";
         /// <summary>
         /// A device has been prepared for the order.
         /// </summary>
-        [EnumMember(Value = "DevicePrepared")]
-        DevicePrepared,
+        public const string DevicePrepared = "DevicePrepared";
         /// <summary>
         /// Device has been dispatched to the user of the order.
         /// </summary>
-        [EnumMember(Value = "Dispatched")]
-        Dispatched,
+        public const string Dispatched = "Dispatched";
         /// <summary>
         /// Device has been delivered to the user of the order.
         /// </summary>
-        [EnumMember(Value = "Delivered")]
-        Delivered,
+        public const string Delivered = "Delivered";
         /// <summary>
         /// Device has been picked up from user and in transit to Azure
         /// datacenter.
         /// </summary>
-        [EnumMember(Value = "PickedUp")]
-        PickedUp,
+        public const string PickedUp = "PickedUp";
         /// <summary>
         /// Device has been received at Azure datacenter from the user.
         /// </summary>
-        [EnumMember(Value = "AtAzureDC")]
-        AtAzureDC,
+        public const string AtAzureDC = "AtAzureDC";
         /// <summary>
         /// Data copy from the device at Azure datacenter.
         /// </summary>
-        [EnumMember(Value = "DataCopy")]
-        DataCopy,
+        public const string DataCopy = "DataCopy";
         /// <summary>
         /// Order has completed.
         /// </summary>
-        [EnumMember(Value = "Completed")]
-        Completed,
+        public const string Completed = "Completed";
         /// <summary>
         /// Order has completed with errors.
         /// </summary>
-        [EnumMember(Value = "CompletedWithErrors")]
-        CompletedWithErrors,
+        public const string CompletedWithErrors = "CompletedWithErrors";
         /// <summary>
         /// Order has been cancelled.
         /// </summary>
-        [EnumMember(Value = "Cancelled")]
-        Cancelled,
+        public const string Cancelled = "Cancelled";
         /// <summary>
         /// Order has failed due to issue reported by user.
         /// </summary>
-        [EnumMember(Value = "Failed_IssueReportedAtCustomer")]
-        FailedIssueReportedAtCustomer,
+        public const string FailedIssueReportedAtCustomer = "Failed_IssueReportedAtCustomer";
         /// <summary>
         /// Order has failed due to issue detected at Azure datacenter.
         /// </summary>
-        [EnumMember(Value = "Failed_IssueDetectedAtAzureDC")]
-        FailedIssueDetectedAtAzureDC,
+        public const string FailedIssueDetectedAtAzureDC = "Failed_IssueDetectedAtAzureDC";
         /// <summary>
         /// Order has been aborted.
         /// </summary>
-        [EnumMember(Value = "Aborted")]
-        Aborted,
+        public const string Aborted = "Aborted";
         /// <summary>
         /// Order has completed with warnings.
         /// </summary>
-        [EnumMember(Value = "CompletedWithWarnings")]
-        CompletedWithWarnings,
+        public const string CompletedWithWarnings = "CompletedWithWarnings";
         /// <summary>
         /// Device is ready to be handed to customer from Azure DC.
         /// </summary>
-        [EnumMember(Value = "ReadyToDispatchFromAzureDC")]
-        ReadyToDispatchFromAzureDC,
+        public const string ReadyToDispatchFromAzureDC = "ReadyToDispatchFromAzureDC";
         /// <summary>
         /// Device can be dropped off at Azure DC.
         /// </summary>
-        [EnumMember(Value = "ReadyToReceiveAtAzureDC")]
-        ReadyToReceiveAtAzureDC
-    }
-    internal static class StageNameEnumExtension
-    {
-        internal static string ToSerializedValue(this StageName? value)
-        {
-            return value == null ? null : ((StageName)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this StageName value)
-        {
-            switch( value )
-            {
-                case StageName.DeviceOrdered:
-                    return "DeviceOrdered";
-                case StageName.DevicePrepared:
-                    return "DevicePrepared";
-                case StageName.Dispatched:
-                    return "Dispatched";
-                case StageName.Delivered:
-                    return "Delivered";
-                case StageName.PickedUp:
-                    return "PickedUp";
-                case StageName.AtAzureDC:
-                    return "AtAzureDC";
-                case StageName.DataCopy:
-                    return "DataCopy";
-                case StageName.Completed:
-                    return "Completed";
-                case StageName.CompletedWithErrors:
-                    return "CompletedWithErrors";
-                case StageName.Cancelled:
-                    return "Cancelled";
-                case StageName.FailedIssueReportedAtCustomer:
-                    return "Failed_IssueReportedAtCustomer";
-                case StageName.FailedIssueDetectedAtAzureDC:
-                    return "Failed_IssueDetectedAtAzureDC";
-                case StageName.Aborted:
-                    return "Aborted";
-                case StageName.CompletedWithWarnings:
-                    return "CompletedWithWarnings";
-                case StageName.ReadyToDispatchFromAzureDC:
-                    return "ReadyToDispatchFromAzureDC";
-                case StageName.ReadyToReceiveAtAzureDC:
-                    return "ReadyToReceiveAtAzureDC";
-            }
-            return null;
-        }
-
-        internal static StageName? ParseStageName(this string value)
-        {
-            switch( value )
-            {
-                case "DeviceOrdered":
-                    return StageName.DeviceOrdered;
-                case "DevicePrepared":
-                    return StageName.DevicePrepared;
-                case "Dispatched":
-                    return StageName.Dispatched;
-                case "Delivered":
-                    return StageName.Delivered;
-                case "PickedUp":
-                    return StageName.PickedUp;
-                case "AtAzureDC":
-                    return StageName.AtAzureDC;
-                case "DataCopy":
-                    return StageName.DataCopy;
-                case "Completed":
-                    return StageName.Completed;
-                case "CompletedWithErrors":
-                    return StageName.CompletedWithErrors;
-                case "Cancelled":
-                    return StageName.Cancelled;
-                case "Failed_IssueReportedAtCustomer":
-                    return StageName.FailedIssueReportedAtCustomer;
-                case "Failed_IssueDetectedAtAzureDC":
-                    return StageName.FailedIssueDetectedAtAzureDC;
-                case "Aborted":
-                    return StageName.Aborted;
-                case "CompletedWithWarnings":
-                    return StageName.CompletedWithWarnings;
-                case "ReadyToDispatchFromAzureDC":
-                    return StageName.ReadyToDispatchFromAzureDC;
-                case "ReadyToReceiveAtAzureDC":
-                    return StageName.ReadyToReceiveAtAzureDC;
-            }
-            return null;
-        }
+        public const string ReadyToReceiveAtAzureDC = "ReadyToReceiveAtAzureDC";
+        /// <summary>
+        /// Job created by the customer.
+        /// </summary>
+        public const string Created = "Created";
+        /// <summary>
+        /// User shipped the device to AzureDC.
+        /// </summary>
+        public const string ShippedToAzureDC = "ShippedToAzureDC";
+        /// <summary>
+        /// Awaiting shipment details of device from customer.
+        /// </summary>
+        public const string AwaitingShipmentDetails = "AwaitingShipmentDetails";
+        /// <summary>
+        /// Preparing the device to ship to customer.
+        /// </summary>
+        public const string PreparingToShipFromAzureDC = "PreparingToShipFromAzureDC";
+        /// <summary>
+        /// Shipped the device to customer.
+        /// </summary>
+        public const string ShippedToCustomer = "ShippedToCustomer";
     }
 }

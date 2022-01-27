@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
         {
             _predefinedTag = null;
             ///subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/tagNames/platformsettings.host_environment.service.platform_optedin_for_rootcerts
-            var resource = Client.GetPreDefinedTag($"/subscriptions/{Guid.NewGuid()}/tagNames/fakeTagName");
+            var resource = Client.GetPreDefinedTag(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/tagNames/fakeTagName"));
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
@@ -42,10 +42,9 @@ namespace Azure.ResourceManager.Tests
         {
             _predefinedTag = null;
             Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false); 
-            var operation = Client.GetPreDefinedTag($"/subscriptions/{subscription.Id.SubscriptionId}/tagNames/fakeTagName");
-            string subscriptionId;
-            Assert.IsTrue(operation.Id.TryGetSubscriptionId(out subscriptionId));
-            Assert.AreEqual(subscriptionId, TestEnvironment.SubscriptionId);
+            var operation = Client.GetPreDefinedTag(new ResourceIdentifier($"/subscriptions/{subscription.Id.SubscriptionId}/tagNames/fakeTagName"));
+            Assert.NotNull(operation.Id.SubscriptionId);
+            Assert.AreEqual(operation.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
         [TestCase]

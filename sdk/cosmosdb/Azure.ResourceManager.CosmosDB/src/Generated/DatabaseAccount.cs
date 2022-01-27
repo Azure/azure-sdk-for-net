@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A Class representing a DatabaseAccount along with the instance operations that can be performed on it. </summary>
     public partial class DatabaseAccount : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="DatabaseAccount"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DatabaseAccountsRestOperations _databaseAccountsRestClient;
         private readonly DatabaseRestOperations _databaseRestClient;

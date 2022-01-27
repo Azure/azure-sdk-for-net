@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="encryptionType">Possible values include:
         /// 'EncryptionAtRestWithCustomerKey',
-        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'</param>
         /// <param name="activeKey">The key vault key which is currently used
         /// by this disk encryption set.</param>
         /// <param name="previousKeys">A readonly collection of key vault keys
@@ -86,7 +87,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets possible values include:
         /// 'EncryptionAtRestWithCustomerKey',
-        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionType")]
         public string EncryptionType { get; set; }

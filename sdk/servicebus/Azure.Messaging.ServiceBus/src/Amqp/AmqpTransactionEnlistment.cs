@@ -7,6 +7,7 @@ using System.Transactions;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Transaction;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using System.Threading;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -31,13 +32,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public ArraySegment<byte> AmqpTransactionId { get; private set; }
 
-        protected override async Task<AmqpTransactionEnlistment> OnCreateAsync(TimeSpan timeout)
+        protected override async Task<AmqpTransactionEnlistment> OnCreateAsync(TimeSpan timeout, CancellationToken cancellationToken)
         {
             try
             {
                 Controller controller = await GetController(timeout).ConfigureAwait(false);
 
-                AmqpTransactionId = await controller.DeclareAsync().ConfigureAwait(false);
+                AmqpTransactionId = await controller.DeclareAsync(cancellationToken).ConfigureAwait(false);
                 ServiceBusEventSource.Log.TransactionDeclared(_transactionId, AmqpTransactionId);
                 return this;
             }

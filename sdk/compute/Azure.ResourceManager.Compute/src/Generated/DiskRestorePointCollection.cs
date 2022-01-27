@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string diskRestorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             if (diskRestorePointName == null)
             {
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             if (diskRestorePointName == null)
             {
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointCollection.ExistsAsync");
             scope.Start();
             try
             {

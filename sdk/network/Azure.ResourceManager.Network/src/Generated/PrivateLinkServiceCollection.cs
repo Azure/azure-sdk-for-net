@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string serviceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (serviceName == null)
             {
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string serviceName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (serviceName == null)
             {
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceCollection.ExistsAsync");
             scope.Start();
             try
             {

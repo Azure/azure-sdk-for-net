@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string snapshotName, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {
                 throw new ArgumentNullException(nameof(snapshotName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.Exists");
             scope.Start();
             try
             {
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {
                 throw new ArgumentNullException(nameof(snapshotName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SnapshotCollection.ExistsAsync");
             scope.Start();
             try
             {

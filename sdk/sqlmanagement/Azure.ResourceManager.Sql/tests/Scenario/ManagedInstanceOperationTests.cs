@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Guid operationName = new Guid(list.FirstOrDefault().Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.CheckIfExists(operationName));
+            Assert.IsTrue(collection.Exists(operationName));
 
             // 3.Get
             var getOperation = await collection.GetAsync(operationName);

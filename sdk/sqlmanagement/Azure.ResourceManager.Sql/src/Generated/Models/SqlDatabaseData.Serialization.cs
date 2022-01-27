@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<Models.Sku> sku = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
             IDictionary<string, string> tags = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
             Optional<DatabaseReadScale> readScale = default;
             Optional<int> highAvailabilityReplicaCount = default;
             Optional<SecondaryType> secondaryType = default;
-            Optional<Sku> currentSku = default;
+            Optional<Models.Sku> currentSku = default;
             Optional<int> autoPauseDelay = default;
             Optional<CurrentBackupStorageRedundancy> currentBackupStorageRedundancy = default;
             Optional<RequestedBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentSku = Sku.DeserializeSku(property0.Value);
+                            currentSku = Models.Sku.DeserializeSku(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"))

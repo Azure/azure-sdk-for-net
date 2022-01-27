@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
             {
                 throw new ArgumentNullException(nameof(containerName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.ExistsAsync");
             scope.Start();
             try
             {

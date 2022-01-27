@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A Class representing a ManagementPolicy along with the instance operations that can be performed on it. </summary>
     public partial class ManagementPolicy : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ManagementPolicy"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string managementPolicyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ManagementPoliciesRestOperations _managementPoliciesRestClient;
         private readonly ManagementPolicyData _data;

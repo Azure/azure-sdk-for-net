@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string storedProcedureName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             if (storedProcedureName == null)
             {
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             if (storedProcedureName == null)
             {
                 throw new ArgumentNullException(nameof(storedProcedureName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.ExistsAsync");
             scope.Start();
             try
             {

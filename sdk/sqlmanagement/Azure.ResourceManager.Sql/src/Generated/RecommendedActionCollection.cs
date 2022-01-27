@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             if (recommendedActionName == null)
             {
                 throw new ArgumentNullException(nameof(recommendedActionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.Exists");
             scope.Start();
             try
             {
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             if (recommendedActionName == null)
             {
                 throw new ArgumentNullException(nameof(recommendedActionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("RecommendedActionCollection.ExistsAsync");
             scope.Start();
             try
             {

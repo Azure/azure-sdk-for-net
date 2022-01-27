@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (galleryImageName == null)
             {
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (galleryImageName == null)
             {
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageCollection.ExistsAsync");
             scope.Start();
             try
             {

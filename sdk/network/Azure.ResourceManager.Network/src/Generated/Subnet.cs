@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A Class representing a Subnet along with the instance operations that can be performed on it. </summary>
     public partial class Subnet : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="Subnet"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubnetsRestOperations _subnetsRestClient;
         private readonly ResourceNavigationLinksRestOperations _resourceNavigationLinksRestClient;

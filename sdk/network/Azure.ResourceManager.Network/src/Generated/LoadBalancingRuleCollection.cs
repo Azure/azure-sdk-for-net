@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             if (loadBalancingRuleName == null)
             {
                 throw new ArgumentNullException(nameof(loadBalancingRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             if (loadBalancingRuleName == null)
             {
                 throw new ArgumentNullException(nameof(loadBalancingRuleName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRuleCollection.ExistsAsync");
             scope.Start();
             try
             {

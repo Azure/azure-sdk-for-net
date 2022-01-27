@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string certificateOrderName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (certificateOrderName == null)
             {
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             if (certificateOrderName == null)
             {
                 throw new ArgumentNullException(nameof(certificateOrderName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.ExistsAsync");
             scope.Start();
             try
             {

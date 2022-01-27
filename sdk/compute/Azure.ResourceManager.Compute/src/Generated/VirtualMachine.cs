@@ -22,6 +22,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a VirtualMachine along with the instance operations that can be performed on it. </summary>
     public partial class VirtualMachine : ArmResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="VirtualMachine"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            return new ResourceIdentifier(resourceId);
+        }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly VirtualMachinesRestOperations _virtualMachinesRestClient;
         private readonly VirtualMachineData _data;
@@ -143,7 +149,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to delete a virtual machine. </summary>
-        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines.(Feature in Preview). </param>
+        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VirtualMachineDeleteOperation> DeleteAsync(bool? forceDeletion = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to delete a virtual machine. </summary>
-        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines.(Feature in Preview). </param>
+        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VirtualMachineDeleteOperation Delete(bool? forceDeletion = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)

@@ -37,7 +37,7 @@ Now that we have the resource group created, we can manage the azure front door 
 ```C# Snippet:Managing_AfdRules_CreateAnAzureFrontDoorRule
 // Create a new azure front door profile
 string AfdProfileName = "myAfdProfile";
-var input1 = new ProfileData("Global", new Sku { Name = SkuName.StandardAzureFrontDoor });
+var input1 = new ProfileData("Global", new Models.Sku { Name = SkuName.StandardAzureFrontDoor });
 ProfileCreateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(AfdProfileName, input1);
 Profile AfdProfile = lro1.Value;
 // Get the rule set collection from the specific azure front door profile and create a rule set

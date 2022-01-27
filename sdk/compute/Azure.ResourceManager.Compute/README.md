@@ -14,7 +14,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Compute management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.Compute -Version 1.0.0-beta.4
+Install-Package Azure.ResourceManager.Compute -Version 1.0.0-beta.5
 ```
 
 ### Prerequisites
@@ -148,7 +148,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
 string availabilitySetName = "myAvailabilitySet";
-bool exists = await resourceGroup.GetAvailabilitySets().CheckIfExistsAsync(availabilitySetName);
+bool exists = await resourceGroup.GetAvailabilitySets().ExistsAsync(availabilitySetName);
 
 if (exists)
 {

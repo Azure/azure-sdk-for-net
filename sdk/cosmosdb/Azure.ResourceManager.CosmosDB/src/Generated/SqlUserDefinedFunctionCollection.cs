@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             if (userDefinedFunctionName == null)
             {
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.Exists");
             scope.Start();
             try
             {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             if (userDefinedFunctionName == null)
             {
                 throw new ArgumentNullException(nameof(userDefinedFunctionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.CheckIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("SqlUserDefinedFunctionCollection.ExistsAsync");
             scope.Start();
             try
             {

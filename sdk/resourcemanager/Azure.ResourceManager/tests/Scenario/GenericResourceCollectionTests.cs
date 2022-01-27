@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(resourceId, null));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(null, ConstructGenericAvailabilitySet()));
             var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
-            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(rgId));
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(new ResourceIdentifier(rgId)));
         }
 
         [TestCase]
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Tests
             var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                var createOp = await StartCreateGenericAvailabilitySetAsync(rgId);
+                var createOp = await StartCreateGenericAvailabilitySetAsync(new ResourceIdentifier(rgId));
                 _ = await createOp.WaitForCompletionAsync();
             });
         }
