@@ -1,5 +1,22 @@
 namespace Azure.ResourceManager
 {
+    public partial class ArmAudience : System.IEquatable<Azure.ResourceManager.ArmAudience>
+    {
+        public static readonly Azure.ResourceManager.ArmAudience AzureChinaCloud;
+        public static readonly Azure.ResourceManager.ArmAudience AzureCloud;
+        public static readonly Azure.ResourceManager.ArmAudience AzureGermanCloud;
+        public static readonly Azure.ResourceManager.ArmAudience AzureUSGovernment;
+        public ArmAudience(string value) { }
+        public bool Equals(Azure.ResourceManager.ArmAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArmAudience left, Azure.ResourceManager.ArmAudience right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArmAudience (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArmAudience left, Azure.ResourceManager.ArmAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ArmClient
     {
         protected ArmClient() { }
@@ -41,7 +58,7 @@ namespace Azure.ResourceManager
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {
         public ArmClientOptions() { }
-        public string Scope { get { throw null; } set { } }
+        public Azure.ResourceManager.ArmAudience Audience { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
     }
     public abstract partial class ArmOperation : Azure.Operation

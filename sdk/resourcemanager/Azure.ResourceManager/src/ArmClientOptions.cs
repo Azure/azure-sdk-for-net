@@ -16,9 +16,9 @@ namespace Azure.ResourceManager
         internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         /// <summary>
-        /// Gets the ApiVersions object
+        /// Azure cloud audience.
         /// </summary>
-        public string Scope { get; set; } = "https://management.core.windows.net/.default";
+        public ArmAudience Audience { get; set; } = ArmAudience.AzureCloud;
 
         /// <summary>
         /// Sets the api version to use for a given resource type.
