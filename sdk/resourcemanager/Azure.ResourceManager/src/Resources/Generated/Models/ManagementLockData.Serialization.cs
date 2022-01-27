@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ManagementLockObjectData : IUtf8JsonSerializable
+    public partial class ManagementLockData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
             writer.WriteEndObject();
         }
 
-        internal static ManagementLockObjectData DeserializeManagementLockObjectData(JsonElement element)
+        internal static ManagementLockData DeserializeManagementLockData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ManagementLockObjectData(id, name, type, level, notes.Value, Optional.ToList(owners));
+            return new ManagementLockData(id, name, type, level, notes.Value, Optional.ToList(owners));
         }
     }
 }

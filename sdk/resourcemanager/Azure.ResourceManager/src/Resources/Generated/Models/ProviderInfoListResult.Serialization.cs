@@ -8,15 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ManagementLockListResult
+    internal partial class ProviderInfoListResult
     {
-        internal static ManagementLockListResult DeserializeManagementLockListResult(JsonElement element)
+        internal static ProviderInfoListResult DeserializeProviderInfoListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagementLockData>> value = default;
+            Optional<IReadOnlyList<ProviderInfo>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagementLockData> array = new List<ManagementLockData>();
+                    List<ProviderInfo> array = new List<ProviderInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementLockData.DeserializeManagementLockData(item));
+                        array.Add(ProviderInfo.DeserializeProviderInfo(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ManagementLockListResult(Optional.ToList(value), nextLink.Value);
+            return new ProviderInfoListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

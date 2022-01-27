@@ -14,16 +14,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Delete a management lock by scope. </summary>
-    public partial class ManagementLockObjectDeleteOperation : Operation
+    public partial class ManagementLockDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagementLockObjectDeleteOperation for mocking. </summary>
-        protected ManagementLockObjectDeleteOperation()
+        /// <summary> Initializes a new instance of ManagementLockDeleteOperation for mocking. </summary>
+        protected ManagementLockDeleteOperation()
         {
         }
 
-        internal ManagementLockObjectDeleteOperation(Response response)
+        internal ManagementLockDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

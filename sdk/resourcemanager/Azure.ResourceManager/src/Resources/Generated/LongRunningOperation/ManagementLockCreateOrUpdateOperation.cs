@@ -16,25 +16,25 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Create or update a management lock by scope. </summary>
-    public partial class ManagementLockObjectCreateOrUpdateOperation : Operation<ManagementLockObject>
+    public partial class ManagementLockCreateOrUpdateOperation : Operation<ManagementLock>
     {
-        private readonly OperationOrResponseInternals<ManagementLockObject> _operation;
+        private readonly OperationOrResponseInternals<ManagementLock> _operation;
 
-        /// <summary> Initializes a new instance of ManagementLockObjectCreateOrUpdateOperation for mocking. </summary>
-        protected ManagementLockObjectCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of ManagementLockCreateOrUpdateOperation for mocking. </summary>
+        protected ManagementLockCreateOrUpdateOperation()
         {
         }
 
-        internal ManagementLockObjectCreateOrUpdateOperation(ArmClient armClient, Response<ManagementLockObjectData> response)
+        internal ManagementLockCreateOrUpdateOperation(ArmClient armClient, Response<ManagementLockData> response)
         {
-            _operation = new OperationOrResponseInternals<ManagementLockObject>(Response.FromValue(new ManagementLockObject(armClient, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ManagementLock>(Response.FromValue(new ManagementLock(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ManagementLockObject Value => _operation.Value;
+        public override ManagementLock Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Resources.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ManagementLockObject>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ManagementLock>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ManagementLockObject>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ManagementLock>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

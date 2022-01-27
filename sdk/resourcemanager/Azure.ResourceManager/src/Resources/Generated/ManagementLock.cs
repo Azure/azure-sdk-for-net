@@ -19,42 +19,42 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ManagementLockObject along with the instance operations that can be performed on it. </summary>
-    public partial class ManagementLockObject : ArmResource
+    /// <summary> A Class representing a ManagementLock along with the instance operations that can be performed on it. </summary>
+    public partial class ManagementLock : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagementLockObject"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ManagementLock"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string lockName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/locks/{lockName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _managementLockObjectManagementLocksClientDiagnostics;
-        private readonly ManagementLocksRestOperations _managementLockObjectManagementLocksRestClient;
-        private readonly ManagementLockObjectData _data;
+        private readonly ClientDiagnostics _managementLockClientDiagnostics;
+        private readonly ManagementLocksRestOperations _managementLockRestClient;
+        private readonly ManagementLockData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementLockObject"/> class for mocking. </summary>
-        protected ManagementLockObject()
+        /// <summary> Initializes a new instance of the <see cref="ManagementLock"/> class for mocking. </summary>
+        protected ManagementLock()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementLockObject"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ManagementLock"/> class. </summary>
         /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementLockObject(ArmClient armClient, ManagementLockObjectData data) : this(armClient, data.Id)
+        internal ManagementLock(ArmClient armClient, ManagementLockData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementLockObject"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementLock"/> class. </summary>
         /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementLockObject(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ManagementLock(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _managementLockObjectManagementLocksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string managementLockObjectManagementLocksApiVersion);
-            _managementLockObjectManagementLocksRestClient = new ManagementLocksRestOperations(_managementLockObjectManagementLocksClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockObjectManagementLocksApiVersion);
+            _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string managementLockApiVersion);
+            _managementLockRestClient = new ManagementLocksRestOperations(_managementLockClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagementLockObjectData Data
+        public virtual ManagementLockData Data
         {
             get
             {
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.Resources
         /// OperationId: ManagementLocks_GetByScope
         /// <summary> Get a management lock by scope. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagementLockObject>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementLock>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockObjectManagementLocksClientDiagnostics.CreateScope("ManagementLockObject.Get");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Get");
             scope.Start();
             try
             {
-                var response = await _managementLockObjectManagementLocksRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managementLockRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managementLockObjectManagementLocksClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementLockObject(ArmClient, response.Value), response.GetRawResponse());
+                    throw await _managementLockClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// OperationId: ManagementLocks_GetByScope
         /// <summary> Get a management lock by scope. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementLockObject> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagementLock> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockObjectManagementLocksClientDiagnostics.CreateScope("ManagementLockObject.Get");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Get");
             scope.Start();
             try
             {
-                var response = _managementLockObjectManagementLocksRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
+                var response = _managementLockRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _managementLockObjectManagementLocksClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLockObject(ArmClient, response.Value), response.GetRawResponse());
+                    throw _managementLockClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockObjectManagementLocksClientDiagnostics.CreateScope("ManagementLockObject.GetAvailableLocations");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockObjectManagementLocksClientDiagnostics.CreateScope("ManagementLockObject.GetAvailableLocations");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Delete a management lock by scope. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementLockObjectDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementLockDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockObjectManagementLocksClientDiagnostics.CreateScope("ManagementLockObject.Delete");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Delete");
             scope.Start();
             try
             {
-                var response = await _managementLockObjectManagementLocksRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockObjectDeleteOperation(response);
+                var response = await _managementLockRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagementLockDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Delete a management lock by scope. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementLockObjectDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ManagementLockDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockObjectManagementLocksClientDiagnostics.CreateScope("ManagementLockObject.Delete");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Delete");
             scope.Start();
             try
             {
-                var response = _managementLockObjectManagementLocksRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ManagementLockObjectDeleteOperation(response);
+                var response = _managementLockRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
+                var operation = new ManagementLockDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -12,25 +12,25 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ManagementLockObject data model. </summary>
-    public partial class ManagementLockObjectData : Resource
+    /// <summary> A class representing the ManagementLock data model. </summary>
+    public partial class ManagementLockData : Resource
     {
-        /// <summary> Initializes a new instance of ManagementLockObjectData. </summary>
+        /// <summary> Initializes a new instance of ManagementLockData. </summary>
         /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can&apos;t modify or delete it. </param>
-        public ManagementLockObjectData(LockLevel level)
+        public ManagementLockData(LockLevel level)
         {
             Level = level;
             Owners = new ChangeTrackingList<ManagementLockOwner>();
         }
 
-        /// <summary> Initializes a new instance of ManagementLockObjectData. </summary>
+        /// <summary> Initializes a new instance of ManagementLockData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can&apos;t modify or delete it. </param>
         /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
         /// <param name="owners"> The owners of the lock. </param>
-        internal ManagementLockObjectData(ResourceIdentifier id, string name, ResourceType type, LockLevel level, string notes, IList<ManagementLockOwner> owners) : base(id, name, type)
+        internal ManagementLockData(ResourceIdentifier id, string name, ResourceType type, LockLevel level, string notes, IList<ManagementLockOwner> owners) : base(id, name, type)
         {
             Level = level;
             Notes = notes;
