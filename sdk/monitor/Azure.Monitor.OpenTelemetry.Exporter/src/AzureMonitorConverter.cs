@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     foreach (ref var metricPoint in metric.GetMetricPoints())
                     {
-                        telemetryItem = new TelemetryItem("Metric", TelemetryItem.FormatUtcTimestamp(metricPoint.EndTime.UtcDateTime));
+                        telemetryItem = new TelemetryItem(ref metricPoint);
                         telemetryItem.InstrumentationKey = instrumentationKey;
                         telemetryItem.SetResource(roleName, roleInstance);
 
