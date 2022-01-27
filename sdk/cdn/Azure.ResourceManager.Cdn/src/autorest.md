@@ -7,12 +7,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
-require: https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8181069e065ff4df9507ad31d70c40ebb458dd39/specification/cdn/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
 modelerfour:
-  lenient-model-deduplication: true
+  naming:
+    preserve-uppercase-max-length: 2
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
@@ -22,6 +23,17 @@ override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
 directive:
+  - from: swagger-document
+    where: $.definitions.DeliveryRuleAction.properties.name
+    transform: >
+        $['x-ms-enum'] = {
+            "name": "DeliveryRuleActionName",
+            "modelAsString": true
+        }
+  - from: swagger-document
+    where: $.definitions.CdnEndpoint
+    transform: >
+        $['x-ms-client-name'] = 'LinkedCdnEndpoint'
   - from: swagger-document
     where: $.definitions
     transform: >
@@ -62,66 +74,6 @@ directive:
                 }
             }
         }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
   - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
@@ -290,4 +242,22 @@ directive:
               }
           }
       }
+  - from: swagger-document
+    where: $.definitions.EdgeNodeProperties.properties.ipAddressGroups
+    transform: $['x-ms-client-name'] = 'iPAddressGroups'
+  - from: swagger-document
+    where: $.definitions.IpAddressGroup
+    transform: $['x-ms-client-name'] = 'IPAddressGroup'
+  - from: swagger-document
+    where: $.definitions.IpAddressGroup.properties.ipv4Addresses
+    transform: $['x-ms-client-name'] = 'iPv4Addresses'
+  - from: swagger-document
+    where: $.definitions.IpAddressGroup.properties.ipv6Addresses
+    transform: $['x-ms-client-name'] = 'iPv6Addresses'
+  - from: swagger-document
+    where: $.definitions.cidrIpAddress
+    transform: $['x-ms-client-name'] = 'cidrIPAddress'
+  - from: swagger-document
+    where: $.definitions.cidrIpAddress.properties.baseIpAddress
+    transform: $['x-ms-client-name'] = 'baseIPAddress'
 ```
