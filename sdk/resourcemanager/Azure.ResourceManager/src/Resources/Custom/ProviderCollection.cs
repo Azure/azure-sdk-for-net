@@ -11,43 +11,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Provider and their operations over its parent. </summary>
-    [CodeGenSuppress("ProviderCollection", typeof(ArmResource))]
     [CodeGenSuppress("GetAllAsGenericResources", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetAllAsGenericResourcesAsync", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     public partial class ProviderCollection : ArmCollection, IEnumerable<Provider>, IAsyncEnumerable<Provider>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderCollection"/> class.
-        /// </summary>
-        /// <param name="parent"> The client context to use. </param>
-        internal ProviderCollection(Subscription parent)
-            : base(parent)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);
-            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
-        }
-
-        internal ProviderCollection(ArmResource operations, ResourceIdentifier id)
-            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Provider.ResourceType, out var apiVersion);
-            _providersRestClient = new ProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
-        }
-
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
@@ -57,10 +29,10 @@ namespace Azure.ResourceManager.Resources
         {
             string version;
             Dictionary<string, string> resourceVersions;
-            if (!ClientOptions.ResourceApiVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
+            if (!ArmClient.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
             {
                 resourceVersions = LoadResourceVersionsFromApi(resourceType.Namespace, cancellationToken);
-                ClientOptions.ResourceApiVersions.TryAdd(resourceType.Namespace, resourceVersions);
+                ArmClient.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
             }
             if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
@@ -73,10 +45,10 @@ namespace Azure.ResourceManager.Resources
         {
             string version;
             Dictionary<string, string> resourceVersions;
-            if (!ClientOptions.ResourceApiVersions.TryGetValue(resourceType.Namespace, out resourceVersions))
+            if (!ArmClient.ResourceApiVersionCache.TryGetValue(resourceType.Namespace, out resourceVersions))
             {
                 resourceVersions = await LoadResourceVersionsFromApiAsync(resourceType.Namespace, cancellationToken).ConfigureAwait(false);
-                ClientOptions.ResourceApiVersions.TryAdd(resourceType.Namespace, resourceVersions);
+                ArmClient.ResourceApiVersionCache.TryAdd(resourceType.Namespace, resourceVersions);
             }
             if (!resourceVersions.TryGetValue(resourceType.Type, out version))
             {
@@ -110,11 +82,11 @@ namespace Azure.ResourceManager.Resources
         internal string GetApiVersionForNamespace(string resourceNamespace, CancellationToken cancellationToken = default)
         {
             string version;
-            if (!ClientOptions.NamespaceVersions.TryGetValue(resourceNamespace, out version))
+            if (!ArmClient.NamespaceVersionCache.TryGetValue(resourceNamespace, out version))
             {
                 Provider results = Get(resourceNamespace, cancellationToken: cancellationToken);
                 version = GetMaxVersion(results);
-                ClientOptions.NamespaceVersions.TryAdd(resourceNamespace, version);
+                ArmClient.NamespaceVersionCache.TryAdd(resourceNamespace, version);
             }
             return version;
         }
@@ -122,11 +94,11 @@ namespace Azure.ResourceManager.Resources
         internal async ValueTask<string> GetApiVersionForNamespaceAsync(string resourceNamespace, CancellationToken cancellationToken = default)
         {
             string version;
-            if (!ClientOptions.NamespaceVersions.TryGetValue(resourceNamespace, out version))
+            if (!ArmClient.NamespaceVersionCache.TryGetValue(resourceNamespace, out version))
             {
                 Provider results = await GetAsync(resourceNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
                 version = GetMaxVersion(results);
-                ClientOptions.NamespaceVersions.TryAdd(resourceNamespace, version);
+                ArmClient.NamespaceVersionCache.TryAdd(resourceNamespace, version);
             }
             return version;
         }

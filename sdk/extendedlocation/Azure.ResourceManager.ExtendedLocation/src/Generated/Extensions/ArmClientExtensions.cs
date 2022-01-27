@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         public static CustomLocation GetCustomLocation(this ArmClient armClient, ResourceIdentifier id)
         {
             CustomLocation.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CustomLocation(clientOptions, credential, uri, pipeline, id));
+            return new CustomLocation(armClient, id);
         }
         #endregion
     }

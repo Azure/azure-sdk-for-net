@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of ExpressRouteCircuitAuthorization and their operations over its parent. </summary>
     public partial class ExpressRouteCircuitAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteCircuitAuthorization>, IAsyncEnumerable<ExpressRouteCircuitAuthorization>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ExpressRouteCircuitAuthorizationsRestOperations _expressRouteCircuitAuthorizationsRestClient;
+        private readonly ClientDiagnostics _expressRouteCircuitAuthorizationClientDiagnostics;
+        private readonly ExpressRouteCircuitAuthorizationsRestOperations _expressRouteCircuitAuthorizationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitAuthorizationCollection"/> class for mocking. </summary>
         protected ExpressRouteCircuitAuthorizationCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteCircuitAuthorizationCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ExpressRouteCircuitAuthorization.ResourceType, out string apiVersion);
-            _expressRouteCircuitAuthorizationsRestClient = new ExpressRouteCircuitAuthorizationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _expressRouteCircuitAuthorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuitAuthorization.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ExpressRouteCircuitAuthorization.ResourceType, out string expressRouteCircuitAuthorizationApiVersion);
+            _expressRouteCircuitAuthorizationRestClient = new ExpressRouteCircuitAuthorizationsRestOperations(_expressRouteCircuitAuthorizationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCircuitAuthorizationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(authorizationParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CreateOrUpdate");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expressRouteCircuitAuthorizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters, cancellationToken);
-                var operation = new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRouteCircuitAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
+                var response = _expressRouteCircuitAuthorizationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters, cancellationToken);
+                var operation = new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(ArmClient, _expressRouteCircuitAuthorizationClientDiagnostics, Pipeline, _expressRouteCircuitAuthorizationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(authorizationParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CreateOrUpdate");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _expressRouteCircuitAuthorizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _expressRouteCircuitAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
+                var response = await _expressRouteCircuitAuthorizationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(ArmClient, _expressRouteCircuitAuthorizationClientDiagnostics, Pipeline, _expressRouteCircuitAuthorizationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Get");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Get");
             scope.Start();
             try
             {
-                var response = _expressRouteCircuitAuthorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken);
+                var response = _expressRouteCircuitAuthorizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitAuthorization(this, response.Value), response.GetRawResponse());
+                    throw _expressRouteCircuitAuthorizationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorization(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Get");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _expressRouteCircuitAuthorizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteCircuitAuthorizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCircuitAuthorization(this, response.Value), response.GetRawResponse());
+                    throw await _expressRouteCircuitAuthorizationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRouteCircuitAuthorization(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExists");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _expressRouteCircuitAuthorizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
+                var response = _expressRouteCircuitAuthorizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ExpressRouteCircuitAuthorization>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitAuthorization(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorization(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExists");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _expressRouteCircuitAuthorizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteCircuitAuthorizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ExpressRouteCircuitAuthorization>(null, response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitAuthorization(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorization(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
+            using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<ExpressRouteCircuitAuthorization> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
+                using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRouteCircuitAuthorizationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _expressRouteCircuitAuthorizationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<ExpressRouteCircuitAuthorization> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
+                using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRouteCircuitAuthorizationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _expressRouteCircuitAuthorizationRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ExpressRouteCircuitAuthorization>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
+                using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _expressRouteCircuitAuthorizationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRouteCircuitAuthorizationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ExpressRouteCircuitAuthorization>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
+                using var scope = _expressRouteCircuitAuthorizationClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _expressRouteCircuitAuthorizationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRouteCircuitAuthorizationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitAuthorization(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,8 +351,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRouteCircuitAuthorization, ExpressRouteCircuitAuthorizationData> Construct() { }
     }
 }

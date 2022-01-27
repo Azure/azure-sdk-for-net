@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of ManagedServerSecurityAlertPolicy and their operations over its parent. </summary>
     public partial class ManagedServerSecurityAlertPolicyCollection : ArmCollection, IEnumerable<ManagedServerSecurityAlertPolicy>, IAsyncEnumerable<ManagedServerSecurityAlertPolicy>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedServerSecurityAlertPoliciesRestOperations _managedServerSecurityAlertPoliciesRestClient;
+        private readonly ClientDiagnostics _managedServerSecurityAlertPolicyClientDiagnostics;
+        private readonly ManagedServerSecurityAlertPoliciesRestOperations _managedServerSecurityAlertPolicyRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedServerSecurityAlertPolicyCollection"/> class for mocking. </summary>
         protected ManagedServerSecurityAlertPolicyCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedServerSecurityAlertPolicyCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ManagedServerSecurityAlertPolicy.ResourceType, out string apiVersion);
-            _managedServerSecurityAlertPoliciesRestClient = new ManagedServerSecurityAlertPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedServerSecurityAlertPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedServerSecurityAlertPolicy.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedServerSecurityAlertPolicy.ResourceType, out string managedServerSecurityAlertPolicyApiVersion);
+            _managedServerSecurityAlertPolicyRestClient = new ManagedServerSecurityAlertPoliciesRestOperations(_managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedServerSecurityAlertPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.CreateOrUpdate");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedServerSecurityAlertPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters, cancellationToken);
-                var operation = new ManagedServerSecurityAlertPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response);
+                var response = _managedServerSecurityAlertPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters, cancellationToken);
+                var operation = new ManagedServerSecurityAlertPolicyCreateOrUpdateOperation(ArmClient, _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, _managedServerSecurityAlertPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.CreateOrUpdate");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedServerSecurityAlertPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServerSecurityAlertPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response);
+                var response = await _managedServerSecurityAlertPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedServerSecurityAlertPolicyCreateOrUpdateOperation(ArmClient, _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, _managedServerSecurityAlertPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedServerSecurityAlertPolicy> Get(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Get");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken);
+                var response = _managedServerSecurityAlertPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedServerSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
+                    throw _managedServerSecurityAlertPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedServerSecurityAlertPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedServerSecurityAlertPolicy>> GetAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Get");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedServerSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedServerSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedServerSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
+                    throw await _managedServerSecurityAlertPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedServerSecurityAlertPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedServerSecurityAlertPolicy> GetIfExists(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetIfExists");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
+                var response = _managedServerSecurityAlertPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ManagedServerSecurityAlertPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedServerSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedServerSecurityAlertPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedServerSecurityAlertPolicy>> GetIfExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetIfExists");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedServerSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedServerSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ManagedServerSecurityAlertPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedServerSecurityAlertPolicy(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedServerSecurityAlertPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Exists");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Exists");
+            using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ManagedServerSecurityAlertPolicy> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
+                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedServerSecurityAlertPoliciesRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedServerSecurityAlertPolicyRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedServerSecurityAlertPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
+                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedServerSecurityAlertPoliciesRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedServerSecurityAlertPolicyRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -296,12 +296,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ManagedServerSecurityAlertPolicy>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
+                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedServerSecurityAlertPoliciesRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedServerSecurityAlertPolicyRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedServerSecurityAlertPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
+                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedServerSecurityAlertPoliciesRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedServerSecurityAlertPolicyRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicy(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,8 +341,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedServerSecurityAlertPolicy, ManagedServerSecurityAlertPolicyData> Construct() { }
     }
 }

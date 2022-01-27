@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class representing collection of ServiceBusNamespace and their operations over its parent. </summary>
     public partial class ServiceBusNamespaceCollection : ArmCollection, IEnumerable<ServiceBusNamespace>, IAsyncEnumerable<ServiceBusNamespace>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NamespacesRestOperations _namespacesRestClient;
+        private readonly ClientDiagnostics _serviceBusNamespaceNamespacesClientDiagnostics;
+        private readonly NamespacesRestOperations _serviceBusNamespaceNamespacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceCollection"/> class for mocking. </summary>
         protected ServiceBusNamespaceCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusNamespaceCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServiceBusNamespace.ResourceType, out string apiVersion);
-            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serviceBusNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespace.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServiceBusNamespace.ResourceType, out string serviceBusNamespaceNamespacesApiVersion);
+            _serviceBusNamespaceNamespacesRestClient = new NamespacesRestOperations(_serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusNamespaceNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: Namespaces_CreateOrUpdate
         /// <summary> Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -68,12 +71,12 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.CreateOrUpdate");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
-                var operation = new ServiceBusNamespaceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = _serviceBusNamespaceNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
+                var operation = new ServiceBusNamespaceCreateOrUpdateOperation(ArmClient, _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -85,6 +88,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: Namespaces_CreateOrUpdate
         /// <summary> Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -100,12 +106,12 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.CreateOrUpdate");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusNamespaceCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = await _serviceBusNamespaceNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceBusNamespaceCreateOrUpdateOperation(ArmClient, _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,6 +123,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: Namespaces_Get
         /// <summary> Gets a description for the specified namespace. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,14 +135,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Get");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken);
+                var response = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                    throw _serviceBusNamespaceNamespacesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespace(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,6 +151,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: Namespaces_Get
         /// <summary> Gets a description for the specified namespace. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,14 +163,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Get");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                    throw await _serviceBusNamespaceNamespacesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServiceBusNamespace(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +188,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
+                var response = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespace(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +213,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServiceBusNamespace>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespace(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespace(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +238,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Exists");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +261,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Exists");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -263,6 +275,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: Namespaces_ListByResourceGroup
         /// <summary> Gets the available namespaces within a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
@@ -270,12 +285,12 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Page<ServiceBusNamespace> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
+                using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _namespacesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceBusNamespaceNamespacesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,12 +300,12 @@ namespace Azure.ResourceManager.ServiceBus
             }
             Page<ServiceBusNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
+                using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _namespacesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceBusNamespaceNamespacesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,6 +316,9 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: Namespaces_ListByResourceGroup
         /// <summary> Gets the available namespaces within a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
@@ -308,12 +326,12 @@ namespace Azure.ResourceManager.ServiceBus
         {
             async Task<Page<ServiceBusNamespace>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
+                using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _namespacesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusNamespaceNamespacesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +341,12 @@ namespace Azure.ResourceManager.ServiceBus
             }
             async Task<Page<ServiceBusNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
+                using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _namespacesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusNamespaceNamespacesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -347,7 +365,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAllAsGenericResources");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -370,7 +388,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAllAsGenericResources");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -399,8 +417,5 @@ namespace Azure.ResourceManager.ServiceBus
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceBusNamespace, ServiceBusNamespaceData> Construct() { }
     }
 }

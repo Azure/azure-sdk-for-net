@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         private readonly OperationInternals<ConfigurationStore> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ConfigurationStoreCreateOrUpdateOperation for mocking. </summary>
         protected ConfigurationStoreCreateOrUpdateOperation()
         {
         }
 
-        internal ConfigurationStoreCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ConfigurationStoreCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ConfigurationStore>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ConfigurationStoreCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConfigurationStoreData.DeserializeConfigurationStoreData(document.RootElement);
-            return new ConfigurationStore(_operationBase, data);
+            return new ConfigurationStore(_armClient, data);
         }
 
         async ValueTask<ConfigurationStore> IOperationSource<ConfigurationStore>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConfigurationStoreData.DeserializeConfigurationStoreData(document.RootElement);
-            return new ConfigurationStore(_operationBase, data);
+            return new ConfigurationStore(_armClient, data);
         }
     }
 }

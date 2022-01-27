@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of ServerDnsAlias and their operations over its parent. </summary>
     public partial class ServerDnsAliasCollection : ArmCollection, IEnumerable<ServerDnsAlias>, IAsyncEnumerable<ServerDnsAlias>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServerDnsAliasesRestOperations _serverDnsAliasesRestClient;
+        private readonly ClientDiagnostics _serverDnsAliasClientDiagnostics;
+        private readonly ServerDnsAliasesRestOperations _serverDnsAliasRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerDnsAliasCollection"/> class for mocking. </summary>
         protected ServerDnsAliasCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerDnsAliasCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServerDnsAlias.ResourceType, out string apiVersion);
-            _serverDnsAliasesRestClient = new ServerDnsAliasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serverDnsAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDnsAlias.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServerDnsAlias.ResourceType, out string serverDnsAliasApiVersion);
+            _serverDnsAliasRestClient = new ServerDnsAliasesRestOperations(_serverDnsAliasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDnsAliasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.CreateOrUpdate");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverDnsAliasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
-                var operation = new ServerDnsAliasCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
+                var response = _serverDnsAliasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
+                var operation = new ServerDnsAliasCreateOrUpdateOperation(ArmClient, _serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.CreateOrUpdate");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverDnsAliasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerDnsAliasCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
+                var response = await _serverDnsAliasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
+                var operation = new ServerDnsAliasCreateOrUpdateOperation(ArmClient, _serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Get");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverDnsAliasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
+                var response = _serverDnsAliasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDnsAlias(this, response.Value), response.GetRawResponse());
+                    throw _serverDnsAliasClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDnsAlias(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Get");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serverDnsAliasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverDnsAliasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDnsAlias(this, response.Value), response.GetRawResponse());
+                    throw await _serverDnsAliasClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServerDnsAlias(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExists");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serverDnsAliasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
+                var response = _serverDnsAliasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServerDnsAlias>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDnsAlias(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDnsAlias(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExists");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serverDnsAliasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverDnsAliasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServerDnsAlias>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDnsAlias(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDnsAlias(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Exists");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.Exists");
+            using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.Exists");
             scope.Start();
             try
             {
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServerDnsAlias> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
+                using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverDnsAliasesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverDnsAliasRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerDnsAlias> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
+                using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverDnsAliasesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverDnsAliasRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServerDnsAlias>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
+                using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverDnsAliasesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverDnsAliasRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerDnsAlias>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
+                using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAliasCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverDnsAliasesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverDnsAliasRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDnsAlias(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,8 +359,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerDnsAlias, ServerDnsAliasData> Construct() { }
     }
 }

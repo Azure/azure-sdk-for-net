@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetKeyVaultReferenceRequest(keyVaultName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -283,7 +283,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateKeyVaultReferenceRequest(keyVaultName, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -337,7 +337,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -391,7 +391,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteKeyVaultReferenceRequest(keyVaultName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -445,7 +445,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -499,7 +499,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetScanRulesetRequest(scanRulesetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -564,7 +564,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -629,7 +629,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateScanRulesetRequest(scanRulesetName, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -683,7 +683,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -737,7 +737,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteScanRulesetRequest(scanRulesetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -791,7 +791,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -845,7 +845,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForDataSourceRequest(dataSourceType, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -897,7 +897,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -949,7 +949,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetSystemRulesetsForVersionRequest(version, dataSourceType, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1000,7 +1000,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1051,7 +1051,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetLatestSystemRulesetsRequest(dataSourceType, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1110,7 +1110,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetKeyVaultReferencesRequest(context)
                         : CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1167,7 +1167,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetKeyVaultReferencesRequest(context)
                         : CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1221,7 +1221,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetClassificationRulesRequest(context)
                         : CreateGetClassificationRulesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1275,7 +1275,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetClassificationRulesRequest(context)
                         : CreateGetClassificationRulesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1378,7 +1378,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetDataSourcesRequest(context)
                         : CreateGetDataSourcesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1481,7 +1481,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetDataSourcesRequest(context)
                         : CreateGetDataSourcesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1538,7 +1538,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetScanRulesetsRequest(context)
                         : CreateGetScanRulesetsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1595,7 +1595,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetScanRulesetsRequest(context)
                         : CreateGetScanRulesetsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1652,7 +1652,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsRequest(context)
                         : CreateGetSystemRulesetsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1709,7 +1709,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsRequest(context)
                         : CreateGetSystemRulesetsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1767,7 +1767,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsVersionsRequest(dataSourceType, context)
                         : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1825,7 +1825,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetSystemRulesetsVersionsRequest(dataSourceType, context)
                         : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

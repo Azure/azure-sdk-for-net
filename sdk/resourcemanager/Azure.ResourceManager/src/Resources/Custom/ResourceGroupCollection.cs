@@ -15,24 +15,11 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ResourceGroup and their operations over its parent. </summary>
-    [CodeGenSuppress("ResourceGroupCollection", typeof(ArmResource))]
     [CodeGenSuppress("GetAllAsGenericResources", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetAllAsGenericResourcesAsync", typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     public partial class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroup>, IAsyncEnumerable<ResourceGroup>
 
     {
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupCollection"/> class. </summary>
-        /// <param name="parent"> The parent subscription. </param>
-        internal ResourceGroupCollection(Subscription parent) : base(parent)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceGroup.ResourceType, out var apiVersion);
-            _resourceGroupsRestClient = new ResourceGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
-        }
-
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>

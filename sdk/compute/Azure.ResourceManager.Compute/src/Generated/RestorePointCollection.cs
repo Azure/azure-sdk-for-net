@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing collection of RestorePoint and their operations over its parent. </summary>
     public partial class RestorePointCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RestorePointsRestOperations _restorePointsRestClient;
+        private readonly ClientDiagnostics _restorePointClientDiagnostics;
+        private readonly RestorePointsRestOperations _restorePointRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class for mocking. </summary>
         protected RestorePointCollection()
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RestorePointCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(RestorePoint.ResourceType, out string apiVersion);
-            _restorePointsRestClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePoint.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(RestorePoint.ResourceType, out string restorePointApiVersion);
+            _restorePointRestClient = new RestorePointsRestOperations(_restorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken);
-                var operation = new RestorePointCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
+                var response = _restorePointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken);
+                var operation = new RestorePointCreateOrUpdateOperation(ArmClient, _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RestorePointCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
+                var response = await _restorePointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new RestorePointCreateOrUpdateOperation(ArmClient, _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
+                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
+                    throw _restorePointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Get");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
+                    throw await _restorePointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _restorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _restorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Exists");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();
             try
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _clientDiagnostics.CreateScope("RestorePointCollection.Exists");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();
             try
             {
@@ -257,8 +257,5 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
     }
 }

@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(ArmResource operationsBase, Response<CsmPublishingCredentialsPoliciesEntityData> response)
+        internal SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(ArmClient armClient, Response<CsmPublishingCredentialsPoliciesEntityData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteBasicPublishingCredentialsPolicyScm>(Response.FromValue(new SiteBasicPublishingCredentialsPolicyScm(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteBasicPublishingCredentialsPolicyScm>(Response.FromValue(new SiteBasicPublishingCredentialsPolicyScm(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

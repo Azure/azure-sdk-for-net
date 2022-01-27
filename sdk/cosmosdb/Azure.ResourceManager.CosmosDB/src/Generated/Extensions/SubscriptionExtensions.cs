@@ -6,15 +6,8 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -33,76 +26,29 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        private static DatabaseAccountsRestOperations GetDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
+        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return new DatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+            return subscription.GetCachedClient((armClient) =>
+            {
+                return new SubscriptionExtensionClient(armClient, subscription.Id);
+            }
+            );
         }
 
-        private static RestorableDatabaseAccountsRestOperations GetRestorableDatabaseAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
-        {
-            return new RestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
-        }
-
-        /// <summary> Lists the DatabaseAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DatabaseAccount> GetDatabaseAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(DatabaseAccount.ResourceType, out string apiVersion);
-                DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                async Task<Page<DatabaseAccount>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatabaseAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccount(subscription, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-            }
-            );
+            return GetExtensionClient(subscription).GetDatabaseAccountsAsync(cancellationToken);
         }
 
-        /// <summary> Lists the DatabaseAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<DatabaseAccount> GetDatabaseAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                options.TryGetApiVersion(DatabaseAccount.ResourceType, out string apiVersion);
-                DatabaseAccountsRestOperations restOperations = GetDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri, apiVersion);
-                Page<DatabaseAccount> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDatabaseAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccount(subscription, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-            }
-            );
+            return GetExtensionClient(subscription).GetDatabaseAccounts(cancellationToken);
         }
 
         /// <summary> Filters the list of DatabaseAccounts for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -114,9 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetDatabaseAccountsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DatabaseAccount.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDatabaseAccountsAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of DatabaseAccounts for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -128,69 +72,23 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetDatabaseAccountsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(DatabaseAccount.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetDatabaseAccountsAsGenericResources(filter, expand, top, cancellationToken);
         }
 
-        /// <summary> Lists the RestorableDatabaseAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RestorableDatabaseAccount> GetRestorableDatabaseAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                RestorableDatabaseAccountsRestOperations restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                async Task<Page<RestorableDatabaseAccount>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorableDatabaseAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListAsync(subscription.Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(subscription, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-            }
-            );
+            return GetExtensionClient(subscription).GetRestorableDatabaseAccountsAsync(cancellationToken);
         }
 
-        /// <summary> Lists the RestorableDatabaseAccounts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<RestorableDatabaseAccount> GetRestorableDatabaseAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                RestorableDatabaseAccountsRestOperations restOperations = GetRestorableDatabaseAccountsRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                Page<RestorableDatabaseAccount> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorableDatabaseAccounts");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.List(subscription.Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(subscription, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-            }
-            );
+            return GetExtensionClient(subscription).GetRestorableDatabaseAccounts(cancellationToken);
         }
 
         /// <summary> Filters the list of RestorableDatabaseAccounts for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -202,9 +100,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GenericResource> GetRestorableDatabaseAccountsAsGenericResourcesAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(RestorableDatabaseAccount.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetRestorableDatabaseAccountsAsGenericResourcesAsync(filter, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of RestorableDatabaseAccounts for a <see cref="Subscription" /> represented as generic resources. </summary>
@@ -216,9 +112,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<GenericResource> GetRestorableDatabaseAccountsAsGenericResources(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(RestorableDatabaseAccount.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
+            return GetExtensionClient(subscription).GetRestorableDatabaseAccountsAsGenericResources(filter, expand, top, cancellationToken);
         }
     }
 }

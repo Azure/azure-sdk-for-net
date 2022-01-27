@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly OperationInternals<AfdSecret> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AfdSecretCreateOrUpdateOperation for mocking. </summary>
         protected AfdSecretCreateOrUpdateOperation()
         {
         }
 
-        internal AfdSecretCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AfdSecretCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AfdSecret>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AfdSecretCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
-            return new AfdSecret(_operationBase, data);
+            return new AfdSecret(_armClient, data);
         }
 
         async ValueTask<AfdSecret> IOperationSource<AfdSecret>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
-            return new AfdSecret(_operationBase, data);
+            return new AfdSecret(_armClient, data);
         }
     }
 }

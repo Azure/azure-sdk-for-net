@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly OperationInternals<ManagedHsm> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ManagedHsmUpdateOperation for mocking. </summary>
         protected ManagedHsmUpdateOperation()
         {
         }
 
-        internal ManagedHsmUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedHsmUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ManagedHsm>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-            return new ManagedHsm(_operationBase, data);
+            return new ManagedHsm(_armClient, data);
         }
 
         async ValueTask<ManagedHsm> IOperationSource<ManagedHsm>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-            return new ManagedHsm(_operationBase, data);
+            return new ManagedHsm(_armClient, data);
         }
     }
 }

@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly JobTargetGroupsRestOperations _jobTargetGroupsRestClient;
+
+        private readonly ClientDiagnostics _jobTargetGroupClientDiagnostics;
+        private readonly JobTargetGroupsRestOperations _jobTargetGroupRestClient;
         private readonly JobTargetGroupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="JobTargetGroup"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "JobTargetGroup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobTargetGroup(ArmResource options, JobTargetGroupData data) : base(options, data.Id)
+        internal JobTargetGroup(ArmClient armClient, JobTargetGroupData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _jobTargetGroupsRestClient = new JobTargetGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="JobTargetGroup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobTargetGroup(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal JobTargetGroup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _jobTargetGroupsRestClient = new JobTargetGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="JobTargetGroup"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobTargetGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _jobTargetGroupsRestClient = new JobTargetGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _jobTargetGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string jobTargetGroupApiVersion);
+            _jobTargetGroupRestClient = new JobTargetGroupsRestOperations(_jobTargetGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobTargetGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +91,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<JobTargetGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroup.Get");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroup.Get");
             scope.Start();
             try
             {
-                var response = await _jobTargetGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _jobTargetGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JobTargetGroup(this, response.Value), response.GetRawResponse());
+                    throw await _jobTargetGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new JobTargetGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +114,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<JobTargetGroup> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroup.Get");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroup.Get");
             scope.Start();
             try
             {
-                var response = _jobTargetGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _jobTargetGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobTargetGroup(this, response.Value), response.GetRawResponse());
+                    throw _jobTargetGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JobTargetGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +135,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroup.GetAvailableLocations");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroup.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -174,7 +153,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroup.GetAvailableLocations");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroup.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -195,11 +174,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<JobTargetGroupDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroup.Delete");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroup.Delete");
             scope.Start();
             try
             {
-                var response = await _jobTargetGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _jobTargetGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new JobTargetGroupDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -220,11 +199,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual JobTargetGroupDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroup.Delete");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroup.Delete");
             scope.Start();
             try
             {
-                var response = _jobTargetGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _jobTargetGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new JobTargetGroupDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);

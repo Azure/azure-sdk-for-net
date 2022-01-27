@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing collection of DeploymentScript and their operations over its parent. </summary>
     public partial class DeploymentScriptCollection : ArmCollection, IEnumerable<DeploymentScript>, IAsyncEnumerable<DeploymentScript>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeploymentScriptsRestOperations _deploymentScriptsRestClient;
+        private readonly ClientDiagnostics _deploymentScriptClientDiagnostics;
+        private readonly DeploymentScriptsRestOperations _deploymentScriptRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeploymentScriptCollection"/> class for mocking. </summary>
         protected DeploymentScriptCollection()
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeploymentScriptCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DeploymentScript.ResourceType, out string apiVersion);
-            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(DeploymentScript.ResourceType, out string deploymentScriptApiVersion);
+            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(_deploymentScriptClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentScript));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.CreateOrUpdate");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deploymentScriptsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken);
-                var operation = new DeploymentScriptCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _deploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
+                var response = _deploymentScriptRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken);
+                var operation = new DeploymentScriptCreateOrUpdateOperation(ArmClient, _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentScript));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.CreateOrUpdate");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deploymentScriptsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentScriptCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _deploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
+                var response = await _deploymentScriptRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken).ConfigureAwait(false);
+                var operation = new DeploymentScriptCreateOrUpdateOperation(ArmClient, _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Get");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.Get");
             scope.Start();
             try
             {
-                var response = _deploymentScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken);
+                var response = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                    throw _deploymentScriptClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeploymentScript(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Get");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deploymentScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                    throw await _deploymentScriptClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DeploymentScript(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetIfExists");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deploymentScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken);
+                var response = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<DeploymentScript>(null, response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeploymentScript(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,14 +200,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetIfExists");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deploymentScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<DeploymentScript>(null, response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeploymentScript(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Exists");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.Exists");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.Exists");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.Exists");
             scope.Start();
             try
             {
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<DeploymentScript> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
+                using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deploymentScriptsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _deploymentScriptRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,12 +284,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<DeploymentScript> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
+                using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deploymentScriptsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _deploymentScriptRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -307,12 +307,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<DeploymentScript>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
+                using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _deploymentScriptsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _deploymentScriptRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,12 +322,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DeploymentScript>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
+                using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _deploymentScriptsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _deploymentScriptRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetAllAsGenericResources");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptCollection.GetAllAsGenericResources");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -398,8 +398,5 @@ namespace Azure.ResourceManager.Resources
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DeploymentScript, DeploymentScriptData> Construct() { }
     }
 }

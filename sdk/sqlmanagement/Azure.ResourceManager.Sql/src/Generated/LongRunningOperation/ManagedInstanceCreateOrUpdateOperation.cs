@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ManagedInstance> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ManagedInstanceCreateOrUpdateOperation for mocking. </summary>
         protected ManagedInstanceCreateOrUpdateOperation()
         {
         }
 
-        internal ManagedInstanceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedInstanceCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ManagedInstance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstanceCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceData.DeserializeManagedInstanceData(document.RootElement);
-            return new ManagedInstance(_operationBase, data);
+            return new ManagedInstance(_armClient, data);
         }
 
         async ValueTask<ManagedInstance> IOperationSource<ManagedInstance>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceData.DeserializeManagedInstanceData(document.RootElement);
-            return new ManagedInstance(_operationBase, data);
+            return new ManagedInstance(_armClient, data);
         }
     }
 }

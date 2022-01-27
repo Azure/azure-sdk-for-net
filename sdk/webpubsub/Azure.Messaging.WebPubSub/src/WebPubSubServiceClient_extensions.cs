@@ -438,7 +438,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -512,7 +512,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -549,7 +549,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

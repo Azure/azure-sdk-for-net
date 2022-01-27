@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of ServerTrustGroup and their operations over its parent. </summary>
     public partial class ServerTrustGroupCollection : ArmCollection, IEnumerable<ServerTrustGroup>, IAsyncEnumerable<ServerTrustGroup>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServerTrustGroupsRestOperations _serverTrustGroupsRestClient;
+        private readonly ClientDiagnostics _serverTrustGroupClientDiagnostics;
+        private readonly ServerTrustGroupsRestOperations _serverTrustGroupRestClient;
         private readonly string _locationName;
 
         /// <summary> Initializes a new instance of the <see cref="ServerTrustGroupCollection"/> class for mocking. </summary>
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal ServerTrustGroupCollection(ArmResource parent, string locationName) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServerTrustGroup.ResourceType, out string apiVersion);
-            _serverTrustGroupsRestClient = new ServerTrustGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerTrustGroup.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServerTrustGroup.ResourceType, out string serverTrustGroupApiVersion);
+            _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(_serverTrustGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverTrustGroupApiVersion);
             _locationName = locationName;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.CreateOrUpdate");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverTrustGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters, cancellationToken);
-                var operation = new ServerTrustGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response);
+                var response = _serverTrustGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters, cancellationToken);
+                var operation = new ServerTrustGroupCreateOrUpdateOperation(ArmClient, _serverTrustGroupClientDiagnostics, Pipeline, _serverTrustGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.CreateOrUpdate");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverTrustGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerTrustGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response);
+                var response = await _serverTrustGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServerTrustGroupCreateOrUpdateOperation(ArmClient, _serverTrustGroupClientDiagnostics, Pipeline, _serverTrustGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Get");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverTrustGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken);
+                var response = _serverTrustGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerTrustGroup(this, response.Value), response.GetRawResponse());
+                    throw _serverTrustGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerTrustGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Get");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serverTrustGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverTrustGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerTrustGroup(this, response.Value), response.GetRawResponse());
+                    throw await _serverTrustGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServerTrustGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExists");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serverTrustGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken: cancellationToken);
+                var response = _serverTrustGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServerTrustGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerTrustGroup(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerTrustGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,14 +217,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExists");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serverTrustGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverTrustGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServerTrustGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerTrustGroup(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerTrustGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -289,12 +289,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServerTrustGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupsRestClient.ListByLocation(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverTrustGroupRestClient.ListByLocation(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -304,12 +304,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerTrustGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serverTrustGroupRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -330,12 +330,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServerTrustGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupsRestClient.ListByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverTrustGroupRestClient.ListByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,12 +345,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerTrustGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serverTrustGroupRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAllAsGenericResources");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAllAsGenericResources");
+            using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,8 +421,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerTrustGroup, ServerTrustGroupData> Construct() { }
     }
 }

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of NetworkProfile and their operations over its parent. </summary>
     public partial class NetworkProfileCollection : ArmCollection, IEnumerable<NetworkProfile>, IAsyncEnumerable<NetworkProfile>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkProfilesRestOperations _networkProfilesRestClient;
+        private readonly ClientDiagnostics _networkProfileClientDiagnostics;
+        private readonly NetworkProfilesRestOperations _networkProfileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkProfileCollection"/> class for mocking. </summary>
         protected NetworkProfileCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkProfileCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(NetworkProfile.ResourceType, out string apiVersion);
-            _networkProfilesRestClient = new NetworkProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfile.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(NetworkProfile.ResourceType, out string networkProfileApiVersion);
+            _networkProfileRestClient = new NetworkProfilesRestOperations(_networkProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken);
-                var operation = new NetworkProfileCreateOrUpdateOperation(this, response);
+                var response = _networkProfileRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken);
+                var operation = new NetworkProfileCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkProfileCreateOrUpdateOperation(this, response);
+                var response = await _networkProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkProfileCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Get");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken);
+                var response = _networkProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                    throw _networkProfileClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Get");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                    throw await _networkProfileClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken);
+                var response = _networkProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<NetworkProfile>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<NetworkProfile>(null, response.GetRawResponse());
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<NetworkProfile> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _networkProfilesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkProfileRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkProfile> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _networkProfilesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkProfileRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<NetworkProfile>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _networkProfilesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkProfileRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkProfile>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _networkProfilesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkProfileRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAllAsGenericResources");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAllAsGenericResources");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -405,8 +405,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkProfile, NetworkProfileData> Construct() { }
     }
 }

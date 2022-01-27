@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteSlotNetworkConfigCreateOrUpdateOperation(ArmResource operationsBase, Response<SwiftVirtualNetworkData> response)
+        internal SiteSlotNetworkConfigCreateOrUpdateOperation(ArmClient armClient, Response<SwiftVirtualNetworkData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteSlotNetworkConfig>(Response.FromValue(new SiteSlotNetworkConfig(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteSlotNetworkConfig>(Response.FromValue(new SiteSlotNetworkConfig(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
