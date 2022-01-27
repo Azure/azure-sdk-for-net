@@ -7,12 +7,12 @@ namespace Azure.Identity.Tests
 {
     public abstract class IdentityRecordedTestBase : RecordedTestBase<IdentityTestEnvironment>
     {
-        protected IdentityRecordedTestBase(bool isAsync, bool useLegacyTransport = false) : base(isAsync, useLegacyTransport: useLegacyTransport)
+        protected IdentityRecordedTestBase(bool isAsync, bool useLegacyTransport = false) : base(isAsync)
         {
             InitialzeRecordingSettings();
         }
 
-        protected IdentityRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = false) : base(isAsync, mode, useLegacyTransport: useLegacyTransport)
+        protected IdentityRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = false) : base(isAsync, mode)
         {
             InitialzeRecordingSettings();
         }
