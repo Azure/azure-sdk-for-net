@@ -26,6 +26,7 @@ namespace Azure.ResourceManager
         private static readonly Uri _defaultUri = new Uri("https://management.azure.com");
         private Tenant _tenant;
         private Subscription _defaultSubscription;
+        private readonly ClientDiagnostics _subscriptionClientDiagnostics;
 
         private Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager
             }
 
             DiagnosticOptions = options.Diagnostics;
+            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions);
 
             CopyApiVersionOverrides(options);
 
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager
         public virtual Subscription GetDefaultSubscription(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            using var scope = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            using var scope = _subscriptionClientDiagnostics.CreateScope("ArmClient.GetDefaultSubscription");
             scope.Start();
             try
             {
@@ -193,7 +195,7 @@ namespace Azure.ResourceManager
         public virtual async Task<Subscription> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            using var scope = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            using var scope = _subscriptionClientDiagnostics.CreateScope("ArmClient.GetDefaultSubscription");
             scope.Start();
             try
             {
