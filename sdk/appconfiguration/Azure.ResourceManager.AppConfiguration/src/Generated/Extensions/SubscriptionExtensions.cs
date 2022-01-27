@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static async Task<NameAvailabilityStatus> CheckAppConfigurationNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).CheckAppConfigurationNameAvailabilityAsync(checkNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static NameAvailabilityStatus CheckAppConfigurationNameAvailability(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).CheckAppConfigurationNameAvailability(checkNameAvailabilityParameters, cancellationToken);
         }
