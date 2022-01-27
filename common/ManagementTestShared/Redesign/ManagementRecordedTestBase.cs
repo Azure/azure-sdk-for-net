@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.TestFramework
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
-                TestEnvironment.Credential,
-                TestEnvironment.SubscriptionId,
+                subscriptionId ?? TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
+                TestEnvironment.Credential,
                 options);
         }
 
