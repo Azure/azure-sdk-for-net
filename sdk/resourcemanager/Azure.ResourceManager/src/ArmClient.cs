@@ -71,7 +71,6 @@ namespace Azure.ResourceManager
         public ArmClient(TokenCredential credential, string defaultSubscriptionId, Uri baseUri, ArmClientOptions options = default)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(defaultSubscriptionId, nameof(defaultSubscriptionId));
             Argument.AssertNotNull(baseUri, nameof(baseUri));
 
             BaseUri = baseUri;

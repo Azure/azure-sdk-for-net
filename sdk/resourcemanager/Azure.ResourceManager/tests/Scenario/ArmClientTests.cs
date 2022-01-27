@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Tests
         public void TestArmClientParamCheck()
         {
             Assert.Throws<ArgumentNullException>(() => { new ArmClient(default(TokenCredential)); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, default(string)); });
+            Assert.DoesNotThrow(() => { new ArmClient(TestEnvironment.Credential, default(string)); });
             Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, TestEnvironment.SubscriptionId, default(Uri)); });
         }
 

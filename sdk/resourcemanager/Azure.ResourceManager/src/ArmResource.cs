@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Core
     public abstract partial class ArmResource
     {
         private TagResource _tagResource;
-        private Tenant _tenant;
         private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
@@ -42,8 +41,6 @@ namespace Azure.ResourceManager.Core
             ArmClient = armClient;
             Id = id;
         }
-
-        private Tenant Tenant => _tenant ??= new Tenant(ArmClient);
 
         /// <summary>
         /// Gets the <see cref="ArmClient"/> this resource client was created from.
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(ArmClient, new ResourceIdentifier(this.Id + "/providers/Microsoft.Resources/tags/default"));
+        protected internal TagResource TagResource => _tagResource ??= new TagResource(ArmClient, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
 
         /// <summary>
         /// Lists all available geo-locations.
@@ -84,10 +81,10 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderData resourcePageableProvider = Tenant.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
+            ProviderData resourcePageableProvider = ArmClient.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => new AzureLocation(l));
@@ -101,10 +98,10 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderData resourcePageableProvider = await Tenant.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+            ProviderData resourcePageableProvider = await ArmClient.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => new AzureLocation(l));
