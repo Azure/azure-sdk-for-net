@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/sip?api-version=2021-05-01-preview1",
+      "RequestUri": "https://e2e_test.communication.azure.com/sip?api-version=2021-05-01-preview1",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "242",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "Date": "Tue, 25 Jan 2022 08:46:08 GMT",
-        "traceparent": "00-7fef8d4d3c56f344bd758f0bcc71db10-0d936f4c3afcbb4a-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "Date": "Thu, 27 Jan 2022 10:20:17 GMT",
+        "traceparent": "00-47719a53255d3c40bf6299620e3a8b9e-364ad3e0e1ae8946-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220127.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "a2016491ad8c0191bdab4328550ef9a0",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -35,13 +35,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 08:46:07 GMT",
-        "MS-CV": "T8SC4gqrf0WghUJ7zKZoJw.0",
+        "Date": "Thu, 27 Jan 2022 10:20:16 GMT",
+        "MS-CV": "gsmVEelz2ECL6Pw5PxeTWQ.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "00LjvYQAAAADrk7nkwqsqS76tRJ8V5uY8UFJHMDFFREdFMDkxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "04HHyYQAAAACyPpqH99GOTasORJv856O2UFJHMDFFREdFMDYyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "283ms"
+        "X-Processing-Time": "263ms"
       },
       "ResponseBody": {
         "trunks": {
@@ -65,16 +65,16 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/sip?api-version=2021-05-01-preview1",
+      "RequestUri": "https://e2e_test.communication.azure.com/sip?api-version=2021-05-01-preview1",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "126",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "Date": "Tue, 25 Jan 2022 08:46:09 GMT",
-        "traceparent": "00-b133cffc468fe441ba9368218448130a-ade724aedc0c1c46-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "Date": "Thu, 27 Jan 2022 10:20:17 GMT",
+        "traceparent": "00-a3f6453ff8ab3147a1c07cf5b821a24f-2393f447b26df440-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220127.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "c686be4e0df91168ed9bc2a652e8e5f3",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -93,13 +93,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 08:46:08 GMT",
-        "MS-CV": "wgIQsamspki9dQAKe5F8FQ.0",
+        "Date": "Thu, 27 Jan 2022 10:20:17 GMT",
+        "MS-CV": "AUI1n6Un4ESu0bMQHgcWFA.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "00LjvYQAAAAD6KOSBJD91SYkDAZIScpQlUFJHMDFFREdFMDkxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "04XHyYQAAAADmWrPVv9fUSIwXKZjJy/VFUFJHMDFFREdFMDYyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "309ms"
+        "X-Processing-Time": "366ms"
       },
       "ResponseBody": {
         "trunks": {
@@ -114,16 +114,16 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/sip?api-version=2021-05-01-preview1",
+      "RequestUri": "https://e2e_test.communication.azure.com/sip?api-version=2021-05-01-preview1",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "187",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "Date": "Tue, 25 Jan 2022 08:46:09 GMT",
-        "traceparent": "00-652408abd85a1749a398d187473e491f-fd8608a960beef4e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "Date": "Thu, 27 Jan 2022 10:20:17 GMT",
+        "traceparent": "00-e76e703549e6b54cb7494fb4bc50ecc0-d3a0fe4bf88f8f4a-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220127.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "b86d127efabdad5bfd04c9d2c3782e36",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -144,13 +144,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 08:46:08 GMT",
-        "MS-CV": "mL/6CH81N0qzkZwFN7A2dw.0",
+        "Date": "Thu, 27 Jan 2022 10:20:17 GMT",
+        "MS-CV": "5wqIxW6fJkygzOInm3YpZw.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "00bjvYQAAAACEVECednNPTro3xuFB2lWVUFJHMDFFREdFMDkxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "04XHyYQAAAACoOHE1jjULS6Zt2qGJ8iZ6UFJHMDFFREdFMDYyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "166ms"
+        "X-Processing-Time": "164ms"
       },
       "ResponseBody": {
         "trunks": {
@@ -175,14 +175,14 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/sip?api-version=2021-05-01-preview1",
+      "RequestUri": "https://e2e_test.communication.azure.com/sip?api-version=2021-05-01-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 25 Jan 2022 08:46:10 GMT",
-        "traceparent": "00-331fcd14f052804e9d124b6d897ed23d-7bf10fef5e9afb4d-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "Date": "Thu, 27 Jan 2022 10:20:18 GMT",
+        "traceparent": "00-b3bd3f35925e0144bddcedd2cd4e4e99-5f22b7204ffa8244-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220127.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "e7b43b8544a9830ffbf0b4f0ebebaed5",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -191,13 +191,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 08:46:08 GMT",
-        "MS-CV": "Kk7uuJxBh0CHxZuKxkEpkw.0",
+        "Date": "Thu, 27 Jan 2022 10:20:17 GMT",
+        "MS-CV": "4Majs3XpaUe8A\u002BeF95g\u002BvQ.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "00bjvYQAAAABGGXGh7Rk0RIZDSSUMjjHxUFJHMDFFREdFMDkxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "04nHyYQAAAAC4GxqTNvXOQ53H7kZsxKz8UFJHMDFFREdFMDYyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "85ms"
+        "X-Processing-Time": "77ms"
       },
       "ResponseBody": {
         "trunks": {
@@ -222,8 +222,8 @@
       }
     }
   ],
-    "Variables": {
-        "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://e2e_test.communication.azure.com/;accesskey=Kg==",
-        "RandomSeed": "726452042"
-    }
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://e2e_test.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "726452042"
+  }
 }
