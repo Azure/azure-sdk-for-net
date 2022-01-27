@@ -29,6 +29,7 @@ output-folder: $(this-folder)/Common/Generated
 namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -66,6 +67,14 @@ directive:
     where: $.definitions.systemData.properties.*
     transform: >
       $["readOnly"] = true
+  - from: managedidentity.json
+    where: $.definitions.*
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
 ```
 
 ### Tag: package-resources
@@ -316,15 +325,26 @@ directive:
     where: $.paths["/providers/{resourceProviderNamespace}"].get.responses["200"].schema["$ref"]
     transform: return "#/definitions/ProviderInfo"
 
+  - from: resources.json
+    where: $.definitions.Identity.properties.type["x-ms-enum"]
+    transform: > 
+      $["name"] = "GenericResourceIdentityType";
+      $["modelAsString"] = true;
+  - from: resources.json
+    where: $.definitions.Identity
+    transform: > 
+      $["required"] = ["type"]
+  - from: resources.json
+    where: $.definitions.Identity
+    transform: >
+      $["x-ms-client-name"] = "GenericResourceIdentity";
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
-  - from: resources.json,
+  - from: policyAssignments.json
     where: $.definitions.Identity
-    transform: 'return undefined'
-  - rename-model:
-      from: Identity
-      to: PolicyAssignmentIdentity
+    transform: >
+      $["x-ms-client-name"] = "PolicyAssignmentIdentity";
   - from: locks.json
     where: $.paths..parameters[?(@.name === "scope")]
     transform: >
