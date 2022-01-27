@@ -72,7 +72,7 @@ param(
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
-. (Join-Path $PSScriptRoot Helpers Metadata-Helper.ps1)
+. (Join-Path $PSScriptRoot Helpers Metadata-Helpers.ps1)
 
 $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)(?:master|main)"
 $TITLE_REGEX = "(\#\s+(?<filetitle>Azure .+? (?:client|plugin|shared) library for (?:JavaScript|Java|Python|\.NET|C)))"
