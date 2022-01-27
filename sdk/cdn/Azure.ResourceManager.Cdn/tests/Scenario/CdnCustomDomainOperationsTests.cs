@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnCustomDomainName = Recording.GenerateAssetName("customDomain-");
             string hostName = "customdomaintest-5.azuretest.net";
             CdnCustomDomain cdnCustomDomain = await CreateCdnCustomDomain(cdnEndpoint, cdnCustomDomainName, hostName);
-            Assert.ThrowsAsync<RequestFailedException>(async () => await cdnCustomDomain.DisableCustomHttpsAsync(true));
-            CdnManagedHttpsOptions customDomainHttpsOptions = new CdnManagedHttpsOptions(ProtocolType.ServerNameIndication, new CdnCertificateSourceParameters(CdnCertificateSourceParametersOdataType.MicrosoftAzureCdnModelsCdnCertificateSourceParameters, CertificateType.Dedicated));
-            Assert.DoesNotThrowAsync(async () => await cdnCustomDomain.EnableCustomHttpsAsync(true, customDomainHttpsOptions));
-            Assert.DoesNotThrowAsync(async () => await cdnCustomDomain.DisableCustomHttpsAsync(true));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await cdnCustomDomain.DisableCustomHttpsAsync());
+            CdnManagedHttpsOptions customDomainHttpsOptions = new CdnManagedHttpsOptions(ProtocolType.ServerNameIndication, new CdnCertificateSourceParameters(CdnCertificateSourceParametersTypeName.CdnCertificateSourceParameters, CertificateType.Dedicated));
+            Assert.DoesNotThrowAsync(async () => await cdnCustomDomain.EnableCustomHttpsAsync(customDomainHttpsOptions));
+            Assert.DoesNotThrowAsync(async () => await cdnCustomDomain.DisableCustomHttpsAsync());
         }
     }
 }

@@ -159,7 +159,6 @@ directive:
       from: LogAnalytics_GetWafLogAnalyticsRankings
       to: AfdProfiles_GetWafLogAnalyticsRankings
   - remove-operation: AFDProfiles_CheckHostNameAvailability
-  - remove-operation: Secrets_Update
   - remove-operation: Validate_Secret
   - from: swagger-document
     where: $.definitions.AFDEndpointProtocols

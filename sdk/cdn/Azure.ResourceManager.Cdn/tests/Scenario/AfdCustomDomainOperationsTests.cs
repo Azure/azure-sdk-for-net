@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 TlsSettings = new AfdCustomDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
                 {
-                    MinimumTlsVersion = AfdMinimumTlsVersion.TLS12
+                    MinimumTlsVersion = AfdMinimumTlsVersion.Tls12
                 },
             };
             var lro = await afdCustomDomain.UpdateAsync(true, updateOptions);

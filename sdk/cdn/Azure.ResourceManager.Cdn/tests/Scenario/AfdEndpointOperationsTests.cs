@@ -43,10 +43,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            AfdEndpointUpdateOptions updateOptions = new AfdEndpointUpdateOptions
-            {
-                OriginResponseTimeoutSeconds = 30
-            };
+            AfdEndpointUpdateOptions updateOptions = new AfdEndpointUpdateOptions();
             updateOptions.Tags.Add("newTag", "newValue");
             var lro = await afdEndpointInstance.UpdateAsync(true, updateOptions);
             AfdEndpoint updatedAfdEndpointInstance = lro.Value;

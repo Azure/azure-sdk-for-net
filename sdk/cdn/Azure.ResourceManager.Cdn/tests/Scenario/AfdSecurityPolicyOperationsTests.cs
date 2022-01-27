@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
             string afdEndpointName2 = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpoint afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
-            SecurityPolicyProperties updateOptions = new SecurityPolicyProperties
+            SecurityPolicyUpdateParameters updateOptions = new SecurityPolicyUpdateParameters
             {
                 Parameters = new SecurityPolicyWebApplicationFirewallParameters
                 {
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Cdn.Tests
                 }
             };
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new WritableSubResource
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ActivatedResourceReference
             {
                 Id = afdEndpointInstance1.Id
             });
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new WritableSubResource
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ActivatedResourceReference
             {
                 Id = afdEndpointInstance2.Id
             });
