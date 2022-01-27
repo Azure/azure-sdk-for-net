@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
+        private static ValidateRestOperations GetValidateRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
+        {
+            return new ValidateRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+        }
+
         private static ProfilesRestOperations GetProfilesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
             return new ProfilesRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
@@ -40,6 +45,70 @@ namespace Azure.ResourceManager.Cdn
         private static ManagedRuleSetsRestOperations GetManagedRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
         {
             return new ManagedRuleSetsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
+        }
+
+        /// <summary> Validate a Secret in the profile. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="validateSecretInput"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        public static async Task<Response<ValidateSecretOutput>> ValidateSecretAsync(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        {
+            if (validateSecretInput == null)
+            {
+                throw new ArgumentNullException(nameof(validateSecretInput));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateSecret");
+                scope.Start();
+                try
+                {
+                    ValidateRestOperations restOperations = GetValidateRestOperations(clientDiagnostics, pipeline, options, baseUri);
+                    var response = await restOperations.SecretAsync(subscription.Id.SubscriptionId, validateSecretInput, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Validate a Secret in the profile. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="validateSecretInput"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        public static Response<ValidateSecretOutput> ValidateSecret(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        {
+            if (validateSecretInput == null)
+            {
+                throw new ArgumentNullException(nameof(validateSecretInput));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ValidateSecret");
+                scope.Start();
+                try
+                {
+                    ValidateRestOperations restOperations = GetValidateRestOperations(clientDiagnostics, pipeline, options, baseUri);
+                    var response = restOperations.Secret(subscription.Id.SubscriptionId, validateSecretInput, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
         }
 
         /// <summary> Lists the Profiles for this <see cref="Subscription" />. </summary>

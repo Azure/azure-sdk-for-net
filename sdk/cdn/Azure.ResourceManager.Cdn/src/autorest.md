@@ -22,6 +22,8 @@ no-property-type-replacement:
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
+  AfdProfiles_CheckHostNameAvailability: CheckAfdProfileHostNameAvailability
+  Validate_Secret: ValidateSecret
 directive:
   - from: swagger-document
     where: $.definitions.DeliveryRuleAction.properties.name
@@ -158,8 +160,6 @@ directive:
   - rename-operation:
       from: LogAnalytics_GetWafLogAnalyticsRankings
       to: AfdProfiles_GetWafLogAnalyticsRankings
-  - remove-operation: AFDProfiles_CheckHostNameAvailability
-  - remove-operation: Validate_Secret
   - from: swagger-document
     where: $.definitions.AFDEndpointProtocols
     transform: >
@@ -195,7 +195,7 @@ directive:
               const newKey = 'Afd' + key;
               $[key]['x-ms-client-name'] = newKey
           }
-          if (['AfdPurgeParameters', 'CdnManagedHttpsParameters', 'CdnWebApplicationFirewallPolicyPatchParameters', 'CustomDomainHttpsParameters', 'CustomDomainParameters', 'EndpointUpdateParameters', 'LoadParameters', 'OriginGroupUpdateParameters', 'OriginUpdateParameters', 'ProfileUpdateParameters', 'PurgeParameters', 'RouteUpdateParameters', 'RuleUpdateParameters', 'UserManagedHttpsParameters'].includes(key)) {
+          if (['AfdPurgeParameters', 'CdnManagedHttpsParameters', 'CdnWebApplicationFirewallPolicyPatchParameters', 'CustomDomainHttpsParameters', 'CustomDomainParameters', 'EndpointUpdateParameters', 'LoadParameters', 'OriginGroupUpdateParameters', 'OriginUpdateParameters', 'ProfileUpdateParameters', 'PurgeParameters', 'RouteUpdateParameters', 'RuleUpdateParameters', 'UserManagedHttpsParameters', 'SecurityPolicyUpdateParameters'].includes(key)) {
               const newKey = key.replace('Parameters', 'Options');
               $[key]['x-ms-client-name'] = newKey
           }
