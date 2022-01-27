@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> An internal class to add extension methods to. </summary>
     internal partial class ResourceGroupExtensionClient : ArmResource
     {
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class for mocking. </summary>
+        protected ResourceGroupExtensionClient()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
         /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>

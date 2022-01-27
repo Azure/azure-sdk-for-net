@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Sql
         private ClientDiagnostics _sqlServerServersClientDiagnostics;
         private ServersRestOperations _sqlServerServersRestClient;
 
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class for mocking. </summary>
+        protected SubscriptionExtensionClient()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
         /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>

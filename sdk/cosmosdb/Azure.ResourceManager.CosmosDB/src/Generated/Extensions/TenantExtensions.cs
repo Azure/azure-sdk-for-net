@@ -7,6 +7,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="System.ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static async Task<bool> CheckNameExistsDatabaseAccountAsync(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(tenant).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="System.ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static bool CheckNameExistsDatabaseAccount(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
+        public static Response<bool> CheckNameExistsDatabaseAccount(this Tenant tenant, string accountName, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenant).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
         }

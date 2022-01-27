@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public static async Task<ValidateResponse> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(resourceGroup).ValidateAsync(validateRequest, cancellationToken).ConfigureAwait(false);
         }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public static ValidateResponse Validate(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public static Response<ValidateResponse> Validate(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroup).Validate(validateRequest, cancellationToken);
         }

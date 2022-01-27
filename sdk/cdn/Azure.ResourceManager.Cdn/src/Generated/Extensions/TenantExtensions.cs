@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityAsync(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(tenant).CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static CheckNameAvailabilityOutput CheckCdnNameAvailability(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenant).CheckCdnNameAvailability(checkNameAvailabilityInput, cancellationToken);
         }
