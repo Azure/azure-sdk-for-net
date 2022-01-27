@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder
         public static AddressResource GetAddressResource(this ArmClient armClient, ResourceIdentifier id)
         {
             AddressResource.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AddressResource(clientOptions, credential, uri, pipeline, id));
+            return new AddressResource(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder
         public static OrderResource GetOrderResource(this ArmClient armClient, ResourceIdentifier id)
         {
             OrderResource.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OrderResource(clientOptions, credential, uri, pipeline, id));
+            return new OrderResource(armClient, id);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder
         public static OrderItemResource GetOrderItemResource(this ArmClient armClient, ResourceIdentifier id)
         {
             OrderItemResource.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new OrderItemResource(clientOptions, credential, uri, pipeline, id));
+            return new OrderItemResource(armClient, id);
         }
         #endregion
     }

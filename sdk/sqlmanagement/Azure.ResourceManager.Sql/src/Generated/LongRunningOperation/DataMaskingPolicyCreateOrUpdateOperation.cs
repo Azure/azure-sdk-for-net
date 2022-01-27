@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal DataMaskingPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<DataMaskingPolicyData> response)
+        internal DataMaskingPolicyCreateOrUpdateOperation(ArmClient armClient, Response<DataMaskingPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<DataMaskingPolicy>(Response.FromValue(new DataMaskingPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DataMaskingPolicy>(Response.FromValue(new DataMaskingPolicy(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

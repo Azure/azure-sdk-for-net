@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static ServiceBusNamespace GetServiceBusNamespace(this ArmClient armClient, ResourceIdentifier id)
         {
             ServiceBusNamespace.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusNamespace(clientOptions, credential, uri, pipeline, id));
+            return new ServiceBusNamespace(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static NetworkRuleSet GetNetworkRuleSet(this ArmClient armClient, ResourceIdentifier id)
         {
             NetworkRuleSet.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkRuleSet(clientOptions, credential, uri, pipeline, id));
+            return new NetworkRuleSet(armClient, id);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
             PrivateEndpointConnection.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            return new PrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static DisasterRecovery GetDisasterRecovery(this ArmClient armClient, ResourceIdentifier id)
         {
             DisasterRecovery.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecovery(clientOptions, credential, uri, pipeline, id));
+            return new DisasterRecovery(armClient, id);
         }
         #endregion
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
             NamespaceDisasterRecoveryAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return new NamespaceDisasterRecoveryAuthorizationRule(armClient, id);
         }
         #endregion
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
             NamespaceAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return new NamespaceAuthorizationRule(armClient, id);
         }
         #endregion
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
             NamespaceQueueAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceQueueAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return new NamespaceQueueAuthorizationRule(armClient, id);
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
             NamespaceTopicAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceTopicAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return new NamespaceTopicAuthorizationRule(armClient, id);
         }
         #endregion
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static MigrationConfigProperties GetMigrationConfigProperties(this ArmClient armClient, ResourceIdentifier id)
         {
             MigrationConfigProperties.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MigrationConfigProperties(clientOptions, credential, uri, pipeline, id));
+            return new MigrationConfigProperties(armClient, id);
         }
         #endregion
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static ServiceBusQueue GetServiceBusQueue(this ArmClient armClient, ResourceIdentifier id)
         {
             ServiceBusQueue.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusQueue(clientOptions, credential, uri, pipeline, id));
+            return new ServiceBusQueue(armClient, id);
         }
         #endregion
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static ServiceBusTopic GetServiceBusTopic(this ArmClient armClient, ResourceIdentifier id)
         {
             ServiceBusTopic.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusTopic(clientOptions, credential, uri, pipeline, id));
+            return new ServiceBusTopic(armClient, id);
         }
         #endregion
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static ServiceBusRule GetServiceBusRule(this ArmClient armClient, ResourceIdentifier id)
         {
             ServiceBusRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusRule(clientOptions, credential, uri, pipeline, id));
+            return new ServiceBusRule(armClient, id);
         }
         #endregion
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static ServiceBusSubscription GetServiceBusSubscription(this ArmClient armClient, ResourceIdentifier id)
         {
             ServiceBusSubscription.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusSubscription(clientOptions, credential, uri, pipeline, id));
+            return new ServiceBusSubscription(armClient, id);
         }
         #endregion
     }

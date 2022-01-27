@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly OperationInternals<SiteSlotSiteextension> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of SiteSlotSiteextensionCreateOrUpdateOperation for mocking. </summary>
         protected SiteSlotSiteextensionCreateOrUpdateOperation()
         {
         }
 
-        internal SiteSlotSiteextensionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SiteSlotSiteextensionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SiteSlotSiteextension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SiteSlotSiteextensionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSlotSiteextension(_operationBase, data);
+            return new SiteSlotSiteextension(_armClient, data);
         }
 
         async ValueTask<SiteSlotSiteextension> IOperationSource<SiteSlotSiteextension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSlotSiteextension(_operationBase, data);
+            return new SiteSlotSiteextension(_armClient, data);
         }
     }
 }

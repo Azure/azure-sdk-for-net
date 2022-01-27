@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
         }
 
-        internal NetworkRuleSetCreateOrUpdateOperation(ArmResource operationsBase, Response<NetworkRuleSetData> response)
+        internal NetworkRuleSetCreateOrUpdateOperation(ArmClient armClient, Response<NetworkRuleSetData> response)
         {
-            _operation = new OperationOrResponseInternals<NetworkRuleSet>(Response.FromValue(new NetworkRuleSet(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NetworkRuleSet>(Response.FromValue(new NetworkRuleSet(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

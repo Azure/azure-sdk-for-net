@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal ManagementLockObjectCreateOrUpdateOperation(ArmResource operationsBase, Response<ManagementLockObjectData> response)
+        internal ManagementLockObjectCreateOrUpdateOperation(ArmClient armClient, Response<ManagementLockObjectData> response)
         {
-            _operation = new OperationOrResponseInternals<ManagementLockObject>(Response.FromValue(new ManagementLockObject(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ManagementLockObject>(Response.FromValue(new ManagementLockObject(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

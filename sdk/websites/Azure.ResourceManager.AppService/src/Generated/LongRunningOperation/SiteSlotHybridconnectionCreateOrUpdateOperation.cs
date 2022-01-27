@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteSlotHybridconnectionCreateOrUpdateOperation(ArmResource operationsBase, Response<RelayServiceConnectionEntityData> response)
+        internal SiteSlotHybridconnectionCreateOrUpdateOperation(ArmClient armClient, Response<RelayServiceConnectionEntityData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteSlotHybridconnection>(Response.FromValue(new SiteSlotHybridconnection(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteSlotHybridconnection>(Response.FromValue(new SiteSlotHybridconnection(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

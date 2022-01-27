@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal ResourceGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<ResourceGroupData> response)
+        internal ResourceGroupCreateOrUpdateOperation(ArmClient armClient, Response<ResourceGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<ResourceGroup>(Response.FromValue(new ResourceGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ResourceGroup>(Response.FromValue(new ResourceGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

@@ -8,10 +8,11 @@
 using Azure.Core;
 using Azure.ResourceManager.Management;
 
+[assembly: CodeGenSuppressType("ArmClient")]
 namespace Azure.ResourceManager
 {
     /// <summary> The entry point for all ARM clients. </summary>
-    public partial class ArmClient
+  public partial class ArmClient
     {
         #region ManagementGroup
         /// <summary> Gets an object representing a ManagementGroup along with the instance operations that can be performed on it but with no data. </summary>
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager
         public virtual ManagementGroup GetManagementGroup(ResourceIdentifier id)
         {
             ManagementGroup.ValidateResourceId(id);
-            return new ManagementGroup(ClientOptions, Credential, BaseUri, Pipeline, id);
+            return new ManagementGroup(this, id);
         }
         #endregion
     }
