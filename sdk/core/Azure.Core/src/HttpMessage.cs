@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -92,9 +93,40 @@ namespace Azure.Core
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
             }
+
+            ResponseClassifier = PerCallResponseClassifier.Instance;
+            if (context.CustomNonErrors != null)
+            {
+                NonErrorStatusCodes.AddRange(context.CustomNonErrors);
+            }
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+
+        internal List<int> NonErrorStatusCodes { get; } = new();
+
+        /// <summary>
+        /// </summary>
+        /// <param name="nonErrorCodes"></param>
+        public void AddNonErrorStatusCodes(int[] nonErrorCodes)
+        {
+            NonErrorStatusCodes.AddRange(nonErrorCodes);
+        }
+
+        private class PerCallResponseClassifier : ResponseClassifier
+        {
+            public static ResponseClassifier Instance { get; } = new();
+
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                if (message.NonErrorStatusCodes.Contains(message.Response.Status))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.

@@ -196,7 +196,6 @@ namespace Azure
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public void ConfigureResponse(int[] statusCodes, bool isError) { }
-        public Azure.Core.ResponseClassifier GetResponseClassifier(Azure.Core.ResponseClassifier instance) { throw null; }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
@@ -433,6 +432,7 @@ namespace Azure.Core
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
+        public void AddNonErrorStatusCodes(int[] nonErrorCodes) { }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
