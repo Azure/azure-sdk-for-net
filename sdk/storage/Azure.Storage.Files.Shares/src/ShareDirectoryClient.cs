@@ -292,6 +292,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
+        /// <param name="fileRequestIntent">
+        /// File request intent.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -300,8 +303,13 @@ namespace Azure.Storage.Files.Shares
         public ShareDirectoryClient(
             Uri directoryUri,
             TokenCredential credential,
+            ShareFileRequestIntent? fileRequestIntent = default,
             ShareClientOptions options = default)
-            : this(directoryUri, credential.AsPolicy(options), options ?? new ShareClientOptions())
+            : this(
+                  directoryUri,
+                  credential.AsPolicy(options),
+                  options ?? new ShareClientOptions(),
+                  fileRequestIntent: fileRequestIntent)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -326,11 +334,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="fileRequestIntent">
+        /// File request intent.
+        /// </param>
         internal ShareDirectoryClient(
             Uri directoryUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
+            StorageSharedKeyCredential storageSharedKeyCredential = default,
+            ShareFileRequestIntent? fileRequestIntent = default)
         {
             Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
@@ -339,7 +351,8 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                fileRequestIntent: fileRequestIntent);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -370,7 +383,8 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.Version.ToVersionString());
+                _clientConfiguration.Version.ToVersionString(),
+                _clientConfiguration.FileRequestIntent);
         }
         #endregion ctors
 

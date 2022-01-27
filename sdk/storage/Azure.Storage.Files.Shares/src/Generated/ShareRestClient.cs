@@ -21,6 +21,7 @@ namespace Azure.Storage.Files.Shares
     {
         private string url;
         private string version;
+        private ShareFileRequestIntent? fileRequestIntent;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -29,11 +30,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
+        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10", ShareFileRequestIntent? fileRequestIntent = null)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.fileRequestIntent = fileRequestIntent;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -71,6 +74,10 @@ namespace Azure.Storage.Files.Shares
             if (rootSquash != null)
             {
                 request.Headers.Add("x-ms-root-squash", rootSquash.Value.ToSerialString());
+            }
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;

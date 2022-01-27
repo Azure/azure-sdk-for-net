@@ -20,6 +20,7 @@ namespace Azure.Storage.Files.Shares
     {
         private string url;
         private string version;
+        private ShareFileRequestIntent? fileRequestIntent;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,11 +29,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10", ShareFileRequestIntent? fileRequestIntent = null)
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.fileRequestIntent = fileRequestIntent;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -66,6 +69,10 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-file-attributes", fileAttributes);
             request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
             request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -162,6 +169,10 @@ namespace Azure.Storage.Files.Shares
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -216,6 +227,10 @@ namespace Azure.Storage.Files.Shares
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -280,6 +295,10 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-file-attributes", fileAttributes);
             request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
             request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -375,6 +394,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-meta-", metadata);
             }
             request.Headers.Add("x-ms-version", version);
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -453,6 +476,10 @@ namespace Azure.Storage.Files.Shares
             if (includeExtendedInfo != null)
             {
                 request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
+            }
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -550,6 +577,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-recursive", recursive.Value);
             }
             request.Headers.Add("x-ms-version", version);
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -639,6 +670,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-recursive", recursive.Value);
             }
             request.Headers.Add("x-ms-version", version);
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -697,7 +732,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, CopyFileSmbInfo copyFileSmbInfo)
+        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, IDictionary<string, string> metadata, CopyFileSmbInfo copyFileSmbInfo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -749,6 +784,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
             }
+            if (metadata != null)
+            {
+                request.Headers.Add("x-ms-meta-", metadata);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -762,17 +801,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, metadata, copyFileSmbInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryRenameHeaders(message.Response);
             switch (message.Response.Status)
@@ -793,17 +833,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, metadata, copyFileSmbInfo);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryRenameHeaders(message.Response);
             switch (message.Response.Status)
@@ -828,6 +869,10 @@ namespace Azure.Storage.Files.Shares
             if (includeExtendedInfo != null)
             {
                 request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
+            }
+            if (fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
