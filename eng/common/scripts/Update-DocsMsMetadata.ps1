@@ -32,11 +32,14 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 The docker image id in format of '$containerRegistry/$imageName:$tag'
 e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
 
-.PARAMETER PackageSourceOverride
-Optional parameter to supply a different package source (useful for daily dev
-docs generation from pacakges which are not published to the default feed). This
-variable is meant to be used in the domain-specific business logic in
-&$ValidateDocsMsPackagesFn
+.PARAMETER TenantId
+The aad tenant id/object id.
+
+.PARAMETER ClientId
+The add client id/application id.
+
+.PARAMETER ClientSecret
+The client secret of add app.
 #>
 
 param(
@@ -56,10 +59,20 @@ param(
   [string]$DocValidationImageId,
 
   [Parameter(Mandatory = $false)]
-  [string]$PackageSourceOverride
+  [string]$PackageSourceOverride,
+
+  [Parameter(Mandatory = $false)]
+  [string]$TenantId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ClientId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ClientSecret
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
+. (Join-Path $PSScriptRoot Helpers Metadata-Helper.ps1)
 
 $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)(?:master|main)"
 $TITLE_REGEX = "(\#\s+(?<filetitle>Azure .+? (?:client|plugin|shared) library for (?:JavaScript|Java|Python|\.NET|C)))"
@@ -94,15 +107,20 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   }
   
   # Get the first code owners of the package.
-  $author = "ramya-rao-a"
   $msauthor = "ramyar"
   Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
-  $codeOwnerArray = ."$PSScriptRoot/get-codeowners.ps1" `
-                    -TargetDirectory $PackageInfo.DirectoryPath 
-  if ($codeOwnerArray) {
-    Write-Host "Code Owners are $($codeOwnerArray -join ",")"
-    $author = $codeOwnerArray[0]
-    $msauthor = $author # This is a placeholder for now. Will change to the right ms alias.
+  $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath 
+  if (!$author) {
+    $author = "ramya-rao-a" 
+    $msauthor = "ramyar"
+  }
+  $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
+  # Default value
+  if (!$msauthor) {
+    $msauthor = $author
+  }
+  elseif (!$msauthor) {
+    $msauthor = $author
   }
   Write-Host "The author of package: $author"
   Write-Host "The ms author of package: $msauthor"
