@@ -234,7 +234,12 @@ namespace Azure.Storage.Files.Shares
         public ShareFileClient(
             Uri fileUri,
             ShareClientOptions options = default)
-            : this(fileUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
+            : this(
+                  fileUri: fileUri,
+                  authentication: (HttpPipelinePolicy)null,
+                  options: options,
+                  storageSharedKeyCredential: null,
+                  fileRequestIntent: null)
         {
         }
 
@@ -258,7 +263,12 @@ namespace Azure.Storage.Files.Shares
             Uri fileUri,
             StorageSharedKeyCredential credential,
             ShareClientOptions options = default)
-            : this(fileUri, credential.AsPolicy(), options, credential)
+            : this(
+                  fileUri: fileUri,
+                  authentication: credential.AsPolicy(),
+                  options: options,
+                  storageSharedKeyCredential: credential,
+                  fileRequestIntent: null)
         {
         }
 
@@ -302,6 +312,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
+        /// <param name="fileRequestIntent">
+        /// File request intent.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -310,8 +323,14 @@ namespace Azure.Storage.Files.Shares
         public ShareFileClient(
             Uri fileUri,
             TokenCredential credential,
+            ShareFileRequestIntent? fileRequestIntent = default,
             ShareClientOptions options = default)
-            : this(fileUri, credential.AsPolicy(options), options ?? new ShareClientOptions())
+            : this(
+                  fileUri: fileUri,
+                  authentication: credential.AsPolicy(options),
+                  options: options ?? new ShareClientOptions(),
+                  storageSharedKeyCredential: null,
+                  fileRequestIntent: fileRequestIntent)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -336,11 +355,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="fileRequestIntent">
+        /// File request intent.
+        /// </param>
         internal ShareFileClient(
             Uri fileUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            ShareFileRequestIntent? fileRequestIntent)
         {
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
@@ -348,8 +371,10 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
+                sasCredential: null,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                clientOptions: options);
+                clientOptions: options,
+                fileRequestIntent: fileRequestIntent);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -453,7 +478,8 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.ClientOptions.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                _clientConfiguration.FileRequestIntent);
         }
         #endregion ctors
 

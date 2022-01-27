@@ -6,8 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-9b17bcd01fcb5c458733ea97a835618c-059aedf4181ae245-00",
-        "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-b1cff8094110c41c5a01e69147f70e0a-695ecc0ec0ed4ae5-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220126.1",
+          "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
+        ],
         "x-ms-client-request-id": "57347690-d00b-8184-85ba-22c93751adb2",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-06-08"
@@ -16,12 +19,15 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 11 Nov 2021 18:36:44 GMT",
-        "ETag": "\u00220x8D9A5423690C78D\u0022",
-        "Last-Modified": "Thu, 11 Nov 2021 18:36:45 GMT",
-        "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
+        "Date": "Thu, 27 Jan 2022 02:38:13 GMT",
+        "ETag": "\u00220x8D9E13E11061CAB\u0022",
+        "Last-Modified": "Thu, 27 Jan 2022 02:38:13 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-client-request-id": "57347690-d00b-8184-85ba-22c93751adb2",
-        "x-ms-request-id": "57286205-001a-0026-562b-d71df0000000",
+        "x-ms-request-id": "de9db498-d01a-002c-8026-132fd5000000",
         "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
@@ -32,8 +38,11 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-2ebcd9299e8fab49b61d1027b273a0c8-6b386aa1b91fd34e-00",
-        "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-de322238dd5ebdabaab95740bf02bd84-95a92f2bf6a0fe4f-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220126.1",
+          "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
+        ],
         "x-ms-client-request-id": "58b1c278-4776-f715-f55e-2d33e3d1cb55",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-06-08"
@@ -42,14 +51,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Thu, 11 Nov 2021 18:36:44 GMT",
-        "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
+        "Date": "Thu, 27 Jan 2022 02:38:13 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "58b1c278-4776-f715-f55e-2d33e3d1cb55",
-        "x-ms-request-id": "57286208-001a-0026-582b-d71df0000000",
+        "x-ms-request-id": "de9db49b-d01a-002c-0226-132fd5000000",
         "x-ms-version": "2021-06-08"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://oauthfilerest3.file.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Etest-share-a41256a2-8044-363d-5729-fa41ceaa9e20\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 11 Nov 2021 18:36:45 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D9A5423690C78D\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003EThu, 11 Nov 2021 18:36:45 GMT\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://oauthfilerest3.file.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Etest-share-3724d71e-bbdd-4bf2-bc4c-5107cf34a38e\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 27 Jan 2022 02:21:42 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D9E13BC1E22740\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003EThu, 27 Jan 2022 02:21:42 GMT\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-4d99bb64-96d1-4e10-aac7-60d4c551d8f8\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 27 Jan 2022 02:21:32 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D9E13BBBFE4875\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003EThu, 27 Jan 2022 02:21:32 GMT\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-674031b8-5ed6-483b-b564-4b67b87fe103\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 27 Jan 2022 02:08:38 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D9E139EED54CAE\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003EThu, 27 Jan 2022 02:08:38 GMT\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-a41256a2-8044-363d-5729-fa41ceaa9e20\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 27 Jan 2022 02:38:13 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D9E13E11061CAB\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003EThu, 27 Jan 2022 02:38:13 GMT\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-a7383471-bdbf-49e3-b4bb-78b152bed3a4\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 27 Jan 2022 02:05:21 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D9E139790E4D1A\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003CAccessTier\u003ETransactionOptimized\u003C/AccessTier\u003E\u003CAccessTierChangeTime\u003EThu, 27 Jan 2022 02:05:21 GMT\u003C/AccessTierChangeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
       "RequestUri": "https://oauthfilerest3.file.core.windows.net/test-share-a41256a2-8044-363d-5729-fa41ceaa9e20?restype=share",
@@ -57,8 +69,11 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-9ba3422a876f0146bb96ae3bda4f3fef-982338ee5ea6ae41-00",
-        "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211111.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-e9f7ee50bc4df5a405b70915cf8fa98e-2c7b2f912ddaa14e-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220126.1",
+          "(.NET 6.0.1; Microsoft Windows 10.0.19044)"
+        ],
         "x-ms-client-request-id": "7550ff28-55a0-393b-3a97-68334f0bb8e9",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
@@ -68,10 +83,13 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 11 Nov 2021 18:36:44 GMT",
-        "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
+        "Date": "Thu, 27 Jan 2022 02:38:13 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-client-request-id": "7550ff28-55a0-393b-3a97-68334f0bb8e9",
-        "x-ms-request-id": "5728620c-001a-0026-5c2b-d71df0000000",
+        "x-ms-request-id": "de9db49e-d01a-002c-0426-132fd5000000",
         "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
@@ -79,6 +97,6 @@
   ],
   "Variables": {
     "RandomSeed": "1073289443",
-    "Storage_TestConfigOAuth": "OAuthTenant\noauthfilerest3\nU2FuaXRpemVk\nhttps://oauthfilerest3.blob.core.windows.net\nhttps://oauthfilerest3.file.core.windows.net\nhttps://oauthfilerest3.queue.core.windows.net\nhttps://oauthfilerest3.table.core.windows.net\n\n\n\n\nhttps://oauthfilerest3-secondary.blob.core.windows.net\nhttps://oauthfilerest3-secondary.file.core.windows.net\nhttps://oauthfilerest3-secondary.queue.core.windows.net\nhttps://oauthfilerest3-secondary.table.core.windows.net\ndc57b189-cd6a-485e-beb1-dd71492b0a92\nSanitized\n922923f3-36c9-4663-b1d7-68e670802ae1\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://oauthfilerest3.blob.core.windows.net/;QueueEndpoint=https://oauthfilerest3.queue.core.windows.net/;FileEndpoint=https://oauthfilerest3.file.core.windows.net/;BlobSecondaryEndpoint=https://oauthfilerest3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://oauthfilerest3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://oauthfilerest3-secondary.file.core.windows.net/;AccountName=oauthfilerest3;AccountKey=Sanitized\nseanscope1\nXClient\n25c81a3f-c3f0-41c0-8453-4f699167c22d"
+    "Storage_TestConfigOAuth": "OAuthTenant\noauthfilerest3\nU2FuaXRpemVk\nhttps://oauthfilerest3.blob.core.windows.net\nhttps://oauthfilerest3.file.core.windows.net\nhttp://oauthfilerest3.queue.core.windows.net\nhttp://oauthfilerest3.table.core.windows.net\n\n\n\n\nhttp://oauthfilerest3-secondary.blob.core.windows.net\nhttp://oauthfilerest3-secondary.file.core.windows.net\nhttp://oauthfilerest3-secondary.queue.core.windows.net\nhttp://oauthfilerest3-secondary.table.core.windows.net\ndc57b189-cd6a-485e-beb1-dd71492b0a92\nSanitized\n922923f3-36c9-4663-b1d7-68e670802ae1\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://oauthfilerest3.blob.core.windows.net/;QueueEndpoint=http://oauthfilerest3.queue.core.windows.net/;FileEndpoint=https://oauthfilerest3.file.core.windows.net/;BlobSecondaryEndpoint=http://oauthfilerest3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://oauthfilerest3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://oauthfilerest3-secondary.file.core.windows.net/;AccountName=oauthfilerest3;AccountKey=Sanitized\n\njaschrep\n25c81a3f-c3f0-41c0-8453-4f699167c22d"
   }
 }

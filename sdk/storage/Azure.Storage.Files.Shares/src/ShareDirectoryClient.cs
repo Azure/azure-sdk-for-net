@@ -224,7 +224,12 @@ namespace Azure.Storage.Files.Shares
         public ShareDirectoryClient(
             Uri directoryUri,
             ShareClientOptions options = default)
-            : this(directoryUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
+            : this(
+                  directoryUri: directoryUri,
+                  authentication: (HttpPipelinePolicy)null,
+                  options: options,
+                  storageSharedKeyCredential: null,
+                  fileRequestIntent: null)
         {
         }
 
@@ -249,7 +254,12 @@ namespace Azure.Storage.Files.Shares
             Uri directoryUri,
             StorageSharedKeyCredential credential,
             ShareClientOptions options = default)
-            : this(directoryUri, credential.AsPolicy(), options, credential)
+            : this(
+                  directoryUri: directoryUri,
+                  authentication: credential.AsPolicy(),
+                  options: options,
+                  storageSharedKeyCredential: credential,
+                  fileRequestIntent: null)
         {
         }
 
@@ -294,6 +304,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
+        /// <param name="fileRequestIntent">
+        /// File request intent.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -302,8 +315,14 @@ namespace Azure.Storage.Files.Shares
         public ShareDirectoryClient(
             Uri directoryUri,
             TokenCredential credential,
+            ShareFileRequestIntent? fileRequestIntent = default,
             ShareClientOptions options = default)
-            : this(directoryUri, credential.AsPolicy(options), options ?? new ShareClientOptions())
+            : this(
+                  directoryUri: directoryUri,
+                  authentication: credential.AsPolicy(options),
+                  options: options ?? new ShareClientOptions(),
+                  storageSharedKeyCredential: null,
+                  fileRequestIntent: fileRequestIntent)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -328,11 +347,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="fileRequestIntent">
+        /// File request intent.
+        /// </param>
         internal ShareDirectoryClient(
             Uri directoryUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            ShareFileRequestIntent? fileRequestIntent)
         {
             Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
@@ -340,8 +363,10 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
+                sasCredential: default,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                clientOptions: options);
+                clientOptions: options,
+                fileRequestIntent: fileRequestIntent);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -447,7 +472,8 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.ClientOptions.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                _clientConfiguration.FileRequestIntent);
         }
         #endregion ctors
 

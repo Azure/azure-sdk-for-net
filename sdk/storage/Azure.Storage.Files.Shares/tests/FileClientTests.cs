@@ -180,7 +180,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task CreateAsync_OAuth()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -651,7 +651,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetMetadataAsync_OAuth()
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             // Arrange
@@ -756,7 +756,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
@@ -1051,7 +1051,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var constants = TestConstants.Create(this);
 
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             // Act
@@ -1298,7 +1298,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task DeleteAsync_OAuth()
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             // Act
@@ -1391,10 +1391,10 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient source = testSource.File;
             await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient dest = testDest.File;
 
             var data = GetRandomBuffer(Constants.KB);
@@ -1925,7 +1925,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task AbortCopyAsync_OAuth()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -2163,7 +2163,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var data = GetRandomBuffer(Constants.KB);
 
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             using (var stream = new MemoryStream(data))
@@ -2445,7 +2445,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             // Act
@@ -2675,7 +2675,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             byte[] data = GetRandomBuffer(Constants.KB);
@@ -2858,7 +2858,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var data = GetRandomBuffer(Constants.KB);
 
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             using (var stream = new MemoryStream(data))
@@ -3094,7 +3094,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var data = this.GetRandomBuffer(size);
 
             await using DisposingShare test = await GetTestShareAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareClient share = test.Share;
 
             var name = this.GetNewFileName();
@@ -3324,7 +3324,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ClearRangeAsync_OAuth()
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             Response<ShareFileUploadInfo> response = await file.ClearRangeAsync(
@@ -3837,7 +3837,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             // Act
@@ -3883,7 +3883,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = test.File;
 
             // Act
@@ -3957,7 +3957,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -4025,7 +4025,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -4096,7 +4096,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -4188,7 +4188,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
@@ -4312,7 +4312,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(16 * Constants.KB);
 

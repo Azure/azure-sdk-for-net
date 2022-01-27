@@ -170,7 +170,8 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task CreateAsync_OAuth()
         {
-            await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
+            await using DisposingShare test = await GetTestShareAsync(
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareClient share = test.Share;
 
             // Arrange
@@ -573,7 +574,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task DeleteAsync_OAuth()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -621,7 +622,8 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task GetPropertiesAsync_OAuth()
         {
-            await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
+            await using DisposingShare test = await GetTestShareAsync(
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareClient share = test.Share;
 
             // Arrange
@@ -711,7 +713,8 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task SetHttpHeadersAsync_OAuth()
         {
-            await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
+            await using DisposingShare test = await GetTestShareAsync(
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareClient share = test.Share;
 
             // Arrange
@@ -863,7 +866,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetMetadataAsync_OAuth()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             // Arrange
@@ -956,7 +959,8 @@ namespace Azure.Storage.Files.Shares.Tests
             var numDirectories = 5;
             var directoryNames = Enumerable.Range(0, numDirectories).Select(_ => GetNewFileName()).ToArray();
 
-            await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_OAuth());
+            await using DisposingShare test = await GetTestShareAsync(
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareClient share = test.Share;
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
@@ -1106,7 +1110,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             // Act
@@ -1152,7 +1156,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
+                SharesClientBuilder.GetServiceClient_OAuth(ShareFileRequestIntent.Backup));
             ShareDirectoryClient directory = test.Directory;
 
             // Act

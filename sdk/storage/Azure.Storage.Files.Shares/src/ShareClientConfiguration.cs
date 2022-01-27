@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
@@ -14,12 +15,14 @@ namespace Azure.Storage.Files.Shares
 
         public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; internal set; }
 
+        public ShareFileRequestIntent? FileRequestIntent { get; internal set; }
+
         public ShareClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions, default)
         {
         }
 
@@ -28,7 +31,7 @@ namespace Azure.Storage.Files.Shares
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions)
+            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions, default)
         {
         }
 
@@ -37,12 +40,14 @@ namespace Azure.Storage.Files.Shares
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
-            ShareClientOptions clientOptions)
+            ShareClientOptions clientOptions,
+            ShareFileRequestIntent? fileRequestIntent)
             : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             UploadTransferValidationOptions = clientOptions.UploadTransferValidationOptions;
             DownloadTransferValidationOptions = clientOptions.DownloadTransferValidationOptions;
+            FileRequestIntent = fileRequestIntent;
         }
     }
 }
