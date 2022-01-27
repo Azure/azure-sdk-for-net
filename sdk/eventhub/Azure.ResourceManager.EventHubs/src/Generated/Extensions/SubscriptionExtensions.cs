@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityNamespaceAsync(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).CheckNameAvailabilityNamespaceAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityNamespace(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).CheckNameAvailabilityNamespace(parameters, cancellationToken);
         }
