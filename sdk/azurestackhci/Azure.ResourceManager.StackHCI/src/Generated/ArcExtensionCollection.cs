@@ -14,25 +14,27 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
-    /// <summary> A class representing collection of Extension and their operations over its parent. </summary>
-    public partial class ExtensionCollection : ArmCollection, IEnumerable<Extension>, IAsyncEnumerable<Extension>
+    /// <summary> A class representing collection of ArcExtension and their operations over its parent. </summary>
+    public partial class ArcExtensionCollection : ArmCollection, IEnumerable<ArcExtension>, IAsyncEnumerable<ArcExtension>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExtensionsRestOperations _extensionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ExtensionCollection"/> class for mocking. </summary>
-        protected ExtensionCollection()
+        /// <summary> Initializes a new instance of the <see cref="ArcExtensionCollection"/> class for mocking. </summary>
+        protected ArcExtensionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtensionCollection class. </summary>
+        /// <summary> Initializes a new instance of ArcExtensionCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ExtensionCollection(ArmResource parent) : base(parent)
+        internal ArcExtensionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _extensionsRestClient = new ExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extension"/> is null. </exception>
-        public virtual ExtensionCreateOperation CreateOrUpdate(string extensionName, ExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExtensionCreateOperation CreateOrUpdate(string extensionName, ArcExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.StackHCI
                 throw new ArgumentNullException(nameof(extension));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extension"/> is null. </exception>
-        public async virtual Task<ExtensionCreateOperation> CreateOrUpdateAsync(string extensionName, ExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExtensionCreateOperation> CreateOrUpdateAsync(string extensionName, ArcExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.StackHCI
                 throw new ArgumentNullException(nameof(extension));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,21 +117,21 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<Extension> Get(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtension> Get(string extensionName, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.Get");
             scope.Start();
             try
             {
                 var response = _extensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Extension(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtension(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,21 +144,21 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public async virtual Task<Response<Extension>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ArcExtension>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.Get");
             scope.Start();
             try
             {
                 var response = await _extensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Extension(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtension(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,21 +171,21 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<Extension> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtension> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _extensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<Extension>(null, response.GetRawResponse())
-                    : Response.FromValue(new Extension(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<ArcExtension>(null, response.GetRawResponse())
+                    : Response.FromValue(new ArcExtension(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,21 +198,21 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public async virtual Task<Response<Extension>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ArcExtension>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             if (extensionName == null)
             {
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.GetIfExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 var response = await _extensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<Extension>(null, response.GetRawResponse())
-                    : Response.FromValue(new Extension(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<ArcExtension>(null, response.GetRawResponse())
+                    : Response.FromValue(new ArcExtension(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +232,7 @@ namespace Azure.ResourceManager.StackHCI
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.Exists");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.Exists");
             scope.Start();
             try
             {
@@ -255,7 +257,7 @@ namespace Azure.ResourceManager.StackHCI
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.ExistsAsync");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -271,17 +273,17 @@ namespace Azure.ResourceManager.StackHCI
 
         /// <summary> List all Extensions under ArcSetting resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Extension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Extension> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArcExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArcExtension> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<Extension> FirstPageFunc(int? pageSizeHint)
+            Page<ArcExtension> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _extensionsRestClient.ListByArcSetting(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Extension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -289,14 +291,14 @@ namespace Azure.ResourceManager.StackHCI
                     throw;
                 }
             }
-            Page<Extension> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArcExtension> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _extensionsRestClient.ListByArcSettingNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Extension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,17 +311,17 @@ namespace Azure.ResourceManager.StackHCI
 
         /// <summary> List all Extensions under ArcSetting resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Extension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Extension> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArcExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArcExtension> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Extension>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArcExtension>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _extensionsRestClient.ListByArcSettingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Extension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -327,14 +329,14 @@ namespace Azure.ResourceManager.StackHCI
                     throw;
                 }
             }
-            async Task<Page<Extension>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArcExtension>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExtensionCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _extensionsRestClient.ListByArcSettingNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Extension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,7 +347,7 @@ namespace Azure.ResourceManager.StackHCI
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<Extension> IEnumerable<Extension>.GetEnumerator()
+        IEnumerator<ArcExtension> IEnumerable<ArcExtension>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -355,12 +357,12 @@ namespace Azure.ResourceManager.StackHCI
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Extension> IAsyncEnumerable<Extension>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ArcExtension> IAsyncEnumerable<ArcExtension>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Extension, ExtensionData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ArcExtension, ArcExtensionData> Construct() { }
     }
 }

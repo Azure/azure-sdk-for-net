@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
-    public partial class ExtensionData : IUtf8JsonSerializable
+    public partial class ArcExtensionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.StackHCI
             writer.WriteEndObject();
         }
 
-        internal static ExtensionData DeserializeExtensionData(JsonElement element)
+        internal static ArcExtensionData DeserializeArcExtensionData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.StackHCI
                     continue;
                 }
             }
-            return new ExtensionData(id, name, type, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new ArcExtensionData(id, name, type, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }

@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StackHCI.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
-    public partial class ClusterData : IUtf8JsonSerializable
+    public partial class HCIClusterData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.StackHCI
             writer.WriteEndObject();
         }
 
-        internal static ClusterData DeserializeClusterData(JsonElement element)
+        internal static HCIClusterData DeserializeHCIClusterData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.StackHCI
                     continue;
                 }
             }
-            return new ClusterData(id, name, type, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), cloudId.Value, cloudManagementEndpoint.Value, aadClientId.Value, aadTenantId.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new HCIClusterData(id, name, type, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), cloudId.Value, cloudManagementEndpoint.Value, aadClientId.Value, aadTenantId.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }

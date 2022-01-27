@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/>, or <paramref name="extensionName"/> is null. </exception>
-        public async Task<Response<ExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArcExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        ExtensionData value = default;
+                        ArcExtensionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExtensionData.DeserializeExtensionData(document.RootElement);
+                        value = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtensionData)null, message.Response);
+                    return Response.FromValue((ArcExtensionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/>, or <paramref name="extensionName"/> is null. </exception>
-        public Response<ExtensionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
+        public Response<ArcExtensionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -258,19 +258,19 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        ExtensionData value = default;
+                        ArcExtensionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExtensionData.DeserializeExtensionData(document.RootElement);
+                        value = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtensionData)null, message.Response);
+                    return Response.FromValue((ArcExtensionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionData extension)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData extension)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extension"> Details of the Machine Extension to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/>, <paramref name="extensionName"/>, or <paramref name="extension"/> is null. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionData extension, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extension"> Details of the Machine Extension to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/>, <paramref name="extensionName"/>, or <paramref name="extension"/> is null. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionData extension, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionData extension)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData extension)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extension"> Details of the Machine Extension to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/>, <paramref name="extensionName"/>, or <paramref name="extension"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionData extension, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="extension"> Details of the Machine Extension to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/>, <paramref name="extensionName"/>, or <paramref name="extension"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionData extension, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

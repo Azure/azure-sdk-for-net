@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StackHCI.Models
     {
         internal static ExtensionList DeserializeExtensionList(JsonElement element)
         {
-            Optional<IReadOnlyList<ExtensionData>> value = default;
+            Optional<IReadOnlyList<ArcExtensionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.StackHCI.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionData> array = new List<ExtensionData>();
+                    List<ArcExtensionData> array = new List<ArcExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionData.DeserializeExtensionData(item));
+                        array.Add(ArcExtensionData.DeserializeArcExtensionData(item));
                     }
                     value = array;
                     continue;

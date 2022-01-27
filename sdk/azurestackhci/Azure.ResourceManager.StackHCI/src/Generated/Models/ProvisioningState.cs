@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StackHCI.Models
 {
-    /// <summary> Provisioning state of the Extension proxy resource. </summary>
+    /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;

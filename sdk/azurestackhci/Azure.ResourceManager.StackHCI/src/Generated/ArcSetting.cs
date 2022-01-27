@@ -14,8 +14,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.StackHCI.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        #region Extension
+        #region ArcExtension
 
-        /// <summary> Gets a collection of Extensions in the ArcSetting. </summary>
-        /// <returns> An object representing collection of Extensions and their operations over a ArcSetting. </returns>
-        public virtual ExtensionCollection GetExtensions()
+        /// <summary> Gets a collection of ArcExtensions in the ArcSetting. </summary>
+        /// <returns> An object representing collection of ArcExtensions and their operations over a ArcSetting. </returns>
+        public ArcExtensionCollection GetArcExtensions()
         {
-            return new ExtensionCollection(this);
+            return new ArcExtensionCollection(this);
         }
         #endregion
     }

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.StackHCI.Models;
 
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.StackHCI
 {
     /// <summary> A class representing collection of ArcSetting and their operations over its parent. </summary>
     public partial class ArcSettingCollection : ArmCollection, IEnumerable<ArcSetting>, IAsyncEnumerable<ArcSetting>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ArcSettingsRestOperations _arcSettingsRestClient;
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.StackHCI
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Cluster.ResourceType;
+        protected override ResourceType ValidResourceType => HCICluster.ResourceType;
 
         // Collection level operations.
 
@@ -361,6 +363,6 @@ namespace Azure.ResourceManager.StackHCI
         }
 
         // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ArcSetting, ArcSettingData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ArcSetting, ArcSettingData> Construct() { }
     }
 }

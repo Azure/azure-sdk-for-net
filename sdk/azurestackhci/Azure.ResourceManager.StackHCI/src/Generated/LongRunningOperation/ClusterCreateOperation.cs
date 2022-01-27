@@ -16,25 +16,25 @@ using Azure.ResourceManager.StackHCI;
 namespace Azure.ResourceManager.StackHCI.Models
 {
     /// <summary> Create an HCI cluster. </summary>
-    public partial class ClusterCreateOperation : Operation<Cluster>
+    public partial class ClusterCreateOperation : Operation<HCICluster>
     {
-        private readonly OperationOrResponseInternals<Cluster> _operation;
+        private readonly OperationOrResponseInternals<HCICluster> _operation;
 
         /// <summary> Initializes a new instance of ClusterCreateOperation for mocking. </summary>
         protected ClusterCreateOperation()
         {
         }
 
-        internal ClusterCreateOperation(ArmResource operationsBase, Response<ClusterData> response)
+        internal ClusterCreateOperation(ArmResource operationsBase, Response<HCIClusterData> response)
         {
-            _operation = new OperationOrResponseInternals<Cluster>(Response.FromValue(new Cluster(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<HCICluster>(Response.FromValue(new HCICluster(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Cluster Value => _operation.Value;
+        public override HCICluster Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.StackHCI.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Cluster>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<HCICluster>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Cluster>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<HCICluster>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

@@ -18,9 +18,9 @@ using Azure.ResourceManager.StackHCI;
 namespace Azure.ResourceManager.StackHCI.Models
 {
     /// <summary> Update Extension for HCI cluster. </summary>
-    public partial class ExtensionUpdateOperation : Operation<Extension>, IOperationSource<Extension>
+    public partial class ExtensionUpdateOperation : Operation<ArcExtension>, IOperationSource<ArcExtension>
     {
-        private readonly OperationInternals<Extension> _operation;
+        private readonly OperationInternals<ArcExtension> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StackHCI.Models
 
         internal ExtensionUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Extension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "ExtensionUpdateOperation");
+            _operation = new OperationInternals<ArcExtension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "ExtensionUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StackHCI.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Extension Value => _operation.Value;
+        public override ArcExtension Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.StackHCI.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Extension>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ArcExtension>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Extension>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ArcExtension>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Extension IOperationSource<Extension>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArcExtension IOperationSource<ArcExtension>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Extension(_operationBase, ExtensionData.DeserializeExtensionData(document.RootElement));
+            return new ArcExtension(_operationBase, ArcExtensionData.DeserializeArcExtensionData(document.RootElement));
         }
 
-        async ValueTask<Extension> IOperationSource<Extension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArcExtension> IOperationSource<ArcExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Extension(_operationBase, ExtensionData.DeserializeExtensionData(document.RootElement));
+            return new ArcExtension(_operationBase, ArcExtensionData.DeserializeArcExtensionData(document.RootElement));
         }
     }
 }

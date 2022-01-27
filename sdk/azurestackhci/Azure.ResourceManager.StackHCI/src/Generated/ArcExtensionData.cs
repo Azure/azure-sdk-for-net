@@ -8,21 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
-    /// <summary> A class representing the Extension data model. </summary>
-    public partial class ExtensionData : Resource
+    /// <summary> A class representing the ArcExtension data model. </summary>
+    public partial class ArcExtensionData : Resource
     {
-        /// <summary> Initializes a new instance of ExtensionData. </summary>
-        public ExtensionData()
+        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
+        public ArcExtensionData()
         {
             PerNodeExtensionDetails = new ChangeTrackingList<PerNodeExtensionState>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionData. </summary>
+        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal ExtensionData(ResourceIdentifier id, string name, ResourceType type, ProvisioningState? provisioningState, ExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string typePropertiesExtensionParametersType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type)
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType type, ProvisioningState? provisioningState, ExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string typePropertiesExtensionParametersType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;

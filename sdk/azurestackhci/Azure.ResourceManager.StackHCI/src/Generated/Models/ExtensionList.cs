@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StackHCI.Models
         /// <summary> Initializes a new instance of ExtensionList. </summary>
         internal ExtensionList()
         {
-            Value = new ChangeTrackingList<ExtensionData>();
+            Value = new ChangeTrackingList<ArcExtensionData>();
         }
 
         /// <summary> Initializes a new instance of ExtensionList. </summary>
         /// <param name="value"> List of Extensions in HCI cluster. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ExtensionList(IReadOnlyList<ExtensionData> value, string nextLink)
+        internal ExtensionList(IReadOnlyList<ArcExtensionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Extensions in HCI cluster. </summary>
-        public IReadOnlyList<ExtensionData> Value { get; }
+        public IReadOnlyList<ArcExtensionData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

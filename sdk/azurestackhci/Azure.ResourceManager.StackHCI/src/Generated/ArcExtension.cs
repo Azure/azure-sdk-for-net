@@ -14,15 +14,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.StackHCI.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
-    /// <summary> A Class representing a Extension along with the instance operations that can be performed on it. </summary>
-    public partial class Extension : ArmResource
+    /// <summary> A Class representing a ArcExtension along with the instance operations that can be performed on it. </summary>
+    public partial class ArcExtension : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="Extension"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ArcExtension"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}/extensions/{extensionName}";
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.StackHCI
         }
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ExtensionsRestOperations _extensionsRestClient;
-        private readonly ExtensionData _data;
+        private readonly ArcExtensionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="Extension"/> class for mocking. </summary>
-        protected Extension()
+        /// <summary> Initializes a new instance of the <see cref="ArcExtension"/> class for mocking. </summary>
+        protected ArcExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "Extension"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ArcExtension"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Extension(ArmResource options, ExtensionData resource) : base(options, resource.Id)
+        internal ArcExtension(ArmResource options, ArcExtensionData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.StackHCI
             _extensionsRestClient = new ExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Extension"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcExtension"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Extension(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ArcExtension(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _extensionsRestClient = new ExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Extension"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcExtension"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Extension(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal ArcExtension(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _extensionsRestClient = new ExtensionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StackHCI
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ExtensionData Data
+        public virtual ArcExtensionData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.StackHCI
 
         /// <summary> Get particular Arc Extension of HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Extension>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ArcExtension>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Extension.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtension.Get");
             scope.Start();
             try
             {
                 var response = await _extensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Extension(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtension(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.StackHCI
 
         /// <summary> Get particular Arc Extension of HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Extension> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtension> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Extension.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtension.Get");
             scope.Start();
             try
             {
                 var response = _extensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Extension(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtension(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ExtensionDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Extension.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtension.Delete");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ExtensionDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Extension.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtension.Delete");
             scope.Start();
             try
             {
@@ -195,14 +195,14 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
-        public async virtual Task<ExtensionUpdateOperation> UpdateAsync(ExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExtensionUpdateOperation> UpdateAsync(ArcExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (extension == null)
             {
                 throw new ArgumentNullException(nameof(extension));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Extension.Update");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtension.Update");
             scope.Start();
             try
             {
@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
-        public virtual ExtensionUpdateOperation Update(ExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExtensionUpdateOperation Update(ArcExtensionData extension, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (extension == null)
             {
                 throw new ArgumentNullException(nameof(extension));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Extension.Update");
+            using var scope = _clientDiagnostics.CreateScope("ArcExtension.Update");
             scope.Start();
             try
             {

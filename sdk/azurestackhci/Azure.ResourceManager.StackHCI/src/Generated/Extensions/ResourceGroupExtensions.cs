@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.StackHCI
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Cluster
-        /// <summary> Gets an object representing a ClusterCollection along with the instance operations that can be performed on it. </summary>
+        #region HCICluster
+        /// <summary> Gets an object representing a HCIClusterCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ClusterCollection" /> object. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="HCIClusterCollection" /> object. </returns>
+        public static HCIClusterCollection GetHCIClusters(this ResourceGroup resourceGroup)
         {
-            return new ClusterCollection(resourceGroup);
+            return new HCIClusterCollection(resourceGroup);
         }
         #endregion
     }

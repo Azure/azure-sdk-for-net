@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StackHCI.Models
         /// <summary> Initializes a new instance of ClusterList. </summary>
         internal ClusterList()
         {
-            Value = new ChangeTrackingList<ClusterData>();
+            Value = new ChangeTrackingList<HCIClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterList. </summary>
         /// <param name="value"> List of clusters. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ClusterList(IReadOnlyList<ClusterData> value, string nextLink)
+        internal ClusterList(IReadOnlyList<HCIClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of clusters. </summary>
-        public IReadOnlyList<ClusterData> Value { get; }
+        public IReadOnlyList<HCIClusterData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }
