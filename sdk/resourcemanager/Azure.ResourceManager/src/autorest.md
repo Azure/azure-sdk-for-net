@@ -6,8 +6,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 arm-core: true
 clear-output-folder: true
-modelerfour:
-  lenient-model-deduplication: true
 skip-csproj: true
 model-namespace: false
 public-clients: false
@@ -29,6 +27,7 @@ output-folder: $(this-folder)/Common/Generated
 namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
+  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -66,6 +65,14 @@ directive:
     where: $.definitions.systemData.properties.*
     transform: >
       $["readOnly"] = true
+  - from: managedidentity.json
+    where: $.definitions.*
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
 ```
 
 ### Tag: package-resources
@@ -97,6 +104,7 @@ request-path-to-resource-data:
   /subscriptions/{subscriptionId}: Subscription
   # tenant does not have name and type
   /: Tenant
+  # provider does not have name and type
   /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
@@ -169,7 +177,7 @@ directive:
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
-
+  # Deduplicate
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
     transform: >
@@ -185,6 +193,35 @@ directive:
     transform: >
       $["operationId"] = "Operations_ListFeaturesOperations";
     reason: Add operation group so that we can omit related models by the operation group.
+  - from: locks.json
+    where: $.definitions
+    transform: >
+      $["OperationListResult"]["x-ms-client-name"] = "ManagementLockOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "ManagementLockOperation";
+      $["Operation"]["properties"]["displayOfManagementLock"] = $["Operation"]["properties"]["display"];
+      $["Operation"]["properties"]["display"] = undefined;
+  - from: links.json
+    where: $.definitions
+    transform: >
+      $["OperationListResult"]["x-ms-client-name"] = "ResourceLinkOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "ResourceLinksOperation";
+  - from: subscriptions.json
+    where: $.definitions
+    transform: >
+      $["OperationListResult"]["x-ms-client-name"] = "SubscriptionOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "SubscriptionOperation";
+  - from: features.json
+    where: $.definitions
+    transform: >
+      $["OperationListResult"]["x-ms-client-name"] = "FeatureOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "FeatureOperation";
+      $["Operation"]["properties"]["displayOfFeature"] = $["Operation"]["properties"]["display"];
+      $["Operation"]["properties"]["display"] = undefined;
+  - from: features.json
+    where: $.definitions.ErrorResponse
+    transform: >
+      $["x-ms-client-name"] = "FeatureErrorResponse";
+
   - rename-operation:
       from: checkResourceName
       to: ResourceCheck_CheckResourceName
@@ -316,15 +353,26 @@ directive:
     where: $.paths["/providers/{resourceProviderNamespace}"].get.responses["200"].schema["$ref"]
     transform: return "#/definitions/ProviderInfo"
 
+  - from: resources.json
+    where: $.definitions.Identity.properties.type["x-ms-enum"]
+    transform: > 
+      $["name"] = "GenericResourceIdentityType";
+      $["modelAsString"] = true;
+  - from: resources.json
+    where: $.definitions.Identity
+    transform: > 
+      $["required"] = ["type"]
+  - from: resources.json
+    where: $.definitions.Identity
+    transform: >
+      $["x-ms-client-name"] = "GenericResourceIdentity";
   - from: policyAssignments.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: $["name"] = "PolicyAssignmentIdentityType"
-  - from: resources.json,
+  - from: policyAssignments.json
     where: $.definitions.Identity
-    transform: 'return undefined'
-  - rename-model:
-      from: Identity
-      to: PolicyAssignmentIdentity
+    transform: >
+      $["x-ms-client-name"] = "PolicyAssignmentIdentity";
   - from: locks.json
     where: $.paths..parameters[?(@.name === "scope")]
     transform: >
