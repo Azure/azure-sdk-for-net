@@ -11373,7 +11373,7 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "0",
+        "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 19 Jan 2022 04:13:53 GMT",
         "Expires": "-1",
@@ -11393,7 +11393,7 @@
         "x-ms-request-id": "23e015dc-1abd-4ec1-b5af-4ad0d93960b2",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20220119T041353Z:495cc181-9e08-4102-9174-3e4223173cdf"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operationResults/23e015dc-1abd-4ec1-b5af-4ad0d93960b2?api-version=2021-02-01",
