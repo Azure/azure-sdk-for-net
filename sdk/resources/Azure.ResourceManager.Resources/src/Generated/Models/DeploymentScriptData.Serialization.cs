@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
                     case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element);
                 }
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<Models.ManagedServiceIdentity> identity = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))

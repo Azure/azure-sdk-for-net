@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,10 +22,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="sendKeyName"> The name of the send key. </param>
         /// <param name="sendKeyValue"> The value of the send key. </param>
-        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType type, string kind, string sendKeyName, string sendKeyValue) : base(id, name, type, kind)
+        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string sendKeyName, string sendKeyValue) : base(id, name, type, systemData, kind)
         {
             SendKeyName = sendKeyName;
             SendKeyValue = sendKeyValue;

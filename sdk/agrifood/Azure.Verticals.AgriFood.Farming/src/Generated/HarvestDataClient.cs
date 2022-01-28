@@ -22,10 +22,9 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -45,7 +44,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -123,7 +122,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
-            using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.GetHarvestData");
+            using var scope = ClientDiagnostics.CreateScope("HarvestDataClient.GetHarvestData");
             scope.Start();
             try
             {
@@ -208,7 +207,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
-            using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.GetHarvestData");
+            using var scope = ClientDiagnostics.CreateScope("HarvestDataClient.GetHarvestData");
             scope.Start();
             try
             {
@@ -335,7 +334,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
-            using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -462,7 +461,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
-            using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -506,7 +505,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
-            using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("HarvestDataClient.Delete");
             scope.Start();
             try
             {
@@ -550,7 +549,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(farmerId, nameof(farmerId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
-            using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("HarvestDataClient.Delete");
             scope.Start();
             try
             {
@@ -678,7 +677,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(farmerId, nameof(farmerId));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "HarvestDataClient.GetAllHarvestDataByFarmerId");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "HarvestDataClient.GetAllHarvestDataByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -807,7 +806,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(farmerId, nameof(farmerId));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "HarvestDataClient.GetAllHarvestDataByFarmerId");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "HarvestDataClient.GetAllHarvestDataByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -932,7 +931,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetAllHarvestDataAsync(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "HarvestDataClient.GetAllHarvestData");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "HarvestDataClient.GetAllHarvestData");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1057,7 +1056,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetAllHarvestData(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "HarvestDataClient.GetAllHarvestData");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "HarvestDataClient.GetAllHarvestData");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
         {
             Optional<Models.Sku> sku = default;
             Optional<Models.Plan> plan = default;
-            Optional<ResourceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<Models.ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("zones"))

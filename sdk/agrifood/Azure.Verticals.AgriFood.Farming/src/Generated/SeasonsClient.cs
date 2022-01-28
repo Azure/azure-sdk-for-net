@@ -22,10 +22,9 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -45,7 +44,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -95,7 +94,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(seasonId, nameof(seasonId));
 
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.GetSeason");
+            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.GetSeason");
             scope.Start();
             try
             {
@@ -152,7 +151,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(seasonId, nameof(seasonId));
 
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.GetSeason");
+            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.GetSeason");
             scope.Start();
             try
             {
@@ -225,7 +224,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(seasonId, nameof(seasonId));
 
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -298,7 +297,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(seasonId, nameof(seasonId));
 
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -340,7 +339,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(seasonId, nameof(seasonId));
 
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.Delete");
             scope.Start();
             try
             {
@@ -382,7 +381,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(seasonId, nameof(seasonId));
 
-            using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("SeasonsClient.Delete");
             scope.Start();
             try
             {
@@ -462,7 +461,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetSeasonsAsync(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "SeasonsClient.GetSeasons");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "SeasonsClient.GetSeasons");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -543,7 +542,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetSeasons(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "SeasonsClient.GetSeasons");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "SeasonsClient.GetSeasons");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

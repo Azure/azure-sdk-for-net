@@ -22,10 +22,9 @@ namespace Azure.Security.ConfidentialLedger
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _ledgerUri;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -58,7 +57,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
             {
@@ -96,7 +95,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetConstitution(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
             try
             {
@@ -138,7 +137,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetConsortiumMembersAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
             {
@@ -180,7 +179,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetConsortiumMembers(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
             scope.Start();
             try
             {
@@ -218,7 +217,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
             {
@@ -256,7 +255,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetEnclaveQuotes(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
             try
             {
@@ -302,7 +301,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
@@ -348,7 +347,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response PostLedgerEntry(RequestContent content, string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
@@ -395,7 +394,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
             {
@@ -442,7 +441,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
             try
             {
@@ -496,7 +495,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
             {
@@ -550,7 +549,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
             try
             {
@@ -592,7 +591,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
             {
@@ -634,7 +633,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(transactionId, nameof(transactionId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
             try
             {
@@ -674,7 +673,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
             {
@@ -714,7 +713,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
             try
             {
@@ -750,7 +749,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
             {
@@ -786,7 +785,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
             try
             {
@@ -828,7 +827,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
             {
@@ -870,7 +869,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             Argument.AssertNotNull(userId, nameof(userId));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
             try
             {
@@ -920,7 +919,7 @@ namespace Azure.Security.ConfidentialLedger
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
             {
@@ -970,7 +969,7 @@ namespace Azure.Security.ConfidentialLedger
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
             try
             {
@@ -1018,7 +1017,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1067,7 +1066,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Pageable<BinaryData> GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

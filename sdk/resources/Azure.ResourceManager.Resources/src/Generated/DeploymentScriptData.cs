@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
-        internal DeploymentScriptData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind) : base(id, name, type, systemData)
+        internal DeploymentScriptData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Models.ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind) : base(id, name, type, systemData)
         {
             Identity = identity;
             Location = location;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public Models.ManagedServiceIdentity Identity { get; set; }
         /// <summary> The location of the ACI and the storage account for the deployment script. </summary>
         public string Location { get; set; }
         /// <summary> Resource tags. </summary>

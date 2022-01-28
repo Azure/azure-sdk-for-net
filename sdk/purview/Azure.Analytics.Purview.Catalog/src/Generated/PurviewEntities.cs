@@ -20,9 +20,8 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -163,7 +162,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -309,7 +308,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -405,7 +404,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
@@ -501,7 +500,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
             scope.Start();
             try
             {
@@ -649,7 +648,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
@@ -797,7 +796,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateEntities");
             scope.Start();
             try
             {
@@ -882,7 +881,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
@@ -967,7 +966,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guids, nameof(guids));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuids");
             scope.Start();
             try
             {
@@ -1023,7 +1022,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
@@ -1079,7 +1078,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassification");
             scope.Start();
             try
             {
@@ -1172,7 +1171,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
@@ -1265,7 +1264,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
             scope.Start();
             try
             {
@@ -1359,7 +1358,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
@@ -1453,7 +1452,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
@@ -1538,7 +1537,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
@@ -1623,7 +1622,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByGuid");
             scope.Start();
             try
             {
@@ -1678,7 +1677,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
@@ -1733,7 +1732,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassification");
             scope.Start();
             try
             {
@@ -1769,7 +1768,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
@@ -1805,7 +1804,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassification");
             scope.Start();
             try
             {
@@ -1849,7 +1848,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
@@ -1893,7 +1892,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
             scope.Start();
             try
             {
@@ -1948,7 +1947,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
@@ -2003,7 +2002,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassifications");
             scope.Start();
             try
             {
@@ -2058,7 +2057,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
@@ -2113,7 +2112,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassifications");
             scope.Start();
             try
             {
@@ -2214,7 +2213,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
@@ -2315,7 +2314,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
             scope.Start();
             try
             {
@@ -2469,7 +2468,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
@@ -2623,7 +2622,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
@@ -2716,7 +2715,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
@@ -2809,7 +2808,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
@@ -2846,7 +2845,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
@@ -2883,7 +2882,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(classificationName, nameof(classificationName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
@@ -2939,7 +2938,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -2995,7 +2994,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -3051,7 +3050,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -3107,7 +3106,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(typeName, nameof(typeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -3146,7 +3145,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
@@ -3185,7 +3184,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetClassifications");
             scope.Start();
             try
             {
@@ -3293,7 +3292,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
@@ -3401,7 +3400,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(typeName, nameof(typeName));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
@@ -3480,7 +3479,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {
@@ -3559,7 +3558,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetHeader");
             scope.Start();
             try
             {

@@ -19,10 +19,9 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -42,7 +41,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewCatalogClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -108,7 +107,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
@@ -181,7 +180,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
@@ -227,7 +226,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
@@ -273,7 +272,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
@@ -321,7 +320,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
             try
             {
@@ -369,7 +368,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
             try
             {
@@ -415,7 +414,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {
@@ -461,7 +460,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {

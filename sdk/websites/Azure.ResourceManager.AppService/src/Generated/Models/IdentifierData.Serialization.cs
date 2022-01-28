@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> id0 = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,6 +62,11 @@ namespace Azure.ResourceManager.AppService
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -78,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new IdentifierData(id, name, type, kind.Value, id0.Value);
+            return new IdentifierData(id, name, type, systemData, kind.Value, id0.Value);
         }
     }
 }
