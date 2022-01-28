@@ -22,10 +22,9 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -45,7 +44,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -93,7 +92,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.GetCrop");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
             try
             {
@@ -148,7 +147,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.GetCrop");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.GetCrop");
             scope.Start();
             try
             {
@@ -217,7 +216,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -286,7 +285,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -328,7 +327,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();
             try
             {
@@ -370,7 +369,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(cropId, nameof(cropId));
 
-            using var scope = _clientDiagnostics.CreateScope("CropsClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropsClient.Delete");
             scope.Start();
             try
             {
@@ -444,7 +443,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual AsyncPageable<BinaryData> GetCropsAsync(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropsClient.GetCrops");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "CropsClient.GetCrops");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -519,7 +518,7 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Pageable<BinaryData> GetCrops(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropsClient.GetCrops");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "CropsClient.GetCrops");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
