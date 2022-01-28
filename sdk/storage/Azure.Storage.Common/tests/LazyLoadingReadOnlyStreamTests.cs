@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -100,27 +97,6 @@ namespace Azure.Storage.Tests
 
             // Assert
             Assert.AreEqual(1, downloadMock.Invocations.Count);
-        }
-    }
-}
-
-// TODO delete; this is a temp unblocker and should not be committed
-namespace Azure.Core
-{
-#pragma warning disable SA1402 // File may only contain a single type
-    internal static class ResponseHeadersExtensions
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        public static bool TryGetValue(this ResponseHeaders headers, string name, out byte[] value)
-        {
-            if (headers.TryGetValue(name, out string stringValue))
-            {
-                value = Convert.FromBase64String(stringValue);
-                return true;
-            }
-
-            value = null;
-            return false;
         }
     }
 }
