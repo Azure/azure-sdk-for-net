@@ -19,10 +19,9 @@ namespace Azure.Analytics.Purview.Account
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -45,7 +44,7 @@ namespace Azure.Analytics.Purview.Account
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            _clientDiagnostics = clientDiagnostics;
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
@@ -172,7 +171,7 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
+            using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -306,7 +305,7 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response GetResourceSetRule(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
+            using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -538,7 +537,7 @@ namespace Azure.Analytics.Purview.Account
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
+            using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -770,7 +769,7 @@ namespace Azure.Analytics.Purview.Account
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
+            using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -810,7 +809,7 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
+            using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
             {
@@ -850,7 +849,7 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response DeleteResourceSetRule(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
+            using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
             {

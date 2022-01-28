@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceName"> The resource name of the service alias. </param>
-        internal AvailableServiceAlias(ResourceIdentifier id, string name, ResourceType type, string resourceName) : base(id, name, type)
+        internal AvailableServiceAlias(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string resourceName) : base(id, name, type, systemData)
         {
             ResourceName = resourceName;
         }

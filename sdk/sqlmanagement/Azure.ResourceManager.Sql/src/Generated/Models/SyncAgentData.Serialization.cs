@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> name0 = default;
             Optional<string> syncDatabaseId = default;
             Optional<DateTimeOffset> lastAliveTime = default;
@@ -55,6 +57,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SyncAgentData(id, name, type, name0.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value);
+            return new SyncAgentData(id, name, type, systemData, name0.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value);
         }
     }
 }

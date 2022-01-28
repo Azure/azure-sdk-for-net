@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> functionAppResourceId = default;
             Optional<string> functionAppRegion = default;
             Optional<DateTimeOffset> createdOn = default;
@@ -66,6 +68,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -101,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteUserProvidedFunctionAppARMResourceData(id, name, type, kind.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn));
+            return new StaticSiteUserProvidedFunctionAppARMResourceData(id, name, type, systemData, kind.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn));
         }
     }
 }

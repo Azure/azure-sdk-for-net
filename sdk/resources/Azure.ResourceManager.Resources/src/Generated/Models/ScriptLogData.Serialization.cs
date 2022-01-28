@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> log = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.Resources
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -62,7 +69,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ScriptLogData(id, name, type, log.Value);
+            return new ScriptLogData(id, name, type, systemData, log.Value);
         }
     }
 }

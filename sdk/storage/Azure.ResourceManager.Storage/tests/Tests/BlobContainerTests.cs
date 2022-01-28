@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays = 5;
             immutabilityPolicy.Data.AllowProtectedAppendWrites = false;
-            immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, ifMatch: immutabilityPolicy.Data.Etag, immutabilityPolicy.Data)).Value;
+            immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, parameters: immutabilityPolicy.Data, ifMatch: immutabilityPolicy.Data.Etag)).Value;
             Assert.NotNull(immutabilityPolicy.Data.Id);
             Assert.NotNull(immutabilityPolicy.Data.Type);
             Assert.NotNull(immutabilityPolicy.Data.Name);

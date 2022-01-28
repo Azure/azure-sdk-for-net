@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyGremlinDatabases(database, database2);
 
-            GremlinDatabaseCreateUpdateOptions updateOptions = new GremlinDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type,
+            GremlinDatabaseCreateUpdateOptions updateOptions = new GremlinDatabaseCreateUpdateOptions(database.Id, _databaseName, database.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,11 +22,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="repositoryUrl"> URL for the repository of the static site. </param>
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
-        internal StaticSitesWorkflowPreviewRequest(ResourceIdentifier id, string name, ResourceType type, string kind, string repositoryUrl, string branch, StaticSiteBuildProperties buildProperties) : base(id, name, type, kind)
+        internal StaticSitesWorkflowPreviewRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string repositoryUrl, string branch, StaticSiteBuildProperties buildProperties) : base(id, name, type, systemData, kind)
         {
             RepositoryUrl = repositoryUrl;
             Branch = branch;
