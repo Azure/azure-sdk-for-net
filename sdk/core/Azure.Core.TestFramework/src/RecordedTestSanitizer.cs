@@ -66,6 +66,14 @@ namespace Azure.Core.TestFramework
                 });
         }
 
+        public void SanitizeQueryParameter(string queryKey)
+        {
+            UriRegexSanitizers.Add(new UriRegexSanitizer($@"([\x0026|&|?]{queryKey}=)(?<group>[\w\d%]+)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
+        }
+
         public virtual string SanitizeUri(string uri)
         {
             return uri;
