@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ManagedServiceIdentity : IUtf8JsonSerializable
+    public partial class DeploymentScriptManagedServiceIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
+        internal static DeploymentScriptManagedServiceIdentity DeserializeDeploymentScriptManagedServiceIdentity(JsonElement element)
         {
-            Optional<ManagedServiceIdentityType> type = default;
+            Optional<DeploymentScriptManagedServiceIdentityType> type = default;
             Optional<string> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ManagedServiceIdentityType(property.Value.GetString());
+                    type = new DeploymentScriptManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ManagedServiceIdentity(Optional.ToNullable(type), tenantId.Value, Optional.ToDictionary(userAssignedIdentities));
+            return new DeploymentScriptManagedServiceIdentity(Optional.ToNullable(type), tenantId.Value, Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

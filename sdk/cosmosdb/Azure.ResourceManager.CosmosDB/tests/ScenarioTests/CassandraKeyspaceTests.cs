@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyCassandraKeyspaces(keyspace, keyspace2);
 
-            CassandraKeyspaceCreateUpdateOptions updateOptions = new CassandraKeyspaceCreateUpdateOptions(keyspace.Id, _keyspaceName, keyspace.Data.Type,
+            CassandraKeyspaceCreateUpdateOptions updateOptions = new CassandraKeyspaceCreateUpdateOptions(keyspace.Id, _keyspaceName, keyspace.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, keyspace.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
