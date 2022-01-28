@@ -609,5 +609,62 @@ steps:
                 }
             }
         }
+
+        [Fact]
+        public void ContainerRegistrySystemData()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                // Validate registry system data properties
+                var cachedSystemData = registry.SystemData;
+                ValidateSystemData(cachedSystemData);
+
+                // Apply SKU update
+                var parameters = new RegistryUpdateParameters()
+                {
+                    Sku = new Sku()
+                    {
+                        Name = SkuName.Standard
+                    }
+                };
+
+                registry = registryClient.Registries.Update(resourceGroup.Name, registry.Name, parameters);
+
+                // Validate updated registry system data properties
+                ValidateSystemData(registry.SystemData);
+
+                // Validate system data create properties
+                Assert.Equal(cachedSystemData.CreatedAt, registry.SystemData.CreatedAt);
+                Assert.Equal(cachedSystemData.CreatedBy, registry.SystemData.CreatedBy);
+                Assert.Equal(cachedSystemData.CreatedByType, registry.SystemData.CreatedByType);
+
+                // Validate system data update properties
+                Assert.NotEqual(cachedSystemData.LastModifiedAt, registry.SystemData.LastModifiedAt);
+                Assert.Equal(cachedSystemData.LastModifiedBy, registry.SystemData.LastModifiedBy);
+                Assert.Equal(cachedSystemData.LastModifiedByType, registry.SystemData.LastModifiedByType);
+
+                void ValidateSystemData(SystemData systemData)
+                {
+                    Assert.NotNull(systemData);
+                    Assert.NotNull(systemData.CreatedAt);
+                    Assert.NotNull(systemData.CreatedBy);
+                    Assert.NotNull(systemData.CreatedByType);
+                    Assert.NotNull(systemData.LastModifiedAt);
+                    Assert.NotNull(systemData.LastModifiedBy);
+                    Assert.NotNull(systemData.LastModifiedByType);
+                }
+            }
+        }
     }
 }
