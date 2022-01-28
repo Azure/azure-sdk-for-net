@@ -1,8 +1,42 @@
 {
-  "Entries": [],
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/274e24b1-b301-2088-4af9-c573d62a3cc4?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220124.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1d4cb3d5fd111f9998fea58424253dbf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "129",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 05:44:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c2208b84-a2bc-4805-9e1c-d74aa1105c7e",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "c2208b84-a2bc-4805-9e1c-d74aa1105c7e",
+        "x-ms-routing-request-id": "WESTUS2:20220125T054448Z:c2208b84-a2bc-4805-9e1c-d74aa1105c7e"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "SubscriptionNotFound",
+          "message": "The subscription \u0027274e24b1-b301-2088-4af9-c573d62a3cc4\u0027 could not be found."
+        }
+      }
+    }
+  ],
   "Variables": {
-    "RandomSeed": "430596848",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "RandomSeed": "334487857",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
   }
 }

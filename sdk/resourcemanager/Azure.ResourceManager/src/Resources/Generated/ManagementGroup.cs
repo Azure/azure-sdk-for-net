@@ -29,5 +29,14 @@ namespace Azure.ResourceManager.Management
             return new ManagementGroupPolicySetDefinitionCollection(this);
         }
         #endregion
+
+        private ManagementGroupExtensionClient GetExtensionClient()
+        {
+            return this.GetCachedClient((armClient) =>
+            {
+                return new ManagementGroupExtensionClient(armClient, this.Id);
+            }
+            );
+        }
     }
 }

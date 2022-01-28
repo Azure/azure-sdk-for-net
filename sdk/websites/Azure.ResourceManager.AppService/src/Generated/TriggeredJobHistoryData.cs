@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,9 +25,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="runs"> List of triggered web job runs. </param>
-        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType type, string kind, IList<TriggeredJobRun> runs) : base(id, name, type, kind)
+        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IList<TriggeredJobRun> runs) : base(id, name, type, systemData, kind)
         {
             Runs = runs;
         }

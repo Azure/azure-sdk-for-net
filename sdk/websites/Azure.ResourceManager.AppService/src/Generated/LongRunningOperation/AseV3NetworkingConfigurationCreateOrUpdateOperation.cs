@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal AseV3NetworkingConfigurationCreateOrUpdateOperation(ArmResource operationsBase, Response<AseV3NetworkingConfigurationData> response)
+        internal AseV3NetworkingConfigurationCreateOrUpdateOperation(ArmClient armClient, Response<AseV3NetworkingConfigurationData> response)
         {
-            _operation = new OperationOrResponseInternals<AseV3NetworkingConfiguration>(Response.FromValue(new AseV3NetworkingConfiguration(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<AseV3NetworkingConfiguration>(Response.FromValue(new AseV3NetworkingConfiguration(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

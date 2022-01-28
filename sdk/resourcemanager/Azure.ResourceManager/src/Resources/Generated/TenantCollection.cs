@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Tenant and their operations over its parent. </summary>
     public partial class TenantCollection : ArmCollection, IEnumerable<Tenant>, IAsyncEnumerable<Tenant>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TenantsRestOperations _tenantsRestClient;
+        private readonly ClientDiagnostics _tenantClientDiagnostics;
+        private readonly TenantsRestOperations _tenantRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class for mocking. </summary>
         protected TenantCollection()
@@ -47,12 +46,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Tenant> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _tenantsRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _tenantRestClient.List(cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -62,12 +61,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Tenant> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _tenantsRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _tenantRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -88,12 +87,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Tenant>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _tenantsRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _tenantRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -103,12 +102,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Tenant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TenantCollection.GetAll");
+                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _tenantsRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _tenantRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Tenant(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,8 +132,5 @@ namespace Azure.ResourceManager.Resources
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Tenant, TenantData> Construct() { }
     }
 }

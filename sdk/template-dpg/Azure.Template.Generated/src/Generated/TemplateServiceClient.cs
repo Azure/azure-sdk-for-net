@@ -22,9 +22,8 @@ namespace Azure.Template.Generated
         private static readonly string[] AuthorizationScopes = new string[] { "https://dev.azuresdkgenerated.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -44,7 +43,7 @@ namespace Azure.Template.Generated
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new TemplateServiceClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -72,12 +71,12 @@ namespace Azure.Template.Generated
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -108,12 +107,12 @@ namespace Azure.Template.Generated
         public virtual Response Create(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -132,12 +131,12 @@ namespace Azure.Template.Generated
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(resourceId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -156,12 +155,12 @@ namespace Azure.Template.Generated
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(resourceId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -189,12 +188,12 @@ namespace Azure.Template.Generated
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetResourceRequest(resourceId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -222,12 +221,12 @@ namespace Azure.Template.Generated
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetResourceRequest(resourceId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -256,7 +255,7 @@ namespace Azure.Template.Generated
         public virtual AsyncPageable<BinaryData> GetResourcesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "TemplateServiceClient.GetResources");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "TemplateServiceClient.GetResources");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -264,7 +263,7 @@ namespace Azure.Template.Generated
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourcesRequest(context)
                         : CreateGetResourcesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -291,7 +290,7 @@ namespace Azure.Template.Generated
         public virtual Pageable<BinaryData> GetResources(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "TemplateServiceClient.GetResources");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "TemplateServiceClient.GetResources");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -299,7 +298,7 @@ namespace Azure.Template.Generated
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourcesRequest(context)
                         : CreateGetResourcesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

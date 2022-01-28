@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<RouteFilter> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of RouteFilterCreateOrUpdateOperation for mocking. </summary>
         protected RouteFilterCreateOrUpdateOperation()
         {
         }
 
-        internal RouteFilterCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RouteFilterCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<RouteFilter>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteFilterCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RouteFilterData.DeserializeRouteFilterData(document.RootElement);
-            return new RouteFilter(_operationBase, data);
+            return new RouteFilter(_armClient, data);
         }
 
         async ValueTask<RouteFilter> IOperationSource<RouteFilter>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RouteFilterData.DeserializeRouteFilterData(document.RootElement);
-            return new RouteFilter(_operationBase, data);
+            return new RouteFilter(_armClient, data);
         }
     }
 }

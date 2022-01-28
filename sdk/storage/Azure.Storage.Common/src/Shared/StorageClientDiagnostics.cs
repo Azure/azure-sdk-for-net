@@ -22,14 +22,10 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="content">The error content.</param>
         /// <param name="responseHeaders">The response headers.</param>
-        /// <param name="message">The error message.</param>
-        /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-        protected override void ExtractFailureContent(
+        protected override ResponseError? ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
-            ref string? message,
-            ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo
             )
         {
@@ -41,8 +37,8 @@ namespace Azure.Core.Pipeline
                 if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationXml))
                 {
                     XDocument xml = XDocument.Parse(content);
-                    errorCode = xml.Root.Element(Constants.ErrorCode).Value;
-                    message = xml.Root.Element(Constants.ErrorMessage).Value;
+                    var errorCode = xml.Root.Element(Constants.ErrorCode).Value;
+                    var message = xml.Root.Element(Constants.ErrorMessage).Value;
 
                     foreach (XElement element in xml.Root.Elements())
                     {
@@ -56,6 +52,8 @@ namespace Azure.Core.Pipeline
                                 break;
                         }
                     }
+
+                    return new ResponseError(errorCode, message);
                 }
 
                 // Json body
@@ -74,9 +72,10 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
-                    message = error.GetProperty(Constants.MessagePropertyKey).GetString();
-                    errorCode = error.GetProperty(Constants.CodePropertyKey).GetString();
+                    var message = error.GetProperty(Constants.MessagePropertyKey).GetString();
+                    var errorCode = error.GetProperty(Constants.CodePropertyKey).GetString();
                     additionalInfo = details;
+                    return new ResponseError(errorCode, message);
                 }
             }
             // No response body.
@@ -85,9 +84,11 @@ namespace Azure.Core.Pipeline
                 // The other headers will appear in the "Headers" section of the Exception message.
                 if (responseHeaders.TryGetValue(Constants.HeaderNames.ErrorCode, out string? value))
                 {
-                    errorCode = value;
+                    return new ResponseError(value, null);
                 }
             }
+
+            return null;
         }
     }
 }

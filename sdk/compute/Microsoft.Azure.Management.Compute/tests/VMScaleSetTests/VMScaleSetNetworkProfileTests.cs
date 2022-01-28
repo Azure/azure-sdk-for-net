@@ -431,6 +431,181 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        public void TestVMScaleSetScalingWithPublicIPPrefix()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+                if (originalTestLocation == null)
+                {
+                    originalTestLocation = String.Empty;
+                }
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                var dnsname = TestUtilities.GenerateName("dnsname");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+                try
+                {
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    var vnetResponse = CreateVNETWithSubnets(rgName, 2);
+                    var vmssSubnet = vnetResponse.Subnets[1];
+                    var publicIpPrefix = CreatePublicIPPrefix(rgName, 30);
+
+                    var publicipConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration();
+                    publicipConfiguration.Name = "pip1";
+                    publicipConfiguration.IdleTimeoutInMinutes = 10;
+                    publicipConfiguration.DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings();
+                    publicipConfiguration.DnsSettings.DomainNameLabel = dnsname;
+                    publicipConfiguration.PublicIPPrefix = new Microsoft.Azure.Management.Compute.Models.SubResource();
+                    publicipConfiguration.PublicIPPrefix.Id = publicIpPrefix.Id;
+
+                    // Creating a VMSS with 2 instances
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName: rgName,
+                        vmssName: vmssName,
+                        storageAccount: storageAccountOutput,
+                        imageRef: imageRef,
+                        inputVMScaleSet: out inputVMScaleSet,
+                        vmScaleSetCustomizer:
+                            (virtualMachineScaleSet) =>
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile
+                                    .NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration = publicipConfiguration,
+                        createWithPublicIpAddress: false,
+                        subnet: vmssSubnet,
+                        capacity: 2);
+
+                    var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+
+                    Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.PublicIPPrefix);
+                    Assert.Equal(publicIpPrefix.Id, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.PublicIPPrefix.Id);
+
+                    var getPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.Get(rgName, publicIpPrefix.Name);
+                    Assert.Equal(2, getPublicIpPrefixResponse.PublicIPAddresses.Count());
+
+                    // Scaling the VMScaleSet now to 3 instances
+                    VirtualMachineScaleSetUpdate patchVMScaleSet = new VirtualMachineScaleSetUpdate()
+                    {
+                        Sku = new Sku()
+                        {
+                            Capacity = 3,
+                        },
+                    };
+                    PatchVMScaleSet(rgName, vmssName, patchVMScaleSet);
+
+                    getPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.Get(rgName, publicIpPrefix.Name);
+                    Assert.Equal(3, getPublicIpPrefixResponse.PublicIPAddresses.Count());
+
+                    // Scaling the VMScaleSet now to 3 instances
+                    patchVMScaleSet = new VirtualMachineScaleSetUpdate()
+                    {
+                        Sku = new Sku()
+                        {
+                            Capacity = 4,
+                        },
+                    };
+                    PatchVMScaleSet(rgName, vmssName, patchVMScaleSet);
+
+                    getPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.Get(rgName, publicIpPrefix.Name);
+                    Assert.Equal(4, getPublicIpPrefixResponse.PublicIPAddresses.Count());
+
+                    passed = true;
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        ///  Adding VMScaleSet Flex Filter
+        /// </summary>
+        [Fact]
+        public void TestFlexVMScaleSetFilter()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+                EnsureClientsInitialized(context);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                var dnsname = TestUtilities.GenerateName("dnsname");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    var vnetResponse = CreateVNETWithSubnets(rgName, 2);
+                    var vmssSubnet = vnetResponse.Subnets[1];
+
+                    var publicipConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration();
+                    publicipConfiguration.Name = "pip1";
+                    publicipConfiguration.IdleTimeoutInMinutes = 10;
+                    publicipConfiguration.DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings();
+                    publicipConfiguration.DnsSettings.DomainNameLabel = dnsname;
+                    publicipConfiguration.DeleteOption = DeleteOptions.Detach.ToString();
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName: rgName,
+                        vmssName: vmssName,
+                        storageAccount: null,
+                        imageRef: imageRef,
+                        inputVMScaleSet: out inputVMScaleSet,
+                        singlePlacementGroup: false,
+                        createWithManagedDisks: true,
+                        vmScaleSetCustomizer:
+                            (virtualMachineScaleSet) => {
+                                virtualMachineScaleSet.UpgradePolicy = null;
+                                virtualMachineScaleSet.Overprovision = null;
+                                virtualMachineScaleSet.PlatformFaultDomainCount = 1;
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile.NetworkApiVersion = NetworkApiVersion.TwoZeroTwoZeroHyphenMinusOneOneHyphenMinusZeroOne;
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile
+                                    .NetworkInterfaceConfigurations[0].DeleteOption = DeleteOptions.Delete.ToString();
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile
+                                    .NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration = publicipConfiguration;
+                                virtualMachineScaleSet.OrchestrationMode = OrchestrationMode.Flexible.ToString();
+                                virtualMachineScaleSet.VirtualMachineProfile.StorageProfile.DataDisks = null;
+                            },
+                        createWithPublicIpAddress: false,
+                        subnet: vmssSubnet,
+                        capacity: 2);
+                    String vmssFilterMatch = $"'virtualMachineScaleSet/id' eq '/subscriptions/{m_subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'";
+                    var listResponse = m_CrpClient.VirtualMachines.ListAll(null, vmssFilterMatch);
+
+                    var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    foreach (VirtualMachine vm in listResponse)
+                    {
+                        Assert.True(string.Equals(vm.VirtualMachineScaleSet.Id, vmss.Id, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                }
+            }
+        }
+
         /// <summary>
         /// Associates a VMScaleSet with Nsg
         /// </summary>

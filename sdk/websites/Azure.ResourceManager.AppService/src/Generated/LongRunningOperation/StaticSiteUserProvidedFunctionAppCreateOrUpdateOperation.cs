@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly OperationInternals<AppService.StaticSiteUserProvidedFunctionApp> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation for mocking. </summary>
         protected StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation()
         {
         }
 
-        internal StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AppService.StaticSiteUserProvidedFunctionApp>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "StaticSiteUserProvidedFunctionAppCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
-            return new AppService.StaticSiteUserProvidedFunctionApp(_operationBase, data);
+            return new AppService.StaticSiteUserProvidedFunctionApp(_armClient, data);
         }
 
         async ValueTask<AppService.StaticSiteUserProvidedFunctionApp> IOperationSource<AppService.StaticSiteUserProvidedFunctionApp>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
-            return new AppService.StaticSiteUserProvidedFunctionApp(_operationBase, data);
+            return new AppService.StaticSiteUserProvidedFunctionApp(_armClient, data);
         }
     }
 }

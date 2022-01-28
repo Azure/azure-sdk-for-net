@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
@@ -31,12 +30,12 @@ namespace Azure.ResourceManager.Core
         }
         #endregion
 
-        #region ManagementLockObject
-        /// <summary> Gets an object representing a ManagementLockObjectCollection along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="ManagementLockObjectCollection" /> object. </returns>
-        public virtual ManagementLockObjectCollection GetManagementLockObjects()
+        #region ManagementLock
+        /// <summary> Gets an object representing a ManagementLockCollection along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ManagementLockCollection" /> object. </returns>
+        public virtual ManagementLockCollection GetManagementLocks()
         {
-            return new ManagementLockObjectCollection(this);
+            return new ManagementLockCollection(this);
         }
         #endregion
     }

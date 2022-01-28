@@ -73,13 +73,8 @@ namespace Azure.Core.TestFramework
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
                     ["Logging__LogLevel__Default"] = "Error",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = Path.Combine(
-                        TestEnvironment.RepositoryRoot,
-                        "eng",
-                        "common",
-                        "testproxy",
-                        "dotnet-devcert.pfx"),
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = "password"
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
                 }
             };
 

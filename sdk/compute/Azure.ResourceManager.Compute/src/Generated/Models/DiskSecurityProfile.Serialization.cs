@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityType");
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(SecureVMDiskEncryptionSetId))
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId");
-                writer.WriteStringValue(SecureVMDiskEncryptionSetId);
+                writer.WriteStringValue(SecureVmDiskEncryptionSetId);
             }
             writer.WriteEndObject();
         }

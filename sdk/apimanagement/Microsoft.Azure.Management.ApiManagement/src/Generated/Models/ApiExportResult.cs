@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the ApiExportResult class.
         /// </summary>
         /// <param name="id">ResourceId of the API which was exported.</param>
-        /// <param name="exportResultFormat">Format in which the Api Details
+        /// <param name="exportResultFormat">Format in which the API Details
         /// are exported to the Storage Blob with Sas Key valid for 5 minutes.
         /// Possible values include: 'Swagger', 'Wsdl', 'Wadl',
         /// 'OpenApi'</param>
         /// <param name="value">The object defining the schema of the exported
-        /// Api Detail</param>
+        /// API Detail</param>
         public ApiExportResult(string id = default(string), string exportResultFormat = default(string), ApiExportResultValue value = default(ApiExportResultValue))
         {
             Id = id;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets format in which the Api Details are exported to the
+        /// Gets or sets format in which the API Details are exported to the
         /// Storage Blob with Sas Key valid for 5 minutes. Possible values
         /// include: 'Swagger', 'Wsdl', 'Wadl', 'OpenApi'
         /// </summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ExportResultFormat { get; set; }
 
         /// <summary>
-        /// Gets or sets the object defining the schema of the exported Api
+        /// Gets or sets the object defining the schema of the exported API
         /// Detail
         /// </summary>
         [JsonProperty(PropertyName = "value")]

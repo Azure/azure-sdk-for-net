@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="instanceId"> The virtual machine instance ID. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
-        /// <param name="osProfile"> Specifies the operating system settings for the virtual machine. </param>
+        /// <param name="oSProfile"> Specifies the operating system settings for the virtual machine. </param>
         /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
         /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
         /// <param name="networkProfileConfiguration"> Specifies the network profile configuration of the virtual machine. </param>
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
         /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
-        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string instanceId, Models.Sku sku, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVMInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVMProtectionPolicy protectionPolicy, string userData) : base(id, name, type, tags, location)
+        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, Models.Sku sku, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile oSProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData) : base(id, name, type, systemData, tags, location)
         {
             InstanceId = instanceId;
             Sku = sku;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Compute
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
-            OsProfile = osProfile;
+            OSProfile = oSProfile;
             SecurityProfile = securityProfile;
             NetworkProfile = networkProfile;
             NetworkProfileConfiguration = networkProfileConfiguration;
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Azure VM unique ID. </summary>
         public string VmId { get; }
         /// <summary> The virtual machine instance view. </summary>
-        public VirtualMachineScaleSetVMInstanceView InstanceView { get; }
+        public VirtualMachineScaleSetVmInstanceView InstanceView { get; }
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
@@ -101,13 +102,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings for the virtual machine. </summary>
-        public OSProfile OsProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
         public SecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
         public NetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the network profile configuration of the virtual machine. </summary>
-        public VirtualMachineScaleSetVMNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
+        public VirtualMachineScaleSetVmNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
         /// <summary> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </summary>
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
         /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). &lt;br&gt;&lt;br&gt; For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates) &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set. </summary>
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </summary>
         public string ModelDefinitionApplied { get; }
         /// <summary> Specifies the protection policy of the virtual machine. </summary>
-        public VirtualMachineScaleSetVMProtectionPolicy ProtectionPolicy { get; set; }
+        public VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy { get; set; }
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
     }

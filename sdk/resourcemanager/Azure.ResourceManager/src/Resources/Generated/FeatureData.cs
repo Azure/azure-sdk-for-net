@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the previewed feature. </param>
-        internal FeatureData(ResourceIdentifier id, string name, ResourceType type, FeatureProperties properties) : base(id, name, type)
+        internal FeatureData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, FeatureProperties properties) : base(id, name, type, systemData)
         {
             Properties = properties;
         }

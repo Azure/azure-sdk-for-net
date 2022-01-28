@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SitePrivateAccessCreateOrUpdateOperation(ArmResource operationsBase, Response<PrivateAccessData> response)
+        internal SitePrivateAccessCreateOrUpdateOperation(ArmClient armClient, Response<PrivateAccessData> response)
         {
-            _operation = new OperationOrResponseInternals<SitePrivateAccess>(Response.FromValue(new SitePrivateAccess(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SitePrivateAccess>(Response.FromValue(new SitePrivateAccess(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

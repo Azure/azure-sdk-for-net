@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal NetworkWatcherCreateOrUpdateOperation(ArmResource operationsBase, Response<NetworkWatcherData> response)
+        internal NetworkWatcherCreateOrUpdateOperation(ArmClient armClient, Response<NetworkWatcherData> response)
         {
-            _operation = new OperationOrResponseInternals<NetworkWatcher>(Response.FromValue(new NetworkWatcher(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NetworkWatcher>(Response.FromValue(new NetworkWatcher(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

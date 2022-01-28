@@ -1,8 +1,18 @@
 # Release History
 
+## 1.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0-beta.1 (2022-01-24)
 ### Features Added
-- Add support for API version `2022-01-11-preview2`.
+- Add support of Denmark (DK) and United Kingdom (GB) phone number acquisitions.
 
 ## 1.0.2 (2021-10-05)
 - Dependency versions updated.

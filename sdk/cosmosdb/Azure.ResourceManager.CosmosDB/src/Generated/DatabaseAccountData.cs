@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -37,11 +36,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="provisioningState"> The status of the Cosmos DB account at the time the operation was called. The status can be one of following. &apos;Creating&apos; – the Cosmos DB account is being created. When an account is in Creating state, only properties that are specified as input for the Create Cosmos DB account operation are returned. &apos;Succeeded&apos; – the Cosmos DB account is active for use. &apos;Updating&apos; – the Cosmos DB account is being updated. &apos;Deleting&apos; – the Cosmos DB account is being deleted. &apos;Failed&apos; – the Cosmos DB account failed creation. &apos;DeletionFailed&apos; – the Cosmos DB account deletion failed. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the Cosmos DB database account. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. Default value: Standard. </param>
@@ -75,11 +74,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
-        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ResourceIdentity identity, SystemData systemData, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountCapability> capabilities, IReadOnlyList<DatabaseAccountLocation> writeLocations, IReadOnlyList<DatabaseAccountLocation> readLocations, IReadOnlyList<DatabaseAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth) : base(id, name, type, tags, location)
+        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountCapability> capabilities, IReadOnlyList<DatabaseAccountLocation> writeLocations, IReadOnlyList<DatabaseAccountLocation> readLocations, IReadOnlyList<DatabaseAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth) : base(id, name, type, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
-            SystemData = systemData;
             ProvisioningState = provisioningState;
             DocumentEndpoint = documentEndpoint;
             DatabaseAccountOfferType = databaseAccountOfferType;
@@ -118,9 +116,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         public DatabaseAccountKind? Kind { get; set; }
         /// <summary> Identity for the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The status of the Cosmos DB account at the time the operation was called. The status can be one of following. &apos;Creating&apos; – the Cosmos DB account is being created. When an account is in Creating state, only properties that are specified as input for the Create Cosmos DB account operation are returned. &apos;Succeeded&apos; – the Cosmos DB account is active for use. &apos;Updating&apos; – the Cosmos DB account is being updated. &apos;Deleting&apos; – the Cosmos DB account is being deleted. &apos;Failed&apos; – the Cosmos DB account failed creation. &apos;DeletionFailed&apos; – the Cosmos DB account deletion failed. </summary>
         public string ProvisioningState { get; }
         /// <summary> The connection endpoint for the Cosmos DB database account. </summary>

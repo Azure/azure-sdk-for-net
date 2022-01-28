@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
         }
 
-        internal VaultKeyCreateOrUpdateOperation(ArmResource operationsBase, Response<KeyData> response)
+        internal VaultKeyCreateOrUpdateOperation(ArmClient armClient, Response<KeyData> response)
         {
-            _operation = new OperationOrResponseInternals<VaultKey>(Response.FromValue(new VaultKey(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<VaultKey>(Response.FromValue(new VaultKey(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

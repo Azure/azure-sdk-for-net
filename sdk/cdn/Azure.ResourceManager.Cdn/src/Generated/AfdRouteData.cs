@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRoute data model. </summary>
-    public partial class AfdRouteData : ProxyResource
+    public partial class AfdRouteData : Resource
     {
         /// <summary> Initializes a new instance of AfdRouteData. </summary>
         public AfdRouteData()
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="customDomains"> Domains referenced by this endpoint. </param>
         /// <param name="originGroup"> A reference to the origin group. </param>
         /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>

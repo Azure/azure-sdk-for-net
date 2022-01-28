@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteHybridConnectionNamespaceRelayCreateOrUpdateOperation(ArmResource operationsBase, Response<HybridConnectionData> response)
+        internal SiteHybridConnectionNamespaceRelayCreateOrUpdateOperation(ArmClient armClient, Response<HybridConnectionData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteHybridConnectionNamespaceRelay>(Response.FromValue(new SiteHybridConnectionNamespaceRelay(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteHybridConnectionNamespaceRelay>(Response.FromValue(new SiteHybridConnectionNamespaceRelay(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
