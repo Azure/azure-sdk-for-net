@@ -52,13 +52,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 await httpContext.Response.WriteAsync("Ok");
             };
 
-            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
-            options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
-
-            // Overwrite storage to reduce maintenance period
-            transmitter.storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+            // Transmit
+            var transmitter = GetTransmitter();
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             // Wait for maintenance job to run atleast once
@@ -83,13 +78,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 await httpContext.Response.WriteAsync("Internal Server Error");
             };
 
-            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
-            options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
-
-            // Overwrite storage to reduce maintenance period
-            transmitter.storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+            // Transmit
+            var transmitter = GetTransmitter();
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             // Wait for maintenance job to run atleast once
@@ -118,13 +108,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 await httpContext.Response.WriteAsync("Too Many Requests");
             };
 
-            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
-            options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
-
-            // Overwrite storage to reduce maintenance period
-            transmitter.storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+            // Transmit
+            var transmitter = GetTransmitter();
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             // Wait for maintenance job to run atleast once
@@ -159,13 +144,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 await httpContext.Response.WriteAsync("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
             };
 
-            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
-            options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
-
-            // Overwrite storage to reduce maintenance period
-            transmitter.storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+            // Transmit
+            var transmitter = GetTransmitter();
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             // Wait for maintenance job to run atleast once
@@ -183,6 +163,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             // Delete the blob
             transmitter.storage.GetBlob().Lease(1000).Delete();
+        }
+
+        private static AzureMonitorTransmitter GetTransmitter()
+        {
+            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
+            options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
+            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
+            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
+
+            // Overwrite storage to reduce maintenance period
+            transmitter.storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+
+            return transmitter;
         }
 
         private static Activity CreateActivity(string activityName)
