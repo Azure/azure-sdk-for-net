@@ -7783,7 +7783,7 @@
         "x-ms-request-id": "2da34cee-103f-42f1-a03b-2aa9a4f750c3",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20211115T142346Z:7d62721d-1da3-43df-affc-c9d4caf7d677"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/2da34cee-103f-42f1-a03b-2aa9a4f750c3*2A5C1579938E951C2B0F7800EFF7E5214D3B5A8AE997E1113362C4CA5BE63AF5?api-version=2020-03-01-preview",

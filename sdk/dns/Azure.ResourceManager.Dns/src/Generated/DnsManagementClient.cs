@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dns
 
             options ??= new DnsManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, $"{endpoint}/.default"));
             _subscriptionId = subscriptionId;
             _endpoint = endpoint;
         }

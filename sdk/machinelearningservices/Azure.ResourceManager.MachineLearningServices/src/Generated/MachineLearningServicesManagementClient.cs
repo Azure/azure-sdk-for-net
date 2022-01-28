@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public MachineLearningServicesManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, MachineLearningServicesManagementClientOptions options = null)
         {
-            endpoint ??= new Uri("https://management.azure.com");
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
+            endpoint ??= new Uri("https://management.azure.com");
 
             options ??= new MachineLearningServicesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, $"{endpoint}/.default"));
             _endpoint = endpoint;
             _subscriptionId = subscriptionId;
         }
