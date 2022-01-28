@@ -263,22 +263,5 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <returns> A collection of the management groups. </returns>
         public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
-
-        /// <summary> Gets an object representing a GenericResource along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
-        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
-        {
-            return new GenericResource(this, id);
-        }
-
-        /// <summary> Gets an object representing a ManagementGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroup" /> object. </returns>
-        public virtual ManagementGroup GetManagementGroup(ResourceIdentifier id)
-        {
-            ManagementGroup.ValidateResourceId(id);
-            return new ManagementGroup(this, id);
-        }
     }
 }

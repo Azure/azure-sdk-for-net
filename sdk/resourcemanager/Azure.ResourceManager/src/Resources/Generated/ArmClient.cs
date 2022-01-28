@@ -35,6 +35,17 @@ namespace Azure.ResourceManager
         }
         #endregion
 
+        #region GenericResource
+        /// <summary> Gets an object representing a GenericResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
+        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
+        {
+            GenericResource.ValidateResourceId(id);
+            return new GenericResource(this, id);
+        }
+        #endregion
+
         #region ResourceGroup
         /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -175,6 +186,17 @@ namespace Azure.ResourceManager
         {
             Subscription.ValidateResourceId(id);
             return new Subscription(this, id);
+        }
+        #endregion
+
+        #region Tenant
+        /// <summary> Gets an object representing a Tenant along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="Tenant" /> object. </returns>
+        public virtual Tenant GetTenant(ResourceIdentifier id)
+        {
+            Tenant.ValidateResourceId(id);
+            return new Tenant(this, id);
         }
         #endregion
 
