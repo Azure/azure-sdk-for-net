@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsAudience"/> object.
         /// </summary>
-        /// <param name="value">A string representing the Azure Cloud this service will access. Default to Azure Public Cloud. Read more at: https://azure.microsoft.com/en-us/overview/what-is-a-public-cloud/.</param>
+        /// <param name="value">The Azure Active Directory audience to use when forming authorization scopes.For Text Analytics, this value corresponds to a URL that identifies the Azure cloud where the resource is located. Read more at: https://docs.microsoft.com/en-us/azure/azure-government/documentation-government-cognitiveservices. The default audience value is the Azure Public Cloud.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextAnalyticsAudience(string value)
         {
@@ -23,18 +23,18 @@ namespace Azure.AI.TextAnalytics
             _value = value;
         }
 
-        private const string AzureResourceManagerChinaValue = "https://cognitiveservices.azure.cn";
-        private const string AzureResourceManagerGovernmentValue = "https://cognitiveservices.azure.us";
-        private const string AzureResourceManagerPublicCloudValue = "https://cognitiveservices.azure.com";
+        private const string AzureChinaValue = "https://cognitiveservices.azure.cn";
+        private const string AzureGovernmentValue = "https://cognitiveservices.azure.us";
+        private const string AzurePublicCloudValue = "https://cognitiveservices.azure.com";
 
         /// <summary> Azure China. </summary>
-        public static TextAnalyticsAudience AzureResourceManagerChina { get; } = new TextAnalyticsAudience(AzureResourceManagerChinaValue);
+        public static TextAnalyticsAudience AzureChina { get; } = new TextAnalyticsAudience(AzureChinaValue);
 
         /// <summary> Azure Government. </summary>
-        public static TextAnalyticsAudience AzureResourceManagerGovernment { get; } = new TextAnalyticsAudience(AzureResourceManagerGovernmentValue);
+        public static TextAnalyticsAudience AzurerGovernment { get; } = new TextAnalyticsAudience(AzureGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
-        public static TextAnalyticsAudience AzureResourceManagerPublicCloud { get; } = new TextAnalyticsAudience(AzureResourceManagerPublicCloudValue);
+        public static TextAnalyticsAudience AzurePublicCloud { get; } = new TextAnalyticsAudience(AzurePublicCloudValue);
 
         /// <summary> Determines if two <see cref="TextAnalyticsAudience"/> values are the same. </summary>
         public static bool operator ==(TextAnalyticsAudience left, TextAnalyticsAudience right) => left.Equals(right);
