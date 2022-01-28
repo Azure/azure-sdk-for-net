@@ -1,12 +1,16 @@
 namespace Azure.ResourceManager
 {
-    public partial class ArmAudience : System.IEquatable<Azure.ResourceManager.ArmAudience>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ArmAudience : System.IEquatable<Azure.ResourceManager.ArmAudience>
     {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public static readonly Azure.ResourceManager.ArmAudience AzureChinaCloud;
         public static readonly Azure.ResourceManager.ArmAudience AzureCloud;
         public static readonly Azure.ResourceManager.ArmAudience AzureGermanCloud;
         public static readonly Azure.ResourceManager.ArmAudience AzureUSGovernment;
-        public ArmAudience(string value) { }
+        public ArmAudience(string value) { throw null; }
+        public string DefaultScope { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ArmAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

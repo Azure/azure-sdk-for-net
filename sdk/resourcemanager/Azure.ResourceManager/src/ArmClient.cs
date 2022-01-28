@@ -81,11 +81,11 @@ namespace Azure.ResourceManager
 
             if (options.Diagnostics.IsTelemetryEnabled)
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, GetAuthenticationScope(options.Audience)), new MgmtTelemetryPolicy(this, options));
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Audience.DefaultScope), new MgmtTelemetryPolicy(this, options));
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, GetAuthenticationScope(options.Audience)));
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Audience.DefaultScope));
             }
 
             DiagnosticOptions = options.Diagnostics;
@@ -96,11 +96,6 @@ namespace Azure.ResourceManager
             _tenant = new Tenant(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new Subscription(this, Subscription.CreateResourceIdentifier(defaultSubscriptionId));
-        }
-
-        private static string GetAuthenticationScope(ArmAudience audience)
-        {
-            return $"{audience}/.default";
         }
 
         private void CopyApiVersionOverrides(ArmClientOptions options)

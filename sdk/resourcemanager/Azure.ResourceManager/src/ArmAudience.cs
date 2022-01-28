@@ -9,7 +9,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// ArmAudience represents the audience of Azure Cloud.
     /// </summary>
-    public class ArmAudience : IEquatable<ArmAudience>
+    public readonly struct ArmAudience : IEquatable<ArmAudience>
     {
         // name after the `name` property of returned audience from https://management.azure.com/metadata/endpoints?api-version=2019-11-01
         /// <summary> Azure Public Cloud. </summary>
@@ -24,6 +24,11 @@ namespace Azure.ResourceManager
         /// <summary> Azure German Cloud. </summary>
         public static readonly ArmAudience AzureGermanCloud = new ArmAudience("https://management.microsoftazure.de");
 
+        /// <summary>
+        /// Default scope of this audience.
+        /// </summary>
+        public string DefaultScope => GetScope(".default");
+
         private readonly string _value;
 
         /// <summary>
@@ -33,6 +38,11 @@ namespace Azure.ResourceManager
         public ArmAudience(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private string GetScope(string permission)
+        {
+            return $"{_value}/{permission}";
         }
 
         /// <summary> Determines if two <see cref="ArmAudience"/> values are the same. </summary>
@@ -49,7 +59,7 @@ namespace Azure.ResourceManager
         public override bool Equals(object obj) => obj is ArmAudience other && Equals(other);
 
         /// <inheritdoc />
-        public bool Equals(ArmAudience other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ArmAudience other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
