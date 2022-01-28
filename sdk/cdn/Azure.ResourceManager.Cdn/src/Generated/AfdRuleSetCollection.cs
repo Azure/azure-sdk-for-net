@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdRuleSetRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
-                var operation = new AfdRuleSetCreateOrUpdateOperation(ArmClient, _afdRuleSetClientDiagnostics, Pipeline, _afdRuleSetRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName).Request, response);
+                var operation = new AfdRuleSetCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdRuleSetRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRuleSetCreateOrUpdateOperation(ArmClient, _afdRuleSetClientDiagnostics, Pipeline, _afdRuleSetRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName).Request, response);
+                var operation = new AfdRuleSetCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

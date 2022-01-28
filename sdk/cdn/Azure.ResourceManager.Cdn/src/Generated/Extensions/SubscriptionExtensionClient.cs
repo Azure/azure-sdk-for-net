@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> An internal class to add extension methods to. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
+        private ClientDiagnostics _validateClientDiagnostics;
+        private ValidateRestOperations _validateRestClient;
         private ClientDiagnostics _profileClientDiagnostics;
         private ProfilesRestOperations _profileRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
@@ -43,6 +45,8 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
+        private ClientDiagnostics ValidateClientDiagnostics => _validateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+        private ValidateRestOperations ValidateRestClient => _validateRestClient ??= new ValidateRestOperations(ValidateClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", Profile.ResourceType.Namespace, DiagnosticOptions);
         private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(ProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Profile.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
@@ -52,13 +56,63 @@ namespace Azure.ResourceManager.Cdn
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private ManagedRuleSetsRestOperations ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSetsRestOperations(ManagedRuleSetsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private string GetApiVersionOrNull(Azure.Core.ResourceType resourceType)
         {
             ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
+        /// <summary> Validate a Secret in the profile. </summary>
+        /// <param name="validateSecretInput"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        public async virtual Task<Response<ValidateSecretOutput>> ValidateSecretAsync(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        {
+            if (validateSecretInput == null)
+            {
+                throw new ArgumentNullException(nameof(validateSecretInput));
+            }
+
+            using var scope = ValidateClientDiagnostics.CreateScope("SubscriptionExtensionClient.ValidateSecret");
+            scope.Start();
+            try
+            {
+                var response = await ValidateRestClient.SecretAsync(Id.SubscriptionId, validateSecretInput, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Validate a Secret in the profile. </summary>
+        /// <param name="validateSecretInput"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        public virtual Response<ValidateSecretOutput> ValidateSecret(ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
+        {
+            if (validateSecretInput == null)
+            {
+                throw new ArgumentNullException(nameof(validateSecretInput));
+            }
+
+            using var scope = ValidateClientDiagnostics.CreateScope("SubscriptionExtensionClient.ValidateSecret");
+            scope.Start();
+            try
+            {
+                var response = ValidateRestClient.Secret(Id.SubscriptionId, validateSecretInput, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Profile> GetProfilesAsync(CancellationToken cancellationToken = default)
@@ -96,7 +150,7 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
+        /// <summary> Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Profile> GetProfiles(CancellationToken cancellationToken = default)

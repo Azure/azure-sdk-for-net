@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn
         private ClientDiagnostics EdgeNodesClientDiagnostics => _edgeNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private EdgeNodesRestOperations EdgeNodesRestClient => _edgeNodesRestClient ??= new EdgeNodesRestOperations(EdgeNodesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private string GetApiVersionOrNull(Azure.Core.ResourceType resourceType)
         {
             ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

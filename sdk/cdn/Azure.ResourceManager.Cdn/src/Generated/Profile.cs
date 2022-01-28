@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles";
+        public static readonly Azure.Core.ResourceType ResourceType = "Microsoft.Cdn/profiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Profile>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Profile> Get(CancellationToken cancellationToken = default)
         {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
+        /// <summary> Deletes an existing  Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ProfileDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
+        /// <summary> Deletes an existing  Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ProfileDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,154 +424,6 @@ namespace Azure.ResourceManager.Cdn
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("Profile.GenerateSsoUri");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SsoUri> GenerateSsoUri(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("Profile.GenerateSsoUri");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.ListSupportedOptimizationTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.ListSupportedOptimizationTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = await _profileRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = await _profileRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceUsage> GetResourceUsage(CancellationToken cancellationToken = default)
-        {
-            Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = _profileRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = _profileRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
@@ -648,6 +500,56 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
+        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
+        public async virtual Task<Response<CheckNameAvailabilityOutput>> CheckAfdProfileHostNameAvailabilityAsync(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
+        {
+            if (checkHostNameAvailabilityInput == null)
+            {
+                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
+            }
+
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.CheckAfdProfileHostNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await _afdProfilesRestClient.CheckHostNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
+        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityOutput> CheckAfdProfileHostNameAvailability(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
+        {
+            if (checkHostNameAvailabilityInput == null)
+            {
+                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
+            }
+
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.CheckAfdProfileHostNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = _afdProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get log report for AFD profile. </summary>
@@ -1004,15 +906,153 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        #region CdnEndpoint
-
-        /// <summary> Gets a collection of CdnEndpoints in the Profile. </summary>
-        /// <returns> An object representing collection of CdnEndpoints and their operations over a Profile. </returns>
-        public virtual CdnEndpointCollection GetCdnEndpoints()
+        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
         {
-            return new CdnEndpointCollection(this);
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GenerateSsoUri");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SsoUri> GenerateSsoUri(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GenerateSsoUri");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.ListSupportedOptimizationTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.ListSupportedOptimizationTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = await _profileRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = await _profileRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        {
+            Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = _profileRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = _profileRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
 
         #region AfdCustomDomain
 
@@ -1071,6 +1111,16 @@ namespace Azure.ResourceManager.Cdn
         public virtual AfdSecretCollection GetAfdSecrets()
         {
             return new AfdSecretCollection(this);
+        }
+        #endregion
+
+        #region CdnEndpoint
+
+        /// <summary> Gets a collection of CdnEndpoints in the Profile. </summary>
+        /// <returns> An object representing collection of CdnEndpoints and their operations over a Profile. </returns>
+        public virtual CdnEndpointCollection GetCdnEndpoints()
+        {
+            return new CdnEndpointCollection(this);
         }
         #endregion
     }

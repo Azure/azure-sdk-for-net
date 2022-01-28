@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal AfdOriginUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<AfdOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AfdOriginUpdateOperation");
+            _operation = new OperationInternals<AfdOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AfdOriginUpdateOperation");
             _armClient = armClient;
         }
 

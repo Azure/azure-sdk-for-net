@@ -17,7 +17,7 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+    /// <summary> Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
     public partial class ProfileUpdateOperation : Operation<Profile>, IOperationSource<Profile>
     {
         private readonly OperationInternals<Profile> _operation;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal ProfileUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Profile>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "ProfileUpdateOperation");
+            _operation = new OperationInternals<Profile>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ProfileUpdateOperation");
             _armClient = armClient;
         }
 

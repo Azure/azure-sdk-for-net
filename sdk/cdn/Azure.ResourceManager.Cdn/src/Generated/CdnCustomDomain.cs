@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/customDomains";
+        public static readonly Azure.Core.ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/customDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -205,19 +205,15 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Disable https delivery of the custom domain. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CdnCustomDomainDisableCustomHttpsOperation> DisableCustomHttpsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CdnCustomDomain>> DisableCustomHttpsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.DisableCustomHttps");
             scope.Start();
             try
             {
                 var response = await _cdnCustomDomainRestClient.DisableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnCustomDomainDisableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,19 +223,15 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Disable https delivery of the custom domain. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CdnCustomDomainDisableCustomHttpsOperation DisableCustomHttps(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual Response<CdnCustomDomain> DisableCustomHttps(CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.DisableCustomHttps");
             scope.Start();
             try
             {
                 var response = _cdnCustomDomainRestClient.DisableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnCustomDomainDisableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,20 +241,16 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Enable https delivery of the custom domain. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CdnCustomDomainEnableCustomHttpsOperation> EnableCustomHttpsAsync(bool waitForCompletion, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CdnCustomDomain>> EnableCustomHttpsAsync(CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.EnableCustomHttps");
             scope.Start();
             try
             {
                 var response = await _cdnCustomDomainRestClient.EnableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnCustomDomainEnableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,20 +260,16 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Enable https delivery of the custom domain. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CdnCustomDomainEnableCustomHttpsOperation EnableCustomHttps(bool waitForCompletion, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public virtual Response<CdnCustomDomain> EnableCustomHttps(CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomain.EnableCustomHttps");
             scope.Start();
             try
             {
                 var response = _cdnCustomDomainRestClient.EnableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters, cancellationToken);
-                var operation = new CdnCustomDomainEnableCustomHttpsOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, customDomainHttpsParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

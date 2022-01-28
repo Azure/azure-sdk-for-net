@@ -17,7 +17,7 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Updates an existing Secret within a profile. </summary>
+    /// <summary> Updates an existing security policy within a profile. </summary>
     public partial class AfdSecurityPolicyUpdateOperation : Operation<AfdSecurityPolicy>, IOperationSource<AfdSecurityPolicy>
     {
         private readonly OperationInternals<AfdSecurityPolicy> _operation;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal AfdSecurityPolicyUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<AfdSecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AfdSecurityPolicyUpdateOperation");
+            _operation = new OperationInternals<AfdSecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AfdSecurityPolicyUpdateOperation");
             _armClient = armClient;
         }
 
