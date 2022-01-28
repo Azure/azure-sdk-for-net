@@ -39,15 +39,14 @@ namespace Azure.Core.TestFramework
             {
                 if (IsTaskFaulted(invocation.ReturnValue))
                     return;
-                object lro = GetLroFromResult(invocation.ReturnValue);
-                object targetLro = lro.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(lro);
-                if (targetLro.GetType().BaseType == typeof(Operation))
+                object lro = GetResultFromTask(invocation.ReturnValue);
+                if (lro.GetType().BaseType?.BaseType == typeof(Operation))
                 {
-                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(targetLro, invocation.Arguments.Last());
+                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(lro, invocation.Arguments.Last());
                 }
                 else
                 {
-                    _ = OperationInterceptor.InvokeWaitForCompletion(targetLro, targetLro.GetType(), invocation.Arguments.Last());
+                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), invocation.Arguments.Last());
                 }
                 return;
             }
@@ -67,25 +66,11 @@ namespace Azure.Core.TestFramework
                 var taskResultType = type.GetGenericArguments()[0];
                 if (taskResultType.Name.StartsWith("Response") || InheritsFromArmResource(taskResultType))
                 {
-                    try
-                    {
-                        var taskResult = result.GetType().GetProperty("Result").GetValue(result);
-                        var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
-                        invocation.ReturnValue = type.Name.StartsWith("ValueTask")
-                            ? GetValueFromValueTask(taskResultType, instrumentedResult)
-                            : GetValueFromOther(taskResultType, instrumentedResult);
-                    }
-                    catch (TargetInvocationException e)
-                    {
-                        if (e.InnerException is AggregateException aggException)
-                        {
-                            throw aggException.InnerExceptions.First();
-                        }
-                        else
-                        {
-                            throw e.InnerException;
-                        }
-                    }
+                    var taskResult = GetResultFromTask(result);
+                    var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                    invocation.ReturnValue = type.Name.StartsWith("ValueTask")
+                        ? GetValueFromValueTask(taskResultType, instrumentedResult)
+                        : GetValueFromOther(taskResultType, instrumentedResult);
                 }
             }
             else if (invocation.Method.Name.EndsWith("Value") && InheritsFromArmResource(type))
@@ -113,13 +98,27 @@ namespace Azure.Core.TestFramework
             return (bool)taskObj.GetType().GetProperty("IsFaulted").GetValue(taskObj);
         }
 
-        private static object GetLroFromResult(object returnValue)
+        private static object GetResultFromTask(object returnValue)
         {
-            object lro = null;
-            Type returnType = returnValue.GetType();
-            return IsTaskType(returnType)
-                ? lro = returnType.GetProperty("Result").GetValue(returnValue)
-                : lro = returnValue;
+            try
+            {
+                object lro = null;
+                Type returnType = returnValue.GetType();
+                return IsTaskType(returnType)
+                    ? lro = returnType.GetProperty("Result").GetValue(returnValue)
+                    : lro = returnValue;
+            }
+            catch (TargetInvocationException e)
+            {
+                if (e.InnerException is AggregateException aggException)
+                {
+                    throw aggException.InnerExceptions.First();
+                }
+                else
+                {
+                    throw e.InnerException;
+                }
+            }
         }
 
         private static bool IsTaskType(Type type)

@@ -221,6 +221,6 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         protected override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation, new ManagementInterceptor(this));
+            => InstrumentOperationInternal(operationType, operation, false, new ManagementInterceptor(this));
     }
 }
