@@ -212,5 +212,24 @@ namespace Azure.Core
             AssertNotNullOrEmpty(value, name);
             return value;
         }
+
+        public static void AssertHasOnlySupportedHeaders(RequestConditions? requestConditions, string paramName, string[] supportedHeaders)
+        {
+            if (requestConditions != null)
+            {
+                AssertHasNoUnsupportedHeader(requestConditions.IfMatch, paramName, supportedHeaders, HttpHeader.Names.IfMatch);
+                AssertHasNoUnsupportedHeader(requestConditions.IfNoneMatch, paramName, supportedHeaders, HttpHeader.Names.IfNoneMatch);
+                AssertHasNoUnsupportedHeader(requestConditions.IfModifiedSince, paramName, supportedHeaders, HttpHeader.Names.IfModifiedSince);
+                AssertHasNoUnsupportedHeader(requestConditions.IfUnmodifiedSince, paramName, supportedHeaders, HttpHeader.Names.IfUnmodifiedSince);
+            }
+        }
+
+        private static void AssertHasNoUnsupportedHeader<T>(T? value, string paramName, string[] supportedHeaders, string unsupportedHeader) where T : struct
+        {
+            if (value.HasValue && !Array.Exists(supportedHeaders, element => element == unsupportedHeader))
+            {
+                throw new ArgumentException($"{unsupportedHeader} header is not supported. Supported headers are: {string.Join(", ", supportedHeaders)}.", paramName);
+            }
+        }
     }
 }
