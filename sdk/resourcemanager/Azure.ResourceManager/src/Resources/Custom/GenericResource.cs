@@ -14,6 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 [assembly: CodeGenSuppressType("GenericResourceFilter")]
 [assembly: CodeGenSuppressType("GenericResource")]
+[assembly: CodeGenSuppressType("GenericResourceIdentityType")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>

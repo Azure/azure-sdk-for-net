@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="runCommand"> Run command. </param>
         /// <param name="url"> Job URL. </param>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType type, string kind, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, kind)
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, systemData, kind)
         {
             RunCommand = runCommand;
             Url = url;

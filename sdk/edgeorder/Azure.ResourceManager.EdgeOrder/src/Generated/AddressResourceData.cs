@@ -34,22 +34,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="systemData"> Represents resource creation and update time. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
-        internal AddressResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, SystemData systemData, ShippingAddress shippingAddress, ContactDetails contactDetails, AddressValidationStatus? addressValidationStatus) : base(id, name, type, tags, location)
+        internal AddressResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ShippingAddress shippingAddress, ContactDetails contactDetails, AddressValidationStatus? addressValidationStatus) : base(id, name, type, systemData, tags, location)
         {
-            SystemData = systemData;
             ShippingAddress = shippingAddress;
             ContactDetails = contactDetails;
             AddressValidationStatus = addressValidationStatus;
         }
 
-        /// <summary> Represents resource creation and update time. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Shipping details for the address. </summary>
         public ShippingAddress ShippingAddress { get; set; }
         /// <summary> Contact details for the address. </summary>

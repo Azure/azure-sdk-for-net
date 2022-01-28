@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
         /// <param name="relayName"> The name of the Service Bus relay. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// normally, use the POST /listKeys API instead.
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
-        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType type, string kind, string serviceBusNamespace, string relayName, string relayArmUri, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix) : base(id, name, type, kind)
+        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string serviceBusNamespace, string relayName, string relayArmUri, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix) : base(id, name, type, systemData, kind)
         {
             ServiceBusNamespace = serviceBusNamespace;
             RelayName = relayName;

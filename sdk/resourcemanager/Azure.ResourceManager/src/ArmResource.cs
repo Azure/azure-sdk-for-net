@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderData resourcePageableProvider = ArmClient.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
+            ProviderInfo resourcePageableProvider = ArmClient.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderData resourcePageableProvider = await ArmClient.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+            ProviderInfo resourcePageableProvider = await ArmClient.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));

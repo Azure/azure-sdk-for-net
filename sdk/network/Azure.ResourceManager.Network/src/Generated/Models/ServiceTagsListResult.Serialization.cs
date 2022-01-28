@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"))
@@ -69,8 +71,13 @@ namespace Azure.ResourceManager.Network.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new ServiceTagsListResult(id, name, type, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
+            return new ServiceTagsListResult(id, name, type, systemData, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
         }
     }
 }

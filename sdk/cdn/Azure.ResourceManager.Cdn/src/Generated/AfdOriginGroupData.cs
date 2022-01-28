@@ -7,11 +7,12 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdOriginGroup data model. </summary>
-    public partial class AfdOriginGroupData : ProxyResource
+    public partial class AfdOriginGroupData : Resource
     {
         /// <summary> Initializes a new instance of AfdOriginGroupData. </summary>
         public AfdOriginGroupData()
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
         /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
