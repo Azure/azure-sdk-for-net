@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -1501,6 +1502,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, RequestContext context)
         {
+            context.ResponseClassifier ??= ResponseClassifier200.Instance;
             var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -1527,7 +1529,6 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
@@ -1586,10 +1587,8 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateSendToAllRequest(RequestContent content, IEnumerable<string> excluded, RequestContext context)
         {
+            context.ResponseClassifier ??= ResponseClassifier204.Instance;
             var message = _pipeline.CreateMessage(context);
-            message.ResponseClassifier = context.GetResponseClassifier(
-                context => new ResponseClassifier202(context),
-                ResponseClassifier202.Instance);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1609,6 +1608,7 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
+            
             return message;
         }
 
@@ -1989,6 +1989,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateGrantPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
         {
+            context.ResponseClassifier ??= ResponseClassifier200.Instance;
             var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -2007,7 +2008,6 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
@@ -2090,21 +2090,8 @@ namespace Azure.Messaging.WebPubSub
             private static ResponseClassifier _instance;
             public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
 
-            public ResponseClassifier202() : base()
-            {
-            }
-
-            public ResponseClassifier202(RequestContext context) : base(context)
-            {
-            }
-
             public override bool IsErrorResponse(HttpMessage message)
             {
-                if (TryClassify(message.Response.Status, out bool isError))
-                {
-                    return isError;
-                }
-
                 return message.Response.Status switch
                 {
                     202 => false,

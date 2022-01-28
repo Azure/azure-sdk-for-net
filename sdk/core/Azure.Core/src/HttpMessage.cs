@@ -93,6 +93,11 @@ namespace Azure.Core
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
             }
+
+            if (context.ResponseClassifier != null)
+            {
+                ResponseClassifier = context.ResponseClassifier;
+            }
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }

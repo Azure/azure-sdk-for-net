@@ -15,15 +15,11 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        internal int[]? CustomErrors;
-        internal int[]? CustomNonErrors;
-
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         /// <summary>
-        /// Indicates whether ConfigureResponse has been called.
         /// </summary>
-        internal bool HasCustomClassifier => CustomErrors != null || CustomNonErrors != null;
+        public ResponseClassifier? ResponseClassifier { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -60,45 +56,6 @@ namespace Azure
         {
             Policies ??= new();
             Policies.Add((position, policy));
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="statusCodes">Status codes that will not be considered to be error status codes for the scope of the service method call.</param>
-        /// <param name="isError">Whether the passed-in status codes will be considered to be error codes for the duration of this request.</param>
-        public void ConfigureResponse(int[] statusCodes, bool isError)
-        {
-            CopyOrMerge(statusCodes, ref isError ? ref CustomErrors : ref CustomNonErrors);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="factory"></param>
-        /// <param name="instance"></param>
-        /// <returns></returns>
-        public ResponseClassifier GetResponseClassifier(Func<RequestContext, ResponseClassifier> factory, ResponseClassifier instance)
-        {
-            if (HasCustomClassifier)
-            {
-                return factory(this);
-            }
-
-            return instance;
-        }
-
-        private static void CopyOrMerge(int[] source, ref int[]? target)
-        {
-            if (target == null)
-            {
-                target = new int[source.Length];
-                Array.Copy(source, target, source.Length);
-            }
-            else // merge arrays
-            {
-                var origLength = target.Length;
-                Array.Resize(ref target, source.Length + target.Length);
-                Array.Copy(source, 0, target, origLength, source.Length);
-            }
         }
     }
 }
