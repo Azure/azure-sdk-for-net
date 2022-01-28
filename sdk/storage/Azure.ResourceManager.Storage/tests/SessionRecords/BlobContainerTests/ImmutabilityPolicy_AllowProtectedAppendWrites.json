@@ -388,7 +388,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "92",
         "Content-Type": "application/json",
-        "If-Match": "",
         "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0-alpha.20220118.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "24cb51356519d9b19998245fe47d7c6a",
         "x-ms-return-client-request-id": "true"
