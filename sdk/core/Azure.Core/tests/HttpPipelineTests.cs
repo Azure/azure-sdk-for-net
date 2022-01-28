@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new[] {
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
-            }, responseClassifier: new CustomResponseClassifier());
+            }, responseClassifier: new Only500RetryErrorResponseClassifier());
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -267,17 +267,39 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CustomClassifierSetsResponseIsError()
+        public async Task PipelineClassifierSetsResponseIsError()
         {
             var mockTransport = new MockTransport(
                 new MockResponse(404));
 
-            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new CustomResponseClassifier());
+            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new Only500RetryErrorResponseClassifier());
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            Assert.IsFalse(response.IsError);
+        }
+
+        [Test]
+        public async Task RequestContextClassifierSetsResponseIsError()
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(404));
+
+            var pipeline = new HttpPipeline(mockTransport);
+            var context = new RequestContext()
+            {
+                ResponseClassifier = new Only500RetryErrorResponseClassifier()
+            };
+
+            HttpMessage message = pipeline.CreateMessage(context);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://contoso.a.io"));
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Response response = message.Response;
 
             Assert.IsFalse(response.IsError);
         }
@@ -304,7 +326,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        private class CustomResponseClassifier : ResponseClassifier
+        private class Only500RetryErrorResponseClassifier : ResponseClassifier
         {
             public override bool IsRetriableResponse(HttpMessage message)
             {
@@ -318,7 +340,7 @@ namespace Azure.Core.Tests
 
             public override bool IsErrorResponse(HttpMessage message)
             {
-                return IsRetriableResponse(message);
+                return message.Response.Status == 500;
             }
         }
         #endregion

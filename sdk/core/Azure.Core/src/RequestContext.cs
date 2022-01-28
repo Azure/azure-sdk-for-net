@@ -16,10 +16,6 @@ namespace Azure
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         /// <summary>
-        /// </summary>
-        public ResponseClassifier? ResponseClassifier { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
         /// </summary>
         public RequestContext()
@@ -41,6 +37,10 @@ namespace Azure
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
+
+        /// <summary>
+        /// </summary>
+        public ResponseClassifier? ResponseClassifier { get; set; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.

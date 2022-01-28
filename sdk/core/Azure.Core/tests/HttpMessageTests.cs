@@ -34,5 +34,25 @@ namespace Azure.Core.Tests
 
             Assert.False(message.TryGetProperty("SomeName", out _));
         }
+
+        [Test]
+        public void AppliesResponseClassifier()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
+            RequestContext context = new RequestContext()
+            {
+                ResponseClassifier = new TestResponseClassifier()
+            };
+
+            message.ApplyRequestContext(context);
+            Assert.AreEqual(context.ResponseClassifier.GetType(), message.ResponseClassifier.GetType());
+        }
+
+        #region Helpers
+        public class TestResponseClassifier : ResponseClassifier
+        {
+        };
+
+        #endregion
     }
 }
