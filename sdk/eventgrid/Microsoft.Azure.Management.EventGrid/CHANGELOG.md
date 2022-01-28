@@ -1,5 +1,17 @@
 # Release History
 
+## 7.0.0 (2021-12)
+- This release corresponds to api-version 2021-12-01 which includes the following new features:
+    * MSI for delivery to first party destinations.
+    * Support for tracked system topic
+    * Support for Delivery Attributes
+    * Topic type with multiple source scopes.
+    * Support for storage queue message TTL.
+	* MSI for system topics.
+	* Self management of domain topics.
+	* Data plane AAD auth.
+	* User assigned identity for topics and domains.
+	
 ## 6.2.0 (2021-06)
 - This release corresponds to api-version 2021-06-01-preview which includes the following new features:
     * Support of AAD authentication for user topics, domains, and partner namespaces.

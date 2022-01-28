@@ -127,6 +127,14 @@ directive:
     where: $.definitions.Identity.properties.type["x-ms-enum"]
     transform: >
       $.name = "ApplicationResourceIdentityType"
+  - from: deploymentScripts.json
+    where: $.definitions.ManagedServiceIdentity.properties.type["x-ms-enum"]
+    transform: >
+      $.name = "DeploymentScriptManagedServiceIdentityType"
+  - from: deploymentScripts.json
+    where: $.definitions.ManagedServiceIdentity
+    transform: >
+      $["x-ms-client-name"] = "DeploymentScriptManagedServiceIdentity"
 ```
 
 ### Tag: package-track2-preview

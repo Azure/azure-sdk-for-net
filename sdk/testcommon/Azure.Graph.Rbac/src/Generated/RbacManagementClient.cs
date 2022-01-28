@@ -48,7 +48,7 @@ namespace Azure.Graph.Rbac
 
             options ??= new RbacManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, $"{endpoint}/.default"));
             _tenantID = tenantID;
             _endpoint = endpoint;
         }
