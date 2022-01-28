@@ -189,17 +189,6 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region Tenant
-        /// <summary> Gets an object representing a Tenant along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Tenant" /> object. </returns>
-        public virtual Tenant GetTenant(ResourceIdentifier id)
-        {
-            Tenant.ValidateResourceId(id);
-            return new Tenant(this, id);
-        }
-        #endregion
-
         #region Feature
         /// <summary> Gets an object representing a Feature along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
