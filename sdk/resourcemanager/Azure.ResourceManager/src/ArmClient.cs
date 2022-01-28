@@ -124,17 +124,17 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the diagnostic options used for this client.
         /// </summary>
-        protected internal virtual DiagnosticsOptions DiagnosticOptions { get; }
+        internal DiagnosticsOptions DiagnosticOptions { get; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        protected internal virtual Uri BaseUri { get; private set; }
+        internal Uri BaseUri { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline { get; private set; }
+        internal HttpPipeline Pipeline { get; private set; }
 
         /// <summary>
         /// Gets the Azure subscriptions.

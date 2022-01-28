@@ -262,21 +262,21 @@ namespace Azure.ResourceManager.Tests
         {
             var options = new ArmClientOptions();
             options.Diagnostics.IsTelemetryEnabled = true;
-            var client = GetArmClient(options);
-            Assert.IsNotNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
+            var client = GetOriginal(GetArmClient(options));
+            Assert.IsNotNull(GetPolicyFromPipeline(client.Pipeline, nameof(MgmtTelemetryPolicy)));
 
             options.Diagnostics.IsTelemetryEnabled = false;
-            client = GetArmClient(options);
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), "TelemetryPolicy"));
+            client = GetOriginal(GetArmClient(options));
+            Assert.IsNull(GetPolicyFromPipeline(client.Pipeline, nameof(MgmtTelemetryPolicy)));
+            Assert.IsNull(GetPolicyFromPipeline(client.Pipeline, "TelemetryPolicy"));
         }
 
         [RecordedTest]
         [SyncOnly]
         public void ValidateMgmtTelemetryComesAfterTelemetry()
         {
-            var client = GetArmClient();
-            var pipeline = GetPipelineFromClient(client);
+            var client = GetOriginal(GetArmClient());
+            var pipeline = client.Pipeline;
             bool foundTelemetry = false;
             foreach (var policy in GetPoliciesFromPipeline(pipeline).ToArray())
             {
@@ -287,12 +287,6 @@ namespace Azure.ResourceManager.Tests
                     break;
                 }
             }
-        }
-
-        private static HttpPipeline GetPipelineFromClient(ArmClient client)
-        {
-            var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);
-            return pipelineProperty.GetValue(client) as HttpPipeline;
         }
 
         private object GetPolicyFromPipeline(HttpPipeline pipeline, string policyType)
