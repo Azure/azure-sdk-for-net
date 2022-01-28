@@ -59,6 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case ResponseStatusCodes.BadGateway:
                 case ResponseStatusCodes.ServiceUnavailable:
                 case ResponseStatusCodes.GatewayTimeout:
+                    // Send Messages To Storage
                     HttpPipelineHelper.SaveTelemetryToStorage(this.transmitter.storage, message);
                     break;
                 case null: // UnknownNetworkError
