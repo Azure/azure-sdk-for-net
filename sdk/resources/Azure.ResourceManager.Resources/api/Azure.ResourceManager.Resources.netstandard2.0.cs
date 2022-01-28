@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Resources
     public partial class DeploymentScriptData : Azure.ResourceManager.Models.Resource
     {
         public DeploymentScriptData(string location) { }
-        public Azure.ResourceManager.Resources.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -891,6 +891,30 @@ namespace Azure.ResourceManager.Resources.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DeploymentScriptManagedServiceIdentity
+    {
+        public DeploymentScriptManagedServiceIdentity() { }
+        public string TenantId { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType? Type { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeploymentScriptManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeploymentScriptManagedServiceIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType left, Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType left, Azure.ResourceManager.Resources.Models.DeploymentScriptManagedServiceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DeploymentScriptUpdateParameter : Azure.ResourceManager.Models.Resource
     {
         public DeploymentScriptUpdateParameter() { }
@@ -1123,30 +1147,6 @@ namespace Azure.ResourceManager.Resources.Models
         public LinkedTemplateArtifact(string path, object template) { }
         public string Path { get { throw null; } set { } }
         public object Template { get { throw null; } set { } }
-    }
-    public partial class ManagedServiceIdentity
-    {
-        public ManagedServiceIdentity() { }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Resources.Models.ManagedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class OnErrorDeployment
     {
