@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="client"> The client to copy settings from. </param>
         /// <param name="id"> The id of the parent for the collection. </param>
-        protected internal ArmCollection(ArmClient client, ResourceIdentifier id)
+        protected ArmCollection(ArmClient client, ResourceIdentifier id)
             : base(client, id)
         {
         }

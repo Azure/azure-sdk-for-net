@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentException("Only resource id in a subscription is supported", nameof(resourceId));
             }
-            string version = new ProviderCollection(ArmClient.GetSubscription(subscription)).TryGetApiVersion(resourceId.ResourceType, cancellationToken);
+            string version = GetProviderCollectionForSubscription(subscription).GetApiVersion(resourceId.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {resourceId}");
@@ -308,12 +308,15 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentException("Only resource id in a subscription is supported", nameof(resourceId));
             }
-            string version = await new ProviderCollection(ArmClient.GetSubscription(subscription)).TryGetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
+            string version = await GetProviderCollectionForSubscription(subscription).GetApiVersionAsync(resourceId.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {resourceId}");
             }
             return version;
         }
+
+        private ProviderCollection GetProviderCollectionForSubscription(ResourceIdentifier subscriptionId)
+            => GetCachedClient((armClient) => { return new ProviderCollection(armClient, subscriptionId); });
     }
 }

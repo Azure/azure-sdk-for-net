@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Tests
             var rg2Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg1 = rg1Op.Value;
             ResourceGroup rg2 = rg2Op.Value;
-            var genericResources = subscription.GetGenericResources();
+            var genericResources = subscription.GetGenericResourcesAsync();
             var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
 
             int countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Tests
             var rg2Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg1 = rg1Op.Value;
             ResourceGroup rg2 = rg2Op.Value;
-            var genericResources = subscription.GetGenericResources();
+            var genericResources = subscription.GetGenericResourcesAsync();
             var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
             GenericResource aset = await asetOp.WaitForCompletionAsync();
 

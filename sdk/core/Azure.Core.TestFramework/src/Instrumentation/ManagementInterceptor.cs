@@ -37,6 +37,8 @@ namespace Azure.Core.TestFramework
 
             if (modifiedAskToWait)
             {
+                if (IsTaskFaulted(invocation.ReturnValue))
+                    return;
                 object lro = GetLroFromResult(invocation.ReturnValue);
                 object targetLro = lro.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(lro);
                 if (targetLro.GetType().BaseType == typeof(Operation))
@@ -57,11 +59,9 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.StartsWith("ValueTask") ||
-                type.Name.StartsWith("Task") ||
-                type.Name.StartsWith("AsyncStateMachineBox")) //in .net 5 the type is not task here
+            if (IsTaskType(type))
             {
-                if ((bool)type.GetProperty("IsFaulted").GetValue(result))
+                if (IsTaskFaulted(result))
                     return;
 
                 var taskResultType = type.GetGenericArguments()[0];
@@ -108,13 +108,26 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        private static bool IsTaskFaulted(object taskObj)
+        {
+            return (bool)taskObj.GetType().GetProperty("IsFaulted").GetValue(taskObj);
+        }
+
         private static object GetLroFromResult(object returnValue)
         {
             object lro = null;
             Type returnType = returnValue.GetType();
-            return returnType.Name.StartsWith("Task")
+            return IsTaskType(returnType)
                 ? lro = returnType.GetProperty("Result").GetValue(returnValue)
                 : lro = returnValue;
+        }
+
+        private static bool IsTaskType(Type type)
+        {
+            string name = type.Name;
+            return name.StartsWith("ValueTask", StringComparison.Ordinal) ||
+                name.StartsWith("Task", StringComparison.Ordinal) ||
+                name.StartsWith("AsyncStateMachineBox", StringComparison.Ordinal); //in .net 5 the type is not task here
         }
 
         private static bool IsLro(Type returnType)

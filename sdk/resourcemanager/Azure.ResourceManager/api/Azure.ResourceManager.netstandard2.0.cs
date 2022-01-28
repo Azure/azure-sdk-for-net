@@ -6,9 +6,6 @@ namespace Azure.ResourceManager
         public ArmClient(Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options = null) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, System.Uri baseUri, Azure.ResourceManager.ArmClientOptions options = null) { }
-        protected internal virtual System.Uri BaseUri { get { throw null; } }
-        protected internal virtual Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
-        protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.DataPolicyManifest GetDataPolicyManifest(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Subscription GetDefaultSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Subscription> GetDefaultSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -44,7 +41,6 @@ namespace Azure.ResourceManager
         public ArmClientOptions() { }
         public string Scope { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
-        public bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
     public abstract partial class GenericResourceFilter
     {
@@ -106,6 +102,7 @@ namespace Azure.ResourceManager.Core
     public abstract partial class ArmCollection : Azure.ResourceManager.Core.ArmResource
     {
         protected ArmCollection() { }
+        protected ArmCollection(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
         protected ArmCollection(Azure.ResourceManager.Core.ArmResource parent) { }
         protected Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
     }
@@ -126,6 +123,7 @@ namespace Azure.ResourceManager.Core
         public virtual Azure.ResourceManager.Resources.PolicyExemptionCollection GetPolicyExemptions() { throw null; }
         protected System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> ListAvailableLocations(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> ListAvailableLocationsAsync(Azure.Core.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
     public static partial class ResourceListOperations
     {

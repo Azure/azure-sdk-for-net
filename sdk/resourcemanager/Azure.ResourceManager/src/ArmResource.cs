@@ -37,10 +37,16 @@ namespace Azure.ResourceManager.Core
         protected internal ArmResource(ArmClient armClient, ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(armClient, nameof(armClient));
 
             ArmClient = armClient;
             Id = id;
         }
+
+        /// <summary>
+        /// Gets the resource identifier.
+        /// </summary>
+        public virtual ResourceIdentifier Id { get; }
 
         /// <summary>
         /// Gets the <see cref="ArmClient"/> this resource client was created from.
@@ -63,15 +69,17 @@ namespace Azure.ResourceManager.Core
         protected internal Uri BaseUri => ArmClient.BaseUri;
 
         /// <summary>
-        /// Gets the resource identifier.
-        /// </summary>
-        public virtual ResourceIdentifier Id { get; }
-
-        /// <summary>
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
         protected internal TagResource TagResource => _tagResource ??= new TagResource(ArmClient, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
+
+        /// <summary>
+        /// Gets the api version override if it has been set for the current client options.
+        /// </summary>
+        /// <param name="resourceType"> The resource type to get the version for. </param>
+        /// <param name="apiVersion"> The api version to variable to set. </param>
+        protected bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => ArmClient.TryGetApiVersion(resourceType, out apiVersion);
 
         /// <summary>
         /// Lists all available geo-locations.

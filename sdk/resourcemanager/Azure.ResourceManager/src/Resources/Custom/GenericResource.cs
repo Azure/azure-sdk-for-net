@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Resources
 
         private string GetApiVersion(CancellationToken cancellationToken)
         {
-            string version = _providerCollection.TryGetApiVersion(Id.ResourceType, cancellationToken);
+            string version = _providerCollection.GetApiVersion(Id.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {Id}");
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources
 
         private async Task<string> GetApiVersionAsync(CancellationToken cancellationToken)
         {
-            string version = await _providerCollection.TryGetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
+            string version = await _providerCollection.GetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resource id was given {Id}");
