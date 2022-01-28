@@ -15,7 +15,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         private readonly string _value;
         internal const string FbxValue = ".fbx";
         internal const string GlbValue = ".glb";
-        internal const string GltfValue = ".gltf";
         internal const string ObjValue = ".obj";
         internal const string PlyValue = ".ply";
 
@@ -47,11 +46,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// The GLB asset file type.
         /// </summary>
         public static AssetFileType Glb { get; } = new AssetFileType(GlbValue);
-
-        /// <summary>
-        /// The GLTF asset file type.
-        /// </summary>
-        public static AssetFileType Gltf { get; } = new AssetFileType(GltfValue);
 
         /// <summary>
         /// The OBJ asset file type.
