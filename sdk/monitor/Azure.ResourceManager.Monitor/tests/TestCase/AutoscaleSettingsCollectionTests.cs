@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Monitor.Tests
 {
     public class AutoscaleSettingsCollectionTests : MonitorTestBase
     {
-        public AutoscaleSettingsCollectionTests(bool isAsync, RecordedTestMode mode)
-           : base(isAsync)
+        public AutoscaleSettingsCollectionTests(bool isAsync)
+           : base(isAsync, RecordedTestMode.Record)
         {
         }
         private async Task<AutoscaleSettingCollection> GetAutoscaleSettingsCollectionAsync()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var container = await GetAutoscaleSettingsCollectionAsync();
             var name = Recording.GenerateAssetName("testAutoscaleSettings");
-            var input = ResourceDataHelper.GetBasicAutoscaleSettingData("eastus2");
+            var input = ResourceDataHelper.GetBasicAutoscaleSettingData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(true, name, input);
             var autoscaleSetting = lro.Value;
             Assert.AreEqual(name, autoscaleSetting.Data.Name);

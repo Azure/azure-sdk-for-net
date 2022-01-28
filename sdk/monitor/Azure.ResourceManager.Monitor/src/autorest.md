@@ -29,6 +29,14 @@ directive:
     where: $.definitions.MetricAlertProperties.properties.criteria
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.MetricTrigger.properties.dimensions
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AutoscaleSetting.properties.notifications
+    transform: >
+        $["x-nullable"] = true;
   - rename-model:
       from: AzureMonitorPrivateLinkScope
       to: PrivateLinkScope

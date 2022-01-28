@@ -45,13 +45,20 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteNumberValue(Threshold);
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
-                writer.WriteStartArray();
-                foreach (var item in Dimensions)
+                if (Dimensions != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("dimensions");
+                    writer.WriteStartArray();
+                    foreach (var item in Dimensions)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("dimensions");
+                }
             }
             if (Optional.IsDefined(DividePerInstance))
             {
@@ -131,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        dimensions = null;
                         continue;
                     }
                     List<ScaleRuleMetricDimension> array = new List<ScaleRuleMetricDimension>();

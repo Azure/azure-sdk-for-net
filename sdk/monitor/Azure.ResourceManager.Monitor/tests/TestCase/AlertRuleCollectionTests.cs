@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class AlertRuleCollectionTests : MonitorTestBase
     {
         public AlertRuleCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var container = await GetAlertRuleCollectionAsync();
             var name = Recording.GenerateAssetName("testAlertRule");
-            var input = ResourceDataHelper.GetBasicAlertRuleData("eastus2", DefaultSubscription.Id);
+            var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(false, name, input);
             var alert = lro.Value;
             Assert.AreEqual(name, alert.Data.Name);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var collection = await GetAlertRuleCollectionAsync();
             var actionGroupName = Recording.GenerateAssetName("testAlertRule", DefaultSubscription.Id);
-            var input = ResourceDataHelper.GetBasicAlertRuleData("eastus2", DefaultSubscription.Id);
+            var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(true, actionGroupName, input);
             AlertRule alert1 = lro.Value;
             AlertRule alert2 = await collection.GetAsync(actionGroupName);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         public async Task GetAll()
         {
             var collection = await GetAlertRuleCollectionAsync();
-            var input = ResourceDataHelper.GetBasicAlertRuleData("eastus2", DefaultSubscription.Id);
+            var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
             _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
             _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
             int count = 0;

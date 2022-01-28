@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         private async Task<AlertRule> CreateAlertRuleAsync(string alertRuleName)
         {
             var collection = (await CreateResourceGroupAsync()).GetAlertRules();
-            var input = ResourceDataHelper.GetBasicAlertRuleData("eastus",DefaultSubscription.Id);
+            var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(true, alertRuleName, input);
             return lro.Value;
         }

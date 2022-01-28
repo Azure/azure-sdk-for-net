@@ -38,13 +38,20 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Notifications))
             {
-                writer.WritePropertyName("notifications");
-                writer.WriteStartArray();
-                foreach (var item in Notifications)
+                if (Notifications != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("notifications");
+                    writer.WriteStartArray();
+                    foreach (var item in Notifications)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("notifications");
+                }
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -138,7 +145,7 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                notifications = null;
                                 continue;
                             }
                             List<AutoscaleNotification> array = new List<AutoscaleNotification>();

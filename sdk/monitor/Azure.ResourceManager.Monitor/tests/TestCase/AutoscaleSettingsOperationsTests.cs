@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class AutoscaleSettingsOperationsTests : MonitorTestBase
     {
         public AutoscaleSettingsOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 

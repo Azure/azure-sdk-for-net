@@ -96,23 +96,13 @@ namespace Azure.ResourceManager.Monitor.Tests
             Assert.AreEqual(data1.Description, data2.Description);
         }
 
-        public static AlertRuleData GetBasicAlertRuleData(AzureLocation location, string subID)
+        public static AlertRuleData GetBasicAlertRuleData(AzureLocation location)
         {
-            RuleDataSource ruleDataSource = new RuleMetricDataSource("Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/microsoft.insights/activityLogAlerts/aaa", "id", location, "CpuPercentage", "Requests");
+            RuleDataSource ruleDataSource = new RuleMetricDataSource("Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/microsoft.insights/metricalerts/testAlertRule", "global", "Microsoft.EventHub/namespaces", "ActiveConnections");
+            var ruleCondition = new ThresholdRuleCondition("Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria", ruleDataSource, ConditionOperator.GreaterThan, 3.0, TimeSpan.FromMinutes(15), TimeAggregationOperator.Average);
+            var data = new AlertRuleData(location, "testAlertRule", true, ruleCondition)
             {
-                //ResourceUri = subID,
-                //MetricNamespace = "CpuPercentage",
-                //OdataType = "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-            };
-            var ruleCondition = new ThresholdRuleCondition(ConditionOperator.GreaterThan, 3.0)
-            {
-                DataSource = ruleDataSource,
-                OdataType = "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
-                WindowSize = TimeSpan.FromMinutes(5),
-                TimeAggregation = TimeAggregationOperator.Total,
-            };
-            var data = new AlertRuleData(location, "alertRule", true, ruleCondition)
-            {
+                Actions = { }
             };
             return data;
         }
@@ -131,30 +121,23 @@ namespace Azure.ResourceManager.Monitor.Tests
             var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
             var recurrence = new Recurrence(RecurrenceFrequency.Week, Schedule);
             ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
-            IEnumerable<ScaleRule> rules = new List<ScaleRule>()
+            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "Eest US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
+            IList<ScaleRule> rules = new List<ScaleRule>()
             {
-                new ScaleRule(new MetricTrigger("AbandonMessage", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromHours(1), TimeAggregationType.Maximum, ComparisonOperationType.GreaterThan, 70.0), new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
+                new ScaleRule(metricTtigger, new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
             };
             IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
             {
-                //new AutoscaleProfile("Profiles1", scaleCapacity, rules),
-                new AutoscaleProfile("Profiles2", scaleCapacity, rules)
-                {
-                    FixedDate = fixDate,
-                    //Recurrence = recurrence,
-                },
-                new AutoscaleProfile("Profiles3", scaleCapacity, rules)
-                {
-                    Recurrence = recurrence,
-                    FixedDate = null,
-                },
+                //new AutoscaleProfile("Profiles2", scaleCapacity, rules)
+                new AutoscaleProfile("Profiles2", scaleCapacity, rules, fixDate, null),
+                new AutoscaleProfile("Profiles3", scaleCapacity, rules,null, recurrence),
             };
             var data = new AutoscaleSettingData(location, profiles)
             {
                 Enabled = true,
                 TargetResourceLocation = location,
                 TargetResourceUri = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
-                Notifications =
+                /*Notifications =
                 {
                     new AutoscaleNotification()
                     {
@@ -178,7 +161,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                             }
                         }
                     },
-                },
+                },*/
                 Tags = {},
             };
             return data;
@@ -195,24 +178,32 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static DiagnosticSettingsData GetBasicDiagnosticSettingsData()
         {
-            IList<MetricSettings> metricSettings = new List<MetricSettings>()
+            var data = new DiagnosticSettingsData()
             {
-                new MetricSettings(true)
+                StorageAccountId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8010",
+                //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                EventHubAuthorizationRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412",
+                EventHubName = "myeventhub",
+                WorkspaceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412",
+                LogAnalyticsDestinationType = "Dedicated",
+                Metrics =
+                {
+                    new MetricSettings(true)
                 {
                     Category = "WorkflowMetrics",
                     RetentionPolicy = new RetentionPolicy(false, 0),
                 }
-            };
-            IList<LogSettings> logSettings = new List<LogSettings>()
-            {
-                new LogSettings(true)
+                },
+                Logs =
+                {
+                    new LogSettings(true)
                 {
                     Category = "allLogs",
                     RetentionPolicy= new RetentionPolicy(false, 0)
                 }
+                }
             };
-            //var data = new DiagnosticSettingsData();
-            var data = new DiagnosticSettingsData(ResourceIdentifier.Root, "mysetting", "Microsoft.Insights/diagnosticSettings", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8010", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412", "myeventhub", metricSettings, logSettings, "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c", "Dedicated");
+            //var data = new DiagnosticSettingsData(ResourceIdentifier.Root, "mysetting", "Microsoft.Insights/diagnosticSettings", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8010", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412", "myeventhub", metricSettings, logSettings, "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c", "Dedicated");
             return data;
         }
         #endregion

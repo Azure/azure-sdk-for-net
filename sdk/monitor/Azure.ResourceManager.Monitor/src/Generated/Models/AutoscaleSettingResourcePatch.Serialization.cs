@@ -40,13 +40,20 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
-                writer.WritePropertyName("notifications");
-                writer.WriteStartArray();
-                foreach (var item in Notifications)
+                if (Notifications != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("notifications");
+                    writer.WriteStartArray();
+                    foreach (var item in Notifications)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("notifications");
+                }
             }
             if (Optional.IsDefined(Enabled))
             {
