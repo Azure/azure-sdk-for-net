@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,11 +15,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsAudience"/> object.
         /// </summary>
+        /// <param name="value">A string representing the Azure Cloud this service will access. Default to Azure Public Cloud. Read more at: https://azure.microsoft.com/en-us/overview/what-is-a-public-cloud/.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextAnalyticsAudience(string value)
         {
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNullOrEmpty(value, nameof(value));
             _value = value;
         }
 
