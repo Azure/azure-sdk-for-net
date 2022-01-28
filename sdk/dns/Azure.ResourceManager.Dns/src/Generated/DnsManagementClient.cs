@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.Dns
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
-            const string endpointValue = "https://management.azure.com";
-            endpoint ??= new Uri(endpointValue);
+            endpoint ??= new Uri("https://management.azure.com");
 
             options ??= new DnsManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, endpointValue));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, $"{endpoint}/.default"));
             _subscriptionId = subscriptionId;
             _endpoint = endpoint;
         }

@@ -44,12 +44,11 @@ namespace Azure.Graph.Rbac
             {
                 throw new ArgumentNullException(nameof(tenantID));
             }
-            const string endpointValue = "https://graph.windows.net";
-            endpoint ??= new Uri(endpointValue);
+            endpoint ??= new Uri("https://graph.windows.net");
 
             options ??= new RbacManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, endpointValue));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, $"{endpoint}/.default"));
             _tenantID = tenantID;
             _endpoint = endpoint;
         }

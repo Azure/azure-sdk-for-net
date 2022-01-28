@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Management
             var options = new ArmClientOptions();
             var dummyPolicy = new DummyPolicy();
             options.AddPolicy(dummyPolicy, HttpPipelinePosition.PerCall);
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(new MockCredential(), "http://foo.com"));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(new MockCredential(), "http://foo.com/.default"));
 
             var perCallPolicyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             var policies = (ReadOnlyMemory<HttpPipelinePolicy>)perCallPolicyField.GetValue(pipeline);
