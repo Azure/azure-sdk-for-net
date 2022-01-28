@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal WebApplicationFirewallPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<WebApplicationFirewallPolicyData> response)
+        internal WebApplicationFirewallPolicyCreateOrUpdateOperation(ArmClient armClient, Response<WebApplicationFirewallPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<WebApplicationFirewallPolicy>(Response.FromValue(new WebApplicationFirewallPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<WebApplicationFirewallPolicy>(Response.FromValue(new WebApplicationFirewallPolicy(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

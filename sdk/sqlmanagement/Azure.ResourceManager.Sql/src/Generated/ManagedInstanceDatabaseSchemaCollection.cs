@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of DatabaseSchema and their operations over its parent. </summary>
     public partial class ManagedInstanceDatabaseSchemaCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseSchema>, IAsyncEnumerable<ManagedInstanceDatabaseSchema>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedDatabaseSchemasRestOperations _managedDatabaseSchemasRestClient;
+        private readonly ClientDiagnostics _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics;
+        private readonly ManagedDatabaseSchemasRestOperations _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaCollection"/> class for mocking. </summary>
         protected ManagedInstanceDatabaseSchemaCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceDatabaseSchemaCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ManagedInstanceDatabaseSchema.ResourceType, out string apiVersion);
-            _managedDatabaseSchemasRestClient = new ManagedDatabaseSchemasRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchema.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedInstanceDatabaseSchema.ResourceType, out string managedInstanceDatabaseSchemaManagedDatabaseSchemasApiVersion);
+            _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient = new ManagedDatabaseSchemasRestOperations(_managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaManagedDatabaseSchemasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Get");
+            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchema(this, response.Value), response.GetRawResponse());
+                    throw _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Get");
+            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceDatabaseSchema(this, response.Value), response.GetRawResponse());
+                    throw await _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedInstanceDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetIfExists");
+            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
+                var response = _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceDatabaseSchema>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchema(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetIfExists");
+            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceDatabaseSchema>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchema(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchema(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Exists");
+            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Exists");
+            using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.Exists");
             scope.Start();
             try
             {
@@ -214,12 +213,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ManagedInstanceDatabaseSchema> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
+                using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSchemasRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,12 +228,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstanceDatabaseSchema> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
+                using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSchemasRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,12 +255,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ManagedInstanceDatabaseSchema>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
+                using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSchemasRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,12 +270,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstanceDatabaseSchema>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
+                using var scope = _managedInstanceDatabaseSchemaManagedDatabaseSchemasClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSchemasRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceDatabaseSchemaManagedDatabaseSchemasRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchema(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,8 +300,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceDatabaseSchema, DatabaseSchemaData> Construct() { }
     }
 }

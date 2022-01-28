@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/providers/Microsoft.Web/publishingUsers/web";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebSiteManagementRestOperations _restClient;
+
+        private readonly ClientDiagnostics _userClientDiagnostics;
+        private readonly WebSiteManagementRestOperations _userRestClient;
         private readonly UserData _data;
 
         /// <summary> Initializes a new instance of the <see cref="User"/> class for mocking. </summary>
@@ -38,46 +39,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "User"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal User(ArmResource options, UserData data) : base(options, data.Id)
+        internal User(ArmClient armClient, UserData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="User"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal User(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal User(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="User"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal User(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _restClient = new WebSiteManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _userClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string userApiVersion);
+            _userRestClient = new WebSiteManagementRestOperations(_userClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,9 +84,6 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
         /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
         /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
         /// OperationId: GetPublishingUser
@@ -117,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<User>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("User.Get");
+            using var scope = _userClientDiagnostics.CreateScope("User.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _userRestClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new User(this, response.Value), response.GetRawResponse());
+                    throw await _userClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new User(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,14 +114,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<User> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("User.Get");
+            using var scope = _userClientDiagnostics.CreateScope("User.Get");
             scope.Start();
             try
             {
-                var response = _restClient.GetPublishingUser(cancellationToken);
+                var response = _userRestClient.GetPublishingUser(cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new User(this, response.Value), response.GetRawResponse());
+                    throw _userClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new User(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("User.GetAvailableLocations");
+            using var scope = _userClientDiagnostics.CreateScope("User.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -179,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("User.GetAvailableLocations");
+            using var scope = _userClientDiagnostics.CreateScope("User.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -207,12 +181,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(userDetails));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("User.CreateOrUpdate");
+            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
-                var operation = new UserCreateOrUpdateOperation(this, response);
+                var response = await _userRestClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
+                var operation = new UserCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,12 +213,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(userDetails));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("User.CreateOrUpdate");
+            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.UpdatePublishingUser(userDetails, cancellationToken);
-                var operation = new UserCreateOrUpdateOperation(this, response);
+                var response = _userRestClient.UpdatePublishingUser(userDetails, cancellationToken);
+                var operation = new UserCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

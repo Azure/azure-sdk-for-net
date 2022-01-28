@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of ServerCommunicationLink and their operations over its parent. </summary>
     public partial class ServerCommunicationLinkCollection : ArmCollection, IEnumerable<ServerCommunicationLink>, IAsyncEnumerable<ServerCommunicationLink>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServerCommunicationLinksRestOperations _serverCommunicationLinksRestClient;
+        private readonly ClientDiagnostics _serverCommunicationLinkClientDiagnostics;
+        private readonly ServerCommunicationLinksRestOperations _serverCommunicationLinkRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerCommunicationLinkCollection"/> class for mocking. </summary>
         protected ServerCommunicationLinkCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServerCommunicationLinkCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServerCommunicationLink.ResourceType, out string apiVersion);
-            _serverCommunicationLinksRestClient = new ServerCommunicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serverCommunicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerCommunicationLink.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServerCommunicationLink.ResourceType, out string serverCommunicationLinkApiVersion);
+            _serverCommunicationLinkRestClient = new ServerCommunicationLinksRestOperations(_serverCommunicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverCommunicationLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CreateOrUpdate");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverCommunicationLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters, cancellationToken);
-                var operation = new ServerCommunicationLinkCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters).Request, response);
+                var response = _serverCommunicationLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters, cancellationToken);
+                var operation = new ServerCommunicationLinkCreateOrUpdateOperation(ArmClient, _serverCommunicationLinkClientDiagnostics, Pipeline, _serverCommunicationLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CreateOrUpdate");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverCommunicationLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerCommunicationLinkCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serverCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters).Request, response);
+                var response = await _serverCommunicationLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServerCommunicationLinkCreateOrUpdateOperation(ArmClient, _serverCommunicationLinkClientDiagnostics, Pipeline, _serverCommunicationLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Get");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverCommunicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken);
+                var response = _serverCommunicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
+                    throw _serverCommunicationLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerCommunicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Get");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serverCommunicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverCommunicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
+                    throw await _serverCommunicationLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServerCommunicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serverCommunicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken);
+                var response = _serverCommunicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerCommunicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serverCommunicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverCommunicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerCommunicationLink(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerCommunicationLink(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
+            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServerCommunicationLink> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetAll");
+                using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serverCommunicationLinksRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLink(this, value)), null, response.GetRawResponse());
+                    var response = _serverCommunicationLinkRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLink(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServerCommunicationLink>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetAll");
+                using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serverCommunicationLinksRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLink(this, value)), null, response.GetRawResponse());
+                    var response = await _serverCommunicationLinkRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLink(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,8 +339,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerCommunicationLink, ServerCommunicationLinkData> Construct() { }
     }
 }

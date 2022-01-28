@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -284,7 +284,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

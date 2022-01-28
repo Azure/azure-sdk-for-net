@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetFilterRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetFilterRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -273,7 +273,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateFilterRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -415,7 +415,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -557,7 +557,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -646,7 +646,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetPropertiesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -735,7 +735,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetPropertiesRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -824,7 +824,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -913,7 +913,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -979,7 +979,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateRunScanRequest(runId, scanLevel, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1045,7 +1045,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateRunScanRequest(runId, scanLevel, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1110,7 +1110,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCancelScanRequest(runId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1175,7 +1175,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCancelScanRequest(runId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1250,7 +1250,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetTriggerRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1325,7 +1325,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateGetTriggerRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1439,7 +1439,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1553,7 +1553,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1628,7 +1628,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteTriggerRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1703,7 +1703,7 @@ namespace Azure.Analytics.Purview.Scanning
             try
             {
                 using HttpMessage message = CreateDeleteTriggerRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1794,7 +1794,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetRunsRequest(context)
                         : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1883,7 +1883,7 @@ namespace Azure.Analytics.Purview.Scanning
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetRunsRequest(context)
                         : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

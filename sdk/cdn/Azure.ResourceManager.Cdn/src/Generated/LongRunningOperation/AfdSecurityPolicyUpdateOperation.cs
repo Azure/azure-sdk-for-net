@@ -12,27 +12,27 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Updates an existing security policy within a profile. </summary>
+    /// <summary> Updates an existing Secret within a profile. </summary>
     public partial class AfdSecurityPolicyUpdateOperation : Operation<AfdSecurityPolicy>, IOperationSource<AfdSecurityPolicy>
     {
         private readonly OperationInternals<AfdSecurityPolicy> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AfdSecurityPolicyUpdateOperation for mocking. </summary>
         protected AfdSecurityPolicyUpdateOperation()
         {
         }
 
-        internal AfdSecurityPolicyUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AfdSecurityPolicyUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<AfdSecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AfdSecurityPolicyUpdateOperation");
-            _operationBase = operationsBase;
+            _operation = new OperationInternals<AfdSecurityPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AfdSecurityPolicyUpdateOperation");
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
-            return new AfdSecurityPolicy(_operationBase, data);
+            return new AfdSecurityPolicy(_armClient, data);
         }
 
         async ValueTask<AfdSecurityPolicy> IOperationSource<AfdSecurityPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdSecurityPolicyData.DeserializeAfdSecurityPolicyData(document.RootElement);
-            return new AfdSecurityPolicy(_operationBase, data);
+            return new AfdSecurityPolicy(_armClient, data);
         }
     }
 }

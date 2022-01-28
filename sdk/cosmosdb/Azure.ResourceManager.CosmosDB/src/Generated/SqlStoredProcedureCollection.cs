@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing collection of SqlStoredProcedure and their operations over its parent. </summary>
     public partial class SqlStoredProcedureCollection : ArmCollection, IEnumerable<SqlStoredProcedure>, IAsyncEnumerable<SqlStoredProcedure>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SqlResourcesRestOperations _sqlResourcesRestClient;
+        private readonly ClientDiagnostics _sqlStoredProcedureSqlResourcesClientDiagnostics;
+        private readonly SqlResourcesRestOperations _sqlStoredProcedureSqlResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SqlStoredProcedureCollection"/> class for mocking. </summary>
         protected SqlStoredProcedureCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlStoredProcedureCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SqlStoredProcedure.ResourceType, out string apiVersion);
-            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _sqlStoredProcedureSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlStoredProcedure.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SqlStoredProcedure.ResourceType, out string sqlStoredProcedureSqlResourcesApiVersion);
+            _sqlStoredProcedureSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlStoredProcedureSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlStoredProcedureParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.CreateOrUpdate");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.CreateUpdateSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters, cancellationToken);
-                var operation = new SqlStoredProcedureCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters).Request, response);
+                var response = _sqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters, cancellationToken);
+                var operation = new SqlStoredProcedureCreateOrUpdateOperation(ArmClient, _sqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _sqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlStoredProcedureParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.CreateOrUpdate");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.CreateUpdateSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlStoredProcedureCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters).Request, response);
+                var response = await _sqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlStoredProcedureCreateOrUpdateOperation(ArmClient, _sqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _sqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.Get");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.GetSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken);
+                var response = _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlStoredProcedure(this, response.Value), response.GetRawResponse());
+                    throw _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlStoredProcedure(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.Get");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.GetSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlStoredProcedure(this, response.Value), response.GetRawResponse());
+                    throw await _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SqlStoredProcedure(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetIfExists");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.GetSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken: cancellationToken);
+                var response = _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SqlStoredProcedure>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlStoredProcedure(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlStoredProcedure(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetIfExists");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.GetSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SqlStoredProcedure>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlStoredProcedure(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlStoredProcedure(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.Exists");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.Exists");
+            using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Page<SqlStoredProcedure> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetAll");
+                using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sqlResourcesRestClient.ListSqlStoredProcedures(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlStoredProcedure(this, value)), null, response.GetRawResponse());
+                    var response = _sqlStoredProcedureSqlResourcesRestClient.ListSqlStoredProcedures(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlStoredProcedure(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.CosmosDB
         {
             async Task<Page<SqlStoredProcedure>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetAll");
+                using var scope = _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("SqlStoredProcedureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sqlResourcesRestClient.ListSqlStoredProceduresAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlStoredProcedure(this, value)), null, response.GetRawResponse());
+                    var response = await _sqlStoredProcedureSqlResourcesRestClient.ListSqlStoredProceduresAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlStoredProcedure(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,8 +321,5 @@ namespace Azure.ResourceManager.CosmosDB
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlStoredProcedure, SqlStoredProcedureData> Construct() { }
     }
 }

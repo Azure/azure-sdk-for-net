@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         private readonly OperationInternals<MachineExtension> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of MachineExtensionUpdateOperation for mocking. </summary>
         protected MachineExtensionUpdateOperation()
         {
         }
 
-        internal MachineExtensionUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal MachineExtensionUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<MachineExtension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MachineExtensionUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MachineExtensionData.DeserializeMachineExtensionData(document.RootElement);
-            return new MachineExtension(_operationBase, data);
+            return new MachineExtension(_armClient, data);
         }
 
         async ValueTask<MachineExtension> IOperationSource<MachineExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MachineExtensionData.DeserializeMachineExtensionData(document.RootElement);
-            return new MachineExtension(_operationBase, data);
+            return new MachineExtension(_armClient, data);
         }
     }
 }

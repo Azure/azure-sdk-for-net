@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly OperationInternals<CdnOrigin> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of CdnOriginUpdateOperation for mocking. </summary>
         protected CdnOriginUpdateOperation()
         {
         }
 
-        internal CdnOriginUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnOriginUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CdnOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CdnOriginUpdateOperation");
-            _operationBase = operationsBase;
+            _operation = new OperationInternals<CdnOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "CdnOriginUpdateOperation");
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CdnOriginData.DeserializeCdnOriginData(document.RootElement);
-            return new CdnOrigin(_operationBase, data);
+            return new CdnOrigin(_armClient, data);
         }
 
         async ValueTask<CdnOrigin> IOperationSource<CdnOrigin>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CdnOriginData.DeserializeCdnOriginData(document.RootElement);
-            return new CdnOrigin(_operationBase, data);
+            return new CdnOrigin(_armClient, data);
         }
     }
 }

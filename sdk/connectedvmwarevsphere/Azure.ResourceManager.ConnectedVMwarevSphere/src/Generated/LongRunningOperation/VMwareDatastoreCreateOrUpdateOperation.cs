@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         private readonly OperationInternals<VMwareDatastore> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VMwareDatastoreCreateOrUpdateOperation for mocking. </summary>
         protected VMwareDatastoreCreateOrUpdateOperation()
         {
         }
 
-        internal VMwareDatastoreCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VMwareDatastoreCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VMwareDatastore>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VMwareDatastoreCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement);
-            return new VMwareDatastore(_operationBase, data);
+            return new VMwareDatastore(_armClient, data);
         }
 
         async ValueTask<VMwareDatastore> IOperationSource<VMwareDatastore>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement);
-            return new VMwareDatastore(_operationBase, data);
+            return new VMwareDatastore(_armClient, data);
         }
     }
 }

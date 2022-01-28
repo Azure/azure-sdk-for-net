@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkProfilesRestOperations _networkProfilesRestClient;
+
+        private readonly ClientDiagnostics _networkProfileClientDiagnostics;
+        private readonly NetworkProfilesRestOperations _networkProfileRestClient;
         private readonly NetworkProfileData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkProfile"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "NetworkProfile"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkProfile(ArmResource options, NetworkProfileData data) : base(options, new ResourceIdentifier(data.Id))
+        internal NetworkProfile(ArmClient armClient, NetworkProfileData data) : this(armClient, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _networkProfilesRestClient = new NetworkProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkProfile"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkProfile(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal NetworkProfile(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _networkProfilesRestClient = new NetworkProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="NetworkProfile"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkProfile(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _networkProfilesRestClient = new NetworkProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string networkProfileApiVersion);
+            _networkProfileRestClient = new NetworkProfilesRestOperations(_networkProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -110,14 +89,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NetworkProfile>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.Get");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.Get");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                    throw await _networkProfileClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,14 +110,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkProfile> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.Get");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.Get");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _networkProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                    throw _networkProfileClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +131,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.GetAvailableLocations");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -170,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.GetAvailableLocations");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -188,12 +167,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<NetworkProfileDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.Delete");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.Delete");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkProfileDeleteOperation(_clientDiagnostics, Pipeline, _networkProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _networkProfileRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkProfileDeleteOperation(_networkProfileClientDiagnostics, Pipeline, _networkProfileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,12 +189,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NetworkProfileDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.Delete");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.Delete");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkProfileDeleteOperation(_clientDiagnostics, Pipeline, _networkProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _networkProfileRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkProfileDeleteOperation(_networkProfileClientDiagnostics, Pipeline, _networkProfileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -238,12 +217,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.Update");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.Update");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                var response = await _networkProfileRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,12 +242,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfile.Update");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfile.Update");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                var response = _networkProfileRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

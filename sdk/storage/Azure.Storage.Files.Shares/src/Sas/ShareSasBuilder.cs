@@ -149,12 +149,13 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
-        /// class to create a Blob Service Sas.
+        /// class to create a Azure File Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
-        /// This field must be omitted if it has been specified in an
-        /// associated stored access policy.
+        /// The permissions associated with the shared access signature. The
+        /// user is restricted to operations allowed by the permissions. This
+        /// field must be omitted if it has been specified in an associated
+        /// stored access policy.
         /// </param>
         /// <param name="expiresOn">
         /// The time at which the shared access signature becomes invalid.
@@ -169,10 +170,11 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
-        /// class to create a Blob Container Service Sas.
+        /// class to create a File Share Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature. The
+        /// user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>

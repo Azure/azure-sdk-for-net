@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ServerCommunicationLink> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServerCommunicationLinkCreateOrUpdateOperation for mocking. </summary>
         protected ServerCommunicationLinkCreateOrUpdateOperation()
         {
         }
 
-        internal ServerCommunicationLinkCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServerCommunicationLinkCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServerCommunicationLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerCommunicationLinkCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerCommunicationLinkData.DeserializeServerCommunicationLinkData(document.RootElement);
-            return new ServerCommunicationLink(_operationBase, data);
+            return new ServerCommunicationLink(_armClient, data);
         }
 
         async ValueTask<ServerCommunicationLink> IOperationSource<ServerCommunicationLink>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerCommunicationLinkData.DeserializeServerCommunicationLinkData(document.RootElement);
-            return new ServerCommunicationLink(_operationBase, data);
+            return new ServerCommunicationLink(_armClient, data);
         }
     }
 }

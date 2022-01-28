@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.TestFramework
             if (Mode != RecordedTestMode.Playback)
             {
                 return new ArmClient(
-                        TestEnvironment.SubscriptionId,
-                        GetUri(TestEnvironment.ResourceManagerUrl),
-                        TestEnvironment.Credential,
-                        new ArmClientOptions());
+                    TestEnvironment.Credential,
+                    TestEnvironment.SubscriptionId,
+                    GetUri(TestEnvironment.ResourceManagerUrl),
+                    new ArmClientOptions());
             }
             return null;
         }
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
+                TestEnvironment.Credential,
                 TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
-                TestEnvironment.Credential,
                 options);
         }
 
         private Uri GetUri(string endpoint)
         {
-            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : null;
+            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : new Uri("https://management.azure.com");
         }
 
         [SetUp]
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             GlobalClient = CreateClient<ArmClient>(
+                SessionEnvironment.Credential,
                 SessionEnvironment.SubscriptionId,
                 GetUri(SessionEnvironment.ResourceManagerUrl),
-                SessionEnvironment.Credential,
                 options);
         }
 

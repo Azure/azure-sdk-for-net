@@ -16,16 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VpnSiteLinkConnection and their operations over its parent. </summary>
     public partial class VpnSiteLinkConnectionCollection : ArmCollection, IEnumerable<VpnSiteLinkConnection>, IAsyncEnumerable<VpnSiteLinkConnection>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VpnSiteLinkConnectionsRestOperations _vpnSiteLinkConnectionsRestClient;
-        private readonly VpnLinkConnectionsRestOperations _vpnLinkConnectionsRestClient;
+        private readonly ClientDiagnostics _vpnSiteLinkConnectionClientDiagnostics;
+        private readonly VpnSiteLinkConnectionsRestOperations _vpnSiteLinkConnectionRestClient;
+        private readonly ClientDiagnostics _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics;
+        private readonly VpnLinkConnectionsRestOperations _vpnSiteLinkConnectionVpnLinkConnectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VpnSiteLinkConnectionCollection"/> class for mocking. </summary>
         protected VpnSiteLinkConnectionCollection()
@@ -36,10 +36,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VpnSiteLinkConnectionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string apiVersion);
-            _vpnSiteLinkConnectionsRestClient = new VpnSiteLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _vpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _vpnSiteLinkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionApiVersion);
+            _vpnSiteLinkConnectionRestClient = new VpnSiteLinkConnectionsRestOperations(_vpnSiteLinkConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionApiVersion);
+            _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
+            _vpnSiteLinkConnectionVpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(_vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,14 +64,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
+            using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _vpnSiteLinkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken);
+                var response = _vpnSiteLinkConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                    throw _vpnSiteLinkConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,14 +89,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
+            using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _vpnSiteLinkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _vpnSiteLinkConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                    throw await _vpnSiteLinkConnectionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VpnSiteLinkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,14 +114,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
+            using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _vpnSiteLinkConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken);
+                var response = _vpnSiteLinkConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,14 +139,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
+            using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _vpnSiteLinkConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vpnSiteLinkConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,7 +164,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
+            using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -185,7 +187,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
+            using var scope = _vpnSiteLinkConnectionClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -206,12 +208,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<VpnSiteLinkConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
+                using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vpnLinkConnectionsRestClient.ListByVpnConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -221,12 +223,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<VpnSiteLinkConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
+                using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vpnLinkConnectionsRestClient.ListByVpnConnectionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnectionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,12 +246,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<VpnSiteLinkConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
+                using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vpnLinkConnectionsRestClient.ListByVpnConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,12 +261,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VpnSiteLinkConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
+                using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vpnLinkConnectionsRestClient.ListByVpnConnectionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnectionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -289,8 +291,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VpnSiteLinkConnection, VpnSiteLinkConnectionData> Construct() { }
     }
 }

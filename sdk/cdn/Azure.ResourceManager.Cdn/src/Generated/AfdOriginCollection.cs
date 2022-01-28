@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing collection of AfdOrigin and their operations over its parent. </summary>
     public partial class AfdOriginCollection : ArmCollection, IEnumerable<AfdOrigin>, IAsyncEnumerable<AfdOrigin>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AfdOriginsRestOperations _afdOriginsRestClient;
+        private readonly ClientDiagnostics _afdOriginClientDiagnostics;
+        private readonly AfdOriginsRestOperations _afdOriginRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AfdOriginCollection"/> class for mocking. </summary>
         protected AfdOriginCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdOriginCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(AfdOrigin.ResourceType, out string apiVersion);
-            _afdOriginsRestClient = new AfdOriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _afdOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdOrigin.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(AfdOrigin.ResourceType, out string afdOriginApiVersion);
+            _afdOriginRestClient = new AfdOriginsRestOperations(_afdOriginClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdOriginApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(origin));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.CreateOrUpdate");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _afdOriginsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken);
-                var operation = new AfdOriginCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdOriginsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
+                var response = _afdOriginRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken);
+                var operation = new AfdOriginCreateOrUpdateOperation(ArmClient, _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(origin));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.CreateOrUpdate");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _afdOriginsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdOriginCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdOriginsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
+                var response = await _afdOriginRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdOriginCreateOrUpdateOperation(ArmClient, _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Get");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Get");
             scope.Start();
             try
             {
-                var response = _afdOriginsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
+                var response = _afdOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
+                    throw _afdOriginClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Get");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Get");
             scope.Start();
             try
             {
-                var response = await _afdOriginsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken).ConfigureAwait(false);
+                var response = await _afdOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
+                    throw await _afdOriginClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _afdOriginsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
+                var response = _afdOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<AfdOrigin>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _afdOriginsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _afdOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<AfdOrigin>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdOrigin(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdOrigin(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Exists");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.Exists");
+            using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<AfdOrigin> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
+                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _afdOriginsRestClient.ListByOriginGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _afdOriginRestClient.ListByOriginGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<AfdOrigin> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
+                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _afdOriginsRestClient.ListByOriginGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _afdOriginRestClient.ListByOriginGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<AfdOrigin>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
+                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _afdOriginsRestClient.ListByOriginGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _afdOriginRestClient.ListByOriginGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<AfdOrigin>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
+                using var scope = _afdOriginClientDiagnostics.CreateScope("AfdOriginCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _afdOriginsRestClient.ListByOriginGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _afdOriginRestClient.ListByOriginGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdOrigin(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,8 +351,5 @@ namespace Azure.ResourceManager.Cdn
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdOrigin, AfdOriginData> Construct() { }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ServerSecurityAlertPolicy> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServerSecurityAlertPolicyCreateOrUpdateOperation for mocking. </summary>
         protected ServerSecurityAlertPolicyCreateOrUpdateOperation()
         {
         }
 
-        internal ServerSecurityAlertPolicyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServerSecurityAlertPolicyCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServerSecurityAlertPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerSecurityAlertPolicyCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
-            return new ServerSecurityAlertPolicy(_operationBase, data);
+            return new ServerSecurityAlertPolicy(_armClient, data);
         }
 
         async ValueTask<ServerSecurityAlertPolicy> IOperationSource<ServerSecurityAlertPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
-            return new ServerSecurityAlertPolicy(_operationBase, data);
+            return new ServerSecurityAlertPolicy(_armClient, data);
         }
     }
 }

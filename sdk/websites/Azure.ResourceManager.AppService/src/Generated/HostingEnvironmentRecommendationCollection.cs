@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of RecommendationRule and their operations over its parent. </summary>
     public partial class HostingEnvironmentRecommendationCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RecommendationsRestOperations _recommendationsRestClient;
+        private readonly ClientDiagnostics _hostingEnvironmentRecommendationRecommendationsClientDiagnostics;
+        private readonly RecommendationsRestOperations _hostingEnvironmentRecommendationRecommendationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationCollection"/> class for mocking. </summary>
         protected HostingEnvironmentRecommendationCollection()
@@ -32,9 +31,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HostingEnvironmentRecommendationCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string apiVersion);
-            _recommendationsRestClient = new RecommendationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _hostingEnvironmentRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendation.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
+            _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,14 +61,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
+            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
+                var response = _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                    throw _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -92,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
+            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
+                var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                    throw await _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new HostingEnvironmentRecommendation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,14 +118,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
+            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _recommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
+                var response = _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,14 +145,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
+            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _recommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<HostingEnvironmentRecommendation>(null, response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentRecommendation(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendation(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
+            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
+            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {
@@ -211,8 +210,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, HostingEnvironmentRecommendation, RecommendationRuleData> Construct() { }
     }
 }

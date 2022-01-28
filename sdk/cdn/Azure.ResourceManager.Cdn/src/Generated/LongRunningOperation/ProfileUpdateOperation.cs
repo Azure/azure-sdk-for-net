@@ -12,27 +12,27 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+    /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
     public partial class ProfileUpdateOperation : Operation<Profile>, IOperationSource<Profile>
     {
         private readonly OperationInternals<Profile> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ProfileUpdateOperation for mocking. </summary>
         protected ProfileUpdateOperation()
         {
         }
 
-        internal ProfileUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ProfileUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Profile>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ProfileUpdateOperation");
-            _operationBase = operationsBase;
+            _operation = new OperationInternals<Profile>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "ProfileUpdateOperation");
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ProfileData.DeserializeProfileData(document.RootElement);
-            return new Profile(_operationBase, data);
+            return new Profile(_armClient, data);
         }
 
         async ValueTask<Profile> IOperationSource<Profile>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ProfileData.DeserializeProfileData(document.RootElement);
-            return new Profile(_operationBase, data);
+            return new Profile(_armClient, data);
         }
     }
 }

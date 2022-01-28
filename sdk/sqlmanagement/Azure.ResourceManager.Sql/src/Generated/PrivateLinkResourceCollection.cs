@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of PrivateLinkResource and their operations over its parent. </summary>
     public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _privateLinkResourceClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _privateLinkResourceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkResourceCollection"/> class for mocking. </summary>
         protected PrivateLinkResourceCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PrivateLinkResourceCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(PrivateLinkResource.ResourceType, out string apiVersion);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", PrivateLinkResource.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
+            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
+                var response = _privateLinkResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                    throw _privateLinkResourceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                    throw await _privateLinkResourceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new PrivateLinkResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _privateLinkResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<PrivateLinkResource>(null, response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -213,12 +212,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+                using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateLinkResourcesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _privateLinkResourceRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,12 +227,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<PrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+                using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateLinkResourcesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _privateLinkResourceRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,12 +253,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+                using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateLinkResourcesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateLinkResourceRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,12 +268,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<PrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+                using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateLinkResourcesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateLinkResourceRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,8 +298,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateLinkResource, PrivateLinkResourceData> Construct() { }
     }
 }

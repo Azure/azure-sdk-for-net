@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
         }
 
-        internal InventoryItemCreateOrUpdateOperation(ArmResource operationsBase, Response<InventoryItemData> response)
+        internal InventoryItemCreateOrUpdateOperation(ArmClient armClient, Response<InventoryItemData> response)
         {
-            _operation = new OperationOrResponseInternals<InventoryItem>(Response.FromValue(new InventoryItem(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<InventoryItem>(Response.FromValue(new InventoryItem(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

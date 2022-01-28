@@ -28,8 +28,10 @@ namespace Azure.ResourceManager.Cdn
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ProfilesRestOperations _profilesRestClient;
+
+        private readonly ClientDiagnostics _profileClientDiagnostics;
+        private readonly ProfilesRestOperations _profileRestClient;
+        private readonly ClientDiagnostics _afdProfilesClientDiagnostics;
         private readonly AfdProfilesRestOperations _afdProfilesRestClient;
         private readonly ProfileData _data;
 
@@ -39,54 +41,31 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Profile"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Profile(ArmResource options, ProfileData data) : base(options, data.Id)
+        internal Profile(ArmClient armClient, ProfileData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="Profile"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Profile(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Profile(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="Profile"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Profile(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _profilesRestClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _afdProfilesRestClient = new AfdProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string profileApiVersion);
+            _profileRestClient = new ProfilesRestOperations(_profileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, profileApiVersion);
+            _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _afdProfilesRestClient = new AfdProfilesRestOperations(_afdProfilesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Azure.Core.ResourceType ResourceType = "Microsoft.Cdn/profiles";
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -109,18 +88,18 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Profile>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.Get");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.Get");
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                    throw await _profileClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Profile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,18 +108,18 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Gets a CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Profile> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.Get");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.Get");
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Profile(this, response.Value), response.GetRawResponse());
+                    throw _profileClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Profile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetAvailableLocations");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -172,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetAvailableLocations");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -185,17 +164,17 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing  Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
+        /// <summary> Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ProfileDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.Delete");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.Delete");
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileDeleteOperation(_clientDiagnostics, Pipeline, _profilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _profileRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ProfileDeleteOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,17 +186,17 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing  Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
+        /// <summary> Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ProfileDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.Delete");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.Delete");
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ProfileDeleteOperation(_clientDiagnostics, Pipeline, _profilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _profileRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ProfileDeleteOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -238,15 +217,15 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.AddTag");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Profile(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,15 +243,15 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.AddTag");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Profile(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,7 +271,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.SetTags");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.SetTags");
             scope.Start();
             try
             {
@@ -300,8 +279,8 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Profile(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +300,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.SetTags");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.SetTags");
             scope.Start();
             try
             {
@@ -329,8 +308,8 @@ namespace Azure.ResourceManager.Cdn
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Profile(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -347,15 +326,15 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.RemoveTag");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _profilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Profile(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -372,15 +351,15 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.RemoveTag");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _profilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Profile(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -389,7 +368,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -401,12 +380,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileUpdateParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.Update");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.Update");
             scope.Start();
             try
             {
-                var response = await _profilesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var response = await _profileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ProfileUpdateOperation(ArmClient, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -418,7 +397,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group. </summary>
+        /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -430,12 +409,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profileUpdateParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.Update");
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.Update");
             scope.Start();
             try
             {
-                var response = _profilesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
-                var operation = new ProfileUpdateOperation(this, _clientDiagnostics, Pipeline, _profilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var response = _profileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
+                var operation = new ProfileUpdateOperation(ArmClient, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -447,6 +426,154 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GenerateSsoUri");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SsoUri> GenerateSsoUri(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GenerateSsoUri");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.ListSupportedOptimizationTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.ListSupportedOptimizationTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = await _profileRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = await _profileRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        {
+            Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = _profileRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _profileClientDiagnostics.CreateScope("Profile.GetResourceUsage");
+                scope.Start();
+                try
+                {
+                    var response = _profileRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
         /// <summary> Checks the quota and actual usage of endpoints under the given CDN profile. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
@@ -454,7 +581,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
                 try
                 {
@@ -469,7 +596,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
                 try
                 {
@@ -492,7 +619,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<Usage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
                 try
                 {
@@ -507,7 +634,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetResourceUsageAfdProfiles");
                 scope.Start();
                 try
                 {
@@ -521,56 +648,6 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public async virtual Task<Response<CheckNameAvailabilityOutput>> CheckAfdProfileHostNameAvailabilityAsync(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            if (checkHostNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Profile.CheckAfdProfileHostNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await _afdProfilesRestClient.CheckHostNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS. </summary>
-        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityOutput> CheckAfdProfileHostNameAvailability(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            if (checkHostNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkHostNameAvailabilityInput));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Profile.CheckAfdProfileHostNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = _afdProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Get log report for AFD profile. </summary>
@@ -600,7 +677,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(protocols));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAfdProfile");
             scope.Start();
             try
             {
@@ -641,7 +718,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(protocols));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsMetricsAfdProfile");
             scope.Start();
             try
             {
@@ -675,7 +752,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAfdProfile");
             scope.Start();
             try
             {
@@ -709,7 +786,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsRankingsAfdProfile");
             scope.Start();
             try
             {
@@ -727,7 +804,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAfdProfileAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsAfdProfile");
             scope.Start();
             try
             {
@@ -745,7 +822,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContinentsResponse> GetLogAnalyticsLocationsAfdProfile(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsLocationsAfdProfile");
             scope.Start();
             try
             {
@@ -763,7 +840,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAfdProfileAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesAfdProfile");
             scope.Start();
             try
             {
@@ -781,7 +858,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourcesResponse> GetLogAnalyticsResourcesAfdProfile(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetLogAnalyticsResourcesAfdProfile");
             scope.Start();
             try
             {
@@ -812,7 +889,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAfdProfile");
             scope.Start();
             try
             {
@@ -843,7 +920,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsMetricsAfdProfile");
             scope.Start();
             try
             {
@@ -878,7 +955,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(rankings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAfdProfile");
             scope.Start();
             try
             {
@@ -913,7 +990,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(rankings));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAfdProfile");
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("Profile.GetWafLogAnalyticsRankingsAfdProfile");
             scope.Start();
             try
             {
@@ -927,153 +1004,15 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GenerateSsoUri");
-            scope.Start();
-            try
-            {
-                var response = await _profilesRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        #region CdnEndpoint
 
-        /// <summary> Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SsoUri> GenerateSsoUri(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of CdnEndpoints in the Profile. </summary>
+        /// <returns> An object representing collection of CdnEndpoints and their operations over a Profile. </returns>
+        public virtual CdnEndpointCollection GetCdnEndpoints()
         {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GenerateSsoUri");
-            scope.Start();
-            try
-            {
-                var response = _profilesRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new CdnEndpointCollection(this);
         }
-
-        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
-            scope.Start();
-            try
-            {
-                var response = await _profilesRestClient.ListSupportedOptimizationTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Profile.GetSupportedOptimizationTypes");
-            scope.Start();
-            try
-            {
-                var response = _profilesRestClient.ListSupportedOptimizationTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = await _profilesRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = await _profilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceUsage> GetResourceUsage(CancellationToken cancellationToken = default)
-        {
-            Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = _profilesRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("Profile.GetResourceUsage");
-                scope.Start();
-                try
-                {
-                    var response = _profilesRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+        #endregion
 
         #region AfdCustomDomain
 
@@ -1132,16 +1071,6 @@ namespace Azure.ResourceManager.Cdn
         public virtual AfdSecretCollection GetAfdSecrets()
         {
             return new AfdSecretCollection(this);
-        }
-        #endregion
-
-        #region CdnEndpoint
-
-        /// <summary> Gets a collection of CdnEndpoints in the Profile. </summary>
-        /// <returns> An object representing collection of CdnEndpoints and their operations over a Profile. </returns>
-        public virtual CdnEndpointCollection GetCdnEndpoints()
-        {
-            return new CdnEndpointCollection(this);
         }
         #endregion
     }

@@ -177,7 +177,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateGetResourceSetRuleRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateGetResourceSetRuleRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -543,7 +543,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -775,7 +775,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -815,7 +815,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateDeleteResourceSetRuleRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -855,7 +855,7 @@ namespace Azure.Analytics.Purview.Account
             try
             {
                 using HttpMessage message = CreateDeleteResourceSetRuleRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
