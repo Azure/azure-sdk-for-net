@@ -1,10 +1,10 @@
 # Troubleshooting Azure Key Vault Certificates SDK Issues
 
 The `Azure.Security.KeyVault.Certificates` package provides APIs for operations on Azure Key Vault for the
-`CertificateClient` class. This troubleshooting guide contains mitigation steps for issues specific to the
+`CertificateClient` class. This troubleshooting guide contains steps for diagnosing issues specific to the
 `Azure.Security.KeyVault.Keys` package.
 
-Visit our [Azure Key Vault SDK Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/TROUBLESHOOTING.md)
+See our [Azure Key Vault SDK Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/TROUBLESHOOTING.md)
 to troubleshoot issues common to the Azure Key Vault SDKs for .NET.
 
 ## Table of Contents
