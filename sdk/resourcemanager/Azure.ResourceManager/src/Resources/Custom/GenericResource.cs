@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            //no op but here for code generation
+        }
+
         /// RequestPath: /{resourceId}
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_GetById
