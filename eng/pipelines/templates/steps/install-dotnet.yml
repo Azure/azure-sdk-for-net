@@ -1,23 +1,33 @@
-# All required SDKs/runtimes are available on DevOps agents
-steps: []
-# Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
-# parameters:
-#   NuGetCacheKey: 'Build'
+parameters:
+  EnableNuGetCache: true
+  NuGetCacheKey: 'Build'
 
-# steps:
-#   - task: UseDotNet@2
-#     displayName: 'Use .NET Core SDK'
-#     inputs:
-#       useGlobalJson: true
-#       performMultiLevelLookup: true
-#   - task: UseDotNet@2
-#     condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
-#     displayName: 'Use .NET Core 3.1 runtime'
-#     inputs:
-#       packageType: runtime
-#       version: "3.1.x"
-#   - task: Cache@2
-#     inputs:
-#       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
-#       path: $(NUGET_PACKAGES)
-#     displayName: Cache NuGet packages
+steps:
+  - task: MSBuild@1
+    displayName: Install DevOps Logger
+    inputs:
+      solution: eng/InstallDevopsLogger.proj
+      msbuildArguments: /p:WorkFolder="$(Agent.WorkFolder)" /p:BuildDirectory="$(Agent.BuildDirectory)"
+  # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core SDK'
+    retryCountOnTaskFailure: 3
+    inputs:
+      useGlobalJson: true
+      performMultiLevelLookup: true
+  - task: UseDotNet@2
+    condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
+    displayName: 'Use .NET Core 3.1 SDK'
+    retryCountOnTaskFailure: 3
+    inputs:
+      # AspNetCore runtime pack can't be installed outside of SDK and we need it for intergation tests
+      packageType: sdk
+      performMultiLevelLookup: true
+      version: "3.1.x"
+  - task: Cache@2
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
+      path: $(NUGET_PACKAGES)
+    condition: and(succeeded(), ${{parameters.EnableNuGetCache}})
+    continueOnError: true
+    displayName: Cache NuGet packages

@@ -47,6 +47,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("uploadSizeBytes");
                 writer.WriteNumberValue(UploadSizeBytes.Value);
             }
+            if (Optional.IsDefined(LogicalSectorSize))
+            {
+                writer.WritePropertyName("logicalSectorSize");
+                writer.WriteNumberValue(LogicalSectorSize.Value);
+            }
+            if (Optional.IsDefined(SecurityDataUri))
+            {
+                writer.WritePropertyName("securityDataUri");
+                writer.WriteStringValue(SecurityDataUri);
+            }
             writer.WriteEndObject();
         }
 
@@ -60,6 +70,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> sourceResourceId = default;
             Optional<string> sourceUniqueId = default;
             Optional<long> uploadSizeBytes = default;
+            Optional<int> logicalSectorSize = default;
+            Optional<string> securityDataUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"))
@@ -117,8 +129,23 @@ namespace Azure.ResourceManager.Compute.Models
                     uploadSizeBytes = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("logicalSectorSize"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    logicalSectorSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("securityDataUri"))
+                {
+                    securityDataUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes));
+            return new CreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value);
         }
     }
 }

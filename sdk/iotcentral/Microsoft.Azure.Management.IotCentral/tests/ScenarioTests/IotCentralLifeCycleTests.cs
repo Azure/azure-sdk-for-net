@@ -12,7 +12,6 @@ namespace IotCentral.Tests.ScenarioTests
     using Microsoft.Azure.Management.IotCentral.Models;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Newtonsoft.Json.Linq;
     using Xunit;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -24,44 +23,119 @@ namespace IotCentral.Tests.ScenarioTests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+				// Note: Set IotCentralTestBase.isTestRecorderRun to true when building and running tests locally (before recording for PR).
+
                 Initialize(context);
 
                 // Create Resource Group
-                var resourceGroup = CreateResourceGroup(IotCentralTestUtilities.DefaultResourceGroupName);
+                Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup resourceGroup = CreateResourceGroup(this.ResourceGroupName);
 
                 // Create App
-                var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultResourceName, IotCentralTestUtilities.DefaultSubdomain);
+                App app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, ResourceName, SubDomain);
 
                 // Validate resourceName and subdomain are taken
                 this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
 
                 Assert.NotNull(app);
-                Assert.Equal(AppSku.ST1, app.Sku.Name);
-                Assert.Equal(IotCentralTestUtilities.DefaultResourceName, app.Name);
-                Assert.Equal(IotCentralTestUtilities.DefaultSubdomain, app.Subdomain);
+                Assert.Equal(DefaultIotcSku, app.Sku.Name);
+                Assert.Contains(IotCentralTestUtilities.DefaultResourceName, app.Name);
+                Assert.Contains(IotCentralTestUtilities.DefaultSubdomain, app.Subdomain);
+                Assert.Equal("eastus", app.Location);
+                Assert.Equal("created", app.State);
+                Assert.Equal("Microsoft.IoTCentral/IoTApps", app.Type);
+                Assert.Equal("None", app.Identity.Type);
 
                 // Add and Get Tags
                 IDictionary<string, string> tags = new Dictionary<string, string>
                  {
                      { "key1", "value1" },
-                     { "key2", "value2" }
+                     { "key2", "value2" },
                  };
 
                 var appPatch = new AppPatch()
                 {
                     Tags = tags,
-                    DisplayName = IotCentralTestUtilities.DefaultResourceName,
-                    Subdomain = IotCentralTestUtilities.DefaultSubdomain
+                    DisplayName = ResourceName,
+                    Subdomain = SubDomain,
                 };
 
-                app = this.iotCentralClient.Apps.Update(IotCentralTestUtilities.DefaultResourceGroupName, IotCentralTestUtilities.DefaultResourceName, appPatch);
+                app = this.iotCentralClient.Apps.Update(ResourceGroupName, ResourceName, appPatch);
 
                 Assert.NotNull(app);
                 Assert.True(app.Tags.Count().Equals(2));
                 Assert.Equal("value2", app.Tags["key2"]);
 
                 // Get all Iot Central apps in a resource group
-                var iotAppsByResourceGroup = this.iotCentralClient.Apps.ListByResourceGroup(IotCentralTestUtilities.DefaultResourceGroupName.ToLowerInvariant()).ToList();
+                var iotAppsByResourceGroup = this.iotCentralClient.Apps.ListByResourceGroup(ResourceGroupName.ToLowerInvariant()).ToList();
+
+                // Get all Iot Apps in a subscription
+                var iotAppsBySubscription = this.iotCentralClient.Apps.ListBySubscription().ToList();
+
+                Assert.True(iotAppsByResourceGroup.Count > 0);
+                Assert.True(iotAppsBySubscription.Count > 0);
+            }
+        }
+
+        [Fact]
+        public void TestIotCentralCreateWithManagedIdentityLifeCycle()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Initialize(context);
+
+                // Create Resource Group
+                Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup resourceGroup = CreateResourceGroup(ResourceGroupName);
+
+                // Create App
+                App app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, ResourceName, SubDomain, DefaultMIType);
+
+                // Validate resourceName and subdomain are taken
+                this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
+
+                Assert.NotNull(app);
+                Assert.Equal(AppSku.ST2, app.Sku.Name);
+                Assert.Contains(IotCentralTestUtilities.DefaultResourceName, app.Name);
+                Assert.Contains(IotCentralTestUtilities.DefaultSubdomain, app.Subdomain);
+                Assert.Equal("eastus", app.Location);
+                Assert.Equal("created", app.State);
+                Assert.Equal("Microsoft.IoTCentral/IoTApps", app.Type);
+
+                // validate managed identity.
+                Assert.NotNull(app.Identity);
+                Assert.Equal("SystemAssigned", app.Identity.Type);
+                Assert.NotNull(app.Identity.PrincipalId);
+                Assert.NotNull(app.Identity.TenantId);
+                var principalId = app.Identity.PrincipalId;
+                var tenantId = app.Identity.TenantId;
+
+                // Add and Get Tags
+                IDictionary<string, string> tags = new Dictionary<string, string>
+                 {
+                     { "key1", "value1" },
+                     { "key2", "value2" },
+                 };
+
+                var appPatch = new AppPatch()
+                {
+                    Tags = tags,
+                    DisplayName = ResourceName,
+                    Subdomain = SubDomain,
+                };
+
+                app = this.iotCentralClient.Apps.Update(ResourceGroupName, ResourceName, appPatch);
+
+                Assert.NotNull(app);
+                Assert.True(app.Tags.Count().Equals(2));
+                Assert.Equal("value2", app.Tags["key2"]);
+                Assert.NotNull(app.Identity);
+                Assert.Equal("SystemAssigned", app.Identity.Type);
+                Assert.NotNull(app.Identity.PrincipalId);
+                Assert.NotNull(app.Identity.TenantId);
+                Assert.Equal(principalId, app.Identity.PrincipalId);
+                Assert.Equal(tenantId, app.Identity.TenantId);
+
+                // Get all Iot Central apps in a resource group
+                var iotAppsByResourceGroup = this.iotCentralClient.Apps.ListByResourceGroup(ResourceGroupName.ToLowerInvariant()).ToList();
 
                 // Get all Iot Apps in a subscription
                 var iotAppsBySubscription = this.iotCentralClient.Apps.ListBySubscription().ToList();
@@ -79,13 +153,13 @@ namespace IotCentral.Tests.ScenarioTests
                 this.Initialize(context);
 
                 // Create Resource Group
-                var resourceGroup = CreateResourceGroup(IotCentralTestUtilities.DefaultUpdateResourceGroupName);
+                var resourceGroup = CreateResourceGroup(UpdateResourceGroupName);
 
                 // Create App
-                var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultUpdateResourceName, IotCentralTestUtilities.DefaultUpdateSubdomain);
+                var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, UpdateResourceName, UpdateSubDomain);
 
                 // Validate the default sku
-                Assert.Equal(app.Sku.Name, AppSku.ST1);
+                Assert.Equal(DefaultIotcSku, app.Sku.Name);
 
                 // Validate resourceName and subdomain are taken
                 this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
@@ -93,11 +167,12 @@ namespace IotCentral.Tests.ScenarioTests
                 // Update App
                 var newSubDomain = "test-updated-sub-domain";
                 var newDisplayName = "test-updated-display-name";
+
                 // Add and Get Tags
                 IDictionary<string, string> tags = new Dictionary<string, string>
                 {
                     { "key1", "value1" },
-                    { "key2", "value2" }
+                    { "key2", "value2" },
                 };
 
                 AppPatch appPatch = new AppPatch()
@@ -108,11 +183,11 @@ namespace IotCentral.Tests.ScenarioTests
                     Sku = new AppSkuInfo(AppSku.ST2),
                 };
 
-                app = UpdateIotCentral(resourceGroup, appPatch, IotCentralTestUtilities.DefaultUpdateResourceName);
+                app = UpdateIotCentral(resourceGroup, appPatch, UpdateResourceName);
 
                 // List apps
-                app = iotCentralClient.Apps.ListByResourceGroup(IotCentralTestUtilities.DefaultUpdateResourceGroupName)
-                    .FirstOrDefault(e => e.Name.Equals(IotCentralTestUtilities.DefaultUpdateResourceName, StringComparison.OrdinalIgnoreCase));
+                app = iotCentralClient.Apps.ListByResourceGroup(UpdateResourceGroupName)
+                    .FirstOrDefault(e => e.Name.Equals(UpdateResourceName, StringComparison.OrdinalIgnoreCase));
 
                 Assert.NotNull(app);
                 Assert.Equal(newDisplayName, app.DisplayName);
@@ -120,6 +195,64 @@ namespace IotCentral.Tests.ScenarioTests
                 Assert.Equal("value2", app.Tags["key2"]);
                 Assert.Equal(app.Sku.Name, AppSku.ST2);
             }
+        }
+
+        [Fact]
+        public void TestAppWhenUnsupportedS1SkuIsUsed()
+        {
+            string sku = "S1";
+            string exceptionMessage = "The sku S1 is invalid, allowed skus are ST0, ST1, ST2";
+            var exceptionThrown = false;
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Initialize(context);
+
+                // Create Resource Group
+                Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup resourceGroup = CreateResourceGroup(ResourceGroupName);
+
+                try
+                {
+                    // Create App
+                    App app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, ResourceName, SubDomain, DefaultMIType, sku);
+                }
+                catch (CloudException cex)
+                {
+                    exceptionThrown = true;
+                    Assert.Equal(exceptionMessage, cex.Body.Message);
+                }
+            }
+
+            Assert.True(exceptionThrown);
+        }
+
+        [Fact]
+        public void TestAppWhenF1SkuIsUsed()
+        {
+            string sku = "F1";
+            string exceptionMessage = "Cannot create a subscription less application with SKU F1";
+            var exceptionThrown = false;
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Initialize(context);
+
+                // Create Resource Group
+                Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup resourceGroup = CreateResourceGroup(ResourceGroupName);
+
+                try
+                {
+                    // Create App
+                    App app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, ResourceName, SubDomain, DefaultMIType, sku);
+                }
+                catch (CloudException cex)
+                {
+                    exceptionThrown = true;
+                    Assert.Equal(exceptionMessage, cex.Body.Message);
+                }
+            }
+
+            Assert.True(exceptionThrown);
         }
 
         [Fact]
@@ -132,8 +265,8 @@ namespace IotCentral.Tests.ScenarioTests
                 {
                     Location = IotCentralTestUtilities.DefaultLocation,
                     Sku = new AppSkuInfo(),
-                    Subdomain = IotCentralTestUtilities.DefaultUpdateSubdomain,
-                    DisplayName = IotCentralTestUtilities.DefaultUpdateResourceName
+                    Subdomain = SubDomain,
+                    DisplayName = IotCentralTestUtilities.DefaultUpdateResourceName,
                 };
                 app.Validate();
             }
@@ -212,9 +345,11 @@ namespace IotCentral.Tests.ScenarioTests
                 Assert.Equal("Retail", iotAppsTemplates[0].Industry);
                 Assert.True(iotAppsTemplates[0].Locations.Count > 0);
                 Assert.NotNull(iotAppsTemplates[0].Locations[0].Id);
-                Assert.Equal("unitedstates", iotAppsTemplates[0].Locations[0].Id);
                 Assert.NotNull(iotAppsTemplates[0].Locations[0].DisplayName);
-                Assert.Equal("United States", iotAppsTemplates[0].Locations[0].DisplayName);
+                
+                // Validate Geo->Regional change.
+                IList<AppTemplateLocations> locations = iotAppsTemplates[0].Locations;
+                Enumerable.SequenceEqual(locations, IotCentralTestUtilities.SupportedAzureRegions);
             }
         }
 

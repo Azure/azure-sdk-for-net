@@ -43,8 +43,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="identity">The Azure Active Directory identity of the
-        /// server.</param>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="administratorLogin">The administrator's login name of
         /// a server. Can only be specified when the server is being created
@@ -52,79 +50,57 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login (required for server creation).</param>
         /// <param name="version">Server version. Possible values include:
-        /// '5.7'</param>
-        /// <param name="sslEnforcement">Enable ssl enforcement or not when
-        /// connect to server. Possible values include: 'Enabled',
-        /// 'Disabled'</param>
-        /// <param name="infrastructureEncryption">Status showing whether the
-        /// server enabled infrastructure encryption. Possible values include:
-        /// 'Enabled', 'Disabled'</param>
+        /// '5.7', '8.0.21'</param>
+        /// <param name="availabilityZone">availability Zone information of the
+        /// server.</param>
+        /// <param name="createMode">The mode to create a new MySQL server.
+        /// Possible values include: 'Default', 'PointInTimeRestore',
+        /// 'Replica', 'GeoRestore'</param>
+        /// <param name="sourceServerResourceId">The source MySQL server
+        /// id.</param>
+        /// <param name="restorePointInTime">Restore point creation time
+        /// (ISO8601 format), specifying the time to restore from.</param>
+        /// <param name="replicationRole">The replication role. Possible values
+        /// include: 'None', 'Source', 'Replica'</param>
+        /// <param name="replicaCapacity">The maximum number of replicas that a
+        /// primary server can have.</param>
         /// <param name="state">The state of a server. Possible values include:
         /// 'Ready', 'Dropping', 'Disabled', 'Starting', 'Stopping', 'Stopped',
         /// 'Updating'</param>
-        /// <param name="haState">The state of a HA server. Possible values
-        /// include: 'NotEnabled', 'CreatingStandby', 'ReplicatingData',
-        /// 'FailingOver', 'Healthy', 'RemovingStandby'</param>
-        /// <param name="haEnabled">Enable HA or not for a server. Possible
-        /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="fullyQualifiedDomainName">The fully qualified domain
         /// name of a server.</param>
-        /// <param name="earliestRestoreDate">Earliest restore point creation
-        /// time (ISO8601 format)</param>
-        /// <param name="storageProfile">Storage profile of a server.</param>
-        /// <param name="replicationRole">The replication role.</param>
-        /// <param name="replicaCapacity">The maximum number of replicas that a
-        /// primary server can have.</param>
-        /// <param name="publicNetworkAccess">Whether or not public network
-        /// access is allowed for this server. Value is optional but if passed
-        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
-        /// 'Enabled', 'Disabled'</param>
+        /// <param name="storage">Storage related properties of a
+        /// server.</param>
+        /// <param name="backup">Backup related properties of a server.</param>
+        /// <param name="highAvailability">High availability related properties
+        /// of a server.</param>
+        /// <param name="network">Network related properties of a
+        /// server.</param>
         /// <param name="maintenanceWindow">Maintenance window of a
         /// server.</param>
-        /// <param name="sourceServerId">The source MySQL server id.</param>
-        /// <param name="restorePointInTime">Restore point creation time
-        /// (ISO8601 format), specifying the time to restore from.</param>
-        /// <param name="availabilityZone">availability Zone information of the
-        /// server.</param>
-        /// <param name="standbyAvailabilityZone">availability Zone information
-        /// of the server.</param>
-        /// <param name="byokEnforcement">Status showing whether the data
-        /// encryption is enabled with customer-managed keys.</param>
-        /// <param name="delegatedSubnetArguments">Delegated subnet
-        /// arguments.</param>
-        /// <param name="createMode">The mode to create a new MySQL server.
-        /// Possible values include: 'Default', 'PointInTimeRestore',
-        /// 'Replica'</param>
-        /// <param name="serverTags">Application-specific metadata in the form
-        /// of key-value pairs.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), Sku sku = default(Sku), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string sslEnforcement = default(string), string infrastructureEncryption = default(string), string state = default(string), string haState = default(string), string haEnabled = default(string), string fullyQualifiedDomainName = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), StorageProfile storageProfile = default(StorageProfile), string replicationRole = default(string), int? replicaCapacity = default(int?), string publicNetworkAccess = default(string), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string sourceServerId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string availabilityZone = default(string), string standbyAvailabilityZone = default(string), string byokEnforcement = default(string), DelegatedSubnetArguments delegatedSubnetArguments = default(DelegatedSubnetArguments), string createMode = default(string), IDictionary<string, string> serverTags = default(IDictionary<string, string>))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string availabilityZone = default(string), string createMode = default(string), string sourceServerResourceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string replicationRole = default(string), int? replicaCapacity = default(int?), string state = default(string), string fullyQualifiedDomainName = default(string), Storage storage = default(Storage), Backup backup = default(Backup), HighAvailability highAvailability = default(HighAvailability), Network network = default(Network), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
-            Identity = identity;
             Sku = sku;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
-            SslEnforcement = sslEnforcement;
-            InfrastructureEncryption = infrastructureEncryption;
-            State = state;
-            HaState = haState;
-            HaEnabled = haEnabled;
-            FullyQualifiedDomainName = fullyQualifiedDomainName;
-            EarliestRestoreDate = earliestRestoreDate;
-            StorageProfile = storageProfile;
+            AvailabilityZone = availabilityZone;
+            CreateMode = createMode;
+            SourceServerResourceId = sourceServerResourceId;
+            RestorePointInTime = restorePointInTime;
             ReplicationRole = replicationRole;
             ReplicaCapacity = replicaCapacity;
-            PublicNetworkAccess = publicNetworkAccess;
+            State = state;
+            FullyQualifiedDomainName = fullyQualifiedDomainName;
+            Storage = storage;
+            Backup = backup;
+            HighAvailability = highAvailability;
+            Network = network;
             MaintenanceWindow = maintenanceWindow;
-            SourceServerId = sourceServerId;
-            RestorePointInTime = restorePointInTime;
-            AvailabilityZone = availabilityZone;
-            StandbyAvailabilityZone = standbyAvailabilityZone;
-            ByokEnforcement = byokEnforcement;
-            DelegatedSubnetArguments = delegatedSubnetArguments;
-            CreateMode = createMode;
-            ServerTags = serverTags;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -132,12 +108,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the Azure Active Directory identity of the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public Identity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU (pricing tier) of the server.
@@ -161,69 +131,41 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public string AdministratorLoginPassword { get; set; }
 
         /// <summary>
-        /// Gets or sets server version. Possible values include: '5.7'
+        /// Gets or sets server version. Possible values include: '5.7',
+        /// '8.0.21'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets enable ssl enforcement or not when connect to server.
-        /// Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets availability Zone information of the server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sslEnforcement")]
-        public string SslEnforcement { get; set; }
+        [JsonProperty(PropertyName = "properties.availabilityZone")]
+        public string AvailabilityZone { get; set; }
 
         /// <summary>
-        /// Gets or sets status showing whether the server enabled
-        /// infrastructure encryption. Possible values include: 'Enabled',
-        /// 'Disabled'
+        /// Gets or sets the mode to create a new MySQL server. Possible values
+        /// include: 'Default', 'PointInTimeRestore', 'Replica', 'GeoRestore'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.infrastructureEncryption")]
-        public string InfrastructureEncryption { get; set; }
+        [JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
 
         /// <summary>
-        /// Gets the state of a server. Possible values include: 'Ready',
-        /// 'Dropping', 'Disabled', 'Starting', 'Stopping', 'Stopped',
-        /// 'Updating'
+        /// Gets or sets the source MySQL server id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; private set; }
+        [JsonProperty(PropertyName = "properties.sourceServerResourceId")]
+        public string SourceServerResourceId { get; set; }
 
         /// <summary>
-        /// Gets the state of a HA server. Possible values include:
-        /// 'NotEnabled', 'CreatingStandby', 'ReplicatingData', 'FailingOver',
-        /// 'Healthy', 'RemovingStandby'
+        /// Gets or sets restore point creation time (ISO8601 format),
+        /// specifying the time to restore from.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.haState")]
-        public string HaState { get; private set; }
+        [JsonProperty(PropertyName = "properties.restorePointInTime")]
+        public System.DateTime? RestorePointInTime { get; set; }
 
         /// <summary>
-        /// Gets or sets enable HA or not for a server. Possible values
-        /// include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.haEnabled")]
-        public string HaEnabled { get; set; }
-
-        /// <summary>
-        /// Gets the fully qualified domain name of a server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.fullyQualifiedDomainName")]
-        public string FullyQualifiedDomainName { get; private set; }
-
-        /// <summary>
-        /// Gets earliest restore point creation time (ISO8601 format)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.earliestRestoreDate")]
-        public System.DateTime? EarliestRestoreDate { get; private set; }
-
-        /// <summary>
-        /// Gets or sets storage profile of a server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageProfile")]
-        public StorageProfile StorageProfile { get; set; }
-
-        /// <summary>
-        /// Gets or sets the replication role.
+        /// Gets or sets the replication role. Possible values include: 'None',
+        /// 'Source', 'Replica'
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicationRole")]
         public string ReplicationRole { get; set; }
@@ -235,12 +177,42 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public int? ReplicaCapacity { get; private set; }
 
         /// <summary>
-        /// Gets whether or not public network access is allowed for this
-        /// server. Value is optional but if passed in, must be 'Enabled' or
-        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// Gets the state of a server. Possible values include: 'Ready',
+        /// 'Dropping', 'Disabled', 'Starting', 'Stopping', 'Stopped',
+        /// 'Updating'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; private set; }
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; private set; }
+
+        /// <summary>
+        /// Gets the fully qualified domain name of a server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fullyQualifiedDomainName")]
+        public string FullyQualifiedDomainName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets storage related properties of a server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storage")]
+        public Storage Storage { get; set; }
+
+        /// <summary>
+        /// Gets or sets backup related properties of a server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backup")]
+        public Backup Backup { get; set; }
+
+        /// <summary>
+        /// Gets or sets high availability related properties of a server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.highAvailability")]
+        public HighAvailability HighAvailability { get; set; }
+
+        /// <summary>
+        /// Gets or sets network related properties of a server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.network")]
+        public Network Network { get; set; }
 
         /// <summary>
         /// Gets or sets maintenance window of a server.
@@ -249,56 +221,10 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public MaintenanceWindow MaintenanceWindow { get; set; }
 
         /// <summary>
-        /// Gets or sets the source MySQL server id.
+        /// Gets the system metadata relating to this resource.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sourceServerId")]
-        public string SourceServerId { get; set; }
-
-        /// <summary>
-        /// Gets or sets restore point creation time (ISO8601 format),
-        /// specifying the time to restore from.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.restorePointInTime")]
-        public System.DateTime? RestorePointInTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets availability Zone information of the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.availabilityZone")]
-        public string AvailabilityZone { get; set; }
-
-        /// <summary>
-        /// Gets availability Zone information of the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.standbyAvailabilityZone")]
-        public string StandbyAvailabilityZone { get; private set; }
-
-        /// <summary>
-        /// Gets status showing whether the data encryption is enabled with
-        /// customer-managed keys.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.byokEnforcement")]
-        public string ByokEnforcement { get; private set; }
-
-        /// <summary>
-        /// Gets or sets delegated subnet arguments.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.delegatedSubnetArguments")]
-        public DelegatedSubnetArguments DelegatedSubnetArguments { get; set; }
-
-        /// <summary>
-        /// Gets or sets the mode to create a new MySQL server. Possible values
-        /// include: 'Default', 'PointInTimeRestore', 'Replica'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createMode")]
-        public string CreateMode { get; set; }
-
-        /// <summary>
-        /// Gets or sets application-specific metadata in the form of key-value
-        /// pairs.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tags")]
-        public IDictionary<string, string> ServerTags { get; set; }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

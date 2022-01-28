@@ -97,7 +97,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_EncryptionAtHost", vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_EncryptionAtHost", vmSize: VirtualMachineSizeTypes.StandardD2sV3, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.StandardLRS, encryptionAtHostEnabled: true);
             }
             finally
@@ -120,6 +120,28 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_TrustedLaunch", vmSize: VirtualMachineSizeTypes.StandardD2sV3, hasManagedDisks: true,
                     osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, securityType: "TrustedLaunch", imageReference: image, validateListAvailableSize: false);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
+        /// To record this test case, you need to run it in region which support ConfidentialVM
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_ConfidentialVM")]
+        public void TestVMScenarioOperations_ConfidentialVM()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                ImageReference image = new ImageReference(publisher: "MICROSOFTWINDOWSSERVER", offer: "WINDOWS-CVM", version: "20348.230.2109130355", sku: "2022-DATACENTER-CVM");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                VMDiskSecurityProfile diskSecurityProfile = new VMDiskSecurityProfile(securityEncryptionType: "VMGuestStateOnly");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ConfidentialVM", vmSize: "Standard_DC2as_v5", hasManagedDisks: true,
+                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, securityType: "ConfidentialVM", imageReference: image, validateListAvailableSize: false, diskSecurityProfile: diskSecurityProfile);
             }
             finally
             {
@@ -247,7 +269,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_UsingCapacityReservationGroup",
                     hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardDS1V2, associateWithCapacityReservation: true);
             }
@@ -280,7 +302,7 @@ namespace Compute.Tests
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
             string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true,
-            bool associateWithCapacityReservation = false)
+            bool associateWithCapacityReservation = false, VMDiskSecurityProfile diskSecurityProfile = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -330,7 +352,8 @@ namespace Compute.Tests
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                         dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, 
                         diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, securityType: securityType, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
-                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName, capacityReservationGroupReferenceId: capacityReservationGroupReferenceId);
+                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName, capacityReservationGroupReferenceId: capacityReservationGroupReferenceId,
+                        diskSecurityProfile: diskSecurityProfile);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
@@ -393,10 +416,15 @@ namespace Compute.Tests
                         Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
                     }
                     
-                    if(securityType != null && securityType.Equals("TrustedLaunch"))
+                    if(securityType != null)
                     {
                         Assert.True(inputVM.SecurityProfile.UefiSettings.VTpmEnabled);
                         Assert.True(inputVM.SecurityProfile.UefiSettings.SecureBootEnabled);
+                    }
+
+                    if(diskSecurityProfile != null)
+                    {
+                        Assert.Equal("ConfidentialVM", inputVM.SecurityProfile.SecurityType);
                     }
 
                     if(isPpgScenario)

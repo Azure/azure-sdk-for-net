@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
                     {
                         Name = name,
                         Activity = Activity.Current,
-                        Links = links.Select(a => a.ParentId).ToList(),
+                        Links = links.Select(a => new ProducedLink(a.ParentId, a.TraceStateString)).ToList(),
                         LinkedActivities = links.ToList()
                     };
 
@@ -141,6 +141,21 @@ namespace Azure.Core.Tests
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
+                var activity = producedDiagnosticScope.Activity;
+                var operationName = activity.OperationName;
+                // traverse the activities and check for duplicates among ancestors
+                while (activity != null)
+                {
+                    if (operationName == activity.Parent?.OperationName)
+                    {
+                        // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
+                        // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
+                        throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
+                    }
+
+                    activity = activity.Parent;
+                }
+
                 if (!producedDiagnosticScope.IsCompleted)
                 {
                     throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
@@ -155,6 +170,7 @@ namespace Azure.Core.Tests
         {
             lock (Scopes)
             {
+                var foundScopeNames = Scopes.Select(s => s.Name);
                 foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                 {
                     if (producedDiagnosticScope.Name == name)
@@ -175,7 +191,7 @@ namespace Azure.Core.Tests
                         return producedDiagnosticScope;
                     }
                 }
-                throw new InvalidOperationException($"Event '{name}' was not started");
+                throw new InvalidOperationException($"Event '{name}' was not started. Found scope names:\n{string.Join("\n", foundScopeNames)}\n");
             }
         }
 
@@ -218,13 +234,31 @@ namespace Azure.Core.Tests
             public bool IsCompleted { get; set; }
             public bool IsFailed => Exception != null;
             public Exception Exception { get; set; }
-            public List<string> Links { get; set; } = new List<string>();
+            public List<ProducedLink> Links { get; set; } = new List<ProducedLink>();
             public List<Activity> LinkedActivities { get; set; } = new List<Activity>();
 
             public override string ToString()
             {
                 return Name;
             }
+        }
+
+        public struct ProducedLink
+        {
+            public ProducedLink(string id)
+            {
+                Traceparent = id;
+                Tracestate = null;
+            }
+
+            public ProducedLink(string traceparent, string tracestate)
+            {
+                Traceparent = traceparent;
+                Tracestate = tracestate;
+            }
+
+            public string Traceparent { get; set; }
+            public string Tracestate { get; set; }
         }
     }
 }

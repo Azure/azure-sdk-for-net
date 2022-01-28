@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress");
-                writer.WriteObjectValue(PublicIPAddress);
+                JsonSerializer.Serialize(writer, PublicIPAddress);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -52,8 +53,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<SubResource> subnet = default;
-            Optional<SubResource> publicIPAddress = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<WritableSubResource> publicIPAddress = default;
             Optional<string> privateIPAddress = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = DeserializeSubResource(property0.Value);
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = DeserializeSubResource(property0.Value);
+                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddress"))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayIPConfiguration(id.Value, name.Value, etag.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, privateIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new VirtualNetworkGatewayIPConfiguration(id.Value, name.Value, etag.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateIPAddress.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

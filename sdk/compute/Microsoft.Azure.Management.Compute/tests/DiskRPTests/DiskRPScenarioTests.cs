@@ -69,6 +69,18 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void Snapshot_CRUD_WithSecurityType()
+        {
+            Snapshot_CRUD_WithSecurityType_Execute("Snapshot_CRUD_WithSecurityType", location: "eastus2");
+        }
+
+        [Fact]
+        public void Snapshot_CRUD_WithAcceleratedNetwork()
+        {
+            Snapshot_CRUD_WithAcceleratedNetwork_Execute(DiskCreateOption.Empty, "Snapshot_CRUD_WithAcceleratedNetwork", diskSizeGB: 5, location: "eastus2");
+        }
+
+        [Fact]
         public void Disk_List_EmptyDisk()
         {
             Disk_List_Execute(DiskCreateOption.Empty, "Disk_List_EmptyDisk", diskSizeGB: 5);
@@ -95,6 +107,12 @@ namespace Compute.Tests.DiskRPTests
         public void Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk()
         {
             Disk_CRUD_WithSupportsHibernationFlag_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithSupportsHibernationFlag_EmptyDisk", diskSizeGB: 5);
+        }
+
+        [Fact]
+        public void Disk_CRUD_WithAcceleratedNetworking_EmptyDisk()
+        {
+            Disk_CRUD_WithAcceleratedNetworking_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithAcceleratedNetworking_EmptyDisk", diskSizeGB: 5);
         }
 
         [Fact]

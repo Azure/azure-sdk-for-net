@@ -4,14 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void AnalyzeOperation()
@@ -19,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                                 worth the hike! Yesterday was foggy though, so we missed the spectacular views.
@@ -82,6 +79,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 int docNumber = 1;
                 foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
                 {
+                    Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
                     foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");

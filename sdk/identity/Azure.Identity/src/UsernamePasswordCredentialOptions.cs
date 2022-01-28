@@ -9,7 +9,7 @@ namespace Azure.Identity
     public class UsernamePasswordCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
-        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted to disk.
         /// </summary>
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }

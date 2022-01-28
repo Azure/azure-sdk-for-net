@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/5.0.421.11614",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -27,13 +27,13 @@
           "chunked"
         ],
         "x-envoy-upstream-service-time": [
-          "125"
+          "97"
         ],
         "CSP-Billing-Usage": [
           "CognitiveServices.ComputerVision.Transaction=1"
         ],
         "apim-request-id": [
-          "de857a6f-9131-4330-ac5d-34f13246c630"
+          "0b129c8a-5173-4980-aff6-eb1bd3f99dcc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -42,7 +42,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 26 Mar 2021 08:01:17 GMT"
+          "Thu, 04 Nov 2021 04:51:33 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

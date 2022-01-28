@@ -19,7 +19,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
           {
               return new Tuple<string, string, string>[]
               {
-
+                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImage", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImageByDomain", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImageByDomainInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImageInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "DescribeImage", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "DescribeImageInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "DetectObjects", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "DetectObjectsInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "GenerateThumbnail", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "GenerateThumbnailInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "GetAreaOfInterest", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "GetAreaOfInterestInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "GetReadResult", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "ListModels", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "Read", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "ReadInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "RecognizePrintedText", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "RecognizePrintedTextInStream", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "TagImage", "3.2"),
+                new Tuple<string, string, string>("ComputerVisionClient", "TagImageInStream", "3.2"),
               }.AsEnumerable();
           }
       }

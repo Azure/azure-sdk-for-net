@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -18,14 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("keyUrl");
             writer.WriteStringValue(KeyUrl);
             writer.WritePropertyName("sourceVault");
-            writer.WriteObjectValue(SourceVault);
-            writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
         }
 
         internal static KeyVaultKeyReference DeserializeKeyVaultKeyReference(JsonElement element)
         {
             string keyUrl = default;
-            SubResource sourceVault = default;
+            WritableSubResource sourceVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUrl"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("sourceVault"))
                 {
-                    sourceVault = SubResource.DeserializeSubResource(property.Value);
+                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
             }

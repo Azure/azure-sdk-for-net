@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cosmos-db/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "cosmos-db/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch main 

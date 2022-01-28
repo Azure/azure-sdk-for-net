@@ -37,12 +37,13 @@ namespace Azure.Core
         /// Only support for <see cref="KeyType.RSA"/> is implemented by shared code.
         /// </param>
         /// <param name="allowCertificateOnly">Whether to create an <see cref="X509Certificate2"/> if no private key is read.</param>
+        /// <param name="keyStorageFlags">A combination of the enumeration values that control where and how to import the certificate.</param>
         /// <returns>An <see cref="X509Certificate2"/> loaded from the PEM data.</returns>
         /// <exception cref="CryptographicException">A cryptographic exception occurred when trying to create the <see cref="X509Certificate2"/>.</exception>
         /// <exception cref="InvalidDataException"><paramref name="cer"/> is null and no CERTIFICATE field is defined in PEM, or no PRIVATE KEY is defined in PEM.</exception>
         /// <exception cref="NotSupportedException">The <paramref name="keyType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Creating a <see cref="X509Certificate2"/> from PEM data is not supported on the current platform.</exception>
-        public static X509Certificate2 LoadCertificate(ReadOnlySpan<char> data, byte[] cer = null, KeyType keyType = KeyType.Auto, bool allowCertificateOnly = false)
+        public static X509Certificate2 LoadCertificate(ReadOnlySpan<char> data, byte[] cer = null, KeyType keyType = KeyType.Auto, bool allowCertificateOnly = false, X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.DefaultKeySet)
         {
             byte[] priv = null;
 
@@ -76,7 +77,7 @@ namespace Azure.Core
             {
                 if (allowCertificateOnly)
                 {
-                    return new X509Certificate2(cer);
+                    return new X509Certificate2(cer, (string)null, keyStorageFlags);
                 }
 
                 throw new InvalidDataException("The certificate is missing the private key");
@@ -97,17 +98,17 @@ namespace Azure.Core
             if (keyType == KeyType.ECDsa)
             {
                 X509Certificate2 certificate = null;
-                CreateECDsaCertificate(cer, priv, ref certificate);
+                CreateECDsaCertificate(cer, priv, keyStorageFlags, ref certificate);
 
                 return certificate ?? throw new NotSupportedException("Reading an ECDsa certificate from a PEM file is not supported");
             }
 
-            return CreateRsaCertificate(cer, priv);
+            return CreateRsaCertificate(cer, priv, keyStorageFlags);
         }
 
-        static partial void CreateECDsaCertificate(byte[] cer, byte[] key, ref X509Certificate2 certificate);
+        static partial void CreateECDsaCertificate(byte[] cer, byte[] key, X509KeyStorageFlags keyStorageFlags, ref X509Certificate2 certificate);
 
-        private static X509Certificate2 CreateRsaCertificate(byte[] cer, byte[] key)
+        private static X509Certificate2 CreateRsaCertificate(byte[] cer, byte[] key, X509KeyStorageFlags keyStorageFlags)
         {
             if (!s_rsaInitializedImportPkcs8PrivateKeyMethod)
             {
@@ -144,14 +145,18 @@ namespace Azure.Core
                     privateKey = LightweightPkcs8Decoder.DecodeRSAPkcs8(key);
                 }
 
-                using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer);
-                X509Certificate2 certificate = (X509Certificate2)s_rsaCopyWithPrivateKeyMethod.Invoke(null, new object[] { certificateWithoutPrivateKey, privateKey });
+                using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer, (string)null, keyStorageFlags);
 
+                X509Certificate2 certificate = (X509Certificate2)s_rsaCopyWithPrivateKeyMethod.Invoke(null, new object[] { certificateWithoutPrivateKey, privateKey });
                 // On .NET Framework the PrivateKey member is not initialized after calling CopyWithPrivateKey.
+
+                // This class only compiles against NET6.0 in tests and never in SDK libraries suppress the warning
+#pragma warning disable SYSLIB0028 // Use CopyWithPrivateKey instead
                 if (certificate.PrivateKey is null)
                 {
                     certificate.PrivateKey = privateKey;
                 }
+#pragma warning restore SYSLIB0028
 
                 // Make sure the private key doesn't get disposed now that it's used.
                 privateKey = null;

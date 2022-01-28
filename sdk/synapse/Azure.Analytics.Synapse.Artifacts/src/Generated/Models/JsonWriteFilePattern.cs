@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </summary>
-    public readonly partial struct JsonWriteFilePattern : IEquatable<JsonWriteFilePattern>
+    /// <summary> All available filePatterns. </summary>
+    internal readonly partial struct JsonWriteFilePattern : IEquatable<JsonWriteFilePattern>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JsonWriteFilePattern"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonWriteFilePattern"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JsonWriteFilePattern(string value)
         {

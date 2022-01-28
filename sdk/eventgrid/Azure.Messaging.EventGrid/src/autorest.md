@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/504bc4ece6c4a1ad983f148237c71a3f72fc977f/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/409af02e5ca217c7e7ec2acf50f4976c053496f8/specification/eventgrid/data-plane/readme.md
 ```
 
 ## Swagger workarounds
@@ -123,4 +123,16 @@ directive:
 - from: swagger-document
   where: $.definitions.MediaJobOutput
   transform: $.required.push("@odata.type")
+```
+
+### Fix Media types
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.MediaLiveEventChannelArchiveHeartbeatEventData["properties"]["channelLatencyMs"]["x-ms-client-name"] = "ChannelLatencyMsInternal";
+    $.MediaLiveEventIngestHeartbeatEventData["properties"]["ingestDriftValue"]["x-ms-client-name"] = "IngestDriftValueInternal";
+    $.MediaLiveEventIngestHeartbeatEventData["properties"]["lastFragmentArrivalTime"]["format"] = "date-time";
 ```

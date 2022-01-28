@@ -24,11 +24,19 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> The time series returned when a data query is performed. </summary>
         [CodeGenMember("Timeseries")]
-        public IReadOnlyList<TimeSeriesElement> TimeSeries { get; }
+        public IReadOnlyList<MetricTimeSeriesElement> TimeSeries { get; }
 
         /// <summary>
         /// Gets the error that occurred while querying the metric.
         /// </summary>
-        public ResponseError Error => ErrorCode == SuccessErrorCode ? null : new ResponseError(ErrorCode, ErrorMessage, null, null, null);
+        public ResponseError Error => ErrorCode == SuccessErrorCode ? null : new ResponseError(ErrorCode, ErrorMessage);
+
+        /// <summary> Detailed description of this metric. </summary>
+        [CodeGenMember("DisplayDescription")]
+        public string Description { get; }
+
+        /// <summary> the resource type of the metric resource. </summary>
+        [CodeGenMember("Type")]
+        public string ResourceType { get; }
     }
 }

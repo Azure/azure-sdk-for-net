@@ -11,11 +11,11 @@
 		</Description>
 		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
-		<Version>3.1.0</Version>
+		<Version>4.0.0-preview.1</Version>
 		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-				- Support to specify "All" as an option when assigning permissions
+				- Added generated for 2021-06-01-preview
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AuthorizationUseStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationUseStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthorizationUseStatus(string value)
         {

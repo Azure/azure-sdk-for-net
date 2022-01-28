@@ -143,8 +143,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine.
         /// </param>
         /// <param name='forceDeletion'>
-        /// Optional parameter to force delete virtual machines.(Feature in
-        /// Preview)
+        /// Optional parameter to force delete virtual machines.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -255,6 +254,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
+        /// <param name='hibernate'>
+        /// Optional parameter to hibernate a virtual machine. (Feature in
+        /// Preview)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -267,7 +270,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? hibernate = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Sets the OS state of the virtual machine to generalized. It is
         /// recommended to sysprep the virtual machine before performing this
@@ -305,6 +308,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
+        /// <param name='filter'>
+        /// The system query option to filter VMs returned in the response.
+        /// Allowed value is 'virtualMachineScaleSet/id' eq
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -320,7 +328,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the virtual machines in the specified subscription.
         /// Use the nextLink property in the response to get the next page of
@@ -330,6 +338,11 @@ namespace Microsoft.Azure.Management.Compute
         /// statusOnly=true enables fetching run time status of all Virtual
         /// Machines in the subscription.
         /// </param>
+        /// <param name='filter'>
+        /// The system query option to filter VMs returned in the response.
+        /// Allowed value is 'virtualMachineScaleSet/id' eq
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -345,7 +358,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all available virtual machine sizes to which the specified
         /// virtual machine can be resized.
@@ -771,8 +784,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine.
         /// </param>
         /// <param name='forceDeletion'>
-        /// Optional parameter to force delete virtual machines.(Feature in
-        /// Preview)
+        /// Optional parameter to force delete virtual machines.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -822,6 +834,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
+        /// <param name='hibernate'>
+        /// Optional parameter to hibernate a virtual machine. (Feature in
+        /// Preview)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -834,7 +850,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? hibernate = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to power off (stop) a virtual machine. The virtual
         /// machine can be restarted with the same provisioned resources. You

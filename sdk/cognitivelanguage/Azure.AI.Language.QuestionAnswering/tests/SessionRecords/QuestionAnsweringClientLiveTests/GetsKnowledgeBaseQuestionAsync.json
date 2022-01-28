@@ -1,33 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-05-01-preview",
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "12",
+        "Content-Length": "13",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-75701752f8e6854ba75b247d32c65b27-36b21b77d55e4349-00",
+        "traceparent": "00-f6abcd01ea7e6843ab0d5fcbbc6de733-06d9f9f60ff05543-00",
         "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210630.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "f347cb56d22a45f7a622db442ef3e84b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "qnaId": 24
+        "qnaId": 133
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "67cfc16b-d65e-4abb-a3fb-0d19d5579e6b",
-        "Content-Length": "484",
+        "apim-request-id": "89de2340-8be0-45c5-ad1f-26394a23d55d",
+        "Content-Length": "485",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Jun 2021 18:12:27 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
+        "Date": "Thu, 28 Oct 2021 21:26:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "145"
+        "x-envoy-upstream-service-time": "971"
       },
       "ResponseBody": [
         "{\n",
@@ -38,7 +39,7 @@
         "      ],\n",
         "      \u0022answer\u0022: \u0022**Check the battery level**\\n\\nYou can check the battery level from the lock screen or the desktop:\u0022,\n",
         "      \u0022confidenceScore\u0022: 1.0,\n",
-        "      \u0022id\u0022: 24,\n",
+        "      \u0022id\u0022: 133,\n",
         "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
         "      \u0022metadata\u0022: {\n",
         "        \u0022explicitlytaggedheading\u0022: \u0022check the battery level\u0022\n",
@@ -54,9 +55,9 @@
     }
   ],
   "Variables": {
-    "QNAMAKER_API_KEY": "Sanitized",
-    "QNAMAKER_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "QNAMAKER_URI": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
     "RandomSeed": "2107017080"
   }
 }

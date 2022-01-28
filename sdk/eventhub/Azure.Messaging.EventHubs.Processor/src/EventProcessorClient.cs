@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs
     /// </remarks>
     ///
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
     {
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
@@ -71,7 +72,7 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>
-        ///    Performs the tasks to initialize a partition, and its associated context, for event processing.
+        ///   Performs the tasks to initialize a partition, and its associated context, for event processing.
         ///
         ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
@@ -616,6 +617,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
+        /// <exception cref="InvalidOperationException">Occurs when either the <see cref="ProcessEventAsync" /> handler or <see cref="ProcessErrorAsync" /> handler has not been registered.</exception>
+        ///
         /// <exception cref="AggregateException">
         ///   As the processor starts, it will attempt to detect configuration and permissions errors that would prevent it from
         ///   being able to recover without intervention.  For example, an incorrect connection string or the inability to write to the
@@ -632,6 +635,8 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when either the <see cref="ProcessEventAsync" /> handler or <see cref="ProcessErrorAsync" /> handler has not been registered.</exception>
         ///
         /// <exception cref="AggregateException">
         ///   As the processor starts, it will attempt to detect configuration and permissions errors that would prevent it from

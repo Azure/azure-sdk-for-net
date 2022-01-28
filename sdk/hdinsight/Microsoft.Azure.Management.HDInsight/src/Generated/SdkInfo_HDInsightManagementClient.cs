@@ -19,25 +19,27 @@ namespace Microsoft.Azure.Management.HDInsight
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("HDInsight", "Applications", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Clusters", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Configurations", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Extensions", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Locations", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Operations", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "ScriptActions", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "ScriptExecutionHistory", "2018-06-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "VirtualMachines", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "Applications", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "Clusters", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "Configurations", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "Extensions", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "Locations", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "Operations", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "PrivateEndpointConnections", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "PrivateLinkResources", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "ScriptActions", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "ScriptExecutionHistory", "2021-06-01"),
+                new Tuple<string, string, string>("HDInsight", "VirtualMachines", "2021-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.3.2";
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\source\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "9875f8eebd8c1392a83c052bc50a79c8251b1174";
+      public static readonly String GithubCommidId = "2ebe584103a362fa87f2f60c9bab89ab410c7571";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

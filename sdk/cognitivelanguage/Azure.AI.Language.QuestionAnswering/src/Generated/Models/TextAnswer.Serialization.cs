@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class TextAnswer
     {

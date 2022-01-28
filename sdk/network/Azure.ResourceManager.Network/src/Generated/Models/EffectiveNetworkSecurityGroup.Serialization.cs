@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityGroup DeserializeEffectiveNetworkSecurityGroup(JsonElement element)
         {
-            Optional<SubResource> networkSecurityGroup = default;
+            Optional<WritableSubResource> networkSecurityGroup = default;
             Optional<EffectiveNetworkSecurityGroupAssociation> association = default;
             Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             Optional<string> tagMap = default;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkSecurityGroup = SubResource.DeserializeSubResource(property.Value);
+                    networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("association"))
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroup.Value, association.Value, Optional.ToList(effectiveSecurityRules), tagMap.Value);
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association.Value, Optional.ToList(effectiveSecurityRules), tagMap.Value);
         }
     }
 }

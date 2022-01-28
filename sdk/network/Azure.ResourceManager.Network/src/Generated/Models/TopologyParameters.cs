@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the representation of topology. </summary>
@@ -18,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the target resource group to perform topology on. </summary>
         public string TargetResourceGroupName { get; set; }
         /// <summary> The reference to the Virtual Network resource. </summary>
-        public SubResource TargetVirtualNetwork { get; set; }
+        public WritableSubResource TargetVirtualNetwork { get; set; }
         /// <summary> The reference to the Subnet resource. </summary>
-        public SubResource TargetSubnet { get; set; }
+        public WritableSubResource TargetSubnet { get; set; }
     }
 }

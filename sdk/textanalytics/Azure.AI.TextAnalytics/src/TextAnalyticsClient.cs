@@ -149,7 +149,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
@@ -201,7 +201,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
@@ -439,7 +439,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(result.Value.Documents[0]), response);
@@ -497,7 +497,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(result.Value.Documents[0]), response);
@@ -759,7 +759,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToPiiEntityCollection(result.Value.Documents[0]), response);
@@ -829,7 +829,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToPiiEntityCollection(result.Value.Documents[0]), response);
@@ -1153,7 +1153,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
@@ -1214,7 +1214,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
@@ -1571,7 +1571,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
@@ -1624,7 +1624,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
@@ -1866,7 +1866,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
@@ -1922,7 +1922,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
                 return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
@@ -2297,13 +2297,22 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2322,13 +2331,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
@@ -2347,13 +2365,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
@@ -2371,13 +2398,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
@@ -2396,7 +2432,6 @@ namespace Azure.AI.TextAnalytics
 
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            ValidateActions(actions);
             options ??= new AnalyzeActionsOptions();
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
@@ -2422,7 +2457,6 @@ namespace Azure.AI.TextAnalytics
 
         private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            ValidateActions(actions);
             options ??= new AnalyzeActionsOptions();
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
@@ -2458,6 +2492,10 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
             }
+            if (actions.RecognizeCustomEntitiesActions != null)
+            {
+                tasks.CustomEntityRecognitionTasks = Transforms.ConvertFromRecognizeCustomEntitiesActionsToTasks(actions.RecognizeCustomEntitiesActions);
+            }
             if (actions.ExtractKeyPhrasesActions != null)
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
@@ -2474,20 +2512,15 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
             }
-            return tasks;
-        }
-
-        private static void ValidateActions(TextAnalyticsActions actions)
-        {
-            if (actions.RecognizePiiEntitiesActions?.Count > 1 ||
-                actions.RecognizeEntitiesActions?.Count > 1 ||
-                actions.RecognizeLinkedEntitiesActions?.Count > 1 ||
-                actions.ExtractKeyPhrasesActions?.Count > 1 ||
-                actions.AnalyzeSentimentActions?.Count > 1 ||
-                actions.ExtractSummaryActions?.Count > 1)
+            if (actions.SingleCategoryClassifyActions != null)
             {
-                throw new ArgumentException("Multiple of the same action is not currently supported.");
+                tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions);
             }
+            if (actions.MultiCategoryClassifyActions != null)
+            {
+                tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions);
+            }
+            return tasks;
         }
 
         #endregion

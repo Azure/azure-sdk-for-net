@@ -19,24 +19,36 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of SpatialAnalysisTypedOperationBase. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="debug"> If set to &apos;true&apos;, enables debugging mode for this operation. </param>
+        /// <param name="calibrationConfiguration"> Advanced calibration configuration. </param>
         /// <param name="cameraConfiguration"> Advanced camera configuration. </param>
+        /// <param name="cameraCalibratorNodeConfiguration"> Advanced camera calibrator configuration. </param>
         /// <param name="detectorNodeConfiguration"> Advanced detector node configuration. </param>
+        /// <param name="trackerNodeConfiguration"> Advanced tracker node configuration. </param>
         /// <param name="enableFaceMaskClassifier"> If set to &apos;true&apos;, enables face mask detection for this operation. </param>
-        internal SpatialAnalysisTypedOperationBase(string type, string debug, string cameraConfiguration, string detectorNodeConfiguration, string enableFaceMaskClassifier) : base(type)
+        internal SpatialAnalysisTypedOperationBase(string type, string debug, string calibrationConfiguration, string cameraConfiguration, string cameraCalibratorNodeConfiguration, string detectorNodeConfiguration, string trackerNodeConfiguration, string enableFaceMaskClassifier) : base(type)
         {
             Debug = debug;
+            CalibrationConfiguration = calibrationConfiguration;
             CameraConfiguration = cameraConfiguration;
+            CameraCalibratorNodeConfiguration = cameraCalibratorNodeConfiguration;
             DetectorNodeConfiguration = detectorNodeConfiguration;
+            TrackerNodeConfiguration = trackerNodeConfiguration;
             EnableFaceMaskClassifier = enableFaceMaskClassifier;
             Type = type ?? "SpatialAnalysisTypedOperationBase";
         }
 
         /// <summary> If set to &apos;true&apos;, enables debugging mode for this operation. </summary>
         public string Debug { get; set; }
+        /// <summary> Advanced calibration configuration. </summary>
+        public string CalibrationConfiguration { get; set; }
         /// <summary> Advanced camera configuration. </summary>
         public string CameraConfiguration { get; set; }
+        /// <summary> Advanced camera calibrator configuration. </summary>
+        public string CameraCalibratorNodeConfiguration { get; set; }
         /// <summary> Advanced detector node configuration. </summary>
         public string DetectorNodeConfiguration { get; set; }
+        /// <summary> Advanced tracker node configuration. </summary>
+        public string TrackerNodeConfiguration { get; set; }
         /// <summary> If set to &apos;true&apos;, enables face mask detection for this operation. </summary>
         public string EnableFaceMaskClassifier { get; set; }
     }

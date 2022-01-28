@@ -1,17 +1,19 @@
 # Newtonsoft.Json support for Azure Core shared client library for .NET
 
-The [Azure.Core package][azure_core_package] contains types shared by all Azure SDK client libraries.
-This library contains converters dependent on the [Newtonsoft.Json package][newtonsoft_json_package] for use with Azure.Core.
+The [Azure.Core package][azure_core_package] contains types shared by the latest Azure SDK client libraries. This `Newtonsoft.Json` compatibility library:
+
+- Contains converters dependent upon the [Newtonsoft.Json][newtonsoft_json_package] package.
+- Enables serialization and deserialization of custom model types using `Newtonsoft.Json`. Those custom model types may then be used with the following client libraries:
+  - [Azure.DigitalTwins.Core][azure_digital_twins_core_package]
+  - [Azure.Search.Documents][azure_search_documents_package]
 
 ## Getting started
-
-Install this package if you want to use Newtonsoft.Json to serialize and deserialize model types with some Azure SDKs.
 
 ### Install the package
 
 Install this package from [NuGet] using the .NET CLI:
 
-```bash
+```dotnetcli
 dotnet add package Microsoft.Azure.Core.NewtonsoftJson
 ```
 
@@ -31,7 +33,7 @@ The [Azure.Search.Documents package][azure_search_documents_package] is used in 
 
 ### Deserializing models
 
-Consider a model class containing information about movies:
+Consider a custom model class containing information about movies:
 
 ```C# Snippet:Microsoft_Azure_Core_NewtonsoftJson_Samples_Readme_Model
 public class Movie
@@ -118,6 +120,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FMicrosoft.Azure.Core.NewtonsoftJson%2FREADME.png)
 
 [azure_core_package]: https://www.nuget.org/packages/Azure.Core/
+[azure_digital_twins_core_package]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
 [azure_search_documents_package]: https://www.nuget.org/packages/Azure.Search.Documents/
 [azure_search_documents_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/README.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct

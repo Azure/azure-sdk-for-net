@@ -14,20 +14,31 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailablePrivateEndpointType DeserializeAvailablePrivateEndpointType(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> type = default;
             Optional<string> resourceName = default;
+            Optional<string> displayName = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("resourceName"))
                 {
-                    name = property.Value.GetString();
+                    resourceName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"))
+                {
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -35,13 +46,8 @@ namespace Azure.ResourceManager.Network.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
-                {
-                    resourceName = property.Value.GetString();
-                    continue;
-                }
             }
-            return new AvailablePrivateEndpointType(name.Value, id.Value, type.Value, resourceName.Value);
+            return new AvailablePrivateEndpointType(id, name, type, resourceName.Value, displayName.Value);
         }
     }
 }

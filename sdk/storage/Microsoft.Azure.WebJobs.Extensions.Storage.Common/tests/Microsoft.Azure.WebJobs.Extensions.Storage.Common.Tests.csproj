@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
+    <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\SkuUtility.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1622,19 +1622,34 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            long? expectedContentLength = null;
             if (UsingClientSideEncryption)
             {
-                // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
+                options ??= new BlobUploadOptions();
+
+                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
+
+                // if content length was known, we retain that for dividing REST requests appropriately
+                expectedContentLength = content.GetLengthOrDefault();
+                if (expectedContentLength.HasValue)
+                {
+                    expectedContentLength = ClientSideEncryptor.ExpectedCiphertextLength(expectedContentLength.Value);
+                }
                 (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength,
                 options,
                 options?.ProgressHandler,
                 async,
@@ -1708,6 +1723,102 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            BlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                overwrite,
+                options,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.  If the blob exists,
+        /// it will be overwritten.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            BlobOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                overwrite,
+                options,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        internal async Task<Stream> OpenWriteInternal(
+            bool overwrite,
+            BlobOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            if (UsingClientSideEncryption)
+            {
+                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
+
+                return await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                    .ClientSideEncryptionOpenWriteInternal(
+                        BlockBlobClient,
+                        overwrite,
+                        options.ToBlockBlobOpenWriteOptions(),
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+            }
+
+            return await BlockBlobClient.OpenWriteInternal(
+                overwrite,
+                options.ToBlockBlobOpenWriteOptions(),
+                async,
+                cancellationToken).ConfigureAwait(false);
+        }
+        #endregion
+
         private BlockBlobClient _blockBlobClient;
 
         private BlockBlobClient BlockBlobClient
@@ -1724,8 +1835,9 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, hashingOptions, arrayPool, operationName);
     }
 }

@@ -18,8 +18,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>
         /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static async Task<string> GetResourceLocation(ResourcesManagementClient client, string resourceType, FeaturesInfo.Type feature = FeaturesInfo.Type.Default)
+        public static async Task<string> GetResourceLocation(ArmClient client, string resourceType, FeaturesInfo.Type feature = FeaturesInfo.Type.Default)
         {
+            Subscription subscription = await client.GetDefaultSubscriptionAsync();
             HashSet<string> supportedLocations = null;
 
             switch (feature)
@@ -39,49 +40,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Response<Provider> provider = await client.Providers.GetAsync(providerName);
-            foreach (var resource in provider.Value.ResourceTypes)
-            {
-                if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
-                {
-                    return resource.Locations.FirstOrDefault(supportedLocations.Contains);
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Get default resource location for a given resource type.
-        /// Once all tests are moved away from depreciated version of Resource Manager, this method should be removed
-        /// and "using Microsoft.Azure.Management.Resources" should be changed to "using Microsoft.Azure.Management.ResourceManager"
-        /// </summary>
-        /// <param name="client">The resource management client</param>
-        /// <param name="resourceType">The type of resource to create</param>
-        /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static async Task<string> GetResourceLocation(ResourcesManagementClient client, ProvidersOperations providersOperations, string resourceType, FeaturesInfo.Type feature = FeaturesInfo.Type.Default)
-        {
-            HashSet<string> supportedLocations = null;
-
-            switch (feature)
-            {
-                case FeaturesInfo.Type.Default:
-                    supportedLocations = FeaturesInfo.DefaultLocations;
-                    break;
-                case FeaturesInfo.Type.All:
-                    supportedLocations = FeaturesInfo.AllFeaturesSupportedLocations;
-                    break;
-                case FeaturesInfo.Type.Ipv6:
-                    supportedLocations = FeaturesInfo.Ipv6SupportedLocations;
-                    break;
-                case FeaturesInfo.Type.MultiCA:
-                    supportedLocations = FeaturesInfo.DefaultLocations;
-                    break;
-            }
-            string[] parts = resourceType.Split('/');
-            string providerName = parts[0];
-            Response<Provider> provider = await providersOperations.GetAsync(providerName);
-            foreach (var resource in provider.Value.ResourceTypes)
+            Provider provider = await subscription.GetProviders().GetAsync(providerName);
+            foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {

@@ -31,11 +31,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of SpatialAnalysisPersonCountOperation. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="debug"> If set to &apos;true&apos;, enables debugging mode for this operation. </param>
+        /// <param name="calibrationConfiguration"> Advanced calibration configuration. </param>
         /// <param name="cameraConfiguration"> Advanced camera configuration. </param>
+        /// <param name="cameraCalibratorNodeConfiguration"> Advanced camera calibrator configuration. </param>
         /// <param name="detectorNodeConfiguration"> Advanced detector node configuration. </param>
+        /// <param name="trackerNodeConfiguration"> Advanced tracker node configuration. </param>
         /// <param name="enableFaceMaskClassifier"> If set to &apos;true&apos;, enables face mask detection for this operation. </param>
         /// <param name="zones"> The list of zones and optional events. </param>
-        internal SpatialAnalysisPersonCountOperation(string type, string debug, string cameraConfiguration, string detectorNodeConfiguration, string enableFaceMaskClassifier, IList<SpatialAnalysisPersonCountZoneEvents> zones) : base(type, debug, cameraConfiguration, detectorNodeConfiguration, enableFaceMaskClassifier)
+        internal SpatialAnalysisPersonCountOperation(string type, string debug, string calibrationConfiguration, string cameraConfiguration, string cameraCalibratorNodeConfiguration, string detectorNodeConfiguration, string trackerNodeConfiguration, string enableFaceMaskClassifier, IList<SpatialAnalysisPersonCountZoneEvents> zones) : base(type, debug, calibrationConfiguration, cameraConfiguration, cameraCalibratorNodeConfiguration, detectorNodeConfiguration, trackerNodeConfiguration, enableFaceMaskClassifier)
         {
             Zones = zones;
             Type = type ?? "#Microsoft.VideoAnalyzer.SpatialAnalysisPersonCountOperation";

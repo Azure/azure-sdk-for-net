@@ -28,7 +28,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationNetworkTraversalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-06-21-preview")
+        public CommunicationNetworkTraversalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10-08-preview")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
@@ -36,7 +36,7 @@ namespace Azure.Communication.NetworkTraversal
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateIssueRelayConfigurationRequest(string id)
+        internal HttpMessage CreateIssueRelayConfigurationRequest(string id, RouteType? routeType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -48,7 +48,11 @@ namespace Azure.Communication.NetworkTraversal
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CommunicationRelayConfigurationRequest(id);
+            var model = new CommunicationRelayConfigurationRequest()
+            {
+                Id = id,
+                RouteType = routeType
+            };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -57,16 +61,11 @@ namespace Azure.Communication.NetworkTraversal
 
         /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
         /// <param name="id"> An existing ACS identity. </param>
+        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateIssueRelayConfigurationRequest(id);
+            using var message = CreateIssueRelayConfigurationRequest(id, routeType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -84,16 +83,11 @@ namespace Azure.Communication.NetworkTraversal
 
         /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
         /// <param name="id"> An existing ACS identity. </param>
+        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id, CancellationToken cancellationToken = default)
+        public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateIssueRelayConfigurationRequest(id);
+            using var message = CreateIssueRelayConfigurationRequest(id, routeType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

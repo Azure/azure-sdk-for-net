@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public ServiceBusAdministrationClientOptions(ServiceVersion version = ServiceVersion.V2017_04)
+        public ServiceBusAdministrationClientOptions(ServiceVersion version = ServiceVersion.V2021_05)
         {
             Version = version;
         }
@@ -32,11 +32,14 @@ namespace Azure.Messaging.ServiceBus.Administration
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2019-02-02 service version described at
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-02-02">
-            /// Version 2019-02-02</see>
+            /// The 2017-04 service version.
             /// </summary>
-            V2017_04 = 1
+            V2017_04 = 1,
+
+            /// <summary>
+            /// The 2021-05 service version.
+            /// </summary>
+            V2021_05 = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

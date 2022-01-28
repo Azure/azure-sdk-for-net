@@ -173,16 +173,20 @@ namespace Azure.Search.Documents
         [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
+        /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
+        [CodeGenMember("semanticConfiguration")]
+        public string SemanticConfigurationName { get; set; }
+
         /// <summary> A value that specifies the language of the search query. </summary>
         [CodeGenMember("queryLanguage")]
         public QueryLanguage? QueryLanguage { get; set; }
 
         /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
         [CodeGenMember("speller")]
-        public QuerySpeller? QuerySpeller { get; set; }
+        public QuerySpellerType? QuerySpeller { get; set; }
 
         /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
-        public QueryAnswer? QueryAnswer { get; set; }
+        public QueryAnswerType? QueryAnswer { get; set; }
 
         /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
         public int? QueryAnswerCount { get; set; }
@@ -223,7 +227,7 @@ namespace Azure.Search.Documents
                         }
                         else
                         {
-                            QueryAnswer = new QueryAnswer(queryAnswerPart);
+                            QueryAnswer = new QueryAnswerType(queryAnswerPart);
                         }
 
                         if (int.TryParse(countPart, out int countValue))
@@ -233,7 +237,7 @@ namespace Azure.Search.Documents
                     }
                     else
                     {
-                        QueryAnswer = new QueryAnswer(value);
+                        QueryAnswer = new QueryAnswerType(value);
                         QueryAnswerCount = null;
                     }
                 }
@@ -242,18 +246,18 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// A value that specifies whether <see cref="SearchResults{T}.Captions"/> should be returned as part of the search response.
-        /// <para>The default value is <see cref="QueryCaption.None"/>.</para>
+        /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
         /// </summary>
-        public QueryCaption? QueryCaption { get; set; }
+        public QueryCaptionType? QueryCaption { get; set; }
 
         /// <summary>
-        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaption.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
+        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaptionType.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
         /// It populates <see cref="CaptionResult.Highlights"/>.
         /// <para>The default value is <c>true</c>.</para>
         /// </summary>
-        public bool? QueryCaptionHighlight { get; set; }
+        public bool? QueryCaptionHighlightEnabled { get; set; }
 
-        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlight"/>.</summary>
+        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlightEnabled"/>.</summary>
         [CodeGenMember("captions")]
         internal string QueryCaptionRaw
         {
@@ -263,7 +267,7 @@ namespace Azure.Search.Documents
 
                 if (QueryCaption.HasValue)
                 {
-                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlight.GetValueOrDefault(true)}";
+                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
                 }
 
                 return queryCaptionStringValue;
@@ -274,7 +278,7 @@ namespace Azure.Search.Documents
                 if (string.IsNullOrEmpty(value))
                 {
                     QueryCaption = null;
-                    QueryCaptionHighlight = null;
+                    QueryCaptionHighlightEnabled = null;
                 }
                 else
                 {
@@ -284,13 +288,13 @@ namespace Azure.Search.Documents
                         var queryCaptionPart = value.Substring(0, splitIndex);
                         var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
 
-                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaption(queryCaptionPart);
-                        QueryCaptionHighlight = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
+                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaptionType(queryCaptionPart);
+                        QueryCaptionHighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
                     }
                     else
                     {
-                        QueryCaption = new QueryCaption(value);
-                        QueryCaptionHighlight = null;
+                        QueryCaption = new QueryCaptionType(value);
+                        QueryCaptionHighlightEnabled = null;
                     }
                 }
             }
@@ -317,7 +321,7 @@ namespace Azure.Search.Documents
             destination.QueryAnswer = source.QueryAnswer;
             destination.QueryAnswerCount = source.QueryAnswerCount;
             destination.QueryCaption = source.QueryCaption;
-            destination.QueryCaptionHighlight = source.QueryCaptionHighlight;
+            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
             destination.QueryLanguage = source.QueryLanguage;
             destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
@@ -328,6 +332,7 @@ namespace Azure.Search.Documents
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
+            destination.SemanticConfigurationName = source.SemanticConfigurationName;
             destination.SemanticFields = source.SemanticFields;
             destination.Size = source.Size;
             destination.Skip = source.Skip;

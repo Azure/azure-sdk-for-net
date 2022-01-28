@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceVirtualMachine))
             {
                 writer.WritePropertyName("sourceVirtualMachine");
-                writer.WriteObjectValue(SourceVirtualMachine);
+                JsonSerializer.Serialize(writer, SourceVirtualMachine);
             }
             if (Optional.IsDefined(StorageProfile))
             {

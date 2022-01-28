@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Samples
 {
@@ -10,14 +11,10 @@ namespace Microsoft.Azure.WebJobs.Samples
     public static class WebPubSubTriggerReturnValueFunction
     {
         [FunctionName("WebPubSubTriggerReturnValueFunction")]
-        public static MessageResponse Run(
-            [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] ConnectionContext context)
+        public static UserEventResponse Run(
+            [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] UserEventRequest request)
         {
-            return new MessageResponse
-            {
-                Message = BinaryData.FromString("ack"),
-                DataType = MessageDataType.Text
-            };
+            return request.CreateResponse(BinaryData.FromString("ack"), WebPubSubDataType.Text);
         }
     }
     #endregion

@@ -13,7 +13,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.Batch.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
@@ -21,12 +21,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestBase.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestEnvironment.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobsClientTestFixtureAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestBase.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestEnvironment.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\ClientBuilderExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\DisposingContainer.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

@@ -57,6 +57,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// a length no greater than 128 characters and a value with a length
         /// no greater than 256 characters.</param>
         /// <param name="identity">The identity of the resource.</param>
+        /// <param name="allowedCopyScope">Restrict copy to and from Storage
+        /// Accounts within an AAD tenant or with Private Links to the same
+        /// VNet. Possible values include: 'PrivateLink', 'AAD'</param>
+        /// <param name="publicNetworkAccess">Allow or disallow public network
+        /// access to Storage Account. Value is optional but if passed in, must
+        /// be 'Enabled' or 'Disabled'. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="sasPolicy">SasPolicy assigned to the storage
         /// account.</param>
         /// <param name="keyPolicy">KeyPolicy assigned to the storage
@@ -66,8 +73,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// supported per storage account at this time. To clear the existing
         /// custom domain, use an empty string for the custom domain name
         /// property.</param>
-        /// <param name="encryption">Not applicable. Azure Storage encryption
-        /// is enabled for all storage accounts and cannot be disabled.</param>
+        /// <param name="encryption">Encryption settings to be used for
+        /// server-side encryption for the storage account.</param>
         /// <param name="networkRuleSet">Network rule set</param>
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
@@ -77,6 +84,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true. The default value is true since
         /// API version 2019-04-01.</param>
+        /// <param name="isSftpEnabled">Enables Secure File Transfer Protocol,
+        /// if set to true</param>
+        /// <param name="isLocalUserEnabled">Enables local users feature, if
+        /// set to true</param>
         /// <param name="isHnsEnabled">Account HierarchicalNamespace enabled if
         /// sets to true.</param>
         /// <param name="largeFileSharesState">Allow large file shares if sets
@@ -102,7 +113,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="allowCrossTenantReplication">Allow or disallow cross
         /// AAD tenant object replication. The default interpretation is true
         /// for this property.</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?))
+        /// <param name="defaultToOAuthAuthentication">A boolean flag which
+        /// indicates whether the default authentication is OAuth or not. The
+        /// default interpretation is false for this property.</param>
+        /// <param name="immutableStorageWithVersioning">The property is
+        /// immutable and can only be set to true at the account creation time.
+        /// When set to true, it enables object level immutability for all the
+        /// new containers in the account by default.</param>
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), string allowedCopyScope = default(string), string publicNetworkAccess = default(string), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount))
         {
             Sku = sku;
             Kind = kind;
@@ -110,6 +128,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             ExtendedLocation = extendedLocation;
             Tags = tags;
             Identity = identity;
+            AllowedCopyScope = allowedCopyScope;
+            PublicNetworkAccess = publicNetworkAccess;
             SasPolicy = sasPolicy;
             KeyPolicy = keyPolicy;
             CustomDomain = customDomain;
@@ -118,6 +138,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             AccessTier = accessTier;
             AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
+            IsSftpEnabled = isSftpEnabled;
+            IsLocalUserEnabled = isLocalUserEnabled;
             IsHnsEnabled = isHnsEnabled;
             LargeFileSharesState = largeFileSharesState;
             RoutingPreference = routingPreference;
@@ -126,6 +148,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             AllowSharedKeyAccess = allowSharedKeyAccess;
             EnableNfsV3 = enableNfsV3;
             AllowCrossTenantReplication = allowCrossTenantReplication;
+            DefaultToOAuthAuthentication = defaultToOAuthAuthentication;
+            ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             CustomInit();
         }
 
@@ -185,6 +209,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         public Identity Identity { get; set; }
 
         /// <summary>
+        /// Gets or sets restrict copy to and from Storage Accounts within an
+        /// AAD tenant or with Private Links to the same VNet. Possible values
+        /// include: 'PrivateLink', 'AAD'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowedCopyScope")]
+        public string AllowedCopyScope { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow public network access to Storage
+        /// Account. Value is optional but if passed in, must be 'Enabled' or
+        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Gets or sets sasPolicy assigned to the storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sasPolicy")]
@@ -206,8 +246,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
-        /// Gets or sets not applicable. Azure Storage encryption is enabled
-        /// for all storage accounts and cannot be disabled.
+        /// Gets or sets encryption settings to be used for server-side
+        /// encryption for the storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
@@ -239,6 +279,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHttpsTrafficOnly")]
         public bool? EnableHttpsTrafficOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables Secure File Transfer Protocol, if set to true
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isSftpEnabled")]
+        public bool? IsSftpEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables local users feature, if set to true
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isLocalUserEnabled")]
+        public bool? IsLocalUserEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets account HierarchicalNamespace enabled if sets to true.
@@ -301,6 +353,23 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? AllowCrossTenantReplication { get; set; }
 
         /// <summary>
+        /// Gets or sets a boolean flag which indicates whether the default
+        /// authentication is OAuth or not. The default interpretation is false
+        /// for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultToOAuthAuthentication")]
+        public bool? DefaultToOAuthAuthentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property is immutable and can only be set to true
+        /// at the account creation time. When set to true, it enables object
+        /// level immutability for all the new containers in the account by
+        /// default.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.immutableStorageWithVersioning")]
+        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -351,6 +420,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (AzureFilesIdentityBasedAuthentication != null)
             {
                 AzureFilesIdentityBasedAuthentication.Validate();
+            }
+            if (ImmutableStorageWithVersioning != null)
+            {
+                ImmutableStorageWithVersioning.Validate();
             }
         }
     }

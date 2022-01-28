@@ -25,11 +25,12 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests.Sampl
             var cloudEvent =
                 new CloudEvent
                 {
+                    Id = Guid.NewGuid().ToString(),
                     Type = "record",
                     Source = new Uri("http://www.contoso.com"),
                     Data = "data"
                 };
-            await client.SendCloudEventAsync(cloudEvent);
+            await client.SendCloudNativeCloudEventAsync(cloudEvent);
             #endregion
         }
     }

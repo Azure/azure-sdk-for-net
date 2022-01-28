@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     sessionId = "sessionId";
                 }
                 int numMessages = 5;
-                var msgs = GetMessages(numMessages, sessionId);
+                var msgs = ServiceBusTestUtilities.GetMessages(numMessages, sessionId);
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(useSessions, sender, msgs);
 
@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
 
                 // schedule
-                msgs = GetMessages(numMessages, sessionId);
+                msgs = ServiceBusTestUtilities.GetMessages(numMessages, sessionId);
 
                 foreach (var msg in msgs)
                 {
@@ -158,7 +158,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var batch = await sender.CreateMessageBatchAsync();
                 for (int i = 0; i < numMessages; i++)
                 {
-                    batch.TryAddMessage(GetMessage(sessionId));
+                    batch.TryAddMessage(ServiceBusTestUtilities.GetMessage(sessionId));
                 }
                 await sender.SendMessagesAsync(batch);
                 AssertSendActivities(useSessions, sender, batch.AsEnumerable<ServiceBusMessage>());
@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task ProcessorActivities()
         {
-            string[] messageActivities = null;
+            ClientDiagnosticListener.ProducedLink[] messageActivities = null;
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
@@ -189,10 +189,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
-                var msgs = GetMessages(messageCt);
+                var msgs = ServiceBusTestUtilities.GetMessages(messageCt);
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
-                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
+                messageActivities = sendActivities.Select(a => new ClientDiagnosticListener.ProducedLink(a.ParentId, a.TraceStateString)).ToArray();
 
                 ServiceBusProcessor processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
@@ -209,7 +209,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     }
                     return Task.CompletedTask;
                 };
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task SessionProcessorActivities()
         {
-            string[] messageActivities = null;
+            ClientDiagnosticListener.ProducedLink[] messageActivities = null;
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
@@ -247,10 +247,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
-                var msgs = GetMessages(messageCt, "sessionId");
+                var msgs = ServiceBusTestUtilities.GetMessages(messageCt, "sessionId");
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
-                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
+                messageActivities = sendActivities.Select(a => new ClientDiagnosticListener.ProducedLink(a.ParentId, a.TraceStateString)).ToArray();
 
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName,
                     new ServiceBusSessionProcessorOptions
@@ -268,7 +268,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     }
                     return Task.CompletedTask;
                 };
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();

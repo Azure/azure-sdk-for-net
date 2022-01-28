@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
 
+        private ArmClient _cleanupClient;
+
         protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -30,15 +32,20 @@ namespace Azure.ResourceManager.TestFramework
             return operation.WaitForCompletionAsync();
         }
 
-        protected ResourcesManagementClient GetResourceManagementClient()
+        protected ValueTask<Response> WaitForCompletionAsync(Operation operation)
         {
-            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
+            return operation.WaitForCompletionResponseAsync();
+        }
+
+        protected ArmClient GetResourceManagementClient()
+        {
+            var options = InstrumentClientOptions(new ArmClientOptions());
             CleanupPolicy = new ResourceGroupCleanupPolicy();
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
-            return CreateClient<ResourcesManagementClient>(
-                TestEnvironment.SubscriptionId,
+            return CreateClient<ArmClient>(
                 TestEnvironment.Credential,
+                TestEnvironment.SubscriptionId,
                 options);
         }
 
@@ -46,21 +53,22 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
             {
-                var resourceGroupsClient = new ResourcesManagementClient(
-                    TestEnvironment.SubscriptionId,
+                _cleanupClient ??= new ArmClient(
                     TestEnvironment.Credential,
-                    new ResourcesManagementClientOptions()).ResourceGroups;
+                    TestEnvironment.SubscriptionId,
+                    new ArmClientOptions());
+                var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    await resourceGroupsClient.StartDeleteAsync(resourceGroup);
+                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync(true);
                 }
             }
         }
 
-        protected async Task<string> GetFirstUsableLocationAsync(ProvidersOperations providersClient, string resourceProviderNamespace, string resourceType)
+        protected async Task<string> GetFirstUsableLocationAsync(ProviderCollection providersClient, string resourceProviderNamespace, string resourceType)
         {
             var provider = (await providersClient.GetAsync(resourceProviderNamespace)).Value;
-            return provider.ResourceTypes.Where(
+            return provider.Data.ResourceTypes.Where(
                 (resType) =>
                 {
                     if (resType.ResourceType == resourceType)

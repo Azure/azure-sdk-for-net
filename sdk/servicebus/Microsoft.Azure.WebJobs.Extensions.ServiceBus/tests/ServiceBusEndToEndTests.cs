@@ -9,9 +9,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +24,7 @@ using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System.Transactions;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -197,14 +201,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_AutoCompleteEnabledOnTrigger()
         {
             await TestMultiple<TestBatchAutoCompleteMessagesEnabledOnTrigger>(
-                configurationDelegate: BuildHostWithAutoCompleteDisabled<TestBatchAutoCompleteMessagesEnabledOnTrigger>());
+                configurationDelegate: DisableAutoComplete);
         }
 
         [Test]
         public async Task TestBatch_AutoCompleteEnabledOnTrigger_CompleteInFunction()
         {
             await TestMultiple<TestBatchAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>(
-                configurationDelegate: BuildHostWithAutoCompleteDisabled<TestBatchAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
+                configurationDelegate: DisableAutoComplete);
         }
 
         [Test]
@@ -212,12 +216,52 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
             var host = BuildHost<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>(
-                BuildHostWithAutoCompleteDisabled<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
+                DisableAutoComplete);
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCrossEntityTransaction>(EnableCrossEntityTransactions);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestBatch_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCrossEntityTransactionBatch>(EnableCrossEntityTransactions);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_CustomErrorHandler()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCustomErrorHandler>(SetCustomErrorHandler);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                // intentionally not calling host.StopAsync as we are expecting errors in the error log
+                // for this test, so we accept that the stop will not be graceful
             }
         }
 
@@ -306,6 +350,34 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_OutputBinaryData()
+        {
+            var host = BuildHost<ServiceBusOutputBinaryDataTest>();
+            using (host)
+            {
+                var jobHost = host.GetJobHost();
+                await jobHost.CallAsync(nameof(ServiceBusOutputBinaryDataTest.OutputBinaryData));
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_OutputBinaryData_Batch()
+        {
+            var host = BuildHost<ServiceBusOutputBinaryDataBatchTest>();
+            using (host)
+            {
+                var jobHost = host.GetJobHost();
+                await jobHost.CallAsync(nameof(ServiceBusOutputBinaryDataBatchTest.OutputBinaryData));
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
         public async Task TestBatch_DataContractPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>(true);
@@ -344,6 +416,102 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("Input(foobar)", logs);
                 await host.StopAsync();
+            }
+        }
+
+        [Test]
+        [Category("DynamicConcurrency")]
+        public async Task DynamicConcurrencyTest()
+        {
+            DynamicConcurrencyTestJob.InvocationCount = 0;
+
+            var host = BuildHost<DynamicConcurrencyTestJob>(b =>
+            {
+                b.ConfigureWebJobs(b =>
+                 {
+                     b.Services.AddOptions<ConcurrencyOptions>().Configure(options =>
+                     {
+                         options.DynamicConcurrencyEnabled = true;
+
+                         // ensure on each test run we work up from 1
+                         options.SnapshotPersistenceEnabled = false;
+                     });
+                 }).ConfigureLogging((context, b) =>
+                 {
+                     // ensure we get all concurrency logs
+                     b.SetMinimumLevel(LogLevel.Debug);
+                 });
+            }, startHost: false);
+
+            using (host)
+            {
+                // ensure initial concurrency is 1
+                MethodInfo methodInfo = typeof(DynamicConcurrencyTestJob).GetMethod("ProcessMessage", BindingFlags.Public | BindingFlags.Static);
+                string functionId = $"{methodInfo.DeclaringType.FullName}.{methodInfo.Name}";
+                var concurrencyManager = host.Services.GetServices<ConcurrencyManager>().SingleOrDefault();
+                var concurrencyStatus = concurrencyManager.GetStatus(functionId);
+                Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
+
+                // write a bunch of messages in batch
+                int numMessages = 500;
+                string[] messages = new string[numMessages];
+                for (int i = 0; i < numMessages; i++)
+                {
+                    messages[i] = Guid.NewGuid().ToString();
+                }
+                await WriteQueueMessages(messages);
+
+                // start the host and wait for all messages to be processed
+                await host.StartAsync();
+                await TestHelpers.Await(() =>
+                {
+                    return DynamicConcurrencyTestJob.InvocationCount >= numMessages;
+                });
+
+                // ensure we've dynamically increased concurrency
+                concurrencyStatus = concurrencyManager.GetStatus(functionId);
+                Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 10);
+
+                // check a few of the concurrency logs
+                var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
+                int concurrencyIncreaseLogCount = concurrencyLogs.Count(p => p.Contains("ProcessMessage Increasing concurrency"));
+                Assert.GreaterOrEqual(concurrencyIncreaseLogCount, 3);
+
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task BindToAmqpValue()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBinding>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task BindToAmqpValueAsString()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBindingAsString>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
             }
         }
 
@@ -409,15 +577,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        private static Action<IHostBuilder> BuildHostWithAutoCompleteDisabled<T>()
-        {
-            return builder =>
+        private static Action<IHostBuilder> DisableAutoComplete =>
+            builder =>
                 builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
                         sbOptions.AutoCompleteMessages = false;
                     }));
-        }
 
         private static Action<IHostBuilder> BuildDrainHost<T>()
         {
@@ -577,6 +743,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "       \"MaxRetries\": 3",
                 "  }",
                 "  \"TransportType\": \"AmqpTcp\",",
+                "  \"EnableCrossEntityTransactions\": false",
                 "  \"WebProxy\": \"\",",
                 "}",
                 "SingletonOptions",
@@ -586,6 +753,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"LockAcquisitionTimeout\": \"",
                 "  \"LockPeriod\": \"00:00:15\",",
                 "  \"ListenerLockRecoveryPollingInterval\": \"00:01:00\"",
+                "}",
+                "ConcurrencyOptions",
+                "{",
+                "  \"DynamicConcurrencyEnabled\": false,",
+                "  \"CPUThreshold\": 0.8,",
+                "  \"MaximumFunctionConcurrency\": 500,",
+                "  \"SnapshotPersistenceEnabled\": true",
                 "}",
             }.OrderBy(p => p).ToArray();
 
@@ -736,6 +910,58 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value", received.Value);
                 Assert.AreEqual("name", received.Name);
                 _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusOutputBinaryDataTest
+        {
+            public static void OutputBinaryData(
+                [ServiceBus(FirstQueueNameKey)] out BinaryData output)
+            {
+                output = new BinaryData("message");
+            }
+
+            public static void TriggerBinaryData(
+                [ServiceBusTrigger(FirstQueueNameKey)] BinaryData received)
+            {
+                Assert.AreEqual("message", received.ToString());
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusOutputBinaryDataBatchTest
+        {
+            private static volatile bool firstReceived = false;
+            private static volatile bool secondReceived = false;
+            public static void OutputBinaryData(
+                [ServiceBus(FirstQueueNameKey)] ICollector<BinaryData> output)
+            {
+                output.Add(new BinaryData("message1"));
+                output.Add(new BinaryData("message2"));
+            }
+
+            public static void TriggerBinaryData(
+                [ServiceBusTrigger(FirstQueueNameKey)] BinaryData[] received)
+            {
+                foreach (BinaryData binaryData in received)
+                {
+                    switch (binaryData.ToString())
+                    {
+                        case "message1":
+                            firstReceived = true;
+                            break;
+                        case "message2":
+                            secondReceived = true;
+                            break;
+                    }
+                }
+                if (firstReceived && secondReceived)
+                {
+                    // reset for the next test
+                    firstReceived = false;
+                    secondReceived = false;
+                    _waitHandle1.Set();
+                }
             }
         }
 
@@ -938,6 +1164,39 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class ServiceBusAmqpValueBinding
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage input)
+            {
+                input.GetRawAmqpMessage().Body.TryGetValue(out object value);
+                Assert.AreEqual("foobar", value);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusAmqpValueBindingAsString
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] string input)
+            {
+                Assert.AreEqual("foobar", input);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class DynamicConcurrencyTestJob
+        {
+            public static int InvocationCount;
+
+            public static async Task ProcessMessage([ServiceBusTrigger(FirstQueueNameKey)] string message, ILogger logger)
+            {
+                await Task.Delay(250);
+
+                Interlocked.Increment(ref InvocationCount);
+            }
+        }
+
         public class TestBatchAutoCompleteMessagesDisabledOnTrigger
         {
             public static async Task RunAsync(
@@ -992,6 +1251,84 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // we want to validate that this doesn't trigger an exception in the SDK since AutoComplete = true
                 await messageActions.CompleteMessageAsync(message);
                 _waitHandle1.Set();
+            }
+        }
+
+        public class TestCrossEntityTransaction
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions,
+                ServiceBusClient client)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await messageActions.CompleteMessageAsync(message);
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    await sender.SendMessageAsync(new ServiceBusMessage());
+                    ts.Complete();
+                }
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = client.CreateReceiver(_firstQueueScope.QueueName);
+                // var received = await receiver1.ReceiveMessageAsync();
+                // Assert.IsNull(received);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
+                var received = await receiver2.ReceiveMessageAsync();
+                Assert.IsNotNull(received);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestCrossEntityTransactionBatch
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusMessageActions messageActions,
+                ServiceBusClient client)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await messageActions.CompleteMessageAsync(messages.First());
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    await sender.SendMessageAsync(new ServiceBusMessage());
+                    ts.Complete();
+                }
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = client.CreateReceiver(_firstQueueScope.QueueName);
+                // var received = await receiver1.ReceiveMessageAsync();
+                // Assert.IsNull(received);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
+                var received = await receiver2.ReceiveMessageAsync();
+                Assert.IsNotNull(received);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestCustomErrorHandler
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusClient client)
+            {
+                // Dispose the client so that we will trigger an error in the processor.
+                // We can't simply throw an exception here as it would be swallowed by TryExecuteAsync call in the listener.
+                // This means that the exception handler will not be used for errors originating from the function. This is the same
+                // behavior as in V4.
+                await client.DisposeAsync();
+            }
+
+            public static Task ErrorHandler(ProcessErrorEventArgs e)
+            {
+                Assert.IsInstanceOf<ObjectDisposedException>(e.Exception);
+                _waitHandle1.Set();
+                return Task.CompletedTask;
             }
         }
 

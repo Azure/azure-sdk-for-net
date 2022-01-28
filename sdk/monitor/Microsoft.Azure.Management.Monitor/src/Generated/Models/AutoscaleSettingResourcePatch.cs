@@ -48,7 +48,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="name">the name of the autoscale setting.</param>
         /// <param name="targetResourceUri">the resource identifier of the
         /// resource that the autoscale setting should be added to.</param>
-        public AutoscaleSettingResourcePatch(IList<AutoscaleProfile> profiles, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AutoscaleNotification> notifications = default(IList<AutoscaleNotification>), bool? enabled = default(bool?), string name = default(string), string targetResourceUri = default(string))
+        /// <param name="targetResourceLocation">the location of the resource
+        /// that the autoscale setting should be added to.</param>
+        public AutoscaleSettingResourcePatch(IList<AutoscaleProfile> profiles, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AutoscaleNotification> notifications = default(IList<AutoscaleNotification>), bool? enabled = default(bool?), string name = default(string), string targetResourceUri = default(string), string targetResourceLocation = default(string))
         {
             Tags = tags;
             Profiles = profiles;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             Enabled = enabled;
             Name = name;
             TargetResourceUri = targetResourceUri;
+            TargetResourceLocation = targetResourceLocation;
             CustomInit();
         }
 
@@ -103,6 +106,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetResourceUri")]
         public string TargetResourceUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the resource that the autoscale
+        /// setting should be added to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetResourceLocation")]
+        public string TargetResourceLocation { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -4,17 +4,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class ConnectionMonitorTests : NetworkTestsManagementClientBase
+    public class ConnectionMonitorTests : NetworkServiceClientTestBase
     {
         public ConnectionMonitorTests(bool isAsync) : base(isAsync)
         {
@@ -29,10 +27,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
+        private ConnectionMonitorCollection ConnectionMonitors
         {
-            await CleanupResourceGroupsAsync();
+            get
+            {
+                return GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.GetConnectionMonitors();
+            }
         }
 
         [Test]
@@ -42,49 +42,28 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                 resourcesClient: ResourceManagementClient,
-                 resourceGroupName: resourceGroupName,
-                 location: location,
-                 virtualMachineName: virtualMachineName,
-                 storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 networkInterfaceName: networkInterfaceName,
-                 networkSecurityGroupName: networkSecurityGroupName,
-                 diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 deploymentName: Recording.GenerateAssetName("azsmnet"),
-                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                 );
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
-
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await deployWindowsNetworkAgent(virtualMachineName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = "cm";
-            ConnectionMonitor cm = new ConnectionMonitor
+            var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -93,16 +72,16 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            Operation<ConnectionMonitorResult> putConnectionMonitorOperation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName, cm);
-            Response<ConnectionMonitorResult> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName, cm);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
-            Assert.AreEqual("Running", putConnectionMonitor.Value.MonitoringStatus);
-            Assert.AreEqual("centraluseuap", putConnectionMonitor.Value.Location);
-            Assert.AreEqual(30, putConnectionMonitor.Value.MonitoringIntervalInSeconds);
-            Assert.AreEqual(connectionMonitorName, putConnectionMonitor.Value.Name);
-            Assert.AreEqual(getVm.Value.Id, putConnectionMonitor.Value.Source.ResourceId);
-            Assert.AreEqual("bing.com", putConnectionMonitor.Value.Destination.Address);
-            Assert.AreEqual(80, putConnectionMonitor.Value.Destination.Port);
+            Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
+            Assert.AreEqual("centraluseuap", putConnectionMonitor.Value.Data.Location);
+            Assert.AreEqual(30, putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
+            Assert.AreEqual(connectionMonitorName, putConnectionMonitor.Value.Data.Name);
+            Assert.AreEqual(vm.Id, putConnectionMonitor.Value.Data.Source.ResourceId);
+            Assert.AreEqual("bing.com", putConnectionMonitor.Value.Data.Destination.Address);
+            Assert.AreEqual(80, putConnectionMonitor.Value.Data.Destination.Port);
         }
 
         [Test]
@@ -112,50 +91,29 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                 resourcesClient: ResourceManagementClient,
-                 resourceGroupName: resourceGroupName,
-                 location: location,
-                 virtualMachineName: virtualMachineName,
-                 storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 networkInterfaceName: networkInterfaceName,
-                 networkSecurityGroupName: networkSecurityGroupName,
-                 diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 deploymentName: Recording.GenerateAssetName("azsmnet"),
-                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                 );
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
-
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await deployWindowsNetworkAgent(virtualMachineName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            ConnectionMonitor cm = new ConnectionMonitor
+            var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -165,15 +123,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 AutoStart = false
             };
 
-            Operation<ConnectionMonitorResult> putConnectionMonitorOperation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName, cm);
-            Response<ConnectionMonitorResult> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
-            Assert.AreEqual("NotStarted", putConnectionMonitor.Value.MonitoringStatus);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName, cm);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
+            Assert.AreEqual("NotStarted", putConnectionMonitor.Value.Data.MonitoringStatus);
 
-            ConnectionMonitorsStartOperation connectionMonitorsStartOperation = await NetworkManagementClient.ConnectionMonitors.StartStartAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName);
-            await WaitForCompletionAsync(connectionMonitorsStartOperation);
+            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync(true);
+            await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
-            Response<ConnectionMonitorResult> getConnectionMonitor = await NetworkManagementClient.ConnectionMonitors.GetAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName);
-            Assert.AreEqual("Running", getConnectionMonitor.Value.MonitoringStatus);
+            Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
+            Assert.AreEqual("Running", getConnectionMonitor.Value.Data.MonitoringStatus);
         }
 
         [Test]
@@ -183,49 +141,28 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
-
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await deployWindowsNetworkAgent(virtualMachineName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            ConnectionMonitor cm = new ConnectionMonitor
+            var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -234,15 +171,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            Operation<ConnectionMonitorResult> putConnectionMonitorOperation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName, cm);
-            Response<ConnectionMonitorResult> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
-            Assert.AreEqual("Running", putConnectionMonitor.Value.MonitoringStatus);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName, cm);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
+            Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
 
-            ConnectionMonitorsStopOperation connectionMonitorsStopOperation = await NetworkManagementClient.ConnectionMonitors.StartStopAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName);
-            await WaitForCompletionAsync(connectionMonitorsStopOperation);
+            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync(true);
+            await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
-            Response<ConnectionMonitorResult> getConnectionMonitor = await NetworkManagementClient.ConnectionMonitors.GetAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName);
-            Assert.AreEqual("Stopped", getConnectionMonitor.Value.MonitoringStatus);
+            Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
+            Assert.AreEqual("Stopped", getConnectionMonitor.Value.Data.MonitoringStatus);
         }
 
         [Test]
@@ -252,49 +189,28 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
-
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await deployWindowsNetworkAgent (virtualMachineName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            ConnectionMonitor cm = new ConnectionMonitor
+            var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -303,17 +219,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            Operation<ConnectionMonitorResult> putConnectionMonitorOperation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName, cm);
-            await WaitForCompletionAsync(putConnectionMonitorOperation);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName, cm);
+            await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
-            ConnectionMonitorsStartOperation connectionMonitorsStartOperation = await NetworkManagementClient.ConnectionMonitors.StartStartAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName);
-            await WaitForCompletionAsync(connectionMonitorsStartOperation);
+            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync(true);
+            await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
-            ConnectionMonitorsStopOperation connectionMonitorsStopOperation = await NetworkManagementClient.ConnectionMonitors.StartStopAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName);
-            await WaitForCompletionAsync(connectionMonitorsStopOperation);
+            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync(true);
+            await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
-            Operation<ConnectionMonitorQueryResult> queryResultOperation = await NetworkManagementClient.ConnectionMonitors.StartQueryAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName);
-            Response<ConnectionMonitorQueryResult> queryResult = await WaitForCompletionAsync(queryResultOperation);
+            Operation<ConnectionMonitorQueryResult> queryResultOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.QueryAsync(true);
+            Response<ConnectionMonitorQueryResult> queryResult = await queryResultOperation.WaitForCompletionAsync();;
             //Has.One.EqualTo(queryResult.States);
             Assert.AreEqual("Reachable", queryResult.Value.States[0].ConnectionState);
             Assert.AreEqual("InProgress", queryResult.Value.States[0].EvaluationState);
@@ -327,49 +243,28 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup (resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
-
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await deployWindowsNetworkAgent (virtualMachineName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            ConnectionMonitor cm = new ConnectionMonitor
+            var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -378,14 +273,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            Operation<ConnectionMonitorResult> putConnectionMonitorOperation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName, cm);
-            Response<ConnectionMonitorResult> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
-            Assert.AreEqual(30, putConnectionMonitor.Value.MonitoringIntervalInSeconds);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName, cm);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
+            Assert.AreEqual(30, putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
 
             cm.MonitoringIntervalInSeconds = 60;
-            Operation<ConnectionMonitorResult> updateConnectionMonitorOperation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName, cm);
-            Response<ConnectionMonitorResult> updateConnectionMonitor = await WaitForCompletionAsync(updateConnectionMonitorOperation);
-            Assert.AreEqual(60, updateConnectionMonitor.Value.MonitoringIntervalInSeconds);
+            var updateConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName, cm);
+            Response<ConnectionMonitor> updateConnectionMonitor = await updateConnectionMonitorOperation.WaitForCompletionAsync();;
+            Assert.AreEqual(60, updateConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
         }
 
         [Test]
@@ -395,50 +290,29 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup (resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
-
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await deployWindowsNetworkAgent (virtualMachineName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName1 = Recording.GenerateAssetName("azsmnet");
             string connectionMonitorName2 = Recording.GenerateAssetName("azsmnet");
-            ConnectionMonitor cm = new ConnectionMonitor
+            var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -448,18 +322,21 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 AutoStart = false
             };
 
-            Operation<ConnectionMonitorResult> connectionMonitor1Operation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName1, cm);
-            await WaitForCompletionAsync(connectionMonitor1Operation);
-            Operation<ConnectionMonitorResult> connectionMonitor2Operation = await NetworkManagementClient.ConnectionMonitors.StartCreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName2, cm);
-            await WaitForCompletionAsync(connectionMonitor2Operation);
+            var connectionMonitor1Operation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName1, cm);
+            await connectionMonitor1Operation.WaitForCompletionAsync();;
+            var connectionMonitor2Operation = await ConnectionMonitors.CreateOrUpdateAsync(true, connectionMonitorName2, cm);
+            var connectionMonitor2 = (await connectionMonitor2Operation.WaitForCompletionAsync()).Value;
 
-            AsyncPageable<ConnectionMonitorResult> getConnectionMonitors1AP = NetworkManagementClient.ConnectionMonitors.ListAsync("NetworkWatcherRG", "NetworkWatcher_westus2");
-            Task<List<ConnectionMonitorResult>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
+            AsyncPageable<ConnectionMonitor> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();
+            Task<List<ConnectionMonitor>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
             Assert.AreEqual(2, getConnectionMonitors1.Result.Count);
 
-            ConnectionMonitorsDeleteOperation connectionMonitorsDeleteOperation = await NetworkManagementClient.ConnectionMonitors.StartDeleteAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectionMonitorName2);
-            await WaitForCompletionAsync(connectionMonitorsDeleteOperation);
-            AsyncPageable<ConnectionMonitorResult> getConnectionMonitors2 = NetworkManagementClient.ConnectionMonitors.ListAsync("NetworkWatcherRG", "NetworkWatcher_westus2");
+            var operation = await connectionMonitor2.DeleteAsync(true);
+            await operation.WaitForCompletionResponseAsync();
+            // TODO: restore to use Delete of the specific resource collection: ADO 5998
+            //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.DeleteAsync(true);
+            //await connectionMonitorsDeleteOperation.WaitForCompletionAsync();;
+            AsyncPageable<ConnectionMonitor> getConnectionMonitors2 = ConnectionMonitors.GetAllAsync();
             Has.One.EqualTo(getConnectionMonitors2);
         }
     }

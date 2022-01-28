@@ -6,7 +6,9 @@ extends:
     ServiceDirectory: search
     TimeoutInMinutes: 240
     MaxParallel: 2
-    UnsupportedClouds: 'Canary'
-    SupportedClouds: 'Public,UsGov,China'
+    # TODO: change 'Preview' cloud back to public after search RP fixes deletion metadata issue
+    # https://github.com/Azure/azure-sdk-tools/issues/2216
+    Clouds: 'Preview'
+    SupportedClouds: 'Preview,UsGov,China'
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live

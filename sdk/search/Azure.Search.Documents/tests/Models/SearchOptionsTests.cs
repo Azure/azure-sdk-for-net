@@ -54,16 +54,16 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.QueryAnswerCount);
             Assert.IsNull(searchOptions.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = QueryAnswer.None;
-            Assert.AreEqual($"{QueryAnswer.None}|count-1", searchOptions.QueryAnswerRaw);
+            searchOptions.QueryAnswer = QueryAnswerType.None;
+            Assert.AreEqual($"{QueryAnswerType.None}|count-1", searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswerCount);
 
-            searchOptions.QueryAnswer = QueryAnswer.Extractive;
-            Assert.AreEqual($"{QueryAnswer.Extractive}|count-1", searchOptions.QueryAnswerRaw);
+            searchOptions.QueryAnswer = QueryAnswerType.Extractive;
+            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-1", searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswerCount);
 
             searchOptions.QueryAnswerRaw = "none";
-            Assert.AreEqual(QueryAnswer.None, searchOptions.QueryAnswer);
+            Assert.AreEqual(QueryAnswerType.None, searchOptions.QueryAnswer);
             Assert.IsNull(searchOptions.QueryAnswerCount);
         }
 
@@ -97,22 +97,22 @@ namespace Azure.Search.Documents.Tests.Models
 
             // We can set `QueryAnswer` to one of the known values, using either a string or a pre-defined value.
             searchOptions.QueryAnswer = "none";
-            Assert.AreEqual($"{QueryAnswer.None}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = QueryAnswer.None;
-            Assert.AreEqual($"{QueryAnswer.None}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
+            searchOptions.QueryAnswer = QueryAnswerType.None;
+            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswer = "extractive";
-            Assert.AreEqual($"{QueryAnswer.Extractive}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = QueryAnswer.Extractive;
-            Assert.AreEqual($"{QueryAnswer.Extractive}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
+            searchOptions.QueryAnswer = QueryAnswerType.Extractive;
+            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
 
             // We can also set `QueryAnswer` to a value unknown to the SDK.
             searchOptions.QueryAnswer = "unknown";
             Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
 
-            searchOptions.QueryAnswer = new QueryAnswer("unknown");
+            searchOptions.QueryAnswer = new QueryAnswerType("unknown");
             Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswerRaw = "unknown|count-10";
@@ -126,20 +126,20 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
 
             Assert.IsNull(searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
             Assert.IsNull(searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaption = QueryCaption.None;
-            Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            searchOptions.QueryCaption = QueryCaptionType.None;
+            Assert.AreEqual($"{QueryCaptionType.None}|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
 
-            searchOptions.QueryCaption = QueryCaption.Extractive;
-            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-True", searchOptions.QueryCaptionRaw);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            searchOptions.QueryCaption = QueryCaptionType.Extractive;
+            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
 
             searchOptions.QueryCaptionRaw = "none";
-            Assert.AreEqual(QueryCaption.None, searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.AreEqual(QueryCaptionType.None, searchOptions.QueryCaption);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
         }
 
         [Test]
@@ -148,14 +148,14 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions searchOptions = new();
 
             Assert.IsNull(searchOptions.QueryCaption);
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
             Assert.IsNull(searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlight = true;
+            searchOptions.QueryCaptionHighlightEnabled = true;
             Assert.IsNull(searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaption);
 
-            searchOptions.QueryCaptionHighlight = false;
+            searchOptions.QueryCaptionHighlightEnabled = false;
             Assert.IsNull(searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaption);
         }
@@ -167,35 +167,35 @@ namespace Azure.Search.Documents.Tests.Models
 
             // We can set `QueryCaption` to one of the known values, using either a string or a predefined value.
             searchOptions.QueryCaption = "none";
-            Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaptionType.None}|highlight-True", searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaption = QueryCaption.None;
-            Assert.AreEqual($"{QueryCaption.None}|highlight-True", searchOptions.QueryCaptionRaw);
+            searchOptions.QueryCaption = QueryCaptionType.None;
+            Assert.AreEqual($"{QueryCaptionType.None}|highlight-True", searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlight = false;
+            searchOptions.QueryCaptionHighlightEnabled = false;
 
             searchOptions.QueryCaption = "extractive";
-            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaption = QueryCaption.Extractive;
-            Assert.AreEqual($"{QueryCaption.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
+            searchOptions.QueryCaption = QueryCaptionType.Extractive;
+            Assert.AreEqual($"{QueryCaptionType.Extractive}|highlight-False", searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryCaptionHighlight = true;
+            searchOptions.QueryCaptionHighlightEnabled = true;
 
             // We can also set `QueryCaption` to a value unknown to the SDK.
             searchOptions.QueryCaption = "unknown";
             Assert.AreEqual($"unknown|highlight-True", searchOptions.QueryCaptionRaw);
 
-            searchOptions.QueryAnswer = new QueryAnswer("unknown");
+            searchOptions.QueryAnswer = new QueryAnswerType("unknown");
             Assert.AreEqual($"unknown|highlight-True", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaptionRaw = "unknown";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.IsNull(searchOptions.QueryCaptionHighlight);
+            Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
 
             searchOptions.QueryCaptionRaw = "unknown|highlight-False";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.AreEqual(false, searchOptions.QueryCaptionHighlight);
+            Assert.AreEqual(false, searchOptions.QueryCaptionHighlightEnabled);
         }
 
         [Test]
@@ -205,9 +205,9 @@ namespace Azure.Search.Documents.Tests.Models
             {
                 QueryType = SearchQueryType.Semantic,
                 QueryLanguage = QueryLanguage.EnUs,
-                QueryAnswer = QueryAnswer.Extractive,
+                QueryAnswer = QueryAnswerType.Extractive,
                 QueryAnswerCount = 5,
-                QueryCaption = QueryCaption.Extractive,
+                QueryCaption = QueryCaptionType.Extractive,
             };
 
             Assert.AreEqual("extractive|count-5", semanticSearchOptions.QueryAnswerRaw);

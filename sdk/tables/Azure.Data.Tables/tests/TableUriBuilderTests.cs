@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual(443, tableuribuilder.Port);
             Assert.IsNull(tableuribuilder.Sas);
             Assert.AreEqual("", tableuribuilder.Query);
-
+            Assert.AreEqual("table", tableuribuilder.Tablename);
             Assert.AreEqual(originalUri, newUri);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual("account", tableuribuilder.AccountName);
             Assert.IsNull(tableuribuilder.Sas);
             Assert.AreEqual("comp=list", tableuribuilder.Query);
-
+            Assert.AreEqual("", tableuribuilder.Tablename);
             Assert.AreEqual(originalUri, newUri);
         }
 
@@ -232,7 +232,7 @@ namespace Azure.Data.Tables.Tests
         public void TableBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
         {
             // Arrange
-            Uri initialUri = new Uri($"https://account.table.core.windows.net/table?tn=tablename&sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.table.core.windows.net/table?tn=tablename&sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D");
             TableUriBuilder tableuribuilder = new TableUriBuilder(initialUri);
 
             // Act
@@ -250,7 +250,7 @@ namespace Azure.Data.Tables.Tests
             // Arrange
             string startTime = "2020-10-27T12Z";
             string expiryTime = "2020-10-28T13Z";
-            Uri initialUri = new Uri($"https://account.table.core.windows.net/table?sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.table.core.windows.net/table?sv=2020-04-08&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D");
 
             // Act
             try

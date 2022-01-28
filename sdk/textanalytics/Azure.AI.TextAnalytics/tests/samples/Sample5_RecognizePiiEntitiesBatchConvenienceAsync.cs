@@ -4,14 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public async Task RecognizePiiEntitiesBatchConvenienceAsync()
@@ -20,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string documentA = @"Parker Doe has repaid all of their loans as of 2020-04-25.
                                 Their SSN is 859-98-0987. To contact them, use their phone number 800-102-1100.

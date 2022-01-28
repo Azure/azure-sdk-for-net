@@ -47,7 +47,7 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared acccess signature.
+        /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared access signature.
         /// </summary>
         /// <param name="sasUri">The Uri containing a SAS token to parse.</param>
         /// <returns></returns>

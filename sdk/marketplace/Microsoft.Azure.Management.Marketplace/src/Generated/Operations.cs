@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Marketplace
     /// <summary>
     /// Operations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<MarketplaceManagementClient>, IOperations
+    internal partial class Operations : IServiceOperations<MarketplaceRPServiceClient>, IOperations
     {
         /// <summary>
         /// Initializes a new instance of the Operations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(MarketplaceManagementClient client)
+        internal Operations(MarketplaceRPServiceClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Marketplace
         }
 
         /// <summary>
-        /// Gets a reference to the MarketplaceManagementClient
+        /// Gets a reference to the MarketplaceRPServiceClient
         /// </summary>
-        public MarketplaceManagementClient Client { get; private set; }
+        public MarketplaceRPServiceClient Client { get; private set; }
 
         /// <summary>
         /// Lists all of the available Microsoft.Marketplace REST API operations.

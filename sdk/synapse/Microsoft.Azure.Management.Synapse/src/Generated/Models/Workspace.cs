@@ -77,8 +77,15 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="publicNetworkAccess">Enable or Disable public network
         /// access to workspace. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="cspWorkspaceAdminProperties">Initial workspace AAD
+        /// admin properties for a CSP subscription</param>
+        /// <param name="settings">Workspace settings</param>
+        /// <param name="azureADOnlyAuthentication">Enable or Disable
+        /// AzureADOnlyAuthentication on All Workspace subresource</param>
+        /// <param name="trustedServiceBypassEnabled">Is
+        /// trustedServiceBypassEnabled for the workspace</param>
         /// <param name="identity">Identity of the workspace</param>
-        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStorageAccountDetails defaultDataLakeStorage = default(DataLakeStorageAccountDetails), string sqlAdministratorLoginPassword = default(string), string managedResourceGroupName = default(string), string provisioningState = default(string), string sqlAdministratorLogin = default(string), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IDictionary<string, string> connectivityEndpoints = default(IDictionary<string, string>), string managedVirtualNetwork = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), EncryptionDetails encryption = default(EncryptionDetails), System.Guid? workspaceUID = default(System.Guid?), IDictionary<string, object> extraProperties = default(IDictionary<string, object>), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default(WorkspaceRepositoryConfiguration), PurviewConfiguration purviewConfiguration = default(PurviewConfiguration), string adlaResourceId = default(string), string publicNetworkAccess = default(string), ManagedIdentity identity = default(ManagedIdentity))
+        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStorageAccountDetails defaultDataLakeStorage = default(DataLakeStorageAccountDetails), string sqlAdministratorLoginPassword = default(string), string managedResourceGroupName = default(string), string provisioningState = default(string), string sqlAdministratorLogin = default(string), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IDictionary<string, string> connectivityEndpoints = default(IDictionary<string, string>), string managedVirtualNetwork = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), EncryptionDetails encryption = default(EncryptionDetails), System.Guid? workspaceUID = default(System.Guid?), IDictionary<string, object> extraProperties = default(IDictionary<string, object>), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default(WorkspaceRepositoryConfiguration), PurviewConfiguration purviewConfiguration = default(PurviewConfiguration), string adlaResourceId = default(string), string publicNetworkAccess = default(string), CspWorkspaceAdminProperties cspWorkspaceAdminProperties = default(CspWorkspaceAdminProperties), IDictionary<string, object> settings = default(IDictionary<string, object>), bool? azureADOnlyAuthentication = default(bool?), bool? trustedServiceBypassEnabled = default(bool?), ManagedIdentity identity = default(ManagedIdentity))
             : base(location, id, name, type, tags)
         {
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -98,6 +105,10 @@ namespace Microsoft.Azure.Management.Synapse.Models
             PurviewConfiguration = purviewConfiguration;
             AdlaResourceId = adlaResourceId;
             PublicNetworkAccess = publicNetworkAccess;
+            CspWorkspaceAdminProperties = cspWorkspaceAdminProperties;
+            Settings = settings;
+            AzureADOnlyAuthentication = azureADOnlyAuthentication;
+            TrustedServiceBypassEnabled = trustedServiceBypassEnabled;
             Identity = identity;
             CustomInit();
         }
@@ -216,6 +227,32 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets initial workspace AAD admin properties for a CSP
+        /// subscription
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cspWorkspaceAdminProperties")]
+        public CspWorkspaceAdminProperties CspWorkspaceAdminProperties { get; set; }
+
+        /// <summary>
+        /// Gets workspace settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.settings")]
+        public IDictionary<string, object> Settings { get; private set; }
+
+        /// <summary>
+        /// Gets or sets enable or Disable AzureADOnlyAuthentication on All
+        /// Workspace subresource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureADOnlyAuthentication")]
+        public bool? AzureADOnlyAuthentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets is trustedServiceBypassEnabled for the workspace
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.trustedServiceBypassEnabled")]
+        public bool? TrustedServiceBypassEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets identity of the workspace

@@ -104,7 +104,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// authentication.</param>
         /// <param name="restoreParameters">Parameters to indicate the
         /// information about the restore.</param>
-        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), string createMode = default(string), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters))
+        /// <param name="capacity">The object that represents all properties
+        /// related to capacity enforcement on an account.</param>
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), string createMode = default(string), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters), Capacity capacity = default(Capacity))
             : base(id, name, type, location, tags)
         {
             Kind = kind;
@@ -134,6 +136,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
             DisableLocalAuth = disableLocalAuth;
             RestoreParameters = restoreParameters;
+            Capacity = capacity;
             CustomInit();
         }
         /// <summary>
@@ -334,6 +337,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public RestoreParameters RestoreParameters { get; set; }
 
         /// <summary>
+        /// Gets or sets the object that represents all properties related to
+        /// capacity enforcement on an account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacity")]
+        public Capacity Capacity { get; set; }
+
+        /// <summary>
         /// The offer type for the database
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseAccountOfferType")]
@@ -374,6 +384,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (Capacity != null)
+            {
+                Capacity.Validate();
             }
         }
     }

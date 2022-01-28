@@ -15,6 +15,7 @@ namespace Azure.Core.Tests
         private List<IDisposable> _subscriptions = new();
 
         public List<DiagnosticListener> Sources { get; } = new();
+        public Action<(string Key, object Value, DiagnosticListener Listener)> EventCallback { get; set; }
         public Queue<(string Key, object Value, DiagnosticListener Listener)> Events { get; } = new();
 
         public Queue<(string Name, object Arg1, object Arg2)> IsEnabledCalls { get; } = new();
@@ -45,7 +46,15 @@ namespace Azure.Core.Tests
                 lock (subscriptions)
                 {
                     Sources.Add(value);
-                    subscriptions.Add(value.Subscribe(new InternalListener(Events, value), IsEnabled));
+                    subscriptions.Add(value.Subscribe(new InternalListener(evt =>
+                    {
+                        lock (Events)
+                        {
+                            Events.Enqueue(evt);
+                        }
+
+                        EventCallback?.Invoke(evt);
+                    }, value), IsEnabled));
                 }
             }
         }
@@ -86,15 +95,15 @@ namespace Azure.Core.Tests
 
         private class InternalListener : IObserver<KeyValuePair<string, object>>
         {
-            private readonly Queue<(string, object, DiagnosticListener)> _queue;
+            private readonly Action<(string, object, DiagnosticListener)> _queue;
 
             private DiagnosticListener _listener;
 
             public InternalListener(
-                Queue<(string Key, object Value, DiagnosticListener Listener)> queue,
+                Action<(string Key, object Value, DiagnosticListener Listener)> eventCallback,
                 DiagnosticListener listener)
             {
-                _queue = queue;
+                _queue = eventCallback;
                 _listener = listener;
             }
 
@@ -108,10 +117,7 @@ namespace Azure.Core.Tests
 
             public void OnNext(KeyValuePair<string, object> value)
             {
-                lock (_queue)
-                {
-                    _queue.Enqueue((value.Key, value.Value, _listener));
-                }
+                _queue((value.Key, value.Value, _listener));
             }
         }
     }

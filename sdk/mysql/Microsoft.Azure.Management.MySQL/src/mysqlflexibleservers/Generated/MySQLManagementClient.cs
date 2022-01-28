@@ -88,9 +88,9 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         public virtual IReplicasOperations Replicas { get; private set; }
 
         /// <summary>
-        /// Gets the IServerKeysOperations.
+        /// Gets the IBackupsOperations.
         /// </summary>
-        public virtual IServerKeysOperations ServerKeys { get; private set; }
+        public virtual IBackupsOperations Backups { get; private set; }
 
         /// <summary>
         /// Gets the IFirewallRulesOperations.
@@ -108,11 +108,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         public virtual IConfigurationsOperations Configurations { get; private set; }
 
         /// <summary>
-        /// Gets the IServerParametersOperations.
-        /// </summary>
-        public virtual IServerParametersOperations ServerParameters { get; private set; }
-
-        /// <summary>
         /// Gets the ILocationBasedCapabilitiesOperations.
         /// </summary>
         public virtual ILocationBasedCapabilitiesOperations LocationBasedCapabilities { get; private set; }
@@ -126,6 +121,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// Gets the ICheckNameAvailabilityOperations.
         /// </summary>
         public virtual ICheckNameAvailabilityOperations CheckNameAvailability { get; private set; }
+
+        /// <summary>
+        /// Gets the IGetPrivateDnsZoneSuffixOperations.
+        /// </summary>
+        public virtual IGetPrivateDnsZoneSuffixOperations GetPrivateDnsZoneSuffix { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -375,17 +375,17 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         {
             Servers = new ServersOperations(this);
             Replicas = new ReplicasOperations(this);
-            ServerKeys = new ServerKeysOperations(this);
+            Backups = new BackupsOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             Databases = new DatabasesOperations(this);
             Configurations = new ConfigurationsOperations(this);
-            ServerParameters = new ServerParametersOperations(this);
             LocationBasedCapabilities = new LocationBasedCapabilitiesOperations(this);
             CheckVirtualNetworkSubnetUsage = new CheckVirtualNetworkSubnetUsageOperations(this);
             CheckNameAvailability = new CheckNameAvailabilityOperations(this);
+            GetPrivateDnsZoneSuffix = new GetPrivateDnsZoneSuffixOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-07-01-privatepreview";
+            ApiVersion = "2021-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

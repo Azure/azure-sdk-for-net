@@ -5,7 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Length": "0",
         "traceparent": "00-0578d7661f46e941979e2ab6533a432c-879fe81ed393974b-00",
         "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210802.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "b34c4de6bd8c4864aa7831c0913dd72b",

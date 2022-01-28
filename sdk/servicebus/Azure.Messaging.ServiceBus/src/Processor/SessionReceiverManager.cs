@@ -160,11 +160,6 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken processorCancellationToken,
             bool forceClose = false)
         {
-            if (forceClose)
-            {
-                await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
-                return;
-            }
             bool releaseSemaphore = false;
             try
             {
@@ -172,6 +167,13 @@ namespace Azure.Messaging.ServiceBus
                 // we need to ensure that we at least attempt to close the receiver if needed.
                 await WaitSemaphore(CancellationToken.None).ConfigureAwait(false);
                 releaseSemaphore = true;
+
+                if (forceClose)
+                {
+                    await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
+                    return;
+                }
+
                 if (_receiver == null)
                 {
                     return;
@@ -310,7 +312,7 @@ namespace Azure.Messaging.ServiceBus
                     // single message at one time, so cancelling the token there would serve no purpose.
                     if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
-                        _sessionCancellationSource.Cancel();
+                        CancelSession();
                     }
                 }
                 await RaiseExceptionReceived(
@@ -399,14 +401,10 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal void ReleaseSession()
-        {
-            _sessionCancellationSource.Cancel();
-        }
-
         internal void CancelSession()
         {
             _sessionCancellationSource?.Cancel();
+            _sessionCancellationSource?.Dispose();
         }
     }
 }

@@ -114,7 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableDataFlowDebugSession debugSession = await DisposableDataFlowDebugSession.Create (debugClient, this.Recording);
 
             // SYNAPSE_API_ISSUE - What payload do we need here?
-            DataFlowDebugSessionExecuteCommandOperation executeOperation = await debugClient.StartExecuteCommandAsync (new DataFlowDebugCommandRequest (debugSession.SessionId, new object ()));
+            DataFlowDebugSessionExecuteCommandOperation executeOperation = await debugClient.StartExecuteCommandAsync(new DataFlowDebugCommandRequest { SessionId = debugSession.SessionId });
             DataFlowDebugCommandResponse response = await executeOperation.WaitForCompletionAsync();
             Assert.AreEqual (200, response.Status);
         }

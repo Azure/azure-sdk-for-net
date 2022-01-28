@@ -930,14 +930,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"key1\": \"pPHC5JKLlCWu+rMuztx2tIdMBOOUCaolA3OtdAikXqoRe0UWFMBXZ/pDaeMbSMWf6LdclZuZEW4U2wh9ZpoMFg==\",\r\n  \"key2\": \"WnosfBwSHN4bo8XLkmLzsEwn/MK2vMJg3F+Uzt2SYB4PE79fmtN5FRzX6Fo6AoDbOcdnhxgMxmie3wCmYPPg8A==\"\r\n}",
+      "ResponseBody": "{\r\n  \"key1\": \"Sanitized\",\r\n  \"key2\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2716/providers/Microsoft.Compute/cloudServices/cs5518?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDI5Njc5MGQtNDI3Yy00OGNhLWIyMDQtOGI3MjliYmQ4NjcwL3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjI3MTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2Nsb3VkU2VydmljZXMvY3M1NTE4P2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"packageUrl\": \"https://saforcspkg6518.blob.core.windows.net/sascontainer/HelloWorldTest_WebRole_D2_V2.cspkg?sv=2017-04-17&sr=b&sig=o2731ZaoKOilz2YM5SUBkwsy9Wf8WAAvr9HXeVfG03k%3D&st=2021-03-21T06%3A58%3A39Z&se=2021-03-24T06%3A58%3A39Z&sp=rw\",\r\n    \"configuration\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-16\\\"?>\\r\\n<ServiceConfiguration xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" serviceName=\\\"HelloWorldTest_WebRole\\\" osFamily=\\\"5\\\" osVersion=\\\"*\\\" schemaVersion=\\\"2015-04.2.6\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration\\\">\\r\\n  <Role name=\\\"HelloWorldTest1\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <NetworkConfiguration>\\r\\n    <VirtualNetworkSite name=\\\"csvnet1671\\\" />\\r\\n    <AddressAssignments>\\r\\n      <InstanceAddress roleName=\\\"HelloWorldTest1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet1016\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n    </AddressAssignments>\\r\\n  </NetworkConfiguration>\\r\\n</ServiceConfiguration>\",\r\n    \"roleProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HelloWorldTest1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"networkProfile\": {\r\n      \"loadBalancerConfigurations\": [\r\n        {\r\n          \"name\": \"lb9408\",\r\n          \"properties\": {\r\n            \"frontendIPConfigurations\": [\r\n              {\r\n                \"name\": \"lbfe5360\",\r\n                \"properties\": {\r\n                  \"publicIPAddress\": {\r\n                    \"id\": \"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2716/providers/Microsoft.Network/publicIPAddresses/cspip1149\"\r\n                  }\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"packageUrl\": \"Sanitized\",\r\n    \"configuration\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-16\\\"?>\\r\\n<ServiceConfiguration xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" serviceName=\\\"HelloWorldTest_WebRole\\\" osFamily=\\\"5\\\" osVersion=\\\"*\\\" schemaVersion=\\\"2015-04.2.6\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration\\\">\\r\\n  <Role name=\\\"HelloWorldTest1\\\">\\r\\n    <Instances count=\\\"1\\\" />\\r\\n    <ConfigurationSettings>\\r\\n      <Setting name=\\\"Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString\\\" value=\\\"UseDevelopmentStorage=true\\\" />\\r\\n    </ConfigurationSettings>\\r\\n  </Role>\\r\\n  <NetworkConfiguration>\\r\\n    <VirtualNetworkSite name=\\\"csvnet1671\\\" />\\r\\n    <AddressAssignments>\\r\\n      <InstanceAddress roleName=\\\"HelloWorldTest1\\\">\\r\\n        <Subnets>\\r\\n          <Subnet name=\\\"subnet1016\\\" />\\r\\n        </Subnets>\\r\\n      </InstanceAddress>\\r\\n    </AddressAssignments>\\r\\n  </NetworkConfiguration>\\r\\n</ServiceConfiguration>\",\r\n    \"roleProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HelloWorldTest1\",\r\n          \"sku\": {\r\n            \"name\": \"Standard_D2_v2\",\r\n            \"tier\": \"Standard\",\r\n            \"capacity\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"networkProfile\": {\r\n      \"loadBalancerConfigurations\": [\r\n        {\r\n          \"name\": \"lb9408\",\r\n          \"properties\": {\r\n            \"frontendIPConfigurations\": [\r\n              {\r\n                \"name\": \"lbfe5360\",\r\n                \"properties\": {\r\n                  \"publicIPAddress\": {\r\n                    \"id\": \"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/crptestar2716/providers/Microsoft.Network/publicIPAddresses/cspip1149\"\r\n                  }\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "02fcf50c-e8d1-4a97-9ea9-8f72e7d30a65"
@@ -1066,7 +1066,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:28:46.7722208+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-21T23:58:46.7722208-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1127,7 +1127,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:28:46.7722208+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-21T23:58:46.7722208-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1188,7 +1188,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:28:46.7722208+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-21T23:58:46.7722208-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1249,7 +1249,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:28:46.7722208+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-21T23:58:46.7722208-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1310,7 +1310,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:28:46.7722208+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-21T23:58:46.7722208-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1371,7 +1371,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:28:46.7722208+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-21T23:58:46.7722208-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1432,7 +1432,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:28:46.7722208+05:30\",\r\n  \"endTime\": \"2021-03-22T12:32:08.5459031+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-21T23:58:46.7722208-07:00\",\r\n  \"endTime\": \"2021-03-22T00:02:08.5459031-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"9ce6f4c9-7f67-4ec7-a77b-4f3f98c05b4e\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2018,7 +2018,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:32:22.2182998+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4d7c84e5-9d7d-4ded-ab66-5efe2a76fba1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:02:22.2182998-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"4d7c84e5-9d7d-4ded-ab66-5efe2a76fba1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2079,7 +2079,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:32:22.2182998+05:30\",\r\n  \"endTime\": \"2021-03-22T12:33:17.9261227+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"4d7c84e5-9d7d-4ded-ab66-5efe2a76fba1\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:02:22.2182998-07:00\",\r\n  \"endTime\": \"2021-03-22T00:03:17.9261227-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"4d7c84e5-9d7d-4ded-ab66-5efe2a76fba1\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2267,7 +2267,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:33:23.754473+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2c98930f-1d85-4d2d-8e9f-b2b672109b2d\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:03:23.754473-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2c98930f-1d85-4d2d-8e9f-b2b672109b2d\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2328,7 +2328,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:33:23.754473+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2c98930f-1d85-4d2d-8e9f-b2b672109b2d\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:03:23.754473-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"2c98930f-1d85-4d2d-8e9f-b2b672109b2d\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2389,7 +2389,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:33:23.754473+05:30\",\r\n  \"endTime\": \"2021-03-22T12:34:49.7265997+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"2c98930f-1d85-4d2d-8e9f-b2b672109b2d\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:03:23.754473-07:00\",\r\n  \"endTime\": \"2021-03-22T00:04:49.7265997-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"2c98930f-1d85-4d2d-8e9f-b2b672109b2d\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2583,7 +2583,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:34:56.0550284+05:30\",\r\n  \"endTime\": \"2021-03-22T12:35:06.5242077+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"081ae61a-e929-4e6f-b39a-99bacb483a02\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:04:56.0550284-07:00\",\r\n  \"endTime\": \"2021-03-22T00:05:06.5242077-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"081ae61a-e929-4e6f-b39a-99bacb483a02\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2777,7 +2777,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:35:27.2907604+05:30\",\r\n  \"endTime\": \"2021-03-22T12:35:37.5255676+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"8b01ecba-c07a-4875-81a8-fc489af57c1c\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:05:27.2907604-07:00\",\r\n  \"endTime\": \"2021-03-22T00:05:37.5255676-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"8b01ecba-c07a-4875-81a8-fc489af57c1c\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2971,7 +2971,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:35:58.401463+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:05:58.401463-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3032,7 +3032,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:35:58.401463+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:05:58.401463-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3093,7 +3093,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:35:58.401463+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:05:58.401463-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3154,7 +3154,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:35:58.401463+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:05:58.401463-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3215,7 +3215,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:35:58.401463+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:05:58.401463-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3276,7 +3276,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:35:58.401463+05:30\",\r\n  \"endTime\": \"2021-03-22T12:38:50.1432746+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:05:58.401463-07:00\",\r\n  \"endTime\": \"2021-03-22T00:08:50.1432746-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"420427dc-551d-4b35-af2c-19d676b33c5a\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3464,7 +3464,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:39:03.3470133+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"04f91122-fd02-46c5-adfd-04007a8674cb\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:09:03.3470133-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"04f91122-fd02-46c5-adfd-04007a8674cb\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3525,7 +3525,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:39:03.3470133+05:30\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"04f91122-fd02-46c5-adfd-04007a8674cb\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:09:03.3470133-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"04f91122-fd02-46c5-adfd-04007a8674cb\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -3586,7 +3586,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T12:39:03.3470133+05:30\",\r\n  \"endTime\": \"2021-03-22T12:40:04.1308872+05:30\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"04f91122-fd02-46c5-adfd-04007a8674cb\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2021-03-22T00:09:03.3470133-07:00\",\r\n  \"endTime\": \"2021-03-22T00:10:04.1308872-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"04f91122-fd02-46c5-adfd-04007a8674cb\"\r\n}",
       "StatusCode": 200
     },
     {

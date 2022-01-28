@@ -53,8 +53,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// domain is supported per storage account at this time. To clear the
         /// existing custom domain, use an empty string for the custom domain
         /// name property.</param>
-        /// <param name="encryption">Provides the encryption settings on the
-        /// account. The default setting is unencrypted.</param>
+        /// <param name="encryption">Not applicable. Azure Storage encryption
+        /// at rest is enabled by default for all storage accounts and cannot
+        /// be disabled.</param>
         /// <param name="sasPolicy">SasPolicy assigned to the storage
         /// account.</param>
         /// <param name="keyPolicy">KeyPolicy assigned to the storage
@@ -66,6 +67,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// identity based authentication settings for Azure Files.</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
+        /// <param name="isSftpEnabled">Enables Secure File Transfer Protocol,
+        /// if set to true</param>
+        /// <param name="isLocalUserEnabled">Enables local users feature, if
+        /// set to true</param>
         /// <param name="networkRuleSet">Network rule set</param>
         /// <param name="largeFileSharesState">Allow large file shares if sets
         /// to Enabled. It cannot be disabled once it is enabled. Possible
@@ -88,11 +93,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="allowCrossTenantReplication">Allow or disallow cross
         /// AAD tenant object replication. The default interpretation is true
         /// for this property.</param>
+        /// <param name="defaultToOAuthAuthentication">A boolean flag which
+        /// indicates whether the default authentication is OAuth or not. The
+        /// default interpretation is false for this property.</param>
+        /// <param name="publicNetworkAccess">Allow or disallow public network
+        /// access to Storage Account. Value is optional but if passed in, must
+        /// be 'Enabled' or 'Disabled'. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="immutableStorageWithVersioning">The property is
+        /// immutable and can only be set to true at the account creation time.
+        /// When set to true, it enables object level immutability for all the
+        /// containers in the account by default.</param>
+        /// <param name="allowedCopyScope">Restrict copy to and from Storage
+        /// Accounts within an AAD tenant or with Private Links to the same
+        /// VNet. Possible values include: 'PrivateLink', 'AAD'</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? allowCrossTenantReplication = default(bool?), string kind = default(string))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), string publicNetworkAccess = default(string), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount), string allowedCopyScope = default(string), string kind = default(string))
         {
             Sku = sku;
             Tags = tags;
@@ -104,6 +123,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             AccessTier = accessTier;
             AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
+            IsSftpEnabled = isSftpEnabled;
+            IsLocalUserEnabled = isLocalUserEnabled;
             NetworkRuleSet = networkRuleSet;
             LargeFileSharesState = largeFileSharesState;
             RoutingPreference = routingPreference;
@@ -111,6 +132,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             MinimumTlsVersion = minimumTlsVersion;
             AllowSharedKeyAccess = allowSharedKeyAccess;
             AllowCrossTenantReplication = allowCrossTenantReplication;
+            DefaultToOAuthAuthentication = defaultToOAuthAuthentication;
+            PublicNetworkAccess = publicNetworkAccess;
+            ImmutableStorageWithVersioning = immutableStorageWithVersioning;
+            AllowedCopyScope = allowedCopyScope;
             Kind = kind;
             CustomInit();
         }
@@ -154,8 +179,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
-        /// Gets or sets provides the encryption settings on the account. The
-        /// default setting is unencrypted.
+        /// Gets or sets not applicable. Azure Storage encryption at rest is
+        /// enabled by default for all storage accounts and cannot be disabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
@@ -193,6 +218,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHttpsTrafficOnly")]
         public bool? EnableHttpsTrafficOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables Secure File Transfer Protocol, if set to true
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isSftpEnabled")]
+        public bool? IsSftpEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables local users feature, if set to true
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isLocalUserEnabled")]
+        public bool? IsLocalUserEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets network rule set
@@ -249,6 +286,39 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? AllowCrossTenantReplication { get; set; }
 
         /// <summary>
+        /// Gets or sets a boolean flag which indicates whether the default
+        /// authentication is OAuth or not. The default interpretation is false
+        /// for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultToOAuthAuthentication")]
+        public bool? DefaultToOAuthAuthentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow public network access to Storage
+        /// Account. Value is optional but if passed in, must be 'Enabled' or
+        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property is immutable and can only be set to true
+        /// at the account creation time. When set to true, it enables object
+        /// level immutability for all the containers in the account by
+        /// default.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.immutableStorageWithVersioning")]
+        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+
+        /// <summary>
+        /// Gets or sets restrict copy to and from Storage Accounts within an
+        /// AAD tenant or with Private Links to the same VNet. Possible values
+        /// include: 'PrivateLink', 'AAD'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowedCopyScope")]
+        public string AllowedCopyScope { get; set; }
+
+        /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
@@ -296,6 +366,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (NetworkRuleSet != null)
             {
                 NetworkRuleSet.Validate();
+            }
+            if (ImmutableStorageWithVersioning != null)
+            {
+                ImmutableStorageWithVersioning.Validate();
             }
         }
     }

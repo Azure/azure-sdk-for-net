@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,9 +17,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
         public ApplicationGatewayRedirectConfiguration()
         {
-            RequestRoutingRules = new ChangeTrackingList<SubResource>();
-            UrlPathMaps = new ChangeTrackingList<SubResource>();
-            PathRules = new ChangeTrackingList<SubResource>();
+            RequestRoutingRules = new ChangeTrackingList<WritableSubResource>();
+            UrlPathMaps = new ChangeTrackingList<WritableSubResource>();
+            PathRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string type, ApplicationGatewayRedirectType? redirectType, SubResource targetListener, string targetUrl, bool? includePath, bool? includeQueryString, IList<SubResource> requestRoutingRules, IList<SubResource> urlPathMaps, IList<SubResource> pathRules) : base(id)
+        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string type, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, string targetUrl, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> HTTP redirection type. </summary>
         public ApplicationGatewayRedirectType? RedirectType { get; set; }
         /// <summary> Reference to a listener to redirect the request to. </summary>
-        public SubResource TargetListener { get; set; }
+        public WritableSubResource TargetListener { get; set; }
         /// <summary> Url to redirect the request to. </summary>
         public string TargetUrl { get; set; }
         /// <summary> Include path in the redirected url. </summary>
@@ -66,10 +67,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Include query string in the redirected url. </summary>
         public bool? IncludeQueryString { get; set; }
         /// <summary> Request routing specifying redirect configuration. </summary>
-        public IList<SubResource> RequestRoutingRules { get; }
+        public IList<WritableSubResource> RequestRoutingRules { get; }
         /// <summary> Url path maps specifying default redirect configuration. </summary>
-        public IList<SubResource> UrlPathMaps { get; }
+        public IList<WritableSubResource> UrlPathMaps { get; }
         /// <summary> Path rules specifying redirect configuration. </summary>
-        public IList<SubResource> PathRules { get; }
+        public IList<WritableSubResource> PathRules { get; }
     }
 }

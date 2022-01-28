@@ -10,9 +10,9 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class UsageTests : NetworkTestsManagementClientBase
+    public class UsageTests : NetworkServiceClientTestBase
     {
         public UsageTests(bool isAsync) : base(isAsync)
         {
@@ -27,31 +27,28 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
-
         [Test]
+        [RecordedTest]
         public async Task UsageTest()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkSecurityGroups");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string networkSecurityGroupName = Recording.GenerateAssetName("azsmnet");
-            NetworkSecurityGroup networkSecurityGroup = new NetworkSecurityGroup() { Location = location, };
+            NetworkSecurityGroupData networkSecurityGroup = new NetworkSecurityGroupData() { Location = location, };
 
             // Put Nsg
-            NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await NetworkManagementClient.NetworkSecurityGroups.StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-            Response<NetworkSecurityGroup> putNsgResponse = await WaitForCompletionAsync(putNsgResponseOperation);
-            Assert.AreEqual("Succeeded", putNsgResponse.Value.ProvisioningState.ToString());
+            var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
+            Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
+            Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
-            Response<NetworkSecurityGroup> getNsgResponse = await NetworkManagementClient.NetworkSecurityGroups.GetAsync(resourceGroupName, networkSecurityGroupName);
+            Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
 
             // Query for usages
-            AsyncPageable<Usage> usagesResponseAP = NetworkManagementClient.Usages.ListAsync(getNsgResponse.Value.Location.Replace(" ", string.Empty));
+            AsyncPageable<Usage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
             List<Usage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
             Assert.NotNull(usagesResponse);

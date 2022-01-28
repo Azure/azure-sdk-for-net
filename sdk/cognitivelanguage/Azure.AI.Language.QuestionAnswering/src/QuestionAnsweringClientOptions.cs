@@ -4,14 +4,16 @@
 using System;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType(nameof(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions))]
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary>
     /// Client options for <see cref="QuestionAnsweringClient"/>.
     /// </summary>
+    [CodeGenType("QuestionAnsweringProjectsClientOptions")]
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_01;
 
         /// <summary>
         /// The version of the service to use.
@@ -20,11 +22,24 @@ namespace Azure.AI.Language.QuestionAnswering
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Service version "2021-05-01-preview".
+            /// Service version "2021-10-01".
             /// </summary>
-            V2021_05_01_preview = 1,
+            V2021_10_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        /// <summary>
+        /// Gets the method used to interpret string offsets, which is always <see cref="StringIndexType.Utf16CodeUnit"/> for .NET.
+        /// </summary>
+        internal static StringIndexType DefaultStringIndexType { get; } = StringIndexType.Utf16CodeUnit;
+
+        /// <summary>
+        /// Gets or sets the default language to use in some client methods.
+        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// If not set, the service default, "en" for English, is used.
+        /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
+        /// </summary>
+        public string DefaultLanguage { get; set; } = "en";
 
         internal string Version { get; }
 
@@ -35,7 +50,7 @@ namespace Azure.AI.Language.QuestionAnswering
         {
             Version = version switch
             {
-                ServiceVersion.V2021_05_01_preview => "2021-05-01-preview",
+                ServiceVersion.V2021_10_01 => "2021-10-01",
                 _ => throw new NotSupportedException()
             };
 

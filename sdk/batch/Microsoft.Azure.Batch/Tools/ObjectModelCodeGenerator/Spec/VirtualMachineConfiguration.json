@@ -35,7 +35,7 @@
       "Key": {
         "Type": "IList<DataDisk>",
         "Name": "DataDisks",
-        "SummaryComment": "The configuration for data disks attached to the Comptue Nodes in the pool.",
+        "SummaryComment": "The configuration for data disks attached to the Compute Nodes in the pool.",
         "RemarksComment": "This property must be specified if the Compute Nodes in the pool need to have empty data disks attached to them. This cannot be updated.",
         "BoundAccess": "read,write",
         "UnboundAccess": "read,write"

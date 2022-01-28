@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusMessage
+    public class ServiceBusMessage : MessageWithMetadata
     {
         /// <summary>
         /// Creates a new message.
@@ -63,12 +64,25 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+
+            AmqpMessageBody body = null;
+            if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetValue(out object valueBody))
+            {
+                body = AmqpMessageBody.FromValue(valueBody);
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequenceBody))
+            {
+                body = AmqpMessageBody.FromSequence(sequenceBody);
+            }
+            else
             {
                 throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
             }
 
-            AmqpMessageBody body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(dataBody));
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
@@ -102,7 +116,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
                     kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName)
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName)
                 {
                     continue;
                 }
@@ -142,6 +156,17 @@ namespace Azure.Messaging.ServiceBus
             {
                 AmqpMessage.Body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(value));
             }
+        }
+
+        /// <summary>
+        /// Hidden property that shadows the <see cref="Body"/> property. This is added
+        /// in order to inherit from <see cref="MessageWithMetadata"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => Body;
+            set => Body = value;
         }
 
         /// <summary>
@@ -288,13 +313,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string CorrelationId
         {
-            get
-            {
-                return AmqpMessage.Properties.CorrelationId.ToString();
-            }
+            get => AmqpMessage.Properties.CorrelationId?.ToString();
             set
             {
-                AmqpMessage.Properties.CorrelationId = new AmqpMessageId(value);
+                AmqpMessage.Properties.CorrelationId = value == null ? null : new AmqpMessageId(value);
             }
         }
 
@@ -326,13 +348,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To
         {
-            get
-            {
-                return AmqpMessage.Properties.To.ToString();
-            }
+            get => AmqpMessage.Properties.To?.ToString();
             set
             {
-                AmqpMessage.Properties.To = new AmqpAddress(value);
+                AmqpMessage.Properties.To = value == null ? null : new AmqpAddress(value);
             }
         }
 
@@ -342,7 +361,7 @@ namespace Azure.Messaging.ServiceBus
         /// Optionally describes the payload of the message, with a descriptor following the format of
         /// RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public string ContentType
+        public override string ContentType
         {
             get
             {
@@ -354,6 +373,13 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Hidden property that indicates that the <see cref="ServiceBusMessage"/> is not read-only. This is part of
+        /// the <see cref="MessageWithMetadata"/> abstraction.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool IsReadOnly => false;
+
         /// <summary>Gets or sets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>
         /// <remarks>
@@ -364,13 +390,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo
         {
-            get
-            {
-                return AmqpMessage.Properties.ReplyTo.ToString();
-            }
+            get => AmqpMessage.Properties.ReplyTo?.ToString();
             set
             {
-                AmqpMessage.Properties.ReplyTo = new AmqpAddress(value);
+                AmqpMessage.Properties.ReplyTo = value == null ? null : new AmqpAddress(value);
             }
         }
 

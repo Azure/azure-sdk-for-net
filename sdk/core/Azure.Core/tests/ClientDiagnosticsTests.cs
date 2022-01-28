@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ClientDiagnosticsTests
+    public partial class ClientDiagnosticsTests
     {
         [Test]
         public void CreatesActivityWithNameAndTags()
@@ -50,6 +51,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ActivityDurationIsNotZeroWhenStoping()
+        {
+            TimeSpan? duration = null;
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+            testListener.EventCallback = _ => { duration = Activity.Current?.Duration; };
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            scope.Start();
+
+            Thread.Sleep(50);
+
+            scope.Dispose();
+
+            Assert.True(duration > TimeSpan.Zero);
+        }
+
+        [Test]
         public void ResourceNameIsOptional()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
@@ -71,7 +92,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
             Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
-            CollectionAssert.IsEmpty(activity.Tags);
         }
 
         [Test]
@@ -82,8 +102,8 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
-            scope.AddLink("id");
-            scope.AddLink("id2");
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null);
             scope.Start();
 
             (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
@@ -93,10 +113,13 @@ namespace Azure.Core.Tests
             scope.Dispose();
 
             (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
+            var isEnabledCall = testListener.IsEnabledCalls.Dequeue();
 
+            Assert.NotNull(activity);
             Assert.Null(Activity.Current);
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
+            Assert.AreEqual("ActivityName", isEnabledCall.Name);
 
             var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity[] activitiesArray = activities.ToArray();
@@ -107,10 +130,12 @@ namespace Azure.Core.Tests
             Activity linkedActivity2 = activitiesArray[1];
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity1.IdFormat);
-            Assert.AreEqual("id", linkedActivity1.ParentId);
+            Assert.AreEqual("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", linkedActivity1.ParentId);
+            Assert.AreEqual("foo=bar", linkedActivity1.TraceStateString);
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity2.IdFormat);
-            Assert.AreEqual("id2", linkedActivity2.ParentId);
+            Assert.AreEqual("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", linkedActivity2.ParentId);
+            Assert.Null(linkedActivity2.TraceStateString);
 
             Assert.AreEqual(0, testListener.Events.Count);
         }
@@ -129,7 +154,7 @@ namespace Azure.Core.Tests
                 {"key2", "value2"}
             };
 
-            scope.AddLink("id", expectedTags);
+            scope.AddLink("id", null, expectedTags);
             scope.Start();
 
             (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
@@ -192,6 +217,8 @@ namespace Azure.Core.Tests
         {
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);
             DiagnosticScope scope = clientDiagnostics.CreateScope("");
+
+            Assert.IsFalse(scope.IsEnabled);
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());

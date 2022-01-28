@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -82,17 +82,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<IPage<IpFirewallRuleInfo>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -123,6 +112,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -130,6 +120,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -142,9 +133,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -273,7 +264,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -301,7 +292,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -326,7 +317,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -354,17 +345,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<IpFirewallRuleInfo>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -399,6 +379,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -406,6 +387,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("ruleName", ruleName);
@@ -420,9 +402,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{ruleName}", System.Uri.EscapeDataString(ruleName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -551,7 +533,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='request'>
         /// Replace all IP firewall rules request
@@ -576,7 +558,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -607,17 +589,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<IpFirewallRuleInfo>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, IpFirewallRuleInfo ipFirewallRuleInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -656,6 +627,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ipFirewallRuleInfo");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -663,6 +635,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("ruleName", ruleName);
@@ -678,9 +651,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{ruleName}", System.Uri.EscapeDataString(ruleName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -746,7 +719,7 @@ namespace Microsoft.Azure.Management.Synapse
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -833,7 +806,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='ruleName'>
         /// The IP firewall rule name
@@ -861,17 +834,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<object>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -906,6 +868,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -913,6 +876,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("ruleName", ruleName);
@@ -927,9 +891,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{ruleName}", System.Uri.EscapeDataString(ruleName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1058,7 +1022,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='request'>
         /// Replace all IP firewall rules request
@@ -1086,17 +1050,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<ReplaceAllFirewallRulesOperationResponse>> BeginReplaceAllWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ReplaceAllIpFirewallRulesRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1131,6 +1084,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "request");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1138,6 +1092,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("request", request);
@@ -1151,9 +1106,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

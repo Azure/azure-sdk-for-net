@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static SubnetAssociation DeserializeSubnetAssociation(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<IReadOnlyList<SecurityRule>> securityRules = default;
+            Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -31,10 +32,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityRule> array = new List<SecurityRule>();
+                    List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRule.DeserializeSecurityRule(item));
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
                     }
                     securityRules = array;
                     continue;

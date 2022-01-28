@@ -4,7 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
-    TimeoutInMinutes: 90
+    TimeoutInMinutes: 180
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
@@ -12,7 +12,5 @@ extends:
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'centraluseuap'
-      UsGov:
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
-        Location: 'usgovvirginia'
-    SupportedClouds: 'Public,Canary,UsGov'
+    Clouds: 'Public'
+    SupportedClouds: 'Public, Canary'

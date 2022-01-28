@@ -19,7 +19,6 @@ namespace Azure.Identity
     public class ClientSecretCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
-		private readonly bool _allowMultiTenantAuthentication;
 
         internal MsalConfidentialClient Client { get; }
 
@@ -88,7 +87,6 @@ namespace Azure.Identity
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             ClientSecret = clientSecret;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             Client = client ??
                      new MsalConfidentialClient(
@@ -96,6 +94,7 @@ namespace Azure.Identity
                          tenantId,
                          clientId,
                          clientSecret,
+                         null,
                          options as ITokenCacheOptions,
                          (options as ClientSecretCredentialOptions)?.RegionalAuthority,
                          options?.IsLoggingPIIEnabled ?? false);
@@ -113,7 +112,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -136,7 +135,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

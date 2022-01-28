@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -70,6 +70,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// </return>
         public async Task<AzureOperationResponse<AlertsMetaData>> MetaDataWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            string apiVersion = "2019-05-05-preview";
             string identifier = "MonitorServiceList";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -78,6 +79,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("identifier", identifier);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "MetaData", tracingParameters);
@@ -86,9 +88,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.AlertsManagement/alertsMetaData").ToString();
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (identifier != null)
             {
@@ -154,14 +156,13 @@ namespace Microsoft.Azure.Management.AlertsManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -171,10 +172,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -322,7 +319,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Alert>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Alert>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -335,6 +332,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
+            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -359,6 +357,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("timeRange", timeRange);
                 tracingParameters.Add("customTimeRange", customTimeRange);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAll", tracingParameters);
             }
@@ -421,7 +420,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             }
             if (sortOrder != null)
             {
-                _queryParameters.Add(string.Format("sortOrder={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(sortOrder, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("sortOrder={0}", System.Uri.EscapeDataString(sortOrder)));
             }
             if (select != null)
             {
@@ -435,9 +434,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 _queryParameters.Add(string.Format("customTimeRange={0}", System.Uri.EscapeDataString(customTimeRange)));
             }
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -606,6 +605,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "alertId");
             }
+            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -614,6 +614,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("alertId", alertId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetById", tracingParameters);
             }
@@ -623,9 +624,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{alertId}", System.Uri.EscapeDataString(alertId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -799,6 +800,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "newState");
             }
+            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -807,6 +809,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("alertId", alertId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("newState", newState);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ChangeState", tracingParameters);
@@ -817,9 +820,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{alertId}", System.Uri.EscapeDataString(alertId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (newState != null)
             {
@@ -990,6 +993,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "alertId");
             }
+            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -998,6 +1002,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("alertId", alertId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetHistory", tracingParameters);
             }
@@ -1007,9 +1012,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{alertId}", System.Uri.EscapeDataString(alertId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1227,6 +1232,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupby");
             }
+            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1246,6 +1252,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 tracingParameters.Add("alertRule", alertRule);
                 tracingParameters.Add("timeRange", timeRange);
                 tracingParameters.Add("customTimeRange", customTimeRange);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSummary", tracingParameters);
             }
@@ -1302,9 +1309,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 _queryParameters.Add(string.Format("customTimeRange={0}", System.Uri.EscapeDataString(customTimeRange)));
             }
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -1,22 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-preview.3</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageId>Azure.ResourceManager.Network</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Microsoft.Network.
       This is a beta preview vesion.  This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
     </Description>
     <PackageTags>azure;management;network</PackageTags>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- TODO: Temp workaround. Should be fixed prio release  -->
-    <NoWarn>$(NoWarn);AZC0008</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
-  </ItemGroup>
 </Project>

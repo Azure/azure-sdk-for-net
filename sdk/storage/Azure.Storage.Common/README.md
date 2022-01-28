@@ -1,6 +1,6 @@
 # Azure Storage Common client library for .NET
 
-> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
+> Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
@@ -19,7 +19,7 @@ Azure Storage client libraries.
 Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Storage.Blobs
 dotnet add package Azure.Storage.Queues
 dotnet add package Azure.Storage.Files.Shares

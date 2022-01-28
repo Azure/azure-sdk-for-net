@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for Backup Feature support
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FeatureValidationResponseBase")]
     public partial class FeatureValidationResponseBase
     {
         /// <summary>

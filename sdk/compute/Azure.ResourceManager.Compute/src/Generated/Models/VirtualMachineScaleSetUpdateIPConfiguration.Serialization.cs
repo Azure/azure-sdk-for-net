@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(Primary))
             {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerInboundNatPools)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -96,14 +97,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<string> name = default;
             Optional<string> id = default;
-            Optional<ApiEntityReference> subnet = default;
+            Optional<WritableSubResource> subnet = default;
             Optional<bool> primary = default;
             Optional<VirtualMachineScaleSetUpdatePublicIPAddressConfiguration> publicIPAddressConfiguration = default;
             Optional<IPVersion> privateIPAddressVersion = default;
-            Optional<IList<SubResource>> applicationGatewayBackendAddressPools = default;
-            Optional<IList<SubResource>> applicationSecurityGroups = default;
-            Optional<IList<SubResource>> loadBalancerBackendAddressPools = default;
-            Optional<IList<SubResource>> loadBalancerInboundNatPools = default;
+            Optional<IList<WritableSubResource>> applicationGatewayBackendAddressPools = default;
+            Optional<IList<WritableSubResource>> applicationSecurityGroups = default;
+            Optional<IList<WritableSubResource>> loadBalancerBackendAddressPools = default;
+            Optional<IList<WritableSubResource>> loadBalancerInboundNatPools = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = ApiEntityReference.DeserializeApiEntityReference(property0.Value);
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("primary"))
@@ -172,10 +173,10 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             applicationGatewayBackendAddressPools = array;
                             continue;
@@ -187,10 +188,10 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             applicationSecurityGroups = array;
                             continue;
@@ -202,10 +203,10 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             loadBalancerBackendAddressPools = array;
                             continue;
@@ -217,10 +218,10 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             loadBalancerInboundNatPools = array;
                             continue;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetUpdateIPConfiguration(id.Value, name.Value, subnet.Value, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(applicationSecurityGroups), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatPools));
+            return new VirtualMachineScaleSetUpdateIPConfiguration(id.Value, name.Value, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(applicationSecurityGroups), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatPools));
         }
     }
 }

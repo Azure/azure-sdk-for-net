@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<string>> paths = default;
             Optional<PartitionKind> kind = default;
             Optional<int> version = default;
+            Optional<bool> systemKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("paths"))
@@ -81,8 +82,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     version = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("systemKey"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemKey = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ContainerPartitionKey(Optional.ToList(paths), Optional.ToNullable(kind), Optional.ToNullable(version));
+            return new ContainerPartitionKey(Optional.ToList(paths), Optional.ToNullable(kind), Optional.ToNullable(version), Optional.ToNullable(systemKey));
         }
     }
 }

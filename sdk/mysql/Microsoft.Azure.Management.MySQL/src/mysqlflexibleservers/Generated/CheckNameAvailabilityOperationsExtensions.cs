@@ -27,12 +27,15 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='locationName'>
+            /// The name of the location.
+            /// </param>
             /// <param name='nameAvailabilityRequest'>
             /// The required parameters for checking if server name is available.
             /// </param>
-            public static NameAvailability Execute(this ICheckNameAvailabilityOperations operations, NameAvailabilityRequest nameAvailabilityRequest)
+            public static NameAvailability Execute(this ICheckNameAvailabilityOperations operations, string locationName, NameAvailabilityRequest nameAvailabilityRequest)
             {
-                return operations.ExecuteAsync(nameAvailabilityRequest).GetAwaiter().GetResult();
+                return operations.ExecuteAsync(locationName, nameAvailabilityRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,15 +44,18 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='locationName'>
+            /// The name of the location.
+            /// </param>
             /// <param name='nameAvailabilityRequest'>
             /// The required parameters for checking if server name is available.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NameAvailability> ExecuteAsync(this ICheckNameAvailabilityOperations operations, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NameAvailability> ExecuteAsync(this ICheckNameAvailabilityOperations operations, string locationName, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ExecuteWithHttpMessagesAsync(nameAvailabilityRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ExecuteWithHttpMessagesAsync(locationName, nameAvailabilityRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

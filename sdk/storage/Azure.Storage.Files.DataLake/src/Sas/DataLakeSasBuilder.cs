@@ -221,7 +221,8 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -241,7 +242,8 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -353,30 +355,31 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? String.Empty, Path ?? String.Empty),
-                Identifier,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                Resource,
-                null, // snapshot
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
+            string stringToSign = string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                    Identifier,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    null, // snapshot
+                    null, // encryption scope
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
 
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
-            var p = new DataLakeSasQueryParameters(
+            DataLakeSasQueryParameters p = new DataLakeSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -416,17 +419,17 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
+            string stringToSign = string.Join("\n",
                 Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(accountName, FileSystemName ?? String.Empty, Path ?? String.Empty),
+                GetCanonicalName(accountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
                 userDelegationKey.SignedObjectId,
                 userDelegationKey.SignedTenantId,
                 signedStart,
@@ -441,15 +444,16 @@ namespace Azure.Storage.Sas
                 Version,
                 Resource,
                 null, // snapshot
+                null, // encryption scope
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
 
-            var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+            string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            var p = new DataLakeSasQueryParameters(
+            DataLakeSasQueryParameters p = new DataLakeSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -608,7 +612,7 @@ namespace Azure.Storage.Sas
                 ContentType = originalDataLakeSasBuilder.ContentType,
                 PreauthorizedAgentObjectId = originalDataLakeSasBuilder.PreauthorizedAgentObjectId,
                 AgentObjectId = originalDataLakeSasBuilder.AgentObjectId,
-                CorrelationId = originalDataLakeSasBuilder.CorrelationId
+                CorrelationId = originalDataLakeSasBuilder.CorrelationId,
             };
     }
 }

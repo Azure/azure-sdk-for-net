@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_LRS\"\r\n  },\r\n  \"kind\": \"StorageV2\",\r\n  \"location\": \"eastus2euap\",\r\n  \"properties\": {\r\n    \"isHnsEnabled\": true\r\n  }\r\n}",
       "RequestHeaders": {
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/providers/Microsoft.Storage/locations/eastus2euap/asyncoperations/54a970c2-4c21-4e26-a97d-57cdb3bce04b?monitor=true&api-version=2021-04-01"
+          "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/providers/Microsoft.Storage/locations/eastus2euap/asyncoperations/54a970c2-4c21-4e26-a97d-57cdb3bce04b?monitor=true&api-version=2021-08-01"
         ],
         "Retry-After": [
           "17"
@@ -142,8 +142,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/providers/Microsoft.Storage/locations/eastus2euap/asyncoperations/54a970c2-4c21-4e26-a97d-57cdb3bce04b?monitor=true&api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvYXN5bmNvcGVyYXRpb25zLzU0YTk3MGMyLTRjMjEtNGUyNi1hOTdkLTU3Y2RiM2JjZTA0Yj9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/providers/Microsoft.Storage/locations/eastus2euap/asyncoperations/54a970c2-4c21-4e26-a97d-57cdb3bce04b?monitor=true&api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvYXN5bmNvcGVyYXRpb25zLzU0YTk3MGMyLTRjMjEtNGUyNi1hOTdkLTU3Y2RiM2JjZTA0Yj9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -199,8 +199,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/blobServices/default/containers/container1?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2Jsb2JTZXJ2aWNlcy9kZWZhdWx0L2NvbnRhaW5lcnMvY29udGFpbmVyMT9hcGktdmVyc2lvbj0yMDIxLTA0LTAx",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/blobServices/default/containers/container1?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2Jsb2JTZXJ2aWNlcy9kZWZhdWx0L2NvbnRhaW5lcnMvY29udGFpbmVyMT9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{}",
       "RequestHeaders": {
@@ -271,8 +271,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"policy\": {\r\n      \"enabled\": true,\r\n      \"rules\": [\r\n        {\r\n          \"enabled\": true,\r\n          \"name\": \"rule1\",\r\n          \"destination\": \"container1\",\r\n          \"definition\": {\r\n            \"filters\": {\r\n              \"prefixMatch\": [\r\n                \"prefix1\",\r\n                \"prefix2\"\r\n              ],\r\n              \"blobTypes\": [\r\n                \"blockBlob\"\r\n              ],\r\n              \"includeBlobVersions\": true,\r\n              \"includeSnapshots\": true\r\n            },\r\n            \"format\": \"Csv\",\r\n            \"schedule\": \"Weekly\",\r\n            \"objectType\": \"Blob\",\r\n            \"schemaFields\": [\r\n              \"Name\",\r\n              \"Creation-Time\",\r\n              \"Last-Modified\",\r\n              \"Content-Length\",\r\n              \"Content-MD5\",\r\n              \"BlobType\",\r\n              \"AccessTier\",\r\n              \"AccessTierChangeTime\",\r\n              \"Expiry-Time\",\r\n              \"hdi_isfolder\",\r\n              \"Owner\",\r\n              \"Group\",\r\n              \"Permissions\",\r\n              \"Acl\",\r\n              \"Snapshot\",\r\n              \"VersionId\",\r\n              \"IsCurrentVersion\",\r\n              \"Metadata\",\r\n              \"LastAccessTime\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"enabled\": true,\r\n          \"name\": \"rule2\",\r\n          \"destination\": \"container1\",\r\n          \"definition\": {\r\n            \"filters\": {\r\n              \"prefixMatch\": [\r\n                \"con1\",\r\n                \"con2\"\r\n              ]\r\n            },\r\n            \"format\": \"Csv\",\r\n            \"schedule\": \"Daily\",\r\n            \"objectType\": \"Container\",\r\n            \"schemaFields\": [\r\n              \"Name\",\r\n              \"Last-Modified\",\r\n              \"Metadata\",\r\n              \"LeaseStatus\",\r\n              \"LeaseState\",\r\n              \"LeaseDuration\",\r\n              \"PublicAccess\",\r\n              \"HasImmutabilityPolicy\",\r\n              \"HasLegalHold\"\r\n            ]\r\n          }\r\n        }\r\n      ],\r\n      \"type\": \"Inventory\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -340,8 +340,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"policy\": {\r\n      \"enabled\": true,\r\n      \"rules\": [\r\n        {\r\n          \"enabled\": true,\r\n          \"name\": \"rule1\",\r\n          \"destination\": \"container1\",\r\n          \"definition\": {\r\n            \"filters\": {\r\n              \"prefixMatch\": [\r\n                \"prefix1\",\r\n                \"prefix2\"\r\n              ],\r\n              \"blobTypes\": [\r\n                \"blockBlob\"\r\n              ],\r\n              \"includeBlobVersions\": true,\r\n              \"includeSnapshots\": true\r\n            },\r\n            \"format\": \"Csv\",\r\n            \"schedule\": \"Weekly\",\r\n            \"objectType\": \"Blob\",\r\n            \"schemaFields\": [\r\n              \"Name\",\r\n              \"Creation-Time\",\r\n              \"Last-Modified\",\r\n              \"Content-Length\",\r\n              \"Content-MD5\",\r\n              \"BlobType\",\r\n              \"AccessTier\",\r\n              \"AccessTierChangeTime\",\r\n              \"Expiry-Time\",\r\n              \"hdi_isfolder\",\r\n              \"Owner\",\r\n              \"Group\",\r\n              \"Permissions\",\r\n              \"Acl\",\r\n              \"Snapshot\",\r\n              \"VersionId\",\r\n              \"IsCurrentVersion\",\r\n              \"Metadata\",\r\n              \"LastAccessTime\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"enabled\": true,\r\n          \"name\": \"rule2\",\r\n          \"destination\": \"container1\",\r\n          \"definition\": {\r\n            \"filters\": {\r\n              \"prefixMatch\": [\r\n                \"con1\",\r\n                \"con2\"\r\n              ]\r\n            },\r\n            \"format\": \"Csv\",\r\n            \"schedule\": \"Daily\",\r\n            \"objectType\": \"Container\",\r\n            \"schemaFields\": [\r\n              \"Name\",\r\n              \"Last-Modified\",\r\n              \"Metadata\",\r\n              \"LeaseStatus\",\r\n              \"LeaseState\",\r\n              \"LeaseDuration\",\r\n              \"PublicAccess\",\r\n              \"HasImmutabilityPolicy\",\r\n              \"HasLegalHold\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"enabled\": true,\r\n          \"name\": \"rule3\",\r\n          \"destination\": \"container1\",\r\n          \"definition\": {\r\n            \"filters\": {\r\n              \"blobTypes\": [\r\n                \"blockBlob\"\r\n              ]\r\n            },\r\n            \"format\": \"Parquet\",\r\n            \"schedule\": \"Daily\",\r\n            \"objectType\": \"Blob\",\r\n            \"schemaFields\": [\r\n              \"Name\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"enabled\": true,\r\n          \"name\": \"rule4\",\r\n          \"destination\": \"container1\",\r\n          \"definition\": {\r\n            \"format\": \"Parquet\",\r\n            \"schedule\": \"Weekly\",\r\n            \"objectType\": \"Container\",\r\n            \"schemaFields\": [\r\n              \"Name\"\r\n            ]\r\n          }\r\n        }\r\n      ],\r\n      \"type\": \"Inventory\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -409,8 +409,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -472,8 +472,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -535,8 +535,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -598,8 +598,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9009/providers/Microsoft.Storage/storageAccounts/sto1174/inventoryPolicies/default?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDViNjBkODUtZmQ3Mi00MjdhLWE3MDgtZjk5NGQyNmU1OTNlL3Jlc291cmNlR3JvdXBzL3JlczkwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMTc0L2ludmVudG9yeVBvbGljaWVzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

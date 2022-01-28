@@ -4,8 +4,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Azure.Test
 {
@@ -17,13 +17,14 @@ namespace Azure.Azure.Test
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>
         /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static async Task<string> GetResourceLocation(ResourcesManagementClient client, string resourceType)
+        public static async Task<string> GetResourceLocation(ArmClient client, string resourceType)
         {
             string location = null;
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Response<Provider> provider = await client.Providers.GetAsync(providerName);
-            foreach (var resource in provider.Value.ResourceTypes)
+            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            Provider provider = await subscription.GetProviders().GetAsync(providerName);
+            foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {

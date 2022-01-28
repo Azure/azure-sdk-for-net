@@ -2,33 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialTests : ClientTestBase
+    public class ClientCertificateCredentialTests : CredentialTestBase
     {
-        private const string Scope = "https://vault.azure.net/.default";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
-        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private string expectedToken;
-        private DateTimeOffset expiresOn;
-        private MockMsalConfidentialClient mockMsalClient;
-        private string expectedTenantId;
-        private TokenCredentialOptions options;
-
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
 
@@ -36,9 +21,7 @@ namespace Azure.Identity.Tests
         public void VerifyCtorParametersValidation()
         {
             var tenantId = Guid.NewGuid().ToString();
-
             var clientId = Guid.NewGuid().ToString();
-
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
@@ -56,25 +39,25 @@ namespace Azure.Identity.Tests
             var tenantId = Guid.NewGuid().ToString();
             var clientId = Guid.NewGuid().ToString();
 
-            TokenRequestContext tokenContext = new TokenRequestContext(MockScopes.Default);
+            TokenRequestContext tokenContext = new(MockScopes.Default);
 
-            ClientCertificateCredential missingFileCredential = new ClientCertificateCredential(
+            ClientCertificateCredential missingFileCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "notfound.pem"));
-            ClientCertificateCredential invalidPemCredential = new ClientCertificateCredential(
+            ClientCertificateCredential invalidPemCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid-data.pem"));
-            ClientCertificateCredential unknownFormatCredential = new ClientCertificateCredential(
+            ClientCertificateCredential unknownFormatCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.unknown"));
-            ClientCertificateCredential encryptedCredential = new ClientCertificateCredential(
+            ClientCertificateCredential encryptedCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx"));
-            ClientCertificateCredential unsupportedCertCredential = new ClientCertificateCredential(
+            ClientCertificateCredential unsupportedCertCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "ec-cert.pem"));
@@ -160,71 +143,21 @@ namespace Azure.Identity.Tests
             [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            options.AllowMultiTenantAuthentication = allowMultiTenantAuthentication;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockMsalClient)
-                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockMsalClient)
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockConfidentialMsalClient)
+                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
             );
 
             var token = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
-        }
-
-        public void TestSetup()
-        {
-            options = new TokenCredentialOptions();
-            expectedTenantId = null;
-            expectedToken = Guid.NewGuid().ToString();
-            expiresOn = DateTimeOffset.Now.AddHours(1);
-            var result = new AuthenticationResult(
-                expectedToken,
-                false,
-                null,
-                expiresOn,
-                expiresOn,
-                TenantId,
-                new MockAccount("username"),
-                null,
-                new[] { Scope },
-                Guid.NewGuid(),
-                null,
-                "Bearer");
-
-            Func<string[], string, AuthenticationResult> clientFactory = (_, _tenantId) =>
-            {
-                return result;
-            };
-            mockMsalClient = new MockMsalConfidentialClient(clientFactory);
-        }
-
-        private static IEnumerable<TestCaseData> RegionalAuthorityTestData()
-        {
-            yield return new TestCaseData(null);
-            yield return new TestCaseData(RegionalAuthority.AutoDiscoverRegion);
-            yield return new TestCaseData(RegionalAuthority.USWest);
-        }
-
-        [Test]
-        [TestCaseSource("RegionalAuthorityTestData")]
-        public void VerifyMsalClientRegionalAuthority(RegionalAuthority? regionalAuthority)
-        {
-            var expectedTenantId = Guid.NewGuid().ToString();
-
-            var expectedClientId = Guid.NewGuid().ToString();
-
-            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
-
-            var cred =  new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath, new ClientCertificateCredentialOptions { RegionalAuthority = regionalAuthority });
-
-            Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
         }
     }
 }

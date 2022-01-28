@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("primary");
                 writer.WriteBooleanValue(Primary.Value);
             }
+            if (Optional.IsDefined(DeleteOption))
+            {
+                writer.WritePropertyName("deleteOption");
+                writer.WriteStringValue(DeleteOption.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<string> id = default;
             Optional<bool> primary = default;
+            Optional<DeleteOptions> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -61,11 +67,21 @@ namespace Azure.ResourceManager.Compute.Models
                             primary = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("deleteOption"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deleteOption = new DeleteOptions(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new NetworkInterfaceReference(id.Value, Optional.ToNullable(primary));
+            return new NetworkInterfaceReference(id.Value, Optional.ToNullable(primary), Optional.ToNullable(deleteOption));
         }
     }
 }

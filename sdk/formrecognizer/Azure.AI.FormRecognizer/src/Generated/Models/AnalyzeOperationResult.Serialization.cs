@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
             OperationStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Optional<AnalyzeResult> analyzeResult = default;
+            Optional<V2AnalyzeResult> analyzeResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
                         analyzeResult = null;
                         continue;
                     }
-                    analyzeResult = AnalyzeResult.DeserializeAnalyzeResult(property.Value);
+                    analyzeResult = V2AnalyzeResult.DeserializeV2AnalyzeResult(property.Value);
                     continue;
                 }
             }

@@ -59,7 +59,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="protectedSettings">The extension can contain either
         /// protectedSettings or protectedSettingsFromKeyVault or no protected
         /// settings at all.</param>
-        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object))
+        /// <param name="suppressFailures">Indicates whether failures stemming
+        /// from the extension will be suppressed (Operational failures such as
+        /// not connecting to the VM will not be suppressed regardless of this
+        /// value). The default is false.</param>
+        /// <param name="protectedSettingsFromKeyVault">The extensions
+        /// protected settings that are passed by reference, and consumed from
+        /// key vault</param>
+        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?), object protectedSettingsFromKeyVault = default(object))
             : base(tags)
         {
             ForceUpdateTag = forceUpdateTag;
@@ -70,6 +77,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
             Settings = settings;
             ProtectedSettings = protectedSettings;
+            SuppressFailures = suppressFailures;
+            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
             CustomInit();
         }
 
@@ -133,6 +142,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.protectedSettings")]
         public object ProtectedSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether failures stemming from the extension
+        /// will be suppressed (Operational failures such as not connecting to
+        /// the VM will not be suppressed regardless of this value). The
+        /// default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suppressFailures")]
+        public bool? SuppressFailures { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extensions protected settings that are passed by
+        /// reference, and consumed from key vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.protectedSettingsFromKeyVault")]
+        public object ProtectedSettingsFromKeyVault { get; set; }
 
     }
 }

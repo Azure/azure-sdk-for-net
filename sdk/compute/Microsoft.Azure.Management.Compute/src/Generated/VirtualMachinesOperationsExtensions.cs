@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -394,9 +394,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
+            public static void Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?))
             {
-                operations.DeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.DeallocateAsync(resourceGroupName, vmName, hibernate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -412,12 +415,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, hibernate, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -479,9 +485,14 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IPage<VirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName)
+            /// <param name='filter'>
+            /// The system query option to filter VMs returned in the response. Allowed
+            /// value is 'virtualMachineScaleSet/id' eq
+            /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
+            /// </param>
+            public static IPage<VirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName, string filter = default(string))
             {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -494,12 +505,17 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
+            /// <param name='filter'>
+            /// The system query option to filter VMs returned in the response. Allowed
+            /// value is 'virtualMachineScaleSet/id' eq
+            /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAsync(this IVirtualMachinesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachine>> ListAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -516,9 +532,14 @@ namespace Microsoft.Azure.Management.Compute
             /// statusOnly=true enables fetching run time status of all Virtual Machines in
             /// the subscription.
             /// </param>
-            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly = default(string))
+            /// <param name='filter'>
+            /// The system query option to filter VMs returned in the response. Allowed
+            /// value is 'virtualMachineScaleSet/id' eq
+            /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
+            /// </param>
+            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string))
             {
-                return operations.ListAllAsync(statusOnly).GetAwaiter().GetResult();
+                return operations.ListAllAsync(statusOnly, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -532,12 +553,17 @@ namespace Microsoft.Azure.Management.Compute
             /// statusOnly=true enables fetching run time status of all Virtual Machines in
             /// the subscription.
             /// </param>
+            /// <param name='filter'>
+            /// The system query option to filter VMs returned in the response. Allowed
+            /// value is 'virtualMachineScaleSet/id' eq
+            /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1248,7 +1274,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
@@ -1268,7 +1294,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='forceDeletion'>
-            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// Optional parameter to force delete virtual machines.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1330,9 +1356,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
+            public static void BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?))
             {
-                operations.BeginDeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginDeallocateAsync(resourceGroupName, vmName, hibernate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1348,12 +1377,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
+            /// <param name='hibernate'>
+            /// Optional parameter to hibernate a virtual machine. (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? hibernate = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, hibernate, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

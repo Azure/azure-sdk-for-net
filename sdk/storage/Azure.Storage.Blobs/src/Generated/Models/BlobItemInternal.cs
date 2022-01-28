@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="snapshot"></param>
         /// <param name="properties"> Properties of a blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/>, or <paramref name="properties"/> is null. </exception>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, BlobPropertiesInternal properties)
+        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, BlobPropertiesInternal properties)
         {
             if (name == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
             Snapshot = snapshot;
             Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ObjectReplicationMetadata = new ChangeTrackingDictionary<string, string>();
+            OrMetadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of BlobItemInternal. </summary>
@@ -52,9 +52,9 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="properties"> Properties of a blob. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
         /// <param name="blobTags"> Blob tags. </param>
-        /// <param name="objectReplicationMetadata"> Dictionary of &lt;string&gt;. </param>
         /// <param name="hasVersionsOnly"></param>
-        internal BlobItemInternal(string name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, IReadOnlyDictionary<string, string> objectReplicationMetadata, bool? hasVersionsOnly)
+        /// <param name="orMetadata"> Dictionary of &lt;string&gt;. </param>
+        internal BlobItemInternal(BlobName name, bool deleted, string snapshot, string versionId, bool? isCurrentVersion, BlobPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, BlobTags blobTags, bool? hasVersionsOnly, IReadOnlyDictionary<string, string> orMetadata)
         {
             Name = name;
             Deleted = deleted;
@@ -64,14 +64,19 @@ namespace Azure.Storage.Blobs.Models
             Properties = properties;
             Metadata = metadata;
             BlobTags = blobTags;
-            ObjectReplicationMetadata = objectReplicationMetadata;
             HasVersionsOnly = hasVersionsOnly;
+            OrMetadata = orMetadata;
         }
 
-        public string Name { get; }
+        /// <summary> Gets the name. </summary>
+        public BlobName Name { get; }
+        /// <summary> Gets the deleted. </summary>
         public bool Deleted { get; }
+        /// <summary> Gets the snapshot. </summary>
         public string Snapshot { get; }
+        /// <summary> Gets the version id. </summary>
         public string VersionId { get; }
+        /// <summary> Gets the is current version. </summary>
         public bool? IsCurrentVersion { get; }
         /// <summary> Properties of a blob. </summary>
         public BlobPropertiesInternal Properties { get; }
@@ -79,8 +84,9 @@ namespace Azure.Storage.Blobs.Models
         public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> Blob tags. </summary>
         public BlobTags BlobTags { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IReadOnlyDictionary<string, string> ObjectReplicationMetadata { get; }
+        /// <summary> Gets the has versions only. </summary>
         public bool? HasVersionsOnly { get; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IReadOnlyDictionary<string, string> OrMetadata { get; }
     }
 }

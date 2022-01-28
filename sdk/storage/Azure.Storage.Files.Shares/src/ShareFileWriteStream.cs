@@ -20,10 +20,12 @@ namespace Azure.Storage.Files.Shares
             long bufferSize,
             long position,
             ShareFileRequestConditions conditions,
-            IProgress<long> progressHandler) : base(
+            IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                hashingOptions)
         {
             ValidateBufferSize(bufferSize);
             _fileClient = fileClient;
@@ -39,25 +41,18 @@ namespace Azure.Storage.Files.Shares
 
                 HttpRange httpRange = new HttpRange(_writeIndex, _buffer.Length);
 
-                if (async)
-                {
-                    await _fileClient.UploadRangeAsync(
-                        range: httpRange,
-                        content: _buffer,
-                        progressHandler: _progressHandler,
-                        conditions: _conditions,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    _fileClient.UploadRange(
-                        range: httpRange,
-                        content: _buffer,
-                        progressHandler: _progressHandler,
-                        conditions: _conditions,
-                        cancellationToken: cancellationToken);
-                }
+               await _fileClient.UploadRangeInternal(
+                    range: httpRange,
+                    content: _buffer,
+                    options: new ShareFileUploadRangeOptions
+                    {
+                        TransactionalHashingOptions = _hashingOptions,
+                        ProgressHandler = _progressHandler,
+                        Conditions = _conditions
+                    },
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
                 _buffer.Clear();

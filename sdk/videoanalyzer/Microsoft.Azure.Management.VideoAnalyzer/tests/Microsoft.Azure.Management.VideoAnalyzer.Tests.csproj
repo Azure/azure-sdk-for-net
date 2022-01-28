@@ -7,21 +7,6 @@
     <AssemblyName>VideoAnalyzer.Tests</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="ScenarioTests\AccountFilterTests.cs" />
-    <Compile Remove="ScenarioTests\AssetFilterTests.cs" />
-    <Compile Remove="ScenarioTests\AssetTests.cs" />
-    <Compile Remove="ScenarioTests\ContentKeyPolicyTests.cs" />
-    <Compile Remove="ScenarioTests\ExtensibleEnumsTests.cs" />
-    <Compile Remove="ScenarioTests\JobTests.cs" />
-    <Compile Remove="ScenarioTests\LiveEventTests.cs" />
-    <Compile Remove="ScenarioTests\LiveOutputTests.cs" />
-    <Compile Remove="ScenarioTests\OperationsTests.cs" />
-    <Compile Remove="ScenarioTests\StreamingEndpointTests.cs" />
-    <Compile Remove="ScenarioTests\StreamingLocatorTests.cs" />
-    <Compile Remove="ScenarioTests\StreamingPolicyTests.cs" />
-    <Compile Remove="ScenarioTests\TransformTests.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Storage" Version="[5.0.2-preview,6.0)" />

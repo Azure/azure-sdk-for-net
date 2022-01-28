@@ -1,16 +1,66 @@
 # Release History
 
-## 7.3.0-beta.2 (Unreleased)
+## 7.6.0-beta.1 (Unreleased)
+
+### Bugs Fixed
+
+- Add a delay when retrying if we are being throttled by the service.
 
 ### Features Added
 
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
+
+## 7.5.0 (2021-11-10)
+
 ### Breaking Changes
+
+- Default `To`, `ReplyTo`, and `CorrelationId` properties of `ServiceBusMessage` to null, rather than empty string.
+To retain the old behavior, you can set the properties to empty string when constructing your message:
+```c#
+var message = new ServiceBusMessage
+{
+    ReplyTo = "",
+    To = "",
+    CorrelationId = ""
+};
+```
+
+### Bugs Fixed
+
+- Fixed memory leak in ServiceBusSessionProcessor.
+- Fixed bug where AMQP sequence/value messages could not be created from a received message.
+- Fixed bug where a named session of empty string could not be accepted.
+
+## 7.5.0-beta.1 (2021-10-05)
+
+### Features Added
+- Added support for specifying the maximum message size for entities in Premium namespaces.
+
+## 7.4.0 (2021-10-05)
+
+### Features Added
+- Added support for cancelling send and receives while in-flight.
+
+### Bugs Fixed
+- Leveraged fix in AMQP library that allows messages to be properly unlocked when shutting down the processor.
+
+## 7.3.0 (2021-09-07)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- John Call _([GitHub](https://github.com/johnthcall))_
 
 ### Bugs Fixed
 
 - Fixed an issue with refreshing authorization where redundant requests were made to acquire AAD tokens that were due to expire.  Refreshes will now coordinate to ensure a single AAD token acquisition.
 
+- Fixed an issue with authorization refresh where attempts may have been made to authorize a faulted link.  Links that fail to open are no longer be considered valid for authorization.
+
 ### Other Changes
+
+- Serialization of messages read from Service Bus has been tweaked for greater efficiency.  _(A community contribution, courtesy of [johnthcall](https://github.com/johnthcall))_
 
 ## 7.3.0-beta.1 (2021-08-10)
 

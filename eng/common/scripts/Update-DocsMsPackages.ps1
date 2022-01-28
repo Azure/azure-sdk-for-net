@@ -18,10 +18,26 @@ packages which have not released to a central package manager.
 .PARAMETER DocRepoLocation
 Location of the docs.microsoft.com reference docs repo.
 
+.PARAMETER PackageSourceOverride
+Optional parameter to supply a different package source (useful for daily dev
+docs generation from pacakges which are not published to the default feed). This
+variable is meant to be used in the domain-specific business logic in
+&$UpdateDocsMsPackagesFn
+
+.PARAMETER ImageId
+Optional The docker image for package validation in format of '$containerRegistry/$imageName:$tag'. 
+e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
+
 #>
 param (
   [Parameter(Mandatory = $true)]
-  $DocRepoLocation # the location of the cloned doc repo
+  [string] $DocRepoLocation, # the location of the cloned doc repo
+
+  [Parameter(Mandatory = $false)]
+  [string] $PackageSourceOverride,
+
+  [Parameter(Mandatory = $false)]
+  [string] $ImageId
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -45,7 +61,7 @@ function GetDocsMetadataForMoniker($moniker) {
       $versionPreview = $fileObject.Version
     }
 
-    $metadata += @{ 
+    $entry = @{
       Package = $fileObject.Name; 
       VersionGA = $versionGa;
       VersionPreview = $versionPreview;
@@ -53,6 +69,11 @@ function GetDocsMetadataForMoniker($moniker) {
       Type = $fileObject.SdkType;
       New = $fileObject.IsNewSdk;
     }
+    if ($fileObject.PSObject.Members.Name -contains "Group")
+    {
+      $entry.Add("GroupId", $fileObject.Group)
+    }
+    $metadata += $entry
   }
 
   return $metadata
@@ -119,7 +140,7 @@ if ($UpdateDocsMsPackagesFn -and (Test-Path "Function:$UpdateDocsMsPackagesFn"))
 
   try {
     $docsMetadata = GetDocsMetadata
-    &$UpdateDocsMsPackagesFn -DocsRepoLocation $DocRepoLocation -DocsMetadata $docsMetadata
+    &$UpdateDocsMsPackagesFn -DocsRepoLocation $DocRepoLocation -DocsMetadata $docsMetadata -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $ImageId
   } catch { 
     LogError "Exception while updating docs.ms packages"
     LogError $_ 
@@ -133,3 +154,7 @@ if ($UpdateDocsMsPackagesFn -and (Test-Path "Function:$UpdateDocsMsPackagesFn"))
   See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   exit 1
 }
+
+# Exit 0 so DevOps doesn't fail the build when the last command called by the
+# domain-specific function exited with a non-zero exit code.
+exit 0

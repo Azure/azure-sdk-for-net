@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Duration based custom options to copy
     /// </remarks>
-    [Newtonsoft.Json.JsonObject("CustomCopyOption")]
     public partial class CustomCopyOption : CopyOption
     {
         /// <summary>

@@ -18,9 +18,14 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
+            }
+        },
+        "provisionerApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The provisioner OID to grant access to test resources."
             }
         },
         "location": {
@@ -67,17 +72,22 @@
                 "description": "Key Vault SKU to deploy. The default is 'premium'"
             }
         },
-        "attestationUrl": {
+        "attestationImage": {
             "type": "string",
-            "defaultValue": "https://skrattestation.azurewebsites.net/",
+            "defaultValue": "keyvault-mock-attestation:latest",
             "metadata": {
-                "description": "Test attestation service for Secure Key Release"
+                "description": "The container image name and tag to use for the attestation mock service."
             }
         }
     },
     "variables": {
+        "attestationFarm": "[concat(parameters('baseName'), 'farm')]",
+        "attestationSite": "[concat(parameters('baseName'), 'site')]",
+        "attestationUri": "[concat('DOCKER|azsdkengsys.azurecr.io/', parameters('attestationImage'))]",
         "kvApiVersion": "2019-09-01",
         "kvName": "[parameters('baseName')]",
+        "kvAdminDefinitionId": "00482a5a-887f-4fb3-b363-3b7fe8e74483",
+        "kvAdminAssignmentName": "[guid(resourceGroup().id, variables('kvAdminDefinitionId'), parameters('testApplicationOid'))]",
         "hsmApiVersion": "2021-04-01-preview",
         "hsmName": "[concat(parameters('baseName'), 'hsm')]",
         "mgmtApiVersion": "2019-04-01",
@@ -110,65 +120,22 @@
                     "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
-                "accessPolicies": [
-                    {
-                        "tenantId": "[parameters('tenantId')]",
-                        "objectId": "[parameters('testApplicationOid')]",
-                        "permissions": {
-                            "keys": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "decrypt",
-                                "encrypt",
-                                "unwrapKey",
-                                "wrapKey",
-                                "verify",
-                                "sign",
-                                "purge"
-                            ],
-                            "secrets": [
-                                "get",
-                                "list",
-                                "set",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "purge"
-                            ],
-                            "certificates": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "managecontacts",
-                                "manageissuers",
-                                "getissuers",
-                                "listissuers",
-                                "setissuers",
-                                "deleteissuers",
-                                "purge"
-                            ]
-                        }
-                    }
-                ],
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
                 "enableSoftDelete": true,
+                "enableRbacAuthorization": true,
                 "softDeleteRetentionInDays": 7
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[variables('kvAdminAssignmentName')]",
+            "properties": {
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('kvAdminDefinitionId'))]",
+                "principalId": "[parameters('testApplicationOid')]",
+                "scope": "[resourceGroup().id]"
             }
         },
         {
@@ -183,9 +150,7 @@
             },
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
-                "initialAdminObjectIds": [
-                    "[parameters('testApplicationOid')]"
-                ],
+                "initialAdminObjectIds": "[union(array(parameters('testApplicationOid')), array(parameters('provisionerApplicationOid')))]",
                 "enablePurgeProtection": false,
                 "enableSoftDelete": true,
                 "softDeleteRetentionInDays": 7,
@@ -241,6 +206,47 @@
             "properties": {
                 "publicAccess": "None"
             }
+        },
+        {
+
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-12-01",
+            "name": "[variables('attestationFarm')]",
+            "condition": "[parameters('enableHsm')]",
+            "location": "[parameters('location')]",
+            "kind": "linux",
+            "sku": {
+                "name": "B1"
+            },
+            "properties": {
+                "reserved": true
+            }
+        },
+        {
+
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-12-01",
+            "name": "[variables('attestationSite')]",
+            "condition": "[parameters('enableHsm')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('attestationFarm'))]"
+            ],
+            "location": "[parameters('location')]",
+            "properties": {
+                "httpsOnly": true,
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('attestationFarm'))]",
+                "siteConfig": {
+                    "name": "[variables('attestationSite')]",
+                    "alwaysOn": true,
+                    "linuxFxVersion": "[variables('attestationUri')]",
+                    "appSettings": [
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "false"
+                        }
+                    ]
+                }
+            }
         }
     ],
     "outputs": {
@@ -275,7 +281,8 @@
         },
         "AZURE_KEYVAULT_ATTESTATION_URL": {
             "type": "string",
-            "value": "[parameters('attestationUrl')]"
+            "condition": "[parameters('enableHsm')]",
+            "value": "[format('https://{0}/', reference(variables('attestationSite')).defaultHostName)]"
         }
     }
 }

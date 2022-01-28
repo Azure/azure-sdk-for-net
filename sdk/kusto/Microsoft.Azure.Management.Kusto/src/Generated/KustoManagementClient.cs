@@ -21,6 +21,12 @@ namespace Microsoft.Azure.Management.Kusto
     using System.Net;
     using System.Net.Http;
 
+    /// <summary>
+    /// The Azure Kusto management API provides a RESTful set of web services
+    /// that interact with Azure Kusto services to manage your clusters and
+    /// databases. The API enables you to create, update, and delete clusters
+    /// and databases.
+    /// </summary>
     public partial class KustoManagementClient : ServiceClient<KustoManagementClient>, IKustoManagementClient, IAzureClient
     {
         /// <summary>
@@ -89,6 +95,16 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
+        /// Gets the IAttachedDatabaseConfigurationsOperations.
+        /// </summary>
+        public virtual IAttachedDatabaseConfigurationsOperations AttachedDatabaseConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedPrivateEndpointsOperations.
+        /// </summary>
+        public virtual IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; private set; }
+
+        /// <summary>
         /// Gets the IDatabasePrincipalAssignmentsOperations.
         /// </summary>
         public virtual IDatabasePrincipalAssignmentsOperations DatabasePrincipalAssignments { get; private set; }
@@ -99,9 +115,14 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IScriptsOperations Scripts { get; private set; }
 
         /// <summary>
-        /// Gets the IAttachedDatabaseConfigurationsOperations.
+        /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        public virtual IAttachedDatabaseConfigurationsOperations AttachedDatabaseConfigurations { get; private set; }
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Gets the IDataConnectionsOperations.
@@ -362,14 +383,17 @@ namespace Microsoft.Azure.Management.Kusto
             Clusters = new ClustersOperations(this);
             ClusterPrincipalAssignments = new ClusterPrincipalAssignmentsOperations(this);
             Databases = new DatabasesOperations(this);
+            AttachedDatabaseConfigurations = new AttachedDatabaseConfigurationsOperations(this);
+            ManagedPrivateEndpoints = new ManagedPrivateEndpointsOperations(this);
             DatabasePrincipalAssignments = new DatabasePrincipalAssignmentsOperations(this);
             Scripts = new ScriptsOperations(this);
-            AttachedDatabaseConfigurations = new AttachedDatabaseConfigurationsOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             DataConnections = new DataConnectionsOperations(this);
             Operations = new Operations(this);
             OperationsResults = new OperationsResults(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-01-01";
+            ApiVersion = "2021-08-27";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

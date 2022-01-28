@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToSerialString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("managedDisk");
                 writer.WriteObjectValue(ManagedDisk);
             }
+            if (Optional.IsDefined(DeleteOption))
+            {
+                writer.WritePropertyName("deleteOption");
+                writer.WriteStringValue(DeleteOption.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskCreateOptionTypes createOption = default;
             Optional<int> diskSizeGB = default;
             Optional<ManagedDiskParameters> managedDisk = default;
+            Optional<DiskDeleteOptionTypes> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))
@@ -185,8 +191,18 @@ namespace Azure.ResourceManager.Compute.Models
                     managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(property.Value);
                     continue;
                 }
+                if (property.NameEquals("deleteOption"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deleteOption = new DiskDeleteOptionTypes(property.Value.GetString());
+                    continue;
+                }
             }
-            return new OSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, vhd.Value, image.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), diffDiskSettings.Value, createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value);
+            return new OSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, vhd.Value, image.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), diffDiskSettings.Value, createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

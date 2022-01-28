@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an Azure Firewall. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> Reference to the subnet resource. This resource must be named &apos;AzureFirewallSubnet&apos; or &apos;AzureFirewallManagementSubnet&apos;. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall IP configuration resource. </param>
-        internal AzureFirewallIPConfiguration(string id, string name, string etag, string type, string privateIPAddress, SubResource subnet, SubResource publicIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal AzureFirewallIPConfiguration(string id, string name, string etag, string type, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -44,9 +46,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </summary>
         public string PrivateIPAddress { get; }
         /// <summary> Reference to the subnet resource. This resource must be named &apos;AzureFirewallSubnet&apos; or &apos;AzureFirewallManagementSubnet&apos;. </summary>
-        public SubResource Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </summary>
-        public SubResource PublicIPAddress { get; set; }
+        public WritableSubResource PublicIPAddress { get; set; }
         /// <summary> The provisioning state of the Azure firewall IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

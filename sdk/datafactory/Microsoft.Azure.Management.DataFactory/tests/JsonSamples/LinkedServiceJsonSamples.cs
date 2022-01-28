@@ -27,7 +27,12 @@ namespace DataFactory.Tests.JsonSamples
              value: ""mykey""
           },
           tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
-          azureCloudType: ""AzurePublic""
+          azureCloudType: ""AzurePublic"",
+          servicePrincipalCredentialType: ""ServicePrincipalKey"",
+          servicePrincipalCredential: {
+             type: ""SecureString"",
+             value: ""mykey""
+          },
         }
     }
 }";
@@ -206,6 +211,31 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
         [JsonSample]
+        public const string AmazonRdsForSqlServerLinkedService = @"
+{
+    name: ""Test-AmazonRdsForSqlServer-LinkedService"",
+    properties:
+    {
+        type: ""AmazonRdsForSqlServer"",
+        connectVia: {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            userName: ""WindowsAuthUserName"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
         public const string HDISLinkedServiceWithSqlAlwaysEncryptedProperties = @"
 {
     name: ""Test-HDIS-LinkedService"",
@@ -228,11 +258,15 @@ namespace DataFactory.Tests.JsonSamples
                 type : ""SecureString""
             },
             alwaysEncryptedSettings: {
-                alwaysEncryptedAkvAuthType: ""ServicePrincipal"",
+                alwaysEncryptedAkvAuthType: ""UserAssignedManagedIdentity"",
                 servicePrincipalId: ""fakeServicePrincipalId"",
                 servicePrincipalKey: {
                    value : ""fakeServicePrincipalKey"",
                    type : ""SecureString""
+                },
+                credential: {
+                   type: ""CredentialReference"",
+                   referenceName: ""Credential""
                 }
             }
         }
@@ -592,6 +626,56 @@ namespace DataFactory.Tests.JsonSamples
     properties:
     {
         type: ""Oracle"",
+        connectVia: {
+            referenceName : ""CherryAgent-01"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            password: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            },
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonRdsForOracleLinkedService = @"
+{
+    name: ""LinkedService-AmazonRdsForOracleDB"",
+    properties:
+    {
+        type: ""AmazonRdsForOracle"",
+        connectVia: {
+            referenceName : ""CherryAgent-01"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonRdsForOracleLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""LinkedService-AmazonRdsForOracleDB-with-Password-in-AKV"",
+    properties:
+    {
+        type: ""AmazonRdsForOracle"",
         connectVia: {
             referenceName : ""CherryAgent-01"",
             type : ""IntegrationRuntimeReference""
@@ -2594,6 +2678,25 @@ namespace DataFactory.Tests.JsonSamples
 				useEncryptedEndpoints: true,
 				useHostVerification: true,
 				usePeerVerification: true
+			}
+		}
+	}
+}
+";
+
+        [JsonSample]
+        public const string GoogleAdWordsConnectionPropertiesLinkedService = @"
+{
+	name: ""GoogleAdWordsLinkedService"",
+	properties: {
+		type: ""GoogleAdWords"",
+		typeProperties: {
+			connectionProperties: {
+				clientCustomerID: ""fakeClientCustomerID"",
+				developerToken: {
+					type: ""SecureString"",
+					value: ""some secret""
+				}
 			}
 		}
 	}

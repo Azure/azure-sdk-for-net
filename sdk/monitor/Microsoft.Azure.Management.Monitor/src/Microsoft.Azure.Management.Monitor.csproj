@@ -6,13 +6,11 @@
   <PropertyGroup>
     <Description>Microsoft Azure Monitor Library</Description>
     <AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-    <Version>0.25.4-preview</Version>
+    <Version>0.26.0-preview</Version>
     <PackageId>Microsoft.Azure.Management.Monitor</PackageId>
-    <PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;privatelinkscope;datacollectionrules</PackageTags>
+    <PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;privatelinkscope;datacollectionrules;actiongroups</PackageTags>
     <PackageReleaseNotes>
-      - Adding API **2021-04-01/dataCollectionRules_API**
-      - Adding API **2021-04-01/dataCollectionRuleAssociations_API.json**
-      - Adding API **2021-04-01/dataCollectionEndpoints_API.json**
+	  - Adding API **2021-09-01/actionGroups_API**     
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

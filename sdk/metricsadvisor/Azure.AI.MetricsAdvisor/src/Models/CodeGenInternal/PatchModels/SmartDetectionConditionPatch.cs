@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteNullNumberValue("sensitivity", Sensitivity);
+            writer.WriteNullObjectValue("sensitivity", Sensitivity);
             writer.WriteNullStringValue("anomalyDetectorDirection", AnomalyDetectorDirection);
             writer.WriteNullObjectValue("suppressCondition", SuppressCondition);
             writer.WriteEndObject();

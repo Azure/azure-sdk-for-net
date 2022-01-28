@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// output.</param>
         /// <param name="resourceState">The resource state of the live output.
         /// Possible values include: 'Creating', 'Running', 'Deleting'</param>
-        public LiveOutput(string assetName, System.TimeSpan archiveWindowLength, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string manifestName = default(string), Hls hls = default(Hls), long? outputSnapTime = default(long?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), string provisioningState = default(string), LiveOutputResourceState? resourceState = default(LiveOutputResourceState?))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public LiveOutput(string assetName, System.TimeSpan archiveWindowLength, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string manifestName = default(string), Hls hls = default(Hls), long? outputSnapTime = default(long?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), string provisioningState = default(string), LiveOutputResourceState? resourceState = default(LiveOutputResourceState?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Description = description;
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Media.Models
             LastModified = lastModified;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -150,6 +153,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceState")]
         public LiveOutputResourceState? ResourceState { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

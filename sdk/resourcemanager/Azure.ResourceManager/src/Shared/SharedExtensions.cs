@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -15,6 +16,25 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     internal static class SharedExtensions
     {
+        /// <summary>
+        /// Collects the segments in a resource identifier into a string
+        /// </summary>
+        /// <param name="resourceId">the resource identifier</param>
+        /// <returns></returns>
+        public static string SubstringAfterProviderNamespace(this ResourceIdentifier resourceId)
+        {
+            const string providersKey = "/providers/";
+            var rawId = resourceId.ToString();
+            var indexOfProviders = rawId.LastIndexOf(providersKey, StringComparison.InvariantCultureIgnoreCase);
+            if (indexOfProviders < 0)
+                return string.Empty;
+            var whateverRemains = rawId.Substring(indexOfProviders + providersKey.Length);
+            var firstSlashIndex = whateverRemains.IndexOf('/');
+            if (firstSlashIndex < 0)
+                return string.Empty;
+            return whateverRemains.Substring(firstSlashIndex + 1);
+        }
+
         /// <summary>
         /// An extension method for supporting replacing one dictionary content with another one.
         /// This is used to support resource tags.
@@ -31,16 +51,6 @@ namespace Azure.ResourceManager.Core
             }
 
             return dest;
-        }
-
-        public static List<T> Trim<T>(this List<T> list, int numberToTrim)
-        {
-            if (list is null)
-                throw new ArgumentNullException(nameof(list));
-            if (numberToTrim < 0 || numberToTrim > list.Count)
-                throw new ArgumentOutOfRangeException(nameof(numberToTrim));
-            list.RemoveRange(0, numberToTrim);
-            return list;
         }
 
         public static async Task<TSource?> FirstOrDefaultAsync<TSource>(

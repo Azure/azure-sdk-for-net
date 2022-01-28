@@ -30,12 +30,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string vaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new KeyClient(vaultUri: new Uri(vaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new key using the key client.
             KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
@@ -45,9 +45,9 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #endregion
 
             #region Snippet:CreateCryptographyClient
-            // Create a new cryptography client using the default credential from Azure.Identity using environment variables previously set,
-            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
+            // Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
+            // and options as the KeyClient created earlier.
+            CryptographyClient cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
             #endregion
 
             this.client = client;
@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void RetrieveKey()
         {
             // Make sure a key exists.
-             client.CreateKey("key-name", KeyType.Rsa);
+            client.CreateKey("key-name", KeyType.Rsa);
 
             #region Snippet:RetrieveKey
             KeyVaultKey key = client.GetKey("key-name");
@@ -174,6 +174,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void EncryptDecrypt()
         {
             #region Snippet:EncryptDecrypt
+#if SNIPPET
+            // Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
+            // and options as the KeyClient created earlier.
+            var cryptoClient = client.GetCryptographyClient(key.Name, key.Properties.Version);
+#endif
+
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
             // encrypt the data using the algorithm RSAOAEP
@@ -224,8 +230,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             await client.PurgeDeletedKeyAsync(key.Name);
             #endregion
 
-            DeleteKeyOperation rsaKeyOperation =  client.StartDeleteKey("rsa-key-name");
-            DeleteKeyOperation ecKeyOperation =  client.StartDeleteKey("ec-key-name");
+            DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey("rsa-key-name");
+            DeleteKeyOperation ecKeyOperation = client.StartDeleteKey("ec-key-name");
 
             try
             {

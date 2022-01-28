@@ -33,5 +33,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// Specifies the size of the new Page Blob.
         /// </summary>
         public long? MaxSize { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        /// hashing on uploads.
+        /// </summary>
+        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

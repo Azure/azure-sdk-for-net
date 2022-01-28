@@ -2,36 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
     /// Tracks the status of a long-running operation for copying a custom model into a target Form Recognizer resource.
     /// </summary>
-    public class CopyModelOperation : Operation<CustomFormModelInfo>, IOperation<CustomFormModelInfo>
+    public class CopyModelOperation : Operation<DocumentModel>, IOperation<DocumentModel>
     {
-        private readonly OperationInternal<CustomFormModelInfo> _operationInternal;
+        private readonly OperationInternal<DocumentModel> _operationInternal;
 
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly FormRecognizerRestClient _serviceClient;
+        private readonly DocumentAnalysisRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        /// <summary>The ID of the model to use for copy.</summary>
-        private readonly string _modelId;
-
-        /// <summary>The ID of the copied model.</summary>
-        private readonly string _targetModelId;
-
-        /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
-        private readonly string _resultId;
+        /// <summary>Operation progress (0-100)</summary>
+        private int _percentCompleted;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -40,12 +34,17 @@ namespace Azure.AI.FormRecognizer.Training
         public override string Id { get; }
 
         /// <summary>
+        /// Gets the operation progress. Value is from [0-100].
+        /// </summary>
+        public virtual int PercentCompleted => _percentCompleted;
+
+        /// <summary>
         /// Final result of the long-running operation.
         /// </summary>
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override CustomFormModelInfo Value => _operationInternal.Value;
+        public override DocumentModel Value => _operationInternal.Value;
 
         /// <summary>
         /// Returns true if the long-running operation completed.
@@ -62,33 +61,15 @@ namespace Azure.AI.FormRecognizer.Training
         /// tracks the status of the long-running operation for copying a custom model into a target Form Recognizer resource.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
-        /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
+        public CopyModelOperation(string operationId, DocumentModelAdministrationClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(client, nameof(client));
 
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
-            _targetModelId = targetModelId;
             _operationInternal = new(_diagnostics, this, rawResponse: null);
-
-            // TODO: Use regex to parse ids.
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-
-            // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
-            // https://github.com/Azure/azure-sdk-for-net/issues/10385
-
-            string[] substrs = operationId.Split('/');
-
-            if (substrs.Length < 3)
-            {
-                throw new ArgumentException($"Invalid '{nameof(operationId)}'. It should be formatted as: '{{modelId}}/copyresults/{{resultId}}'.", nameof(operationId));
-            }
-
-            _resultId = substrs.Last();
-            _modelId = substrs.First();
 
             Id = operationId;
         }
@@ -99,31 +80,14 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
-        internal CopyModelOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
+        /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
+        internal CopyModelOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _targetModelId = targetModelId;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
-            // TODO: Use regex to parse ids.
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-
-            // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
-            // https://github.com/Azure/azure-sdk-for-net/issues/10385
-
-            string[] substrs = operationLocation.Split('/');
-
-            if (substrs.Length < 3)
-            {
-                throw new ArgumentException($"Invalid '{nameof(operationLocation)}'. It should be formatted as: '{{prefix}}/{{modelId}}/copyresults/{{resultId}}'.", nameof(operationLocation));
-            }
-
-            _resultId = substrs[substrs.Length - 1];
-            _modelId = substrs[substrs.Length - 3];
-
-            Id = string.Join("/", substrs, substrs.Length - 3, 3);
+            Id = operationLocation.Split('/').Last().Split('?').FirstOrDefault();
         }
 
         /// <summary>
@@ -152,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override async ValueTask<Response<CustomFormModelInfo>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<DocumentModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -168,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override async ValueTask<Response<CustomFormModelInfo>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<DocumentModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -193,39 +157,34 @@ namespace Azure.AI.FormRecognizer.Training
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationState<CustomFormModelInfo>> IOperation<CustomFormModelInfo>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationState<DocumentModel>> IOperation<DocumentModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            Response<CopyOperationResult> response = async
-                ? await _serviceClient.GetCustomModelCopyResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetCustomModelCopyResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+            Response<ModelOperation> response = async
+                    ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetOperation(Id, cancellationToken);
 
-            OperationStatus status = response.Value.Status;
+            DocumentOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
+            _percentCompleted = response.Value.PercentCompleted ?? 0;
 
-            if (status == OperationStatus.Succeeded)
+            if (status == DocumentOperationStatus.Succeeded)
             {
-                return OperationState<CustomFormModelInfo>.Success(rawResponse,
-                    ConvertValue(response.Value, _targetModelId, CustomFormModelStatus.Ready));
+                return OperationState<DocumentModel>.Success(rawResponse, response.Value.Result);
             }
-            else if (status == OperationStatus.Failed)
+            else if (status == DocumentOperationStatus.Failed)
             {
                 RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.CopyResult.Errors)
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
                     .ConfigureAwait(false);
 
-                return OperationState<CustomFormModelInfo>.Failure(rawResponse, requestFailedException);
+                return OperationState<DocumentModel>.Failure(rawResponse, requestFailedException);
+            }
+            else if (status == DocumentOperationStatus.Canceled)
+            {
+                return OperationState<DocumentModel>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return OperationState<CustomFormModelInfo>.Pending(rawResponse);
-        }
-
-        private static CustomFormModelInfo ConvertValue(CopyOperationResult result, string modelId, CustomFormModelStatus status)
-        {
-            return new CustomFormModelInfo(
-                modelId,
-                status,
-                result.CreatedDateTime,
-                result.LastUpdatedDateTime);
+            return OperationState<DocumentModel>.Pending(rawResponse);
         }
     }
 }

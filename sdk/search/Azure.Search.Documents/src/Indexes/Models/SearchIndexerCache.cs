@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerCache
     {
         /// <summary> The connection string to the storage account where the cache data will be persisted. </summary>
-        public string StorageConnectionString { get; private set; }
+        private string StorageConnectionString { get; set; }
 
         /// <summary>
         /// Sets the <see cref="StorageConnectionString"/> for the Search indexer cache.

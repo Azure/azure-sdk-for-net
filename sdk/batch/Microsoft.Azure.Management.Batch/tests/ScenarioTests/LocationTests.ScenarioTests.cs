@@ -67,7 +67,7 @@ namespace Batch.Tests.ScenarioTests
         {
             using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
-                string filterValue = "basic";
+                string filterValue = "standardD";
                 string filterExpression = $"startswith(familyName,'{filterValue}')"; // Select family names beginning with 'basic'.
                 IPage<SupportedSku> result;
 

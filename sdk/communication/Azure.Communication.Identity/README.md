@@ -10,7 +10,7 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 
 Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Communication.Identity --version 1.0.0
 ```
 
@@ -104,20 +104,20 @@ Console.WriteLine($"Token: {token.Token}");
 
 In case a user's tokens are compromised or need to be revoked:
 
-```C# Snippet:RevokeCommunicationUserToken
-Response revokeResponse = client.RevokeTokens(user);
+```C# Snippet:RevokeCommunicationUserTokenAsync
+Response revokeResponse = await client.RevokeTokensAsync(user);
 ```
 
 ### Deleting a user
 
-```C# Snippet:DeleteACommunicationUser
-Response deleteResponse = client.DeleteUser(user);
+```C# Snippet:DeleteACommunicationUserAsync
+Response deleteResponse = await client.DeleteUserAsync(user);
 ```
 
-### Exchange access token
+### Exchanging AAD access token of a Teams User for a Communication Identity access token
 
-```C# Snippet:ExchangeTeamsToken
-Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+```C# Snippet:GetTokenForTeamsUserAsync
+Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```

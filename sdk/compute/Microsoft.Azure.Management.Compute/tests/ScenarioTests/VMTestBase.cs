@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 using CM=Microsoft.Azure.Management.Compute.Models;
 using NM=Microsoft.Azure.Management.Network.Models;
@@ -26,6 +27,11 @@ namespace Compute.Tests
 {
     public class VMTestBase
     {
+        static VMTestBase()
+        {
+            RecorderUtilities.JsonPathSanitizers.Add("$..accessSAS");
+        }
+
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
@@ -245,7 +251,8 @@ namespace Compute.Tests
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
             string userData = null,
-            string capacityReservationGroupReferenceId = null)
+            string capacityReservationGroupReferenceId = null,
+            VMDiskSecurityProfile diskSecurityProfile = null)
         {
             try
             {
@@ -318,29 +325,21 @@ namespace Compute.Tests
                     };
                 }
                 
-                if (securityType != null && securityType.Equals("TrustedLaunch"))
+                if (securityType != null)
                 {
-                    if(inputVM.SecurityProfile != null)
+                    inputVM.SecurityProfile = inputVM.SecurityProfile ?? new SecurityProfile();
+                    inputVM.SecurityProfile.SecurityType = securityType;
+                    inputVM.SecurityProfile.UefiSettings = new UefiSettings
                     {
-                        inputVM.SecurityProfile.SecurityType = SecurityTypes.TrustedLaunch;
-                        inputVM.SecurityProfile.UefiSettings = new UefiSettings
-                        {
-                            VTpmEnabled = true,
-                            SecureBootEnabled = true
-                        };
-                    }
-                    else
-                    {
-                        inputVM.SecurityProfile = new SecurityProfile
-                        {
-                            SecurityType = SecurityTypes.TrustedLaunch,
-                            UefiSettings = new UefiSettings
-                            {
-                                VTpmEnabled = true,
-                                SecureBootEnabled = true
-                            }
-                        };
-                    }
+                        VTpmEnabled = true,
+                        SecureBootEnabled = true
+                    };
+                }
+
+                if(diskSecurityProfile != null)
+                {
+                    inputVM.StorageProfile.OsDisk.ManagedDisk = inputVM.StorageProfile.OsDisk.ManagedDisk ?? new ManagedDiskParameters();
+                    inputVM.StorageProfile.OsDisk.ManagedDisk.SecurityProfile = diskSecurityProfile;
                 }
 
                 if (zones != null)
@@ -1199,9 +1198,9 @@ namespace Compute.Tests
                     Assert.NotNull(vm.AdditionalCapabilities.UltraSSDEnabled);
                     Assert.True(vm.AdditionalCapabilities.UltraSSDEnabled.Value);
                 }
-                else
+                else if (vm.AdditionalCapabilities == null)
                 {
-                    Assert.Null(vm.AdditionalCapabilities);
+                    Assert.Null(vmOut.AdditionalCapabilities);
                 }
 
                 foreach (var dataDisk in vm.StorageProfile.DataDisks)

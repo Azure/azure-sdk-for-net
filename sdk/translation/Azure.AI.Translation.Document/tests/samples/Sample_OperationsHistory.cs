@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -34,12 +33,20 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (TranslationStatus translationStatus in client.GetTranslationStatuses())
+            DateTimeOffset lastWeekTimestamp = DateTimeOffset.Now.AddDays(-7);
+
+            var options = new GetTranslationStatusesOptions
+            {
+                CreatedAfter = lastWeekTimestamp
+            };
+
+            foreach (TranslationStatusResult translationStatus in client.GetTranslationStatuses(options))
             {
                 if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
                     translationStatus.Status == DocumentTranslationStatus.Running)
                 {
                     DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
+                    operation.UpdateStatus();
 
                     while (!operation.HasCompleted)
                     {

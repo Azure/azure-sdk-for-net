@@ -13,8 +13,8 @@
 
 ### Install Bicep
 
-- Install using the instructions in [bicep](https://github.com/Azure/bicep/blob/main/docs/installing.md)
-- Note that to deploy Bicep files, use Bicep CLI version 0.3.1 or later. To check your Bicep CLI version, run:
+- Install using the instructions in [bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep/install#install-manually)
+- Note that to deploy Bicep files, use Bicep CLI version 0.4.1124 or later. To check your Bicep CLI version, run:
 
 ```bash
 bicep --version
@@ -22,13 +22,13 @@ bicep --version
 
 ### Run the setup script
 
-The script outputs [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/test-resources.bicep) file in the root folder [digitaltwins](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins)
+The script creates required resources in your azure subscription that allows you to run live tests against them. Run the following command:
 
-- `.\setup.ps1`
+- `.\setup.ps1 -Region [YOUR REGION] -ResourceGroup [YOUR DESIRED RESOURCE GROUP NAME] -SubscriptionId [YOUR SUBSCRIPTION ID] -DigitalTwinName [YOUR DESIRED DIGITAL TWIN INSTANCE NAME] -AppRegistrationName [YOUR APP REGISTRATION] -Verbose`
 
 ### Generate the ARM template
 
-The ARM template [test-resources.json](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/test-resources.json) is generated from the [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/test-resources.bicep) file by running the following script
+The ARM template is generated from the [test-resources.bicep](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/test-resources.bicep) file by running the following script
 
 - `.\generateArmTemplate.ps1`
 

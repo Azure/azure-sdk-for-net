@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
@@ -15,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Samples
         [FunctionName("WebPubSubConnectionBindingFunction")]
         public static WebPubSubConnection Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-            [WebPubSubConnection(Hub = "hub", UserId = "{query.userid}")] WebPubSubConnection connection)
+            [WebPubSubConnection(Hub = "hub", UserId = "{query.userid}", Connection = "<connection-string>")] WebPubSubConnection connection)
         {
             Console.WriteLine("login");
             return connection;

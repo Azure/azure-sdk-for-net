@@ -13,6 +13,7 @@ using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -24,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 
@@ -31,13 +33,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueListenerTests : LiveTestBase<WebJobsTestEnvironment>
     {
+        private const string TestFunctionId = "TestFunction";
         private Mock<QueueClient> _mockQueue;
         private QueueListener _listener;
         private Mock<QueueProcessor> _mockQueueProcessor;
         private Mock<ITriggerExecutor<QueueMessage>> _mockTriggerExecutor;
+        private Mock<IWebJobsExceptionHandler> _mockExceptionDispatcher;
         private QueueMessage _queueMessage;
         private ILoggerFactory _loggerFactory;
         private TestLoggerProvider _loggerProvider;
+        private QueuesOptions _queuesOptions;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -58,24 +63,51 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _mockQueue.Setup(x => x.Name).Returns("testqueue");
 
             _mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
-            Mock<IWebJobsExceptionHandler> mockExceptionDispatcher = new Mock<IWebJobsExceptionHandler>(MockBehavior.Strict);
+            _mockExceptionDispatcher = new Mock<IWebJobsExceptionHandler>(MockBehavior.Strict);
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
-            QueuesOptions queuesOptions = new QueuesOptions();
-            QueueProcessorOptions context = new QueueProcessorOptions(_mockQueue.Object, _loggerFactory, queuesOptions);
-
-            _mockQueueProcessor = new Mock<QueueProcessor>(MockBehavior.Strict, context);
-            QueuesOptions queueConfig = new QueuesOptions
+            _queuesOptions = new QueuesOptions
             {
                 MaxDequeueCount = 5
             };
+            QueueProcessorOptions context = new QueueProcessorOptions(_mockQueue.Object, _loggerFactory, _queuesOptions);
 
-            _listener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, mockExceptionDispatcher.Object, _loggerFactory, null, queueConfig, _mockQueueProcessor.Object, new FunctionDescriptor { Id = "TestFunction" });
+            _mockQueueProcessor = new Mock<QueueProcessor>(MockBehavior.Strict, context);
+            var concurrencyManagerMock = new Mock<ConcurrencyManager>(MockBehavior.Strict);
+
+            _listener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, _mockExceptionDispatcher.Object, _loggerFactory, null, _queuesOptions, _mockQueueProcessor.Object, new FunctionDescriptor { Id = TestFunctionId }, concurrencyManagerMock.Object);
             _queueMessage = QueuesModelFactory.QueueMessage("TestId", "TestPopReceipt", "TestMessage", 0);
         }
 
         public TestFixture Fixture { get; set; }
+
+        [TestCase]
+        [Category("DynamicConcurrency")]
+        public void GetMessageReceiveCount_DynamicConcurrencyEnabled_ReturnsExpectedValue()
+        {
+            var concurrencyOptions = new ConcurrencyOptions
+            {
+                DynamicConcurrencyEnabled = true
+            };
+            var throttleStatus = new ConcurrencyThrottleAggregateStatus { State = ThrottleState.Disabled };
+            var optionsWrapper = new OptionsWrapper<ConcurrencyOptions>(concurrencyOptions);
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            mockConcurrencyThrottleManager.Setup(p => p.GetStatus()).Returns(() => throttleStatus);
+            var concurrencyManager = new ConcurrencyManager(optionsWrapper, _loggerFactory, mockConcurrencyThrottleManager.Object);
+            var localListener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, _mockExceptionDispatcher.Object, _loggerFactory, null, _queuesOptions, _mockQueueProcessor.Object, new FunctionDescriptor { Id = TestFunctionId }, concurrencyManager);
+
+            int result = localListener.GetMessageReceiveCount();
+            Assert.AreEqual(1, result);
+        }
+
+        [TestCase]
+        [Category("DynamicConcurrency")]
+        public void GetMessageReceiveCount_ReturnsExpectedValue()
+        {
+            int result = _listener.GetMessageReceiveCount();
+            Assert.AreEqual(_mockQueueProcessor.Object.QueuesOptions.BatchSize, result);
+        }
 
         [Test]
         public void ScaleMonitor_Id_ReturnsExpectedValue()
@@ -88,10 +120,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             var queuesOptions = new QueuesOptions();
             Mock<ITriggerExecutor<QueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
+            var mockConcurrencyManager = new Mock<ConcurrencyManager>(MockBehavior.Strict);
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
             var queueProcessor = QueueListenerFactory.CreateQueueProcessor(Fixture.Queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
             QueueListener listener = new QueueListener(Fixture.Queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
+                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" }, mockConcurrencyManager.Object);
 
             var metrics = await listener.GetMetricsAsync();
 
@@ -397,9 +430,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueMessage messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
             var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, NullLoggerFactory.Instance, queueProcessorFactory, queuesOptions, null);
+            var mockConcurrencyManager = new Mock<ConcurrencyManager>(MockBehavior.Strict);
 
             QueueListener listener = new QueueListener(queue, poisonQueue, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                NullLoggerFactory.Instance, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
+                NullLoggerFactory.Instance, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" }, mockConcurrencyManager.Object);
 
             mockTriggerExecutor
                 .Setup(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None))
@@ -438,8 +472,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var queuesOptions = new QueuesOptions();
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
             var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
+            var mockConcurrencyManager = new Mock<ConcurrencyManager>(MockBehavior.Strict);
             QueueListener listener = new QueueListener(queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" });
+                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" }, mockConcurrencyManager.Object);
 
             listener.MinimumVisibilityRenewalInterval = TimeSpan.FromSeconds(1);
 
@@ -481,7 +516,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessor queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
             Assert.False(processorFactoryInvoked);
             Assert.AreNotSame(expectedQueueProcessor, queueProcessor);
-            queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
+            queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.True(poisonMessageHandlerInvoked);
 
             QueueProcessorOptions processorFactoryContext = null;
@@ -510,7 +545,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, watcherMock.Object) as QueueProcessor;
             Assert.True(processorFactoryInvoked);
             Assert.AreSame(expectedQueueProcessor, queueProcessor);
-            queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
+            queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.True(poisonMessageHandlerInvoked);
 
             // if poison message watcher not specified, event not subscribed to
@@ -519,7 +554,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, null) as QueueProcessor;
             Assert.True(processorFactoryInvoked);
             Assert.AreSame(expectedQueueProcessor, queueProcessor);
-            queueProcessor.OnMessageAddedToPoisonQueue(new PoisonMessageEventArgs(null, poisonQueue));
+            queueProcessor.OnMessageAddedToPoisonQueueAsync(new PoisonMessageEventArgs(null, poisonQueue));
             Assert.False(poisonMessageHandlerInvoked);
         }
 

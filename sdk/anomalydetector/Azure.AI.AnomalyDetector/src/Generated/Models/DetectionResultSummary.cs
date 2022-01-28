@@ -15,8 +15,8 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class DetectionResultSummary
     {
         /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
-        /// <param name="status"> Multivariate anomaly detection status. </param>
-        /// <param name="setupInfo"> Request when creating the model. </param>
+        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
+        /// <param name="setupInfo"> Detection request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
         internal DetectionResultSummary(DetectionStatus status, DetectionRequest setupInfo)
         {
@@ -32,10 +32,10 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
-        /// <param name="status"> Multivariate anomaly detection status. </param>
-        /// <param name="errors"> Error message when creating or training model fails. </param>
+        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
+        /// <param name="errors"> Error message when detection is failed. </param>
         /// <param name="variableStates"></param>
-        /// <param name="setupInfo"> Request when creating the model. </param>
+        /// <param name="setupInfo"> Detection request. </param>
         internal DetectionResultSummary(DetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, DetectionRequest setupInfo)
         {
             Status = status;
@@ -44,12 +44,13 @@ namespace Azure.AI.AnomalyDetector.Models
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Multivariate anomaly detection status. </summary>
+        /// <summary> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </summary>
         public DetectionStatus Status { get; }
-        /// <summary> Error message when creating or training model fails. </summary>
+        /// <summary> Error message when detection is failed. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
+        /// <summary> Gets the variable states. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
-        /// <summary> Request when creating the model. </summary>
+        /// <summary> Detection request. </summary>
         public DetectionRequest SetupInfo { get; }
     }
 }

@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticProperty.ConsumerKind);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);
             scope.SetMessageData(new ServiceBusReceivedMessage[] { message });
             scope.Start();
             try
@@ -233,7 +233,6 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
-                renewLockCancellationTokenSource?.Dispose();
             }
         }
 
@@ -303,6 +302,7 @@ namespace Azure.Messaging.ServiceBus
                 if (cancellationSource != null)
                 {
                     cancellationSource.Cancel();
+                    cancellationSource.Dispose();
                     await task.ConfigureAwait(false);
                 }
             }

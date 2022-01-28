@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -63,15 +63,20 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("additionalCapabilities");
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile");
-                writer.WriteObjectValue(OsProfile);
+                writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
+            }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
             }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
@@ -81,17 +86,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet");
-                writer.WriteObjectValue(AvailabilitySet);
+                JsonSerializer.Serialize(writer, AvailabilitySet);
             }
             if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
-                writer.WriteObjectValue(VirtualMachineScaleSet);
+                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                writer.WriteObjectValue(ProximityPlacementGroup);
+                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -111,12 +116,47 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host");
-                writer.WriteObjectValue(Host);
+                JsonSerializer.Serialize(writer, Host);
+            }
+            if (Optional.IsDefined(HostGroup))
+            {
+                writer.WritePropertyName("hostGroup");
+                JsonSerializer.Serialize(writer, HostGroup);
             }
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType);
+            }
+            if (Optional.IsDefined(ExtensionsTimeBudget))
+            {
+                writer.WritePropertyName("extensionsTimeBudget");
+                writer.WriteStringValue(ExtensionsTimeBudget);
+            }
+            if (Optional.IsDefined(PlatformFaultDomain))
+            {
+                writer.WritePropertyName("platformFaultDomain");
+                writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
+            if (Optional.IsDefined(ScheduledEventsProfile))
+            {
+                writer.WritePropertyName("scheduledEventsProfile");
+                writer.WriteObjectValue(ScheduledEventsProfile);
+            }
+            if (Optional.IsDefined(UserData))
+            {
+                writer.WritePropertyName("userData");
+                writer.WriteStringValue(UserData);
+            }
+            if (Optional.IsDefined(CapacityReservation))
+            {
+                writer.WritePropertyName("capacityReservation");
+                writer.WriteObjectValue(CapacityReservation);
+            }
+            if (Optional.IsDefined(ApplicationProfile))
+            {
+                writer.WritePropertyName("applicationProfile");
+                writer.WriteObjectValue(ApplicationProfile);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

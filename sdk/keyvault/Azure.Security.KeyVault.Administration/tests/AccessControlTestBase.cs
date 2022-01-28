@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal string _objectId;
 
         public AccessControlTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, serviceVersion, mode)
+            : base(isAsync, serviceVersion, mode, useLegacyTransport: true)
         { }
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)

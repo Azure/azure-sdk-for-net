@@ -27,11 +27,11 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 TimeSpan pollingInterval = new(1000);
 
-await foreach (DocumentStatus document in operation.GetDocumentStatusesAsync())
+await foreach (DocumentStatusResult document in operation.GetDocumentStatusesAsync())
 {
     Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-    Response<DocumentStatus> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
+    Response<DocumentStatusResult> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.Id);
 
     while (responseDocumentStatus.Value.Status != DocumentTranslationStatus.Failed &&
               responseDocumentStatus.Value.Status != DocumentTranslationStatus.Succeeded)
@@ -48,13 +48,13 @@ await foreach (DocumentStatus document in operation.GetDocumentStatusesAsync())
     if (responseDocumentStatus.Value.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+        Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AnomalyDetectorErrorCodes"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectorErrorCodes"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnomalyDetectorErrorCodes(string value)
         {
@@ -31,6 +31,8 @@ namespace Azure.AI.AnomalyDetector.Models
         private const string InvalidJsonFormatValue = "InvalidJsonFormat";
         private const string RequiredGranularityValue = "RequiredGranularity";
         private const string RequiredSeriesValue = "RequiredSeries";
+        private const string InvalidImputeModeValue = "InvalidImputeMode";
+        private const string InvalidImputeFixedValueValue = "InvalidImputeFixedValue";
 
         /// <summary> InvalidCustomInterval. </summary>
         public static AnomalyDetectorErrorCodes InvalidCustomInterval { get; } = new AnomalyDetectorErrorCodes(InvalidCustomIntervalValue);
@@ -50,6 +52,10 @@ namespace Azure.AI.AnomalyDetector.Models
         public static AnomalyDetectorErrorCodes RequiredGranularity { get; } = new AnomalyDetectorErrorCodes(RequiredGranularityValue);
         /// <summary> RequiredSeries. </summary>
         public static AnomalyDetectorErrorCodes RequiredSeries { get; } = new AnomalyDetectorErrorCodes(RequiredSeriesValue);
+        /// <summary> InvalidImputeMode. </summary>
+        public static AnomalyDetectorErrorCodes InvalidImputeMode { get; } = new AnomalyDetectorErrorCodes(InvalidImputeModeValue);
+        /// <summary> InvalidImputeFixedValue. </summary>
+        public static AnomalyDetectorErrorCodes InvalidImputeFixedValue { get; } = new AnomalyDetectorErrorCodes(InvalidImputeFixedValueValue);
         /// <summary> Determines if two <see cref="AnomalyDetectorErrorCodes"/> values are the same. </summary>
         public static bool operator ==(AnomalyDetectorErrorCodes left, AnomalyDetectorErrorCodes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnomalyDetectorErrorCodes"/> values are not the same. </summary>

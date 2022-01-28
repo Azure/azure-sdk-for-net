@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
@@ -32,15 +32,16 @@ namespace Azure.ResourceManager.TestFramework
         public TestRecording SessionRecording { get; private set; }
 
         private ArmClient _cleanupClient;
+        private bool _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
+        protected ManagementRecordedTestBase(bool isAsync, bool useLegacyTransport = true) : base(isAsync, useLegacyTransport: useLegacyTransport)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = true) : base(isAsync, mode, useLegacyTransport)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
@@ -54,6 +55,8 @@ namespace Azure.ResourceManager.TestFramework
                 var pollField = typeof(OperationInternals).GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
                 pollField.SetValue(null, TimeSpan.Zero);
             }
+
+            _waitForCleanup = Mode == RecordedTestMode.Live;
         }
 
         private ArmClient GetCleanupClient()
@@ -61,10 +64,10 @@ namespace Azure.ResourceManager.TestFramework
             if (Mode != RecordedTestMode.Playback)
             {
                 return new ArmClient(
-                        TestEnvironment.SubscriptionId,
-                        GetUri(TestEnvironment.ResourceManagerUrl),
-                        TestEnvironment.Credential,
-                        new ArmClientOptions());
+                    TestEnvironment.Credential,
+                    TestEnvironment.SubscriptionId,
+                    GetUri(TestEnvironment.ResourceManagerUrl),
+                    new ArmClientOptions());
             }
             return null;
         }
@@ -78,15 +81,15 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
+                TestEnvironment.Credential,
                 TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
-                TestEnvironment.Credential,
                 options);
         }
 
         private Uri GetUri(string endpoint)
         {
-            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : null;
+            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : new Uri("https://management.azure.com");
         }
 
         [SetUp]
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.TestFramework
                     try
                     {
                         var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
-                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
+                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(waitForCompletion: _waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
@@ -117,7 +120,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroup(mgmtGroupId).StartDelete();
+                        _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(waitForCompletion: _waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -127,7 +130,7 @@ namespace Azure.ResourceManager.TestFramework
             }
         }
 
-        private void StartSessionRecording()
+        private async Task StartSessionRecordingAsync()
         {
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
@@ -136,38 +139,42 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
-            SessionRecording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            SessionRecording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             SessionEnvironment.SetRecording(SessionRecording);
             ValidateClientInstrumentation = SessionRecording.HasRequests;
         }
 
-        protected void StopSessionRecording()
+        protected async Task StopSessionRecordingAsync()
         {
             if (ValidateClientInstrumentation)
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
 
-            SessionRecording?.Dispose(true);
+            if (SessionRecording != null)
+            {
+                await SessionRecording.DisposeAsync(true);
+            }
+
             GlobalClient = null;
         }
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public async Task OneTimeSetUp()
         {
             if (!HasOneTimeSetup())
                 return;
 
-            StartSessionRecording();
+            await StartSessionRecordingAsync();
 
             var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             GlobalClient = CreateClient<ArmClient>(
+                SessionEnvironment.Credential,
                 SessionEnvironment.SubscriptionId,
                 GetUri(SessionEnvironment.ResourceManagerUrl),
-                SessionEnvironment.Credential,
                 options);
         }
 
@@ -202,11 +209,11 @@ namespace Azure.ResourceManager.TestFramework
                 Parallel.ForEach(OneTimeResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
                     var sub = _cleanupClient.GetSubscriptions().GetIfExists(SessionEnvironment.SubscriptionId);
-                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
+                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(waitForCompletion: _waitForCleanup);
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroup(mgmtGroupId).StartDelete();
+                    _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(waitForCompletion: _waitForCleanup);
                 });
             }
 

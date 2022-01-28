@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> List of quotas. </summary>
-    internal partial class QuantumJobQuotaList
+    public partial class QuantumJobQuotaList
     {
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
         internal QuantumJobQuotaList()
@@ -28,6 +28,7 @@ namespace Azure.Quantum.Jobs.Models
             NextLink = nextLink;
         }
 
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<QuantumJobQuota> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }

@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sourceResourceId"> If createOption is Copy, this is the ARM id of the source snapshot or disk. </param>
         /// <param name="sourceUniqueId"> If this field is set, this is the unique id identifying the source of this resource. </param>
         /// <param name="uploadSizeBytes"> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </param>
-        internal CreationData(DiskCreateOption createOption, string storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, string sourceUri, string sourceResourceId, string sourceUniqueId, long? uploadSizeBytes)
+        /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
+        /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
+        internal CreationData(DiskCreateOption createOption, string storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, string sourceUri, string sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, string securityDataUri)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -36,6 +38,8 @@ namespace Azure.ResourceManager.Compute.Models
             SourceResourceId = sourceResourceId;
             SourceUniqueId = sourceUniqueId;
             UploadSizeBytes = uploadSizeBytes;
+            LogicalSectorSize = logicalSectorSize;
+            SecurityDataUri = securityDataUri;
         }
 
         /// <summary> This enumerates the possible sources of a disk&apos;s creation. </summary>
@@ -54,5 +58,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string SourceUniqueId { get; }
         /// <summary> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </summary>
         public long? UploadSizeBytes { get; set; }
+        /// <summary> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </summary>
+        public int? LogicalSectorSize { get; set; }
+        /// <summary> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </summary>
+        public string SecurityDataUri { get; set; }
     }
 }

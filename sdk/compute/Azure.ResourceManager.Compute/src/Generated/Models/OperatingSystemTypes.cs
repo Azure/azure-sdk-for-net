@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The Operating System type. </summary>
+    /// <summary> The operating system of the osDiskImage. </summary>
     public enum OperatingSystemTypes
     {
         /// <summary> Windows. </summary>

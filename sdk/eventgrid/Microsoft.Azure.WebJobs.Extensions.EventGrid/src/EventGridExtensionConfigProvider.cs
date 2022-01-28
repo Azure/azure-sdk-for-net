@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Azure;
+using Azure.Core.Pipeline;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
 using Microsoft.Azure.WebJobs.Description;
@@ -34,6 +35,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         private readonly ILoggerFactory _loggerFactory;
         private readonly Func<EventGridAttribute, IAsyncCollector<object>> _converter;
         private readonly HttpRequestProcessor _httpRequestProcessor;
+        private readonly DiagnosticScopeFactory _diagnosticScopeFactory;
+
+        // ApplicationInsights SDK listens to all Azure SDK sources that look like 'Azure.*'
+        private const string DiagnosticScopeNamespace = "Azure.Messaging.EventGrid";
+        private const string ResourceProviderNamespace = "Microsoft.EventGrid";
+        private const string DiagnosticScopeName = "EventGrid.Process";
 
         // for end to end testing
         internal EventGridExtensionConfigProvider(
@@ -44,6 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = converter;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true);
         }
 
         // default constructor
@@ -52,6 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             _converter = (attr => new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting))));
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true);
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -80,38 +89,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 .AddConverter<JToken, EventGridEvent[]>(jobject => EventGridEvent.ParseMany(new BinaryData(jobject.ToString())))
                 .AddConverter<JToken, CloudEvent>(jobject => CloudEvent.Parse(new BinaryData(jobject.ToString())))
                 .AddConverter<JToken, CloudEvent[]>(jobject => CloudEvent.ParseMany(new BinaryData(jobject.ToString())))
+                .AddConverter<JToken, BinaryData>(jobject => new BinaryData(jobject.ToString()))
+                .AddConverter<JToken, BinaryData[]>(jobject => jobject.Select(obj => new BinaryData(obj.ToString())).ToArray())
                 .AddOpenConverter<JToken, OpenType.Poco>(typeof(JTokenToPocoConverter<>))
                 .AddOpenConverter<JToken, OpenType.Poco[]>(typeof(JTokenToPocoConverter<>))
                 .BindToTrigger<JToken>(new EventGridTriggerAttributeBindingProvider(this));
 
             // Register the output binding
-            var rule = context
-                .AddBindingRule<EventGridAttribute>()
-                //TODO - add binding for BinaryData?
-                .AddConverter<string, object>(str =>
-                {
-                    // first attempt to parse as EventGridEvent, then fallback to CloudEvent
-                    try
-                    {
-                        return EventGridEvent.Parse(new BinaryData(str));
-                    }
-                    catch (ArgumentException)
-                    {
-                        return CloudEvent.Parse(new BinaryData(str));
-                    }
-                })
-                .AddConverter<JObject, object>(jobject =>
-                {
-                    try
-                    {
-                        return EventGridEvent.Parse(new BinaryData(jobject.ToString()));
-                    }
-                    catch (ArgumentException)
-                    {
-                        return CloudEvent.Parse(new BinaryData(jobject.ToString()));
-                    }
-                });
-
+            var rule = context.AddBindingRule<EventGridAttribute>();
             rule.BindToCollector(_converter);
             rule.AddValidator((a, t) =>
             {
@@ -148,13 +133,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             // which requires webapi.core...but this does not work for .netframework2.0
             // TODO change this once webjobs.script is migrated
             var functionName = HttpUtility.ParseQueryString(req.RequestUri.Query)["functionName"];
-            if (String.IsNullOrEmpty(functionName) || !_listeners.ContainsKey(functionName))
+            if (String.IsNullOrEmpty(functionName) || !_listeners.TryGetValue(functionName, out EventGridListener listener))
             {
                 _logger.LogInformation($"cannot find function: '{functionName}', available function names: [{string.Join(", ", _listeners.Keys.ToArray())}]");
                 return new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent($"cannot find function: '{functionName}'") };
             }
 
-            return await _httpRequestProcessor.ProcessAsync(req, functionName, ProcessEventsAsync, CancellationToken.None).ConfigureAwait(false);
+            return await _httpRequestProcessor.ProcessAsync(req, functionName, ProcessEventsAsync, listener.BindingType, CancellationToken.None).ConfigureAwait(false);
         }
 
         private async Task<HttpResponseMessage> ProcessEventsAsync(JArray events, string functionName, CancellationToken cancellationToken)
@@ -171,7 +156,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     {
                         TriggerValue = ev
                     };
-                    executions.Add(_listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None));
+                    executions.Add(ExecuteWithTracingAsync(functionName, triggerData));
                 }
             }
             // Batch Dispatch
@@ -181,8 +166,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 {
                     TriggerValue = events
                 };
-                executions.Add(_listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None));
+                executions.Add(ExecuteWithTracingAsync(functionName, triggerData));
             }
+
             await Task.WhenAll(executions).ConfigureAwait(false);
 
             // FIXME without internal queuing, we are going to process all events in parallel
@@ -196,6 +182,50 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             }
 
             return new HttpResponseMessage(HttpStatusCode.Accepted);
+        }
+
+        private async Task<FunctionResult> ExecuteWithTracingAsync(string functionName, TriggeredFunctionData triggerData)
+        {
+            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(DiagnosticScopeName, DiagnosticScope.ActivityKind.Consumer);
+            if (scope.IsEnabled)
+            {
+                if (triggerData.TriggerValue is JArray evntArray)
+                {
+                    foreach (JToken eventToken in evntArray)
+                    {
+                        AddLinkIfEventHasContext(scope, eventToken);
+                    }
+                }
+                else if (triggerData.TriggerValue is JToken eventToken)
+                {
+                    AddLinkIfEventHasContext(scope, eventToken);
+                }
+            }
+
+            scope.Start();
+
+            FunctionResult result = await _listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None).ConfigureAwait(false);
+            if (result.Exception != null)
+            {
+                scope.Failed(result.Exception);
+            }
+            return result;
+        }
+
+        private static void AddLinkIfEventHasContext(DiagnosticScope scope, JToken evnt)
+        {
+            if (evnt is JObject eventObj &&
+                eventObj.TryGetValue("traceparent", out JToken traceparent) &&
+                traceparent.Type == JTokenType.String)
+            {
+                string tracestateStr = null;
+                if (eventObj.TryGetValue("tracestate", out JToken tracestate) &&
+                    tracestate.Type == JTokenType.String)
+                {
+                    tracestateStr = tracestate.Value<string>();
+                }
+                scope.AddLink(traceparent.Value<string>(), tracestateStr);
+            }
         }
 
         private class JTokenToPocoConverter<T> : IConverter<JToken, T>

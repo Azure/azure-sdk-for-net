@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query
         {
             _version = version;
 
-            Diagnostics.LoggedHeaderNames.Add("prefer");
+            Diagnostics.LoggedHeaderNames.Add(HttpHeader.Names.Prefer);
         }
 
         /// <summary>
@@ -41,13 +41,8 @@ namespace Azure.Monitor.Query
             /// <summary>
             /// The V1 version of the service
             /// </summary>
-            V1
+            V1 = 1,
         }
-
-        /// <summary>
-        /// Gets or sets the authentication scope to use for authentication with Azure Active Directory. The default scope will be used if the property is null.
-        /// </summary>
-        public string AuthenticationScope { get; set; }
 
         internal string GetVersionString()
         {

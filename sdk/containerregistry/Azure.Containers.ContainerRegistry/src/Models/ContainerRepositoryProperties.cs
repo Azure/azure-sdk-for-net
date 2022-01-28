@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Repository properties. </summary>
@@ -23,7 +21,5 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanList { get; set; }
         /// <summary> Read enabled. </summary>
         public bool? CanRead { get; set; }
-        /// <summary> Gets or sets whether Teleport functionality is enabled on new images in the repository. Setting this to true can improve Container startup performance. </summary>
-        public bool? TeleportEnabled { get; set; }
     }
 }

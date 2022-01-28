@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/63d7e191-c910-43ba-908f-252519936998/providers/Microsoft.LabServices/labPlans?api-version=2021-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNkN2UxOTEtYzkxMC00M2JhLTkwOGYtMjUyNTE5OTM2OTk4L3Byb3ZpZGVycy9NaWNyb3NvZnQuTGFiU2VydmljZXMvbGFiUGxhbnM/YXBpLXZlcnNpb249MjAyMS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dac6126c-7612-4716-a14a-6b9c0b400d11"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22473.",
+          "Microsoft.Azure.Management.LabServices.LabServicesClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "0HMC9R11QI31C:00000001",
+          "0HMC9NRMD91G4:00000001",
+          "0HMC9PT5RA1LS:00000002"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "53a16015-a3f4-4e94-bd30-2a7956cf08e7"
+        ],
+        "x-ms-correlation-request-id": [
+          "53a16015-a3f4-4e94-bd30-2a7956cf08e7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211008T173206Z:53a16015-a3f4-4e94-bd30-2a7956cf08e7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 08 Oct 2021 17:32:06 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "1647"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"systemData\": {\r\n        \"createdBy\": \"ndepinet@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-09-14T21:52:06.6646627Z\",\r\n        \"lastModifiedBy\": \"ndepinet@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-09-14T21:52:06.6646627Z\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"allowedRegions\": [\r\n          \"westus\"\r\n        ]\r\n      },\r\n      \"location\": \"westus\",\r\n      \"id\": \"/subscriptions/63d7e191-c910-43ba-908f-252519936998/resourceGroups/rg-prod-testcreate/providers/Microsoft.LabServices/labPlans/testcreatelp\",\r\n      \"name\": \"testcreatelp\",\r\n      \"type\": \"Microsoft.LabServices/labPlans\"\r\n    },\r\n    {\r\n      \"systemData\": {\r\n        \"createdBy\": \"ndepinet@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-07-12T21:17:06.9853154Z\",\r\n        \"lastModifiedBy\": \"ndepinet@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-07-12T21:17:06.9853154Z\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"allowedRegions\": [\r\n          \"southcentralus\"\r\n        ]\r\n      },\r\n      \"location\": \"southcentralus\",\r\n      \"id\": \"/subscriptions/63d7e191-c910-43ba-908f-252519936998/resourceGroups/rg-prod-southcentralus/providers/Microsoft.LabServices/labPlans/rgprodscus\",\r\n      \"name\": \"rgprodscus\",\r\n      \"type\": \"Microsoft.LabServices/labPlans\"\r\n    },\r\n    {\r\n      \"systemData\": {\r\n        \"createdBy\": \"snnagen@microsoft.com\",\r\n        \"createdByType\": \"User\",\r\n        \"createdAt\": \"2021-08-19T22:46:34.246844Z\",\r\n        \"lastModifiedBy\": \"snnagen@microsoft.com\",\r\n        \"lastModifiedByType\": \"User\",\r\n        \"lastModifiedAt\": \"2021-08-19T22:46:34.246844Z\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"allowedRegions\": [\r\n          \"eastus2\"\r\n        ]\r\n      },\r\n      \"location\": \"eastus2\",\r\n      \"id\": \"/subscriptions/63d7e191-c910-43ba-908f-252519936998/resourceGroups/rg-prod-eastus-2/providers/Microsoft.LabServices/labPlans/eastus2prod\",\r\n      \"name\": \"eastus2prod\",\r\n      \"type\": \"Microsoft.LabServices/labPlans\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "63d7e191-c910-43ba-908f-252519936998"
+  }
+}

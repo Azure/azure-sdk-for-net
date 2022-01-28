@@ -1809,7 +1809,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var readTime = TimeSpan
                         .FromMilliseconds(options.MaximumWaitTime.Value.TotalMilliseconds * desiredEmptyEvents)
-                        .Add(TimeSpan.FromSeconds(10));
+                        .Add(TimeSpan.FromSeconds(30));
 
                     // Attempt to read from the empty partition and verify that no events are observed.  Because no events are expected, the
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.

@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceCredentialType = DataSourceCredentialKind.DataLakeSharedKey;
         }
 
+        /// <summary> Gets or sets the parameters. </summary>
         public DataLakeGen2SharedKeyParamPatch Parameters { get; set; }
     }
 }

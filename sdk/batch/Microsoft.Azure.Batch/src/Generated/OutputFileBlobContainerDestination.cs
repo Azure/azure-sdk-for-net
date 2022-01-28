@@ -27,12 +27,14 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> ContainerUrlProperty;
             public readonly PropertyAccessor<ComputeNodeIdentityReference> IdentityReferenceProperty;
             public readonly PropertyAccessor<string> PathProperty;
+            public readonly PropertyAccessor<IList<HttpHeader>> UploadHeadersProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.ContainerUrlProperty = this.CreatePropertyAccessor<string>(nameof(ContainerUrl), BindingAccess.Read | BindingAccess.Write);
                 this.IdentityReferenceProperty = this.CreatePropertyAccessor<ComputeNodeIdentityReference>(nameof(IdentityReference), BindingAccess.Read | BindingAccess.Write);
                 this.PathProperty = this.CreatePropertyAccessor<string>(nameof(Path), BindingAccess.Read | BindingAccess.Write);
+                this.UploadHeadersProperty = this.CreatePropertyAccessor<IList<HttpHeader>>(nameof(UploadHeaders), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.OutputFileBlobContainerDestination protocolObject) : base(BindingState.Bound)
@@ -48,6 +50,10 @@ namespace Microsoft.Azure.Batch
                 this.PathProperty = this.CreatePropertyAccessor(
                     protocolObject.Path,
                     nameof(Path),
+                    BindingAccess.Read);
+                this.UploadHeadersProperty = this.CreatePropertyAccessor(
+                    HttpHeader.ConvertFromProtocolCollectionAndFreeze(protocolObject.UploadHeaders),
+                    nameof(UploadHeaders),
                     BindingAccess.Read);
             }
         }
@@ -68,6 +74,14 @@ namespace Microsoft.Azure.Batch
             this.propertyContainer = new PropertyContainer();
             this.ContainerUrl = containerUrl;
             this.Path = path;
+        }
+
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="OutputFileBlobContainerDestination"/> class.
+        /// </summary>
+        protected OutputFileBlobContainerDestination()
+        {
+            this.propertyContainer = new PropertyContainer();
         }
 
         internal OutputFileBlobContainerDestination(Models.OutputFileBlobContainerDestination protocolObject)
@@ -119,6 +133,22 @@ namespace Microsoft.Azure.Batch
             private set { this.propertyContainer.PathProperty.Value = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a list of name-value pairs for headers to be used in uploading output files.
+        /// </summary>
+        /// <remarks>
+        /// These headers will be specified when uploading files to Azure Storage. For more information, see [Request Headers 
+        /// (All Blob Types)](https://docs.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types).
+        /// </remarks>
+        public IList<HttpHeader> UploadHeaders
+        {
+            get { return this.propertyContainer.UploadHeadersProperty.Value; }
+            set
+            {
+                this.propertyContainer.UploadHeadersProperty.Value = ConcurrentChangeTrackedModifiableList<HttpHeader>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
+
         #endregion // OutputFileBlobContainerDestination
 
         #region IPropertyMetadata
@@ -148,6 +178,7 @@ namespace Microsoft.Azure.Batch
                 ContainerUrl = this.ContainerUrl,
                 IdentityReference = UtilitiesInternal.CreateObjectWithNullCheck(this.IdentityReference, (o) => o.GetTransportObject()),
                 Path = this.Path,
+                UploadHeaders = UtilitiesInternal.ConvertToProtocolCollection(this.UploadHeaders),
             };
 
             return result;

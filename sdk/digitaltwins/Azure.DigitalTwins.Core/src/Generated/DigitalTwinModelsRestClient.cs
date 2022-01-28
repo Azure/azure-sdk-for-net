@@ -149,7 +149,10 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/models", false);
             if (dependenciesFor != null)
             {
-                uri.AppendQueryDelimited("dependenciesFor", dependenciesFor, ",", true);
+                foreach (var param in dependenciesFor)
+                {
+                    uri.AppendQuery("dependenciesFor", param, true);
+                }
             }
             if (includeModelDefinition != null)
             {

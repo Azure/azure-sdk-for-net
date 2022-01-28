@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys
     /// Contains random bytes returned from <see cref="KeyClient.GetRandomBytes(int, System.Threading.CancellationToken)"/>
     /// or <see cref="KeyClient.GetRandomBytesAsync(int, System.Threading.CancellationToken)"/>.
     /// </summary>
-    public class RandomBytes : IJsonDeserializable
+    internal class RandomBytes : IJsonDeserializable
     {
         private const string ValuePropertyName = "value";
 

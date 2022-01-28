@@ -640,21 +640,102 @@ namespace NetApp.Tests.ResourceTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                //get list of volumnes                
-                var volumesPage = netAppMgmtClient.Volumes.List("sara-systemic", "Sara-Systemic-NA", "Sara-Systemic-CP");
-                // Get all resources by polling on next page link
-                var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
-                var volumesList = new List<Volume>();
 
-                foreach (var volume in volumeResponseList)
+                //Create 100 volumes
+                var createdVolumes = new List<string>();
+                int length = 103;
+                try
                 {
-                    volumesList.Add(volume);
+                    long setPoolSize = 11*ResourceUtils.tebibyte;
+                    ResourceUtils.CreateVolume(netAppMgmtClient, poolSize: setPoolSize);
+                    createdVolumes.Add(ResourceUtils.volumeName1);
+                    for (int i = 0; i < length-1; i++)
+                    {                        
+                        ResourceUtils.CreateVolume(netAppMgmtClient, $"{ResourceUtils.volumeName1}-{i}", volumeOnly: true);
+                        createdVolumes.Add($"{ResourceUtils.volumeName1}-{i}");
+                    }
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record") 
+                    {
+                        Thread.Sleep(30000);
+                    }
+
+                    //get list of volumnes                
+                    var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                    // Get all resources by polling on next page link
+                    var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
+                    Assert.Equal(length, volumeResponseList.Count);
+
+                    // cleanup                    
+                    foreach(var volumeName in createdVolumes)
+                    {
+                        ResourceUtils.DeleteVolume(netAppMgmtClient, volumeName: volumeName);
+                        if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                        {
+                            Thread.Sleep(10000);
+                        }
+                    }
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                    {
+                        Thread.Sleep(30000);
+                    }
+                }   
+                catch (CloudException cex)
+                {
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                    {
+                        Thread.Sleep(30000);
+                    }
+                    string ble = cex.Message;
+                    //get list of volumnes                
+                    var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                    // Get all resources by polling on next page link
+                    var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
+
+                    foreach (var volume in volumeResponseList)
+                    {
+                        string volumeName = volume.Name.Split(@"/").Last();
+                        try
+                        {
+                            ResourceUtils.DeleteVolume(netAppMgmtClient, volumeName: volumeName);
+                        }
+                        catch
+                        {                            
+                        }
+                    }
+                }
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
                 }
 
-                Assert.Equal(166, volumesList.Count());
-
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }
+
+        //[Fact]
+        //public void CleanLongListVolumes()
+        //{
+        //    HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+        //    using (MockContext context = MockContext.Start(this.GetType()))
+        //    {
+        //        var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                
+        //        //get list of volumes                
+        //        var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+        //        // Get all resources by polling on next page link
+        //        var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);               
+
+        //        foreach (var volume in volumeResponseList)
+        //        {
+        //            var volumeName = volume.Name.Split('/').Last();
+        //            ResourceUtils.DeleteVolume(netAppMgmtClient, resourceGroup: ResourceUtils.resourceGroup, accountName: ResourceUtils.accountName1, poolName: ResourceUtils.poolName1, volumeName: volumeName);
+        //        }
+
+        //        ResourceUtils.DeletePool(netAppMgmtClient);
+        //        ResourceUtils.DeleteAccount(netAppMgmtClient);
+        //    }
+        //}
 
         private static string GetSessionsDirectoryPath()
         {

@@ -51,8 +51,7 @@ namespace Microsoft.Azure.Management.Avs
         public AvsClient Client { get; private set; }
 
         /// <summary>
-        /// Return script packages available for a private cloud to run on their
-        /// Private Cloud
+        /// List script packages available to run on the private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -107,10 +106,6 @@ namespace Microsoft.Azure.Management.Avs
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (privateCloudName == null)
@@ -277,7 +272,7 @@ namespace Microsoft.Azure.Management.Avs
         }
 
         /// <summary>
-        /// Return script package available to run on an Private Cloud
+        /// Get a script package available to run on a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -335,10 +330,6 @@ namespace Microsoft.Azure.Management.Avs
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (privateCloudName == null)
@@ -511,8 +502,7 @@ namespace Microsoft.Azure.Management.Avs
         }
 
         /// <summary>
-        /// Return script packages available for a private cloud to run on their
-        /// Private Cloud
+        /// List script packages available to run on the private cloud
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

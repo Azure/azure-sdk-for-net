@@ -14,20 +14,25 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClientOptions : ClientOptions
     {
         /// <summary>
+        /// The name of the scope to authenticate for when creating a <see cref="Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/>
+        /// </summary>
+        internal const string CredentialScopeName = "https://webpubsub.azure.com/.default";
+
+        /// <summary>
         /// The versions of Azure WebPubSub supported by this client library.
         /// </summary>
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            /// <summary> The 2021_05_01_preview version of the Azure WebPubSub service. </summary>
-            V2021_05_01_preview = 1,
+            /// <summary> The 2021_10_01_stable version of the Azure WebPubSub service. </summary>
+            V2021_10_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// The Latest <see cref="ServiceVersion"/> supported by this client library.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_01;
 
         /// <summary>
         /// Gets the version of the service API used when making requests.
@@ -68,7 +73,7 @@ namespace Azure.Messaging.WebPubSub
         public static string ToVersionString(this WebPubSubServiceClientOptions.ServiceVersion version) =>
             version switch
             {
-                WebPubSubServiceClientOptions.ServiceVersion.V2021_05_01_preview => "2021-05-01-preview",
+                WebPubSubServiceClientOptions.ServiceVersion.V2021_10_01 => "2021-10-01",
                 _ => throw CreateInvalidVersionException(version)
             };
 

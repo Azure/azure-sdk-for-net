@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// 'HardwareAcceleratedFPGA', 'HardwareAcceleratedGPU'</param>
         /// <param name="lastSucceededTimestamp">The time when the Big Data
         /// pool was updated successfully.</param>
-        public BigDataPoolResourceInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), AutoScaleProperties autoScale = default(AutoScaleProperties), System.DateTime? creationDate = default(System.DateTime?), AutoPauseProperties autoPause = default(AutoPauseProperties), bool? isComputeIsolationEnabled = default(bool?), bool? sessionLevelPackagesEnabled = default(bool?), int? cacheSize = default(int?), DynamicExecutorAllocation dynamicExecutorAllocation = default(DynamicExecutorAllocation), string sparkEventsFolder = default(string), int? nodeCount = default(int?), LibraryRequirements libraryRequirements = default(LibraryRequirements), IList<LibraryInfo> customLibraries = default(IList<LibraryInfo>), LibraryRequirements sparkConfigProperties = default(LibraryRequirements), string sparkVersion = default(string), string defaultSparkLogFolder = default(string), string nodeSize = default(string), string nodeSizeFamily = default(string), System.DateTime? lastSucceededTimestamp = default(System.DateTime?))
+        public BigDataPoolResourceInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), AutoScaleProperties autoScale = default(AutoScaleProperties), System.DateTime? creationDate = default(System.DateTime?), AutoPauseProperties autoPause = default(AutoPauseProperties), bool? isComputeIsolationEnabled = default(bool?), bool? sessionLevelPackagesEnabled = default(bool?), int? cacheSize = default(int?), DynamicExecutorAllocation dynamicExecutorAllocation = default(DynamicExecutorAllocation), string sparkEventsFolder = default(string), int? nodeCount = default(int?), LibraryRequirements libraryRequirements = default(LibraryRequirements), IList<LibraryInfo> customLibraries = default(IList<LibraryInfo>), SparkConfigProperties sparkConfigProperties = default(SparkConfigProperties), string sparkVersion = default(string), string defaultSparkLogFolder = default(string), string nodeSize = default(string), string nodeSizeFamily = default(string), System.DateTime? lastSucceededTimestamp = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -121,10 +121,10 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public AutoScaleProperties AutoScale { get; set; }
 
         /// <summary>
-        /// Gets or sets the time when the Big Data pool was created.
+        /// Gets the time when the Big Data pool was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; set; }
+        public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
         /// Gets or sets auto-pausing properties
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// properties
         /// </summary>
         [JsonProperty(PropertyName = "properties.sparkConfigProperties")]
-        public LibraryRequirements SparkConfigProperties { get; set; }
+        public SparkConfigProperties SparkConfigProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the Apache Spark version.

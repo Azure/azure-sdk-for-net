@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(Type);
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
+            Optional<string> type = default;
             Optional<string> id = default;
             Optional<string> serviceName = default;
             Optional<IReadOnlyList<string>> actions = default;
@@ -55,6 +61,11 @@ namespace Azure.ResourceManager.Network.Models
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -105,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Delegation(id.Value, name.Value, etag.Value, serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
+            return new Delegation(id.Value, name.Value, etag.Value, type.Value, serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
         }
     }
 }

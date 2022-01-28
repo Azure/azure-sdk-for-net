@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
@@ -18,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentConvenience
             string documentA = @"The food and service were unacceptable, but the concierge were nice.

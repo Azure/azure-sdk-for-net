@@ -3,12 +3,19 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-templatespecs-2021-05 --csharp.output-folder=C:\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\Generated\TemplateSpecs
-2021-05-11 18:40:02 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-policy-2021-06 --csharp.output-folder=C:\dev\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\GeneratedPolicy202106
+Autorest CSharp Version: 2.3.82
+2022-01-20 22:34:50 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      60be518b4fa1a9fb011a0cb69ae7ca3e1cee06b1
+Commit:      9a19506631005d0ff1e3f394c86a9ce10cf51910
 AutoRest information
 Requested version: v2
-Bootstrapper version:    autorest@1.9.1
+Bootstrapper version:    autorest@3.2.1
+System.IO.IOException: The process cannot access the file 'C:\dev\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\Generated\SdkInfo_PolicyClient.cs' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at Microsoft.PowerShell.Commands.FileSystemProvider.ClearContent(String path)
+Metadata generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/readme.md failed. Please try again

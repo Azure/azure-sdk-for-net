@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -103,15 +102,15 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"{operationResult.DocumentsFailed} failed");
             Console.WriteLine($"{operationResult.DocumentsSucceeded} succeeded");
 
-            await foreach (DocumentStatus document in operationResult.GetDocumentStatusesAsync())
+            await foreach (DocumentStatusResult document in operationResult.GetDocumentStatusesAsync())
             {
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
-                    Console.WriteLine($"Document at {document.SourceDocumentUri} was translated to {document.TranslatedTo} language.You can find translated document at {document.TranslatedDocumentUri}");
+                    Console.WriteLine($"Document at {document.SourceDocumentUri} was translated to {document.TranslatedToLanguageCode} language.You can find translated document at {document.TranslatedDocumentUri}");
                 }
                 else
                 {
-                    Console.WriteLine($"Document ID: {document.Id}, Error Code: {document.Error.ErrorCode}, Message: {document.Error.Message}");
+                    Console.WriteLine($"Document ID: {document.Id}, Error Code: {document.Error.Code}, Message: {document.Error.Message}");
                 }
             }
         }

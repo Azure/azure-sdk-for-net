@@ -29,19 +29,21 @@ namespace DataBoxEdge.Tests
         [Fact]
         public void Test_DeviceOrders()
         {
+            var resourceName = "demo-edge-sdk-order-2021";
+
             Order order = TestUtilities.GetOrderObject();
             // Create an order
-            Client.Orders.CreateOrUpdate(TestConstants.EdgeResourceName, order, TestConstants.DefaultResourceGroupName);
+            Client.Orders.CreateOrUpdate(resourceName, order, TestConstants.DefaultResourceGroupName);
 
             // Get an order
-            Client.Orders.Get(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName);
+            Client.Orders.Get(resourceName, TestConstants.DefaultResourceGroupName);
 
             // List all orders in the device (We support only one order for now)
             string continuationToken = null;
             TestUtilities.ListOrders(Client, TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, out continuationToken);
 
             // Delete an order
-            Client.Orders.Delete(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName);
+            Client.Orders.Delete(resourceName, TestConstants.DefaultResourceGroupName);
         }
         #endregion  Test Methods
 

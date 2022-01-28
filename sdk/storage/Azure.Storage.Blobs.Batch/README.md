@@ -1,6 +1,6 @@
 # Azure Storage Blobs Batch client library for .NET
 
-> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
+> Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.  This
@@ -14,7 +14,7 @@ library allows you to batch multiple Azure Blob Storage operations in a single r
 
 Install the Azure Storage Blobs Batch client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Storage.Blobs.Batch
 ```
 
@@ -29,6 +29,17 @@ Here's an example using the Azure CLI:
 
 ```Powershell
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
+```
+
+### Authenticate the client
+
+In order to interact with the Azure Blobs Storage service for batch operations, you'll need to create an instance of the BlobServiceClient class.  The [Azure Identity library][identity] makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+
+```C# Snippet:SampleSnippetsBlobBatch_Auth
+// Create a BlobServiceClient that will authenticate through Active Directory
+Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
+BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
+BlobBatchClient batch = client.GetBlobBatchClient();
 ```
 
 ## Key concepts

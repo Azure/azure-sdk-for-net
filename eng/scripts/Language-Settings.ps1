@@ -9,7 +9,15 @@ $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=con
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
-  $msbuildOutput = dotnet msbuild /nologo /t:GetPackageInfo $EngDir/service.proj /p:ServiceDirectory=$serviceDirectory
+  # $addDevVersion is a global variable set by a parameter in 
+  # Save-Package-Properties.ps1
+  $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
+  $msbuildOutput = dotnet msbuild `
+    /nologo `
+    /t:GetPackageInfo `
+    $EngDir/service.proj `
+    /p:ServiceDirectory=$serviceDirectory `
+    /p:AddDevVersion=$shouldAddDevVersion
 
   foreach ($projectOutput in $msbuildOutput)
   {
@@ -17,6 +25,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
 
+    if(!(Test-Path $pkgPath)) {
+      Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
+      continue
+    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
@@ -224,24 +236,28 @@ function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName)
   return $packages
 }
 
-function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate)
+function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate, $ReplaceLatestEntryTitle=$true)
 {
   if($null -eq $ReleaseDate)
   {
     $ReleaseDate = Get-Date -Format "yyyy-MM-dd"
   }
   & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceDirectory -PackageName $PackageName `
-  -NewVersionString $Version -ReleaseDate $ReleaseDate
+  -NewVersionString $Version -ReleaseDate $ReleaseDate -ReplaceLatestEntryTitle $ReplaceLatestEntryTitle
 }
 
 function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
+    $PackageName = $PackageName.ToLower()
     $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
     return $existingVersion.versions
   }
   catch {
-    LogError "Failed to retrieve package versions. `n$_"
+    if ($_.Exception.Response.StatusCode -ne 404) 
+    {
+      LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+    }
     return $null
   }
 }
@@ -253,14 +269,27 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     $suffix = '-pre'
   }
 
-  New-Object PSObject -Property @{ 
-    DocsMsReadMeName = $PackageInfo.Name.ToLower() -replace "." , ""
+  $readmeName = $PackageInfo.Name.ToLower()
+
+  # Readme names (which are used in the URL) should not include redundant terms
+  # when viewed in URL form. For example: 
+  # https://docs.microsoft.com/en-us/dotnet/api/overview/azure/storage.blobs-readme
+  # Note how the end of the URL doesn't look like:
+  # ".../azure/azure.storage.blobs-readme" 
+
+  # This logic eliminates a preceeding "azure." in the readme filename.
+  # "azure.storage.blobs" -> "storage.blobs"
+  if ($readmeName.StartsWith('azure.')) {
+    $readmeName = $readmeName.Substring(6)
+  }
+
+  New-Object PSObject -Property @{
+    DocsMsReadMeName = $readmeName
     LatestReadMeLocation = 'api/overview/azure'
     PreviewReadMeLocation = 'api/overview/azure'
     Suffix = $suffix
   }
 }
-
 
 # Details on CSV schema:
 # https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
@@ -348,6 +377,43 @@ function Get-DocsCiLine ($item) {
   return $line
 }
 
+function EnsureCustomSource($package) {
+  # $PackageSourceOverride is a global variable provided in
+  # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
+  # If it is empty then the property is not overridden.
+  $customPackageSource = Get-Variable -Name 'PackageSourceOverride' -ValueOnly -ErrorAction 'Ignore'
+  if (!$customPackageSource) {
+    return $package
+  }
+
+  if (!(Get-PackageSource -Name CustomPackageSource -ErrorAction Ignore)) {
+    Write-Host "Registering custom package source $customPackageSource"
+    Register-PackageSource `
+      -Name CustomPackageSource `
+      -Location $customPackageSource `
+      -ProviderName NuGet `
+      -Force
+  }
+
+  Write-Host "Checking custom package source for $($package.Name)"
+  $existingVersions = Find-Package `
+    -Name $package.Name `
+    -Source CustomPackageSource `
+    -AllVersions `
+    -AllowPrereleaseVersions
+  
+  # Matches package version against output: 
+  # "Azure.Security.KeyVault.Secrets 4.3.0-alpha.20210915.3"
+  $matchedVersion = $existingVersions.Where({$_.Version -eq $package.Versions})
+
+  if (!$matchedVersion) { 
+    return $package
+  }
+
+  $package.Properties['customSource'] = $customPackageSource
+  return $package
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
@@ -391,11 +457,19 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       continue
     }
 
-    Write-Host "Keep tracked package: $($package.Name)"
-    $package.Versions = @($matchingPublishedPackage.VersionGA.Trim())
+    $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
     if ($Mode -eq 'preview') {
-      $package.Versions = @($matchingPublishedPackage.VersionPreview.Trim())
+      $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
     }
+
+    if ($updatedVersion -ne $package.Versions[0]) {
+      Write-Host "Update tracked package: $($package.Name) to version $($updatedVersions)"
+      $package.Versions = @($updatedVersion)
+      $package = EnsureCustomSource $package
+    } else {
+      Write-Host "Keep tracked package: $($package.Name)"
+    }
+
     $outputPackages += $package
   }
 
@@ -416,7 +490,7 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
   }
 
   # Add packages that exist in the metadata but are not onboarded in docs config
-  # TODO: tfm='netstandard2.0' is a temporary workaround for 
+  # TODO: tfm='netstandard2.0' is a temporary workaround for
   # https://github.com/Azure/azure-sdk-for-net/issues/22494
   $newPackageProperties = [ordered]@{ tfm = 'netstandard2.0' }
   if ($Mode -eq 'preview') {
@@ -429,12 +503,16 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
     if ($Mode -eq 'preview') {
       $versions = @($package.VersionPreview.Trim())
     }
-    $outputPackages += [PSCustomObject]@{
+
+    $newPackage = [PSCustomObject]@{
       Id = $package.Package.Replace('.', '').ToLower();
       Name = $package.Package;
       Properties = $newPackageProperties;
       Versions = $versions
-    }
+    } 
+    $newPackage = EnsureCustomSource $newPackage 
+
+    $outputPackages += $newPackage
   }
 
   $outputLines = @() 

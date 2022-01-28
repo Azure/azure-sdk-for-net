@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-08-04";
+        public const string DefaultSasVersion = "2021-02-12";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -173,6 +173,7 @@ namespace Azure.Storage
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
             public const string LastModified = "Last-Modified";
+            public const string ETag = "ETag";
         }
 
         internal static class ErrorCodes
@@ -298,9 +299,19 @@ namespace Azure.Storage
             public const string BlobUriSuffix = Blob.UriSubDomain;
 
             /// <summary>
+            /// The blob URI suffix.
+            /// </summary>
+            public const string BlobUriPeriodSuffix = "." + Blob.UriSubDomain + ".";
+
+            /// <summary>
             /// The DFS URI suffix.
             /// </summary>
             public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The DFS URI suffix.
+            /// </summary>
+            public const string DfsUriPeriodSuffix = "." + DfsUriSuffix + ".";
 
             /// <summary>
             /// The key of the object json object returned for errors.
@@ -323,6 +334,7 @@ namespace Azure.Storage
             public const string AlreadyExists = "ContainerAlreadyExists";
             public const string FilesystemNotFound = "FilesystemNotFound";
             public const string PathNotFound = "PathNotFound";
+            public const string PathAlreadyExists = "PathAlreadyExists";
 
             /// <summary>
             /// Default concurrent transfers count.
@@ -474,6 +486,7 @@ namespace Azure.Storage
                 public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
+                public const char PermanentDelete = 'y';
             }
 
             internal static class Parameters
@@ -530,6 +543,8 @@ namespace Azure.Storage
                 public const string CorrelationIdUpper = "SCID";
                 public const string DirectoryDepth = "sdd";
                 public const string DirectoryDepthUpper = "SDD";
+                public const string EncryptionScope = "ses";
+                public const string EncryptionScopeUpper = "SES";
             }
 
             internal static class Resource
@@ -566,13 +581,15 @@ namespace Azure.Storage
                 Sas.Permissions.Write,
                 Sas.Permissions.Delete,
                 Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.PermanentDelete,
                 Sas.Permissions.List,
                 Sas.Permissions.Tag,
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
                 Sas.Permissions.Move,
-                Sas.Permissions.Execute
+                Sas.Permissions.Execute,
+                Sas.Permissions.SetImmutabilityPolicy,
             };
 
             /// <summary>

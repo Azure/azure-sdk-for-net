@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/Microsoft.Insights/metricDefinitions?api-version=2018-01-01\u0026metricnamespace=Microsoft.OperationalInsights%2Fworkspaces",
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/Microsoft.Insights/metricDefinitions?api-version=2018-01-01\u0026metricnamespace=Microsoft.OperationalInsights%2Fworkspaces",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d1eb7e6b8e1f054da8862d9561b9d887-248fd047caec204e-00",
+        "traceparent": "00-3dd28045fb97fa43880cad16b238832e-fa1d3b0a0b2bc14c-00",
         "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210625.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20211005.1",
+          "(.NET Core 3.1.19; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "a54e04d1a8d8ba5077a364b0e3d9dc6d",
         "x-ms-return-client-request-id": "true"
@@ -19,26 +19,26 @@
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "Request-Context",
         "Cache-Control": "no-cache",
-        "Content-Length": "86362",
+        "Content-Length": "87370",
         "Content-Type": "application/json",
-        "Date": "Fri, 25 Jun 2021 17:16:13 GMT",
+        "Date": "Tue, 05 Oct 2021 23:58:12 GMT",
         "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3063b93a-0a6e-40ca-b8aa-d33849ed62b0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "{3063b93a-0a6e-40ca-b8aa-d33849ed62b0}",
-        "x-ms-routing-request-id": "WESTCENTRALUS:20210625T171613Z:3063b93a-0a6e-40ca-b8aa-d33849ed62b0",
+        "x-ms-correlation-request-id": "b03a704d-24cb-4b2b-b983-ede445127b29",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "398",
+        "x-ms-request-id": "{b03a704d-24cb-4b2b-b983-ede445127b29}",
+        "x-ms-routing-request-id": "WESTUS2:20211005T235813Z:b03a704d-24cb-4b2b-b983-ede445127b29",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Free Inodes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Free Inodes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Free Inodes",
@@ -114,8 +114,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Free Space",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Free Space",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Free Space",
@@ -191,8 +191,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Inodes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Inodes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Used Inodes",
@@ -268,8 +268,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Space",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Space",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Used Space",
@@ -345,8 +345,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Read Bytes/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Read Bytes/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Disk Read Bytes/sec",
@@ -422,8 +422,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Reads/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Reads/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Disk Reads/sec",
@@ -499,8 +499,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Transfers/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Transfers/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Disk Transfers/sec",
@@ -576,8 +576,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Write Bytes/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Write Bytes/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Disk Write Bytes/sec",
@@ -653,8 +653,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Writes/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Disk Writes/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Disk Writes/sec",
@@ -730,8 +730,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Free Megabytes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Free Megabytes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Free Megabytes",
@@ -807,8 +807,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Logical Disk Bytes/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Logical Disk Bytes/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Logical Disk Bytes/sec",
@@ -884,8 +884,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Available Memory",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Available Memory",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Available Memory",
@@ -961,8 +961,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Available Swap Space",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Available Swap Space",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Available Swap Space",
@@ -1038,8 +1038,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Memory",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Memory",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Used Memory",
@@ -1115,8 +1115,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Swap Space",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Used Swap Space",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Used Swap Space",
@@ -1192,8 +1192,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Available MBytes Memory",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Available MBytes Memory",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Available MBytes Memory",
@@ -1269,8 +1269,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Available MBytes Swap",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Available MBytes Swap",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Available MBytes Swap",
@@ -1346,8 +1346,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Page Reads/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Page Reads/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Page Reads/sec",
@@ -1423,8 +1423,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Page Writes/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Page Writes/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Page Writes/sec",
@@ -1500,8 +1500,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Pages/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Pages/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Pages/sec",
@@ -1577,8 +1577,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Used MBytes Swap Space",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Used MBytes Swap Space",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Used MBytes Swap Space",
@@ -1654,8 +1654,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Used Memory MBytes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Used Memory MBytes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Used Memory MBytes",
@@ -1731,8 +1731,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Bytes Transmitted",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Bytes Transmitted",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Bytes Transmitted",
@@ -1808,8 +1808,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Bytes Received",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Bytes Received",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Bytes Received",
@@ -1885,8 +1885,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Bytes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Bytes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Bytes",
@@ -1962,8 +1962,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Packets Transmitted",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Packets Transmitted",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Packets Transmitted",
@@ -2039,8 +2039,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Packets Received",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Packets Received",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Packets Received",
@@ -2116,8 +2116,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Rx Errors",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Rx Errors",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Rx Errors",
@@ -2193,8 +2193,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Tx Errors",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Tx Errors",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Tx Errors",
@@ -2270,8 +2270,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Total Collisions",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Total Collisions",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Total Collisions",
@@ -2347,8 +2347,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Avg. Disk sec/Read",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Avg. Disk sec/Read",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Avg. Disk sec/Read",
@@ -2424,8 +2424,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Avg. Disk sec/Transfer",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Avg. Disk sec/Transfer",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Avg. Disk sec/Transfer",
@@ -2501,8 +2501,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Avg. Disk sec/Write",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Avg. Disk sec/Write",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Avg. Disk sec/Write",
@@ -2578,8 +2578,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Physical Disk Bytes/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Physical Disk Bytes/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Physical Disk Bytes/sec",
@@ -2655,8 +2655,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Pct Privileged Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Pct Privileged Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Pct Privileged Time",
@@ -2732,8 +2732,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Pct User Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Pct User Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Pct User Time",
@@ -2809,8 +2809,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Used Memory kBytes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Used Memory kBytes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Used Memory kBytes",
@@ -2886,8 +2886,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Virtual Shared Memory",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Virtual Shared Memory",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Virtual Shared Memory",
@@ -2963,8 +2963,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% DPC Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% DPC Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% DPC Time",
@@ -3040,8 +3040,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Idle Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Idle Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Idle Time",
@@ -3117,8 +3117,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Interrupt Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Interrupt Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Interrupt Time",
@@ -3194,8 +3194,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% IO Wait Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% IO Wait Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% IO Wait Time",
@@ -3271,8 +3271,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Nice Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Nice Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Nice Time",
@@ -3348,8 +3348,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Privileged Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Privileged Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Privileged Time",
@@ -3425,8 +3425,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Processor Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Processor Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Processor Time",
@@ -3502,8 +3502,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% User Time",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% User Time",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% User Time",
@@ -3579,8 +3579,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Free Physical Memory",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Free Physical Memory",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Free Physical Memory",
@@ -3656,8 +3656,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Free Space in Paging Files",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Free Space in Paging Files",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Free Space in Paging Files",
@@ -3733,8 +3733,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Free Virtual Memory",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Free Virtual Memory",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Free Virtual Memory",
@@ -3810,8 +3810,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Processes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Processes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Processes",
@@ -3887,8 +3887,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Size Stored In Paging Files",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Size Stored In Paging Files",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Size Stored In Paging Files",
@@ -3964,8 +3964,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Uptime",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Uptime",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Uptime",
@@ -4041,8 +4041,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Users",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Users",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Users",
@@ -4118,8 +4118,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Current Disk Queue Length",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Current Disk Queue Length",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Current Disk Queue Length",
@@ -4195,8 +4195,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Available MBytes",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Available MBytes",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Available MBytes",
@@ -4272,8 +4272,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_% Committed Bytes In Use",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_% Committed Bytes In Use",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_% Committed Bytes In Use",
@@ -4349,8 +4349,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Bytes Received/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Bytes Received/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Bytes Received/sec",
@@ -4426,8 +4426,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Bytes Sent/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Bytes Sent/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Bytes Sent/sec",
@@ -4503,8 +4503,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Bytes Total/sec",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Bytes Total/sec",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Bytes Total/sec",
@@ -4580,8 +4580,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Average_Processor Queue Length",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Average_Processor Queue Length",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Average_Processor Queue Length",
@@ -4657,8 +4657,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Heartbeat",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Heartbeat",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Heartbeat",
@@ -4730,8 +4730,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Update",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Update",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Update",
@@ -4811,8 +4811,8 @@
             ]
           },
           {
-            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs/providers/microsoft.insights/metricdefinitions/Event",
-            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs/providers/microsoft.insights/metricdefinitions/Event",
+            "resourceId": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
             "namespace": "Microsoft.OperationalInsights/workspaces",
             "name": {
               "value": "Event",
@@ -4900,8 +4900,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-06-25T10:16:13.7955814-07:00",
-    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon6/providers/Microsoft.OperationalInsights/workspaces/pakrymmon6-logs",
+    "DateTimeOffsetNow": "2021-10-05T16:58:13.2020477-07:00",
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-nibhatimonitor/providers/Microsoft.OperationalInsights/workspaces/nibhatimonitor-logs",
     "METRICS_RESOURCE_NAMESPACE": "Microsoft.OperationalInsights/workspaces",
     "RandomSeed": "411766157",
     "RESOURCE_MANAGER_URL": "https://management.azure.com/"

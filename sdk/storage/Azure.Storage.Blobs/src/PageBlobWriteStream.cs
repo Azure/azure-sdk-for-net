@@ -21,10 +21,12 @@ namespace Azure.Storage.Blobs
             long bufferSize,
             long position,
             PageBlobRequestConditions conditions,
-            IProgress<long> progressHandler) : base(
+            IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                hashingOptions)
         {
             ValidateBufferSize(bufferSize);
             ValidatePosition(position);
@@ -97,9 +99,12 @@ namespace Azure.Storage.Blobs
                 Response<PageInfo> response = await _pageBlobClient.UploadPagesInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    transactionalContentHash: default,
-                    conditions: _conditions,
-                    progressHandler: _progressHandler,
+                    options: new PageBlobUploadPagesOptions()
+                    {
+                        TransactionalHashingOptions = _hashingOptions,
+                        Conditions = _conditions,
+                        ProgressHandler = _progressHandler
+                    },
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

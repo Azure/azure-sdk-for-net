@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> The error object. </summary>
     internal partial class Error

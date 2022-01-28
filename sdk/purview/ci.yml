@@ -28,6 +28,8 @@ extends:
     Artifacts:
     - name: Azure.Analytics.Purview.Account
       safeName: AzureAnalyticsPurviewAccount
+    - name: Azure.Analytics.Purview.Administration
+      safeName: AzureAnalyticsPurviewAdministration
     - name: Azure.Analytics.Purview.Catalog
       safeName: AzureAnalyticsPurviewCatalog
     - name: Azure.Analytics.Purview.Scanning

@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
     using System.Net.Http;
 
     /// <summary>
-    /// Azure Video Analyzer ARM Client
+    /// Azure Video Analyzer provides a platform for you to build intelligent
+    /// video applications that span the edge and the cloud
     /// </summary>
     public partial class VideoAnalyzerClient : ServiceClient<VideoAnalyzerClient>, IVideoAnalyzerClient, IAzureClient
     {
@@ -75,6 +76,36 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IEdgeModulesOperations.
+        /// </summary>
+        public virtual IEdgeModulesOperations EdgeModules { get; private set; }
+
+        /// <summary>
+        /// Gets the IPipelineTopologiesOperations.
+        /// </summary>
+        public virtual IPipelineTopologiesOperations PipelineTopologies { get; private set; }
+
+        /// <summary>
+        /// Gets the ILivePipelinesOperations.
+        /// </summary>
+        public virtual ILivePipelinesOperations LivePipelines { get; private set; }
+
+        /// <summary>
+        /// Gets the IPipelineJobsOperations.
+        /// </summary>
+        public virtual IPipelineJobsOperations PipelineJobs { get; private set; }
+
+        /// <summary>
+        /// Gets the ILivePipelineOperationStatusesOperations.
+        /// </summary>
+        public virtual ILivePipelineOperationStatusesOperations LivePipelineOperationStatuses { get; private set; }
+
+        /// <summary>
+        /// Gets the IPipelineJobOperationStatusesOperations.
+        /// </summary>
+        public virtual IPipelineJobOperationStatusesOperations PipelineJobOperationStatuses { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -85,14 +116,39 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         public virtual IVideoAnalyzersOperations VideoAnalyzers { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationStatusesOperations.
+        /// </summary>
+        public virtual IOperationStatusesOperations OperationStatuses { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationResultsOperations.
+        /// </summary>
+        public virtual IOperationResultsOperations OperationResults { get; private set; }
+
+        /// <summary>
+        /// Gets the IVideoAnalyzerOperationStatusesOperations.
+        /// </summary>
+        public virtual IVideoAnalyzerOperationStatusesOperations VideoAnalyzerOperationStatuses { get; private set; }
+
+        /// <summary>
+        /// Gets the IVideoAnalyzerOperationResultsOperations.
+        /// </summary>
+        public virtual IVideoAnalyzerOperationResultsOperations VideoAnalyzerOperationResults { get; private set; }
+
+        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
-
-        /// <summary>
-        /// Gets the IEdgeModulesOperations.
-        /// </summary>
-        public virtual IEdgeModulesOperations EdgeModules { get; private set; }
 
         /// <summary>
         /// Gets the IVideosOperations.
@@ -345,14 +401,25 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// </summary>
         private void Initialize()
         {
+            EdgeModules = new EdgeModulesOperations(this);
+            PipelineTopologies = new PipelineTopologiesOperations(this);
+            LivePipelines = new LivePipelinesOperations(this);
+            PipelineJobs = new PipelineJobsOperations(this);
+            LivePipelineOperationStatuses = new LivePipelineOperationStatusesOperations(this);
+            PipelineJobOperationStatuses = new PipelineJobOperationStatusesOperations(this);
             Operations = new Operations(this);
             VideoAnalyzers = new VideoAnalyzersOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            OperationStatuses = new OperationStatusesOperations(this);
+            OperationResults = new OperationResultsOperations(this);
+            VideoAnalyzerOperationStatuses = new VideoAnalyzerOperationStatusesOperations(this);
+            VideoAnalyzerOperationResults = new VideoAnalyzerOperationResultsOperations(this);
             Locations = new LocationsOperations(this);
-            EdgeModules = new EdgeModulesOperations(this);
             Videos = new VideosOperations(this);
             AccessPolicies = new AccessPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-05-01-preview";
+            ApiVersion = "2021-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -382,6 +449,24 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<NodeBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<NodeBase>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CredentialsBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CredentialsBase>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TunnelBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TunnelBase>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EndpointBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EndpointBase>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CertificateSource>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CertificateSource>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TimeSequenceBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TimeSequenceBase>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EncoderPresetBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EncoderPresetBase>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AudioEncoderBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AudioEncoderBase>("@type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<VideoEncoderBase>("@type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<VideoEncoderBase>("@type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AuthenticationBase>("@type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AuthenticationBase>("@type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TokenKey>("@type"));

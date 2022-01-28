@@ -60,10 +60,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public DiagnosticScope CreateScope(
             string activityName,
-            string kindAttribute)
+            DiagnosticScope.ActivityKind kind)
         {
-            DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute);
+            DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
             scope.AddAttribute(
                 DiagnosticProperty.ServiceContextAttribute,
                 DiagnosticProperty.ServiceBusServiceContext);
@@ -78,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             {
                 using DiagnosticScope messageScope = CreateScope(
                     DiagnosticProperty.MessageActivityName,
-                    DiagnosticProperty.ProducerKind);
+                    DiagnosticScope.ActivityKind.Producer);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;

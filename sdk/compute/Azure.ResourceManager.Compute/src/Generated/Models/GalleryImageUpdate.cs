@@ -6,42 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies information about the gallery Image Definition that you want to update. </summary>
+    /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
     public partial class GalleryImageUpdate : UpdateResourceDefinition
     {
         /// <summary> Initializes a new instance of GalleryImageUpdate. </summary>
         public GalleryImageUpdate()
         {
+            Features = new ChangeTrackingList<GalleryImageFeature>();
         }
 
-        /// <summary> The description of this gallery Image Definition resource. This property is updatable. </summary>
+        /// <summary> The description of this gallery image definition resource. This property is updatable. </summary>
         public string Description { get; set; }
-        /// <summary> The Eula agreement for the gallery Image Definition. </summary>
+        /// <summary> The Eula agreement for the gallery image definition. </summary>
         public string Eula { get; set; }
         /// <summary> The privacy statement uri. </summary>
         public string PrivacyStatementUri { get; set; }
         /// <summary> The release note uri. </summary>
         public string ReleaseNoteUri { get; set; }
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemTypes? OSType { get; set; }
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </summary>
-        public OperatingSystemStateTypes? OsState { get; set; }
+        public OperatingSystemStateTypes? OSState { get; set; }
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }
-        /// <summary> The end of life date of the gallery Image Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
+        /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeDate { get; set; }
-        /// <summary> This is the gallery Image Definition identifier. </summary>
+        /// <summary> This is the gallery image definition identifier. </summary>
         public GalleryImageIdentifier Identifier { get; set; }
         /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
         public RecommendedMachineConfiguration Recommended { get; set; }
         /// <summary> Describes the disallowed disk types. </summary>
         public Disallowed Disallowed { get; set; }
-        /// <summary> Describes the gallery Image Definition purchase plan. This is used by marketplace images. </summary>
+        /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
         public ImagePurchasePlan PurchasePlan { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryImagePropertiesProvisioningState? ProvisioningState { get; }
+        /// <summary> A list of gallery image features. </summary>
+        public IList<GalleryImageFeature> Features { get; }
     }
 }

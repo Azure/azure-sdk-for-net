@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "baseName": {
@@ -32,7 +32,7 @@
         }
     },
     "variables": {
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]"
+        "secretValue": "Very secret value"
     },
     "resources": [
         {
@@ -68,14 +68,18 @@
               "[resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))]"
             ],
             "properties": {
-              "value": "Very secret value"
+              "value": "[variables('secretValue')]"
             }
           }
     ],
     "outputs": {
         "KEYVAULT_URL": {
             "type": "string",
-            "value": "[variables('azureKeyVaultUrl')]"
+            "value": "[reference(parameters('baseName')).vaultUri]"
+        },
+        "KEYVAULT_SECRET": {
+            "type": "string",
+            "value": "[variables('secretValue')]"
         }
     }
 }

@@ -29,8 +29,8 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(
-                new Uri(TestConfigOAuth.BlobServiceEndpoint),
-                GetOAuthCredential(TestConfigOAuth),
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(Tenants.TestConfigOAuth),
                 GetBlobOptions()));
             BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(GetNewShareName()));
 
@@ -43,7 +43,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 using Stream stream = new MemoryStream(data);
                 await appendBlobClient.AppendBlockAsync(stream);
 
-                ShareServiceClient serviceClient = GetServiceClient_OAuth_SharedKey();
+                ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
                 await using DisposingShare test = await GetTestShareAsync(
                     service: serviceClient,
                     shareName: GetNewShareName());
@@ -84,8 +84,8 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(
-                new Uri(TestConfigOAuth.BlobServiceEndpoint),
-                GetOAuthCredential(TestConfigOAuth),
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(Tenants.TestConfigOAuth),
                 GetBlobOptions()));
             BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(GetNewShareName()));
 
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 using Stream stream = new MemoryStream(data);
                 await appendBlobClient.AppendBlockAsync(stream);
 
-                ShareServiceClient serviceClient = GetServiceClient_OAuth_SharedKey();
+                ShareServiceClient serviceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
                 await using DisposingShare test = await GetTestShareAsync(
                     service: serviceClient,
                     shareName: GetNewShareName());

@@ -17,9 +17,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WritePropertyName("hookType");
             writer.WriteStringValue(HookType.ToString());
-            writer.WriteNullStringValue("hookName", HookName);
-            writer.WriteNullStringValue("description", Description);
-            writer.WriteNullStringValue("externalLink", ExternalLink);
+            writer.WriteNullObjectValue("hookName", HookName);
+            writer.WriteNullObjectValue("description", Description);
+            writer.WriteNullObjectValue("externalLink", ExternalLink);
             if (Optional.IsCollectionDefined(Admins))
             {
                 writer.WritePropertyName("admins");

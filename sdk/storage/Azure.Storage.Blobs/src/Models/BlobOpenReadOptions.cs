@@ -28,6 +28,11 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
 
+        /// <summary>
+        /// Optional transactional hashing options.
+        /// </summary>
+        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+
         internal bool AllowModifications { get; }
 
         /// <summary>

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -58,8 +59,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> id = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<Subnet> subnet = default;
-            Optional<PublicIPAddress> publicIPAddress = default;
+            Optional<SubnetData> subnet = default;
+            Optional<PublicIPAddressData> publicIPAddress = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = Subnet.DeserializeSubnet(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddress.DeserializePublicIPAddress(property0.Value);
+                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

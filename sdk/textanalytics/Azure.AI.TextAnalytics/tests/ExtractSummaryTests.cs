@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_1)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class ExtractSummaryTests : TextAnalyticsClientLiveTestBase
     {
         public ExtractSummaryTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -273,6 +273,42 @@ namespace Azure.AI.TextAnalytics.Tests
             ExtractSummaryResultCollection summaryDocumentsResults = summaryActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(summaryDocumentsResults, includeStatistics: true);
+        }
+
+        [RecordedTest]
+        public async Task ExtractSummaryWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractSummaryActions = new List<ExtractSummaryAction>()
+                {
+                    new ExtractSummaryAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "ExtractSummaryWithDisabledServiceLogs"
+                    },
+                    new ExtractSummaryAction()
+                    {
+                        ActionName = "ExtractSummary"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+
+            Assert.IsNotNull(ExtractSummaryActionsResults);
+
+            IList<string> expected = new List<string> { "ExtractSummary", "ExtractSummaryWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, ExtractSummaryActionsResults.Select(result => result.ActionName));
         }
 
         private void ValidateSummaryDocumentResult(SummarySentenceCollection sentences, SummarySentencesOrder expectedOrder)

@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Ingest fragment dropped event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIngestHeartbeat event. </summary>
+    /// <summary> Ingest heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIngestHeartbeat event. </summary>
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
@@ -18,8 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="transcriptionLanguage"> Gets the Live Transcription language. </param>
+        /// <param name="transcriptionState"> Gets the Live Transcription state. </param>
         /// <param name="bitrate"> Gets the bitrate of the track. </param>
         /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
+        /// <param name="ingestDriftValueInternal"> Gets the track ingest drift value. </param>
+        /// <param name="lastFragmentArrivalTime"> Gets the arrival UTC time of the last fragment. </param>
         /// <param name="lastTimestamp"> Gets the last timestamp. </param>
         /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
         /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
@@ -28,12 +34,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
         /// <param name="state"> Gets the state of the live event. </param>
         /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
-        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, long? bitrate, long? incomingBitrate, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
+        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, string transcriptionLanguage, string transcriptionState, long? bitrate, long? incomingBitrate, string ingestDriftValueInternal, DateTimeOffset? lastFragmentArrivalTime, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
         {
             TrackType = trackType;
             TrackName = trackName;
+            TranscriptionLanguage = transcriptionLanguage;
+            TranscriptionState = transcriptionState;
             Bitrate = bitrate;
             IncomingBitrate = incomingBitrate;
+            IngestDriftValueInternal = ingestDriftValueInternal;
+            LastFragmentArrivalTime = lastFragmentArrivalTime;
             LastTimestamp = lastTimestamp;
             Timescale = timescale;
             OverlapCount = overlapCount;
@@ -48,10 +58,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string TrackType { get; }
         /// <summary> Gets the track name. </summary>
         public string TrackName { get; }
+        /// <summary> Gets the Live Transcription language. </summary>
+        public string TranscriptionLanguage { get; }
+        /// <summary> Gets the Live Transcription state. </summary>
+        public string TranscriptionState { get; }
         /// <summary> Gets the bitrate of the track. </summary>
         public long? Bitrate { get; }
         /// <summary> Gets the incoming bitrate. </summary>
         public long? IncomingBitrate { get; }
+        /// <summary> Gets the arrival UTC time of the last fragment. </summary>
+        public DateTimeOffset? LastFragmentArrivalTime { get; }
         /// <summary> Gets the last timestamp. </summary>
         public string LastTimestamp { get; }
         /// <summary> Gets the timescale of the last timestamp. </summary>

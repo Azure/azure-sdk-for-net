@@ -29,6 +29,31 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
+        public void ThrowsWithTableNameInUri()
+        {
+            var badService = CreateService(ServiceUri + "/" + tableName, InstrumentClientOptions(new TableClientOptions()));
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.CreateTableIfNotExistsAsync(tableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.DeleteTableAsync(tableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.QueryAsync().ToEnumerableAsync());
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await badService.CreateTableAsync(tableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
         public async Task CreateTableIfNotExists()
         {
             // Call CreateTableIfNotExists when the table already exists.
@@ -202,7 +227,7 @@ namespace Azure.Data.Tables.Tests
         [TestCase(5)]
         public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
         {
-            var createdTables = new List<string>() { tableName };
+            var createdTables = new List<string> { tableName };
 
             try
             {
@@ -215,20 +240,17 @@ namespace Azure.Data.Tables.Tests
                 }
 
                 // Get the table list.
-                var remainingItems = createdTables.Count;
-                await foreach (var page in service.QueryAsync(/*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
+                await foreach (var page in service.QueryAsync().AsPages(pageSizeHint: pageCount))
                 {
                     Assert.That(page.Values, Is.Not.Empty);
                     if (pageCount.HasValue)
                     {
-                        Assert.That(page.Values.Count, Is.EqualTo(Math.Min(pageCount.Value, remainingItems)));
-                        remainingItems -= page.Values.Count;
+                        Assert.That(page.Values.Count, Is.LessThanOrEqualTo(pageCount.Value));
                     }
                     else
                     {
-                        Assert.That(page.Values.Count, Is.EqualTo(createdTables.Count));
+                        Assert.That(page.Values.Count, Is.GreaterThanOrEqualTo(createdTables.Count));
                     }
-                    Assert.That(page.Values.All(r => createdTables.Contains(r.Name)));
                 }
             }
 

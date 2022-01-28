@@ -19,7 +19,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal string Version { get; }
 
         /// <summary>
-        /// Gets the list of supported asset file types
+        /// Gets the list of supported asset file types.
         /// </summary>
         internal HashSet<AssetFileType> SupportedAssetFileTypes { get; }
 
@@ -73,7 +73,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             /// Version 0.2-preview.0 of the Azure Object Anchors service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V0_2_preview_0 = 1,
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

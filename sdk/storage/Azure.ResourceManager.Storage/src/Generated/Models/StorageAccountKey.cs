@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> An access key for the storage account. </summary>
@@ -19,11 +21,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="value"> Base 64-encoded value of the key. </param>
         /// <param name="permissions"> Permissions for the key -- read-only or full permissions. </param>
-        internal StorageAccountKey(string keyName, string value, KeyPermission? permissions)
+        /// <param name="creationTime"> Creation time of the key, in round trip date format. </param>
+        internal StorageAccountKey(string keyName, string value, KeyPermission? permissions, DateTimeOffset? creationTime)
         {
             KeyName = keyName;
             Value = value;
             Permissions = permissions;
+            CreationTime = creationTime;
         }
 
         /// <summary> Name of the key. </summary>
@@ -32,5 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
         public string Value { get; }
         /// <summary> Permissions for the key -- read-only or full permissions. </summary>
         public KeyPermission? Permissions { get; }
+        /// <summary> Creation time of the key, in round trip date format. </summary>
+        public DateTimeOffset? CreationTime { get; }
     }
 }

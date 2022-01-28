@@ -64,7 +64,8 @@ ipch/
 *.vsp
 
 # VS Code
-.vscode/
+**/.vscode/*
+!.vscode/cspell.json
 
 # Code analysis
 *.CodeAnalysisLog.xml
@@ -127,6 +128,7 @@ tools/*.dll
 *.pfx
 TestConfigurations.xml
 *.json.env
+*.bicep.env
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)

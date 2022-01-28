@@ -44,6 +44,11 @@ namespace Microsoft.Azure.Management.EventHub
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// Subscription credentials that uniquely identify a Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
@@ -74,29 +79,24 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
-        /// Gets the INamespacesOperations.
-        /// </summary>
-        public virtual INamespacesOperations Namespaces { get; private set; }
-
-        /// <summary>
         /// Gets the IConfigurationOperations.
         /// </summary>
         public virtual IConfigurationOperations Configuration { get; private set; }
 
         /// <summary>
-        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// Gets the INamespacesOperations.
         /// </summary>
-        public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
+        public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
-        /// Gets the IEventHubsOperations.
+        /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        public virtual IEventHubsOperations EventHubs { get; private set; }
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
-        /// Gets the IConsumerGroupsOperations.
+        /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
-        public virtual IConsumerGroupsOperations ConsumerGroups { get; private set; }
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -104,9 +104,24 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IRegionsOperations.
+        /// Gets the IEventHubsOperations.
         /// </summary>
-        public virtual IRegionsOperations Regions { get; private set; }
+        public virtual IEventHubsOperations EventHubs { get; private set; }
+
+        /// <summary>
+        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// </summary>
+        public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
+
+        /// <summary>
+        /// Gets the IConsumerGroupsOperations.
+        /// </summary>
+        public virtual IConsumerGroupsOperations ConsumerGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ISchemaRegistryOperations.
+        /// </summary>
+        public virtual ISchemaRegistryOperations SchemaRegistry { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the EventHubManagementClient class.
@@ -350,14 +365,17 @@ namespace Microsoft.Azure.Management.EventHub
         private void Initialize()
         {
             Clusters = new ClustersOperations(this);
-            Namespaces = new NamespacesOperations(this);
             Configuration = new ConfigurationOperations(this);
-            DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
-            EventHubs = new EventHubsOperations(this);
-            ConsumerGroups = new ConsumerGroupsOperations(this);
+            Namespaces = new NamespacesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             Operations = new Operations(this);
-            Regions = new RegionsOperations(this);
+            EventHubs = new EventHubsOperations(this);
+            DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
+            ConsumerGroups = new ConsumerGroupsOperations(this);
+            SchemaRegistry = new SchemaRegistryOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

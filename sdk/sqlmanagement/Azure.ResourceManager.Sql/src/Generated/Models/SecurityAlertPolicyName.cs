@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SecurityAlertPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAlertPolicyName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DefaultValue = "default";
+        private const string DefaultValue = "Default";
 
-        /// <summary> default. </summary>
+        /// <summary> Default. </summary>
         public static SecurityAlertPolicyName Default { get; } = new SecurityAlertPolicyName(DefaultValue);
         /// <summary> Determines if two <see cref="SecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertPolicyName left, SecurityAlertPolicyName right) => left.Equals(right);

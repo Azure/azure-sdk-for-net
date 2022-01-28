@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
@@ -13,43 +13,41 @@ namespace Azure.ResourceManager.Communication.Tests
     [RunFrequency(RunTestFrequency.Manually)]
     public abstract class CommunicationManagementClientLiveTestBase : ManagementRecordedTestBase<CommunicationManagementTestEnvironment>
     {
-        public string ResourceGroupPrefix { get; }
-        public string ResourceLocation { get; }
-        public string ResourceDataLocation { get; }
-        public string SubscriptionId { get; set; }
-        public string Location { get; set; }
-        public string NotificationHubsResourceGroupName { get; set; }
-        public string NotificationHubsResourceId { get; set; }
-        public string NotificationHubsConnectionString { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
+        public string ResourceGroupPrefix { get; private set; }
+        public string ResourceLocation { get; private set; }
+        public string ResourceDataLocation { get; private set; }
 
-        protected CommunicationManagementClientLiveTestBase(bool isAsync) : base(isAsync)
+        public ArmClient ArmClient { get; set; }
+
+        protected CommunicationManagementClientLiveTestBase(bool isAsync)
+            : base(isAsync)
         {
-            ResourceGroupPrefix = "rg-sdk-test-net-";
+            Init();
+        }
+
+        private void Init()
+        {
+            ResourceGroupPrefix = "Communication-RG-";
             ResourceLocation = "global";
             ResourceDataLocation = "UnitedStates";
-            SubscriptionId = "";
-            Location = "";
-            Sanitizer = new CommunicationManagementRecordedTestSanitizer();
+            //Sanitizer = new CommunicationManagementRecordedTestSanitizer();
         }
 
-        protected void InitializeClients()
+        protected CommunicationManagementClientLiveTestBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)
         {
-            SubscriptionId = TestEnvironment.SubscriptionId;
-            Location = TestEnvironment.Location;
-            NotificationHubsResourceGroupName = TestEnvironment.NotificationHubsResourceGroupName;
-            NotificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
-            NotificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
-
-            ResourcesManagementClient = GetResourceManagementClient();
+            Init();
         }
 
-        internal CommunicationManagementClient GetCommunicationManagementClient()
+        internal async Task<CommunicationService> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroup _resourceGroup)
         {
-            return InstrumentClient(new CommunicationManagementClient(
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new CommunicationManagementClientOptions())));
+            CommunicationServiceData data = new CommunicationServiceData()
+            {
+                Location = ResourceLocation,
+                DataLocation = ResourceDataLocation,
+            };
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(true, communicationServiceName, data);
+            return communicationServiceLro.Value;
         }
     }
 }

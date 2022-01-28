@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {
@@ -14,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
     ///
     /// <seealso cref="BatchPublishPerfTest" />
     ///
-    public sealed class PublishBatchesToGateway : BatchPublishPerfTest
+    public sealed class PublishBatchesToGateway : BatchPublishPerfTest<EventHubsOptions>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="PublishBatchesToGateway"/> class.
@@ -22,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public PublishBatchesToGateway(SizeCountOptions options) : base(options)
+        public PublishBatchesToGateway(EventHubsOptions options) : base(options)
         {
         }
 

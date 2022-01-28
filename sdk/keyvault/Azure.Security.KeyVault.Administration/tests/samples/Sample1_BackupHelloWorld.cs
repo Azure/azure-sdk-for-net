@@ -18,15 +18,16 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [Test]
         public void CreateClientSample()
         {
-            var keyVaultUrl = TestEnvironment.ManagedHsmUrl;
+            var managedHsmUrl = TestEnvironment.ManagedHsmUrl;
 
             #region Snippet:HelloCreateKeyVaultBackupClient
-            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
             #endregion
         }
 
         [RecordedTest]
         [AsyncOnly]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestoreSampleAsync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
@@ -72,6 +73,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         [RecordedTest]
         [SyncOnly]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/26122")]
         public async Task BackupAndRestoreSampleSync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;

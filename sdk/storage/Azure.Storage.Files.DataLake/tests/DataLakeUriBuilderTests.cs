@@ -4,7 +4,6 @@
 using System;
 using System.Net;
 using Azure.Core.TestFramework;
-using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -20,6 +19,18 @@ namespace Azure.Storage.Files.DataLake.Tests
         private readonly Uri _blobPeriodUri = new Uri("https://account.z.blob.core.windows.net");
         private readonly Uri _dfsPeriodUri = new Uri("https://account.z.dfs.core.windows.net");
         private readonly Uri _rootDirectoryUri = new Uri("https://account.dfs.core.windows.net/filesystem/");
+        private readonly Uri _prefixBlobAccountUri = new Uri("https://blobaccount.blob.core.windows.net");
+        private readonly Uri _prefixBlobAccountDfsUri = new Uri("https://blobaccount.dfs.core.windows.net");
+        private readonly Uri _prefixDfsAccountUri = new Uri("https://dfsacount.dfs.core.windows.net");
+        private readonly Uri _prefixDfsAccountBlobUri = new Uri("https://dfsacount.blob.core.windows.net");
+        private readonly Uri _suffixBlobAccountUri = new Uri("https://accountblob.blob.core.windows.net");
+        private readonly Uri _suffixBlobAccountDfsUri = new Uri("https://accountblob.dfs.core.windows.net");
+        private readonly Uri _suffixDfsAccountUri = new Uri("https://accountdfs.dfs.core.windows.net");
+        private readonly Uri _suffixDfsAccountBlobUri = new Uri("https://accountdfs.blob.core.windows.net");
+        private readonly Uri _accountBlobNameUri = new Uri("https://accountblobname.blob.core.windows.net");
+        private readonly Uri _accountBlobNameDfsUri = new Uri("https://accountblobname.dfs.core.windows.net");
+        private readonly Uri _accountDfsNameUri = new Uri("https://accountdfsname.dfs.core.windows.net");
+        private readonly Uri _accountDfsNameBlobUri = new Uri("https://accountdfsname.blob.core.windows.net");
 
         public DataLakeUriBuilderTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -375,6 +386,84 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(new Uri("https://account.blob.core.windows.net/filesystem/"), uri);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToDfsUri_PrefixBlobAccountName()
+        {
+            // Arrange
+            DataLakeUriBuilder blobAccountNameUriBuilder = new DataLakeUriBuilder(_prefixBlobAccountUri);
+
+            // Act
+            Uri uri = blobAccountNameUriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_prefixBlobAccountDfsUri, uri);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToBlobUri_PrefixDfsAccountName()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_prefixDfsAccountUri);
+
+            // Act
+            Uri uri = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_prefixDfsAccountBlobUri, uri);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToDfsUri_SuffixBlobAccountName()
+        {
+            // Arrange
+            DataLakeUriBuilder blobAccountNameUriBuilder = new DataLakeUriBuilder(_suffixBlobAccountUri);
+
+            // Act
+            Uri uri = blobAccountNameUriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_suffixBlobAccountDfsUri, uri);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToBlobUri_SuffixDfsAccountName()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_suffixDfsAccountUri);
+
+            // Act
+            Uri uri = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_suffixDfsAccountBlobUri, uri);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToDfsUri_AccountBlobName()
+        {
+            // Arrange
+            DataLakeUriBuilder blobAccountNameUriBuilder = new DataLakeUriBuilder(_accountBlobNameUri);
+
+            // Act
+            Uri uri = blobAccountNameUriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_accountBlobNameDfsUri, uri);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToBlobUri_AccountDfsName()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_accountDfsNameUri);
+
+            // Act
+            Uri uri = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_accountDfsNameBlobUri, uri);
         }
 
         [Test]

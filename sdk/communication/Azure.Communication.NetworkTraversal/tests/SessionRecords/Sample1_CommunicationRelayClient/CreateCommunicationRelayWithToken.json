@@ -1,93 +1,104 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://anpearesource1.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://smstestapp.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-b33308c0c1b85142975e843ccc17ff35-7dd9033bcdb8aa4d-00",
+        "traceparent": "00-00e1eeacaa3db142a6040473b63e404d-4b9aa0ede0b84f4d-00",
         "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210709.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20211116.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.22494)"
         ],
-        "x-ms-client-request-id": "d8435f118da56949d5b2753f2493bb7e",
+        "x-ms-client-request-id": "968b749fff21c4fb7330a60179971ed3",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Jul 2021 19:35:00 GMT",
+        "x-ms-date": "Wed, 17 Nov 2021 02:28:55 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1, 2021-10-31-preview, 2021-11-01",
+        "Content-Length": "101",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Jul 2021 19:35:00 GMT",
-        "MS-CV": "\u002B4PQ4\u002BRW9kWma\u002Bb6ZHWwcg.0",
+        "Date": "Wed, 17 Nov 2021 02:28:54 GMT",
+        "MS-CV": "k0YHLP7vv0KS5RqUV\u002Brbsw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "05KToYAAAAAAzAu50QUC8QYHawMYdLRAiV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "052iUYQAAAACy27OG6K1YSq/D8dMWi8vJV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "d8435f118da56949d5b2753f2493bb7e",
-        "X-Processing-Time": "86ms"
+        "x-ms-client-request-id": "968b749fff21c4fb7330a60179971ed3",
+        "X-Processing-Time": "22ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:e1b50ade-1e68-426f-b602-fdda5fda7eb1_0000000b-2ca5-bf0b-570c-113a0d002fbc"
+          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-cb9b-6aaf-d68a-084822005a66"
         }
       }
     },
     {
-      "RequestUri": "https://anpearesource1.communication.azure.com/networktraversal/:issueRelayConfiguration?api-version=2021-06-21-preview",
+      "RequestUri": "https://smstestapp.communication.azure.com/networktraversal/:issueRelayConfiguration?api-version=2021-10-08-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json",
-        "traceparent": "00-e96528f102cd414d80c692917917a20b-fcf686b952492e49-00",
+        "traceparent": "00-7c75ca49b1a5594a8fb551b4593c4257-efd86d512584ed48-00",
         "User-Agent": [
-          "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20210709.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20211116.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.22494)"
         ],
-        "x-ms-client-request-id": "2fa9dcf9714dc303d0ab6577e0d41768",
+        "x-ms-client-request-id": "14cf7ceb3f90816b5922660a1abb9a29",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "id": "8:acs:e1b50ade-1e68-426f-b602-fdda5fda7eb1_0000000b-2ca5-bf0b-570c-113a0d002fbc"
+        "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000d-cb9b-6aaf-d68a-084822005a66"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview",
+        "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview, 2021-10-08-preview",
+        "Content-Length": "522",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Jul 2021 19:35:01 GMT",
-        "MS-CV": "e7/DUBF8TUWoUJqkKC3x0Q.0",
+        "Date": "Wed, 17 Nov 2021 02:28:54 GMT",
+        "MS-CV": "kvkRyBknR0OHs\u002Bxr0R54Gg.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "05KToYAAAAAByn\u002B\u002B9vVuiRrCMlB\u002BGEOVQV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "052iUYQAAAADkeiVX\u002BaVeRqZJ0n66gaGUV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "2fa9dcf9714dc303d0ab6577e0d41768",
-        "X-Processing-Time": "324ms"
+        "x-ms-client-request-id": "14cf7ceb3f90816b5922660a1abb9a29",
+        "X-Processing-Time": "18ms"
       },
       "ResponseBody": {
-        "expiresOn": "2021-07-09T19:35:01.2390932\u002B00:00",
         "iceServers": [
           {
+            "routeType": "any",
             "urls": [
-              "turn:worldaz.turn.skype.com:3478"
+              "stun:world.relay.skype.com:3478",
+              "turn:world.relay.skype.com:3478"
             ],
-            "username": "BQAANtcdtq4B13aLHlQJnkdvXGItIue9qYINCEgezd4AAAAMARDhtQreHmhCb7YC/dpf2n6x/J4N\u002Bkv2536V7QAGyMwi95aWYcU=",
+            "username": "BQAANjNJUEoB19ztSsc2qIvB2YBcaRxz2PDiddv6fXQAAAAMARCsgNlqhd5IsZldo6P6NifIdETx1wWxZxufk7o9DZM3\u002BCU4Dqg=",
+            "credential": "Sanitized"
+          },
+          {
+            "routeType": "nearest",
+            "urls": [
+              "stun:13.107.17.41:3478",
+              "turn:13.107.17.41:3478"
+            ],
+            "username": "BQAANjNJUEoB19ztSsc2qIvB2YBcaRxz2PDiddv6fXQAAAAMARCsgNlqhd5IsZldo6P6NifIdETx1wWxZxufk7o9DZM3\u002BCU4Dqg=",
             "credential": "Sanitized"
           }
-        ]
+        ],
+        "expiresOn": "2021-11-17T02:28:55.6568224\u002B00:00"
       }
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://anpearesource1.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1817727159"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "991886650"
   }
 }

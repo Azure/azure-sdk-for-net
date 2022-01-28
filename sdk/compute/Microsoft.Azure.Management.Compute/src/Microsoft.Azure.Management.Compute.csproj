@@ -9,19 +9,13 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>48.0.0</Version>
+    <Version>52.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
-        1. SpotRestorePolicy property added to VMSS resource.
-        2. CapacityReservationProfile added to VMSS resource.
-        3. CapacityReservation added to VirtualMachine resource.
-        4. Restore Points API (Restore Points API model uses properties bag).
-        5. PublicAddressSKu object values were changed from 'publicIPAddressSkuName' and 'publicIPAddressSkuTier' to 'name' and 'tier' respectively.
-        6. SecurityTypes enum was changed to be string based.
-        7. Updated StorageAccountType object description and added to the ManagedDiskParameters property StorageAccountType description.
+        1. DiskRP API calls updated with 2021-08-01 version.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

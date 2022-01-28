@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The node types on which the script action should be executed. </summary>
-    public readonly partial struct HdiNodeTypes : IEquatable<HdiNodeTypes>
+    /// <summary> All available HdiNodeTypes values. </summary>
+    internal readonly partial struct HdiNodeTypes : IEquatable<HdiNodeTypes>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="HdiNodeTypes"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdiNodeTypes"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HdiNodeTypes(string value)
         {

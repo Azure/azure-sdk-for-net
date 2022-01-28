@@ -124,6 +124,7 @@ namespace Microsoft.Azure.Management.DataProtection
             /// The name of the resource group where the backup vault is present.
             /// </param>
             /// <param name='backupPolicyName'>
+            /// Name of the policy
             /// </param>
             /// <param name='parameters'>
             /// Request body for operation
@@ -146,6 +147,7 @@ namespace Microsoft.Azure.Management.DataProtection
             /// The name of the resource group where the backup vault is present.
             /// </param>
             /// <param name='backupPolicyName'>
+            /// Name of the policy
             /// </param>
             /// <param name='parameters'>
             /// Request body for operation

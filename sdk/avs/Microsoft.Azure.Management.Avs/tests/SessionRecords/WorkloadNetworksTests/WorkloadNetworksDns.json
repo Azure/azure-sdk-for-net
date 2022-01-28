@@ -1,2747 +1,461 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"defaultDnsZone\",\n    \"domain\": [],\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ]\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"defaultDnsZone\",\r\n    \"domain\": [],\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8ee916d2-28ca-442e-9d2f-b4aa9503489e"
+          "c078041d-bc59-4fdc-b633-93f03293c7b7"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "124"
+          "132"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "329a92c7-0d72-483a-a317-3301ffb09597"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "c420e534-db81-46ad-ad05-19ca772eabb1"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232639Z:c420e534-db81-46ad-ad05-19ca772eabb1"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:26:39 GMT"
-        ],
-        "Content-Length": [
-          "401"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n  \"name\": \"defaultDnsZone\",\n  \"properties\": {\n    \"displayName\": \"defaultDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"domain\": [],\n    \"provisioningState\": \"Building\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzLzQxNzUyZTgzLTliZWMtNDg4Ni1hNTdmLTlkNDQ3NmEyNGM5Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
-        ],
-        "x-ms-request-id": [
-          "695a2598-8598-47c5-ab07-0453d0ca08ff"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "d45b3c3a-d356-42d9-ae49-2d5dcbf73287"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232649Z:d45b3c3a-d356-42d9-ae49-2d5dcbf73287"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:26:49 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "349"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"name\": \"41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:26:39.1885685-07:00\",\n  \"status\": \"Building\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsZones/dnsZone1\",\r\n  \"name\": \"dnsZone1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\",\r\n  \"properties\": {\r\n    \"displayName\": \"dnsZone1\",\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ],\r\n    \"sourceIp\": \"8.8.8.8\",\r\n    \"dnsServices\": 0,\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzLzQxNzUyZTgzLTliZWMtNDg4Ni1hNTdmLTlkNDQ3NmEyNGM5Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
-        ],
-        "x-ms-request-id": [
-          "d4bfcb8a-476d-48f3-a359-640b0358fb1f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "353965fd-f54f-4d4d-b5b0-74d28a0ef026"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232659Z:353965fd-f54f-4d4d-b5b0-74d28a0ef026"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:26:59 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"name\": \"41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:26:39.1885685-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzLzQxNzUyZTgzLTliZWMtNDg4Ni1hNTdmLTlkNDQ3NmEyNGM5Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "x-ms-request-id": [
-          "8de1d29f-e600-49c2-b125-3bbb5faa5325"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "8a83a706-9c92-436d-885b-d88045f764ce"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232709Z:8a83a706-9c92-436d-885b-d88045f764ce"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:27:09 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"name\": \"41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:26:39.1885685-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzLzQxNzUyZTgzLTliZWMtNDg4Ni1hNTdmLTlkNDQ3NmEyNGM5Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
-        ],
-        "x-ms-request-id": [
-          "f8da4518-5719-43a4-ab8e-3058bf92e382"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "64ef95dc-3a66-4e1e-9aa9-fde875f265d2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232720Z:64ef95dc-3a66-4e1e-9aa9-fde875f265d2"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:27:19 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"name\": \"41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:26:39.1885685-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzLzQxNzUyZTgzLTliZWMtNDg4Ni1hNTdmLTlkNDQ3NmEyNGM5Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
-        ],
-        "x-ms-request-id": [
-          "a66a98db-f965-4980-8e8a-354bb8ee6c57"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "4fd8219c-dc87-4ac7-ac05-e74c67ac45b6"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232730Z:4fd8219c-dc87-4ac7-ac05-e74c67ac45b6"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:27:29 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"name\": \"41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:26:39.1885685-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzLzQxNzUyZTgzLTliZWMtNDg4Ni1hNTdmLTlkNDQ3NmEyNGM5Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
-        ],
-        "x-ms-request-id": [
-          "2c70bde2-39a2-443a-bfd8-74f08ba90e31"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "c0e25447-b781-4024-aaf5-65451191ef31"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232740Z:c0e25447-b781-4024-aaf5-65451191ef31"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:27:39 GMT"
-        ],
-        "Content-Length": [
-          "895"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:27:32.6430368-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"name\": \"41752e83-9bec-4886-a57f-9d4476a24c93\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n    \"name\": \"defaultDnsZone\",\n    \"properties\": {\n      \"displayName\": \"defaultDnsZone\",\n      \"dnsServerIps\": [\n        \"1.1.1.1\"\n      ],\n      \"dnsServices\": 0,\n      \"domain\": [],\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 0,\n      \"sourceIp\": \"\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n  },\n  \"startTime\": \"2021-05-25T16:26:39.1885685-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
-        ],
-        "x-ms-request-id": [
-          "eb3c07c7-b04d-4fdd-94dc-0b83e907865c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "45bc9421-c859-4e7d-a0e2-81e9241b5f84"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232741Z:45bc9421-c859-4e7d-a0e2-81e9241b5f84"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:27:40 GMT"
-        ],
-        "Content-Length": [
-          "445"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n  \"name\": \"defaultDnsZone\",\n  \"properties\": {\n    \"displayName\": \"defaultDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"dnsServices\": 0,\n    \"domain\": [],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"sourceIp\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "06c170b6-ad43-40f1-9091-2952b1ecb81f"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11984"
-        ],
-        "x-ms-request-id": [
-          "084520b7-2698-4109-8a12-45da128a9297"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "12f12ccf-3387-42b4-b246-ac8308dc6a28"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232847Z:12f12ccf-3387-42b4-b246-ac8308dc6a28"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:46 GMT"
-        ],
-        "Content-Length": [
-          "445"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n  \"name\": \"defaultDnsZone\",\n  \"properties\": {\n    \"displayName\": \"defaultDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"dnsServices\": 0,\n    \"domain\": [],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"sourceIp\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11977"
-        ],
-        "x-ms-request-id": [
-          "5a315d9c-94c7-4a52-8cc4-ff8a30990e83"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "0736a6d3-3f92-47f2-8b1d-45cec4a155a1"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232950Z:0736a6d3-3f92-47f2-8b1d-45cec4a155a1"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:29:49 GMT"
-        ],
-        "Content-Length": [
-          "446"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n  \"name\": \"defaultDnsZone\",\n  \"properties\": {\n    \"displayName\": \"modifiedDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"dnsServices\": 0,\n    \"domain\": [],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 1,\n    \"sourceIp\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"fqdnDnsZone\",\n    \"domain\": [\n      \"fqdndnszone.com\"\n    ],\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ]\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"fqdnDnsZone\",\r\n    \"domain\": [\r\n      \"fqdndnszone.com\"\r\n    ],\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "258ca392-5aad-42d5-b9dd-e4d3602bbcd0"
+          "79d8ac50-e04b-45ab-85b7-9cdb5c9bb2ee"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "150"
+          "160"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "bfce57d4-14f3-4dcf-be15-039f4f505901"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "b4da858a-c9b5-41b6-8e1d-e79eb98180b0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232744Z:b4da858a-c9b5-41b6-8e1d-e79eb98180b0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:27:43 GMT"
-        ],
-        "Content-Length": [
-          "409"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone\",\n  \"name\": \"fqdnDnsZone\",\n  \"properties\": {\n    \"displayName\": \"fqdnDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"domain\": [\n      \"fqdndnszone.com\"\n    ],\n    \"provisioningState\": \"Building\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2RjNzY5OGUyLTExYjAtNGI0OC1iNWVmLTVkMzAzZjU4YjM3YT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
-        ],
-        "x-ms-request-id": [
-          "75e84943-e3f0-4954-82f2-f35b662032c5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "e8c88f2c-f1e4-48ff-b140-98efea2ed8c5"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232754Z:e8c88f2c-f1e4-48ff-b140-98efea2ed8c5"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:27:53 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "384"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "349"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"name\": \"dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:27:43.9767222-07:00\",\n  \"status\": \"Building\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsZones/dnsZone1\",\r\n  \"name\": \"dnsZone1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\",\r\n  \"properties\": {\r\n    \"displayName\": \"dnsZone1\",\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ],\r\n    \"sourceIp\": \"8.8.8.8\",\r\n    \"dnsServices\": 0,\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2RjNzY5OGUyLTExYjAtNGI0OC1iNWVmLTVkMzAzZjU4YjM3YT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
-        ],
-        "x-ms-request-id": [
-          "f736f483-2061-4ba1-8416-8bf8d8dee7cd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "5a064618-c94d-45c7-b7a0-c86dd60a56bb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232804Z:5a064618-c94d-45c7-b7a0-c86dd60a56bb"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:03 GMT"
-        ],
-        "Content-Length": [
-          "384"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"name\": \"dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:27:43.9767222-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2RjNzY5OGUyLTExYjAtNGI0OC1iNWVmLTVkMzAzZjU4YjM3YT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11990"
-        ],
-        "x-ms-request-id": [
-          "53256aeb-16f2-462b-8646-adf327307a84"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "34ec69d3-e132-4000-bc03-1bfb180774e9"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232814Z:34ec69d3-e132-4000-bc03-1bfb180774e9"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:14 GMT"
-        ],
-        "Content-Length": [
-          "384"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"name\": \"dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:27:43.9767222-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2RjNzY5OGUyLTExYjAtNGI0OC1iNWVmLTVkMzAzZjU4YjM3YT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11989"
-        ],
-        "x-ms-request-id": [
-          "2d03474e-c8f2-4d94-b671-5780dc7af7aa"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "e3e4b15e-1954-41f4-a2b8-865502cedbba"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232824Z:e3e4b15e-1954-41f4-a2b8-865502cedbba"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:24 GMT"
-        ],
-        "Content-Length": [
-          "384"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"name\": \"dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:27:43.9767222-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2RjNzY5OGUyLTExYjAtNGI0OC1iNWVmLTVkMzAzZjU4YjM3YT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
-        ],
-        "x-ms-request-id": [
-          "ba6fac03-a986-4683-98d6-fb356173a5f4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "8025b391-14d3-4eb7-acef-3dcfa3d682cf"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232834Z:8025b391-14d3-4eb7-acef-3dcfa3d682cf"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:34 GMT"
-        ],
-        "Content-Length": [
-          "384"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"name\": \"dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:27:43.9767222-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2RjNzY5OGUyLTExYjAtNGI0OC1iNWVmLTVkMzAzZjU4YjM3YT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11987"
-        ],
-        "x-ms-request-id": [
-          "d369f677-5e99-4aa6-8ff5-762f027830e3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "4caca33f-da0e-4278-8d42-a0df371617cd"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232845Z:4caca33f-da0e-4278-8d42-a0df371617cd"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:45 GMT"
-        ],
-        "Content-Length": [
-          "900"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:28:38.1451416-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"name\": \"dc7698e2-11b0-4b48-b5ef-5d303f58b37a\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone\",\n    \"name\": \"fqdnDnsZone\",\n    \"properties\": {\n      \"displayName\": \"fqdnDnsZone\",\n      \"dnsServerIps\": [\n        \"1.1.1.1\"\n      ],\n      \"dnsServices\": 0,\n      \"domain\": [\n        \"fqdndnszone.com\"\n      ],\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 0,\n      \"sourceIp\": \"\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n  },\n  \"startTime\": \"2021-05-25T16:27:43.9767222-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11986"
-        ],
-        "x-ms-request-id": [
-          "f535acc8-4b5e-40d9-b02a-ccf156bed1a7"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "96f962c1-4309-4b2e-8a44-0cb23c19ddc9"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232846Z:96f962c1-4309-4b2e-8a44-0cb23c19ddc9"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:45 GMT"
-        ],
-        "Content-Length": [
-          "453"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone\",\n  \"name\": \"fqdnDnsZone\",\n  \"properties\": {\n    \"displayName\": \"fqdnDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"dnsServices\": 0,\n    \"domain\": [\n      \"fqdndnszone.com\"\n    ],\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"sourceIp\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7b36033b-f7d7-4dee-b2a1-102486d2ae44"
+          "fcd0feba-467a-4a55-84a6-239cd152c1bf"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11985"
-        ],
-        "x-ms-request-id": [
-          "6c580a70-cd2b-466d-a4a5-7542a27a6e73"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "d8be0366-a372-4c2c-9894-3169983dd8ff"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232846Z:d8be0366-a372-4c2c-9894-3169983dd8ff"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:28:46 GMT"
-        ],
-        "Content-Length": [
-          "911"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "367"
         ]
       },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultdnszone\",\n      \"name\": \"defaultdnszone\",\n      \"properties\": {\n        \"displayName\": \"defaultDnsZone\",\n        \"dnsServerIps\": [\n          \"1.1.1.1\"\n        ],\n        \"dnsServices\": 0,\n        \"domain\": [],\n        \"provisioningState\": \"Fulfilled\",\n        \"revision\": 0,\n        \"sourceIp\": \"\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n    },\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdndnszone\",\n      \"name\": \"fqdndnszone\",\n      \"properties\": {\n        \"displayName\": \"fqdnDnsZone\",\n        \"dnsServerIps\": [\n          \"1.1.1.1\"\n        ],\n        \"dnsServices\": 0,\n        \"domain\": [\n          \"fqdndnszone.com\"\n        ],\n        \"provisioningState\": \"Fulfilled\",\n        \"revision\": 0,\n        \"sourceIp\": \"\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n    }\n  ]\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsZones/dnsZone1\",\r\n      \"name\": \"portMirroring1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\",\r\n      \"properties\": {\r\n        \"displayName\": \"dnsZone1\",\r\n        \"dnsServerIps\": [\r\n          \"1.1.1.1\"\r\n        ],\r\n        \"sourceIp\": \"8.8.8.8\",\r\n        \"dnsServices\": 0,\r\n        \"revision\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6572e8f0-bf3c-4a68-8f25-f16b57fe8e3e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Fri, 12 Nov 2021 17:41:52 GMT"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "355"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsZones/dnsZone1\",\r\n  \"name\": \"portMirroring1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\",\r\n  \"properties\": {\r\n    \"displayName\": \"dnsZone1\",\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ],\r\n    \"sourceIp\": \"8.8.8.8\",\r\n    \"dnsServices\": 0,\r\n    \"revision\": 1\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"modifiedDnsZone\",\n    \"domain\": [],\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ]\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"modifiedDnsZone\",\r\n    \"domain\": [],\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "01ee244d-d061-4eea-8113-eb25ec14c009"
+          "7ee224c6-4e4e-4c68-a2d0-a1d15ae63257"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "125"
+          "133"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "cbdc5760-927d-4940-8747-1078e126673c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "3cef82a2-8543-4dca-a7d1-8486ff822ffe"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232848Z:3cef82a2-8543-4dca-a7d1-8486ff822ffe"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:28:48 GMT"
-        ],
-        "Content-Length": [
-          "445"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n  \"name\": \"defaultDnsZone\",\n  \"properties\": {\n    \"displayName\": \"modifiedDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"dnsServices\": 0,\n    \"domain\": [],\n    \"provisioningState\": \"Building\",\n    \"revision\": 0,\n    \"sourceIp\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2U3MjMyN2NkLTRlMGEtNDQ1ZS05YWRlLTc0ODNjNTk0Y2Q1Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11983"
-        ],
-        "x-ms-request-id": [
-          "95c16390-aae1-4a49-926a-f4b2d43800c2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "c5311c26-bbfb-484d-8a2b-8cacafe41ab1"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232858Z:c5311c26-bbfb-484d-8a2b-8cacafe41ab1"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:28:58 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "349"
         ]
       },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"name\": \"e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:28:48.4254743-07:00\",\n  \"status\": \"Building\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsZones/dnsZone1\",\r\n  \"name\": \"dnsZone1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\",\r\n  \"properties\": {\r\n    \"displayName\": \"dnsZone1\",\r\n    \"dnsServerIps\": [\r\n      \"1.1.1.1\"\r\n    ],\r\n    \"sourceIp\": \"8.8.8.8\",\r\n    \"dnsServices\": 0,\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2U3MjMyN2NkLTRlMGEtNDQ1ZS05YWRlLTc0ODNjNTk0Y2Q1Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11982"
-        ],
-        "x-ms-request-id": [
-          "4e0ff608-3cae-44a1-9acd-53813e0ecc61"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "8bc6a6d0-a6f7-48a6-a091-5c6ded8cb2bd"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232908Z:8bc6a6d0-a6f7-48a6-a091-5c6ded8cb2bd"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:29:08 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"name\": \"e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:28:48.4254743-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2U3MjMyN2NkLTRlMGEtNDQ1ZS05YWRlLTc0ODNjNTk0Y2Q1Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11981"
-        ],
-        "x-ms-request-id": [
-          "09c7226c-25f8-471a-b3f7-59bf10989b16"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "df3327d8-6a08-44d1-8e62-a20b351c23fa"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232918Z:df3327d8-6a08-44d1-8e62-a20b351c23fa"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:29:18 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"name\": \"e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:28:48.4254743-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2U3MjMyN2NkLTRlMGEtNDQ1ZS05YWRlLTc0ODNjNTk0Y2Q1Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11980"
-        ],
-        "x-ms-request-id": [
-          "e96980f5-9916-4141-8bc4-5491d75fc1b8"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "87e1083a-bb1d-4732-a478-2ac8dde5b38d"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232928Z:87e1083a-bb1d-4732-a478-2ac8dde5b38d"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:29:28 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"name\": \"e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:28:48.4254743-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2U3MjMyN2NkLTRlMGEtNDQ1ZS05YWRlLTc0ODNjNTk0Y2Q1Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11979"
-        ],
-        "x-ms-request-id": [
-          "f01c2664-88e0-4ff8-b731-34bacc6e62f5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "f09af107-11c1-41cc-8b61-e9f029c57346"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232939Z:f09af107-11c1-41cc-8b61-e9f029c57346"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:29:38 GMT"
-        ],
-        "Content-Length": [
-          "387"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"name\": \"e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:28:48.4254743-07:00\",\n  \"status\": \"Building\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2U3MjMyN2NkLTRlMGEtNDQ1ZS05YWRlLTc0ODNjNTk0Y2Q1Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11978"
-        ],
-        "x-ms-request-id": [
-          "4170a3bf-6870-4473-a8e4-e94b3fd662fd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "47440402-bcdb-4b26-b00d-2ca5459303cf"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232949Z:47440402-bcdb-4b26-b00d-2ca5459303cf"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:29:48 GMT"
-        ],
-        "Content-Length": [
-          "896"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:29:46.0093238-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"name\": \"e72327cd-4e0a-445e-9ade-7483c594cd53\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n    \"name\": \"defaultDnsZone\",\n    \"properties\": {\n      \"displayName\": \"modifiedDnsZone\",\n      \"dnsServerIps\": [\n        \"1.1.1.1\"\n      ],\n      \"dnsServices\": 0,\n      \"domain\": [],\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 1,\n      \"sourceIp\": \"\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n  },\n  \"startTime\": \"2021-05-25T16:28:48.4254743-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"dns-forwarder\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"defaultDnsZone\": \"defaultDnsZone\",\n    \"fqdnZones\": [\n      \"fqdnDnsZone\"\n    ],\n    \"logLevel\": \"INFO\"\n  }\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dns-forwarder\",\r\n    \"dnsServiceIp\": \"5.5.5.5\",\r\n    \"defaultDnsZone\": \"dnsZone1\",\r\n    \"fqdnZones\": [\r\n      \"dnsZone1\"\r\n    ],\r\n    \"logLevel\": \"INFO\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4c713c0a-6aa9-4265-b063-ab1c75eb7a0f"
+          "d0c504b0-2770-4271-b705-6f5853a33697"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "201"
+          "202"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/0efd80ad-53cb-4716-8f3b-264717cb6e73?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "af47f088-cd16-4bbf-916d-875b087fe2eb"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "1fd0d0fd-80b5-463d-8fb7-d3877d35d90a"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T232951Z:1fd0d0fd-80b5-463d-8fb7-d3877d35d90a"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:29:50 GMT"
-        ],
-        "Content-Length": [
-          "470"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n  \"name\": \"dns-forwarder\",\n  \"properties\": {\n    \"defaultDnsZone\": \"defaultDnsZone\",\n    \"displayName\": \"dns-forwarder\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"fqdnZones\": [\n      \"fqdnDnsZone\"\n    ],\n    \"logLevel\": \"INFO\",\n    \"provisioningState\": \"Building\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/0efd80ad-53cb-4716-8f3b-264717cb6e73?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXIvb3BlcmF0aW9uc3RhdHVzZXMvMGVmZDgwYWQtNTNjYi00NzE2LThmM2ItMjY0NzE3Y2I2ZTczP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11976"
-        ],
-        "x-ms-request-id": [
-          "9227b3e3-2f4c-4695-b3fd-1e79fe60854e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "568a9409-1098-48d1-b078-6fcceee7646b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233002Z:568a9409-1098-48d1-b078-6fcceee7646b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:01 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "955"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "423"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:29:59.8258203-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/0efd80ad-53cb-4716-8f3b-264717cb6e73\",\n  \"name\": \"0efd80ad-53cb-4716-8f3b-264717cb6e73\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n    \"name\": \"dns-forwarder\",\n    \"properties\": {\n      \"defaultDnsZone\": \"defaultdnszone\",\n      \"displayName\": \"dns-forwarder\",\n      \"dnsServiceIp\": \"5.5.5.5\",\n      \"fqdnZones\": [\n        \"fqdndnszone\"\n      ],\n      \"logLevel\": \"INFO\",\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 0,\n      \"status\": \"SUCCESS\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n  },\n  \"startTime\": \"2021-05-25T16:29:50.9511795-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsServices/dnsService1\",\r\n  \"name\": \"dnsService1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\",\r\n  \"properties\": {\r\n    \"displayName\": \"dnsService1\",\r\n    \"dnsServiceIp\": \"5.5.5.5\",\r\n    \"defaultDnsZone\": \"defaultDnsZone1\",\r\n    \"fqdnZones\": [\r\n      \"fqdnZone1\"\r\n    ],\r\n    \"logLevel\": \"INFO\",\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11975"
-        ],
-        "x-ms-request-id": [
-          "967ee292-830a-4090-92c0-5c967f0cfb5f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "522f84a1-36c6-4990-ab02-b2bb24a82fe6"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233002Z:522f84a1-36c6-4990-ab02-b2bb24a82fe6"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:01 GMT"
-        ],
-        "Content-Length": [
-          "503"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n  \"name\": \"dns-forwarder\",\n  \"properties\": {\n    \"defaultDnsZone\": \"defaultdnszone\",\n    \"displayName\": \"dns-forwarder\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"fqdnZones\": [\n      \"fqdndnszone\"\n    ],\n    \"logLevel\": \"INFO\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"status\": \"SUCCESS\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8ef9b533-3ed0-45d5-83c7-0a9e5a0b8439"
+          "860d51f2-184c-44eb-9534-72c6a49503a5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11973"
-        ],
-        "x-ms-request-id": [
-          "1d956fcb-add6-4b33-9633-e48a926f044d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "3a06dbbd-eced-41f9-9e4f-cbaf1b9cd4be"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233003Z:3a06dbbd-eced-41f9-9e4f-cbaf1b9cd4be"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:30:02 GMT"
-        ],
-        "Content-Length": [
-          "503"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n  \"name\": \"dns-forwarder\",\n  \"properties\": {\n    \"defaultDnsZone\": \"defaultdnszone\",\n    \"displayName\": \"dns-forwarder\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"fqdnZones\": [\n      \"fqdndnszone\"\n    ],\n    \"logLevel\": \"INFO\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 0,\n    \"status\": \"SUCCESS\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11970"
-        ],
-        "x-ms-request-id": [
-          "301579f3-d559-4ba0-8ec2-5228731de02a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "4624fc7b-91ab-4175-8747-aba7ad1f8315"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233026Z:4624fc7b-91ab-4175-8747-aba7ad1f8315"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:26 GMT"
-        ],
-        "Content-Length": [
-          "508"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n  \"name\": \"dns-forwarder\",\n  \"properties\": {\n    \"defaultDnsZone\": \"defaultdnszone\",\n    \"displayName\": \"modifiedDnsService\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"fqdnZones\": [\n      \"fqdndnszone\"\n    ],\n    \"logLevel\": \"INFO\",\n    \"provisioningState\": \"Fulfilled\",\n    \"revision\": 1,\n    \"status\": \"SUCCESS\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "dc05cca1-3401-4737-856c-7927174357c4"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11974"
-        ],
-        "x-ms-request-id": [
-          "ec929d3c-802c-4beb-b88e-131ed6cce8ef"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "dad72059-31c9-4ad1-a780-b5bb72e3d512"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233003Z:dad72059-31c9-4ad1-a780-b5bb72e3d512"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:02 GMT"
-        ],
-        "Content-Length": [
-          "515"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n      \"name\": \"dns-forwarder\",\n      \"properties\": {\n        \"defaultDnsZone\": \"defaultdnszone\",\n        \"displayName\": \"dns-forwarder\",\n        \"dnsServiceIp\": \"5.5.5.5\",\n        \"fqdnZones\": [\n          \"fqdndnszone\"\n        ],\n        \"logLevel\": \"INFO\",\n        \"provisioningState\": \"Fulfilled\",\n        \"revision\": 0,\n        \"status\": \"SUCCESS\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n    }\n  ]\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\n  \"properties\": {\n    \"displayName\": \"modifiedDnsService\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"defaultDnsZone\": \"defaultDnsZone\",\n    \"fqdnZones\": [\n      \"fqdnDnsZone\"\n    ],\n    \"logLevel\": \"INFO\"\n  }\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "5543c7d2-973e-41aa-b271-a8bd603714fc"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "206"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/d5fa9f61-2c1c-46da-8bb4-218a22c0d87c?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "10d1a693-10f9-4c58-b737-3f735591565f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "14c67fb1-8bc1-4f37-bd9d-93d1d82bd7a7"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233005Z:14c67fb1-8bc1-4f37-bd9d-93d1d82bd7a7"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:04 GMT"
-        ],
-        "Content-Length": [
-          "507"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n  \"name\": \"dns-forwarder\",\n  \"properties\": {\n    \"defaultDnsZone\": \"defaultDnsZone\",\n    \"displayName\": \"modifiedDnsService\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"fqdnZones\": [\n      \"fqdnDnsZone\"\n    ],\n    \"logLevel\": \"INFO\",\n    \"provisioningState\": \"Building\",\n    \"revision\": 0,\n    \"status\": \"SUCCESS\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/d5fa9f61-2c1c-46da-8bb4-218a22c0d87c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXIvb3BlcmF0aW9uc3RhdHVzZXMvZDVmYTlmNjEtMmMxYy00NmRhLThiYjQtMjE4YTIyYzBkODdjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11972"
-        ],
-        "x-ms-request-id": [
-          "efcd0958-121e-4886-a554-de05989f7de0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "4cf60376-2d3d-4023-9173-e061f3268aea"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233015Z:4cf60376-2d3d-4023-9173-e061f3268aea"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:15 GMT"
-        ],
-        "Content-Length": [
-          "388"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/d5fa9f61-2c1c-46da-8bb4-218a22c0d87c\",\n  \"name\": \"d5fa9f61-2c1c-46da-8bb4-218a22c0d87c\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-25T16:30:04.9051363-07:00\",\n  \"status\": \"Pending\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/d5fa9f61-2c1c-46da-8bb4-218a22c0d87c?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXIvb3BlcmF0aW9uc3RhdHVzZXMvZDVmYTlmNjEtMmMxYy00NmRhLThiYjQtMjE4YTIyYzBkODdjP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11971"
-        ],
-        "x-ms-request-id": [
-          "918a97f7-9928-4148-ab62-ce0ad38e8431"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "011dd199-afa5-4637-86f6-24b17ac57b52"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233025Z:011dd199-afa5-4637-86f6-24b17ac57b52"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:25 GMT"
-        ],
-        "Content-Length": [
-          "960"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:30:20.8273165-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/d5fa9f61-2c1c-46da-8bb4-218a22c0d87c\",\n  \"name\": \"d5fa9f61-2c1c-46da-8bb4-218a22c0d87c\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n    \"name\": \"dns-forwarder\",\n    \"properties\": {\n      \"defaultDnsZone\": \"defaultdnszone\",\n      \"displayName\": \"modifiedDnsService\",\n      \"dnsServiceIp\": \"5.5.5.5\",\n      \"fqdnZones\": [\n        \"fqdndnszone\"\n      ],\n      \"logLevel\": \"INFO\",\n      \"provisioningState\": \"Fulfilled\",\n      \"revision\": 1,\n      \"status\": \"SUCCESS\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n  },\n  \"startTime\": \"2021-05-25T16:30:04.9051363-07:00\",\n  \"status\": \"Succeeded\"\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "f0f2cd2f-1efc-4469-91c9-1b1e21425182"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationresults/164c7bb7-d359-4379-a1b9-3606a7db8fab?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/164c7bb7-d359-4379-a1b9-3606a7db8fab?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "6bc8e1e0-0fa6-47ad-9b34-095b26a0e522"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "a9fda3fc-ebb8-4dea-b37e-bcec1c2acc77"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233027Z:a9fda3fc-ebb8-4dea-b37e-bcec1c2acc77"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:26 GMT"
-        ],
-        "Content-Length": [
-          "507"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder\",\n  \"name\": \"dns-forwarder\",\n  \"properties\": {\n    \"defaultDnsZone\": \"defaultdnszone\",\n    \"displayName\": \"modifiedDnsService\",\n    \"dnsServiceIp\": \"5.5.5.5\",\n    \"fqdnZones\": [\n      \"fqdndnszone\"\n    ],\n    \"logLevel\": \"INFO\",\n    \"provisioningState\": \"Deleting\",\n    \"revision\": 1,\n    \"status\": \"SUCCESS\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/164c7bb7-d359-4379-a1b9-3606a7db8fab?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXIvb3BlcmF0aW9uc3RhdHVzZXMvMTY0YzdiYjctZDM1OS00Mzc5LWExYjktMzYwNmE3ZGI4ZmFiP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11969"
-        ],
-        "x-ms-request-id": [
-          "6e1a78f3-1002-4d9e-9bf1-f85d5c65d7f4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "59cb2692-0ced-4eef-9498-47dbdf738cd0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233037Z:59cb2692-0ced-4eef-9498-47dbdf738cd0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:36 GMT"
+          "application/json"
         ],
         "Content-Length": [
           "438"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:30:28.8348672-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationstatuses/164c7bb7-d359-4379-a1b9-3606a7db8fab\",\n  \"name\": \"164c7bb7-d359-4379-a1b9-3606a7db8fab\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-25T16:30:26.8441974-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsServices/dnsService1\",\r\n      \"name\": \"portMirroring1\",\r\n      \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\",\r\n      \"properties\": {\r\n        \"displayName\": \"dnsService1\",\r\n        \"dnsServiceIp\": \"5.5.5.5\",\r\n        \"defaultDnsZone\": \"defaultDnsZone1\",\r\n        \"fqdnZones\": [\r\n          \"fqdnZone1\"\r\n        ],\r\n        \"logLevel\": \"INFO\",\r\n        \"status\": \"SUCCESS\",\r\n        \"revision\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder/operationresults/164c7bb7-d359-4379-a1b9-3606a7db8fab?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXIvb3BlcmF0aW9ucmVzdWx0cy8xNjRjN2JiNy1kMzU5LTQzNzktYTFiOS0zNjA2YTdkYjhmYWI/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11968"
-        ],
-        "x-ms-request-id": [
-          "532ad6bf-a9a8-4631-81a5-432261263507"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "1e85f129-21e8-43cc-bba4-0720d6757885"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233037Z:1e85f129-21e8-43cc-bba4-0720d6757885"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:36 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "null",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
         "x-ms-client-request-id": [
-          "391d92ad-02d1-45fe-ac2f-d202860d9a7e"
+          "6d1e004d-de40-4989-82ef-8191d0a8f775"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationresults/d6a52f26-a51a-41a4-a941-39c155e07383?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/d6a52f26-a51a-41a4-a941-39c155e07383?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "e18d0adb-ae1b-456f-8014-94e85c6482ad"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "3b5119da-7268-47e3-a8bc-e74699bfda9a"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233038Z:3b5119da-7268-47e3-a8bc-e74699bfda9a"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:30:38 GMT"
-        ],
-        "Content-Length": [
-          "445"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone\",\n  \"name\": \"defaultDnsZone\",\n  \"properties\": {\n    \"displayName\": \"modifiedDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"dnsServices\": 0,\n    \"domain\": [],\n    \"provisioningState\": \"Deleting\",\n    \"revision\": 1,\n    \"sourceIp\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/d6a52f26-a51a-41a4-a941-39c155e07383?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2Q2YTUyZjI2LWE1MWEtNDFhNC1hOTQxLTM5YzE1NWUwNzM4Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11967"
-        ],
-        "x-ms-request-id": [
-          "d0e966b1-d810-4eec-b47d-ab2c43ceb807"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "dd8c0ca4-5cab-48f4-af42-0d8678463408"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233049Z:dd8c0ca4-5cab-48f4-af42-0d8678463408"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:49 GMT"
+          "application/json"
         ],
         "Content-Length": [
-          "436"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "426"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:30:39.7181761-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationstatuses/d6a52f26-a51a-41a4-a941-39c155e07383\",\n  \"name\": \"d6a52f26-a51a-41a4-a941-39c155e07383\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-25T16:30:38.3974912-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsServices/dnsService1\",\r\n  \"name\": \"portMirroring1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\",\r\n  \"properties\": {\r\n    \"displayName\": \"dnsService1\",\r\n    \"dnsServiceIp\": \"5.5.5.5\",\r\n    \"defaultDnsZone\": \"defaultDnsZone1\",\r\n    \"fqdnZones\": [\r\n      \"fqdnZone1\"\r\n    ],\r\n    \"logLevel\": \"INFO\",\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone/operationresults/d6a52f26-a51a-41a4-a941-39c155e07383?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lL29wZXJhdGlvbnJlc3VsdHMvZDZhNTJmMjYtYTUxYS00MWE0LWE5NDEtMzljMTU1ZTA3MzgzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11966"
-        ],
-        "x-ms-request-id": [
-          "2e3e4638-a3c0-4cf3-8767-0e58a300f1f4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "a7fceb7f-0c15-4871-abce-d3779018d0bb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233049Z:a7fceb7f-0c15-4871-abce-d3779018d0bb"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:49 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "null",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"modifiedDnsService\",\r\n    \"dnsServiceIp\": \"5.5.5.5\",\r\n    \"defaultDnsZone\": \"dnsZone1\",\r\n    \"fqdnZones\": [\r\n      \"dnsZone1\"\r\n    ],\r\n    \"logLevel\": \"INFO\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ff333bc8-f074-49c1-8db8-b22277ad4c14"
+          "4aa71708-97c2-425d-9061-60d9d77a6900"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationresults/c2de2330-e999-4e32-88f9-79dca50b1d43?api-version=2021-06-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14997"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/c2de2330-e999-4e32-88f9-79dca50b1d43?api-version=2021-06-01"
-        ],
-        "x-ms-request-id": [
-          "57495469-7a19-46fe-8ba2-d6c7c12ad0f1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "dfc8aa4f-e2b8-429e-9cc1-7860e8be9738"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233051Z:dfc8aa4f-e2b8-429e-9cc1-7860e8be9738"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 May 2021 23:30:50 GMT"
-        ],
-        "Content-Length": [
-          "452"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone\",\n  \"name\": \"fqdnDnsZone\",\n  \"properties\": {\n    \"displayName\": \"fqdnDnsZone\",\n    \"dnsServerIps\": [\n      \"1.1.1.1\"\n    ],\n    \"dnsServices\": 0,\n    \"domain\": [\n      \"fqdndnszone.com\"\n    ],\n    \"provisioningState\": \"Deleting\",\n    \"revision\": 0,\n    \"sourceIp\": \"\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsZones\"\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/c2de2330-e999-4e32-88f9-79dca50b1d43?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnN0YXR1c2VzL2MyZGUyMzMwLWU5OTktNGUzMi04OGY5LTc5ZGNhNTBiMWQ0Mz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        "Content-Length": [
+          "207"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11965"
-        ],
-        "x-ms-request-id": [
-          "061e5b7d-2b44-4f8d-821c-557077a51f63"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "51d86218-8a9f-4788-af1a-1b2119eeb81c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233101Z:51d86218-8a9f-4788-af1a-1b2119eeb81c"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:31:00 GMT"
-        ],
-        "Content-Length": [
-          "433"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Type": [
-          "application/json; charset=utf-8"
+          "application/json"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "423"
         ]
       },
-      "ResponseBody": "{\n  \"endTime\": \"2021-05-25T16:30:56.6523489-07:00\",\n  \"id\": \"/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationstatuses/c2de2330-e999-4e32-88f9-79dca50b1d43\",\n  \"name\": \"c2de2330-e999-4e32-88f9-79dca50b1d43\",\n  \"percentComplete\": 100,\n  \"startTime\": \"2021-05-25T16:30:51.0955174-07:00\",\n  \"status\": \"Succeeded\"\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/workloadNetworks/default/dnsServices/dnsService1\",\r\n  \"name\": \"dnsService1\",\r\n  \"type\": \"Microsoft.AVS/privateClouds/workloadNetworks/dnsServices\",\r\n  \"properties\": {\r\n    \"displayName\": \"dnsService1\",\r\n    \"dnsServiceIp\": \"5.5.5.5\",\r\n    \"defaultDnsZone\": \"defaultDnsZone1\",\r\n    \"fqdnZones\": [\r\n      \"fqdnZone1\"\r\n    ],\r\n    \"logLevel\": \"INFO\",\r\n    \"status\": \"SUCCESS\",\r\n    \"revision\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2fdcc35c-1cea-4759-8cbd-d3d02f37745d/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone/operationresults/c2de2330-e999-4e32-88f9-79dca50b1d43?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmZkY2MzNWMtMWNlYS00NzU5LThjYmQtZDNkMDJmMzc3NDVkL3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lL29wZXJhdGlvbnJlc3VsdHMvYzJkZTIzMzAtZTk5OS00ZTMyLTg4ZjktNzlkY2E1MGIxZDQzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
-      "RequestMethod": "GET",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsServices/dns-forwarder?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1NlcnZpY2VzL2Rucy1mb3J3YXJkZXI/YXBpLXZlcnNpb249MjAyMS0xMi0wMQ==",
+      "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "792b7831-238a-4c3d-bfd7-c610fd7759a1"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
-          "OSName/Linux",
-          "OSVersion/Linux.5.4.0.73.generic.82.18.04.1.Ubuntu.SMP.Fri.Apr.16.15.10.02.UTC.2021",
-          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11964"
-        ],
-        "x-ms-request-id": [
-          "155ed558-deb0-4a51-9ab4-2a465db83c3d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Server": [
-          "nginx"
-        ],
-        "x-ms-correlation-request-id": [
-          "3d04727e-bea8-4a72-a007-a88790362578"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20210525T233101Z:3d04727e-bea8-4a72-a007-a88790362578"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+          "Rocket"
         ],
         "Date": [
-          "Tue, 25 May 2021 23:31:00 GMT"
+          "Fri, 12 Nov 2021 17:41:52 GMT"
         ],
         "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "0"
         ]
       },
-      "ResponseBody": "null",
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/defaultDnsZone?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2RlZmF1bHREbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c91c4564-9077-46d3-845e-70f6ef7a3673"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Fri, 12 Nov 2021 17:41:52 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/wezamlyn-test-117/providers/Microsoft.AVS/privateClouds/wezamlyn-test-117/workloadNetworks/default/dnsZones/fqdnDnsZone?api-version=2021-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL3dlemFtbHluLXRlc3QtMTE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvd2V6YW1seW4tdGVzdC0xMTcvd29ya2xvYWROZXR3b3Jrcy9kZWZhdWx0L2Ruc1pvbmVzL2ZxZG5EbnNab25lP2FwaS12ZXJzaW9uPTIwMjEtMTItMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7d0adb42-3fa6-4b98-b360-4c7e2f7a531f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.1221.52207",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Avs.AvsClient/3.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Rocket"
+        ],
+        "Date": [
+          "Fri, 12 Nov 2021 17:41:52 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "2fdcc35c-1cea-4759-8cbd-d3d02f37745d"
+    "SubscriptionId": "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5"
   }
 }

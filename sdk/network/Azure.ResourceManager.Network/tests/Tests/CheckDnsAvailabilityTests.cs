@@ -7,9 +7,9 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class CheckDnsAvailabilityTests : NetworkTestsManagementClientBase
+    public class CheckDnsAvailabilityTests : NetworkServiceClientTestBase
     {
         public CheckDnsAvailabilityTests(bool isAsync) : base(isAsync)
         {
@@ -24,21 +24,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
-
         [Test]
+        [RecordedTest]
         public async Task CheckDnsAvailabilityTest()
         {
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
-            location = location.Replace(" ", "");
-
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string domainNameLabel = Recording.GenerateAssetName("domainnamelabel");
-
-            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await ServiceOperations.CheckDnsNameAvailabilityAsync(location, domainNameLabel);
+            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await subscription.CheckDnsNameAvailabilityAsync(TestEnvironment.Location, domainNameLabel);
 
             Assert.True(dnsNameAvailability.Value.Available);
         }

@@ -7,9 +7,9 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 title: Network traversal
-tag: package-2021-06-21-preview
+tag: package-2021-10-08-preview
 model-namespace: false
 require:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a59747e42da9d74654106f16c5410620b5941fe0/specification/communication/data-plane/Turn/readme.md
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f2e08ab373eb0e96b54920e89f9fc96d683355ca/specification/communication/data-plane/NetworkTraversal/readme.md
 payload-flattening-threshold: 3
 ```

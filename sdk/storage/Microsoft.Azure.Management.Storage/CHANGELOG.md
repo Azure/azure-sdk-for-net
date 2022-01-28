@@ -1,5 +1,29 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 23.1.0
+- Upgrade to rest api version 2021-08-01.
+- Support create/update Storage account with enable/disable Sftp and Localuser.
+- Support CreateOrUpdate/Delete/Get/List/ListKeys/RegeneratePassword on Storage account local users.
+- Support create/update account with AllowedCopyScope.
+- Support create/update account with 2 new ActiveDirectoryProperties: samAccountName, accountType.
+- Support create/update account with new EncryptionIdentity: FederatedIdentityClientId.
+
+### Changes in 23.0.0
+- Upgrade to rest api version 2021-06-01.
+- Support Storage account HierarchicalNamespace migration.
+- Support create/update Storage account with enable/disable PublicNetworkAccess.
+- Support create/update account with ImmutableStorageWithVersioning.
+- Support create/update account with defaultToOAuthAuthentication.
+- Support blob Inventory new schema fields: AccessTierInferred and Tags.
+- Support create/update Blob Container with enableNfsV3RootSquash and enableNfsV3AllSquash.
+- Support AllowProtectedAppendWritesAll in set container ImmutabilityPolicy and set container LegalHold.
+
+**Breaking changes**
+
+- Remove StorageFileDataSmbShareOwner from Microsoft.Azure.Management.Storage.Models.DefaultSharePermission.
+- In StorageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(), StorageManagementClient.BlobContainers.ExtendImmutabilityPolicy(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.ImmutabilityPolicy, to input all ImmutabilityPolicy properties, and remove 2 parameters to input ImmutabilityPolicy properties: immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites.
+- In Microsoft.Azure.Management.Storage.Models.AccessPolicy, rename Start to StartTime, Expiry to ExpiryTime.
+
 ### Changes in 22.0.0
 - Upgrade to rest api version 2021-04-01.
 - Support File Share lease and delete share with leased share snapshots.

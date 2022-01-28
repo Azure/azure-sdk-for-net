@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OSType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum OSType
+    public static class OSType
     {
-        [EnumMember(Value = "Windows")]
-        Windows,
-        [EnumMember(Value = "Linux")]
-        Linux
-    }
-    internal static class OSTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this OSType? value)
-        {
-            return value == null ? null : ((OSType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this OSType value)
-        {
-            switch( value )
-            {
-                case OSType.Windows:
-                    return "Windows";
-                case OSType.Linux:
-                    return "Linux";
-            }
-            return null;
-        }
-
-        internal static OSType? ParseOSType(this string value)
-        {
-            switch( value )
-            {
-                case "Windows":
-                    return OSType.Windows;
-                case "Linux":
-                    return OSType.Linux;
-            }
-            return null;
-        }
+        public const string Windows = "Windows";
+        public const string Linux = "Linux";
     }
 }

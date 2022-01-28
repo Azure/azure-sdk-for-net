@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 });
         }
 
-        [Theory]
+        [Theory(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/24372")]
         [InlineData(LogLevel.Information, "Information")]
         [InlineData(LogLevel.Warning, "Warning")]
         [InlineData(LogLevel.Error, "Error")]

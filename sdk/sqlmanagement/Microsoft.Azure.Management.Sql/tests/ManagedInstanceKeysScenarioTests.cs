@@ -17,24 +17,23 @@ namespace Sql.Tests
 {
     public class ManagedInstanceKeysScenarioTests
     {
-        // Update with values from a current MI on the region
-        //
-        private const string ManagedInstanceResourceGroup = "MlAndzic_RG";
-        //Test will fail if the managedinstance does not have system assigned identity
-        private const string ManagedInstanceName = "midemoinstancebc";
-
-        [Fact(Skip = "Manual test due to long setup time required")]
+        [Fact(Skip = "Cannot create Key Vault due permissions. Getting Forbidden error response.")]
         public void TestCreateUpdateDropManagedInstanceKeys()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
-            {
-                string resourceGroupName = ManagedInstanceResourceGroup;
-                string managedInstanceName = ManagedInstanceName;
-                
+            {                
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 ResourceManagementClient resourceClient = context.GetClient<ResourceManagementClient>();
-                ResourceGroup resourceGroup = resourceClient.ResourceGroups.Get(resourceGroupName);
-                ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(resourceGroupName, managedInstanceName);
+                var resourceGroup = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
+                ManagedInstance managedInstance = context.CreateManagedInstance(resourceGroup, new ManagedInstance()
+                {
+                    Identity = new ResourceIdentity()
+                    {
+                        Type = IdentityType.SystemAssignedUserAssigned,
+                        UserAssignedIdentities = ManagedInstanceTestUtilities.UserIdentity,
+                    },
+                    PrimaryUserAssignedIdentityId = ManagedInstanceTestUtilities.UAMI
+                });
 
                 var keyBundle = SqlManagementTestUtilities.CreateKeyVaultKeyWithManagedInstanceAccess(context, resourceGroup, managedInstance);
                 string serverKeyName = SqlManagementTestUtilities.GetServerKeyNameFromKeyBundle(keyBundle);

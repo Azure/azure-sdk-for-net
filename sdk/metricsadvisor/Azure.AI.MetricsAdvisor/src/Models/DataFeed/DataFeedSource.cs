@@ -11,19 +11,19 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// The source that periodically provides data to a <see cref="DataFeed"/>. The service
     /// accepts tables of aggregated data. The supported data feed sources are:
     /// <list type="bullet">
-    ///   <item><see cref="AzureApplicationInsightsDataFeedSource"/></item>
-    ///   <item><see cref="AzureBlobDataFeedSource"/></item>
-    ///   <item><see cref="AzureCosmosDbDataFeedSource"/></item>
-    ///   <item><see cref="AzureDataExplorerDataFeedSource"/></item>
-    ///   <item><see cref="AzureDataLakeStorageDataFeedSource"/></item>
-    ///   <item><see cref="AzureEventHubsDataFeedSource"/></item>
-    ///   <item><see cref="AzureTableDataFeedSource"/></item>
-    ///   <item><see cref="InfluxDbDataFeedSource"/></item>
-    ///   <item><see cref="LogAnalyticsDataFeedSource"/></item>
-    ///   <item><see cref="MongoDbDataFeedSource"/></item>
-    ///   <item><see cref="MySqlDataFeedSource"/></item>
-    ///   <item><see cref="PostgreSqlDataFeedSource"/></item>
-    ///   <item><see cref="SqlServerDataFeedSource"/></item>
+    ///   <item><description><see cref="AzureApplicationInsightsDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureBlobDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureCosmosDbDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureDataExplorerDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureDataLakeStorageDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureEventHubsDataFeedSource"/></description></item>
+    ///   <item><description><see cref="AzureTableDataFeedSource"/></description></item>
+    ///   <item><description><see cref="InfluxDbDataFeedSource"/></description></item>
+    ///   <item><description><see cref="LogAnalyticsDataFeedSource"/></description></item>
+    ///   <item><description><see cref="MongoDbDataFeedSource"/></description></item>
+    ///   <item><description><see cref="MySqlDataFeedSource"/></description></item>
+    ///   <item><description><see cref="PostgreSqlDataFeedSource"/></description></item>
+    ///   <item><description><see cref="SqlServerDataFeedSource"/></description></item>
     /// </list>
     /// </summary>
     public abstract class DataFeedSource

@@ -14,6 +14,7 @@ namespace Azure.Core
     public abstract class ClientOptions
     {
         private HttpPipelineTransport _transport;
+        internal bool IsCustomTransportSet { get; private set; }
 
         /// <summary>
         /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
@@ -64,7 +65,11 @@ namespace Azure.Core
         public HttpPipelineTransport Transport
         {
             get => _transport;
-            set => _transport = value ?? throw new ArgumentNullException(nameof(value));
+            set
+            {
+                _transport = value ?? throw new ArgumentNullException(nameof(value));
+                IsCustomTransportSet = true;
+            }
         }
 
         /// <summary>

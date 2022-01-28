@@ -10,7 +10,9 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Sql.Tests.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Sku = Microsoft.Azure.Management.Sql.Models.Sku;
 
 namespace Sql.Tests
 {
@@ -112,33 +114,86 @@ namespace Sql.Tests
             return v12Server;
         }
 
-        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup)
+        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup, string name = null)
         {
-            return CreateManagedInstance(resourceGroup, TestEnvironmentUtilities.DefaultLocationId);
+            return this.CreateManagedInstance(resourceGroup, new ManagedInstance(), name);
         }
 
-        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup, string location)
+        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup, ManagedInstance initialManagedInstance, string name = null)
         {
             SqlManagementClient sqlClient = GetClient<SqlManagementClient>();
 
-            string miName = "crud-tests-" + SqlManagementTestUtilities.GenerateName();
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-            string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/RG_MIPlayground/providers/Microsoft.Network/virtualNetworks/VNET_MIPlayground/subnets/MISubnet";
-            Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku(name: "CLS3", tier: "Standard");
+            string miName = name ?? SqlManagementTestUtilities.GenerateName("net-sdk-crud-tests-");
+            var payload = this.GetManagedInstancePayload(initialManagedInstance);
 
-            var managedInstance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, miName, new ManagedInstance()
+            return sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, miName, payload);
+        }
+
+        public List<ManagedInstance> ListManagedInstanceByResourceGroup(string rgName)
+        {
+            SqlManagementClient sqlClient = GetClient<SqlManagementClient>();
+            return sqlClient.ManagedInstances.ListByResourceGroup(rgName).ToList();
+        }
+
+        private ManagedInstance GetManagedInstancePayload(ManagedInstance mi)
+        {
+            if (mi.VCores > 8)
             {
-                AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
-                AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
-                Sku = sku,
-                SubnetId = subnetId,
+                throw new Exception("Do not create managed instance with vCore larger then 8, because infrastructure limitation.");
+            }
+
+            var tags = ManagedInstanceTestUtilities.Tags;
+            if (mi.Tags != null && mi.Tags.Count > 0)
+            {
+                foreach (var tag in mi.Tags)
+                {
+                    tags.Add(tag.Key, tag.Value);
+                }
+            }
+
+            var payload = new ManagedInstance()
+            {
+                AdministratorLogin = ManagedInstanceTestUtilities.Username,
+                AdministratorLoginPassword = ManagedInstanceTestUtilities.Password,
+                Collation = mi.Collation,
+                InstancePoolId = mi.InstancePoolId,
+                KeyId = mi.KeyId,
+                LicenseType = mi.LicenseType,
+                Location = ManagedInstanceTestUtilities.Region,
+                MaintenanceConfigurationId = mi.MaintenanceConfigurationId,
+                ProxyOverride = mi.ProxyOverride,
+                PublicDataEndpointEnabled = mi.PublicDataEndpointEnabled,
+                RequestedBackupStorageRedundancy = mi.RequestedBackupStorageRedundancy ?? "Geo",
+                StorageSizeInGB = mi.StorageSizeInGB ?? 32,
+                SubnetId = ManagedInstanceTestUtilities.SubnetResourceId,
                 Tags = tags,
-                Location = location,
-            });
+                VCores = mi.VCores ?? 4,
+                ZoneRedundant = mi.ZoneRedundant
+            };
 
-            SqlManagementTestUtilities.ValidateManagedInstance(managedInstance, miName, SqlManagementTestUtilities.DefaultLogin, tags, location);
+            if (mi.Sku != null)
+            {
+                if (mi.Sku.Name.Contains("Gen4"))
+                {
+                    throw new Exception("Provision only on Gen5 hardwere.");
+                }
+                payload.Sku = new Sku()
+                {
+                    Name = mi.Sku.Name
+                };
+            }
 
-            return managedInstance;
+
+            if (mi.Identity != null)
+            {
+                payload.Identity = mi.Identity;
+                if (mi.Identity.Type == IdentityType.SystemAssignedUserAssigned || mi.Identity.Type == IdentityType.UserAssigned)
+                {
+                    payload.PrimaryUserAssignedIdentityId = mi.PrimaryUserAssignedIdentityId;
+                }
+            }
+
+            return payload;
         }
 
         protected virtual void Dispose(bool disposing)

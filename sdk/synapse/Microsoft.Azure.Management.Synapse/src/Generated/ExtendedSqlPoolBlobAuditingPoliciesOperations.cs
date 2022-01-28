@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='sqlPoolName'>
         /// SQL pool name
@@ -85,17 +85,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<ExtendedSqlPoolBlobAuditingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -130,6 +119,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sqlPoolName");
             }
+            string apiVersion = "2021-06-01";
             string blobAuditingPolicyName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -138,6 +128,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("sqlPoolName", sqlPoolName);
@@ -154,9 +145,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{sqlPoolName}", System.Uri.EscapeDataString(sqlPoolName));
             _url = _url.Replace("{blobAuditingPolicyName}", System.Uri.EscapeDataString(blobAuditingPolicyName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -290,7 +281,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='sqlPoolName'>
         /// SQL pool name
@@ -321,17 +312,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<ExtendedSqlPoolBlobAuditingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, ExtendedSqlPoolBlobAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -374,6 +354,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 parameters.Validate();
             }
+            string apiVersion = "2021-06-01";
             string blobAuditingPolicyName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -382,6 +363,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("sqlPoolName", sqlPoolName);
@@ -399,9 +381,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{sqlPoolName}", System.Uri.EscapeDataString(sqlPoolName));
             _url = _url.Replace("{blobAuditingPolicyName}", System.Uri.EscapeDataString(blobAuditingPolicyName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -559,7 +541,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace
+        /// The name of the workspace.
         /// </param>
         /// <param name='sqlPoolName'>
         /// SQL pool name
@@ -587,17 +569,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// </return>
         public async Task<AzureOperationResponse<IPage<ExtendedSqlPoolBlobAuditingPolicy>>> ListBySqlPoolWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -632,6 +603,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sqlPoolName");
             }
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -639,6 +611,7 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("sqlPoolName", sqlPoolName);
@@ -653,9 +626,9 @@ namespace Microsoft.Azure.Management.Synapse
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{sqlPoolName}", System.Uri.EscapeDataString(sqlPoolName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

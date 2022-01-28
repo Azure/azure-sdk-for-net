@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RunCommandDocument. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
-        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="oSType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, <paramref name="description"/>, or <paramref name="script"/> is null. </exception>
-        internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IEnumerable<string> script) : base(schema, id, osType, label, description)
+        internal RunCommandDocument(string schema, string id, OperatingSystemTypes oSType, string label, string description, IEnumerable<string> script) : base(schema, id, oSType, label, description)
         {
             if (schema == null)
             {
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RunCommandDocument. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
-        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="oSType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, or <paramref name="description"/> is null. </exception>
-        internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description)
+        internal RunCommandDocument(string schema, string id, OperatingSystemTypes oSType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, oSType, label, description)
         {
             if (schema == null)
             {

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class MetadataFilter : IUtf8JsonSerializable
     {
@@ -18,18 +18,17 @@ namespace Azure.AI.Language.QuestionAnswering.Models
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteStartObject();
+                writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteObjectValue(item);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CompoundOperation))
+            if (Optional.IsDefined(LogicalOperation))
             {
-                writer.WritePropertyName("compoundOperation");
-                writer.WriteStringValue(CompoundOperation.Value.ToString());
+                writer.WritePropertyName("logicalOperation");
+                writer.WriteStringValue(LogicalOperation.Value.ToString());
             }
             writer.WriteEndObject();
         }

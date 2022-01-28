@@ -3,14 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void AnalyzeHealthcareEntities_Cancellation()
@@ -18,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \

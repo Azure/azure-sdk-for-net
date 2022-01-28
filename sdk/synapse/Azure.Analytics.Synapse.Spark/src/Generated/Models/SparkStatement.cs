@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="code"></param>
         /// <param name="state"></param>
         /// <param name="output"></param>
-        internal SparkStatement(int id, string code, string state, SparkStatementOutput output)
+        internal SparkStatement(int id, string code, LivyStatementStates? state, SparkStatementOutput output)
         {
             Id = id;
             Code = code;
@@ -30,9 +30,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Output = output;
         }
 
+        /// <summary> Gets the id. </summary>
         public int Id { get; }
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
-        public string State { get; }
+        /// <summary> Gets the state. </summary>
+        public LivyStatementStates? State { get; }
+        /// <summary> Gets the output. </summary>
         public SparkStatementOutput Output { get; }
     }
 }

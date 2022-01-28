@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.Account.Tests
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);
-                Response getResponse = await client.GetCollectionAsync();
+                Response getResponse = await client.GetCollectionAsync(new());
                 JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
                 if (getBodyJson.GetProperty("collectionProvisioningState").GetString() == "Succeeded")
                     break;
@@ -61,13 +61,13 @@ namespace Azure.Analytics.Purview.Account.Tests
                 },
             };
             Response createResponse = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data), default);
-            Response getResponse = await client.GetCollectionAsync();
+            Response getResponse = await client.GetCollectionAsync(new());
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
             Assert.AreEqual("myCollection1", getBodyJson.GetProperty("name").GetString());
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);
-                Response getRes = await client.GetCollectionAsync();
+                Response getRes = await client.GetCollectionAsync(new());
                 JsonElement getJson = JsonDocument.Parse(GetContentFromResponse(getRes)).RootElement;
                 if (getJson.GetProperty("collectionProvisioningState").GetString() == "Succeeded")
                     break;

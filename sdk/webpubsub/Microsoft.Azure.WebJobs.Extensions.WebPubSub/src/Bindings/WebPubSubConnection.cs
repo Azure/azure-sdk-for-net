@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Web;
@@ -9,20 +9,39 @@ using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
+    /// <summary>
+    /// Connection information for client to create WebSocket connection with service.
+    /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class WebPubSubConnection
     {
-        public WebPubSubConnection(Uri url)
+        /// <summary>
+        /// Create an instance of the connection information.
+        /// </summary>
+        /// <param name="uri"></param>
+        public WebPubSubConnection(Uri uri)
         {
-            Url = url.AbsoluteUri;
-            BaseUrl = $"{url.Scheme}://{url.Authority}{url.AbsolutePath}";
-            AccessToken = HttpUtility.ParseQueryString(url.Query)["access_token"];
+            Uri = uri;
+
+            BaseUri = new Uri($"{uri.Scheme}://{uri.Authority}{uri.AbsolutePath}");
+            AccessToken = HttpUtility.ParseQueryString(uri.Query)["access_token"];
         }
 
-        public string BaseUrl { get;}
+        /// <summary>
+        /// Base Uri of the websocket connection.
+        /// </summary>
+        [JsonProperty("baseUrl")]
+        public Uri BaseUri { get;}
 
-        public string Url { get;}
+        /// <summary>
+        /// Uri with accessToken of the websocket connection.
+        /// </summary>
+        [JsonProperty("url")]
+        public Uri Uri { get;}
 
+        /// <summary>
+        /// Access token of the websocket connection.
+        /// </summary>
         public string AccessToken { get;}
     }
 }

@@ -37,6 +37,7 @@ namespace Azure.Data.Tables
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
                     case long _:
+                    case ulong _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                         // Int64 / long should be serialized as string.
                         annotatedDictionary[item.Key] = item.Value.ToString();
@@ -91,6 +92,7 @@ namespace Azure.Data.Tables
                     TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                     TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
                     TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
+                    TableConstants.Odata.EdmDouble => double.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException("Not supported type " + typeAnnotationsWithKeys[annotation])
                 };
 

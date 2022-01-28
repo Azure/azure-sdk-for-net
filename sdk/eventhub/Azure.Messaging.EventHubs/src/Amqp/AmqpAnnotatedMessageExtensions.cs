@@ -222,6 +222,19 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
+        ///   Sets the time that an event was enqueued in the partition on an <see cref="AmqpAnnotatedMessage" />.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        /// <param name="enqueueTime">The value to set as the enqueue time.</param>
+        ///
+        public static void SetEnqueuedTime(this AmqpAnnotatedMessage instance,
+                                           DateTimeOffset enqueueTime)
+        {
+            instance.MessageAnnotations[AmqpProperty.EnqueuedTime.ToString()] = enqueueTime;
+        }
+
+        /// <summary>
         ///   Retrieves the partition key of an event from an <see cref="AmqpAnnotatedMessage" />.
         /// </summary>
         ///
@@ -240,6 +253,19 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
 
             return defaultValue;
+        }
+
+        /// <summary>
+        ///   Sets the partition key of an event on an <see cref="AmqpAnnotatedMessage" />.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        /// <param name="partitionKey">The value to set for the partition key.</param>
+        ///
+        public static void SetPartitionKey(this AmqpAnnotatedMessage instance,
+                                           string partitionKey)
+        {
+            instance.MessageAnnotations[AmqpProperty.PartitionKey.ToString()] = partitionKey;
         }
 
         /// <summary>

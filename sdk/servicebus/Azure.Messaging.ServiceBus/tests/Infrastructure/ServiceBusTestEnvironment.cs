@@ -36,6 +36,17 @@ namespace Azure.Messaging.ServiceBus.Tests
             options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
 
         /// <summary>
+        ///   The connection string for the premium Service Bus namespace instance to be used for
+        ///   Live tests.
+        /// </summary>
+        ///
+        /// <value>The connection string will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
+        ///
+        public string ServiceBusPremiumNamespaceConnectionString => GetRecordedVariable(
+            "SERVICEBUS_PREMIUM_NAMESPACE_CONNECTION_STRING",
+            options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
+
+        /// <summary>
         ///   The connection string for the secondary Service Bus namespace instance to be used for
         ///   Live tests.
         /// </summary>

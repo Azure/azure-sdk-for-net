@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Language.QuestionAnswering.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -17,27 +15,29 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public void Chat()
         {
             QuestionAnsweringClient client = Client;
-            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(id: 27);
+            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27);
 
             #region Snippet:QuestionAnsweringClient_Chat
+            string projectName = "{ProjectName}";
+            string deploymentName = "{DeploymentName}";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+#else
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
-            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+            QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
+            AnswersOptions options = new AnswersOptions
             {
-                Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
+                AnswerContext = new KnowledgeBaseAnswerContext(previousAnswer.QnaId.Value)
             };
 
-#if SNIPPET
-            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
-#else
-            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-#endif
+            Response<AnswersResult> response = client.GetAnswers("How long should charging take?", project, options);
 
             foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
-                Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+                Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
                 Console.WriteLine($"Source: {answer.Source}");
                 Console.WriteLine();
             }
@@ -51,31 +51,33 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public async Task ChatAsync()
         {
             QuestionAnsweringClient client = Client;
-            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(id: 27);
+            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27);
 
             #region Snippet:QuestionAnsweringClient_ChatAsync
+            string projectName = "{ProjectName}";
+            string deploymentName = "{DeploymentName}";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+#else
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
-            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+            QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
+            AnswersOptions options = new AnswersOptions
             {
-                Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
+                AnswerContext = new KnowledgeBaseAnswerContext(previousAnswer.QnaId.Value)
             };
 
-#if SNIPPET
-            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync("FAQ", options);
-#else
-            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-#endif
+            Response<AnswersResult> response = await client.GetAnswersAsync("How long should charging take?", project, options);
 
             foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
-                Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+                Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
                 Console.WriteLine($"Source: {answer.Source}");
                 Console.WriteLine();
             }
-#endregion
+            #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }

@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataShare.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// A view of synchronization setting added by the provider
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SourceShareSynchronizationSetting")]
     public partial class SourceShareSynchronizationSetting
     {
         /// <summary>
