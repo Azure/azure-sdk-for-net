@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The identity type. </summary>
-    public enum ApplicationResourceIdentityType
+    public enum ApplicationManagedIdentityType
     {
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,

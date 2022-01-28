@@ -5,16 +5,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: Resources
-c-sharp: true
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-track2-preview
 
 output-folder: Generated/
 clear-output-folder: true
-
-modelerfour:
-    lenient-model-deduplication: true
 skip-csproj: true
 model-namespace: true
 public-clients: false
@@ -123,18 +119,33 @@ directive:
     where: $.definitions.DeploymentOperationProperties
     transform: >
       $.properties.statusMessage["x-nullable"] = true;
-  - from: managedapplications.json
-    where: $.definitions.Identity.properties.type["x-ms-enum"]
-    transform: >
-      $.name = "ApplicationResourceIdentityType"
+
   - from: deploymentScripts.json
     where: $.definitions.ManagedServiceIdentity.properties.type["x-ms-enum"]
     transform: >
-      $.name = "DeploymentScriptManagedServiceIdentityType"
+      $.name = "DeploymentScriptManagedIdentityType"
   - from: deploymentScripts.json
-    where: $.definitions.ManagedServiceIdentity
+    where: $.definitions
     transform: >
-      $["x-ms-client-name"] = "DeploymentScriptManagedServiceIdentity"
+      $["ManagedServiceIdentity"]["x-ms-client-name"] = "DeploymentScriptManagedIdentity";
+      $["AzureResourceBase"]["x-ms-client-name"] = "DeploymentScriptResourceBase";
+  - from: managedapplications.json
+    where: $.definitions.Identity
+    transform: >
+      $["x-ms-client-name"] = "ApplicationManagedIdentity";
+      $["properties"]["type"]["x-ms-enum"]["name"] = "ApplicationManagedIdentityType";
+  - from: managedapplications.json
+    where: $.definitions
+    transform: >
+      $["GenericResource"]["x-ms-client-name"] = "ApplicationResource";
+      $["Resource"]["x-ms-client-name"] = "ApplicationResourceBase";
+      $["Plan"]["x-ms-client-name"] = "ApplicationPlan";
+      $["Sku"]["x-ms-client-name"] = "ApplicationSku";
+      $["ErrorResponse"]["x-ms-client-name"] = "ApplicationErrorResponse";
+      $["OperationListResult"]["x-ms-client-name"] = "ApplicationOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "ApplicationOperation";
+      $["Operation"]["properties"]["displayOfApplication"] = $["Operation"]["properties"]["display"];
+      $["Operation"]["properties"]["display"] = undefined;
 ```
 
 ### Tag: package-track2-preview

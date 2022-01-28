@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
             var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(true, userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
-            var managedIdentity = new DeploymentScriptManagedServiceIdentity()
+            var managedIdentity = new DeploymentScriptManagedIdentity()
             {
                 Type = "UserAssigned",
                 UserAssignedIdentities =

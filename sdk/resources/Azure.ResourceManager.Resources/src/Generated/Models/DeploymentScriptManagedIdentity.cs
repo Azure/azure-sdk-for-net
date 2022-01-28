@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed identity generic object. </summary>
-    public partial class DeploymentScriptManagedServiceIdentity
+    public partial class DeploymentScriptManagedIdentity
     {
-        /// <summary> Initializes a new instance of DeploymentScriptManagedServiceIdentity. </summary>
-        public DeploymentScriptManagedServiceIdentity()
+        /// <summary> Initializes a new instance of DeploymentScriptManagedIdentity. </summary>
+        public DeploymentScriptManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentScriptManagedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of DeploymentScriptManagedIdentity. </summary>
         /// <param name="type"> Type of the managed identity. </param>
         /// <param name="tenantId"> ID of the Azure Active Directory. </param>
         /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        internal DeploymentScriptManagedServiceIdentity(DeploymentScriptManagedServiceIdentityType? type, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal DeploymentScriptManagedIdentity(DeploymentScriptManagedIdentityType? type, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             Type = type;
             TenantId = tenantId;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Type of the managed identity. </summary>
-        public DeploymentScriptManagedServiceIdentityType? Type { get; set; }
+        public DeploymentScriptManagedIdentityType? Type { get; set; }
         /// <summary> ID of the Azure Active Directory. </summary>
         public string TenantId { get; }
         /// <summary> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </summary>
