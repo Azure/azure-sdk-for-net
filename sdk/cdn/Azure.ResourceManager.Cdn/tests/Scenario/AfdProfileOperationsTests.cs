@@ -159,5 +159,18 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.AreEqual(wafRankingsResponse.Groups[0], WafRankingType.UserAgent.ToString());
             Assert.AreEqual(wafRankingsResponse.Data.Count, 0);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CheckHostNameAvailability()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            CheckHostNameAvailabilityInput input = new CheckHostNameAvailabilityInput("fakeName");
+            CheckNameAvailabilityOutput result = await afdProfile.CheckAfdProfileHostNameAvailabilityAsync(input);
+            Assert.AreEqual(result.NameAvailable, true);
+        }
     }
 }

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyUpdateProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyUpdateProperties"/> is null. </exception>
-        public async virtual Task<AfdSecurityPolicyUpdateOperation> UpdateAsync(bool waitForCompletion, SecurityPolicyUpdateParameters securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
+        public async virtual Task<AfdSecurityPolicyUpdateOperation> UpdateAsync(bool waitForCompletion, SecurityPolicyUpdateOptions securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (securityPolicyUpdateProperties == null)
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyUpdateProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyUpdateProperties"/> is null. </exception>
-        public virtual AfdSecurityPolicyUpdateOperation Update(bool waitForCompletion, SecurityPolicyUpdateParameters securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
+        public virtual AfdSecurityPolicyUpdateOperation Update(bool waitForCompletion, SecurityPolicyUpdateOptions securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (securityPolicyUpdateProperties == null)
             {

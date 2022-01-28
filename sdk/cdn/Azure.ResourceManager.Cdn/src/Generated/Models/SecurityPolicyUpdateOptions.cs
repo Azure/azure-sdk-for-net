@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object containing security policy update parameters. </summary>
-    public partial class SecurityPolicyUpdateParameters
+    public partial class SecurityPolicyUpdateOptions
     {
-        /// <summary> Initializes a new instance of SecurityPolicyUpdateParameters. </summary>
-        public SecurityPolicyUpdateParameters()
+        /// <summary> Initializes a new instance of SecurityPolicyUpdateOptions. </summary>
+        public SecurityPolicyUpdateOptions()
         {
         }
 

@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyUpdateParameters securityPolicyUpdateProperties)
+        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyUpdateOptions securityPolicyUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyUpdateProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/>, or <paramref name="securityPolicyUpdateProperties"/> is null. </exception>
-        public async Task<Response> PatchAsync(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyUpdateParameters securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchAsync(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyUpdateOptions securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyUpdateProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="securityPolicyName"/>, or <paramref name="securityPolicyUpdateProperties"/> is null. </exception>
-        public Response Patch(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyUpdateParameters securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
+        public Response Patch(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName, SecurityPolicyUpdateOptions securityPolicyUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
