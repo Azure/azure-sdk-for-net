@@ -284,17 +284,14 @@ namespace Azure.Core.TestFramework
         protected internal override object InstrumentOperation(Type operationType, object operation)
             => InstrumentOperationInternal(operationType, operation);
 
-        protected object InstrumentMgmtOperation(Type operationType, object operation, ManagementInterceptor managementInterceptor) =>
-            InstrumentOperationInternal(operationType, operation, managementInterceptor);
-
-        private object InstrumentOperationInternal(Type operationType, object operation, params IInterceptor[] interceptors)
+        protected object InstrumentOperationInternal(Type operationType, object operation, params IInterceptor[] interceptors)
         {
-            interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode == RecordedTestMode.Playback) });
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode == RecordedTestMode.Playback) }).ToArray();
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
                 new[] { typeof(IInstrumented) },
                 operation,
-                interceptors);
+                interceptorArray);
         }
 
         /// <summary>
