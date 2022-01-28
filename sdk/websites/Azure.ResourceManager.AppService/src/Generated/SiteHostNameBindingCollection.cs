@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of HostNameBinding and their operations over its parent. </summary>
     public partial class SiteHostNameBindingCollection : ArmCollection, IEnumerable<SiteHostNameBinding>, IAsyncEnumerable<SiteHostNameBinding>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteHostNameBindingWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteHostNameBindingWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteHostNameBindingCollection"/> class for mocking. </summary>
         protected SiteHostNameBindingCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteHostNameBindingCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteHostNameBinding.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteHostNameBindingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteHostNameBinding.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteHostNameBinding.ResourceType, out string siteHostNameBindingWebAppsApiVersion);
+            _siteHostNameBindingWebAppsRestClient = new WebAppsRestOperations(_siteHostNameBindingWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteHostNameBindingWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostNameBinding));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.CreateOrUpdate");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, hostNameBinding, cancellationToken);
-                var operation = new SiteHostNameBindingCreateOrUpdateOperation(this, response);
+                var response = _siteHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, hostNameBinding, cancellationToken);
+                var operation = new SiteHostNameBindingCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostNameBinding));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.CreateOrUpdate");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, hostNameBinding, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteHostNameBindingCreateOrUpdateOperation(this, response);
+                var response = await _siteHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, hostNameBinding, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteHostNameBindingCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.Get");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken);
+                var response = _siteHostNameBindingWebAppsRestClient.GetHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
+                    throw _siteHostNameBindingWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBinding(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.Get");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteHostNameBindingWebAppsRestClient.GetHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
+                    throw await _siteHostNameBindingWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteHostNameBinding(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExists");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken: cancellationToken);
+                var response = _siteHostNameBindingWebAppsRestClient.GetHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteHostNameBinding>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBinding(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExists");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteHostNameBindingWebAppsRestClient.GetHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteHostNameBinding>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteHostNameBinding(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBinding(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.Exists");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.Exists");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.Exists");
             scope.Start();
             try
             {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteHostNameBinding> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
+                using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListHostNameBindings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteHostNameBindingWebAppsRestClient.ListHostNameBindings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteHostNameBinding> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
+                using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListHostNameBindingsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteHostNameBindingWebAppsRestClient.ListHostNameBindingsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteHostNameBinding>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
+                using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListHostNameBindingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteHostNameBindingWebAppsRestClient.ListHostNameBindingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,12 +339,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteHostNameBinding>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
+                using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListHostNameBindingsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteHostNameBindingWebAppsRestClient.ListHostNameBindingsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteHostNameBinding(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -369,8 +369,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteHostNameBinding, HostNameBindingData> Construct() { }
     }
 }

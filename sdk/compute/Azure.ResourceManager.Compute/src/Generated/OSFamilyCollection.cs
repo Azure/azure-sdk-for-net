@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing collection of OSFamily and their operations over its parent. </summary>
     public partial class OSFamilyCollection : ArmCollection, IEnumerable<OSFamily>, IAsyncEnumerable<OSFamily>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
+        private readonly ClientDiagnostics _oSFamilyCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _oSFamilyCloudServiceOperatingSystemsRestClient;
         private readonly string _location;
 
         /// <summary> Initializes a new instance of the <see cref="OSFamilyCollection"/> class for mocking. </summary>
@@ -40,9 +39,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         internal OSFamilyCollection(ArmResource parent, string location) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(OSFamily.ResourceType, out string apiVersion);
-            _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _oSFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSFamily.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(OSFamily.ResourceType, out string oSFamilyCloudServiceOperatingSystemsApiVersion);
+            _oSFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSFamilyCloudServiceOperatingSystemsApiVersion);
             _location = location;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -66,14 +65,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Get");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Get");
             scope.Start();
             try
             {
-                var response = _cloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken);
+                var response = _oSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                    throw _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new OSFamily(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Get");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken).ConfigureAwait(false);
+                var response = await _oSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                    throw await _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new OSFamily(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken);
+                var response = _oSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<OSFamily>(null, response.GetRawResponse());
-                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OSFamily(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _oSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<OSFamily>(null, response.GetRawResponse());
-                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OSFamily(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Exists");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.Exists");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Exists");
             scope.Start();
             try
             {
@@ -210,12 +209,12 @@ namespace Azure.ResourceManager.Compute
         {
             Page<OSFamily> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceOperatingSystemsRestClient.ListOSFamilies(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _oSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamilies(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,12 +224,12 @@ namespace Azure.ResourceManager.Compute
             }
             Page<OSFamily> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _oSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,12 +247,12 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<OSFamily>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceOperatingSystemsRestClient.ListOSFamiliesAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _oSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -263,12 +262,12 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<OSFamily>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _oSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSFamily(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetAllAsGenericResources");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSFamilyCollection.GetAllAsGenericResources");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -339,8 +338,5 @@ namespace Azure.ResourceManager.Compute
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, OSFamily, OSFamilyData> Construct() { }
     }
 }

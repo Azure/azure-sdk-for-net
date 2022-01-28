@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal TableServiceCreateOrUpdateOperation(ArmResource operationsBase, Response<TableServiceData> response)
+        internal TableServiceCreateOrUpdateOperation(ArmClient armClient, Response<TableServiceData> response)
         {
-            _operation = new OperationOrResponseInternals<TableService>(Response.FromValue(new TableService(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<TableService>(Response.FromValue(new TableService(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

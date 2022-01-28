@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<VirtualMachineScaleSetVirtualMachineRunCommand> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation for mocking. </summary>
         protected VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualMachineScaleSetVirtualMachineRunCommand>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVirtualMachineRunCommandUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
-            return new VirtualMachineScaleSetVirtualMachineRunCommand(_operationBase, data);
+            return new VirtualMachineScaleSetVirtualMachineRunCommand(_armClient, data);
         }
 
         async ValueTask<VirtualMachineScaleSetVirtualMachineRunCommand> IOperationSource<VirtualMachineScaleSetVirtualMachineRunCommand>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
-            return new VirtualMachineScaleSetVirtualMachineRunCommand(_operationBase, data);
+            return new VirtualMachineScaleSetVirtualMachineRunCommand(_armClient, data);
         }
     }
 }

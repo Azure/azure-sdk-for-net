@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DisksRestOperations _disksRestClient;
+
+        private readonly ClientDiagnostics _diskClientDiagnostics;
+        private readonly DisksRestOperations _diskRestClient;
         private readonly DiskData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Disk"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Disk"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Disk(ArmResource options, DiskData data) : base(options, data.Id)
+        internal Disk(ArmClient armClient, DiskData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _disksRestClient = new DisksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="Disk"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Disk(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Disk(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _disksRestClient = new DisksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="Disk"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Disk(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _disksRestClient = new DisksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _diskClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string diskApiVersion);
+            _diskRestClient = new DisksRestOperations(_diskClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,14 +88,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Disk>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.Get");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.Get");
             scope.Start();
             try
             {
-                var response = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
+                    throw await _diskClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Disk(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,14 +108,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Disk> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.Get");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.Get");
             scope.Start();
             try
             {
-                var response = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Disk(this, response.Value), response.GetRawResponse());
+                    throw _diskClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Disk(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,7 +129,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.GetAvailableLocations");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -168,7 +147,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.GetAvailableLocations");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -186,12 +165,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<DiskDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.Delete");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.Delete");
             scope.Start();
             try
             {
-                var response = await _disksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskDeleteOperation(_clientDiagnostics, Pipeline, _disksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _diskRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskDeleteOperation(_diskClientDiagnostics, Pipeline, _diskRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,12 +187,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual DiskDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.Delete");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.Delete");
             scope.Start();
             try
             {
-                var response = _disksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DiskDeleteOperation(_clientDiagnostics, Pipeline, _disksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _diskRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DiskDeleteOperation(_diskClientDiagnostics, Pipeline, _diskRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -234,15 +213,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.AddTag");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Disk(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,15 +239,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.AddTag");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Disk(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,7 +267,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.SetTags");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.SetTags");
             scope.Start();
             try
             {
@@ -296,8 +275,8 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Disk(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -317,7 +296,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.SetTags");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.SetTags");
             scope.Start();
             try
             {
@@ -325,8 +304,8 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Disk(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,15 +322,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.RemoveTag");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _disksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Disk(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -368,15 +347,15 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.RemoveTag");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _disksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Disk(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Disk(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -397,12 +376,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(disk));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.Update");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.Update");
             scope.Start();
             try
             {
-                var response = await _disksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskUpdateOperation(this, _clientDiagnostics, Pipeline, _disksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response);
+                var response = await _diskRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskUpdateOperation(ArmClient, _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -426,12 +405,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(disk));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.Update");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.Update");
             scope.Start();
             try
             {
-                var response = _disksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken);
-                var operation = new DiskUpdateOperation(this, _clientDiagnostics, Pipeline, _disksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response);
+                var response = _diskRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken);
+                var operation = new DiskUpdateOperation(ArmClient, _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -455,12 +434,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.GrantAccess");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.GrantAccess");
             scope.Start();
             try
             {
-                var response = await _disksRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskGrantAccessOperation(_clientDiagnostics, Pipeline, _disksRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var response = await _diskRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskGrantAccessOperation(_diskClientDiagnostics, Pipeline, _diskRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -484,12 +463,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.GrantAccess");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.GrantAccess");
             scope.Start();
             try
             {
-                var response = _disksRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
-                var operation = new DiskGrantAccessOperation(_clientDiagnostics, Pipeline, _disksRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var response = _diskRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
+                var operation = new DiskGrantAccessOperation(_diskClientDiagnostics, Pipeline, _diskRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -506,12 +485,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<DiskRevokeAccessOperation> RevokeAccessAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.RevokeAccess");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.RevokeAccess");
             scope.Start();
             try
             {
-                var response = await _disksRestClient.RevokeAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskRevokeAccessOperation(_clientDiagnostics, Pipeline, _disksRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _diskRestClient.RevokeAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DiskRevokeAccessOperation(_diskClientDiagnostics, Pipeline, _diskRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -528,12 +507,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual DiskRevokeAccessOperation RevokeAccess(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.RevokeAccess");
+            using var scope = _diskClientDiagnostics.CreateScope("Disk.RevokeAccess");
             scope.Start();
             try
             {
-                var response = _disksRestClient.RevokeAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DiskRevokeAccessOperation(_clientDiagnostics, Pipeline, _disksRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _diskRestClient.RevokeAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DiskRevokeAccessOperation(_diskClientDiagnostics, Pipeline, _diskRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

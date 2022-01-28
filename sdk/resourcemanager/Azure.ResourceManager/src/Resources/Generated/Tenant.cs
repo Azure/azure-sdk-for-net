@@ -15,21 +15,36 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a Tenant along with the instance operations that can be performed on it. </summary>
     public partial class Tenant : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TenantsRestOperations _tenantsRestClient;
+        private readonly ClientDiagnostics _tenantClientDiagnostics;
+        private readonly TenantsRestOperations _tenantRestClient;
+        private readonly ClientDiagnostics _providersClientDiagnostics;
         private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Tenant"/> class for mocking. </summary>
         protected Tenant()
         {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="Tenant"/> class. </summary>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal Tenant(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        {
+            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string tenantApiVersion);
+            _tenantRestClient = new TenantsRestOperations(_tenantClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
+            _providersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _providersRestClient = new ProvidersRestOperations(_providersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -68,7 +83,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ProviderData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
                 try
                 {
@@ -83,7 +98,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ProviderData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
                 try
                 {
@@ -111,7 +126,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ProviderData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
                 try
                 {
@@ -126,7 +141,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ProviderData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
                 try
                 {
@@ -155,7 +170,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            using var scope = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProvider");
             scope.Start();
             try
             {
@@ -182,7 +197,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            using var scope = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProvider");
             scope.Start();
             try
             {

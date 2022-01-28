@@ -21,5 +21,14 @@ namespace Azure.ResourceManager.Resources
             return new DeploymentCollection(managementGroup);
         }
         #endregion
+
+        private static ManagementGroupExtensionClient GetExtensionClient(ManagementGroup managementGroup)
+        {
+            return managementGroup.GetCachedClient((armClient) =>
+            {
+                return new ManagementGroupExtensionClient(armClient, managementGroup.Id);
+            }
+            );
+        }
     }
 }

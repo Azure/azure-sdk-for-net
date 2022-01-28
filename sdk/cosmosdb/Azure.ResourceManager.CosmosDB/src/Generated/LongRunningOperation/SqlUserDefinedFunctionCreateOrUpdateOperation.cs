@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly OperationInternals<SqlUserDefinedFunction> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of SqlUserDefinedFunctionCreateOrUpdateOperation for mocking. </summary>
         protected SqlUserDefinedFunctionCreateOrUpdateOperation()
         {
         }
 
-        internal SqlUserDefinedFunctionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SqlUserDefinedFunctionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SqlUserDefinedFunction>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlUserDefinedFunctionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
-            return new SqlUserDefinedFunction(_operationBase, data);
+            return new SqlUserDefinedFunction(_armClient, data);
         }
 
         async ValueTask<SqlUserDefinedFunction> IOperationSource<SqlUserDefinedFunction>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
-            return new SqlUserDefinedFunction(_operationBase, data);
+            return new SqlUserDefinedFunction(_armClient, data);
         }
     }
 }

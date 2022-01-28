@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of ServiceEndpointPolicyDefinition and their operations over its parent. </summary>
     public partial class ServiceEndpointPolicyDefinitionCollection : ArmCollection, IEnumerable<ServiceEndpointPolicyDefinition>, IAsyncEnumerable<ServiceEndpointPolicyDefinition>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServiceEndpointPolicyDefinitionsRestOperations _serviceEndpointPolicyDefinitionsRestClient;
+        private readonly ClientDiagnostics _serviceEndpointPolicyDefinitionClientDiagnostics;
+        private readonly ServiceEndpointPolicyDefinitionsRestOperations _serviceEndpointPolicyDefinitionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyDefinitionCollection"/> class for mocking. </summary>
         protected ServiceEndpointPolicyDefinitionCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceEndpointPolicyDefinitionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServiceEndpointPolicyDefinition.ResourceType, out string apiVersion);
-            _serviceEndpointPolicyDefinitionsRestClient = new ServiceEndpointPolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serviceEndpointPolicyDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicyDefinition.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServiceEndpointPolicyDefinition.ResourceType, out string serviceEndpointPolicyDefinitionApiVersion);
+            _serviceEndpointPolicyDefinitionRestClient = new ServiceEndpointPolicyDefinitionsRestOperations(_serviceEndpointPolicyDefinitionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceEndpointPolicyDefinitionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.CreateOrUpdate");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceEndpointPolicyDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, cancellationToken);
-                var operation = new ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions).Request, response);
+                var response = _serviceEndpointPolicyDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, cancellationToken);
+                var operation = new ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(ArmClient, _serviceEndpointPolicyDefinitionClientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.CreateOrUpdate");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceEndpointPolicyDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions).Request, response);
+                var response = await _serviceEndpointPolicyDefinitionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceEndpointPolicyDefinitionCreateOrUpdateOperation(ArmClient, _serviceEndpointPolicyDefinitionClientDiagnostics, Pipeline, _serviceEndpointPolicyDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Get");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceEndpointPolicyDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken);
+                var response = _serviceEndpointPolicyDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicyDefinition(this, response.Value), response.GetRawResponse());
+                    throw _serviceEndpointPolicyDefinitionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicyDefinition(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Get");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceEndpointPolicyDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEndpointPolicyDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceEndpointPolicyDefinition(this, response.Value), response.GetRawResponse());
+                    throw await _serviceEndpointPolicyDefinitionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServiceEndpointPolicyDefinition(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetIfExists");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceEndpointPolicyDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken);
+                var response = _serviceEndpointPolicyDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServiceEndpointPolicyDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicyDefinition(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicyDefinition(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetIfExists");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceEndpointPolicyDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceEndpointPolicyDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServiceEndpointPolicyDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicyDefinition(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicyDefinition(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Exists");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Exists");
+            using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<ServiceEndpointPolicyDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
+                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<ServiceEndpointPolicyDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
+                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ServiceEndpointPolicyDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
+                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ServiceEndpointPolicyDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
+                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serviceEndpointPolicyDefinitionsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinition(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,8 +351,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceEndpointPolicyDefinition, ServiceEndpointPolicyDefinitionData> Construct() { }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -108,7 +108,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -223,7 +223,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -303,7 +303,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -342,7 +342,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateConnectionExistsImplRequest(connectionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -382,7 +382,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -422,7 +422,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -464,7 +464,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -506,7 +506,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -545,7 +545,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGroupExistsImplRequest(group, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -584,7 +584,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGroupExistsImplRequest(group, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -625,7 +625,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -666,7 +666,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -709,7 +709,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -752,7 +752,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -793,7 +793,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -834,7 +834,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -875,7 +875,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -916,7 +916,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -955,7 +955,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateUserExistsImplRequest(userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -994,7 +994,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateUserExistsImplRequest(userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1035,7 +1035,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1076,7 +1076,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1118,7 +1118,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1160,7 +1160,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1199,7 +1199,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1238,7 +1238,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRemoveUserFromAllGroupsRequest(userId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1280,7 +1280,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1322,7 +1322,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGrantPermissionRequest(permission, connectionId, targetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1364,7 +1364,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1406,7 +1406,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateRevokePermissionRequest(permission, connectionId, targetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1448,7 +1448,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1490,7 +1490,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

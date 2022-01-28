@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing collection of CdnCustomDomain and their operations over its parent. </summary>
     public partial class CdnCustomDomainCollection : ArmCollection, IEnumerable<CdnCustomDomain>, IAsyncEnumerable<CdnCustomDomain>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CdnCustomDomainsRestOperations _cdnCustomDomainsRestClient;
+        private readonly ClientDiagnostics _cdnCustomDomainClientDiagnostics;
+        private readonly CdnCustomDomainsRestOperations _cdnCustomDomainRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnCustomDomainCollection"/> class for mocking. </summary>
         protected CdnCustomDomainCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal CdnCustomDomainCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(CdnCustomDomain.ResourceType, out string apiVersion);
-            _cdnCustomDomainsRestClient = new CdnCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _cdnCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnCustomDomain.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(CdnCustomDomain.ResourceType, out string cdnCustomDomainApiVersion);
+            _cdnCustomDomainRestClient = new CdnCustomDomainsRestOperations(_cdnCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken);
-                var operation = new CdnCustomDomainCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
+                var response = _cdnCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken);
+                var operation = new CdnCustomDomainCreateOrUpdateOperation(ArmClient, _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnCustomDomainCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _cdnCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
+                var response = await _cdnCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnCustomDomainCreateOrUpdateOperation(ArmClient, _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken);
+                var response = _cdnCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
+                    throw _cdnCustomDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
+                    throw await _cdnCustomDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
+                var response = _cdnCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<CdnCustomDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new CdnCustomDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
+            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<CdnCustomDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnCustomDomainsRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _cdnCustomDomainRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnCustomDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cdnCustomDomainsRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _cdnCustomDomainRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<CdnCustomDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnCustomDomainsRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _cdnCustomDomainRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnCustomDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
+                using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cdnCustomDomainsRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _cdnCustomDomainRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CdnCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,8 +351,5 @@ namespace Azure.ResourceManager.Cdn
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, CdnCustomDomain, CdnCustomDomainData> Construct() { }
     }
 }

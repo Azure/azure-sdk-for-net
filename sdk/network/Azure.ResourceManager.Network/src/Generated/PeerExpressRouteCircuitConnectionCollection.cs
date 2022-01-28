@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PeerExpressRouteCircuitConnection and their operations over its parent. </summary>
     public partial class PeerExpressRouteCircuitConnectionCollection : ArmCollection, IEnumerable<PeerExpressRouteCircuitConnection>, IAsyncEnumerable<PeerExpressRouteCircuitConnection>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PeerExpressRouteCircuitConnectionsRestOperations _peerExpressRouteCircuitConnectionsRestClient;
+        private readonly ClientDiagnostics _peerExpressRouteCircuitConnectionClientDiagnostics;
+        private readonly PeerExpressRouteCircuitConnectionsRestOperations _peerExpressRouteCircuitConnectionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PeerExpressRouteCircuitConnectionCollection"/> class for mocking. </summary>
         protected PeerExpressRouteCircuitConnectionCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PeerExpressRouteCircuitConnectionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(PeerExpressRouteCircuitConnection.ResourceType, out string apiVersion);
-            _peerExpressRouteCircuitConnectionsRestClient = new PeerExpressRouteCircuitConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _peerExpressRouteCircuitConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PeerExpressRouteCircuitConnection.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(PeerExpressRouteCircuitConnection.ResourceType, out string peerExpressRouteCircuitConnectionApiVersion);
+            _peerExpressRouteCircuitConnectionRestClient = new PeerExpressRouteCircuitConnectionsRestOperations(_peerExpressRouteCircuitConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, peerExpressRouteCircuitConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,14 +59,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
+            using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _peerExpressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
+                var response = _peerExpressRouteCircuitConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                    throw _peerExpressRouteCircuitConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -85,14 +84,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
+            using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _peerExpressRouteCircuitConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                    throw await _peerExpressRouteCircuitConnectionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,14 +109,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
+            using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _peerExpressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
+                var response = _peerExpressRouteCircuitConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +134,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
+            using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _peerExpressRouteCircuitConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<PeerExpressRouteCircuitConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new PeerExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerExpressRouteCircuitConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
+            using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
+            using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -204,12 +203,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<PeerExpressRouteCircuitConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
+                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _peerExpressRouteCircuitConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _peerExpressRouteCircuitConnectionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -219,12 +218,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<PeerExpressRouteCircuitConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
+                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _peerExpressRouteCircuitConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _peerExpressRouteCircuitConnectionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,12 +241,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<PeerExpressRouteCircuitConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
+                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _peerExpressRouteCircuitConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _peerExpressRouteCircuitConnectionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,12 +256,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<PeerExpressRouteCircuitConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
+                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _peerExpressRouteCircuitConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _peerExpressRouteCircuitConnectionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnection(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -287,8 +286,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, PeerExpressRouteCircuitConnection, PeerExpressRouteCircuitConnectionData> Construct() { }
     }
 }

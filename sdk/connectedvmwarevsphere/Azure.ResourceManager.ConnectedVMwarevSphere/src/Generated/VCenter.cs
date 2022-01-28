@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VCentersRestOperations _vCentersRestClient;
+
+        private readonly ClientDiagnostics _vCenterClientDiagnostics;
+        private readonly VCentersRestOperations _vCenterRestClient;
         private readonly VCenterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VCenter"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VCenter"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VCenter(ArmResource options, VCenterData data) : base(options, data.Id)
+        internal VCenter(ArmClient armClient, VCenterData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _vCentersRestClient = new VCentersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="VCenter"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VCenter(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal VCenter(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _vCentersRestClient = new VCentersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="VCenter"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VCenter(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _vCentersRestClient = new VCentersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _vCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string vCenterApiVersion);
+            _vCenterRestClient = new VCentersRestOperations(_vCenterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vCenterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +91,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VCenter>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Get");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Get");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                    throw await _vCenterClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +114,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VCenter> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Get");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Get");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                    throw _vCenterClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +135,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.GetAvailableLocations");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -174,7 +153,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.GetAvailableLocations");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -196,12 +175,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VCenterDeleteOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Delete");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Delete");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new VCenterDeleteOperation(_clientDiagnostics, Pipeline, _vCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
+                var response = await _vCenterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
+                var operation = new VCenterDeleteOperation(_vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,12 +201,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VCenterDeleteOperation Delete(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Delete");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Delete");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new VCenterDeleteOperation(_clientDiagnostics, Pipeline, _vCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
+                var response = _vCenterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
+                var operation = new VCenterDeleteOperation(_vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -248,15 +227,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenter.AddTag");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,15 +253,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenter.AddTag");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VCenter(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -302,7 +281,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VCenter.SetTags");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.SetTags");
             scope.Start();
             try
             {
@@ -310,8 +289,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -331,7 +310,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VCenter.SetTags");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.SetTags");
             scope.Start();
             try
             {
@@ -339,8 +318,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VCenter(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -357,15 +336,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenter.RemoveTag");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -382,15 +361,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("VCenter.RemoveTag");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VCenter(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -407,12 +386,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VCenter>> UpdateAsync(ResourcePatch body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Update");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Update");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                var response = await _vCenterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -429,12 +408,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VCenter> Update(ResourcePatch body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Update");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Update");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                var response = _vCenterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                return Response.FromValue(new VCenter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

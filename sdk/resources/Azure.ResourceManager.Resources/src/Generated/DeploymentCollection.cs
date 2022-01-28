@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing collection of Deployment and their operations over its parent. </summary>
     public partial class DeploymentCollection : ArmCollection, IEnumerable<Deployment>, IAsyncEnumerable<Deployment>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeploymentsRestOperations _deploymentsRestClient;
+        private readonly ClientDiagnostics _deploymentClientDiagnostics;
+        private readonly DeploymentsRestOperations _deploymentRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeploymentCollection"/> class for mocking. </summary>
         protected DeploymentCollection()
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DeploymentCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Deployment.ResourceType, out string apiVersion);
-            _deploymentsRestClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _deploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Deployment.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Deployment.ResourceType, out string deploymentApiVersion);
+            _deploymentRestClient = new DeploymentsRestOperations(_deploymentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentApiVersion);
         }
 
         // Collection level operations.
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deploymentsRestClient.CreateOrUpdateAtScope(Id, deploymentName, parameters, cancellationToken);
-                var operation = new DeploymentCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _deploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response);
+                var response = _deploymentRestClient.CreateOrUpdateAtScope(Id, deploymentName, parameters, cancellationToken);
+                var operation = new DeploymentCreateOrUpdateOperation(ArmClient, _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deploymentsRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _deploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response);
+                var response = await _deploymentRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DeploymentCreateOrUpdateOperation(ArmClient, _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Get");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.Get");
             scope.Start();
             try
             {
-                var response = _deploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken);
+                var response = _deploymentRestClient.GetAtScope(Id, deploymentName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
+                    throw _deploymentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Deployment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Get");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
+                    throw await _deploymentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Deployment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
+                var response = _deploymentRestClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<Deployment>(null, response.GetRawResponse());
-                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,14 +189,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<Deployment>(null, response.GetRawResponse());
-                return Response.FromValue(new Deployment(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Deployment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Exists");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.Exists");
             scope.Start();
             try
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.Exists");
+            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.Exists");
             scope.Start();
             try
             {
@@ -260,12 +260,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Deployment> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
+                using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deploymentsRestClient.ListAtScope(Id, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _deploymentRestClient.ListAtScope(Id, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,12 +275,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Deployment> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
+                using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deploymentsRestClient.ListAtScopeNextPage(nextLink, Id, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _deploymentRestClient.ListAtScopeNextPage(nextLink, Id, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Deployment>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
+                using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _deploymentsRestClient.ListAtScopeAsync(Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _deploymentRestClient.ListAtScopeAsync(Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -315,12 +315,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Deployment>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentCollection.GetAll");
+                using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _deploymentsRestClient.ListAtScopeNextPageAsync(nextLink, Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _deploymentRestClient.ListAtScopeNextPageAsync(nextLink, Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Deployment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,8 +345,5 @@ namespace Azure.ResourceManager.Resources
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Deployment, DeploymentData> Construct() { }
     }
 }

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.StoragePool
     /// <summary> A class representing collection of IscsiTarget and their operations over its parent. </summary>
     public partial class IscsiTargetCollection : ArmCollection, IEnumerable<IscsiTarget>, IAsyncEnumerable<IscsiTarget>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly IscsiTargetsRestOperations _iscsiTargetsRestClient;
+        private readonly ClientDiagnostics _iscsiTargetClientDiagnostics;
+        private readonly IscsiTargetsRestOperations _iscsiTargetRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="IscsiTargetCollection"/> class for mocking. </summary>
         protected IscsiTargetCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal IscsiTargetCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(IscsiTarget.ResourceType, out string apiVersion);
-            _iscsiTargetsRestClient = new IscsiTargetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _iscsiTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", IscsiTarget.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(IscsiTarget.ResourceType, out string iscsiTargetApiVersion);
+            _iscsiTargetRestClient = new IscsiTargetsRestOperations(_iscsiTargetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iscsiTargetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(iscsiTargetCreatePayload));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.CreateOrUpdate");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _iscsiTargetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload, cancellationToken);
-                var operation = new IscsiTargetCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _iscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload).Request, response);
+                var response = _iscsiTargetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload, cancellationToken);
+                var operation = new IscsiTargetCreateOrUpdateOperation(ArmClient, _iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentNullException(nameof(iscsiTargetCreatePayload));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.CreateOrUpdate");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _iscsiTargetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new IscsiTargetCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _iscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload).Request, response);
+                var response = await _iscsiTargetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload, cancellationToken).ConfigureAwait(false);
+                var operation = new IscsiTargetCreateOrUpdateOperation(ArmClient, _iscsiTargetClientDiagnostics, Pipeline, _iscsiTargetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, iscsiTargetCreatePayload).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Get");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.Get");
             scope.Start();
             try
             {
-                var response = _iscsiTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken);
+                var response = _iscsiTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
+                    throw _iscsiTargetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new IscsiTarget(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Get");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _iscsiTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken).ConfigureAwait(false);
+                var response = await _iscsiTargetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
+                    throw await _iscsiTargetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new IscsiTarget(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _iscsiTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken: cancellationToken);
+                var response = _iscsiTargetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<IscsiTarget>(null, response.GetRawResponse());
-                return Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IscsiTarget(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _iscsiTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _iscsiTargetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<IscsiTarget>(null, response.GetRawResponse());
-                return Response.FromValue(new IscsiTarget(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IscsiTarget(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
-            using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
+            using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.Exists");
             scope.Start();
             try
             {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.StoragePool
         {
             Page<IscsiTarget> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
+                using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _iscsiTargetsRestClient.ListByDiskPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _iscsiTargetRestClient.ListByDiskPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.StoragePool
             }
             Page<IscsiTarget> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
+                using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _iscsiTargetsRestClient.ListByDiskPoolNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _iscsiTargetRestClient.ListByDiskPoolNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.StoragePool
         {
             async Task<Page<IscsiTarget>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
+                using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _iscsiTargetsRestClient.ListByDiskPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _iscsiTargetRestClient.ListByDiskPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,12 +339,12 @@ namespace Azure.ResourceManager.StoragePool
             }
             async Task<Page<IscsiTarget>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
+                using var scope = _iscsiTargetClientDiagnostics.CreateScope("IscsiTargetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _iscsiTargetsRestClient.ListByDiskPoolNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _iscsiTargetRestClient.ListByDiskPoolNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new IscsiTarget(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -369,8 +369,5 @@ namespace Azure.ResourceManager.StoragePool
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, IscsiTarget, IscsiTargetData> Construct() { }
     }
 }

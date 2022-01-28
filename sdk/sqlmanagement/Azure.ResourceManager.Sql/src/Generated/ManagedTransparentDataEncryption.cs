@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/transparentDataEncryption/{tdeName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedDatabaseTransparentDataEncryptionRestOperations _managedDatabaseTransparentDataEncryptionRestClient;
+
+        private readonly ClientDiagnostics _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics;
+        private readonly ManagedDatabaseTransparentDataEncryptionRestOperations _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient;
         private readonly ManagedTransparentDataEncryptionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedTransparentDataEncryption"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagedTransparentDataEncryption"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedTransparentDataEncryption(ArmResource options, ManagedTransparentDataEncryptionData data) : base(options, data.Id)
+        internal ManagedTransparentDataEncryption(ArmClient armClient, ManagedTransparentDataEncryptionData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryptionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedTransparentDataEncryption"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedTransparentDataEncryption(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ManagedTransparentDataEncryption(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryptionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ManagedTransparentDataEncryption"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedTransparentDataEncryption(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryptionRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
+            _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryptionRestOperations(_managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedTransparentDataEncryption>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryption.Get");
+            using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryption.Get");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseTransparentDataEncryptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedTransparentDataEncryption(this, response.Value), response.GetRawResponse());
+                    throw await _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedTransparentDataEncryption(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +113,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedTransparentDataEncryption> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryption.Get");
+            using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryption.Get");
             scope.Start();
             try
             {
-                var response = _managedDatabaseTransparentDataEncryptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedTransparentDataEncryption(this, response.Value), response.GetRawResponse());
+                    throw _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedTransparentDataEncryption(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +134,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryption.GetAvailableLocations");
+            using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryption.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -174,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedTransparentDataEncryption.GetAvailableLocations");
+            using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryption.GetAvailableLocations");
             scope.Start();
             try
             {

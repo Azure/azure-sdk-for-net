@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class representing collection of Key and their operations over its parent. </summary>
     public partial class VaultKeyCollection : ArmCollection, IEnumerable<VaultKey>, IAsyncEnumerable<VaultKey>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly KeysRestOperations _keysRestClient;
+        private readonly ClientDiagnostics _vaultKeyKeysClientDiagnostics;
+        private readonly KeysRestOperations _vaultKeyKeysRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VaultKeyCollection"/> class for mocking. </summary>
         protected VaultKeyCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VaultKeyCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(VaultKey.ResourceType, out string apiVersion);
-            _keysRestClient = new KeysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _vaultKeyKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultKey.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VaultKey.ResourceType, out string vaultKeyKeysApiVersion);
+            _vaultKeyKeysRestClient = new KeysRestOperations(_vaultKeyKeysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyKeysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.CreateOrUpdate");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _keysRestClient.CreateIfNotExist(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new VaultKeyCreateOrUpdateOperation(this, response);
+                var response = _vaultKeyKeysRestClient.CreateIfNotExist(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
+                var operation = new VaultKeyCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.CreateOrUpdate");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _keysRestClient.CreateIfNotExistAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VaultKeyCreateOrUpdateOperation(this, response);
+                var response = await _vaultKeyKeysRestClient.CreateIfNotExistAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VaultKeyCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.Get");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.Get");
             scope.Start();
             try
             {
-                var response = _keysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
+                var response = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultKey(this, response.Value), response.GetRawResponse());
+                    throw _vaultKeyKeysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VaultKey(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.Get");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _keysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
+                var response = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VaultKey(this, response.Value), response.GetRawResponse());
+                    throw await _vaultKeyKeysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VaultKey(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.GetIfExists");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _keysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
+                var response = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<VaultKey>(null, response.GetRawResponse());
-                return Response.FromValue(new VaultKey(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VaultKey(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.GetIfExists");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _keysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<VaultKey>(null, response.GetRawResponse());
-                return Response.FromValue(new VaultKey(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VaultKey(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.Exists");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.Exists");
+            using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.Exists");
             scope.Start();
             try
             {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             Page<VaultKey> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
+                using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _keysRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _vaultKeyKeysRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.KeyVault
             }
             Page<VaultKey> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
+                using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _keysRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _vaultKeyKeysRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             async Task<Page<VaultKey>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
+                using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _keysRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vaultKeyKeysRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,12 +339,12 @@ namespace Azure.ResourceManager.KeyVault
             }
             async Task<Page<VaultKey>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
+                using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _keysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vaultKeyKeysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKey(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -369,8 +369,5 @@ namespace Azure.ResourceManager.KeyVault
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VaultKey, KeyData> Construct() { }
     }
 }

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of VnetInfoResource and their operations over its parent. </summary>
     public partial class SiteSlotVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteSlotVirtualNetworkConnection>, IAsyncEnumerable<SiteSlotVirtualNetworkConnection>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotVirtualNetworkConnectionWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionCollection"/> class for mocking. </summary>
         protected SiteSlotVirtualNetworkConnectionCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSlotVirtualNetworkConnectionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteSlotVirtualNetworkConnection.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotVirtualNetworkConnection.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteSlotVirtualNetworkConnection.ResourceType, out string siteSlotVirtualNetworkConnectionWebAppsApiVersion);
+            _siteSlotVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(_siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotVirtualNetworkConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.CreateOrUpdate");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateOrUpdateVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, connectionEnvelope, cancellationToken);
-                var operation = new SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation(this, response);
+                var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, connectionEnvelope, cancellationToken);
+                var operation = new SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.CreateOrUpdate");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation(this, response);
+                var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Get");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken);
+                var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                    throw _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Get");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                    throw await _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetIfExists");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken: cancellationToken);
+                var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotVirtualNetworkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetIfExists");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteSlotVirtualNetworkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnection(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Exists");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Exists");
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteSlotVirtualNetworkConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetAll");
+                using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListVnetConnectionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new SiteSlotVirtualNetworkConnection(this, value)), null, response.GetRawResponse());
+                    var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.ListVnetConnectionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Select(value => new SiteSlotVirtualNetworkConnection(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteSlotVirtualNetworkConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetAll");
+                using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListVnetConnectionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new SiteSlotVirtualNetworkConnection(this, value)), null, response.GetRawResponse());
+                    var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.ListVnetConnectionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Select(value => new SiteSlotVirtualNetworkConnection(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,8 +339,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotVirtualNetworkConnection, VnetInfoResourceData> Construct() { }
     }
 }

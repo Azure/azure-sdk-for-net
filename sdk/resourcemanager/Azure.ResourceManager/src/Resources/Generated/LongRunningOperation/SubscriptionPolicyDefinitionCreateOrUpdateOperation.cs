@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal SubscriptionPolicyDefinitionCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicyDefinitionData> response)
+        internal SubscriptionPolicyDefinitionCreateOrUpdateOperation(ArmClient armClient, Response<PolicyDefinitionData> response)
         {
-            _operation = new OperationOrResponseInternals<SubscriptionPolicyDefinition>(Response.FromValue(new SubscriptionPolicyDefinition(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SubscriptionPolicyDefinition>(Response.FromValue(new SubscriptionPolicyDefinition(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

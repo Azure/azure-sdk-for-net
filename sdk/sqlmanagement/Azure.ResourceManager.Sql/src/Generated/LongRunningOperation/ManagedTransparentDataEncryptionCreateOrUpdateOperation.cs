@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal ManagedTransparentDataEncryptionCreateOrUpdateOperation(ArmResource operationsBase, Response<ManagedTransparentDataEncryptionData> response)
+        internal ManagedTransparentDataEncryptionCreateOrUpdateOperation(ArmClient armClient, Response<ManagedTransparentDataEncryptionData> response)
         {
-            _operation = new OperationOrResponseInternals<ManagedTransparentDataEncryption>(Response.FromValue(new ManagedTransparentDataEncryption(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ManagedTransparentDataEncryption>(Response.FromValue(new ManagedTransparentDataEncryption(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
