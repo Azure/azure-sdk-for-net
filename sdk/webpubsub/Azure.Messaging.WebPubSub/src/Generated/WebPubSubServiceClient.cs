@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -1562,6 +1560,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
+            context.ResponseClassifier ??= ResponseClassifier202.Instance;
             var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
