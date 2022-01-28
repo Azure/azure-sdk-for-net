@@ -14,7 +14,6 @@ namespace Azure.Security.ConfidentialLedger
 {
     public partial class ConfidentialLedgerClient
     {
-
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
