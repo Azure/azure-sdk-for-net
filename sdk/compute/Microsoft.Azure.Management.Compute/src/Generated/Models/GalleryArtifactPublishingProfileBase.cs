@@ -36,9 +36,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="targetRegions">The target regions where the Image
         /// Version is going to be replicated to. This property is
         /// updatable.</param>
-        /// <param name="targetExtendedLocations">The target extended locations
-        /// where the Image Version is going to be replicated to. This property
-        /// is updatable.</param>
         /// <param name="replicaCount">The number of replicas of the Image
         /// Version to be created per region. This property would take effect
         /// for a region when regionalReplicaCount is not specified. This
@@ -58,16 +55,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="replicationMode">Optional parameter which specifies
         /// the mode to be used for replication. This property is not
         /// updatable. Possible values include: 'Full', 'Shallow'</param>
-        public GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions = default(IList<TargetRegion>), IList<GalleryTargetExtendedLocation> targetExtendedLocations = default(IList<GalleryTargetExtendedLocation>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string))
+        /// <param name="targetExtendedLocations">The target extended locations
+        /// where the Image Version is going to be replicated to. This property
+        /// is updatable.</param>
+        public GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string), IList<GalleryTargetExtendedLocation> targetExtendedLocations = default(IList<GalleryTargetExtendedLocation>))
         {
             TargetRegions = targetRegions;
-            TargetExtendedLocations = targetExtendedLocations;
             ReplicaCount = replicaCount;
             ExcludeFromLatest = excludeFromLatest;
             PublishedDate = publishedDate;
             EndOfLifeDate = endOfLifeDate;
             StorageAccountType = storageAccountType;
             ReplicationMode = replicationMode;
+            TargetExtendedLocations = targetExtendedLocations;
             CustomInit();
         }
 
@@ -82,13 +82,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetRegions")]
         public IList<TargetRegion> TargetRegions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the target extended locations where the Image Version
-        /// is going to be replicated to. This property is updatable.
-        /// </summary>
-        [JsonProperty(PropertyName = "targetExtendedLocations")]
-        public IList<GalleryTargetExtendedLocation> TargetExtendedLocations { get; set; }
 
         /// <summary>
         /// Gets or sets the number of replicas of the Image Version to be
@@ -136,6 +129,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "replicationMode")]
         public string ReplicationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target extended locations where the Image Version
+        /// is going to be replicated to. This property is updatable.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetExtendedLocations")]
+        public IList<GalleryTargetExtendedLocation> TargetExtendedLocations { get; set; }
 
     }
 }

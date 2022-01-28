@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SecurityTypes.
+    /// Defines values for RepairAction.
     /// </summary>
-    public static class SecurityTypes
+    public static class RepairAction
     {
-        public const string TrustedLaunch = "TrustedLaunch";
-        public const string ConfidentialVM = "ConfidentialVM";
+        public const string Replace = "Replace";
+        public const string Restart = "Restart";
+        public const string Reimage = "Reimage";
     }
 }

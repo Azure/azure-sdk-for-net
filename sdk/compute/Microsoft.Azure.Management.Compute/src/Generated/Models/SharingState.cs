@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SecurityTypes.
+    /// Defines values for SharingState.
     /// </summary>
-    public static class SecurityTypes
+    public static class SharingState
     {
-        public const string TrustedLaunch = "TrustedLaunch";
-        public const string ConfidentialVM = "ConfidentialVM";
+        public const string Succeeded = "Succeeded";
+        public const string InProgress = "InProgress";
+        public const string Failed = "Failed";
+        public const string Unknown = "Unknown";
     }
 }

@@ -29,15 +29,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDiskImageSecurityProfile class.
         /// </summary>
-        /// <param name="type">all types of security profile. Possible values
-        /// include: 'EncryptedVMGuestStateOnlyWithPmk', 'EncryptedWithPmk',
+        /// <param name="confidentialVMEncryptionType">confidential VM
+        /// encryption types. Possible values include:
+        /// 'EncryptedVMGuestStateOnlyWithPmk', 'EncryptedWithPmk',
         /// 'EncryptedWithCmk'</param>
-        /// <param name="secureVMdiskEncryptionSetId">secure VM disk encryption
+        /// <param name="secureVMDiskEncryptionSetId">secure VM disk encryption
         /// set id</param>
-        public OSDiskImageSecurityProfile(SecurityProfileType? type = default(SecurityProfileType?), string secureVMdiskEncryptionSetId = default(string))
+        public OSDiskImageSecurityProfile(ConfidentialVMEncryptionType? confidentialVMEncryptionType = default(ConfidentialVMEncryptionType?), string secureVMDiskEncryptionSetId = default(string))
         {
-            Type = type;
-            SecureVMdiskEncryptionSetId = secureVMdiskEncryptionSetId;
+            ConfidentialVMEncryptionType = confidentialVMEncryptionType;
+            SecureVMDiskEncryptionSetId = secureVMDiskEncryptionSetId;
             CustomInit();
         }
 
@@ -47,18 +48,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets all types of security profile. Possible values
+        /// Gets or sets confidential VM encryption types. Possible values
         /// include: 'EncryptedVMGuestStateOnlyWithPmk', 'EncryptedWithPmk',
         /// 'EncryptedWithCmk'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public SecurityProfileType? Type { get; set; }
+        [JsonProperty(PropertyName = "confidentialVMEncryptionType")]
+        public ConfidentialVMEncryptionType? ConfidentialVMEncryptionType { get; set; }
 
         /// <summary>
         /// Gets or sets secure VM disk encryption set id
         /// </summary>
-        [JsonProperty(PropertyName = "secureVMdiskEncryptionSetId")]
-        public string SecureVMdiskEncryptionSetId { get; set; }
+        [JsonProperty(PropertyName = "secureVMDiskEncryptionSetId")]
+        public string SecureVMDiskEncryptionSetId { get; set; }
 
     }
 }

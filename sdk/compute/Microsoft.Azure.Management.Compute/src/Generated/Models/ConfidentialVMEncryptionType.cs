@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SecurityProfileType.
+    /// Defines values for ConfidentialVMEncryptionType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum SecurityProfileType
+    public enum ConfidentialVMEncryptionType
     {
         [EnumMember(Value = "EncryptedVMGuestStateOnlyWithPmk")]
         EncryptedVMGuestStateOnlyWithPmk,
@@ -28,37 +28,37 @@ namespace Microsoft.Azure.Management.Compute.Models
         [EnumMember(Value = "EncryptedWithCmk")]
         EncryptedWithCmk
     }
-    internal static class SecurityProfileTypeEnumExtension
+    internal static class ConfidentialVMEncryptionTypeEnumExtension
     {
-        internal static string ToSerializedValue(this SecurityProfileType? value)
+        internal static string ToSerializedValue(this ConfidentialVMEncryptionType? value)
         {
-            return value == null ? null : ((SecurityProfileType)value).ToSerializedValue();
+            return value == null ? null : ((ConfidentialVMEncryptionType)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this SecurityProfileType value)
+        internal static string ToSerializedValue(this ConfidentialVMEncryptionType value)
         {
             switch( value )
             {
-                case SecurityProfileType.EncryptedVMGuestStateOnlyWithPmk:
+                case ConfidentialVMEncryptionType.EncryptedVMGuestStateOnlyWithPmk:
                     return "EncryptedVMGuestStateOnlyWithPmk";
-                case SecurityProfileType.EncryptedWithPmk:
+                case ConfidentialVMEncryptionType.EncryptedWithPmk:
                     return "EncryptedWithPmk";
-                case SecurityProfileType.EncryptedWithCmk:
+                case ConfidentialVMEncryptionType.EncryptedWithCmk:
                     return "EncryptedWithCmk";
             }
             return null;
         }
 
-        internal static SecurityProfileType? ParseSecurityProfileType(this string value)
+        internal static ConfidentialVMEncryptionType? ParseConfidentialVMEncryptionType(this string value)
         {
             switch( value )
             {
                 case "EncryptedVMGuestStateOnlyWithPmk":
-                    return SecurityProfileType.EncryptedVMGuestStateOnlyWithPmk;
+                    return ConfidentialVMEncryptionType.EncryptedVMGuestStateOnlyWithPmk;
                 case "EncryptedWithPmk":
-                    return SecurityProfileType.EncryptedWithPmk;
+                    return ConfidentialVMEncryptionType.EncryptedWithPmk;
                 case "EncryptedWithCmk":
-                    return SecurityProfileType.EncryptedWithCmk;
+                    return ConfidentialVMEncryptionType.EncryptedWithCmk;
             }
             return null;
         }
