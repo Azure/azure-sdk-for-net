@@ -30,12 +30,7 @@ namespace Azure.Storage.DataMovement
         /// also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
         /// part of DMLib instead of scanning right before the job is benefical.
         /// </summary>
-        private List<TransferJobInternal> _totalJobs;
-
-        /// <summary>
-        /// To hold the jobs to scan
-        /// </summary>
-        protected internal List<TransferJobInternal> TotalJobs => _totalJobs;
+        internal List<TransferJobInternal> _totalJobs;
 
         // Not sure if we should keep the jobs that in in progress here
         // private IList<StorageTransferJob> _jobsInProgress;

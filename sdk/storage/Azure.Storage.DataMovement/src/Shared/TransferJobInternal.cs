@@ -6,13 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
     /// Stores the information of the Transfer Job.
     /// TODO: better description
     /// </summary>
-    public class TransferJobInternal
+    internal class TransferJobInternal
     {
         /// <summary>
         /// Job Id in form of a Guid

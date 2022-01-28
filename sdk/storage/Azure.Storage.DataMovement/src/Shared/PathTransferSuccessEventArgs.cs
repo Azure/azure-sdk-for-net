@@ -3,6 +3,7 @@
 
 using System.Threading;
 using Azure.Core;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -16,7 +17,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the <see cref="TransferJobInternal"/> raising the
         /// event.
         /// </summary>
-        public TransferJobInternal Job { get; }
+        public StorageTransferJobDetails Job { get; }
 
         /// <summary>
         /// Gets the <see cref="Response{T}"/> of the job
@@ -51,7 +52,7 @@ namespace Azure.Storage.DataMovement
         /// are null.
         /// </exception>
         public PathTransferSuccessEventArgs(
-            TransferJobInternal job,
+            StorageTransferJobDetails job,
             Response response,
             bool isRunningSynchronously,
             CancellationToken cancellationToken = default)

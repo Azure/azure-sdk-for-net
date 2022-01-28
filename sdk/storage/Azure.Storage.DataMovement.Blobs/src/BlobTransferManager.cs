@@ -9,6 +9,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage;
+using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs.Models;
 
@@ -25,6 +26,8 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobTransferManager : StorageTransferManager
     {
+        internal IList<TransferJobInternal> totalTransferJobs { get; set; }
+
         /// <summary>
         /// internal job transfer to scan for job sand schedule requests accordingly
         /// </summary>
@@ -68,7 +71,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
 
             BlobUploadTransferJob transferJob = new BlobUploadTransferJob(jobId, sourceLocalPath, destinationClient, uploadOptions);
-            TotalJobs.Add(transferJob);
+            totalTransferJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
 
             // TODO: remove stub
@@ -94,8 +97,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(jobId, sourceClient, destinationLocalPath, options);
-            TotalJobs.Add(transferJob);
-            jobTransferScheduler.AddJob(transferJob);
+            totalTransferJobs.Add(transferJob);
             return jobId;
         }
 
@@ -121,7 +123,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, overwrite, destinationClient, options);
-            TotalJobs.Add(transferJob);
+            totalTransferJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
             return jobId;
         }
@@ -146,7 +148,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(jobId, sourceClient, destinationLocalPath, options);
-            TotalJobs.Add(transferJob);
+            totalTransferJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
 
             return jobId;
@@ -179,7 +181,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 destinationClient,
                 copyMethod,
                 copyOptions);
-            TotalJobs.Add(transferJob);
+            totalTransferJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
 
             // TODO: remove stub
@@ -210,7 +212,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString(); // TODO; update the way we generate job ids, to also check if the job id already exists
             BlobServiceCopyDirectoryTransferJob transferJob = new BlobServiceCopyDirectoryTransferJob(jobId, sourceUri, destinationClient, copyMethod, copyOptions);
-            TotalJobs.Add(transferJob);
+            totalTransferJobs.Add(transferJob);
             jobTransferScheduler.AddJob(transferJob);
             return jobId;
         }

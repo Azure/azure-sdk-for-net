@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -17,7 +18,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the <see cref="TransferJobInternal"/> of an action that failed to
         /// complete.  The value might be null.
         /// </summary>
-        public TransferJobInternal Job { get; }
+        public StorageTransferJobDetails Job { get; }
 
         /// <summary>
         /// Gets the <see cref="IOException"/> caused by an action that failed to
@@ -49,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         public PathTransferSkippedEventArgs(
-            TransferJobInternal job,
+            StorageTransferJobDetails job,
             IOException exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken = default)

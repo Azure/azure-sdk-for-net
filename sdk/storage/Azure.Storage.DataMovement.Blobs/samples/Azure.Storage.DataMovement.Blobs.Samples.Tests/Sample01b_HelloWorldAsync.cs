@@ -17,6 +17,7 @@ using NUnit.Framework;
 using Azure.Storage.DataMovement;
 using Azure.Core;
 using Azure.Identity;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {

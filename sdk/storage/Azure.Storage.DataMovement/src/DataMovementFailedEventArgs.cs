@@ -3,6 +3,7 @@
 
 using System.Threading;
 using Azure.Core;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -14,7 +15,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the <see cref="TransferJobInternal"/> that was performing the Job.
         /// </summary>
-        public TransferJobInternal Job { get; }
+        public StorageTransferJobDetails Job { get; }
 
         /// <summary>
         /// Gets the <see cref="RequestFailedException"/> that was thrown during the job.
@@ -48,7 +49,7 @@ namespace Azure.Storage.DataMovement
         /// Thrown if <paramref name="job"/> is null.
         /// </exception>
         public DataMovementFailedEventArgs(
-            TransferJobInternal job,
+            StorageTransferJobDetails job,
             RequestFailedException exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
