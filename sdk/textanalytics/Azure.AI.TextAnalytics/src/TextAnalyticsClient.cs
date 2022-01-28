@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            string defaultScope = options.Audience + "/.default";
+            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience.ToString()) ? TextAnalyticsAudience.AzureResourceManagerPublicCloud : options.Audience)}/.default";
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
